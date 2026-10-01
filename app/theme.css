@@ -1,0 +1,38 @@
+:root {
+  /* Brand palette */
+  --dnh-primary: #167394;
+  --dnh-secondary: #157293;
+  --dnh-accent: #fc8502;
+
+  /* Backgrounds */
+  --dnh-bg-page: #ffffff;
+  --dnh-bg-soft: color-mix(in srgb, var(--dnh-primary) 5%, white);
+  --dnh-bg-brand: var(--dnh-primary);
+
+  /* Text */
+  --dnh-text: color-mix(in srgb, var(--dnh-secondary) 35%, #101820);
+  --dnh-text-muted: color-mix(in srgb, var(--dnh-primary) 55%, #6b7280);
+  --dnh-text-brand: var(--dnh-primary);
+  --dnh-text-on-brand: #ffffff;
+
+  /* Borders and states */
+  --dnh-border: color-mix(in srgb, var(--dnh-primary) 18%, transparent);
+  --dnh-border-strong: var(--dnh-secondary);
+  --dnh-focus: var(--dnh-accent);
+
+  --background: var(--dnh-bg-page);
+  --foreground: var(--dnh-text);
+}
+
+@theme inline {
+  --color-brand-primary: var(--dnh-primary);
+  --color-brand-secondary: var(--dnh-secondary);
+  --color-brand-accent: var(--dnh-accent);
+  --color-page: var(--dnh-bg-page);
+  --color-surface-soft: var(--dnh-bg-soft);
+  --color-ink: var(--dnh-text);
+  --color-ink-muted: var(--dnh-text-muted);
+  --color-line: var(--dnh-border);
+  --color-line-strong: var(--dnh-border-strong);
+  --color-focus: var(--dnh-focus);
+}
