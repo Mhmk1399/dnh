@@ -72,6 +72,7 @@ export function HomeHero() {
         className="
           relative
           z-10
+          dnh-site-shell
           mx-auto
 
           flex
@@ -201,8 +202,6 @@ export function HomeHero() {
 
               sm:w-auto
               sm:flex-row
-              sm:flex-wrap
-              sm:items-center
 
               lg:mt-9
             "
@@ -214,7 +213,7 @@ export function HomeHero() {
               icon={ArrowLeft}
               className="
                 w-full
-                sm:w-auto
+                sm:w-auto text-right
                 sm:min-w-[245px]
               "
             >

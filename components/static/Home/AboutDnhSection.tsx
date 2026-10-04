@@ -144,6 +144,7 @@ export function WealthArchitectureSection() {
         className="
           relative
           z-10
+          dnh-site-shell
           mx-auto
           flex
           w-full

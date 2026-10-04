@@ -74,6 +74,7 @@ export default function FinalConversionSection() {
       className="
         relative
         isolate
+        dnh-site-shell
 
         mx-auto
         mt-12

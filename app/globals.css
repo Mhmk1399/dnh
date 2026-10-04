@@ -5,6 +5,36 @@
 
 @import "./theme.css";
 
+:root {
+  --dnh-layer-navigation-scrim: 50;
+  --dnh-layer-navigation: 60;
+  --dnh-shell-max: 1440px;
+  --dnh-shell-gutter: 24px;
+}
+
+@media (max-width: 1279px) {
+  :root {
+    --dnh-shell-gutter: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --dnh-shell-gutter: 12px;
+  }
+}
+
+.dnh-site-shell {
+  box-sizing: border-box;
+  width: min(
+    calc(100% - (var(--dnh-shell-gutter) + var(--dnh-shell-gutter))),
+    var(--dnh-shell-max)
+  );
+  max-width: var(--dnh-shell-max);
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
 @theme inline {
   --font-sans: var(--font-estedad);
   --font-mono: var(--font-geist-mono);
