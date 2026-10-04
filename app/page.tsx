@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/static/Home/FaqSection";
 import { FinalCtaSection } from "@/components/static/Home/FinalCtaSection";
 import { HomeHero } from "@/components/static/Home/HomeHero";
 import { ServicesTimelineSection } from "@/components/static/Home/ServicesTimelineSection";
+import { LeadSection } from "@/components/pages/LeadSection";
 
 export default function HomePage() {
   return (
@@ -18,8 +19,9 @@ export default function HomePage() {
         <DecisionMarketsSection />
         <CaseStudiesSection />
         <FaqSection />
+        <LeadSection />
         <FinalCtaSection />
-       </main>
+      </main>
     </>
   );
 }
