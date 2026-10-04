@@ -86,6 +86,14 @@ const NAVIGATION: NavItem[] = [
     title: "درباره",
     href: "/about",
   },
+  {
+    title: "ورود",
+    href: "/login",
+  },
+  {
+    title: "ثبت‌نام",
+    href: "/register",
+  },
 ];
 
 /* =============================================================================
@@ -241,7 +249,7 @@ export function Navbar() {
    * وقتی مگا منو باز است نیز Navbar سفید می‌شود.
    * در حالت عادی و قبل از Scroll کاملاً Transparent باقی می‌ماند.
    */
-  const elevated = scrolled || openMenu !== null || mobileOpen;
+  const elevated = pathname !== "/" || scrolled || openMenu !== null || mobileOpen;
 
   /* ---------------------------------------------------------------------- */
   /* Scroll state                                                           */
@@ -382,7 +390,7 @@ export function Navbar() {
               }
         }
         onMouseLeave={() => {
-          if (window.matchMedia("(min-width: 1024px)").matches) {
+          if (window.matchMedia("(min-width: 1280px)").matches) {
             setOpenMenu(null);
           }
         }}
@@ -405,10 +413,8 @@ export function Navbar() {
 
             sm:px-8
 
-            lg:h-20
-            lg:gap-8
-            lg:px-12
-
+            xl:h-20
+            xl:gap-8
             xl:px-16
             2xl:px-20
           "
@@ -480,7 +486,7 @@ export function Navbar() {
               h-full
               items-stretch
               justify-center
-              lg:flex
+              xl:flex
             "
           >
             {NAVIGATION.map((item) => {
@@ -608,7 +614,7 @@ export function Navbar() {
               hidden
               items-center
               justify-end
-              lg:flex
+              xl:flex
             "
           >
             <ActionButton
@@ -676,7 +682,7 @@ export function Navbar() {
               focus-visible:ring-4
               focus-visible:ring-focus/25
 
-              lg:hidden
+              xl:hidden
 
               ${
                 elevated
@@ -710,7 +716,7 @@ export function Navbar() {
         {/* Desktop Mega Menus                                               */}
         {/* ---------------------------------------------------------------- */}
 
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           {(Object.keys(MEGA_MENUS) as MegaMenuKey[]).map((menuKey) => {
             const menu = MEGA_MENUS[menuKey];
             const opened = openMenu === menuKey;
@@ -892,7 +898,7 @@ export function Navbar() {
 
             sm:px-8
 
-            lg:hidden
+            xl:hidden
 
             ${
               mobileOpen
@@ -1113,7 +1119,7 @@ export function Navbar() {
             cursor-default
             bg-black/10
             backdrop-blur-[1px]
-            lg:block
+            xl:block
           "
         />
       )}

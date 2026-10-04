@@ -1,3 +1,3 @@
-export default function Page() {
-  return null;
-}
+import { ContactPage } from "@/components/pages/ContactPage";
+
+export default ContactPage;
