@@ -1,608 +1,293 @@
-import Image, { getImageProps } from "next/image";
-
+import { getImageProps } from "next/image";
 import {
   ArrowLeft,
-  CircleDollarSign,
-  LineChart,
-  ShieldCheck,
-  Sparkles,
-  UserRound,
-  type LucideIcon,
+  ChartNoAxesCombined,
+  Layers3,
+  UserRoundCheck,
 } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
-/* =============================================================================
-   Hero image configuration
+const HERO_DESKTOP = "/assets/images/dnh-hero-desktop.png";
+const HERO_MOBILE = "/assets/images/dnh-hero-mobile.png";
 
-   We generate optimized Next.js srcsets for desktop and mobile, then allow
-   <picture> to choose the correct asset BEFORE downloading the image.
-============================================================================= */
-
-const HERO_IMAGE_ALT =
-  "نمایی از فضای تحلیلی DNH برای معماری ثروت و تصمیم‌های مالی راهبردی";
-
-const {
-  props: { srcSet: desktopHeroSrcSet },
-} = getImageProps({
-  src: "/assets/images/herod.png",
-  alt: HERO_IMAGE_ALT,
-  width: 1536,
-  height: 1024,
-  quality: 82,
-  sizes: "100vw",
-});
-
-const {
-  props: { srcSet: mobileHeroSrcSet },
-} = getImageProps({
-  src: "/assets/images/herom.png",
-  alt: HERO_IMAGE_ALT,
-  width: 1024,
-  height: 1536,
-  quality: 82,
-  sizes: "(max-width: 1023px) 100vw, 1px",
-});
-
-/* =============================================================================
-   Trust data
-============================================================================= */
-
-type TrustItem = {
-  title: string;
-  icon: LucideIcon;
-};
-
-const TRUST_ITEMS: TrustItem[] = [
-  {
-    title: "امن و محرمانه",
-    icon: ShieldCheck,
-  },
-  {
-    title: "تحلیل مبتنی بر داده",
-    icon: LineChart,
-  },
-  {
-    title: "مشاوره اختصاصی",
-    icon: UserRound,
-  },
-];
-
-/* =============================================================================
-   Hero
-============================================================================= */
-
-export default function HeroSection() {
+export function HomeHero() {
   return (
     <section
-      id="home-hero"
-      dir="rtl"
+      id="home"
       aria-labelledby="home-hero-title"
-      aria-describedby="home-hero-description"
       className="
         relative
         isolate
-
-        min-h-[100svh]
-        w-full
-
+        h-dvh
         overflow-hidden
-
-        bg-surface-soft
+        bg-brand-secondary
       "
     >
-      {/* =====================================================================
-          RESPONSIVE HERO CANVAS
+      <HeroBackground />
 
-          Mobile:
-          min-height: 760px
-          content top / image bottom
+      {/* Desktop overlay */}
 
-          Desktop:
-          height: 650px
-          image left / content right
-      ====================================================================== */}
 
+      {/* Mobile overlay */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute
+          inset-0
+          z-[1]
+          lg:hidden
+        "
+        style={{
+          background: `
+            linear-gradient(
+              180deg,
+              color-mix(in srgb, var(--dnh-secondary) 5%, transparent) 0%,
+              color-mix(in srgb, var(--dnh-secondary) 8%, transparent) 42%,
+              color-mix(in srgb, var(--dnh-secondary) 65%, transparent) 68%,
+              color-mix(in srgb, var(--dnh-secondary) 96%, transparent) 100%
+            )
+          `,
+        }}
+      />
+
+      {/* Bottom depth */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute
+          inset-x-0
+          bottom-0
+          z-[1]
+          h-[30%]
+          bg-gradient-to-t
+          from-brand-secondary/55
+          via-brand-secondary/15
+          to-transparent
+        "
+      />
+
+      {/* Content */}
       <div
         className="
           relative
+          z-10
+          mx-auto
 
-          min-h-[100svh]
+          flex
+          h-full
+          min-h-0
+          w-full
+          max-w-[1536px]
 
-          overflow-hidden
+          items-end
+
+          px-5
+          pb-8
+          pt-28
+
+          sm:px-8
+          sm:pb-10
+          sm:pt-32
+
+          lg:items-center
+          lg:px-12
+          lg:pb-0
+          lg:pt-[96px]
+
+          xl:px-16
+          2xl:px-20
         "
       >
-        {/* =================================================================
-            THEME BACKGROUND
-
-            No large filter: blur().
-            Radial gradients are considerably lighter to paint.
-        ================================================================== */}
-
         <div
-          aria-hidden="true"
+          dir="rtl"
           className="
-            pointer-events-none
-
-            absolute
-            inset-0
-          "
-          style={{
-            background: `
-              radial-gradient(
-                circle at 88% 4%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-primary) 12%,
-                  transparent
-                ) 0%,
-                transparent 34%
-              ),
-              radial-gradient(
-                circle at 8% 92%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-accent) 5%,
-                  transparent
-                ) 0%,
-                transparent 34%
-              ),
-              linear-gradient(
-                135deg,
-                var(--dnh-bg-soft) 0%,
-                var(--dnh-bg-page) 47%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-primary) 7%,
-                  var(--dnh-bg-page)
-                ) 100%
-              )
-            `,
-          }}
-        />
-
-        {/* subtle top light */}
-
-        <div
-          aria-hidden="true"
-          className="
-            pointer-events-none
-
-            absolute
-            inset-x-[12%]
-            top-0
-
-            z-[1]
-
-            h-px
-
-            bg-gradient-to-r
-            from-transparent
-            via-brand-primary/20
-            to-transparent
-          "
-        />
-
-        {/* =================================================================
-            RESPONSIVE HERO IMAGE
-
-            One <img> in the DOM.
-            Browser selects herom/herod using <picture>.
-        ================================================================== */}
-
-        <div
-          className="
-            absolute
-            inset-0
-            z-0
-            h-full
+            mr-0
+            ml-auto
             w-full
+            text-right
+
+            sm:max-w-[620px]
+            lg:max-w-[680px]
+            xl:max-w-[730px]
           "
         >
-          <picture
+          {/* Eyebrow */}
+          <div
             className="
-              block
-              h-full
-              w-full
+              mb-4
+              flex
+              items-center
+              justify-start
+              gap-3
+
+              sm:mb-5
+              lg:mb-6
             "
           >
-            {/* Desktop image */}
-
-            <source
-              media="(min-width: 1024px)"
-              srcSet={desktopHeroSrcSet}
-              sizes="100vw"
-            />
-
-            {/* Mobile image */}
-
-            <source
-              media="(max-width: 1023px)"
-              srcSet={mobileHeroSrcSet}
-              sizes="100vw"
-            />
-
-            <Image
-              src="/assets/images/herom.png"
-              alt={HERO_IMAGE_ALT}
-              fill
-              quality={82}
-              sizes="100vw"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
+            <span
+              aria-hidden="true"
               className="
-                object-cover
-                object-center
+                h-px
+                w-9
+                bg-brand-accent
+                sm:w-11
               "
             />
-          </picture>
 
-          {/* ---------------------------------------------------------------
-              MOBILE IMAGE FADE
-          ---------------------------------------------------------------- */}
-
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-
-              absolute
-              inset-x-0
-              top-0
-
-              z-[2]
-
-              h-[62%]
-
-              lg:hidden
-            "
-            style={{
-              background: `
-                linear-gradient(
-                  to bottom,
-                  color-mix(
-                    in srgb,
-                    var(--dnh-bg-page) 94%,
-                    transparent
-                  ) 0%,
-                  color-mix(
-                    in srgb,
-                    var(--dnh-bg-page) 76%,
-                    transparent
-                  ) 58%,
-                  transparent 100%
-                )
-              `,
-            }}
-          />
-        </div>
-
-        {/* =================================================================
-            DESKTOP IMAGE TRANSITION
-        ================================================================== */}
-
-        <div
-          aria-hidden="true"
-          className="
-            pointer-events-none
-
-            absolute
-            inset-y-0
-            left-[48%]
-
-            z-[2]
-
-            hidden
-            w-[28%]
-
-            lg:block
-          "
-          style={{
-            background: `
-              linear-gradient(
-                to right,
-                transparent 0%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-bg-page) 62%,
-                  transparent
-                ) 52%,
-                var(--dnh-bg-page) 100%
-              )
-            `,
-          }}
-        />
-
-        {/* light wash behind desktop text */}
-
-        <div
-          aria-hidden="true"
-          className="
-            pointer-events-none
-
-            absolute
-            inset-y-0
-            right-0
-
-            z-[2]
-
-            hidden
-            w-[58%]
-
-            lg:block
-          "
-          style={{
-            background: `
-              radial-gradient(
-                circle at 65% 48%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-bg-page) 98%,
-                  transparent
-                ) 0%,
-                color-mix(
-                  in srgb,
-                  var(--dnh-bg-page) 86%,
-                  transparent
-                ) 42%,
-                transparent 78%
-              )
-            `,
-          }}
-        />
-
-        {/* =================================================================
-            CONTENT
-
-            One semantic content tree for both desktop + mobile.
-        ================================================================== */}
-
-        <div
-          className="
-            relative
-            z-20
-
-            px-6
-            pb-12
-            pt-[116px]
-
-            text-center
-
-            lg:z-10
-
-            lg:ml-auto
-
-            lg:flex
-            lg:h-full
-            lg:min-h-[100svh]
-            lg:w-[48%]
-            lg:items-center
-
-            lg:px-10
-            lg:py-0
-
-            lg:text-right
-
-            xl:px-16
-
-            2xl:px-20
-          "
-        >
-          <div
-            className="
-              mx-auto
-
-              w-full
-              max-w-[600px]
-
-              lg:mx-0
-            "
-          >
-            {/* ============================================================
-                EYEBROW / BADGE
-            ============================================================= */}
-
-            <div
+            <span
+              dir="rtl"
               className="
-                mx-auto
-                mb-5
-
-                inline-flex
-                items-center
-                gap-[8px]
-
-                rounded-full
-
-                border
-                border-line
-
-                bg-page/75
-
-                px-4
-                py-2
-
-                text-[11px]
+                text-[10px]
                 font-semibold
+                text-[var(--dnh-text-on-brand)]
 
-                text-ink-muted
-
-                shadow-[0_8px_28px_color-mix(in_srgb,var(--dnh-primary)_6%,transparent)]
-
-                lg:mx-0
-                lg:mb-7
-                lg:text-[12px]
-              "
+               "
             >
-              <Sparkles
-                aria-hidden="true"
-                strokeWidth={1.6}
-                className="
-                  h-[14px]
-                  w-[14px]
+              مشاوره مالی راهبردی
+            </span>
+          </div>
 
-                  text-brand-primary
-                "
-              />
+          {/* Main title */}
+          <h1
+            id="home-hero-title"
+            className="
+              max-w-[730px]
+              font-black
+              leading-[1.45]
+              tracking-[-0.035em]
+              text-2xl
+              text-[var(--dnh-text-on-brand)]
+              lg:text-4xl
+            "
+          >
+            تصمیم‌های مالی مهم،
+            <br />
+            به یک <span className="text-brand-accent">تصویر کامل‌تر</span> نیاز
+            دارند.
+          </h1>
 
-              <span
-                aria-hidden="true"
-                className="
-                  h-[6px]
-                  w-[6px]
+          {/* Description */}
+          <p
+            className="
+              mt-5
+              max-w-[570px]
 
-                  rounded-full
+              text-[13px]
+              font-medium
+              leading-[2]
 
-                  bg-brand-accent
+              text-[color-mix(in_srgb,var(--dnh-text-on-brand)_78%,transparent)]
 
-                  shadow-[0_0_0_5px_color-mix(in_srgb,var(--dnh-accent)_10%,transparent)]
-                "
-              />
+              sm:text-[14px]
 
-              <span>معماری هوشمند ثروت</span>
-            </div>
+              lg:mt-6
+              lg:text-[15px]
+              lg:leading-[2.1]
+            "
+          >
+            تبدیل داده، ریسک، سناریو و ساختار مالی به یک تصمیم روشن، ساختاریافته
+            و قابل‌دفاع.
+          </p>
 
-            {/* ============================================================
-                PRIMARY HEADING
+          {/* Actions */}
+          <div
+            className="
+              mt-7
+              flex
+              w-full
+              flex-col
+              gap-3
 
-                Only one H1 in the component.
-            ============================================================= */}
+              sm:w-auto
+              sm:flex-row
+              sm:flex-wrap
+              sm:items-center
 
-            <h1
-              id="home-hero-title"
+              lg:mt-9
+            "
+          >
+            <ActionButton
+              href="/assessment"
+              variant="assessment"
+              size="md"
+              icon={ArrowLeft}
               className="
-                text-[37px]
-                font-black
-
-                leading-[1.5]
-
-                tracking-[-1px]
-
-                text-ink
-
-                lg:text-[54px]
-                lg:leading-[1.42]
-                lg:tracking-[-1.8px]
-
-                xl:text-[60px]
+                w-full
+                sm:w-auto
+                sm:min-w-[245px]
               "
             >
-              تصمیم‌های مالی،
-              <br />
-              شفاف‌تر،
-              <br className="lg:hidden" />
-              <span className="text-brand-primary"> هوشمندتر</span>
-            </h1>
+              ارزیابی اولیه تصمیم مالی
+            </ActionButton>
 
-            {/* ============================================================
-                DESCRIPTION
-            ============================================================= */}
-
-            <p
-              id="home-hero-description"
+            <ActionButton
+              href="/consultation"
+              variant="secondary"
+              size="md"
+              icon={ArrowLeft}
               className="
-                mx-auto
-                mt-4
+                w-full
 
-                max-w-[370px]
+                border-[color-mix(in_srgb,var(--dnh-text-on-brand)_28%,transparent)]
 
-                text-[13px]
-                font-medium
+                bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_8%,transparent)]
 
-                leading-[2]
+                text-[var(--dnh-text-on-brand)]
 
-                text-ink-muted
+                shadow-none
 
-                lg:mx-0
-                lg:mt-6
+                backdrop-blur-[8px]
 
-                lg:max-w-[560px]
+                hover:border-[color-mix(in_srgb,var(--dnh-text-on-brand)_55%,transparent)]
 
-                lg:text-[16px]
-                lg:leading-[2.1]
+                hover:bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_13%,transparent)]
+
+                hover:text-[var(--dnh-text-on-brand)]
+
+                sm:w-auto
+                sm:min-w-[220px]
               "
             >
-              با معماری ثروت، هوشمندی پرتفوی و مشاوره مالی راهبردی DNH،
-              تصمیم‌های مهم سرمایه را در مسیری شفاف، منسجم و مبتنی بر تحلیل پیش
-              ببرید.
-            </p>
+              درخواست مشاوره راهبردی
+            </ActionButton>
+          </div>
 
-            {/* ============================================================
-                ACTIONS
-            ============================================================= */}
+          {/* Roles */}
+          <div
+            className="
+              mt-8
+              hidden
 
-            <div
-              className="
-                mt-6
+              border-t
+              border-[color-mix(in_srgb,var(--dnh-text-on-brand)_16%,transparent)]
 
-                flex
-                flex-col
-                gap-3
+              pt-5
 
-                lg:mt-8
+              sm:flex
+              sm:flex-wrap
+              sm:items-center
+              sm:gap-x-5
+              sm:gap-y-3
 
-                lg:flex-row
-                lg:items-center
-              "
-            >
-              {/* Primary CTA */}
+              lg:mt-10
+              lg:pt-6
+            "
+          >
+            <ProfessionalRole
+              icon={UserRoundCheck}
+              label="معمار ثروت خصوصی"
+            />
 
-              <ActionButton
-                href="/request-strategic-consultation"
-                variant="primary"
-                size="lg"
-                icon={ArrowLeft} 
-                iconPosition="end"
-                className="w-full lg:w-auto lg:min-w-[220px]"
-              >
-                درخواست مشاوره راهبردی
-              </ActionButton>
+            <ProfessionalRole
+              icon={ChartNoAxesCombined}
+              label="مشاور مالی راهبردی"
+            />
 
-              {/* Secondary CTA */}
-
-              <ActionButton
-                href="/financial-decision-assessment"
-                variant="secondary"
-                size="lg"
-                icon={CircleDollarSign}
-                iconPosition="start"
-                className="w-full lg:w-auto lg:min-w-[185px]"
-              >
-                ارزیابی تصمیم مالی
-              </ActionButton>
-            </div>
-
-            {/* ============================================================
-                TRUST SIGNALS
-
-                Desktop only, exactly like the original visual layout.
-            ============================================================= */}
-
-            <ul
-              aria-label="ویژگی‌های خدمات DNH"
-              className="
-                mt-10
-
-                hidden
-                max-w-[570px]
-
-                items-center
-                justify-between
-
-                border-t
-                border-line
-
-                pt-6
-
-                lg:flex
-              "
-            >
-              {TRUST_ITEMS.map(({ title, icon: Icon }) => (
-                <li key={title}>
-                  <TrustItem title={title} icon={Icon} />
-                </li>
-              ))}
-            </ul>
+            <ProfessionalRole
+              icon={Layers3}
+              label="بنیان‌گذار چارچوب دی‌ان‌اچ"
+            />
           </div>
         </div>
       </div>
@@ -610,53 +295,89 @@ export default function HeroSection() {
   );
 }
 
-/* =============================================================================
-   Trust Item
-============================================================================= */
+function HeroBackground() {
+  const commonProps = {
+    alt: "دکتر نسیم محمدحسنی، بنیان‌گذار دی‌ان‌اچ",
+    sizes: "100vw",
+  };
 
-function TrustItem({ icon: Icon, title }: { icon: LucideIcon; title: string }) {
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...commonProps,
+    src: HERO_DESKTOP,
+    width: 2400,
+    height: 1350,
+    quality: 90,
+  });
+
+  const { props: mobileProps } = getImageProps({
+    ...commonProps,
+    src: HERO_MOBILE,
+    width: 1080,
+    height: 1920,
+    quality: 88,
+    loading: "eager",
+    fetchPriority: "high",
+  });
+
+  return (
+    <picture
+      className="
+        absolute
+        inset-0
+        block
+        h-full
+        w-full
+      "
+    >
+      <source
+        media="(min-width: 1024px)"
+        srcSet={desktopSrcSet}
+        sizes="100vw"
+      />
+
+      <img
+        {...mobileProps}
+        alt=""
+        className="
+          h-full
+          w-full
+          object-cover
+          object-center
+        "
+      />
+    </picture>
+  );
+}
+
+function ProfessionalRole({
+  icon: Icon,
+  label,
+}: {
+  icon: typeof UserRoundCheck;
+  label: string;
+}) {
   return (
     <div
+      dir="rtl"
       className="
         flex
         items-center
-        gap-[8px]
-
-        whitespace-nowrap
-
-        text-[12px]
-        font-semibold
-
-        text-ink-muted
+        gap-2
+        text-[10px]
+        font-medium
+        text-[color-mix(in_srgb,var(--dnh-text-on-brand)_76%,transparent)]
+        lg:text-[11px]
       "
     >
-      <span
+      <Icon
         aria-hidden="true"
-        className="
-          flex
-          h-[30px]
-          w-[30px]
-          shrink-0
-          items-center
-          justify-center
+        className="h-3.5 w-3.5 shrink-0 text-[var(--dnh-text-on-brand)]"
+        strokeWidth={1.6}
+      />
 
-          rounded-[10px]
-
-          bg-surface-soft
-
-          text-brand-primary
-        "
-      >
-        <Icon
-          strokeWidth={1.65}
-          className="
-            h-[15px]
-            w-[15px]
-          "
-        />
-      </span>
-
-      <span>{title}</span>
+      <span>{label}</span>
     </div>
   );
 }

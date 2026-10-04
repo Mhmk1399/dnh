@@ -1,51 +1,39 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import {
   ArrowLeft,
-  BookOpen,
   BrainCircuit,
   Briefcase,
   Building2,
   ChevronDown,
   CircleDollarSign,
-  CircleUserRound,
-  Compass,
   Gem,
-  Home,
   Landmark,
   Layers3,
   LayoutGrid,
   LineChart,
-  Menu,
+  Menu as MenuIcon,
   Network,
   PieChart,
   Presentation,
   ShieldCheck,
-  Sparkles,
-  Target,
   X,
   type LucideIcon,
 } from "lucide-react";
-
-import {
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
+import Image from "next/image";
 
-/* =============================================================================
-   Types
-============================================================================= */
+/*
+  این آرایه‌ها را همان‌هایی قرار بده که در پیام خودت فرستادی:
+  NAVIGATION
+  DNH_ITEMS
+  SERVICE_ITEMS
+  TARGET_MARKET_ITEMS
+*/
 
 type MegaMenuKey = "dnh" | "services" | "target-markets";
 
@@ -53,58 +41,55 @@ type NavItem = {
   title: string;
   href?: string;
   menu?: MegaMenuKey;
-  icon: LucideIcon;
 };
 
 type MegaItem = {
+  index: string;
   title: string;
   description: string;
   href: string;
   icon: LucideIcon;
-  index: string;
-  badge?: string;
 };
 
-/* =============================================================================
-   Main navigation
-============================================================================= */
+type MegaMenuDefinition = {
+  title: string;
+  subtitle: string;
+  items: MegaItem[];
+};
 
+/* -------------------------------------------------------------------------- */
+/* Mega menu config                                                           */
+/* -------------------------------------------------------------------------- */
 const NAVIGATION: NavItem[] = [
   {
     title: "خانه",
     href: "/",
-    icon: Home,
   },
   {
     title: "DNH",
     menu: "dnh",
-    icon: Compass,
   },
   {
     title: "خدمات",
     href: "/services",
     menu: "services",
-    icon: Briefcase,
   },
   {
     title: "بازارهای هدف",
     menu: "target-markets",
-    icon: Target,
   },
   {
     title: "دانش",
     href: "/knowledge",
-    icon: BookOpen,
   },
   {
     title: "درباره",
     href: "/about",
-    icon: CircleUserRound,
   },
 ];
 
 /* =============================================================================
-   DNH items
+   DNH
 ============================================================================= */
 
 const DNH_ITEMS: MegaItem[] = [
@@ -114,7 +99,6 @@ const DNH_ITEMS: MegaItem[] = [
     description: "ساختاری منسجم برای سازمان‌دهی ثروت، سرمایه و تصمیم‌های مالی.",
     href: "/dnh/wealth-architecture",
     icon: Landmark,
-    badge: "DNH",
   },
   {
     index: "02",
@@ -191,7 +175,7 @@ const SERVICE_ITEMS: MegaItem[] = [
 ];
 
 /* =============================================================================
-   Target markets
+   Target Markets
 ============================================================================= */
 
 const TARGET_MARKET_ITEMS: MegaItem[] = [
@@ -199,7 +183,7 @@ const TARGET_MARKET_ITEMS: MegaItem[] = [
     index: "01",
     title: "تصمیم مالی بزرگ",
     description:
-      "برای زمانی که یک تصمیم مهم مالی نیازمند تحلیل عمیق‌تر و نگاه چندبعدی است.",
+      "برای تصمیم‌های مهم مالی که نیازمند تحلیل عمیق‌تر و نگاه چندبعدی هستند.",
     href: "/target-markets/big-financial-decision",
     icon: CircleDollarSign,
   },
@@ -207,7 +191,7 @@ const TARGET_MARKET_ITEMS: MegaItem[] = [
     index: "02",
     title: "پرتفوی پراکنده و بدون معماری",
     description:
-      "برای دارایی‌هایی که رشد کرده‌اند اما هنوز ساختار منسجم و قابل مدیریت ندارند.",
+      "برای دارایی‌هایی که رشد کرده‌اند اما هنوز ساختار منسجم ندارند.",
     href: "/target-markets/unstructured-portfolio",
     icon: Layers3,
   },
@@ -215,2991 +199,1196 @@ const TARGET_MARKET_ITEMS: MegaItem[] = [
     index: "03",
     title: "هلدینگ‌ها و ساختار مالی و سرمایه",
     description:
-      "برای مجموعه‌هایی با ساختار مالکیت، سرمایه و تصمیم‌گیری مالی پیچیده.",
+      "برای مجموعه‌هایی با ساختار مالکیت، سرمایه و تصمیم‌گیری پیچیده.",
     href: "/target-markets/holdings-financial-capital-structure",
     icon: Building2,
   },
 ];
 
-/* =============================================================================
-   Helpers
-============================================================================= */
+const MEGA_MENUS: Record<MegaMenuKey, MegaMenuDefinition> = {
+  dnh: {
+    title: "DNH",
+    subtitle: "معماری، چارچوب و هوشمندی برای تصمیم‌های مالی پیچیده",
+    items: DNH_ITEMS,
+  },
 
-function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
-}
+  services: {
+    title: "خدمات DNH",
+    subtitle: "خدمات راهبردی برای ثروت، سرمایه، ریسک و تصمیم‌گیری مالی",
+    items: SERVICE_ITEMS,
+  },
 
-function isRouteActive(pathname: string, href?: string) {
-  if (!href) return false;
+  "target-markets": {
+    title: "بازارهای هدف",
+    subtitle: "مسیرهای تخصصی برای موقعیت‌هایی که به تصمیم دقیق‌تری نیاز دارند",
+    items: TARGET_MARKET_ITEMS,
+  },
+};
 
-  if (href === "/") {
-    return pathname === "/";
-  }
+/* -------------------------------------------------------------------------- */
+/* Navbar                                                                     */
+/* -------------------------------------------------------------------------- */
 
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-function isMegaRouteActive(pathname: string, menu?: MegaMenuKey) {
-  if (!menu) return false;
-
-  switch (menu) {
-    case "dnh":
-      return pathname.startsWith("/dnh/");
-
-    case "services":
-      return pathname === "/services" || pathname.startsWith("/services/");
-
-    case "target-markets":
-      return pathname.startsWith("/target-markets/");
-
-    default:
-      return false;
-  }
-}
-
-/* =============================================================================
-   Main Navbar
-============================================================================= */
-
-export default function DnhNavbar() {
+export function Navbar() {
   const pathname = usePathname();
 
-  const menuBaseId = useId();
-  const mobileMenuId = useId();
-
-  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const [scrolled, setScrolled] = useState(false);
-
-  const [activeMenu, setActiveMenu] = useState<MegaMenuKey | null>(null);
-
+  const [openMenu, setOpenMenu] = useState<MegaMenuKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const [mobileSection, setMobileSection] = useState<MegaMenuKey | null>(null);
 
-  const overlayVisible = Boolean(activeMenu) || mobileOpen;
-  const headerElevated = scrolled || Boolean(activeMenu) || mobileOpen;
-  /* =========================================================================
-     Scroll morph
-  ========================================================================= */
+  /*
+   * وقتی مگا منو باز است نیز Navbar سفید می‌شود.
+   * در حالت عادی و قبل از Scroll کاملاً Transparent باقی می‌ماند.
+   */
+  const elevated = scrolled || openMenu !== null || mobileOpen;
+
+  /* ---------------------------------------------------------------------- */
+  /* Scroll state                                                           */
+  /* ---------------------------------------------------------------------- */
 
   useEffect(() => {
-    let animationFrame = 0;
+    const updateNavbar = () => {
+      const nextScrolled = window.scrollY > 20;
 
-    const update = () => {
-      const next = window.scrollY > 24;
-
-      setScrolled((current) => (current === next ? current : next));
+      setScrolled((current) =>
+        current === nextScrolled ? current : nextScrolled,
+      );
     };
 
-    const handleScroll = () => {
-      cancelAnimationFrame(animationFrame);
+    updateNavbar();
 
-      animationFrame = requestAnimationFrame(update);
-    };
-
-    update();
-
-    window.addEventListener("scroll", handleScroll, {
+    window.addEventListener("scroll", updateNavbar, {
       passive: true,
     });
 
     return () => {
-      cancelAnimationFrame(animationFrame);
-
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", updateNavbar);
     };
   }, []);
 
-  /* =========================================================================
-     Desktop menu logic
-  ========================================================================= */
-
-  const clearCloseTimer = useCallback(() => {
-    if (!closeTimerRef.current) return;
-
-    clearTimeout(closeTimerRef.current);
-
-    closeTimerRef.current = null;
-  }, []);
-
-  const openMegaMenu = useCallback(
-    (menu: MegaMenuKey) => {
-      clearCloseTimer();
-
-      setActiveMenu(menu);
-    },
-    [clearCloseTimer],
-  );
-
-  const closeMegaMenuDelayed = useCallback(() => {
-    clearCloseTimer();
-
-    closeTimerRef.current = setTimeout(() => {
-      setActiveMenu(null);
-    }, 170);
-  }, [clearCloseTimer]);
-
-  const closeEverything = useCallback(() => {
-    clearCloseTimer();
-
-    setActiveMenu(null);
-    setMobileOpen(false);
-    setMobileSection(null);
-  }, [clearCloseTimer]);
-
-  const handleMenuPointerEnter = (
-    event: ReactPointerEvent,
-    menu: MegaMenuKey,
-  ) => {
-    if (event.pointerType === "touch") {
-      return;
-    }
-
-    openMegaMenu(menu);
-  };
-
-  /* =========================================================================
-     Escape support
-  ========================================================================= */
+  /* ---------------------------------------------------------------------- */
+  /* Close menus after navigation                                           */
+  /* ---------------------------------------------------------------------- */
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-
-      closeEverything();
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [closeEverything]);
-
-  /* =========================================================================
-     Cleanup timeout
-  ========================================================================= */
-
-  useEffect(() => {
-    return () => {
-      clearCloseTimer();
-    };
-  }, [clearCloseTimer]);
-
-  /* =========================================================================
-     Close after route change
-  ========================================================================= */
-
-  useEffect(() => {
-    setActiveMenu(null);
+    setOpenMenu(null);
     setMobileOpen(false);
     setMobileSection(null);
   }, [pathname]);
 
-  /* =========================================================================
-     Mobile scroll lock
-  ========================================================================= */
+  /* ---------------------------------------------------------------------- */
+  /* Escape                                                                 */
+  /* ---------------------------------------------------------------------- */
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+
+      setOpenMenu(null);
+      setMobileOpen(false);
+      setMobileSection(null);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  /* ---------------------------------------------------------------------- */
+  /* Mobile body lock                                                       */
+  /* ---------------------------------------------------------------------- */
 
   useEffect(() => {
     if (!mobileOpen) return;
 
-    const body = document.body;
+    const previousOverflow = document.body.style.overflow;
 
-    const previousOverflow = body.style.overflow;
-
-    const previousPaddingRight = body.style.paddingRight;
-
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
-
-    body.style.overflow = "hidden";
-
-    if (scrollbarWidth > 0) {
-      body.style.paddingRight = `${scrollbarWidth}px`;
-    }
+    document.body.style.overflow = "hidden";
 
     return () => {
-      body.style.overflow = previousOverflow;
-
-      body.style.paddingRight = previousPaddingRight;
+      document.body.style.overflow = previousOverflow;
     };
   }, [mobileOpen]);
 
-  /* =========================================================================
-     Breakpoint synchronization
-  ========================================================================= */
+  /* ---------------------------------------------------------------------- */
 
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1100px)");
+  const megaColumns = useMemo(() => {
+    if (openMenu === "services") {
+      return "lg:grid-cols-3";
+    }
 
-    const sync = () => {
-      if (media.matches) {
-        setMobileOpen(false);
-        setMobileSection(null);
-      } else {
-        setActiveMenu(null);
-      }
-    };
+    return "lg:grid-cols-3";
+  }, [openMenu]);
 
-    media.addEventListener("change", sync);
+  function isPathActive(href?: string) {
+    if (!href) return false;
 
-    return () => {
-      media.removeEventListener("change", sync);
-    };
-  }, []);
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+
+  function isMenuActive(menu: MegaMenuKey) {
+    return MEGA_MENUS[menu].items.some((item) => isPathActive(item.href));
+  }
+
+  function handleMenuToggle(menu: MegaMenuKey) {
+    setOpenMenu((current) => (current === menu ? null : menu));
+  }
 
   return (
     <>
-      {/* =====================================================================
-          PAGE BACKDROP
-      ====================================================================== */}
-
-      <button
-        type="button"
-        aria-label="بستن منوی باز"
-        tabIndex={overlayVisible ? 0 : -1}
-        onClick={closeEverything}
-        className={cn(
-          `
-            fixed
-            inset-0
-            z-[80]
-
-            bg-brand-primary/10
-
-            backdrop-blur-[11px]
-            backdrop-saturate-[105%]
-
-            transition-all
-            duration-[400ms]
-            ease-[cubic-bezier(.16,1,.3,1)]
-
-            motion-reduce:transition-none
-          `,
-          overlayVisible
-            ? `
-                pointer-events-auto
-                visible
-                opacity-100
-              `
-            : `
-                pointer-events-none
-                invisible
-                opacity-0
-              `,
-        )}
-      />
-
-      {/* =====================================================================
-          HEADER
-      ====================================================================== */}
-
       <header
-        className="
-    pointer-events-none
+        className={`
+          fixed
+          inset-x-0
+          top-0
+          z-[60]
+          w-full
 
-    fixed
-    inset-x-0
-    top-0
+          border-b
 
-    z-[100]
+          transition-[background-color,border-color,box-shadow]
+          duration-500
+          ease-[cubic-bezier(.22,1,.36,1)]
 
-    w-full
-  "
-      >
-        <div
-          className={cn(
-            `
-        pointer-events-auto
-
-        relative
-
-        mx-auto
-
-        transition-[width,max-width,margin]
-        duration-[650ms]
-        ease-[cubic-bezier(.16,1,.3,1)]
-
-        motion-reduce:transition-none
-      `,
-            scrolled
+          ${
+            elevated
               ? `
-            mt-[10px]
-
-            w-[calc(100%-24px)]
-            max-w-[1320px]
-          `
+                border-line
+                shadow-lg
+              `
               : `
-            mt-[18px]
+                border-transparent
+                shadow-none
+              `
+          }
+        `}
+        style={
+          elevated
+            ? {
+                backgroundColor:
+                  "color-mix(in srgb, var(--dnh-bg-page) 86%, transparent)",
+                backdropFilter: "blur(18px) saturate(145%)",
+                WebkitBackdropFilter: "blur(18px) saturate(145%)",
+              }
+            : {
+                backgroundColor: "transparent",
+              }
+        }
+        onMouseLeave={() => {
+          if (window.matchMedia("(min-width: 1024px)").matches) {
+            setOpenMenu(null);
+          }
+        }}
+      >
+        {/* ---------------------------------------------------------------- */}
+        {/* Main bar                                                         */}
+        {/* ---------------------------------------------------------------- */}
 
-            w-[calc(100%-48px)]
-            max-w-[1540px]
-          `,
-            `
-        max-[640px]:
-        mt-[8px]
+        <div
+          className="
+            mx-auto
+            grid
+            h-16
+            w-full
+            max-w-[1536px]
+            grid-cols-[auto_1fr_auto]
+            items-center
+            gap-4
+            px-5
 
-        max-[640px]:
-        w-[calc(100%-16px)]
-      `,
-          )}
+            sm:px-8
+
+            lg:h-20
+            lg:gap-8
+            lg:px-12
+
+            xl:px-16
+            2xl:px-20
+          "
         >
-          {/* ===============================================================
-        NAVBAR SHELL
-    ================================================================ */}
-
-          <div
-            className={cn(
-              `
-          relative
-          isolate
-
-          transition-[height,background-color,border-color,border-radius,box-shadow,backdrop-filter]
-          duration-[600ms]
-          ease-[cubic-bezier(.16,1,.3,1)]
-
-          motion-reduce:transition-none
-        `,
-              headerElevated
-                ? `
-              h-[70px]
-
-              rounded-[24px]
-
-              border
-              border-line
-
-              bg-page/[0.72]
-
-              shadow-[0_14px_50px_color-mix(in_srgb,var(--dnh-primary)_16%,transparent)]
-
-              backdrop-blur-[28px]
-              backdrop-saturate-[150%]
-            `
-                : `
-              h-[84px]
-
-              rounded-[24px]
-
-              border
-              border-transparent
-
-              bg-transparent
-
-              shadow-none
-
-              backdrop-blur-none
-            `,
-              `
-          max-[1099px]:
-          h-[64px]
-
-          max-[1099px]:
-          rounded-[21px]
-
-          max-[1099px]:
-          border-line
-
-          max-[1099px]:
-          bg-page/[0.88]
-
-          max-[1099px]:
-          shadow-[0_10px_35px_color-mix(in_srgb,var(--dnh-primary)_10%,transparent)]
-
-          max-[1099px]:
-          backdrop-blur-[24px]
-        `,
-            )}
-          >
-            {/* =============================================================
-          GLASS REFLECTION - فقط در حالت Glass
-      ============================================================== */}
-
-            <span
-              aria-hidden="true"
-              className={cn(
-                `
-            pointer-events-none
-
-            absolute
-            inset-x-[10%]
-            top-0
-
-            h-px
-
-            bg-gradient-to-r
-            from-transparent
-            via-page
-            to-transparent
-
-            transition-opacity
-            duration-500
-          `,
-                headerElevated ? "opacity-80" : "opacity-0",
-              )}
-            />
-
-            {/* =============================================================
-          BRAND AMBIENT LIGHT
-      ============================================================== */}
-
-            <span
-              aria-hidden="true"
-              className={cn(
-                `
-            pointer-events-none
-
-            absolute
-            -top-[90px]
-            right-[18%]
-
-            z-[-1]
-
-            h-[150px]
-            w-[360px]
-
-            rounded-full
-
-            bg-brand-primary/[0.08]
-
-            blur-[65px]
-
-            transition-opacity
-            duration-500
-          `,
-                headerElevated ? "opacity-100" : "opacity-0",
-              )}
-            />
-
-            <span
-              aria-hidden="true"
-              className={cn(
-                `
-            pointer-events-none
-
-            absolute
-            -top-[90px]
-            left-[18%]
-
-            z-[-1]
-
-            h-[130px]
-            w-[240px]
-
-            rounded-full
-
-            bg-brand-accent/[0.045]
-
-            blur-[60px]
-
-            transition-opacity
-            duration-500
-          `,
-                headerElevated ? "opacity-100" : "opacity-0",
-              )}
-            />
-
-            {/* =============================================================
-          DESKTOP
-      ============================================================== */}
-
-            <div
-              dir="ltr"
-              className="
-          hidden
-          h-full
-
-          grid-cols-[minmax(220px,1fr)_auto_minmax(200px,1fr)]
-          items-center
-
-          gap-10
-
-          px-6
-
-          min-[1100px]:grid
-
-          xl:gap-14
-          xl:px-8
-
-          2xl:gap-16
-        "
-            >
-              {/* ===========================================================
-            CTA
-        ============================================================ */}
-
-              <div
-                dir="rtl"
-                className="
-            flex
-            justify-start
-          "
-              >
-                <ActionButton
-                  href="/request-strategic-consultation"
-                  aria-label="درخواست مشاوره راهبردی از DNH"
-                  onPointerEnter={() => setActiveMenu(null)}
-                  onFocus={() => setActiveMenu(null)}
-                  variant="primary"
-                  size="md"
-                  icon={ArrowLeft}
-                  iconPosition="end"
-                  className="min-w-[220px]"
-                >
-                  درخواست مشاوره راهبردی
-                </ActionButton>
-              </div>
-
-              {/* ===========================================================
-            DESKTOP NAVIGATION
-        ============================================================ */}
-
-              <nav aria-label="ناوبری اصلی DNH" dir="rtl">
-                <ul
-                  className="
-              flex
-              items-center
-
-              gap-[6px]
-
-              xl:gap-[10px]
-            "
-                >
-                  {NAVIGATION.map((item) => {
-                    const Icon = item.icon;
-
-                    const active =
-                      isRouteActive(pathname, item.href) ||
-                      isMegaRouteActive(pathname, item.menu);
-
-                    /* =====================================================
-                 MEGA MENU ITEM
-              ====================================================== */
-
-                    if (item.menu) {
-                      const open = activeMenu === item.menu;
-
-                      const panelId = `${menuBaseId}-${item.menu}`;
-
-                      return (
-                        <li
-                          key={item.title}
-                          className="relative"
-                          onPointerEnter={(event) =>
-                            handleMenuPointerEnter(event, item.menu!)
-                          }
-                          onPointerLeave={closeMegaMenuDelayed}
-                        >
-                          <button
-                            type="button"
-                            aria-expanded={open}
-                            aria-controls={panelId}
-                            aria-haspopup="true"
-                            onFocus={() => openMegaMenu(item.menu!)}
-                            onClick={() => {
-                              clearCloseTimer();
-
-                              setActiveMenu((current) =>
-                                current === item.menu ? null : item.menu!,
-                              );
-                            }}
-                            className={cn(
-                              `
-                          group/nav
-
-                          relative
-
-                          flex
-                          h-[46px]
-                          items-center
-                          gap-[8px]
-
-                          rounded-[14px]
-
-                          px-[13px]
-
-                          text-[13px]
-                          font-semibold
-
-                          outline-none
-
-                          transition-all
-                          duration-300
-
-                          focus-visible:ring-2
-                          focus-visible:ring-focus/30
-
-                          xl:px-[15px]
-                        `,
-                              active || open
-                                ? `
-                              bg-brand-primary/[0.075]
-
-                              text-brand-primary
-                            `
-                                : `
-                              text-ink
-
-                              hover:bg-brand-primary/[0.055]
-                              hover:text-brand-primary
-                            `,
-                            )}
-                          >
-                            {/* Icon */}
-
-                            <Icon
-                              aria-hidden="true"
-                              strokeWidth={1.65}
-                              className={cn(
-                                `
-                            h-[16px]
-                            w-[16px]
-
-                            shrink-0
-
-                            transition-all
-                            duration-300
-                          `,
-                                active || open
-                                  ? `
-                                text-brand-primary
-                              `
-                                  : `
-                                text-ink-muted
-
-                                group-hover/nav:text-brand-primary
-                              `,
-                              )}
-                            />
-
-                            {/* label */}
-
-                            <span className="whitespace-nowrap">
-                              {item.title}
-                            </span>
-
-                            {/* chevron */}
-
-                            <ChevronDown
-                              aria-hidden="true"
-                              strokeWidth={1.7}
-                              className={cn(
-                                `
-                            h-[12px]
-                            w-[12px]
-
-                            shrink-0
-
-                            text-ink-muted
-
-                            transition-all
-                            duration-300
-
-                            group-hover/nav:text-brand-primary
-                          `,
-                                open &&
-                                  `
-                              rotate-180
-
-                              text-brand-primary
-                            `,
-                              )}
-                            />
-
-                            {/* Active line */}
-
-                            {(active || open) && (
-                              <span
-                                aria-hidden="true"
-                                className="
-                            absolute
-                            bottom-[5px]
-                            left-1/2
-
-                            h-[2px]
-                            w-[16px]
-
-                            -translate-x-1/2
-
-                            rounded-full
-
-                            bg-brand-accent
-                          "
-                              />
-                            )}
-                          </button>
-
-                          {/* hover bridge */}
-
-                          <span
-                            aria-hidden="true"
-                            className="
-                        absolute
-                        -bottom-[27px]
-                        inset-x-0
-
-                        h-[30px]
-                      "
-                          />
-                        </li>
-                      );
-                    }
-
-                    /* =====================================================
-                 NORMAL ITEM
-              ====================================================== */
-
-                    return (
-                      <li key={item.title}>
-                        <Link
-                          href={item.href!}
-                          aria-current={active ? "page" : undefined}
-                          onPointerEnter={() => setActiveMenu(null)}
-                          onFocus={() => setActiveMenu(null)}
-                          className={cn(
-                            `
-                        group/nav
-
-                        relative
-
-                        flex
-                        h-[46px]
-                        items-center
-                        gap-[8px]
-
-                        rounded-[14px]
-
-                        px-[13px]
-
-                        text-[13px]
-                        font-semibold
-
-                        outline-none
-
-                        transition-all
-                        duration-300
-
-                        focus-visible:ring-2
-                        focus-visible:ring-focus/30
-
-                        xl:px-[15px]
-                      `,
-                            active
-                              ? `
-                            bg-brand-primary/[0.075]
-
-                            text-brand-primary
-                          `
-                              : `
-                            text-ink
-
-                            hover:bg-brand-primary/[0.055]
-                            hover:text-brand-primary
-                          `,
-                          )}
-                        >
-                          <Icon
-                            aria-hidden="true"
-                            strokeWidth={1.65}
-                            className={cn(
-                              `
-                          h-[16px]
-                          w-[16px]
-
-                          shrink-0
-
-                          transition-colors
-                          duration-300
-                        `,
-                              active
-                                ? `
-                              text-brand-primary
-                            `
-                                : `
-                              text-ink-muted
-
-                              group-hover/nav:text-brand-primary
-                            `,
-                            )}
-                          />
-
-                          <span className="whitespace-nowrap">
-                            {item.title}
-                          </span>
-
-                          {active && (
-                            <span
-                              aria-hidden="true"
-                              className="
-                          absolute
-                          bottom-[5px]
-                          left-1/2
-
-                          h-[2px]
-                          w-[16px]
-
-                          -translate-x-1/2
-
-                          rounded-full
-
-                          bg-brand-accent
-                        "
-                            />
-                          )}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-
-              {/* ===========================================================
-            LOGO
-        ============================================================ */}
-
-              <div
-                className="
-            flex
-            justify-end
-          "
-              >
-                <Link
-                  href="/"
-                  aria-label="DNH - صفحه اصلی"
-                  className="
+          {/* -------------------------------------------------------------- */}
+          {/* Logo                                                           */}
+          {/* -------------------------------------------------------------- */}
+
+          <Link
+            href="/"
+            aria-label="DNH - صفحه اصلی"
+            className={`
+              relative
+              z-10
               flex
               h-[52px]
-              min-w-[180px]
-              items-center
-              justify-end
-
-              rounded-xl
-
-              outline-none
-
-              focus-visible:ring-2
-              focus-visible:ring-focus/30
-            "
-                >
-                  <Image
-                    src="/assets/images/LOGO.svg"
-                    alt="DNH"
-                    width={175}
-                    height={46}
-                    sizes="175px"
-                    priority
-                    className="
-                h-[38px]
-                w-auto
-
-                object-contain
-              "
-                  />
-                </Link>
-              </div>
-            </div>
-
-            {/* =============================================================
-          MOBILE / TABLET
-      ============================================================== */}
-
-            <div
-              dir="ltr"
-              className="
-          flex
-          h-full
-          items-center
-          justify-between
-
-          px-[10px]
-
-          min-[1100px]:hidden
-        "
-            >
-              {/* menu */}
-
-              <button
-                type="button"
-                aria-expanded={mobileOpen}
-                aria-controls={mobileMenuId}
-                aria-label={
-                  mobileOpen ? "بستن منوی اصلی" : "باز کردن منوی اصلی"
-                }
-                onClick={() => {
-                  setActiveMenu(null);
-
-                  setMobileOpen((current) => !current);
-                }}
-                className={cn(
-                  `
-              relative
-
-              flex
-              h-[44px]
-              w-[44px]
+              w-[156px]
+              shrink-0
               items-center
               justify-center
 
-              rounded-[14px]
+              rounded-[16px]
+              border
+
+              focus-visible:outline-none
+              focus-visible:ring-4
+              focus-visible:ring-focus/25
+
+              transition-[background-color,border-color,box-shadow]
+              duration-500
+              ease-[cubic-bezier(.22,1,.36,1)]
+
+              ${
+                elevated
+                  ? `
+                    border-transparent
+                    bg-transparent
+                    shadow-none
+                  `
+                  : `
+                    border-white/80
+                    bg-white/95
+                    shadow-lg
+                    backdrop-blur-md
+                  `
+              }
+            `}
+          >
+            <Image
+              src={"/assets/images/LOGO.svg"}
+              height={44}
+              width={140}
+              alt="DNH"
+              className="h-11 w-[140px]"
+            />
+
+            <span className="sr-only">DNH</span>
+          </Link>
+
+          {/* -------------------------------------------------------------- */}
+          {/* Desktop navigation                                             */}
+          {/* -------------------------------------------------------------- */}
+
+          <nav
+            aria-label="ناوبری اصلی"
+            dir="rtl"
+            className="
+              hidden
+              h-full
+              items-stretch
+              justify-center
+              lg:flex
+            "
+          >
+            {NAVIGATION.map((item) => {
+              const active = item.menu
+                ? isMenuActive(item.menu)
+                : isPathActive(item.href);
+
+              if (item.menu) {
+                const opened = openMenu === item.menu;
+
+                return (
+                  <div
+                    key={item.title}
+                    className="
+                      relative
+                      flex
+                      h-full
+                      items-center
+                    "
+                    onMouseEnter={() => setOpenMenu(item.menu!)}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={opened}
+                      aria-controls={`mega-menu-${item.menu}`}
+                      onClick={() => handleMenuToggle(item.menu!)}
+                      className={`
+                        group/nav
+                        relative
+
+                        flex
+                        h-full
+                        cursor-pointer
+                        items-center
+                        gap-1.5
+
+                        px-4
+
+                        text-[13px]
+                        font-bold
+
+                        outline-none
+
+                        transition-colors
+                        duration-300
+
+                        focus-visible:ring-4
+                        focus-visible:ring-focus/20
+
+                        ${
+                          elevated
+                            ? "text-ink hover:text-brand-primary"
+                            : "text-white hover:text-white"
+                        }
+                      `}
+                    >
+                      <span>{item.title}</span>
+
+                      <ChevronDown
+                        aria-hidden="true"
+                        strokeWidth={1.8}
+                        className={`
+                          h-3.5
+                          w-3.5
+
+                          transition-transform
+                          duration-300
+
+                          ${opened ? "rotate-180 text-brand-accent" : ""}
+                        `}
+                      />
+
+                      <NavIndicator active={active} opened={opened} />
+                    </button>
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.title}
+                  href={item.href!}
+                  className={`
+                    group/nav
+                    relative
+
+                    flex
+                    h-full
+                    items-center
+
+                    px-4
+
+                    text-[13px]
+                    font-bold
+
+                    outline-none
+
+                    transition-colors
+                    duration-300
+
+                    focus-visible:ring-4
+                    focus-visible:ring-focus/20
+
+                    ${
+                      elevated
+                        ? "text-ink hover:text-brand-primary"
+                        : "text-white hover:text-white"
+                    }
+                  `}
+                >
+                  {item.title}
+
+                  <NavIndicator active={active} opened={false} />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* -------------------------------------------------------------- */}
+          {/* Desktop CTA                                                    */}
+          {/* -------------------------------------------------------------- */}
+
+          <div
+            className="
+              hidden
+              items-center
+              justify-end
+              lg:flex
+            "
+          >
+            <ActionButton
+              href="/consultation"
+              variant="secondary"
+              size="sm"
+              icon={ArrowLeft}
+              className={`
+                min-w-[190px]
+
+                ${
+                  elevated
+                    ? `
+                      border-line
+                      bg-page/70
+                      text-ink
+                    `
+                    : `
+                      border-white/35
+                      bg-white/5
+                      text-white
+                      shadow-none
+                      backdrop-blur-sm
+
+                      hover:border-white/70
+                      hover:bg-white/10
+                      hover:text-white
+                    `
+                }
+              `}
+            >
+              درخواست مشاوره راهبردی
+            </ActionButton>
+          </div>
+
+          {/* -------------------------------------------------------------- */}
+          {/* Mobile toggle                                                  */}
+          {/* -------------------------------------------------------------- */}
+
+          <button
+            type="button"
+            aria-label={mobileOpen ? "بستن منو" : "باز کردن منو"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((current) => !current)}
+            className={`
+              col-start-3
+              flex
+              h-11
+              w-11
+              cursor-pointer
+              items-center
+              justify-center
+              justify-self-end
+
+              rounded-full
+              border
 
               outline-none
 
-              transition-all
+              transition-[background-color,border-color,color,transform]
               duration-300
+
+              active:scale-95
 
               focus-visible:ring-4
               focus-visible:ring-focus/25
-            `,
-                  mobileOpen
-                    ? `
-                  bg-brand-primary
 
-                  text-[var(--dnh-text-on-brand)]
+              lg:hidden
 
-                  shadow-[0_8px_22px_color-mix(in_srgb,var(--dnh-primary)_22%,transparent)]
-                `
-                    : `
-                  bg-surface-soft
-
-                  text-brand-primary
-                `,
-                )}
-              >
-                <Menu
-                  aria-hidden="true"
-                  strokeWidth={1.75}
-                  className={cn(
-                    `
-                absolute
-
-                h-[21px]
-                w-[21px]
-
-                transition-all
-                duration-300
-              `,
-                    mobileOpen
-                      ? `
-                    scale-75
-                    rotate-90
-                    opacity-0
+              ${
+                elevated
+                  ? `
+                    border-line
+                    bg-surface-soft
+                    text-brand-primary
                   `
-                      : `
-                    scale-100
-                    opacity-100
-                  `,
-                  )}
-                />
-
-                <X
-                  aria-hidden="true"
-                  strokeWidth={1.75}
-                  className={cn(
-                    `
-                absolute
-
-                h-[21px]
-                w-[21px]
-
-                transition-all
-                duration-300
-              `,
-                    mobileOpen
-                      ? `
-                    scale-100
-                    opacity-100
+                  : `
+                    border-white/25
+                    bg-white/5
+                    text-white
+                    backdrop-blur-sm
                   `
-                      : `
-                    scale-75
-                    -rotate-90
-                    opacity-0
-                  `,
-                  )}
-                />
-              </button>
-
-              {/* logo */}
-
-              <Link
-                href="/"
-                aria-label="DNH - صفحه اصلی"
-                className="
-            flex
-            h-[44px]
-            items-center
-            justify-end
-          "
-              >
-                <Image
-                  src="/assets/images/LOGO.svg"
-                  alt="DNH"
-                  width={145}
-                  height={38}
-                  sizes="145px"
-                  className="
-              h-[31px]
-              w-auto
-
-              object-contain
-            "
-                />
-              </Link>
-            </div>
-          </div>
-
-          {/* ===============================================================
-        DESKTOP MEGA MENU
-    ================================================================ */}
-
-          <div
-            dir="rtl"
-            inert={!activeMenu}
-            aria-hidden={!activeMenu}
-            onPointerEnter={(event) => {
-              if (event.pointerType === "touch") {
-                return;
               }
-
-              clearCloseTimer();
-            }}
-            onPointerLeave={(event) => {
-              if (event.pointerType === "touch") {
-                return;
-              }
-
-              closeMegaMenuDelayed();
-            }}
-            className={cn(
-              `
-          absolute
-          left-1/2
-
-          z-[110]
-
-          hidden
-
-          w-[calc(100%-24px)]
-          max-w-[1200px]
-
-          -translate-x-1/2
-
-          origin-top
-
-          transition-all
-          duration-[420ms]
-          ease-[cubic-bezier(.16,1,.3,1)]
-
-          min-[1100px]:block
-
-          motion-reduce:transition-none
-        `,
-              scrolled ? "top-[82px]" : "top-[96px]",
-              activeMenu
-                ? `
-              pointer-events-auto
-              visible
-
-              translate-y-0
-              scale-100
-
-              opacity-100
-            `
-                : `
-              pointer-events-none
-              invisible
-
-              -translate-y-[9px]
-              scale-[0.985]
-
-              opacity-0
-            `,
-            )}
+            `}
           >
-            {/* hover bridge */}
-
-            <span
-              aria-hidden="true"
-              className="
-          absolute
-          -top-[26px]
-          inset-x-0
-
-          h-[30px]
-        "
-            />
-
-            {/* Mega Menu glass */}
-
-            <div
-              className="
-          relative
-          isolate
-
-          overflow-hidden
-
-          rounded-[26px]
-
-          border
-          border-line
-
-          bg-page/[0.88]
-
-          p-[9px]
-
-          shadow-[0_30px_95px_color-mix(in_srgb,var(--dnh-primary)_19%,transparent)]
-
-          backdrop-blur-[42px]
-          backdrop-saturate-[160%]
-        "
-            >
-              <span
+            {mobileOpen ? (
+              <X aria-hidden="true" className="h-5 w-5" strokeWidth={1.8} />
+            ) : (
+              <MenuIcon
                 aria-hidden="true"
-                className="
-            pointer-events-none
-
-            absolute
-            -top-[190px]
-            right-[2%]
-
-            z-[-1]
-
-            h-[380px]
-            w-[520px]
-
-            rounded-full
-
-            bg-brand-primary/[0.10]
-
-            blur-[95px]
-          "
+                className="h-5 w-5"
+                strokeWidth={1.8}
               />
-
-              <span
-                aria-hidden="true"
-                className="
-            pointer-events-none
-
-            absolute
-            -bottom-[170px]
-            left-[4%]
-
-            z-[-1]
-
-            h-[300px]
-            w-[340px]
-
-            rounded-full
-
-            bg-brand-accent/[0.05]
-
-            blur-[90px]
-          "
-              />
-
-              {activeMenu === "dnh" && <DnhMegaMenu id={`${menuBaseId}-dnh`} />}
-
-              {activeMenu === "services" && (
-                <ServicesMegaMenu id={`${menuBaseId}-services`} />
-              )}
-
-              {activeMenu === "target-markets" && (
-                <TargetMarketsMegaMenu id={`${menuBaseId}-target-markets`} />
-              )}
-            </div>
-          </div>
+            )}
+          </button>
         </div>
-      </header>
 
-      {/* =====================================================================
-          MOBILE MENU
-      ====================================================================== */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Desktop Mega Menus                                               */}
+        {/* ---------------------------------------------------------------- */}
 
-      <aside
-        id={mobileMenuId}
-        dir="rtl"
-        inert={!mobileOpen}
-        aria-hidden={!mobileOpen}
-        aria-label="منوی اصلی موبایل DNH"
-        className={cn(
-          `
-            fixed
-            inset-x-[8px]
+        <div className="hidden lg:block">
+          {(Object.keys(MEGA_MENUS) as MegaMenuKey[]).map((menuKey) => {
+            const menu = MEGA_MENUS[menuKey];
+            const opened = openMenu === menuKey;
 
-            z-[95]
+            return (
+              <div
+                key={menuKey}
+                id={`mega-menu-${menuKey}`}
+                aria-hidden={!opened}
+                className={`
+                    absolute
+                    inset-x-0
+                    top-full
 
-            mx-auto
+                    px-8
+                    pt-3
 
-            max-h-[calc(100dvh-92px)]
-            max-w-[720px]
+                    transition-[opacity,transform,visibility]
+                    duration-300
+                    ease-[cubic-bezier(.22,1,.36,1)]
 
-            origin-top
+                    ${
+                      opened
+                        ? `
+                          visible
+                          translate-y-0
+                          opacity-100
+                          pointer-events-auto
+                        `
+                        : `
+                          invisible
+                          -translate-y-2
+                          opacity-0
+                          pointer-events-none
+                        `
+                    }
+                  `}
+              >
+                <div
+                  dir="rtl"
+                  className="
+                      mx-auto
+                      w-full
+                      max-w-[1320px]
+                      overflow-hidden
 
-            overflow-hidden
+                      rounded-[24px]
 
-            rounded-[26px]
+                      border
+                      border-line
 
-            border
-            border-line
+                      bg-page/95
 
-            bg-page/95
+                      shadow-2xl
 
-            shadow-[
-              0_26px_85px_color-mix(in_srgb,var(--dnh-primary)_21%,transparent)
-            ]
+                      backdrop-blur-xl
+                    "
+                >
+                  {/* Header */}
+                  <div
+                    className="
+                        flex
+                        items-center
+                        justify-between
 
-            backdrop-blur-[40px]
-            backdrop-saturate-[155%]
+                        border-b
+                        border-line
 
-            transition-all
-            duration-[420ms]
-            ease-[cubic-bezier(.16,1,.3,1)]
+                        px-7
+                        py-5
+                      "
+                  >
+                    <div>
+                      <div
+                        className="
+                            mb-1.5
+                            flex
+                            items-center
+                            gap-2.5
+                          "
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="
+                              h-1.5
+                              w-1.5
+                              rounded-full
+                              bg-brand-accent
+                            "
+                        />
 
-            min-[1100px]:hidden
+                        <h2
+                          className="
+                              text-[15px]
+                              font-black
+                              text-ink
+                            "
+                        >
+                          {menu.title}
+                        </h2>
+                      </div>
 
-            motion-reduce:transition-none
-          `,
-          scrolled
-            ? "top-[83px]"
-            : `
-                top-[107px]
+                      <p
+                        className="
+                            text-[12px]
+                            leading-6
+                            text-ink-muted
+                          "
+                      >
+                        {menu.subtitle}
+                      </p>
+                    </div>
 
-                max-[640px]:top-[81px]
-              `,
-          mobileOpen
-            ? `
-                pointer-events-auto
-                visible
+                    <span
+                      dir="ltr"
+                      className="
+                          text-[10px]
+                          font-bold
+                          uppercase
+                          tracking-[0.2em]
+                          text-brand-primary
+                        "
+                    >
+                      DNH Advisory
+                    </span>
+                  </div>
 
-                translate-y-0
-                scale-100
+                  {/* Items */}
+                  <div
+                    className={`
+                        grid
+                        gap-px
+                        bg-line
+                        ${megaColumns}
+                      `}
+                  >
+                    {menu.items.map((item) => (
+                      <MegaMenuItem
+                        key={item.href}
+                        item={item}
+                        active={isPathActive(item.href)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-                opacity-100
-              `
-            : `
-                pointer-events-none
-                invisible
+        {/* ---------------------------------------------------------------- */}
+        {/* Mobile menu                                                      */}
+        {/* ---------------------------------------------------------------- */}
 
-                -translate-y-[10px]
-                scale-[0.98]
-
-                opacity-0
-              `,
-        )}
-      >
         <div
-          className="
-            max-h-[calc(100dvh-92px)]
+          aria-hidden={!mobileOpen}
+          className={`
+            absolute
+            inset-x-0
+            top-full
 
             overflow-y-auto
             overscroll-contain
 
-            p-[9px]
-          "
+            border-t
+            border-line
+
+            bg-page/95
+
+            px-5
+            pb-8
+            pt-3
+
+            shadow-xl
+            backdrop-blur-xl
+
+            transition-[opacity,transform,visibility]
+            duration-300
+
+            sm:px-8
+
+            lg:hidden
+
+            ${
+              mobileOpen
+                ? `
+                  visible
+                  translate-y-0
+                  opacity-100
+                  pointer-events-auto
+                `
+                : `
+                  invisible
+                  -translate-y-2
+                  opacity-0
+                  pointer-events-none
+                `
+            }
+          `}
+          style={{
+            maxHeight: "calc(100dvh - 4rem)",
+          }}
         >
-          {/* Mobile intro */}
-
-          <div
+          <nav
+            dir="rtl"
+            aria-label="منوی موبایل"
             className="
-              flex
-              items-center
-              justify-between
-              gap-4
-
-              px-[13px]
-              pb-[14px]
-              pt-[10px]
+              mx-auto
+              max-w-xl
             "
           >
-            <div>
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-[7px]
-                "
-              >
-                <span
-                  aria-hidden="true"
+            {NAVIGATION.map((item) => {
+              const active = item.menu
+                ? isMenuActive(item.menu)
+                : isPathActive(item.href);
+
+              if (!item.menu) {
+                return (
+                  <Link
+                    key={item.title}
+                    href={item.href!}
+                    className={`
+                      flex
+                      min-h-14
+                      items-center
+                      justify-between
+
+                      border-b
+                      border-line
+
+                      py-3
+
+                      text-[14px]
+                      font-bold
+
+                      ${active ? "text-brand-primary" : "text-ink"}
+                    `}
+                  >
+                    <span>{item.title}</span>
+
+                    {active ? (
+                      <span
+                        aria-hidden="true"
+                        className="
+                          h-1.5
+                          w-1.5
+                          rounded-full
+                          bg-brand-accent
+                        "
+                      />
+                    ) : null}
+                  </Link>
+                );
+              }
+
+              const expanded = mobileSection === item.menu;
+
+              return (
+                <div
+                  key={item.title}
                   className="
-                    h-[5px]
-                    w-[5px]
-
-                    rounded-full
-
-                    bg-brand-accent
-
-                    shadow-[
-                      0_0_0_5px_color-mix(in_srgb,var(--dnh-accent)_10%,transparent)
-                    ]
-                  "
-                />
-
-                <span
-                  className="
-                    text-[9px]
-                    font-bold
-                    text-brand-primary
+                    border-b
+                    border-line
                   "
                 >
-                  DNH
-                </span>
-              </div>
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    onClick={() =>
+                      setMobileSection((current) =>
+                        current === item.menu ? null : item.menu!,
+                      )
+                    }
+                    className={`
+                      flex
+                      min-h-14
+                      w-full
+                      cursor-pointer
+                      items-center
+                      justify-between
+                      gap-4
 
-              <p
-                className="
-                  mt-[5px]
+                      py-3
 
-                  text-[13px]
-                  font-black
+                      text-right
+                      text-[14px]
+                      font-bold
 
-                  text-ink
-                "
+                      outline-none
+
+                      focus-visible:ring-4
+                      focus-visible:ring-focus/20
+
+                      ${active ? "text-brand-primary" : "text-ink"}
+                    `}
+                  >
+                    <span className="flex items-center gap-2">
+                      {item.title}
+
+                      {active ? (
+                        <span
+                          aria-hidden="true"
+                          className="
+                            h-1.5
+                            w-1.5
+                            rounded-full
+                            bg-brand-accent
+                          "
+                        />
+                      ) : null}
+                    </span>
+
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`
+                        h-4
+                        w-4
+                        shrink-0
+
+                        text-brand-primary
+
+                        transition-transform
+                        duration-300
+
+                        ${expanded ? "rotate-180" : ""}
+                      `}
+                      strokeWidth={1.8}
+                    />
+                  </button>
+
+                  <div
+                    className={`
+                      grid
+
+                      transition-[grid-template-rows,opacity]
+                      duration-300
+
+                      ${
+                        expanded
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }
+                    `}
+                  >
+                    <div className="overflow-hidden">
+                      <div
+                        className="
+                          mb-4
+                          grid
+                          gap-2
+
+                          rounded-2xl
+                          bg-surface-soft
+                          p-2
+                        "
+                      >
+                        {MEGA_MENUS[item.menu].items.map((megaItem) => (
+                          <MobileMegaItem
+                            key={megaItem.href}
+                            item={megaItem}
+                            active={isPathActive(megaItem.href)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="pt-6">
+              <ActionButton
+                href="/consultation"
+                variant="primary"
+                size="md"
+                icon={ArrowLeft}
+                fullWidth
               >
-                معماری تصمیم و ثروت
-              </p>
+                درخواست مشاوره راهبردی
+              </ActionButton>
             </div>
-
-            <div
-              className="
-                flex
-                items-center
-                gap-[6px]
-
-                rounded-full
-
-                border
-                border-line
-
-                bg-surface-soft
-
-                px-[10px]
-                py-[6px]
-
-                text-[9px]
-                font-bold
-
-                text-ink-muted
-              "
-            >
-              <Sparkles
-                aria-hidden="true"
-                strokeWidth={1.7}
-                className="
-                  h-[12px]
-                  w-[12px]
-
-                  text-brand-accent
-                "
-              />
-              تصمیم‌گیری هوشمند
-            </div>
-          </div>
-
-          <nav aria-label="ناوبری موبایل DNH">
-            <ul
-              className="
-                rounded-[21px]
-
-                border
-                border-line
-
-                bg-surface-soft/45
-
-                p-[5px]
-              "
-            >
-              <li>
-                <MobileSimpleLink href="/" active={pathname === "/"}>
-                  خانه
-                </MobileSimpleLink>
-              </li>
-
-              <li>
-                <MobileAccordion
-                  title="DNH"
-                  open={mobileSection === "dnh"}
-                  active={pathname.startsWith("/dnh/")}
-                  onToggle={() =>
-                    setMobileSection((current) =>
-                      current === "dnh" ? null : "dnh",
-                    )
-                  }
-                >
-                  {DNH_ITEMS.map((item) => (
-                    <MobileMegaLink
-                      key={item.href}
-                      item={item}
-                      active={isRouteActive(pathname, item.href)}
-                    />
-                  ))}
-                </MobileAccordion>
-              </li>
-
-              <li>
-                <MobileAccordion
-                  title="خدمات"
-                  open={mobileSection === "services"}
-                  active={
-                    pathname === "/services" ||
-                    pathname.startsWith("/services/")
-                  }
-                  onToggle={() =>
-                    setMobileSection((current) =>
-                      current === "services" ? null : "services",
-                    )
-                  }
-                >
-                  {SERVICE_ITEMS.map((item) => (
-                    <MobileMegaLink
-                      key={item.href}
-                      item={item}
-                      active={isRouteActive(pathname, item.href)}
-                    />
-                  ))}
-                </MobileAccordion>
-              </li>
-
-              <li>
-                <MobileAccordion
-                  title="بازارهای هدف"
-                  open={mobileSection === "target-markets"}
-                  active={pathname.startsWith("/target-markets/")}
-                  onToggle={() =>
-                    setMobileSection((current) =>
-                      current === "target-markets" ? null : "target-markets",
-                    )
-                  }
-                >
-                  {TARGET_MARKET_ITEMS.map((item) => (
-                    <MobileMegaLink
-                      key={item.href}
-                      item={item}
-                      active={isRouteActive(pathname, item.href)}
-                    />
-                  ))}
-                </MobileAccordion>
-              </li>
-
-              <li>
-                <MobileSimpleLink
-                  href="/knowledge"
-                  active={pathname.startsWith("/knowledge")}
-                >
-                  دانش
-                </MobileSimpleLink>
-              </li>
-
-              <li>
-                <MobileSimpleLink
-                  href="/about"
-                  active={pathname.startsWith("/about")}
-                >
-                  درباره
-                </MobileSimpleLink>
-              </li>
-            </ul>
           </nav>
-
-          {/* Mobile CTA */}
-
-          <div className="mt-[8px] space-y-[7px]">
-            <ActionButton
-              href="/request-strategic-consultation"
-              variant="primary"
-              size="md"
-              icon={ArrowLeft}
-              iconPosition="end"
-              contentAlignment="between"
-              fullWidth
-            >
-              درخواست مشاوره راهبردی
-            </ActionButton>
-
-            <div
-              className="
-                grid
-                grid-cols-2
-                gap-[7px]
-              "
-            >
-              <SecondaryMobileAction href="/financial-decision-assessment">
-                ارزیابی تصمیم مالی
-              </SecondaryMobileAction>
-
-              <SecondaryMobileAction href="/contact">
-                تماس با DNH
-              </SecondaryMobileAction>
-            </div>
-          </div>
         </div>
-      </aside>
+      </header>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Backdrop                                                           */}
+      {/* ------------------------------------------------------------------ */}
+
+      {openMenu !== null && (
+        <button
+          type="button"
+          aria-label="بستن منو"
+          onClick={() => setOpenMenu(null)}
+          className="
+            fixed
+            inset-0
+            z-50
+            hidden
+            cursor-default
+            bg-black/10
+            backdrop-blur-[1px]
+            lg:block
+          "
+        />
+      )}
     </>
   );
 }
 
 /* =============================================================================
-   DNH Mega Menu
+   Desktop mega item
 ============================================================================= */
 
-function DnhMegaMenu({ id }: { id: string }) {
-  return (
-    <section
-      id={id}
-      aria-label="بخش DNH"
-      className="
-        grid
-        grid-cols-[1.08fr_.92fr]
-        gap-[9px]
-      "
-    >
-      <div
-        className="
-          rounded-[22px]
-
-          border
-          border-line
-
-          bg-surface-soft/45
-
-          p-[20px]
-        "
-      >
-        <MegaHeading
-          eyebrow="DNH"
-          title="معماری برای تصمیم‌های بزرگ"
-          description="سه لایه اصلی DNH برای ساختاردهی ثروت، تصمیم و هوشمندی."
-        />
-
-        <ul className="mt-[18px] space-y-[5px]">
-          {DNH_ITEMS.map((item) => (
-            <li key={item.href}>
-              <MegaMenuRow item={item} />
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <BrandPanel />
-    </section>
-  );
-}
-
-/* =============================================================================
-   Services Mega Menu
-============================================================================= */
-
-function ServicesMegaMenu({ id }: { id: string }) {
-  return (
-    <section
-      id={id}
-      aria-label="خدمات DNH"
-      className="
-        grid
-        grid-cols-[1fr_310px]
-        gap-[9px]
-      "
-    >
-      <div
-        className="
-          rounded-[22px]
-
-          border
-          border-line
-
-          bg-surface-soft/45
-
-          p-[20px]
-        "
-      >
-        <MegaHeading
-          eyebrow="خدمات DNH"
-          title="خدمات راهبردی برای ثروت و سرمایه"
-          description="مسیر تخصصی مورد نیاز خود را سریع و بدون پیچیدگی پیدا کنید."
-          actionLabel="نمای کلی خدمات"
-          actionHref="/services"
-        />
-
-        <ul
-          className="
-            mt-[17px]
-
-            grid
-            grid-cols-2
-            gap-[5px]
-          "
-        >
-          {SERVICE_ITEMS.filter((item) => item.href !== "/services").map(
-            (item) => (
-              <li key={item.href}>
-                <MegaMenuRow item={item} compact />
-              </li>
-            ),
-          )}
-        </ul>
-      </div>
-
-      <DecisionPanel />
-    </section>
-  );
-}
-
-/* =============================================================================
-   Target Markets Mega Menu
-============================================================================= */
-
-function TargetMarketsMegaMenu({ id }: { id: string }) {
-  return (
-    <section
-      id={id}
-      aria-label="بازارهای هدف DNH"
-      className="
-        rounded-[22px]
-
-        border
-        border-line
-
-        bg-surface-soft/45
-
-        p-[20px]
-      "
-    >
-      <MegaHeading
-        eyebrow="بازارهای هدف"
-        title="مسئله شما از کجا شروع می‌شود؟"
-        description="به‌جای جست‌وجوی نام سرویس، موقعیتی را انتخاب کنید که امروز با آن مواجه هستید."
-      />
-
-      <ul
-        className="
-          mt-[19px]
-
-          grid
-          grid-cols-3
-          gap-[7px]
-        "
-      >
-        {TARGET_MARKET_ITEMS.map((item) => (
-          <li key={item.href} className="h-full">
-            <TargetMarketCard item={item} />
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-/* =============================================================================
-   Mega Heading
-============================================================================= */
-
-function MegaHeading({
-  eyebrow,
-  title,
-  description,
-  actionLabel,
-  actionHref,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-  actionLabel?: string;
-  actionHref?: string;
-}) {
-  return (
-    <div
-      className="
-        flex
-        items-end
-        justify-between
-        gap-8
-
-        px-[4px]
-      "
-    >
-      <div>
-        <div
-          className="
-            flex
-            items-center
-            gap-[7px]
-          "
-        >
-          <span
-            aria-hidden="true"
-            className="
-              h-[5px]
-              w-[5px]
-
-              rounded-full
-
-              bg-brand-accent
-
-              shadow-[
-                0_0_0_5px_color-mix(in_srgb,var(--dnh-accent)_10%,transparent)
-              ]
-            "
-          />
-
-          <span
-            className="
-              text-[9px]
-              font-bold
-
-              text-brand-primary
-            "
-          >
-            {eyebrow}
-          </span>
-        </div>
-
-        <h2
-          className="
-            mt-[8px]
-
-            text-[19px]
-            font-black
-
-            tracking-[-0.035em]
-
-            text-ink
-          "
-        >
-          {title}
-        </h2>
-
-        <p
-          className="
-            mt-[4px]
-
-            max-w-[560px]
-
-            text-[10px]
-            leading-[1.9]
-
-            text-ink-muted
-          "
-        >
-          {description}
-        </p>
-      </div>
-
-      {actionLabel && actionHref && (
-        <ActionButton
-          href={actionHref}
-          variant="secondary"
-          size="sm"
-          icon={ArrowLeft}
-          iconPosition="end"
-          className="shrink-0"
-        >
-          {actionLabel}
-        </ActionButton>
-      )}
-    </div>
-  );
-}
-
-/* =============================================================================
-   Mega Item Row
-============================================================================= */
-
-function MegaMenuRow({
-  item,
-  compact = false,
-}: {
-  item: MegaItem;
-  compact?: boolean;
-}) {
+function MegaMenuItem({ item, active }: { item: MegaItem; active: boolean }) {
   const Icon = item.icon;
 
   return (
     <Link
       href={item.href}
-      className={cn(
-        `
-          group/item
+      className={`
+        group/mega
+        relative
 
+        flex
+        min-h-[150px]
+        gap-4
+
+        bg-page
+
+        p-6
+
+        outline-none
+
+        transition-[background-color,color]
+        duration-300
+
+        hover:bg-surface-soft
+
+        focus-visible:z-10
+        focus-visible:ring-4
+        focus-visible:ring-inset
+        focus-visible:ring-focus/20
+
+        ${active ? "bg-surface-soft" : ""}
+      `}
+    >
+      <div
+        className="
           flex
-          w-full
+          h-11
+          w-11
+          shrink-0
           items-center
-          gap-[12px]
+          justify-center
 
-          rounded-[18px]
+          rounded-full
 
           border
-          border-transparent
+          border-line
 
-          outline-none
+          bg-page
+          text-brand-primary
 
-          transition-all
+          transition-[background-color,color,border-color,transform]
           duration-300
 
-          hover:border-line
-          hover:bg-page
-
-          hover:shadow-[
-            0_9px_28px_color-mix(in_srgb,var(--dnh-primary)_8%,transparent)
-          ]
-
-          focus-visible:border-line-strong
-          focus-visible:bg-page
-          focus-visible:ring-2
-          focus-visible:ring-focus/25
-        `,
-        compact
-          ? `
-              min-h-[76px]
-              px-[10px]
-            `
-          : `
-              min-h-[82px]
-              px-[12px]
-            `,
-      )}
-    >
-      <IconTile icon={Icon} compact={compact} />
+          group-hover/mega:-translate-y-0.5
+          group-hover/mega:border-brand-primary
+          group-hover/mega:bg-brand-primary
+          group-hover/mega:text-white
+        "
+      >
+        <Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.6} />
+      </div>
 
       <div className="min-w-0 flex-1">
         <div
           className="
+            mb-2
             flex
             items-center
-            gap-[7px]
+            justify-between
+            gap-3
           "
         >
-          <span
-            className={cn(
-              `
-                font-black
-                text-ink
-              `,
-              compact ? "text-[11px]" : "text-[12px]",
-            )}
+          <h3
+            className="
+              text-[14px]
+              font-black
+              leading-7
+              text-ink
+
+              transition-colors
+              duration-300
+
+              group-hover/mega:text-brand-primary
+            "
           >
             {item.title}
+          </h3>
+
+          <span
+            dir="ltr"
+            className="
+              text-[9px]
+              font-bold
+              tracking-[0.12em]
+              text-brand-accent
+            "
+          >
+            {item.index}
           </span>
-
-          {item.badge && (
-            <span
-              className="
-                rounded-full
-
-                bg-brand-accent/10
-
-                px-[7px]
-                py-[3px]
-
-                text-[7px]
-                font-black
-
-                text-brand-accent
-              "
-            >
-              {item.badge}
-            </span>
-          )}
         </div>
 
         <p
-          className={cn(
-            `
-              mt-[3px]
-
-              leading-[1.9]
-
-              text-ink-muted
-            `,
-            compact
-              ? `
-                  line-clamp-1
-                  text-[8px]
-                `
-              : "text-[9px]",
-          )}
+          className="
+            max-w-[330px]
+            text-[11px]
+            leading-[2]
+            text-ink-muted
+          "
         >
           {item.description}
         </p>
       </div>
 
-      <span
-        className="
-          flex
-          h-[29px]
-          w-[29px]
-          shrink-0
-          items-center
-          justify-center
-
-          translate-x-[4px]
-
-          rounded-full
-
-          bg-surface-soft
-
-          text-brand-primary
-
-          opacity-0
-
-          transition-all
-          duration-300
-
-          group-hover/item:translate-x-0
-          group-hover/item:opacity-100
-        "
-      >
-        <ArrowLeft
+      {active && (
+        <span
           aria-hidden="true"
-          strokeWidth={1.8}
           className="
-            h-[12px]
-            w-[12px]
+            absolute
+            inset-y-5
+            right-0
+            w-[3px]
+            bg-brand-accent
           "
         />
-      </span>
+      )}
     </Link>
   );
 }
 
 /* =============================================================================
-   Unified Icon Tile
+   Mobile mega item
 ============================================================================= */
 
-function IconTile({
-  icon: Icon,
-  compact = false,
-}: {
-  icon: LucideIcon;
-  compact?: boolean;
-}) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        `
-          relative
-
-          flex
-          shrink-0
-          items-center
-          justify-center
-
-          overflow-hidden
-
-          rounded-[14px]
-
-          border
-          border-line
-
-          bg-surface-soft
-
-          text-brand-primary
-
-          shadow-[
-            0_6px_18px_color-mix(in_srgb,var(--dnh-primary)_8%,transparent)
-          ]
-
-          transition-all
-          duration-300
-
-          group-hover/item:border-line-strong
-          group-hover/item:bg-page
-
-          group-hover/item:shadow-[
-            0_9px_24px_color-mix(in_srgb,var(--dnh-primary)_12%,transparent)
-          ]
-        `,
-        compact
-          ? `
-              h-[42px]
-              w-[42px]
-            `
-          : `
-              h-[46px]
-              w-[46px]
-            `,
-      )}
-    >
-      <span
-        className="
-          absolute
-          -right-[12px]
-          -top-[12px]
-
-          h-[25px]
-          w-[25px]
-
-          rounded-full
-
-          bg-brand-accent/10
-
-          blur-[8px]
-        "
-      />
-
-      <Icon
-        strokeWidth={1.65}
-        className={cn(
-          `
-            relative
-            z-10
-          `,
-          compact
-            ? `
-                h-[18px]
-                w-[18px]
-              `
-            : `
-                h-[20px]
-                w-[20px]
-              `,
-        )}
-      />
-    </span>
-  );
-}
-
-/* =============================================================================
-   Target Market Card
-============================================================================= */
-
-function TargetMarketCard({ item }: { item: MegaItem }) {
+function MobileMegaItem({ item, active }: { item: MegaItem; active: boolean }) {
   const Icon = item.icon;
 
   return (
     <Link
       href={item.href}
-      className="
-        group/card
-
-        relative
-
+      className={`
         flex
-        h-full
-        min-h-[220px]
-        flex-col
+        items-start
+        gap-3
 
-        overflow-hidden
-
-        rounded-[20px]
-
+        rounded-xl
         border
-        border-line
 
-        bg-page/80
+        p-3
 
-        p-[18px]
-
-        outline-none
-
-        transition-all
+        transition-[background-color,border-color]
         duration-300
 
-        hover:-translate-y-[2px]
-
-        hover:border-line-strong
-        hover:bg-page
-
-        hover:shadow-[
-          0_18px_44px_color-mix(in_srgb,var(--dnh-primary)_12%,transparent)
-        ]
-
-        focus-visible:ring-2
-        focus-visible:ring-focus/30
-
-        motion-reduce:transform-none
-      "
-    >
-      <div
-        className="
-          flex
-          items-start
-          justify-between
-          gap-4
-        "
-      >
-        <span
-          className="
-            flex
-            h-[46px]
-            w-[46px]
-            items-center
-            justify-center
-
-            rounded-[14px]
-
-            border
-            border-line
-
-            bg-surface-soft
-
-            text-brand-primary
-
-            transition-all
-            duration-300
-
-            group-hover/card:border-line-strong
-            group-hover/card:bg-brand-primary
-
-            group-hover/card:text-[var(--dnh-text-on-brand)]
-          "
-        >
-          <Icon
-            aria-hidden="true"
-            strokeWidth={1.65}
-            className="
-              h-[20px]
-              w-[20px]
-            "
-          />
-        </span>
-
-        <span
-          className="
-            text-[9px]
-            font-black
-
-            text-brand-primary/65
-          "
-        >
-          {item.index}
-        </span>
-      </div>
-
-      <h3
-        className="
-          mt-[22px]
-
-          text-[14px]
-          font-black
-          leading-[1.8]
-
-          tracking-[-0.025em]
-
-          text-ink
-        "
-      >
-        {item.title}
-      </h3>
-
-      <p
-        className="
-          mt-[7px]
-
-          text-[9px]
-          leading-[2]
-
-          text-ink-muted
-        "
-      >
-        {item.description}
-      </p>
-
-      <div
-        className="
-          mt-auto
-          pt-[20px]
-        "
-      >
-        <span
-          className="
-            inline-flex
-            h-[31px]
-            w-[31px]
-            items-center
-            justify-center
-
-            rounded-full
-
-            bg-surface-soft
-
-            text-brand-primary
-
-            transition-all
-            duration-300
-
-            group-hover/card:-translate-x-[2px]
-
-            group-hover/card:bg-brand-primary
-
-            group-hover/card:text-[var(--dnh-text-on-brand)]
-          "
-        >
-          <ArrowLeft
-            aria-hidden="true"
-            strokeWidth={1.8}
-            className="
-              h-[13px]
-              w-[13px]
-            "
-          />
-        </span>
-      </div>
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          -right-[80px]
-          -top-[80px]
-
-          h-[170px]
-          w-[170px]
-
-          rounded-full
-
-          bg-brand-primary/0
-
-          blur-[50px]
-
-          transition-colors
-          duration-500
-
-          group-hover/card:bg-brand-primary/10
-        "
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          bottom-0
-          right-[18px]
-
-          h-px
-          w-[50px]
-
-          bg-brand-accent
-
-          opacity-0
-
-          transition-opacity
-          duration-300
-
-          group-hover/card:opacity-100
-        "
-      />
-    </Link>
-  );
-}
-
-/* =============================================================================
-   DNH Brand Panel
-============================================================================= */
-
-function BrandPanel() {
-  return (
-    <aside
-      className="
-        relative
-
-        overflow-hidden
-
-        rounded-[22px]
-
-        bg-brand-primary
-
-        p-[27px]
-
-        text-[var(--dnh-text-on-brand)]
-
-        shadow-[
-          0_20px_50px_color-mix(in_srgb,var(--dnh-primary)_28%,transparent)
-        ]
-      "
-      aria-label="معرفی معماری DNH"
-    >
-      <BrandDecoration />
-
-      <div className="relative z-10">
-        <div
-          className="
-            flex
-            items-center
-            justify-between
-            gap-4
-          "
-        >
-          <span
-            className="
-              inline-flex
-              items-center
-              gap-[6px]
-
-              rounded-full
-
-              border
-              border-page/15
-
-              bg-page/10
-
-              px-[10px]
-              py-[6px]
-
-              text-[9px]
-              font-bold
-            "
-          >
-            <Sparkles
-              aria-hidden="true"
-              strokeWidth={1.7}
-              className="
-                h-[12px]
-                w-[12px]
-
-                text-brand-accent
-              "
-            />
-            DNH Wealth Architecture
-          </span>
-
-          <span
-            className="
-              flex
-              h-[44px]
-              w-[44px]
-              items-center
-              justify-center
-
-              rounded-full
-
-              border
-              border-page/15
-
-              bg-page/10
-            "
-          >
-            <Compass
-              aria-hidden="true"
-              strokeWidth={1.6}
-              className="
-                h-[19px]
-                w-[19px]
-              "
-            />
-          </span>
-        </div>
-
-        <div className="mt-[42px]">
-          <p
-            dir="ltr"
-            className="
-              text-[52px]
-              font-black
-
-              tracking-[-0.07em]
-            "
-          >
-            DNH
-          </p>
-
-          <h3
-            className="
-              mt-[5px]
-
-              text-[17px]
-              font-black
-            "
-          >
-            معماری تصمیم و ثروت
-          </h3>
-
-          <p
-            className="
-              mt-[9px]
-
-              max-w-[320px]
-
-              text-[10px]
-              leading-[2]
-
-              opacity-65
-            "
-          >
-            ساختاری برای دیدن تصویر بزرگ‌تر، کاهش پراکندگی و افزایش کیفیت
-            تصمیم‌های مالی.
-          </p>
-        </div>
-
-        <ActionButton
-          href="/dnh/wealth-architecture"
-          variant="secondary"
-          size="md"
-          icon={ArrowLeft}
-          iconPosition="end"
-          contentAlignment="between"
-          fullWidth
-          className="mt-[28px]"
-        >
-          کشف معماری ثروت
-        </ActionButton>
-      </div>
-    </aside>
-  );
-}
-
-/* =============================================================================
-   Decision Panel
-============================================================================= */
-
-function DecisionPanel() {
-  return (
-    <aside
-      aria-label="ارزیابی تصمیم مالی"
-      className="
-        relative
-
-        overflow-hidden
-
-        rounded-[22px]
-
-        bg-brand-primary
-
-        p-[24px]
-
-        text-[var(--dnh-text-on-brand)]
-
-        shadow-[
-          0_20px_50px_color-mix(in_srgb,var(--dnh-primary)_28%,transparent)
-        ]
-      "
-    >
-      <BrandDecoration />
-
-      <div className="relative z-10">
-        <span
-          className="
-            flex
-            h-[46px]
-            w-[46px]
-            items-center
-            justify-center
-
-            rounded-[14px]
-
-            border
-            border-page/15
-
-            bg-page/10
-          "
-        >
-          <CircleDollarSign
-            aria-hidden="true"
-            strokeWidth={1.65}
-            className="
-              h-[20px]
-              w-[20px]
-            "
-          />
-        </span>
-
-        <p
-          className="
-            mt-[30px]
-
-            text-[9px]
-            font-bold
-
-            opacity-55
-          "
-        >
-          نقطه شروع
-        </p>
-
-        <h3
-          className="
-            mt-[6px]
-
-            text-[20px]
-            font-black
-            leading-[1.7]
-
-            tracking-[-0.035em]
-          "
-        >
-          یک تصمیم مالی
-          <br />
-          مهم پیش رو دارید؟
-        </h3>
-
-        <p
-          className="
-            mt-[9px]
-
-            text-[10px]
-            leading-[2]
-
-            opacity-65
-          "
-        >
-          قبل از انتخاب مسیر، مسئله را دقیق‌تر تعریف و ارزیابی کنید.
-        </p>
-
-        <ActionButton
-          href="/financial-decision-assessment"
-          variant="secondary"
-          size="md"
-          icon={ArrowLeft}
-          iconPosition="end"
-          contentAlignment="between"
-          fullWidth
-          className="mt-[25px]"
-        >
-          ارزیابی تصمیم مالی
-        </ActionButton>
-      </div>
-    </aside>
-  );
-}
-
-/* =============================================================================
-   Brand Decorations
-============================================================================= */
-
-function BrandDecoration() {
-  return (
-    <>
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          -left-[100px]
-          -top-[100px]
-
-          h-[250px]
-          w-[250px]
-
-          rounded-full
-
-          bg-page/10
-
-          blur-[65px]
-        "
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          -bottom-[90px]
-          -right-[75px]
-
-          h-[205px]
-          w-[205px]
-
-          rounded-full
-
-          bg-brand-accent/15
-
-          blur-[60px]
-        "
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          inset-x-[10%]
-          top-0
-
-          h-px
-
-          bg-gradient-to-r
-          from-transparent
-          via-page/35
-          to-transparent
-        "
-      />
-    </>
-  );
-}
-
-/* =============================================================================
-   Mobile Accordion
-============================================================================= */
-
-function MobileAccordion({
-  title,
-  active,
-  open,
-  onToggle,
-  children,
-}: {
-  title: string;
-  active: boolean;
-  open: boolean;
-  onToggle: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <button
-        type="button"
-        aria-expanded={open}
-        onClick={onToggle}
-        className={cn(
-          `
-            flex
-            min-h-[55px]
-            w-full
-            items-center
-            justify-between
-
-            rounded-[17px]
-
-            px-[15px]
-
-            text-[13px]
-            font-bold
-
-            outline-none
-
-            transition-all
-            duration-200
-
-            focus-visible:ring-2
-            focus-visible:ring-focus/25
-          `,
-          active || open
-            ? `
-                bg-page
-
-                text-brand-primary
-
-                shadow-[
-                  0_5px_18px_color-mix(in_srgb,var(--dnh-primary)_7%,transparent)
-                ]
-              `
-            : `
-                text-ink
-
-                hover:bg-page
-                hover:text-brand-primary
-              `,
-        )}
-      >
-        {title}
-
-        <ChevronDown
-          aria-hidden="true"
-          strokeWidth={1.8}
-          className={cn(
-            `
-              h-[14px]
-              w-[14px]
-
-              transition-transform
-              duration-300
-            `,
-            open && "rotate-180",
-          )}
-        />
-      </button>
-
-      <div
-        inert={!open}
-        aria-hidden={!open}
-        className={cn(
-          `
-            grid
-
-            transition-[grid-template-rows,opacity]
-            duration-[380ms]
-            ease-[cubic-bezier(.16,1,.3,1)]
-
-            motion-reduce:transition-none
-          `,
-          open
-            ? `
-                grid-rows-[1fr]
-                opacity-100
-              `
-            : `
-                grid-rows-[0fr]
-                opacity-0
-              `,
-        )}
-      >
-        <div className="overflow-hidden">
-          <ul
-            className="
-              space-y-[3px]
-
-              px-[4px]
-              pb-[8px]
-              pt-[5px]
-            "
-          >
-            {children}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Mobile mega link
-============================================================================= */
-
-function MobileMegaLink({ item, active }: { item: MegaItem; active: boolean }) {
-  const Icon = item.icon;
-
-  return (
-    <li>
-      <Link
-        href={item.href}
-        aria-current={active ? "page" : undefined}
-        className={cn(
-          `
-            group/mobile-item
-
-            flex
-            min-h-[64px]
-            items-center
-            gap-[11px]
-
-            rounded-[15px]
-
-            border
-
-            px-[9px]
-
-            outline-none
-
-            transition-all
-            duration-200
-
-            focus-visible:ring-2
-            focus-visible:ring-focus/25
-          `,
+        ${
           active
             ? `
-                border-line
-
-                bg-page
-              `
+              border-brand-primary
+              bg-page
+            `
             : `
-                border-transparent
+              border-transparent
+              hover:border-line
+              hover:bg-page
+            `
+        }
+      `}
+    >
+      <span
+        className="
+          flex
+          h-9
+          w-9
+          shrink-0
+          items-center
+          justify-center
 
-                hover:border-line
-                hover:bg-page/80
-              `,
-        )}
+          rounded-full
+
+          bg-page
+          text-brand-primary
+        "
       >
-        <span
-          className="
-            flex
-            h-[40px]
-            w-[40px]
-            shrink-0
-            items-center
-            justify-center
+        <Icon aria-hidden="true" className="h-4 w-4" strokeWidth={1.6} />
+      </span>
 
-            rounded-[12px]
-
-            border
-            border-line
-
-            bg-surface-soft
-
-            text-brand-primary
-
-            transition-all
-            duration-200
-
-            group-hover/mobile-item:border-line-strong
-          "
-        >
-          <Icon
-            aria-hidden="true"
-            strokeWidth={1.65}
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span
             className="
-              h-[17px]
-              w-[17px]
-            "
-          />
-        </span>
-
-        <div className="min-w-0 flex-1">
-          <div
-            className="
-              flex
-              items-center
-              gap-[6px]
+              text-[12px]
+              font-black
+              leading-6
+              text-ink
             "
           >
-            <span
-              className="
-                truncate
+            {item.title}
+          </span>
 
-                text-[11px]
-                font-black
-
-                text-ink
-              "
-            >
-              {item.title}
-            </span>
-
-            {item.badge && (
-              <span
-                className="
-                  rounded-full
-
-                  bg-brand-accent/10
-
-                  px-[5px]
-                  py-[2px]
-
-                  text-[7px]
-                  font-black
-
-                  text-brand-accent
-                "
-              >
-                {item.badge}
-              </span>
-            )}
-          </div>
-
-          <p
+          <span
+            dir="ltr"
             className="
-              mt-[2px]
-
-              truncate
-
               text-[8px]
-
-              text-ink-muted
+              font-bold
+              text-brand-accent
             "
           >
-            {item.description}
-          </p>
+            {item.index}
+          </span>
         </div>
 
-        {active && (
-          <span
-            aria-hidden="true"
-            className="
-              h-[5px]
-              w-[5px]
-
-              shrink-0
-
-              rounded-full
-
-              bg-brand-accent
-            "
-          />
-        )}
-      </Link>
-    </li>
-  );
-}
-
-/* =============================================================================
-   Mobile simple link
-============================================================================= */
-
-function MobileSimpleLink({
-  href,
-  active,
-  children,
-}: {
-  href: string;
-  active: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(
-        `
-          flex
-          min-h-[55px]
-          items-center
-          justify-between
-
-          rounded-[17px]
-
-          px-[15px]
-
-          text-[13px]
-          font-bold
-
-          outline-none
-
-          transition-all
-          duration-200
-
-          focus-visible:ring-2
-          focus-visible:ring-focus/25
-        `,
-        active
-          ? `
-              bg-page
-
-              text-brand-primary
-
-              shadow-[
-                0_5px_18px_color-mix(in_srgb,var(--dnh-primary)_7%,transparent)
-              ]
-            `
-          : `
-              text-ink
-
-              hover:bg-page
-              hover:text-brand-primary
-            `,
-      )}
-    >
-      {children}
-
-      {active && (
-        <span
-          aria-hidden="true"
+        <p
           className="
-            h-[5px]
-            w-[5px]
-
-            rounded-full
-
-            bg-brand-accent
-
-            shadow-[
-              0_0_0_5px_color-mix(in_srgb,var(--dnh-accent)_10%,transparent)
-            ]
+            mt-1
+            text-[10px]
+            leading-5
+            text-ink-muted
           "
-        />
-      )}
+        >
+          {item.description}
+        </p>
+      </div>
     </Link>
   );
 }
 
 /* =============================================================================
-   Mobile secondary action
+   Active / hover indicator
 ============================================================================= */
 
-function SecondaryMobileAction({
-  href,
-  children,
+function NavIndicator({
+  active,
+  opened,
 }: {
-  href: string;
-  children: ReactNode;
+  active: boolean;
+  opened: boolean;
 }) {
   return (
-    <ActionButton
-      href={href}
-      variant="secondary"
-      size="sm"
-      icon={ArrowLeft}
-      iconPosition="end"
-      contentAlignment="between"
-      fullWidth
-    >
-      {children}
-    </ActionButton>
+    <span
+      aria-hidden="true"
+      className={`
+        absolute
+        bottom-0
+        right-1/2
+
+        h-[2px]
+
+        translate-x-1/2
+
+        bg-brand-accent
+
+        transition-[width,opacity]
+        duration-300
+
+        ${
+          active || opened
+            ? "w-6 opacity-100"
+            : `
+              w-0
+              opacity-0
+
+              group-hover/nav:w-4
+              group-hover/nav:opacity-100
+            `
+        }
+      `}
+    />
   );
 }

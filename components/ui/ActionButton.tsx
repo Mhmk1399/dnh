@@ -146,7 +146,6 @@ export function ActionButton(props: ActionButtonProps) {
     inline-flex
     items-center
     overflow-hidden
-    rounded-full
     outline-none
     touch-manipulation
     transition-[transform,background-color,border-color,color,box-shadow]
