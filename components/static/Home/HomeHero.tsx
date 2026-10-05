@@ -195,26 +195,20 @@ export function HomeHero() {
           h-full
           min-h-0
           w-full
-          max-w-[1536px]
 
           items-end
 
-          px-5
           pb-8
           pt-[118px]
 
-          sm:px-8
           sm:pb-10
           sm:pt-[128px]
 
           lg:items-center
-          lg:px-12
           lg:pb-0
           lg:pt-[106px]
 
-          xl:px-16
 
-          2xl:px-20
         "
       >
         <div

@@ -112,28 +112,22 @@ export function MarketNoiseVsWealthArchitectureSection() {
           mx-auto
           grid
           w-full
-          max-w-[1536px]
 
           gap-12
 
-          px-5
           py-16
 
-          sm:px-8
           sm:py-20
 
           lg:grid-cols-[0.86fr_1.14fr]
           lg:items-center
           lg:gap-16
-          lg:px-12
           lg:py-24
 
           xl:grid-cols-[0.82fr_1.18fr]
           xl:gap-20
-          xl:px-16
           xl:py-28
 
-          2xl:px-20
         "
       >
         {/* =========================================================

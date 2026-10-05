@@ -93,30 +93,24 @@ export function FinancialDecisionAssessmentHero() {
           grid
           min-h-[100dvh]
           w-full
-          max-w-[1536px]
 
           items-center
           gap-12
 
-          px-5
           pb-12
           pt-[120px]
 
-          sm:px-8
           sm:pb-16
           sm:pt-[130px]
 
           lg:grid-cols-[0.88fr_1.12fr]
           lg:gap-16
-          lg:px-12
           lg:pb-16
           lg:pt-[110px]
 
           xl:grid-cols-[0.82fr_1.18fr]
           xl:gap-20
-          xl:px-16
 
-          2xl:px-20
         "
       >
         {/* =======================================================
@@ -451,18 +445,14 @@ export function FinancialDecisionAssessmentHero() {
             mx-auto
 
             flex
-            max-w-[1536px]
 
             items-center
             justify-between
             gap-6
 
-            px-12
             py-4
 
-            xl:px-16
 
-            2xl:px-20
           "
         >
           <p

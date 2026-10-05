@@ -132,28 +132,22 @@ export function FinancialDecisionAssessmentSection() {
           mx-auto
           grid
           w-full
-          max-w-[1536px]
 
           gap-12
 
-          px-5
           py-16
 
-          sm:px-8
           sm:py-20
 
           lg:grid-cols-[0.88fr_1.12fr]
           lg:items-center
           lg:gap-16
-          lg:px-12
           lg:py-24
 
           xl:grid-cols-[0.82fr_1.18fr]
           xl:gap-20
-          xl:px-16
           xl:py-28
 
-          2xl:px-20
         "
       >
         {/* =========================================================
@@ -413,23 +407,17 @@ export function FinancialDecisionAssessmentSection() {
               mx-auto
 
               flex
-              max-w-[1536px]
               flex-col
               gap-4
 
-              px-5
               py-5
 
-              sm:px-8
 
               lg:flex-row
               lg:items-center
               lg:justify-between
-              lg:px-12
 
-              xl:px-16
 
-              2xl:px-20
             "
           >
             <p

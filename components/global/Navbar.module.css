@@ -3,7 +3,7 @@
   position: fixed;
   inset: 20px 0 auto;
 
-  padding-inline: clamp(18px, 3vw, 48px);
+  padding-inline: var(--dnh-shell-gutter);
   z-index: var(--dnh-layer-navigation);
   pointer-events: none;
   transition: inset 240ms ease;
@@ -24,7 +24,7 @@
 }
 .headerInner {
   position: relative;
-  max-width: 1540px;
+  max-width: var(--dnh-shell-max);
   margin-inline: auto;
 }
 .bar {

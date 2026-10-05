@@ -82,26 +82,20 @@ export function AssessmentContactSection() {
           flex
           min-h-[720px]
           w-full
-          max-w-[1536px]
 
           flex-col
           justify-between
 
-          px-5
           py-16
 
           sm:min-h-[760px]
-          sm:px-8
           sm:py-20
 
           lg:min-h-[800px]
-          lg:px-12
           lg:py-24
 
-          xl:px-16
           xl:py-28
 
-          2xl:px-20
         "
       >
         {/* =======================================================
@@ -658,19 +652,7 @@ function Background() {
 
       {/* top accent */}
 
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          right-[18%]
-          top-0
-
-          h-[7px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
+    
     </>
   );
 }

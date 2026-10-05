@@ -145,21 +145,15 @@ export function PrivacyConfidentialitySection() {
 
           mx-auto
           w-full
-          max-w-[1536px]
 
-          px-5
           py-16
 
-          sm:px-8
           sm:py-20
 
-          lg:px-12
           lg:py-24
 
-          xl:px-16
           xl:py-28
 
-          2xl:px-20
         "
       >
         {/* =======================================================

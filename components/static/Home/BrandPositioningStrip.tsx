@@ -110,20 +110,14 @@ export function BrandPositioningStrip() {
           mx-auto
 
           w-full
-          max-w-[1536px]
 
-          px-5
           py-14
 
-          sm:px-8
           sm:py-16
 
-          lg:px-12
           lg:py-[72px]
 
-          xl:px-16
 
-          2xl:px-20
         "
       >
         {/* =======================================================
