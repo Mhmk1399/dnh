@@ -226,9 +226,23 @@
   transform: rotate(180deg);
 }
 .desktopAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
   padding-inline-start: 16px;
   border-inline-start: 1px solid var(--dnh-border);
+}
+.authActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.authButton {
+  min-height: 42px;
+  padding-inline: 14px;
+  font-size: 10.5px;
+  box-shadow: none;
 }
 .consultButton {
   min-height: 46px;
@@ -593,6 +607,16 @@
 }
 .quickLinks svg {
   color: var(--dnh-primary);
+}
+.mobileAuthActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+.mobileAuthActions a {
+  min-height: 44px;
+  box-shadow: none;
 }
 .mobileGroups {
   margin-top: 24px;

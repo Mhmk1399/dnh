@@ -13,12 +13,16 @@ export const dynamic = "force-dynamic";
 
 function date(value: Date) { return new Intl.DateTimeFormat("fa-IR", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value)); }
 
+type AdminUserRow = { _id: unknown; firstName: string; lastName: string; phone: string; role: string; createdAt: Date };
+type AdminContactRow = { _id: unknown; name: string; phone: string; email?: string; subject?: string; message: string; createdAt: Date };
+type AdminLeadRow = { _id: unknown; name: string; phone: string; text: string; createdAt: Date };
+
 export default async function AdminPage() {
   const currentUser = await getCurrentUser(); if (!currentUser) redirect("/login"); if (currentUser.role !== "admin") redirect("/dashboard");
   let loadError = false;
-  let users: Array<{ _id: string; firstName: string; lastName: string; phone: string; role: string; createdAt: Date }> = [];
-  let contacts: Array<{ _id: string; name: string; phone: string; email?: string; subject?: string; message: string; createdAt: Date }> = [];
-  let leads: Array<{ _id: string; name: string; phone: string; text: string; createdAt: Date }> = [];
+  let users: Array<Omit<AdminUserRow, "_id"> & { _id: string }> = [];
+  let contacts: Array<Omit<AdminContactRow, "_id"> & { _id: string }> = [];
+  let leads: Array<Omit<AdminLeadRow, "_id"> & { _id: string }> = [];
   try {
     await connect();
     const [userRows, contactRows, leadRows] = await Promise.all([
@@ -26,9 +30,9 @@ export default async function AdminPage() {
       Contact.find({}).select("name phone email subject message createdAt").sort({ createdAt: -1 }).limit(100).lean(),
       Lead.find({}).select("name phone text createdAt").sort({ createdAt: -1 }).limit(100).lean(),
     ]);
-    users = userRows.map((row) => ({ ...row, _id: String(row._id) }));
-    contacts = contactRows.map((row) => ({ ...row, _id: String(row._id) }));
-    leads = leadRows.map((row) => ({ ...row, _id: String(row._id) }));
+    users = (userRows as AdminUserRow[]).map((row) => ({ ...row, _id: String(row._id) }));
+    contacts = (contactRows as AdminContactRow[]).map((row) => ({ ...row, _id: String(row._id) }));
+    leads = (leadRows as AdminLeadRow[]).map((row) => ({ ...row, _id: String(row._id) }));
   } catch { loadError = true; }
 
   return (

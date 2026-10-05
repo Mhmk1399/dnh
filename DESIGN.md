@@ -69,6 +69,8 @@ Use 24px outer shells, 14–18px internal surfaces, and 12px icon tiles. Preserv
 
 `components/ui/ActionButton.tsx` owns prominent calls to action. Ordinary navigation links and disclosure controls retain their native semantics. All shell controls have visible focus, hover and pressed feedback. Disabled social profiles are non-links with an honest unavailable state; never invent account URLs.
 
+Header authentication entry points are secondary actions: desktop places ورود and ثبت‌نام beside the consultation CTA, while mobile keeps them inside the drawer rather than in the fixed top bar.
+
 Desktop menus support hover with a short grace period, click, keyboard disclosure, ArrowDown into links, Escape with focus restoration, and outside dismissal. Closed panels are inert. Route changes reset menu state. Mobile uses a native modal dialog with Escape, focus containment, background scroll lock, and Lenis-safe internal scrolling. Drawer accordions reveal one section at a time. Footer disclosures work independently of JavaScript.
 
 Icons follow the installed Lucide stroke style (1.5–1.8), normally 18–22px. Only social brand glyphs use local SVG. Motion is limited to 180–240ms feedback and panel transitions; `prefers-reduced-motion` disables shell animation.

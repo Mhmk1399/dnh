@@ -1,90 +1,437 @@
-/** Shared navigation content for the header, mobile menu, and footer. */
-export type MegaMenuKey = "dnh" | "services" | "target-markets";
-export type NavigationIcon = "architecture" | "framework" | "intelligence" | "wealth" | "portfolio" | "advisory" | "market" | "risk" | "briefing" | "decision" | "holdings";
+/**
+ * Shared navigation content for:
+ * - Desktop Header
+ * - Mega Menu
+ * - Mobile Navigation
+ * - Footer
+ */
 
-export type SiteLink = { title: string; href: string };
-export type MegaItem = SiteLink & { description: string; icon: NavigationIcon };
-export type NavigationItem = { title: string; href?: string; menu?: MegaMenuKey };
+export type MegaMenuKey =
+  | "dnh"
+  | "services"
+  | "who-we-help"
+  | "knowledge";
+
+export type NavigationIcon =
+  | "architecture"
+  | "framework"
+  | "intelligence"
+  | "wealth"
+  | "portfolio"
+  | "advisory"
+  | "market"
+  | "risk"
+  | "briefing"
+  | "decision"
+  | "holdings"
+  | "outlook"
+  | "insight"
+  | "research"
+  | "case-study"
+  | "faq";
+
+export type SiteLink = {
+  title: string;
+  href: string;
+};
+
+export type MegaItem = SiteLink & {
+  description: string;
+  icon: NavigationIcon;
+};
+
+export type NavigationItem = {
+  title: string;
+  href?: string;
+  menu?: MegaMenuKey;
+};
+
 export type MegaMenuDefinition = {
   title: string;
+  eyebrow: string;
   headline: string;
   description: string;
-  eyebrow: string;
   overview: SiteLink;
   items: MegaItem[];
 };
 
-export const CONSULTATION_PATH = "/request-strategic-consultation";
-export const ASSESSMENT_PATH = "/financial-decision-assessment";
+/* =============================================================================
+   Conversion
+============================================================================= */
+
+export const CONSULTATION_PATH =
+  "/request-strategic-consultation";
+
+export const ASSESSMENT_PATH =
+  "/financial-decision-assessment";
+
+export const CONTACT_PATH = "/contact";
+
+/* =============================================================================
+   Primary Navigation
+============================================================================= */
 
 export const NAVIGATION: NavigationItem[] = [
-  { title: "خانه", href: "/" },
-  { title: "دنیای DNH", menu: "dnh" },
-  { title: "خدمات", menu: "services", href: "/services" },
-  { title: "برای چه کسانی؟", menu: "target-markets" },
-  { title: "دانش", href: "/knowledge" },
-  { title: "درباره ما", href: "/about" },
-  { title: "تماس", href: "/contact" },
+  {
+    title: "خانه",
+    href: "/",
+  },
+
+  {
+    title: "DNH",
+    menu: "dnh",
+  },
+
+  {
+    title: "خدمات",
+    href: "/services",
+    menu: "services",
+  },
+
+  {
+    title: "برای چه کسانی؟",
+    menu: "who-we-help",
+  },
+
+  {
+    title: "دانش و پژوهش",
+    href: "/knowledge",
+    menu: "knowledge",
+  },
+
+  {
+    title: "درباره DNH",
+    href: "/about",
+  },
 ];
+
+/* =============================================================================
+   DNH
+============================================================================= */
 
 export const DNH_ITEMS: MegaItem[] = [
-  { title: "معماری ثروت", description: "یک تصویر منسجم از ثروت، سرمایه و تصمیم‌های شما.", href: "/dnh/wealth-architecture", icon: "architecture" },
-  { title: "چارچوب DNH", description: "از شناخت مسئله تا ساختن مسیر تصمیم.", href: "/dnh/framework", icon: "framework" },
-  { title: "میز هوشمندی DNH", description: "داده و تحلیل برای دیدن تصویر بزرگ‌تر.", href: "/dnh/intelligence-desk", icon: "intelligence" },
+  {
+    title: "معماری ثروت",
+    description:
+      "دیدن ثروت به‌عنوان یک ساختار منسجم از دارایی، ریسک، نقدینگی، اهداف و تصمیم‌ها.",
+    href: "/dnh/wealth-architecture",
+    icon: "architecture",
+  },
+
+  {
+    title: "چارچوب DNH",
+    description:
+      "رویکرد اختصاصی DNH برای تبدیل داده و عدم‌قطعیت به سناریو و مسیر تصمیم.",
+    href: "/dnh/framework",
+    icon: "framework",
+  },
+
+  {
+    title: "میز هوشمندی DNH",
+    description:
+      "رصد اقتصاد، بازار، ریسک و متغیرهای تصمیم برای شکل‌دادن به یک نگاه راهبردی.",
+    href: "/dnh/intelligence-desk",
+    icon: "intelligence",
+  },
 ];
+
+/* =============================================================================
+   Services
+============================================================================= */
 
 export const SERVICE_ITEMS: MegaItem[] = [
-  { title: "استراتژی ثروت خصوصی", description: "ساختاردهی و برنامه‌ریزی بلندمدت ثروت.", href: "/services/private-wealth-strategy", icon: "wealth" },
-  { title: "هوشمندی پرتفوی", description: "شناخت ترکیب، تمرکز و رفتار دارایی‌ها.", href: "/services/portfolio-intelligence", icon: "portfolio" },
-  { title: "مشاوره مالی راهبردی", description: "تحلیل ابعاد تصمیم‌های مهم مالی.", href: "/services/strategic-financial-advisory", icon: "advisory" },
-  { title: "مشاوره اقتصاد و بازار", description: "درک روندها و سناریوهای پیش رو.", href: "/services/macro-market-advisory", icon: "market" },
-  { title: "مدیریت ریسک و حفاظت از ثروت", description: "شناسایی ریسک و سنجش آسیب‌پذیری‌ها.", href: "/services/risk-management-wealth-protection", icon: "risk" },
-  { title: "نشست‌های مدیران", description: "گفت‌وگوی تحلیلی برای تصمیم‌های راهبردی.", href: "/services/executive-briefings", icon: "briefing" },
+  {
+    title: "استراتژی ثروت خصوصی",
+    description:
+      "ساختن تصویری منسجم‌تر از ثروت، اهداف، نقدشوندگی، ریسک و مسیرهای قابل بررسی.",
+    href: "/services/private-wealth-strategy",
+    icon: "wealth",
+  },
+
+  {
+    title: "هوشمندی پرتفوی",
+    description:
+      "ارزیابی ساختار پرتفوی، تمرکز ریسک، نقدشوندگی و حوزه‌های نیازمند بازبینی.",
+    href: "/services/portfolio-intelligence",
+    icon: "portfolio",
+  },
+
+  {
+    title: "مشاوره مالی راهبردی",
+    description:
+      "بررسی تصمیم‌هایی که سرمایه، نقدینگی، تأمین مالی و آینده کسب‌وکار را به هم مرتبط می‌کنند.",
+    href: "/services/strategic-financial-advisory",
+    icon: "advisory",
+  },
+
+  {
+    title: "مشاوره اقتصاد و بازار",
+    description:
+      "تحلیل شرایط اقتصادی، سناریوهای مرتبط و پیامدهای راهبردی برای تصمیم.",
+    href: "/services/macro-market-advisory",
+    icon: "market",
+  },
+
+  {
+    title: "مدیریت ریسک و حفاظت از ثروت",
+    description:
+      "شناخت ریسک‌های مهم و ایجاد تصویری ساختاریافته از اولویت‌های حفاظتی.",
+    href: "/services/risk-management-wealth-protection",
+    icon: "risk",
+  },
+
+  {
+    title: "نشست‌های مدیران",
+    description:
+      "بررسی متمرکز موضوعات مهم برای مدیران ارشد، هیئت‌مدیره و تصمیم‌گیرندگان کلیدی.",
+    href: "/services/executive-briefings",
+    icon: "briefing",
+  },
 ];
 
-export const TARGET_MARKET_ITEMS: MegaItem[] = [
-  { title: "در آستانه یک تصمیم مالی بزرگ", description: "وقتی یک تصمیم، مسیر آینده را تغییر می‌دهد.", href: "/target-markets/big-financial-decision", icon: "decision" },
-  { title: "پرتفوی پراکنده و بدون معماری", description: "وقتی دارایی‌ها به یک ساختار مشترک نیاز دارند.", href: "/target-markets/unstructured-portfolio", icon: "portfolio" },
-  { title: "هلدینگ‌ها و ساختار سرمایه", description: "وقتی تصمیم‌های مالی چندلایه و به‌هم‌پیوسته‌اند.", href: "/target-markets/holdings-financial-capital-structure", icon: "holdings" },
+/* =============================================================================
+   Who We Help
+============================================================================= */
+
+export const WHO_WE_HELP_ITEMS: MegaItem[] = [
+  {
+    title: "در آستانه یک تصمیم مالی بزرگ",
+    description:
+      "وقتی پیش از یک انتخاب مهم باید مسئله، ریسک، نقدشوندگی، افق زمانی و سناریوها روشن‌تر شوند.",
+    href: "/who-we-help/big-financial-decision",
+    icon: "decision",
+  },
+
+  {
+    title: "پرتفوی پراکنده و بدون معماری",
+    description:
+      "وقتی دارایی‌های متعدد وجود دارند، اما هنوز در یک ساختار منسجم کنار هم دیده نمی‌شوند.",
+    href: "/who-we-help/unstructured-portfolio",
+    icon: "portfolio",
+  },
+
+  {
+    title: "هلدینگ‌ها و ساختار مالی و سرمایه",
+    description:
+      "وقتی سرمایه، نقدینگی، تأمین مالی، ریسک و اهداف یک مجموعه باید در کنار هم بررسی شوند.",
+    href: "/who-we-help/holdings-financial-capital-structure",
+    icon: "holdings",
+  },
 ];
 
-export const MEGA_MENUS: Record<MegaMenuKey, MegaMenuDefinition> = {
+/* =============================================================================
+   Knowledge & Research
+============================================================================= */
+
+export const KNOWLEDGE_ITEMS: MegaItem[] = [
+  {
+    title: "DNH Weekly Outlook",
+    description:
+      "گزارش فشرده شرایط، ریسک‌های کلان، دارایی‌ها و آنچه باید زیر نظر باشد.",
+    href: "/knowledge/weekly-outlook",
+    icon: "outlook",
+  },
+
+  {
+    title: "بینش‌ها",
+    description:
+      "تحلیل‌های تصمیم‌محور درباره معماری ثروت، ریسک، نقدینگی و تصمیم‌گیری مالی.",
+    href: "/knowledge/insights",
+    icon: "insight",
+  },
+
+  {
+    title: "پژوهش",
+    description:
+      "یادداشت‌های پژوهشی، گزارش‌های کلان، نمودارها و مطالعات قابل انتشار DNH.",
+    href: "/knowledge/research",
+    icon: "research",
+  },
+
+  {
+    title: "مطالعات موردی",
+    description:
+      "پرونده‌های ناشناس برای نمایش منطق بررسی مسئله، سناریو و تصمیم.",
+    href: "/knowledge/case-studies",
+    icon: "case-study",
+  },
+
+  {
+    title: "پرسش‌های متداول",
+    description:
+      "پاسخ‌های روشن درباره خدمات، محرمانگی، مرزهای حرفه‌ای و شیوه همکاری.",
+    href: "/knowledge/faq",
+    icon: "faq",
+  },
+];
+
+/* =============================================================================
+   Mega Menus
+============================================================================= */
+
+export const MEGA_MENUS: Record<
+  MegaMenuKey,
+  MegaMenuDefinition
+> = {
   dnh: {
-    title: "دنیای DNH", eyebrow: "نگاه ما به ثروت",
-    headline: "پیش از هر تصمیم،\nتصویر کامل‌تر را ببینید.",
-    description: "آشنایی با نگاه، چارچوب و ابزارهای تحلیلی دی‌ان‌اچ.",
-    overview: { title: "آشنایی با DNH", href: "/about" }, items: DNH_ITEMS,
+    title: "DNH",
+
+    eyebrow: "سیستم تصمیم‌سازی",
+
+    headline:
+      "ثروت را فقط به‌صورت دارایی نبینید؛\nساختار پشت آن را ببینید.",
+
+    description:
+      "معماری ثروت، چارچوب DNH و میز هوشمندی، سه بخش اصلی سیستم فکری و تحلیلی DNH هستند.",
+
+    overview: {
+      title: "شروع از معماری ثروت",
+      href: "/dnh/wealth-architecture",
+    },
+
+    items: DNH_ITEMS,
   },
+
   services: {
-    title: "خدمات تخصصی", eyebrow: "مسیرهای همکاری",
-    headline: "برای هر مسئله،\nیک نگاه دقیق‌تر.",
-    description: "از معماری ثروت تا تحلیل بازار؛ خدماتی متناسب با مسئله شما.",
-    overview: { title: "مشاهده همه خدمات", href: "/services" }, items: SERVICE_ITEMS,
+    title: "خدمات تخصصی",
+
+    eyebrow: "مسیرهای همکاری",
+
+    headline:
+      "خدمت مناسب،\nاز مسئله درست آغاز می‌شود.",
+
+    description:
+      "شش مسیر تخصصی برای بررسی ساختار ثروت، پرتفوی، ریسک، محیط اقتصادی و تصمیم‌های مالی پیچیده.",
+
+    overview: {
+      title: "مشاهده همه خدمات",
+      href: "/services",
+    },
+
+    items: SERVICE_ITEMS,
   },
-  "target-markets": {
-    title: "از موقعیت خود شروع کنید", eyebrow: "شناخت موقعیت شما",
-    headline: "مسئله شما،\nنقطه شروع ماست.",
-    description: "مسیر مناسب را با شناخت موقعیت مالی و اولویت‌های خود پیدا کنید.",
-    overview: { title: "ارزیابی تصمیم مالی", href: ASSESSMENT_PATH }, items: TARGET_MARKET_ITEMS,
+
+  "who-we-help": {
+    title: "برای چه کسانی؟",
+
+    eyebrow: "از موقعیت خود شروع کنید",
+
+    headline:
+      "پیش از انتخاب راه‌حل،\nمسئله باید درست دیده شود.",
+
+    description:
+      "مسیر مناسب DNH از شناخت موقعیت، پیچیدگی و نوع تصمیم شما آغاز می‌شود.",
+
+    overview: {
+      title: "شروع با ارزیابی اولیه تصمیم مالی",
+      href: ASSESSMENT_PATH,
+    },
+
+    items: WHO_WE_HELP_ITEMS,
+  },
+
+  knowledge: {
+    title: "دانش و پژوهش",
+
+    eyebrow: "Research & Insight Hub",
+
+    headline:
+      "تحلیل برای تصمیم؛\nنه هیجان بازار.",
+
+    description:
+      "گزارش‌ها، تحلیل‌ها و پژوهش‌های DNH برای شناخت بهتر شرایط، ریسک و پیامدهای راهبردی.",
+
+    overview: {
+      title: "ورود به مرکز دانش DNH",
+      href: "/knowledge",
+    },
+
+    items: KNOWLEDGE_ITEMS,
   },
 };
 
+/* =============================================================================
+   Legal
+============================================================================= */
+
 export const LEGAL_LINKS: SiteLink[] = [
-  { title: "حریم خصوصی", href: "/legal/privacy-policy" },
-  { title: "شرایط استفاده", href: "/legal/terms-of-use" },
-  { title: "سلب مسئولیت مالی", href: "/legal/financial-disclaimer" },
-  { title: "حفاظت داده", href: "/legal/data-protection-advisory-limitation" },
-  { title: "عدم تضمین سرمایه‌گذاری", href: "/legal/no-investment-guarantee-no-trading-signal" },
+  {
+    title: "حریم خصوصی",
+    href: "/legal/privacy-policy",
+  },
+
+  {
+    title: "شرایط استفاده",
+    href: "/legal/terms-of-use",
+  },
+
+  {
+    title: "سلب مسئولیت مالی",
+    href: "/legal/financial-disclaimer",
+  },
+
+  {
+    title: "حفاظت داده و محدودیت مشاوره",
+    href: "/legal/data-protection-advisory-limitation",
+  },
+
+  {
+    title: "عدم تضمین و عدم ارائه سیگنال",
+    href: "/legal/no-investment-guarantee-no-trading-signal",
+  },
 ];
 
-/** Content routes currently live under app/[locale]; the public home is /. */
-export function getSiteHref(href: string, pathname = "/") {
-  if (href === "/" || !href.startsWith("/") || /^\/(fa|en)(\/|$)/.test(href)) return href;
-  const locale = pathname.match(/^\/(fa|en)(?:\/|$)/)?.[1] ?? "fa";
+/* =============================================================================
+   Localized links
+============================================================================= */
+
+/**
+ * Current routing rule:
+ *
+ * Persian home:
+ * /
+ *
+ * Persian content:
+ * /fa/...
+ *
+ * English home:
+ * /en
+ *
+ * English content:
+ * /en/...
+ */
+export function getSiteHref(
+  href: string,
+  pathname = "/",
+) {
+  if (
+    !href.startsWith("/") ||
+    /^\/(fa|en)(\/|$)/.test(href)
+  ) {
+    return href;
+  }
+
+  const locale =
+    pathname.match(/^\/(fa|en)(?:\/|$)/)?.[1] ??
+    "fa";
+
+  if (href === "/") {
+    return locale === "en" ? "/en" : "/";
+  }
+
   return `/${locale}${href}`;
 }
 
-export function isSitePathActive(href: string, pathname: string) {
-  const path = pathname.replace(/^\/(fa|en)(?=\/|$)/, "") || "/";
-  return href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
+export function isSitePathActive(
+  href: string,
+  pathname: string,
+) {
+  const path =
+    pathname.replace(/^\/(fa|en)(?=\/|$)/, "") ||
+    "/";
+
+  return href === "/"
+    ? path === "/"
+    : path === href ||
+    path.startsWith(`${href}/`);
 }

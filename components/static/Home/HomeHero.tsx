@@ -1,38 +1,114 @@
 import { getImageProps } from "next/image";
-import {
-  ArrowLeft,
-  ChartNoAxesCombined,
-  Layers3,
-  UserRoundCheck,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
+/* =============================================================================
+   Assets
+============================================================================= */
+
 const HERO_DESKTOP = "/assets/images/dnh-hero-desktop.png";
+
 const HERO_MOBILE = "/assets/images/dnh-hero-mobile.png";
+
+/* =============================================================================
+   Routes
+   Home فارسی روی / است اما صفحات محتوایی زیر /fa هستند.
+============================================================================= */
+
+const ASSESSMENT_HREF = "/fa/financial-decision-assessment";
+
+const WEALTH_ARCHITECTURE_HREF = "/fa/dnh/wealth-architecture";
+
+/* =============================================================================
+   Hero
+============================================================================= */
 
 export function HomeHero() {
   return (
     <section
       id="home"
+      dir="rtl"
       aria-labelledby="home-hero-title"
       className="
+        home-hero
         relative
         isolate
-        h-dvh
         overflow-hidden
         bg-brand-secondary
+        text-right
       "
+      style={{
+        height: "100dvh",
+        minHeight: "680px",
+      }}
     >
+      {/* =========================================================
+          Image
+      ========================================================== */}
+
       <HeroBackground />
 
-      {/* Desktop overlay */}
+      {/* =========================================================
+          Desktop readability overlay
+      ========================================================== */}
 
-
-      {/* Mobile overlay */}
       <div
         aria-hidden="true"
         className="
+          pointer-events-none
+          absolute
+          inset-0
+          z-[1]
+          hidden
+          lg:block
+        "
+        style={{
+          background: `
+            linear-gradient(
+              90deg,
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 0%,
+                transparent
+              ) 0%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 5%,
+                transparent
+              ) 32%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 30%,
+                transparent
+              ) 48%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 68%,
+                transparent
+              ) 69%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 90%,
+                transparent
+              ) 100%
+            )
+          `,
+        }}
+      />
+
+      {/* =========================================================
+          Mobile readability overlay
+      ========================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
           absolute
           inset-0
           z-[1]
@@ -42,36 +118,76 @@ export function HomeHero() {
           background: `
             linear-gradient(
               180deg,
-              color-mix(in srgb, var(--dnh-secondary) 5%, transparent) 0%,
-              color-mix(in srgb, var(--dnh-secondary) 8%, transparent) 42%,
-              color-mix(in srgb, var(--dnh-secondary) 65%, transparent) 68%,
-              color-mix(in srgb, var(--dnh-secondary) 96%, transparent) 100%
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 3%,
+                transparent
+              ) 0%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 8%,
+                transparent
+              ) 34%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 44%,
+                transparent
+              ) 55%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 82%,
+                transparent
+              ) 72%,
+
+              color-mix(
+                in srgb,
+                var(--dnh-secondary) 97%,
+                transparent
+              ) 100%
             )
           `,
         }}
       />
 
-      {/* Bottom depth */}
+      {/* =========================================================
+          Bottom depth
+      ========================================================== */}
+
       <div
         aria-hidden="true"
         className="
+          pointer-events-none
           absolute
           inset-x-0
           bottom-0
           z-[1]
-          h-[30%]
+
+          h-[34%]
+
           bg-gradient-to-t
-          from-brand-secondary/55
-          via-brand-secondary/15
+          from-brand-secondary/70
+          via-brand-secondary/18
           to-transparent
         "
       />
 
-      {/* Content */}
+      {/* =========================================================
+          Very subtle atmosphere
+      ========================================================== */}
+
+      {/* =========================================================
+          Content shell
+      ========================================================== */}
+
       <div
         className="
           relative
           z-10
+
           dnh-site-shell
           mx-auto
 
@@ -85,44 +201,52 @@ export function HomeHero() {
 
           px-5
           pb-8
-          pt-28
+          pt-[118px]
 
           sm:px-8
           sm:pb-10
-          sm:pt-32
+          sm:pt-[128px]
 
           lg:items-center
           lg:px-12
           lg:pb-0
-          lg:pt-[96px]
+          lg:pt-[106px]
 
           xl:px-16
+
           2xl:px-20
         "
       >
         <div
-          dir="rtl"
           className="
             mr-0
             ml-auto
+
             w-full
-            text-right
 
             sm:max-w-[620px]
+
             lg:max-w-[680px]
+
             xl:max-w-[730px]
           "
         >
-          {/* Eyebrow */}
+          {/* =====================================================
+              Eyebrow
+          ====================================================== */}
+
           <div
             className="
+              home-hero-reveal
+              home-hero-reveal-1
+
               mb-4
               flex
               items-center
-              justify-start
               gap-3
 
               sm:mb-5
+
               lg:mb-6
             "
           >
@@ -131,35 +255,54 @@ export function HomeHero() {
               className="
                 h-px
                 w-9
+                shrink-0
+
                 bg-brand-accent
+
                 sm:w-11
               "
             />
 
-            <span
-              dir="rtl"
+            <p
               className="
                 text-[10px]
-                font-semibold
-                text-[var(--dnh-text-on-brand)]
+                font-bold
+                leading-none
 
-               "
+                text-white/88
+
+                sm:text-[11px]
+              "
             >
-              مشاوره مالی راهبردی
-            </span>
+              DNH؛ معماری ثروت و تصمیم‌سازی مالی
+            </p>
           </div>
 
-          {/* Main title */}
+          {/* =====================================================
+              Heading
+          ====================================================== */}
+
           <h1
             id="home-hero-title"
             className="
+              home-hero-reveal
+              home-hero-reveal-2
+
               max-w-[730px]
+
+              text-[clamp(2rem,8vw,3rem)]
               font-black
-              leading-[1.45]
-              tracking-[-0.035em]
-              text-2xl
-              text-[var(--dnh-text-on-brand)]
-              lg:text-4xl
+              leading-[1.48]
+              tracking-[-0.045em]
+
+              text-white
+
+              sm:text-[clamp(2.45rem,6.8vw,3.5rem)]
+
+              lg:text-[clamp(2.8rem,3.7vw,3.9rem)]
+              lg:leading-[1.42]
+
+              xl:text-[4rem]
             "
           >
             تصمیم‌های مالی مهم،
@@ -168,17 +311,23 @@ export function HomeHero() {
             دارند.
           </h1>
 
-          {/* Description */}
+          {/* =====================================================
+              Positioning
+          ====================================================== */}
+
           <p
             className="
+              home-hero-reveal
+              home-hero-reveal-3
+
               mt-5
-              max-w-[570px]
+              max-w-[610px]
 
               text-[13px]
               font-medium
-              leading-[2]
+              leading-[2.05]
 
-              text-[color-mix(in_srgb,var(--dnh-text-on-brand)_78%,transparent)]
+              text-white/74
 
               sm:text-[14px]
 
@@ -187,14 +336,21 @@ export function HomeHero() {
               lg:leading-[2.1]
             "
           >
-            تبدیل داده، ریسک، سناریو و ساختار مالی به یک تصمیم روشن، ساختاریافته
-            و قابل‌دفاع.
+            DNH یک سیستم حرفه‌ای برای معماری ثروت و تصمیم‌سازی مالی است؛ برای
+            دیدن شفاف‌تر ساختار مالی، ریسک‌ها، سناریوها و مسیرهای تصمیم‌گیری.
           </p>
 
-          {/* Actions */}
+          {/* =====================================================
+              Actions
+          ====================================================== */}
+
           <div
             className="
+              home-hero-reveal
+              home-hero-reveal-4
+
               mt-7
+
               flex
               w-full
               flex-col
@@ -202,101 +358,113 @@ export function HomeHero() {
 
               sm:w-auto
               sm:flex-row
+              sm:flex-wrap
+              sm:items-center
 
-              lg:mt-9
+              lg:mt-8
             "
           >
             <ActionButton
-              href="/assessment"
+              href={ASSESSMENT_HREF}
               variant="assessment"
               size="md"
               icon={ArrowLeft}
               className="
                 w-full
-                sm:w-auto text-right
-                sm:min-w-[245px]
+ border-white/30 border
+                sm:w-auto
+                sm:min-w-[250px]
               "
             >
               ارزیابی اولیه تصمیم مالی
             </ActionButton>
 
             <ActionButton
-              href="/consultation"
+              href={WEALTH_ARCHITECTURE_HREF}
               variant="secondary"
               size="md"
               icon={ArrowLeft}
               className="
                 w-full
 
-                border-[color-mix(in_srgb,var(--dnh-text-on-brand)_28%,transparent)]
+                border-white/30
+                bg-white/[0.055]
 
-                bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_8%,transparent)]
-
-                text-[var(--dnh-text-on-brand)]
+                text-white
 
                 shadow-none
-
                 backdrop-blur-[8px]
 
-                hover:border-[color-mix(in_srgb,var(--dnh-text-on-brand)_55%,transparent)]
-
-                hover:bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_13%,transparent)]
-
-                hover:text-[var(--dnh-text-on-brand)]
+                hover:border-white/55
+                hover:bg-white/[0.10]
+                hover:text-white
 
                 sm:w-auto
-                sm:min-w-[220px]
+                sm:min-w-[215px]
               "
             >
-              درخواست مشاوره راهبردی
+              آشنایی با معماری ثروت
             </ActionButton>
           </div>
 
-          {/* Roles */}
+          {/* =====================================================
+              Authority line
+          ====================================================== */}
+
           <div
             className="
-              mt-8
+              home-hero-reveal
+              home-hero-reveal-5
+
+              mt-7
+
               hidden
 
               border-t
-              border-[color-mix(in_srgb,var(--dnh-text-on-brand)_16%,transparent)]
+              border-white/15
 
               pt-5
 
-              sm:flex
-              sm:flex-wrap
-              sm:items-center
-              sm:gap-x-5
-              sm:gap-y-3
+              sm:block
 
-              lg:mt-10
-              lg:pt-6
+              lg:mt-9
+              lg:pt-5
             "
           >
-            <ProfessionalRole
-              icon={UserRoundCheck}
-              label="معمار ثروت خصوصی"
-            />
+            <p
+              className="
+                text-[10px]
+                font-medium
+                leading-[1.9]
 
-            <ProfessionalRole
-              icon={ChartNoAxesCombined}
-              label="مشاور مالی راهبردی"
-            />
+                text-white/64
 
-            <ProfessionalRole
-              icon={Layers3}
-              label="بنیان‌گذار چارچوب دی‌ان‌اچ"
-            />
+                lg:text-[11px]
+              "
+            >
+              <span className="font-bold text-white/88">
+                دکتر نسیم محمدحسنی
+              </span>
+              <span aria-hidden="true" className="mx-2 text-brand-accent">
+                —
+              </span>
+              معمار ثروت خصوصی، مشاور مالی راهبردی و بنیان‌گذار چارچوب DNH
+            </p>
           </div>
         </div>
       </div>
+
+      <HeroMotionStyles />
     </section>
   );
 }
 
+/* =============================================================================
+   Background image
+============================================================================= */
+
 function HeroBackground() {
   const commonProps = {
-    alt: "دکتر نسیم محمدحسنی، بنیان‌گذار دی‌ان‌اچ",
     sizes: "100vw",
   };
 
@@ -304,18 +472,29 @@ function HeroBackground() {
     props: { srcSet: desktopSrcSet },
   } = getImageProps({
     ...commonProps,
+
     src: HERO_DESKTOP,
+
+    alt: "",
+
     width: 2400,
     height: 1350,
+
     quality: 90,
   });
 
   const { props: mobileProps } = getImageProps({
     ...commonProps,
+
     src: HERO_MOBILE,
+
+    alt: "دکتر نسیم محمدحسنی، بنیان‌گذار DNH و مشاور مالی راهبردی",
+
     width: 1080,
     height: 1920,
+
     quality: 88,
+
     loading: "eager",
     fetchPriority: "high",
   });
@@ -323,8 +502,12 @@ function HeroBackground() {
   return (
     <picture
       className="
+        home-hero-background
+
         absolute
         inset-0
+        z-0
+
         block
         h-full
         w-full
@@ -338,45 +521,159 @@ function HeroBackground() {
 
       <img
         {...mobileProps}
-        alt=""
+        alt="دکتر نسیم محمدحسنی، بنیان‌گذار DNH و مشاور مالی راهبردی"
         className="
           h-full
           w-full
+
           object-cover
           object-center
+
+          lg:object-center
         "
       />
     </picture>
   );
 }
 
-function ProfessionalRole({
-  icon: Icon,
-  label,
-}: {
-  icon: typeof UserRoundCheck;
-  label: string;
-}) {
-  return (
-    <div
-      dir="rtl"
-      className="
-        flex
-        items-center
-        gap-2
-        text-[10px]
-        font-medium
-        text-[color-mix(in_srgb,var(--dnh-text-on-brand)_76%,transparent)]
-        lg:text-[11px]
-      "
-    >
-      <Icon
-        aria-hidden="true"
-        className="h-3.5 w-3.5 shrink-0 text-[var(--dnh-text-on-brand)]"
-        strokeWidth={1.6}
-      />
+/* =============================================================================
+   Motion
+============================================================================= */
 
-      <span>{label}</span>
-    </div>
+function HeroMotionStyles() {
+  return (
+    <style>{`
+      /* ==========================================================
+         Background
+      =========================================================== */
+
+      @keyframes dnhHeroBackgroundEnter {
+        from {
+          opacity: 0;
+          transform: scale(1.018);
+        }
+
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .home-hero-background {
+        opacity: 0;
+
+        transform-origin: center;
+
+        animation:
+          dnhHeroBackgroundEnter
+          1100ms
+          cubic-bezier(.22, 1, .36, 1)
+          forwards;
+      }
+
+      /* ==========================================================
+         Content
+      =========================================================== */
+
+      @keyframes dnhHeroContentEnter {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 12px, 0);
+        }
+
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      .home-hero-reveal {
+        opacity: 0;
+
+        animation:
+          dnhHeroContentEnter
+          640ms
+          cubic-bezier(.22, 1, .36, 1)
+          forwards;
+      }
+
+      .home-hero-reveal-1 {
+        animation-delay: 120ms;
+      }
+
+      .home-hero-reveal-2 {
+        animation-delay: 200ms;
+      }
+
+      .home-hero-reveal-3 {
+        animation-delay: 300ms;
+      }
+
+      .home-hero-reveal-4 {
+        animation-delay: 400ms;
+      }
+
+      .home-hero-reveal-5 {
+        animation-delay: 500ms;
+      }
+
+      /* ==========================================================
+         Atmosphere
+      =========================================================== */
+
+      @keyframes dnhHeroAtmosphereEnter {
+        from {
+          opacity: 0;
+          transform: translate3d(10px, 0, 0);
+        }
+
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      .home-hero-atmosphere {
+        opacity: 0;
+
+        animation:
+          dnhHeroAtmosphereEnter
+          800ms
+          520ms
+          cubic-bezier(.22, 1, .36, 1)
+          forwards;
+      }
+
+      /* ==========================================================
+         Reduced motion
+      =========================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        .home-hero-background,
+        .home-hero-reveal,
+        .home-hero-atmosphere {
+          opacity: 1 !important;
+
+          transform: none !important;
+
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* ==========================================================
+         Short desktop displays
+      =========================================================== */
+
+      @media (min-width: 1024px) and (max-height: 740px) {
+        .home-hero {
+          min-height: 640px !important;
+        }
+
+        .home-hero-reveal-5 {
+          display: none;
+        }
+      }
+    `}</style>
   );
 }

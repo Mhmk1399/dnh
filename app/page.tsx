@@ -1,26 +1,37 @@
-import { WealthArchitectureSection } from "@/components/static/Home/AboutDnhSection";
-import { CaseStudiesSection } from "@/components/static/Home/CaseStudiesSection";
-import { DecisionMarketsSection } from "@/components/static/Home/DecisionMarketsSection";
 import { DnhFrameworkSection } from "@/components/static/Home/DnhFrameworkSection";
-import { FaqSection } from "@/components/static/Home/FaqSection";
-import { FinalCtaSection } from "@/components/static/Home/FinalCtaSection";
 import { HomeHero } from "@/components/static/Home/HomeHero";
-import { ServicesTimelineSection } from "@/components/static/Home/ServicesTimelineSection";
-import { LeadSection } from "@/components/pages/LeadSection";
+import { AdvisoryServicesSection } from "@/components/static/Home/AdvisoryServicesSection";
+import { BrandPositioningStrip } from "@/components/static/Home/BrandPositioningStrip";
+import { MarketNoiseVsWealthArchitectureSection } from "@/components/static/Home/MarketNoiseVsWealthArchitectureSection";
+import { IntelligenceDeskPreviewSection } from "@/components/static/Home/IntelligenceDeskPreviewSection";
+import { WholeWealthViewSection } from "@/components/static/Home/WholeWealthViewSection";
+import { WeeklyOutlookSection } from "@/components/static/Home/WeeklyOutlookSection";
+import { InsightsSection } from "@/components/static/Home/InsightsSection";
+import { ResearchSection } from "@/components/static/Home/ResearchSection";
+import { AboutDrNasimSection } from "@/components/static/Home/AboutDrNasimSection";
+import { FinancialDecisionAssessmentSection } from "@/components/static/Home/FinancialDecisionAssessmentSection";
 
 export default function HomePage() {
   return (
     <>
       <main>
         <HomeHero />
-        <WealthArchitectureSection />
+
+        <BrandPositioningStrip />
+
+        <MarketNoiseVsWealthArchitectureSection />
+
         <DnhFrameworkSection />
-        <ServicesTimelineSection />
-        <DecisionMarketsSection />
-        <CaseStudiesSection />
-        <FaqSection />
-        <LeadSection />
-        <FinalCtaSection />
+
+        <IntelligenceDeskPreviewSection />
+
+        <WholeWealthViewSection />
+        <AdvisoryServicesSection />
+        <WeeklyOutlookSection />
+        <InsightsSection />
+        <ResearchSection />
+        <AboutDrNasimSection />
+        <FinancialDecisionAssessmentSection />
       </main>
     </>
   );

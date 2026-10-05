@@ -13,7 +13,6 @@ import {
   getSiteHref,
   LEGAL_LINKS,
   SERVICE_ITEMS,
-  TARGET_MARKET_ITEMS,
   type SiteLink,
 } from "@/config/site-navigation";
 import styles from "./Footer.module.css";
@@ -31,11 +30,7 @@ const footerGroups: FooterGroup[] = [
     title: "خدمات تخصصی",
     links: [{ title: "نمای کلی خدمات", href: "/services" }, ...SERVICE_ITEMS],
   },
-  {
-    id: "markets",
-    title: "برای چه کسانی؟",
-    links: TARGET_MARKET_ITEMS,
-  },
+ 
   {
     id: "contact",
     title: "همراه شما",

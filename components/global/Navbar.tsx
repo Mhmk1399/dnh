@@ -58,8 +58,16 @@ const ICONS: Record<NavigationIcon, LucideIcon> = {
   briefing: Presentation,
   decision: CircleDollarSign,
   holdings: Building2,
+  "case-study": BriefcaseBusiness,
+  outlook: TrendingUp,
+  insight: BrainCircuit,
+  research: PieChart,
+  faq: CircleDollarSign,
+  
 };
 const MENU_KEYS = Object.keys(MEGA_MENUS) as MegaMenuKey[];
+const LOGIN_PATH = "/login";
+const SIGNUP_PATH = "/register";
 
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -275,6 +283,26 @@ function NavigationShell({ pathname }: { pathname: string }) {
               })}
             </nav>
             <div className={styles.desktopAction}>
+              <div className={styles.authActions} aria-label="ورود و ثبت‌نام">
+                <ActionButton
+                  href={LOGIN_PATH}
+                  variant="secondary"
+                  size="sm"
+                  className={styles.authButton}
+                  onClick={closeDesktop}
+                >
+                  ورود
+                </ActionButton>
+                <ActionButton
+                  href={SIGNUP_PATH}
+                  variant="secondary"
+                  size="sm"
+                  className={styles.authButton}
+                  onClick={closeDesktop}
+                >
+                  ثبت‌نام
+                </ActionButton>
+              </div>
               <ActionButton
                 href={href(CONSULTATION_PATH)}
                 icon={ArrowUpLeft}
@@ -516,6 +544,26 @@ function MobileNavigation({
         <div className={styles.drawerIntro}>
           <span className={styles.drawerEyebrow}>دسترسی سریع</span>
           <h2 id={`${id}-title`}>مسیرتان را انتخاب کنید.</h2>
+        </div>
+        <div className={styles.mobileAuthActions} aria-label="ورود و ثبت‌نام">
+          <ActionButton
+            href={LOGIN_PATH}
+            variant="secondary"
+            size="sm"
+            fullWidth
+            onClick={onDismiss}
+          >
+            ورود
+          </ActionButton>
+          <ActionButton
+            href={SIGNUP_PATH}
+            variant="secondary"
+            size="sm"
+            fullWidth
+            onClick={onDismiss}
+          >
+            ثبت‌نام
+          </ActionButton>
         </div>
         <nav aria-label="لینک‌های اصلی موبایل" className={styles.quickLinks}>
           {NAVIGATION.filter((item) => !item.menu).map((item) => (

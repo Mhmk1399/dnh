@@ -30,23 +30,26 @@ export function FloatingContact({
   ------------------------------------------------------------------ */
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    let revealTimer: number | undefined;
+    let hideTimer: number | undefined;
 
     try {
       const hasSeenIntro = window.sessionStorage.getItem(SESSION_KEY) === "1";
 
       if (!hasSeenIntro) {
-        setShowIntro(true);
-
         /*
          * همان لحظه ثبت می‌کنیم تا اگر کاربر Route عوض کرد،
          * پیام دوباره نشان داده نشود.
          */
         window.sessionStorage.setItem(SESSION_KEY, "1");
 
-        timer = window.setTimeout(() => {
-          setShowIntro(false);
-        }, 7000);
+        revealTimer = window.setTimeout(() => {
+          setShowIntro(true);
+
+          hideTimer = window.setTimeout(() => {
+            setShowIntro(false);
+          }, 7000);
+        }, 0);
       }
     } catch {
       /*
@@ -56,7 +59,8 @@ export function FloatingContact({
     }
 
     return () => {
-      if (timer) window.clearTimeout(timer);
+      if (revealTimer !== undefined) window.clearTimeout(revealTimer);
+      if (hideTimer !== undefined) window.clearTimeout(hideTimer);
     };
   }, []);
 
