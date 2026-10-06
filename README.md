@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Dynamic lead forms: deployment note
+
+Public dynamic-form submissions include canonical server validation and a hidden honeypot. Before high-volume production use, add infrastructure-level rate limiting and consider a privacy-preserving CAPTCHA when abuse signals justify it. CAPTCHA is intentionally not a v1 dependency.
+
 ## Getting Started
 
 First, run the development server:

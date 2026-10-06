@@ -112,26 +112,29 @@ export function PrivateWealthStrategyHero() {
             "
           >
             <div className="order-1">
-            <div className="mb-5 flex items-center gap-3">
-              <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
+              <div className="mb-5 flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="h-px w-10 bg-brand-accent"
+                />
 
-              <p
-                className="
+                <p
+                  className="
                   text-[10px] font-black text-white/68
                   sm:text-[11px]
                 "
-              >
-                استراتژی ثروت خصوصی
-              </p>
-            </div>
+                >
+                  استراتژی ثروت خصوصی
+                </p>
+              </div>
 
-            {/* ===================================================
+              {/* ===================================================
                 ONE H1
             ==================================================== */}
 
-            <h1
-              id="wealth-strategy-hero-title"
-              className="
+              <h1
+                id="wealth-strategy-hero-title"
+                className="
                 max-w-[850px]
 
                 text-[36px]
@@ -148,15 +151,15 @@ export function PrivateWealthStrategyHero() {
 
                 xl:text-[59px]
               "
-            >
-              استراتژی ثروت خصوصی؛
-              <br />
-              برای دیدن{" "}
-              <span className="text-brand-accent">تصویر کامل‌تر ثروت.</span>
-            </h1>
+              >
+                استراتژی ثروت خصوصی؛
+                <br />
+                برای دیدن{" "}
+                <span className="text-brand-accent">تصویر کامل‌تر ثروت.</span>
+              </h1>
 
-            <p
-              className="
+              <p
+                className="
                 mt-6 max-w-[700px]
 
                 text-[13px]
@@ -168,12 +171,11 @@ export function PrivateWealthStrategyHero() {
                 sm:text-[14px]
                 lg:text-[15px]
               "
-            >
-              برای افراد، خانواده‌ها و صاحبان سرمایه‌ای که می‌خواهند دارایی‌ها،
-              اهداف، نقدشوندگی و ریسک را نه جدا از هم، بلکه در یک تصویر منسجم‌تر
-              ببینند.
-            </p>
-
+              >
+                برای افراد، خانواده‌ها و صاحبان سرمایه‌ای که می‌خواهند
+                دارایی‌ها، اهداف، نقدشوندگی و ریسک را نه جدا از هم، بلکه در یک
+                تصویر منسجم‌تر ببینند.
+              </p>
             </div>
 
             {/* ===================================================
@@ -699,8 +701,6 @@ function HeroBackground() {
           backgroundSize: "118px 100%",
         }}
       />
-
-     
     </>
   );
 }
