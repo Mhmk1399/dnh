@@ -1460,19 +1460,7 @@ function Background() {
         }}
       />
 
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          right-[18%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
+     
     </>
   );
 }

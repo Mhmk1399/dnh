@@ -68,6 +68,8 @@ const ICONS: Record<NavigationIcon, LucideIcon> = {
 const MENU_KEYS = Object.keys(MEGA_MENUS) as MegaMenuKey[];
 const LOGIN_PATH = "/login";
 const SIGNUP_PATH = "/register";
+const PRIMARY_LOGO_SRC = "/assets/images/LOGO.svg";
+const WHITE_LOGO_SRC = "/assets/images/LOGOWHITE.svg";
 
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -100,6 +102,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const openedByHover = useRef<MegaMenuKey | null>(null);
   const id = useId();
   const href = (path: string) => getSiteHref(path, pathname);
+  const elevated = scrolled || openMenu !== null;
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -189,7 +192,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
       <header
         ref={shellRef}
         className={styles.header}
-        data-scrolled={scrolled || openMenu !== null}
+        data-scrolled={elevated}
         dir="rtl"
         onPointerEnter={clearTimers}
         onPointerLeave={(event) => {
@@ -212,12 +215,13 @@ function NavigationShell({ pathname }: { pathname: string }) {
               onClick={closeDesktop}
             >
               <Image
-                src="/assets/images/LOGO.svg"
+                src={elevated ? PRIMARY_LOGO_SRC : WHITE_LOGO_SRC}
                 alt="DNH"
                 width={140}
                 height={44}
                 className={styles.logo}
-                priority
+                loading="eager"
+                unoptimized
               />
             </Link>
             <nav className={styles.desktopNavigation} aria-label="منوی اصلی">
@@ -524,10 +528,11 @@ function MobileNavigation({
       <div className={styles.drawerHeader}>
         <Link href="/" onClick={onDismiss} aria-label="دی‌ان‌اچ؛ صفحه اصلی">
           <Image
-            src="/assets/images/LOGO.svg"
+            src={PRIMARY_LOGO_SRC}
             alt="DNH"
             width={127}
             height={40}
+            unoptimized
           />
         </Link>
         <button

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "lenis/dist/lenis.css";
 import "./globals.css";
-import { estedad } from "@/next-persian-fonts/estedad";
+import { iranSans } from "@/next-persian-fonts/IranSans";
 import Footer from "@/components/global/Footer";
 import SmoothScroll from "@/components/global/SmoothScroll";
 import { Navbar } from "@/components/global/Navbar";
@@ -75,7 +75,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${estedad.className} ${estedad.variable}`}>
+      <body className={`${iranSans.className} ${iranSans.variable}`}>
         <SmoothScroll />
         <PwaRegister />
         <Navbar />

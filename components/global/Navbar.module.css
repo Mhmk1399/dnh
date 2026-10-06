@@ -145,18 +145,19 @@
 }
 .header[data-scrolled="true"] .brand {
   background: transparent;
+  border-color: transparent;
   box-shadow: none;
 }
-/* بالای صفحه — فقط پشت لوگو سفید */
+/* Transparent logo state over the hero */
 .header:not([data-scrolled="true"]) .brand {
   min-height: 54px;
-  padding: 7px 14px;
+  padding: 7px 0;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: transparent;
 
-  border: 1px solid color-mix(in srgb, var(--dnh-primary) 12%, transparent);
+  border-color: transparent;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 .brand {
   display: flex;
@@ -166,9 +167,11 @@
   justify-content: center;
 
   padding: 6px 12px;
+  border: 1px solid transparent;
 
   transition:
     background-color 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 350ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .logo {

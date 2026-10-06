@@ -1,1039 +1,782 @@
-import { getImageProps } from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowDownLeft,
+  ArrowLeft,
+  Droplets,
+  Layers3,
+  ShieldCheck,
+  Target,
+  type LucideIcon,
+} from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
 /* =============================================================================
-   IMAGES
-   مسیر تصاویر را خودت اینجا قرار بده
+   PRIVATE WEALTH STRATEGY HERO
+   Server Component
 ============================================================================= */
 
-const HERO_DESKTOP = "/assets/images/private-wealth-strategyhero-desktop.png";
-const HERO_MOBILE = "/assets/images/private-wealth-strategyhero-mobile.png";
-
-/* =============================================================================
-   SERVICES
-============================================================================= */
-
-const SERVICES = [
+const WEALTH_DIMENSIONS = [
   {
-    index: "01",
-    shortTitle: "استراتژی ثروت خصوصی",
-    href: "/fa/services/private-wealth-strategy",
-    active: true,
+    title: "دارایی‌ها",
+    description: "آنچه امروز در ساختار ثروت وجود دارد",
+    icon: Layers3,
   },
   {
-    index: "02",
-    shortTitle: "هوشمندی پرتفوی",
-    href: "/fa/services/portfolio-intelligence",
+    title: "اهداف",
+    description: "آنچه ثروت باید در خدمت آن باشد",
+    icon: Target,
   },
   {
-    index: "03",
-    shortTitle: "مشاوره مالی راهبردی",
-    href: "/fa/services/strategic-financial-advisory",
+    title: "نقدشوندگی",
+    description: "انعطاف و دسترسی به منابع",
+    icon: Droplets,
   },
   {
-    index: "04",
-    shortTitle: "مشاوره اقتصاد و بازار",
-    href: "/fa/services/macro-market-advisory",
-  },
-  {
-    index: "05",
-    shortTitle: "مدیریت ریسک و حفاظت از ثروت",
-    href: "/fa/services/risk-management-wealth-protection",
-  },
-  {
-    index: "06",
-    shortTitle: "نشست‌های مدیران",
-    href: "/fa/services/executive-briefings",
+    title: "ریسک",
+    description: "آنچه می‌تواند ساختار را آسیب‌پذیر کند",
+    icon: ShieldCheck,
   },
 ] as const;
-
-/* =============================================================================
-   HERO
-============================================================================= */
 
 export function PrivateWealthStrategyHero() {
   return (
     <section
-      id="private-wealth-strategy-hero"
+      id="wealth-strategy-intro"
       dir="rtl"
-      aria-labelledby="private-wealth-strategy-title"
+      aria-labelledby="wealth-strategy-hero-title"
       className="
-        private-wealth-hero
-        relative
-        isolate
-        overflow-hidden
-        bg-[#073949]
-        text-white
+        relative isolate
+        min-h-[100svh]
+        scroll-mt-24 overflow-hidden
+        bg-[#022f3e] text-white
+        sm:scroll-mt-28
       "
-      style={{
-        height: "100dvh",
-        minHeight: "680px",
-      }}
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <HeroBackground />
 
-      {/* Desktop overlay */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          hidden
-          lg:block
-        "
-        style={{
-          background: `
-            linear-gradient(
-              90deg,
-              rgba(1,29,39,0.03) 0%,
-              rgba(2,38,50,0.08) 30%,
-              rgba(3,47,62,0.40) 52%,
-              rgba(2,42,56,0.86) 72%,
-              rgba(2,37,49,0.97) 100%
-            )
-          `,
-        }}
-      />
-
-      {/* Mobile overlay */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          lg:hidden
-        "
-        style={{
-          background: `
-            linear-gradient(
-              180deg,
-              rgba(2,38,50,0.05) 0%,
-              rgba(2,40,53,0.10) 25%,
-              rgba(2,43,56,0.48) 46%,
-              rgba(3,47,61,0.88) 62%,
-              rgba(3,48,62,0.98) 100%
-            )
-          `,
-        }}
-      />
-
-      {/* Right-side readability */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-y-0
-          right-0
-          z-[1]
-          hidden
-          w-[48%]
-          lg:block
-        "
-        style={{
-          background: `
-            linear-gradient(
-              90deg,
-              transparent 0%,
-              rgba(2,40,52,.18) 22%,
-              rgba(2,38,50,.72) 100%
-            )
-          `,
-        }}
-      />
-
-      {/* Bottom depth */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          bottom-0
-          z-[1]
-          h-[28%]
-          bg-gradient-to-t
-          from-[#032f3f]/80
-          via-[#032f3f]/30
-          to-transparent
-        "
-      />
-
-      {/* =========================================================
-          SUBTLE STRUCTURAL DETAILS
-      ========================================================== */}
-
-      <div
-        aria-hidden="true"
-        className="
-          private-wealth-grid
-          pointer-events-none
-          absolute
-          inset-0
-          z-[2]
-          opacity-[0.10]
-        "
-        style={{
-          backgroundImage: `
-            linear-gradient(
-              to right,
-              rgba(255,255,255,.09) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(255,255,255,.07) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "96px 96px",
-          maskImage:
-            "linear-gradient(to right, black 0%, rgba(0,0,0,.62) 52%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to right, black 0%, rgba(0,0,0,.62) 52%, transparent 100%)",
-        }}
-      />
-
-      {/* top thin line */}
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          left-[42%]
-          top-0
-          z-[3]
-          hidden
-          h-px
-          w-[34%]
-          bg-white/15
-          lg:block
-        "
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          left-[42%]
-          top-0
-          z-[3]
-          hidden
-          h-[5px]
-          w-[3px]
-          bg-brand-accent
-          lg:block
-        "
-      />
-
-      {/* =========================================================
-          MAIN CONTAINER
-      ========================================================== */}
-
       <div
         className="
-          relative
-          z-10
-          mx-auto
-          flex
-          h-full
-          w-full
-          max-w-[1600px]
+          dnh-site-shell
+          relative z-10
+          mx-auto flex min-h-[100svh] w-full max-w-[1536px]
           flex-col
-          px-5
-          pb-6
-          pt-[118px]
 
-          sm:px-8
-          sm:pb-8
-          sm:pt-[128px]
-
-          lg:px-12
-          lg:pb-7
-          lg:pt-[108px]
-
+          px-5 pb-8 pt-[116px]
+          sm:px-8 sm:pb-10 sm:pt-[126px]
+          lg:px-12 lg:pb-10 lg:pt-[108px]
           xl:px-16
-
           2xl:px-20
         "
       >
         {/* =======================================================
-            MAIN CONTENT
+            Hero content
         ======================================================== */}
 
         <div
           className="
-            flex
-            min-h-0
-            flex-1
-            items-end
-            pb-10
+            grid flex-1 items-center gap-12 py-12
 
-            sm:pb-12
+            lg:grid-cols-[0.96fr_1.04fr]
+            lg:gap-16
+            lg:py-9
 
-            lg:items-center
-            lg:pb-12
+            xl:grid-cols-[1fr_1fr]
+            xl:gap-20
           "
         >
+          {/* =====================================================
+              VISUAL — LEFT
+          ====================================================== */}
+
           <div
             className="
-              private-wealth-content
-              mr-0
-              ml-auto
-              w-full
-              max-w-[650px]
-              text-right
-
-              lg:max-w-[610px]
-
-              xl:max-w-[670px]
+              order-2
+              lg:col-start-2
+              lg:row-start-1
             "
           >
-            {/* ===============================================
-                EYEBROW
-            ================================================ */}
+            <WealthStructureView />
+          </div>
 
-            <div
-              className="
-                private-wealth-enter
-                private-wealth-delay-1
+          {/* =====================================================
+              COPY — RIGHT
+          ====================================================== */}
 
-                mb-4
-                flex
-                items-center
-                gap-3
+          <div
+            className="
+              contents
 
-                sm:mb-5
-              "
-            >
-              <span
-                aria-hidden="true"
+              lg:block
+              lg:col-start-1
+              lg:row-start-1
+            "
+          >
+            <div className="order-1">
+            <div className="mb-5 flex items-center gap-3">
+              <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
+
+              <p
                 className="
-                  h-px
-                  w-10
-                  bg-brand-accent
-                "
-              />
-
-              <span
-                className="
-                  text-[10px]
-                  font-bold
-                  text-white/70
-
+                  text-[10px] font-black text-white/68
                   sm:text-[11px]
                 "
               >
-                خدمات DNH
-              </span>
+                استراتژی ثروت خصوصی
+              </p>
             </div>
 
-            {/* service counter */}
-
-            <div
-              className="
-                private-wealth-enter
-                private-wealth-delay-2
-
-                mb-5
-                flex
-                items-center
-                gap-4
-
-                text-[9px]
-                font-medium
-                text-white/45
-              "
-            >
-              <span
-                dir="ltr"
-                className="
-                  tracking-[0.12em]
-                  text-white/72
-                "
-              >
-                01 / 06
-              </span>
-
-              <span className="h-px w-8 bg-white/20" />
-
-              <ArrowLeft
-                aria-hidden="true"
-                className="h-3 w-3"
-                strokeWidth={1.4}
-              />
-            </div>
-
-            {/* ===============================================
-                H1
-            ================================================ */}
+            {/* ===================================================
+                ONE H1
+            ==================================================== */}
 
             <h1
-              id="private-wealth-strategy-title"
+              id="wealth-strategy-hero-title"
               className="
-                private-wealth-enter
-                private-wealth-delay-3
+                max-w-[850px]
 
-                max-w-[620px]
-
-                text-[clamp(2.55rem,11vw,4.1rem)]
+                text-[36px]
                 font-black
-                leading-[1.24]
-                tracking-[-0.045em]
+                leading-[1.62]
+                tracking-[-0.05em]
 
                 text-white
 
-                sm:text-[clamp(3rem,8vw,4.4rem)]
+                sm:text-[44px]
 
-                lg:text-[clamp(3.25rem,4.3vw,4.7rem)]
+                lg:text-[52px]
+                lg:leading-[1.52]
 
-                xl:text-[5rem]
+                xl:text-[59px]
               "
             >
-              استراتژی
+              استراتژی ثروت خصوصی؛
               <br />
-              <span className="text-brand-accent">ثروت خصوصی</span>
+              برای دیدن{" "}
+              <span className="text-brand-accent">تصویر کامل‌تر ثروت.</span>
             </h1>
 
-            {/* ===============================================
-                TAGLINE
-            ================================================ */}
-
             <p
               className="
-                private-wealth-enter
-                private-wealth-delay-4
+                mt-6 max-w-[700px]
 
-                mt-5
-
-                text-[14px]
-                font-bold
-                leading-[2]
-
-                text-white/90
-
-                sm:text-[15px]
-
-                lg:mt-6
-                lg:text-[16px]
-              "
-            >
-              ساختاردهی و برنامه‌ریزی بلندمدت ثروت.
-            </p>
-
-            {/* ===============================================
-                DESCRIPTION
-            ================================================ */}
-
-            <p
-              className="
-                private-wealth-enter
-                private-wealth-delay-5
-
-                mt-5
-                max-w-[570px]
-
-                text-[12px]
+                text-[13px]
                 font-medium
-                leading-[2.15]
+                leading-[2.2]
 
-                text-white/62
+                text-white/57
 
-                sm:text-[13px]
-
-                lg:text-[14px]
+                sm:text-[14px]
+                lg:text-[15px]
               "
             >
-              برای تصمیم‌های مهم مالی، داشتن یک مسیر و ساختار منسجم می‌تواند دید
-              روشن‌تری در امتداد افق بلندمدت ایجاد کند.
+              برای افراد، خانواده‌ها و صاحبان سرمایه‌ای که می‌خواهند دارایی‌ها،
+              اهداف، نقدشوندگی و ریسک را نه جدا از هم، بلکه در یک تصویر منسجم‌تر
+              ببینند.
             </p>
 
-            {/* ===============================================
-                ACTIONS
-            ================================================ */}
+            </div>
+
+            {/* ===================================================
+                CTA
+            ==================================================== */}
 
             <div
               className="
-                private-wealth-enter
-                private-wealth-delay-6
+                order-3
+                mt-0
+                flex flex-col gap-3
 
-                mt-7
-                flex
-                w-full
-                flex-col
-                gap-3
-
-                sm:flex-row
-                sm:flex-wrap
-                sm:items-center
-
+                lg:order-none
                 lg:mt-8
+
+                sm:flex-row sm:flex-wrap
               "
             >
               <ActionButton
-                href="#who-it-is-for"
+                href="/fa/financial-decision-assessment"
                 variant="assessment"
-                size="md"
+                size="lg"
                 icon={ArrowLeft}
                 className="
                   w-full
-
                   bg-brand-accent
                   text-white
 
-                  shadow-[0_16px_38px_color-mix(in_srgb,var(--dnh-accent)_24%,transparent)]
+                  shadow-[0_18px_48px_rgba(252,133,2,.18)]
 
-                  hover:bg-[#ec7d01]
+                  hover:-translate-y-0.5
+                  hover:bg-[#eb7c01]
 
                   sm:w-auto
-                  sm:min-w-[235px]
+                  sm:min-w-[285px]
                 "
               >
-                آشنایی با این خدمت
+                ارزیابی اولیه ساختار ثروت
               </ActionButton>
 
               <ActionButton
-                href="/fa/contact"
+                href="#wealth-strategy-fit"
                 variant="secondary"
-                size="md"
-                icon={ArrowLeft}
+                size="lg"
+                icon={ArrowDownLeft}
                 className="
                   w-full
 
-                  border-white/35
-                  bg-white/[0.035]
+                  border-white/20
+                  bg-white/[0.025]
 
                   text-white
-
                   shadow-none
-                  backdrop-blur-[6px]
 
-                  hover:border-white/60
-                  hover:bg-white/[0.08]
+                  hover:border-white/38
+                  hover:bg-white/[0.065]
                   hover:text-white
 
                   sm:w-auto
-                  sm:min-w-[210px]
+                  sm:min-w-[230px]
                 "
               >
-                گفت‌وگو با تیم DNH
+                این خدمت برای چه کسانی است؟
               </ActionButton>
-            </div>
-          </div>
-        </div>
-
-        {/* =======================================================
-            BOTTOM AREA
-        ======================================================== */}
-
-        <div
-          className="
-            private-wealth-enter
-            private-wealth-delay-7
-
-            relative
-            mt-auto
-
-            hidden
-
-            lg:grid
-            lg:grid-cols-[0.72fr_1.28fr]
-            lg:items-end
-            lg:gap-12
-
-            xl:grid-cols-[0.75fr_1.25fr]
-          "
-        >
-          {/* ===============================================
-              IMAGE MICRO COPY
-          ================================================ */}
-
-          <div
-            dir="rtl"
-            className="
-              justify-self-start
-              pb-2
-              text-right
-            "
-          >
-            <div className="mb-4 flex items-center gap-3">
-              <span
-                aria-hidden="true"
-                className="
-                  flex
-                  h-[11px]
-                  w-[11px]
-                  items-center
-                  justify-center
-
-                  bg-brand-accent
-                "
-              >
-                <span className="h-[3px] w-[3px] bg-white" />
-              </span>
-
-              <span className="h-px w-32 bg-brand-accent/65" />
-            </div>
-
-            <p
-              className="
-                max-w-[180px]
-                text-[10px]
-                font-medium
-                leading-[1.9]
-                text-white/62
-              "
-            >
-              نگاهی فراتر از امروز
-              <br />
-              به ساختار فردا
-            </p>
-          </div>
-
-          {/* ===============================================
-              SERVICES INDEX
-          ================================================ */}
-
-          <nav
-            aria-label="خدمات DNH"
-            className="
-              grid
-              grid-cols-6
-              items-start
-              gap-4
-            "
-          >
-            {SERVICES.map((service) => (
-              <ServiceIndexItem key={service.index} {...service} />
-            ))}
-          </nav>
-        </div>
-
-        {/* =======================================================
-            MOBILE SERVICE INDEX
-        ======================================================== */}
-
-        <div
-          className="
-            private-wealth-enter
-            private-wealth-delay-7
-
-            mt-auto
-
-            border-t
-            border-white/12
-
-            pt-4
-
-            lg:hidden
-          "
-        >
-          <div
-            className="
-              flex
-              items-center
-              justify-between
-              gap-4
-            "
-          >
-            <div>
-              <span
-                dir="ltr"
-                className="
-                  block
-
-                  text-[10px]
-                  font-black
-                  tracking-[0.12em]
-
-                  text-brand-accent
-                "
-              >
-                01 / 06
-              </span>
-
-              <span
-                className="
-                  mt-1
-                  block
-
-                  text-[10px]
-                  font-bold
-
-                  text-white/86
-                "
-              >
-                استراتژی ثروت خصوصی
-              </span>
-            </div>
-
-            <div
-              aria-hidden="true"
-              className="
-                flex
-                items-center
-                gap-[10px]
-              "
-            >
-              {SERVICES.map((service) => (
-                <span
-                  key={service.index}
-                  className={`
-                    block
-                    h-[7px]
-                    w-[7px]
-
-                    border
-
-                    ${
-                      service.active
-                        ? `
-                          border-brand-accent
-                          bg-brand-accent
-                        `
-                        : `
-                          border-white/35
-                          bg-white/15
-                        `
-                    }
-                  `}
-                />
-              ))}
             </div>
           </div>
         </div>
       </div>
-
-      {/* =========================================================
-          MOTION
-      ========================================================== */}
-
-      <HeroMotionStyles />
     </section>
   );
 }
 
 /* =============================================================================
-   SERVICE INDEX
+   WEALTH STRUCTURE VIEW
+
+   Meaning:
+   4 dimensions are not shown as separate "products".
+   They are gathered into one structural view of wealth.
 ============================================================================= */
 
-function ServiceIndexItem({
-  index,
-  shortTitle,
-  href,
+function WealthStructureView() {
+  return (
+    <div
+      className="
+        group/view
+        relative
+
+        mx-auto
+        w-full
+        max-w-[650px]
+
+        overflow-hidden
+
+        border
+        border-white/12
+
+        bg-white/[0.025]
+
+        shadow-[0_40px_120px_rgba(0,0,0,.19)]
+
+        transition-[transform,border-color,box-shadow]
+        duration-500
+        ease-[cubic-bezier(.22,1,.36,1)]
+
+        hover:-translate-y-[3px]
+        hover:border-white/20
+        hover:shadow-[0_48px_135px_rgba(0,0,0,.24)]
+      "
+    >
+      <VisualBackground />
+
+      {/* =========================================================
+          Header
+      ========================================================== */}
+
+      <div
+        className="
+          relative z-10
+
+          flex items-center justify-between gap-5
+
+          border-b border-white/10
+
+          px-5 py-5
+          sm:px-6
+        "
+      >
+        <div>
+          <p
+            className="
+              text-[10px]
+              font-black
+
+              text-white/72
+            "
+          >
+            یک تصویر، چند لایه
+          </p>
+
+          <p
+            className="
+              mt-1
+              text-[8px]
+              font-medium
+              text-white/30
+            "
+          >
+            هر جزء در نسبت با کل ساختار دیده می‌شود.
+          </p>
+        </div>
+
+        <span
+          aria-hidden="true"
+          className="
+            flex items-center gap-2
+          "
+        >
+          <span
+            className="
+              h-[6px] w-[6px]
+              bg-brand-accent
+              shadow-[0_0_15px_rgba(252,133,2,.50)]
+            "
+          />
+
+          <span
+            className="
+              h-px w-9
+              bg-white/14
+
+              transition-[width,background-color]
+              duration-500
+
+              group-hover/view:w-14
+              group-hover/view:bg-brand-accent/55
+            "
+          />
+        </span>
+      </div>
+
+      {/* =========================================================
+          Dimensions
+      ========================================================== */}
+
+      <div
+        className="
+          relative z-10
+          px-5 py-5
+          sm:px-6 sm:py-6
+        "
+      >
+        <div
+          className="
+            relative
+            border-x border-white/[0.07]
+          "
+        >
+          {WEALTH_DIMENSIONS.map((item, index) => (
+            <WealthDimension
+              key={item.title}
+              item={item}
+              last={index === WEALTH_DIMENSIONS.length - 1}
+            />
+          ))}
+        </div>
+
+        {/* =======================================================
+            Convergence
+        ======================================================== */}
+
+        <div
+          aria-hidden="true"
+          className="
+            relative
+            mx-auto
+            h-12
+            w-px
+
+            bg-gradient-to-b
+            from-[#82cee4]/36
+            to-brand-accent/70
+          "
+        >
+          <span
+            className="
+              wealth-flow-dot
+
+              absolute
+              left-1/2 top-0
+
+              h-[6px] w-[6px]
+
+              -translate-x-1/2
+
+              bg-brand-accent
+
+              shadow-[0_0_15px_rgba(252,133,2,.55)]
+            "
+          />
+        </div>
+
+        {/* =======================================================
+            Outcome
+        ======================================================== */}
+
+        <div
+          className="
+            relative
+            overflow-hidden
+
+            border
+            border-brand-accent/30
+
+            bg-brand-accent/[0.065]
+
+            px-5 py-5
+
+            sm:px-6
+          "
+        >
+          <span
+            aria-hidden="true"
+            className="
+              absolute inset-y-0 right-0
+              w-[4px]
+              bg-brand-accent
+            "
+          />
+
+          <div
+            className="
+              flex flex-col gap-4
+              sm:flex-row
+              sm:items-center
+              sm:justify-between
+            "
+          >
+            <div>
+              <p
+                className="
+                  text-[8px]
+                  font-black
+                  text-brand-accent
+                "
+              >
+                تصویر مورد نظر
+              </p>
+
+              <p
+                className="
+                  mt-1.5
+                  text-[15px]
+                  font-black
+                  leading-[1.85]
+
+                  text-white
+
+                  sm:text-[17px]
+                "
+              >
+                ساختار ثروت، در یک تصویر منسجم‌تر.
+              </p>
+            </div>
+
+            <div
+              aria-hidden="true"
+              className="
+                flex items-center gap-2
+              "
+            >
+              <span
+                className="
+                  h-px w-10
+                  bg-brand-accent/45
+
+                  transition-[width]
+                  duration-500
+
+                  group-hover/view:w-16
+                "
+              />
+
+              <span
+                className="
+                  h-[8px] w-[8px]
+                  bg-brand-accent
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <VisualMotion />
+    </div>
+  );
+}
+
+/* =============================================================================
+   DIMENSION
+============================================================================= */
+
+function WealthDimension({
+  item,
+  last,
+}: {
+  item: {
+    title: string;
+    description: string;
+    icon: LucideIcon;
+  };
+  last: boolean;
+}) {
+  const Icon = item.icon;
+
+  return (
+    <div
+      className={`
+        group/layer
+        relative
+
+        grid
+        gap-4
+
+        px-4 py-4
+
+        transition-colors
+        duration-300
+
+        hover:bg-white/[0.04]
+
+        sm:grid-cols-[48px_120px_1fr]
+        sm:items-center
+        sm:px-5
+
+        ${!last ? "border-b border-white/10" : ""}
+      `}
+    >
+      <span
+        className="
+          flex h-10 w-10
+          items-center justify-center
+
+          border
+          border-[#82cee4]/16
+
+          bg-[#82cee4]/[0.04]
+
+          text-[#82cee4]
+
+          transition-[background-color,border-color,color]
+          duration-300
+
+          group-hover/layer:border-brand-accent/35
+          group-hover/layer:bg-brand-accent/[0.07]
+          group-hover/layer:text-brand-accent
+        "
+      >
+        <Icon
+          aria-hidden="true"
+          className="h-[18px] w-[18px]"
+          strokeWidth={1.45}
+        />
+      </span>
+
+      <p
+        className="
+          text-[12px]
+          font-black
+          text-white/78
+
+          sm:text-[13px]
+        "
+      >
+        {item.title}
+      </p>
+
+      <p
+        className="
+          text-[9px]
+          font-medium
+          leading-[1.9]
+
+          text-white/32
+
+          sm:text-[10px]
+        "
+      >
+        {item.description}
+      </p>
+
+      <span
+        aria-hidden="true"
+        className="
+          absolute
+          left-0 top-1/2
+
+          h-[5px] w-[5px]
+
+          -translate-y-1/2
+
+          bg-[#82cee4]/32
+
+          transition-[background-color,box-shadow,transform]
+          duration-300
+
+          group-hover/layer:scale-125
+          group-hover/layer:bg-brand-accent
+          group-hover/layer:shadow-[0_0_12px_rgba(252,133,2,.45)]
+        "
+      />
+    </div>
+  );
+}
+
+/* =============================================================================
+   RAIL
+============================================================================= */
+
+function RailWord({
+  children,
   active = false,
 }: {
-  index: string;
-  shortTitle: string;
-  href: string;
+  children: string;
   active?: boolean;
 }) {
   return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className="
-        group/service
-        relative
-        block
-        min-w-0
+    <span
+      className={`
+        text-[8px]
+        font-black
 
-        pt-5
-
-        outline-none
-
-        transition-transform
-        duration-300
-
-        hover:-translate-y-[2px]
-
-        focus-visible:ring-2
-        focus-visible:ring-focus/50
-      "
+        ${active ? "text-brand-accent" : "text-white/25"}
+      `}
     >
-      <span
-        aria-hidden="true"
-        className={`
-          absolute
-          right-0
-          top-0
+      {children}
+    </span>
+  );
+}
 
-          h-px
-
-          transition-[width,background-color]
-          duration-300
-
-          ${
-            active
-              ? "w-full bg-brand-accent"
-              : "w-7 bg-white/20 group-hover/service:w-full group-hover/service:bg-brand-accent/65"
-          }
-        `}
-      />
-
-      <span
-        dir="ltr"
-        className={`
-          block
-
-          text-[9px]
-          font-medium
-
-          ${active ? "text-brand-accent" : "text-white/42"}
-        `}
-      >
-        {index}
-      </span>
-
-      <span
-        className={`
-          mt-2
-          block
-
-          text-[9px]
-          font-medium
-          leading-[1.7]
-
-          transition-colors
-          duration-300
-
-          group-hover/service:text-white
-
-          ${active ? "font-black text-white" : "text-white/48"}
-        `}
-      >
-        {shortTitle}
-      </span>
-    </Link>
+function RailDot() {
+  return (
+    <span
+      aria-hidden="true"
+      className="
+        h-[4px]
+        w-[4px]
+        bg-white/14
+      "
+    />
   );
 }
 
 /* =============================================================================
-   BACKGROUND IMAGE
+   BACKGROUND
 ============================================================================= */
 
 function HeroBackground() {
-  /*
-   * تا وقتی مسیر عکس‌ها را وارد نکرده‌ای،
-   * این fallback نمایش داده می‌شود.
-   */
-  if (!HERO_DESKTOP || !HERO_MOBILE) {
-    return (
+  return (
+    <>
       <div
         aria-hidden="true"
         className="
-          absolute
-          inset-0
-          z-0
+          pointer-events-none
+          absolute inset-0
         "
         style={{
-          background: `
-            linear-gradient(
-              105deg,
-              #0b566a 0%,
-              #07495c 34%,
-              #043b4d 65%,
-              #022d3b 100%
-            )
-          `,
+          background:
+            "radial-gradient(circle at 23% 47%,rgba(22,115,148,.25),transparent 30%),linear-gradient(116deg,#022936 0%,#033847 52%,#022d3a 100%)",
         }}
       />
-    );
-  }
 
-  const {
-    props: { srcSet: desktopSrcSet },
-  } = getImageProps({
-    src: HERO_DESKTOP,
-    alt: "",
-    width: 2400,
-    height: 1350,
-    quality: 90,
-    sizes: "100vw",
-  });
-
-  const { props: mobileProps } = getImageProps({
-    src: HERO_MOBILE,
-    alt: "",
-    width: 1080,
-    height: 1920,
-    quality: 88,
-    sizes: "100vw",
-    loading: "eager",
-    fetchPriority: "high",
-  });
-
-  return (
-    <picture
-      aria-hidden="true"
-      className="
-        private-wealth-background
-        absolute
-        inset-0
-        z-0
-        block
-        h-full
-        w-full
-      "
-    >
-      <source
-        media="(min-width: 1024px)"
-        srcSet={desktopSrcSet}
-        sizes="100vw"
-      />
-
-      <img
-        {...mobileProps}
-        alt=""
+      <div
+        aria-hidden="true"
         className="
-          h-full
-          w-full
-
-          object-cover
-          object-top
-
-          lg:object-center
+          pointer-events-none
+          absolute inset-0
+          opacity-[0.055]
         "
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px)",
+          backgroundSize: "118px 100%",
+        }}
       />
-    </picture>
+
+     
+    </>
+  );
+}
+
+function VisualBackground() {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute inset-0
+        "
+        style={{
+          background:
+            "radial-gradient(circle at 50% 65%,rgba(22,115,148,.15),transparent 36%)",
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute inset-0
+          opacity-[0.065]
+        "
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px)",
+          backgroundSize: "72px 100%",
+        }}
+      />
+    </>
   );
 }
 
 /* =============================================================================
-   ANIMATION
+   CSS MOTION
 ============================================================================= */
 
-function HeroMotionStyles() {
+function VisualMotion() {
   return (
     <style>{`
-      @keyframes privateWealthImageEnter {
-        from {
+      .wealth-flow-dot {
+        animation:
+          dnh-wealth-flow
+          2.8s
+          ease-in-out
+          infinite;
+      }
+
+      @keyframes dnh-wealth-flow {
+        0% {
+          top: 0%;
           opacity: 0;
-          transform: scale(1.025);
         }
 
-        to {
+        20% {
           opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      @keyframes privateWealthEnter {
-        from {
-          opacity: 0;
-          transform: translate3d(0, 12px, 0);
         }
 
-        to {
+        75% {
           opacity: 1;
-          transform: translate3d(0, 0, 0);
         }
-      }
 
-      @keyframes privateWealthGridEnter {
-        from {
+        100% {
+          top: 100%;
           opacity: 0;
         }
-
-        to {
-          opacity: .10;
-        }
       }
-
-      .private-wealth-background {
-        opacity: 0;
-
-        animation:
-          privateWealthImageEnter
-          950ms
-          cubic-bezier(.22, 1, .36, 1)
-          forwards;
-      }
-
-      .private-wealth-enter {
-        opacity: 0;
-
-        animation:
-          privateWealthEnter
-          620ms
-          cubic-bezier(.22, 1, .36, 1)
-          forwards;
-      }
-
-      .private-wealth-delay-1 {
-        animation-delay: 100ms;
-      }
-
-      .private-wealth-delay-2 {
-        animation-delay: 150ms;
-      }
-
-      .private-wealth-delay-3 {
-        animation-delay: 210ms;
-      }
-
-      .private-wealth-delay-4 {
-        animation-delay: 290ms;
-      }
-
-      .private-wealth-delay-5 {
-        animation-delay: 360ms;
-      }
-
-      .private-wealth-delay-6 {
-        animation-delay: 440ms;
-      }
-
-      .private-wealth-delay-7 {
-        animation-delay: 540ms;
-      }
-
-      .private-wealth-grid {
-        opacity: 0;
-
-        animation:
-          privateWealthGridEnter
-          900ms
-          400ms
-          ease-out
-          forwards;
-      }
-
-      /* ================================================
-         Reduced motion
-      ================================================= */
 
       @media (prefers-reduced-motion: reduce) {
-        .private-wealth-background,
-        .private-wealth-enter,
-        .private-wealth-grid {
-          opacity: 1 !important;
-          transform: none !important;
-
+        .wealth-flow-dot {
           animation: none !important;
-          transition: none !important;
-        }
-      }
-
-      /* ================================================
-         Short desktop screens
-      ================================================= */
-
-      @media (min-width: 1024px) and (max-height: 760px) {
-        .private-wealth-hero {
-          min-height: 640px !important;
+          top: 50%;
+          opacity: .7;
         }
       }
     `}</style>

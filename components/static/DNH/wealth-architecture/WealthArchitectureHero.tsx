@@ -92,10 +92,14 @@ export function WealthArchitectureHero() {
           className="
             wealth-hero-content
 
+            contents
+
+            lg:block
             lg:col-start-1
             lg:row-start-1
           "
         >
+          <div className="order-1">
           <div
             className="
               mb-5
@@ -189,22 +193,26 @@ export function WealthArchitectureHero() {
             یک ساختار منسجم و مرتبط است.
           </p>
 
+          </div>
+
           {/* ==========================================================
               ACTIONS
           ========================================================== */}
 
           <div
             className="
-              mt-7
+              order-3
+              mt-0
               flex
               flex-col
               gap-3
 
+              lg:order-none
+              lg:mt-8
+
               sm:flex-row
               sm:items-center
               sm:gap-5
-
-              lg:mt-8
             "
           >
             <ActionButton
@@ -390,6 +398,8 @@ export function WealthArchitectureHero() {
             wealth-visual-wrapper
 
             relative
+
+            order-2
 
             lg:col-start-2
             lg:row-start-1

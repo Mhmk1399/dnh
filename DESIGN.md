@@ -77,6 +77,8 @@ Icons follow the installed Lucide stroke style (1.5–1.8), normally 18–22px. 
 
 PWA and favicon assets use a purpose-built square DNH mark: primary/secondary teal background, white architectural bars, and a small orange accent. Regenerate them with `npm run icons:pwa` instead of manually exporting separate sizes.
 
+Global scrollbars are styled in `app/globals.css`: the track uses the dark petroleum teal shell, while the thumb uses a glass-like light teal highlight with subtle orange active feedback. Keep the standards-based `scrollbar-color` fallback and forced-colors reset whenever adjusting the WebKit treatment.
+
 ## Do's and Don'ts
 
 - Keep header, mega menu and footer tokens and link sources coordinated.

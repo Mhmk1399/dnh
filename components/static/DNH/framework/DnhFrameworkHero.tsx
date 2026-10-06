@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { ArrowDownLeft, ArrowLeft } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
@@ -124,10 +122,14 @@ export function DnhFrameworkHero() {
 
           <div
             className="
+              contents
+
+              lg:block
               lg:col-start-1
               lg:row-start-1
             "
           >
+            <div className="order-1">
             {/* eyebrow */}
 
             <div
@@ -215,15 +217,21 @@ export function DnhFrameworkHero() {
               بلندمدت ثروت دیده می‌شود.
             </p>
 
+            </div>
+
             {/* CTA */}
 
             <div
               className="
-                mt-8
+                order-3
+                mt-0
 
                 flex
                 flex-col
                 gap-3
+
+                lg:order-none
+                lg:mt-8
 
                 sm:flex-row
                 sm:flex-wrap
@@ -284,6 +292,8 @@ export function DnhFrameworkHero() {
 
             <div
               className="
+                hidden
+
                 mt-8
                 max-w-[700px]
 
@@ -291,6 +301,8 @@ export function DnhFrameworkHero() {
                 border-white/11
 
                 pt-5
+
+                lg:block
               "
             >
               <div
@@ -337,6 +349,8 @@ export function DnhFrameworkHero() {
 
           <div
             className="
+              order-2
+
               lg:col-start-2
               lg:row-start-1
             "

@@ -119,12 +119,14 @@ export function FinancialDecisionAssessmentHero() {
 
         <div
           className="
-            order-1
+            contents
 
+            lg:block
             lg:col-start-1
             lg:row-start-1
           "
         >
+          <div className="order-1">
           {/* eyebrow */}
 
           <div
@@ -254,13 +256,16 @@ export function FinancialDecisionAssessmentHero() {
             موقعیت شما پیش از ورود به مسیر مشاوره، روشن‌تر دیده شود.
           </p>
 
+          </div>
+
           {/* =====================================================
               CTA
           ====================================================== */}
 
           <div
             className={`
-              mt-8
+              order-3
+              mt-0
 
               flex
               flex-col
@@ -274,6 +279,9 @@ export function FinancialDecisionAssessmentHero() {
               sm:flex-row
               sm:flex-wrap
               sm:items-center
+
+              lg:order-none
+              lg:mt-8
 
               ${
                 mounted
@@ -341,6 +349,8 @@ export function FinancialDecisionAssessmentHero() {
 
           <div
             className={`
+              hidden
+
               mt-8
               max-w-[640px]
 
@@ -363,6 +373,8 @@ export function FinancialDecisionAssessmentHero() {
               motion-reduce:translate-y-0
               motion-reduce:opacity-100
               motion-reduce:transition-none
+
+              lg:block
             `}
           >
             <div
