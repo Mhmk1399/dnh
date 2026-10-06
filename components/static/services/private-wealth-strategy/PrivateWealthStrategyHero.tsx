@@ -698,7 +698,7 @@ export function PrivateWealthStrategyHero() {
                     border
 
                     ${
-                      service.active
+                      "active" in service && service.active
                         ? `
                           border-brand-accent
                           bg-brand-accent

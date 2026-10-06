@@ -100,6 +100,10 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const openedByHover = useRef<MegaMenuKey | null>(null);
   const id = useId();
   const href = (path: string) => getSiteHref(path, pathname);
+  const forceSolid =
+    pathname === "/admin/forms" ||
+    pathname.startsWith("/admin/forms/") ||
+    pathname.startsWith("/forms/");
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -189,7 +193,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
       <header
         ref={shellRef}
         className={styles.header}
-        data-scrolled={scrolled || openMenu !== null}
+        data-scrolled={forceSolid || scrolled || openMenu !== null}
         dir="rtl"
         onPointerEnter={clearTimers}
         onPointerLeave={(event) => {
