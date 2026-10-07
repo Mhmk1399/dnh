@@ -12,32 +12,32 @@ const SERVICES = [
   {
     en: "PRIVATE WEALTH",
     title: "استراتژی ثروت خصوصی",
-    href: "/fa/services/private-wealth-strategy",
+    href: "/services/private-wealth-strategy",
   },
   {
     en: "PORTFOLIO",
     title: "هوشمندی پرتفوی",
-    href: "/fa/services/portfolio-intelligence",
+    href: "/services/portfolio-intelligence",
   },
   {
     en: "STRATEGIC FINANCE",
     title: "مشاوره مالی راهبردی",
-    href: "/fa/services/strategic-financial-advisory",
+    href: "/services/strategic-financial-advisory",
   },
   {
     en: "MACRO & MARKET",
     title: "مشاوره اقتصاد و بازار",
-    href: "/fa/services/macro-market-advisory",
+    href: "/services/macro-market-advisory",
   },
   {
     en: "RISK & PROTECTION",
     title: "مدیریت ریسک و حفاظت از ثروت",
-    href: "/fa/services/risk-management-wealth-protection",
+    href: "/services/risk-management-wealth-protection",
   },
   {
     en: "EXECUTIVE",
     title: "نشست‌های تخصصی مدیران",
-    href: "/fa/services/executive-briefings",
+    href: "/services/executive-briefings",
   },
 ] as const;
 
@@ -285,7 +285,7 @@ export function ServicesHero() {
               </ActionButton>
 
               <ActionButton
-                href="/fa/financial-decision-assessment"
+                href="/financial-decision-assessment"
                 variant="secondary"
                 size="lg"
                 icon={ArrowLeft}

@@ -261,7 +261,7 @@ export function AssessmentFormSection() {
       await submitAssessment(data)
 
       و سپس:
-      router.push("/fa/financial-decision-assessment/success")
+      router.push("/financial-decision-assessment/success")
 
       فعلاً برای طراحی UI فقط Success State محلی داریم.
     */

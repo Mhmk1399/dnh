@@ -210,7 +210,7 @@ export function PortfolioIntelligenceHero() {
               </span>
 
               <Link
-                href="/fa/who-we-help/unstructured-portfolio"
+                href="/who-we-help/unstructured-portfolio"
                 className="
                   inline-flex
                   items-center gap-2
@@ -261,7 +261,7 @@ function PortfolioHeroActions({ className = "" }: { className?: string }) {
       `}
     >
       <ActionButton
-        href="/fa/financial-decision-assessment"
+        href="/financial-decision-assessment"
         variant="assessment"
         size="lg"
         icon={ArrowLeft}

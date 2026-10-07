@@ -310,7 +310,7 @@ export function WeeklyOutlookSection() {
                 "
               >
                 <ActionButton
-                  href="/fa/knowledge/weekly-outlook"
+                  href="/knowledge/weekly-outlook"
                   variant="primary"
                   size="md"
                   icon={ArrowLeft}
@@ -324,29 +324,8 @@ export function WeeklyOutlookSection() {
                   مشاهده Weekly Outlook
                 </ActionButton>
 
-                <span
-                  className="
-                    inline-flex
-                    items-center
-                    gap-2
-
-                    text-[9px]
-                    font-medium
-
-                    text-ink-muted/70
-                  "
-                >
-                  <span
-                    aria-hidden="true"
-                    className="
-                      h-[6px]
-                      w-[6px]
-
-                      bg-brand-accent
-                    "
-                  />
-                  داده‌های این Preview نمایشی‌اند.
-                </span>
+                
+               
               </div>
             </div>
           </Reveal>

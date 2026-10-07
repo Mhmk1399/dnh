@@ -303,7 +303,7 @@ export function WealthArchitectureIntro() {
             </ActionButton>
 
             <ActionButton
-              href="/fa/financial-decision-assessment"
+              href="/financial-decision-assessment"
               variant="secondary"
               size="md"
               icon={ArrowLeft}

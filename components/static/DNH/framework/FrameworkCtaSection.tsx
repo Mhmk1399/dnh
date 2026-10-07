@@ -239,7 +239,7 @@ export function FrameworkCtaSection() {
 
             <div className="mt-6">
               <ActionButton
-                href="/fa/financial-decision-assessment"
+                href="/financial-decision-assessment"
                 variant="assessment"
                 size="lg"
                 icon={ArrowLeft}
@@ -265,7 +265,7 @@ export function FrameworkCtaSection() {
             {/* Secondary */}
 
             <Link
-              href="/fa/dnh/wealth-architecture"
+              href="/dnh/wealth-architecture"
               className="
                 group/link
 

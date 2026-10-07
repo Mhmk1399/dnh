@@ -65,7 +65,7 @@ Use 24px outer shells, 14–18px internal surfaces, and 12px icon tiles. Preserv
 
 ## Components
 
-`config/site-navigation.ts` owns header/footer link titles, destinations, groups, and action destinations. Content routes are under `app/[locale]`; `getSiteHref` uses `/fa` by default and preserves an active `/fa` or `/en` prefix. The populated public homepage remains `/`. Most content pages are intentionally empty stubs.
+`config/site-navigation.ts` owns header/footer link titles, destinations, groups, and action destinations. The public website is Persian-only for now, so header, footer, sitemap and CTAs use unprefixed routes such as `/services` rather than locale-prefixed service URLs. `getSiteHref` normalizes any legacy locale-prefixed inputs back to the unprefixed route. The populated public homepage remains `/`. Most content pages are intentionally empty stubs.
 
 `components/ui/ActionButton.tsx` owns prominent calls to action. Ordinary navigation links and disclosure controls retain their native semantics. All shell controls have visible focus, hover and pressed feedback. Disabled social profiles are non-links with an honest unavailable state; never invent account URLs.
 

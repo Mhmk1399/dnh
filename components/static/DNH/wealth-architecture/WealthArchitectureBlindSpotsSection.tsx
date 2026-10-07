@@ -188,7 +188,7 @@ export function WealthArchitectureBlindSpotsSection() {
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <ActionButton
-                  href="/fa/contact?subject=ارزیابی%20ساختار%20ثروت"
+                  href="/contact?subject=ارزیابی%20ساختار%20ثروت"
                   variant="primary"
                   size="lg"
                   icon={ArrowLeft}
@@ -207,7 +207,7 @@ export function WealthArchitectureBlindSpotsSection() {
                 </ActionButton>
 
                 <Link
-                  href="/fa/dnh/framework"
+                  href="/dnh/framework"
                   className="
                     group inline-flex items-center justify-center gap-2
                     px-1 py-3 text-sm font-bold text-white/82 transition-colors

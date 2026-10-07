@@ -344,47 +344,6 @@ export function BrandPositioningStrip() {
             بازار و اقتصاد در DNH ابزار هوشمندی و تصمیم‌سازی‌اند؛ نه هویت اصلی
             برند.
           </p>
-
-          <div
-            aria-hidden="true"
-            className="
-              hidden
-              shrink-0
-              items-center
-              gap-3
-
-              sm:flex
-            "
-          >
-            <span
-              className="
-                h-[5px]
-                w-[5px]
-                bg-brand-accent
-              "
-            />
-
-            <span
-              className="
-                h-px
-                w-14
-                bg-brand-primary/30
-              "
-            />
-
-            <span
-              dir="ltr"
-              className="
-                text-[8px]
-                font-bold
-                tracking-[0.2em]
-
-                text-brand-primary/65
-              "
-            >
-              PRIVATE WEALTH / DNH
-            </span>
-          </div>
         </div>
       </div>
 
@@ -765,23 +724,6 @@ function PositioningBackground() {
       />
 
       {/* tiny brand marker */}
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-1/2
-          top-0
-          z-[2]
-
-          h-[6px]
-          w-[2px]
-
-          -translate-x-1/2
-
-          bg-brand-accent
-        "
-      />
     </>
   );
 }

@@ -328,7 +328,7 @@ export function AboutDrNasimSection() {
               "
             >
               <ActionButton
-                href="/fa/about"
+                href="/about"
                 variant="secondary"
                 size="md"
                 icon={ArrowLeft}
@@ -355,7 +355,7 @@ export function AboutDrNasimSection() {
 
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   leading-[1.9]
 

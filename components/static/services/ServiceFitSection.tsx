@@ -32,7 +32,7 @@ const SERVICES = [
 
     icon: Layers3,
 
-    href: "/fa/services/private-wealth-strategy",
+    href: "/services/private-wealth-strategy",
   },
 
   {
@@ -49,7 +49,7 @@ const SERVICES = [
 
     icon: PieChart,
 
-    href: "/fa/services/portfolio-intelligence",
+    href: "/services/portfolio-intelligence",
   },
 
   {
@@ -65,7 +65,7 @@ const SERVICES = [
 
     icon: Briefcase,
 
-    href: "/fa/services/strategic-financial-advisory",
+    href: "/services/strategic-financial-advisory",
   },
 
   {
@@ -81,7 +81,7 @@ const SERVICES = [
 
     icon: TrendingUp,
 
-    href: "/fa/services/macro-market-advisory",
+    href: "/services/macro-market-advisory",
   },
 
   {
@@ -97,7 +97,7 @@ const SERVICES = [
 
     icon: ShieldCheck,
 
-    href: "/fa/services/risk-management-wealth-protection",
+    href: "/services/risk-management-wealth-protection",
   },
 
   {
@@ -113,7 +113,7 @@ const SERVICES = [
 
     icon: Presentation,
 
-    href: "/fa/services/executive-briefings",
+    href: "/services/executive-briefings",
   },
 ] as const;
 
@@ -341,7 +341,7 @@ export function ServiceFitSection() {
           </div>
 
           <ActionButton
-            href="/fa/financial-decision-assessment"
+            href="/financial-decision-assessment"
             variant="primary"
             size="md"
             icon={ArrowLeft}

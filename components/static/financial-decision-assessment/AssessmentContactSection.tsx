@@ -10,9 +10,9 @@ import { ActionButton } from "@/components/ui/ActionButton";
 
 const ASSESSMENT_PATH = "#assessment-form";
 
-const CONSULTATION_PATH = "/fa/request-strategic-consultation";
+const CONSULTATION_PATH = "/request-strategic-consultation";
 
-const CONTACT_PATH = "/fa/contact";
+const CONTACT_PATH = "/contact";
 
 /* =============================================================================
    FINAL CTA

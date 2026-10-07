@@ -286,7 +286,7 @@ export function MarketNoiseVsWealthArchitectureSection() {
             "
           >
             <ActionButton
-              href="/fa/dnh/wealth-architecture"
+              href="/dnh/wealth-architecture"
               variant="secondary"
               size="md"
               icon={ArrowLeft}
@@ -524,7 +524,7 @@ function DecisionField() {
 
               max-w-[210px]
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[1.9]
 

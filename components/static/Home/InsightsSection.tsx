@@ -256,7 +256,7 @@ export function InsightsSection() {
 
               <div className="mt-7">
                 <ActionButton
-                  href="/fa/knowledge/insights"
+                  href="/knowledge/insights"
                   variant="secondary"
                   size="md"
                   icon={ArrowLeft}
@@ -547,21 +547,7 @@ export function InsightsSection() {
                   py-5
                 "
               >
-                <p
-                  dir="ltr"
-                  className="
-                    mb-4
-
-                    text-[7px]
-                    font-black
-                    tracking-[0.18em]
-
-                    text-white/35
-                  "
-                >
-                  FROM INFORMATION TO INSIGHT
-                </p>
-
+               
                 <div
                   className="
                     grid
@@ -645,49 +631,7 @@ export function InsightsSection() {
                 </div>
               </div>
 
-              {/* footer */}
-
-              <div
-                className="
-                  mt-6
-
-                  flex
-                  items-center
-                  justify-between
-                  gap-5
-                "
-              >
-                <p
-                  className="
-                    max-w-[560px]
-
-                    text-[9px]
-                    font-medium
-                    leading-[1.9]
-
-                    text-white/38
-                  "
-                >
-                  Insights برای کمک به فهم مسئله طراحی می‌شود؛ نه ارائه نسخه
-                  عمومی برای هر تصمیم.
-                </p>
-
-                <span
-                  aria-hidden="true"
-                  className="
-                    h-px
-                    w-16
-                    shrink-0
-
-                    bg-brand-accent/55
-
-                    transition-[width]
-                    duration-500
-
-                    group-hover/featured:w-24
-                  "
-                />
-              </div>
+            
             </div>
           </article>
 
@@ -717,124 +661,7 @@ export function InsightsSection() {
             Topic rail
         ======================================================== */}
 
-        <Reveal visible={visible} delay={560}>
-          <div
-            className="
-              mt-5
-
-              border
-              border-white/12
-
-              bg-white/[0.025]
-            "
-          >
-            <div
-              className="
-                flex
-                flex-col
-                gap-5
-
-                px-5
-                py-5
-
-                sm:px-7
-
-                lg:flex-row
-                lg:items-center
-                lg:justify-between
-              "
-            >
-              <div className="shrink-0">
-                <p
-                  dir="ltr"
-                  className="
-                    text-[7px]
-                    font-black
-                    tracking-[0.2em]
-
-                    text-brand-accent
-                  "
-                >
-                  INSIGHT TERRITORIES
-                </p>
-
-                <p
-                  className="
-                    mt-1
-
-                    text-[10px]
-                    font-bold
-
-                    text-white/65
-                  "
-                >
-                  حوزه‌های تحلیلی DNH
-                </p>
-              </div>
-
-              <div
-                className="
-                  flex
-                  flex-wrap
-                  items-center
-                  gap-x-0
-                  gap-y-3
-
-                  lg:justify-end
-                "
-              >
-                {TOPICS.map((topic, index) => (
-                  <div
-                    key={topic}
-                    className="
-                        group/topic
-
-                        flex
-                        items-center
-                      "
-                  >
-                    <span
-                      className="
-                          px-3
-
-                          text-[9px]
-                          font-medium
-
-                          text-white/42
-
-                          transition-colors
-                          duration-300
-
-                          group-hover/topic:text-white
-
-                          sm:text-[10px]
-                        "
-                    >
-                      {topic}
-                    </span>
-
-                    {index < TOPICS.length - 1 && (
-                      <span
-                        aria-hidden="true"
-                        className="
-                            h-[4px]
-                            w-[4px]
-
-                            bg-white/15
-
-                            transition-colors
-                            duration-300
-
-                            group-hover/topic:bg-brand-accent
-                          "
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Reveal>
+      
 
         {/* =======================================================
             bottom action
@@ -877,7 +704,7 @@ export function InsightsSection() {
             </p>
 
             <Link
-              href="/fa/knowledge/insights"
+              href="/knowledge/insights"
               className="
                 group/link
 

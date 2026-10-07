@@ -269,7 +269,7 @@ export function DnhFrameworkSection() {
             "
           >
             <ActionButton
-              href="/fa/dnh/framework"
+              href="/dnh/framework"
               variant="assessment"
               size="md"
               icon={ArrowLeft}

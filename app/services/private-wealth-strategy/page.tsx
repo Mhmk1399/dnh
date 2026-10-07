@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "استراتژی ثروت خصوصی DNH برای بررسی یکپارچه دارایی‌ها، اهداف، نقدشوندگی، ریسک و مسیرهای تصمیم مالی طراحی شده است.",
   alternates: {
-    canonical: "/fa/services/private-wealth-strategy",
+    canonical: "/services/private-wealth-strategy",
   },
 };
 const page = () => {

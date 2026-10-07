@@ -195,7 +195,7 @@ export function PrivateWealthStrategyHero() {
               "
             >
               <ActionButton
-                href="/fa/financial-decision-assessment"
+                href="/financial-decision-assessment"
                 variant="assessment"
                 size="lg"
                 icon={ArrowLeft}

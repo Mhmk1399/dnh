@@ -360,13 +360,13 @@ export function ServiceContextSection() {
               gap-y-3
             "
           >
-            <ContextLink href="/fa/dnh/framework">
+            <ContextLink href="/dnh/framework">
               چارچوب تصمیم‌سازی DNH
             </ContextLink>
 
             <Dot />
 
-            <ContextLink href="/fa/dnh/intelligence-desk">
+            <ContextLink href="/dnh/intelligence-desk">
               میز هوشمندی DNH
             </ContextLink>
           </div>

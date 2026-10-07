@@ -13,12 +13,12 @@ const HERO_MOBILE = "/assets/images/dnh-hero-mobile.png";
 
 /* =============================================================================
    Routes
-   Home فارسی روی / است اما صفحات محتوایی زیر /fa هستند.
+   مسیرهای سایت فعلاً فارسی و بدون پیشوند زبانی هستند.
 ============================================================================= */
 
-const ASSESSMENT_HREF = "/fa/financial-decision-assessment";
+const ASSESSMENT_HREF = "/financial-decision-assessment";
 
-const WEALTH_ARCHITECTURE_HREF = "/fa/dnh/wealth-architecture";
+const WEALTH_ARCHITECTURE_HREF = "/dnh/wealth-architecture";
 
 /* =============================================================================
    Hero

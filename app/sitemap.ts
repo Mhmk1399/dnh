@@ -23,30 +23,6 @@ function getSiteUrl() {
 
 const BASE_URL = getSiteUrl();
 
-/* =============================================================================
-   Localized paths
-============================================================================= */
-
-type Locale = "fa" | "en";
-
-function localizedPath(
-    path: string,
-    locale: Locale,
-) {
-    /*
-     * Persian homepage:
-     * /
-     *
-     * English homepage:
-     * /en
-     */
-    if (path === "/") {
-        return locale === "fa" ? "/" : "/en";
-    }
-
-    return `/${locale}${path}`;
-}
-
 function absoluteUrl(path: string) {
     return `${BASE_URL}${path}`;
 }
@@ -60,34 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         (page) => page.indexable,
     );
 
-    return publicPages.flatMap((page) => {
-        const faPath = localizedPath(
-            page.path,
-            "fa",
-        );
-
-        const enPath = localizedPath(
-            page.path,
-            "en",
-        );
-
-        const alternates = {
-            languages: {
-                "fa-IR": absoluteUrl(faPath),
-                en: absoluteUrl(enPath),
-            },
-        };
-
-        return [
-            {
-                url: absoluteUrl(faPath),
-                alternates,
-            },
-
-            {
-                url: absoluteUrl(enPath),
-                alternates,
-            },
-        ];
-    });
+    return publicPages.map((page) => ({
+        url: absoluteUrl(page.path),
+    }));
 }

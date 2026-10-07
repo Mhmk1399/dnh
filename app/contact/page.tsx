@@ -18,8 +18,7 @@ const page = () => {
         email="info@your-domain.com"
         address="آدرس واقعی دفتر DNH را اینجا وارد کنید"
         googleMapsUrl="https://maps.google.com/?q=YOUR_LOCATION"
-        cityLabel="دفتر DNH"
-      />
+       />
       <ContactForm />
     </div>
   );

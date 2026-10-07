@@ -250,7 +250,7 @@ export function ResearchSection() {
 
               <div className="mt-7">
                 <ActionButton
-                  href="/fa/knowledge/research"
+                  href="/knowledge/research"
                   variant="primary"
                   size="md"
                   icon={ArrowLeft}
@@ -630,7 +630,7 @@ export function ResearchSection() {
                 className="
                   max-w-[660px]
 
-                  text-[9px]
+                  text-[12px]
                   font-medium
                   leading-[1.9]
 

@@ -424,7 +424,7 @@ export function WealthStrategyProblemSection() {
           "
         >
           <Link
-            href="/fa/dnh/wealth-architecture"
+            href="/dnh/wealth-architecture"
             className="
               group/concept
 

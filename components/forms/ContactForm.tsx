@@ -65,67 +65,78 @@ export function ContactForm() {
   }
 
   return (
-    <main
+    <section
+      id="contact-form"
       dir="rtl"
+      aria-labelledby="contact-form-title"
       className="
         relative
         isolate
-        min-h-screen
+        scroll-mt-24
         overflow-hidden
 
-        bg-[linear-gradient(180deg,var(--dnh-bg-soft),white_38%)]
+        bg-[#f6f8f8]
+
+        py-16
+
+        sm:scroll-mt-28
+        sm:py-20
+        lg:py-24
       "
     >
-      <ContactAtmosphere />
+      <SectionBackground />
 
-      <section
+      <div
         className="
+          dnh-site-shell
           relative
           z-10
 
           mx-auto
-          max-w-[1240px]
+          w-full
+          max-w-[1536px]
 
           px-5
-          pb-16
-          pt-[132px]
-
           sm:px-8
-          sm:pb-20
-          sm:pt-[145px]
-
           lg:px-12
-          lg:pb-24
-          lg:pt-[160px]
+          xl:px-16
+          2xl:px-20
         "
       >
+
+
+        {/* ===========================================================
+            MAIN LAYOUT
+        ============================================================ */}
+
         <div
           className="
             grid
             gap-10
 
-            lg:grid-cols-[0.76fr_1.24fr]
-            lg:gap-16
+            pt-10
+
+            lg:grid-cols-[0.7fr_1.3fr]
+            lg:items-start
+            lg:gap-14
+            lg:pt-12
 
             xl:gap-20
           "
         >
-          {/* ===============================================================
+          {/* =========================================================
               INTRO
-          ================================================================ */}
+          ========================================================== */}
 
-          <header
+          <div
             className="
-              dnh-contact-intro
-
               lg:sticky
-              lg:top-32
-              lg:self-start
+              lg:top-28
             "
           >
             <div
               className="
-                mb-6
+                mb-5
                 flex
                 items-center
                 gap-3
@@ -135,345 +146,298 @@ export function ContactForm() {
                 aria-hidden="true"
                 className="
                   h-px
-                  w-10
-                  bg-brand-accent
+                  w-9
+                  bg-[#fc8502]
                 "
               />
 
-              <span
+              <p
                 className="
-                  text-[10px]
+                  text-[13px]
                   font-black
-                  tracking-[0.04em]
-                  text-brand-primary
-
-                  sm:text-[11px]
+                  text-[#167394]
                 "
               >
-                ارتباط محرمانه با DNH
-              </span>
+                شروع ارتباط
+              </p>
             </div>
 
-            <h1
+            <h2
+              id="contact-form-title"
               className="
-                max-w-[560px]
+                max-w-[600px]
 
-                text-[34px]
+                text-[30px]
                 font-black
-                leading-[1.6]
-                tracking-[-0.04em]
+                leading-[1.72]
+                tracking-[-0.045em]
 
-                text-ink
+                text-[#10242c]
 
-                sm:text-[42px]
+                sm:text-[36px]
 
-                lg:text-[48px]
+                lg:text-[42px]
+                lg:leading-[1.62]
               "
             >
-              مسئله را روشن بنویسید؛
-              <br />
-              <span className="text-brand-primary">
-                گفت‌وگو از همین‌جا آغاز می‌شود.
+              موضوع را روشن بنویسید؛{" "}
+              <span className="text-[#167394]">
+                ادامه مسیر از همین‌جا مشخص می‌شود.
               </span>
-            </h1>
+            </h2>
 
             <p
               className="
-                mt-6
+                mt-5
                 max-w-[520px]
 
-                text-[13px]
+                text-[15px]
                 font-medium
-                leading-[2.15]
+                leading-[2]
 
-                text-ink-muted
-
-                sm:text-[14px]
+                text-[#687a80]
               "
             >
-              این فرم برای شروع یک گفت‌وگوی دقیق درباره تصمیم‌های مالی، ساختار
-              سرمایه یا معماری ثروت شماست. اطلاعات فقط برای بررسی اولیه استفاده
-              می‌شود.
+              اطلاعات اولیه کمک می‌کند موضوع شما قبل از برقراری ارتباط مستقیم،
+              در چارچوب مناسب بررسی شود.
             </p>
 
-            {/* -------------------------------------------------------------
-                TRUST
-            -------------------------------------------------------------- */}
+            {/* =======================================================
+                TRUST REGISTER
+            ======================================================== */}
 
             <div
               className="
                 mt-8
-                grid
-                gap-px
 
-                border
-                border-line
-
-                bg-line
-
-                sm:grid-cols-2
-                lg:grid-cols-1
-                xl:grid-cols-2
+                border-y
+                border-[#167394]/10
               "
             >
-              <TrustItem
+              <TrustRow
                 icon={ShieldCheck}
                 title="بررسی محرمانه"
-                description="جزئیات درخواست شما عمومی نخواهد شد."
-                delay="320ms"
+                description="اطلاعات این فرم فقط برای بررسی اولیه درخواست استفاده می‌شود."
               />
 
-              <TrustItem
+              <TrustRow
                 icon={Fingerprint}
-                title="ارجاع قابل پیگیری"
-                description="پس از ثبت، یک شناسه مرجع دریافت می‌کنید."
+                title="شناسه پیگیری"
+                description="در صورت ثبت موفق، شناسه مرجع درخواست نمایش داده می‌شود."
                 accent
-                delay="410ms"
               />
             </div>
 
-            {/* -------------------------------------------------------------
-                SIGNATURE
-            -------------------------------------------------------------- */}
+            {/* reference marker */}
 
             <div
-              aria-hidden="true"
               className="
-                mt-8
-                hidden
+                mt-6
+                flex
                 items-center
-                gap-4
-
-                lg:flex
+                gap-3
               "
             >
               <span
+                aria-hidden="true"
                 className="
-                  h-px
-                  flex-1
-                  bg-line
+                  h-[6px]
+                  w-[6px]
+                  bg-[#fc8502]
                 "
               />
 
-              <span
+              <p
                 className="
-                  h-2
-                  w-2
-                  bg-brand-accent
-                "
-              />
-
-              <span
-                className="
-                  text-[8px]
-                  font-bold
-                  tracking-[0.18em]
-                  text-brand-primary/40
+                  text-[13px]
+                  font-medium
+                  leading-6
+                  text-[#718187]
                 "
               >
-                DNH
-              </span>
+                از درج اطلاعات بانکی، رمزها یا داده‌های حساس غیرضروری خودداری
+                کنید.
+              </p>
             </div>
-          </header>
+          </div>
 
-          {/* ===============================================================
-              FORM
-          ================================================================ */}
+          {/* =========================================================
+              FORM SHEET
+          ========================================================== */}
 
           <div
             className="
-              dnh-contact-form
-
               relative
+              overflow-hidden
 
               border
-              border-line
+              border-[#167394]/14
 
-              bg-white/[0.92]
+              bg-white
 
-              p-5
-
-              shadow-[0_28px_90px_color-mix(in_srgb,var(--dnh-primary)_10%,transparent)]
-
-              backdrop-blur-[14px]
-
-              sm:p-8
-
-              lg:p-10
+              shadow-[0_28px_80px_rgba(3,55,70,.065)]
             "
           >
-            {/* top accent */}
-            <div
+            {/* top rail */}
+
+            <span
               aria-hidden="true"
               className="
-                pointer-events-none
-
                 absolute
                 inset-x-0
                 top-0
 
                 h-[3px]
 
-                bg-[linear-gradient(90deg,var(--dnh-accent)_0_14%,var(--dnh-primary)_14_100%)]
+                bg-[linear-gradient(90deg,#fc8502_0_18%,#167394_18%_100%)]
               "
             />
 
-            {/* corner detail */}
-            <span
-              aria-hidden="true"
-              className="
-                pointer-events-none
 
-                absolute
-                left-0
-                top-0
 
-                h-8
-                w-px
-
-                bg-brand-accent
-              "
-            />
-
-            {/* -------------------------------------------------------------
-                FORM HEADER
-            -------------------------------------------------------------- */}
-
-            <div
-              className="
-                mb-8
-
-                flex
-                items-start
-                justify-between
-                gap-6
-
-                border-b
-                border-line
-
-                pb-6
-              "
-            >
-              <div>
-                <p
-                  className="
-                    text-[12px]
-                    font-black
-                    text-brand-primary
-                  "
-                >
-                  فرم ارتباط راهبردی
-                </p>
-
-                <p
-                  className="
-                    mt-2
-                    text-[11px]
-                    font-medium
-                    leading-6
-                    text-ink-muted
-                  "
-                >
-                  فیلدهای الزامی را تکمیل کنید.
-                </p>
-              </div>
-
-              <span
-                className="
-                  hidden
-                  shrink-0
-
-                  text-[9px]
-                  font-bold
-                  tracking-[0.14em]
-                  text-ink-muted/60
-
-                  sm:block
-                "
-              >
-                فرم / ارتباط
-              </span>
-            </div>
-
-            {/* -------------------------------------------------------------
-                FORM — logic unchanged
-            -------------------------------------------------------------- */}
+            {/* =======================================================
+                FORM
+            ======================================================== */}
 
             <form
               onSubmit={submit}
               noValidate
               aria-label="فرم تماس با DNH"
-              className="space-y-5"
+              className="
+                px-5
+                py-6
+
+                sm:px-7
+                sm:py-7
+
+                lg:px-8
+                lg:py-8
+              "
             >
-              <div
-                className="
-                  grid
-                  gap-5
+              {/* -----------------------------------------------------
+                  IDENTITY
+              ------------------------------------------------------ */}
 
-                  sm:grid-cols-2
-                "
-              >
-                <FormField
-                  label="نام و نام خانوادگی"
-                  name="name"
-                  autoComplete="name"
-                  required
-                  placeholder="مثلاً آرمان احمدی"
-                  error={result?.errors?.name}
-                />
-
-                <FormField
-                  label="شماره موبایل"
-                  name="phone"
-                  type="tel"
-                  inputMode="tel"
-                  dir="ltr"
-                  autoComplete="tel"
-                  required
-                  placeholder="09xxxxxxxxx"
-                  error={result?.errors?.phone}
-                />
-
-                <FormField
-                  label="ایمیل"
-                  name="email"
-                  type="email"
-                  dir="ltr"
-                  autoComplete="email"
-                  hint="اختیاری"
-                  placeholder="name@example.com"
-                  error={result?.errors?.email}
-                />
-
-                <FormField
-                  label="موضوع"
-                  name="subject"
-                  autoComplete="off"
-                  hint="اختیاری"
-                  placeholder="موضوع درخواست"
-                  error={result?.errors?.subject}
-                />
-              </div>
-
-              <FormField
-                label="شرح درخواست"
-                name="message"
-                multiline
-                required
-                minLength={10}
-                maxLength={3000}
-                placeholder="مسئله، زمینه تصمیم و آنچه از DNH انتظار دارید را بنویسید…"
-                error={result?.errors?.message}
-              />
-
-              {/* Status */}
-              {result?.message ? (
-                <div
-                  key={`${result.ok}-${result.reference ?? result.message}`}
+              <fieldset>
+                <legend
                   className="
-                    dnh-contact-status
+                    mb-5
+                    flex
+                    items-center
+                    gap-3
+
+                    text-[13px]
+                    font-black
+                    text-[#31545e]
                   "
                 >
+                  <span
+                    aria-hidden="true"
+                    className="
+                      h-[6px]
+                      w-[6px]
+                      bg-[#fc8502]
+                    "
+                  />
+                  اطلاعات تماس
+                </legend>
+
+                <div
+                  className="
+                    grid
+                    gap-5
+
+                    sm:grid-cols-2
+                  "
+                >
+                  <FormField
+                    label="نام و نام خانوادگی"
+                    name="name"
+                    autoComplete="name"
+                    required
+                    placeholder="مثلاً آرمان احمدی"
+                    error={result?.errors?.name}
+                  />
+
+                  <FormField
+                    label="شماره موبایل"
+                    name="phone"
+                    type="tel"
+                    inputMode="tel"
+                    dir="ltr"
+                    autoComplete="tel"
+                    required
+                    placeholder="09xxxxxxxxx"
+                    error={result?.errors?.phone}
+                  />
+
+                  <FormField
+                    label="ایمیل"
+                    name="email"
+                    type="email"
+                    dir="ltr"
+                    autoComplete="email"
+                    hint="اختیاری"
+                    placeholder="name@example.com"
+                    error={result?.errors?.email}
+                  />
+
+                  <FormField
+                    label="موضوع"
+                    name="subject"
+                    autoComplete="off"
+                    hint="اختیاری"
+                    placeholder="موضوع درخواست"
+                    error={result?.errors?.subject}
+                  />
+                </div>
+              </fieldset>
+
+              {/* -----------------------------------------------------
+                  MESSAGE
+              ------------------------------------------------------ */}
+
+              <fieldset
+                className="
+                  mt-7
+                  border-t
+                  border-[#167394]/10
+                  pt-6
+                "
+              >
+                <legend
+                  className="
+                    mb-5
+
+                    bg-white
+                    pl-3
+
+                    text-[13px]
+                    font-black
+                    text-[#31545e]
+                  "
+                >
+                  شرح درخواست
+                </legend>
+
+                <FormField
+                  label="توضیح کوتاه درباره موضوع"
+                  name="message"
+                  multiline
+                  required
+                  minLength={10}
+                  maxLength={3000}
+                  placeholder="مسئله، زمینه تصمیم و آنچه از DNH انتظار دارید را بنویسید…"
+                  error={result?.errors?.message}
+                />
+              </fieldset>
+
+              {/* =====================================================
+                  STATUS
+              ====================================================== */}
+
+              {result?.message ? (
+                <div className="mt-6">
                   <FormStatus
                     kind={result.ok ? "success" : "error"}
                     message={result.message}
@@ -482,14 +446,22 @@ export function ContactForm() {
                 </div>
               ) : null}
 
-              {/* Submit */}
+              {/* =====================================================
+                  SUBMIT AREA
+              ====================================================== */}
+
               <div
                 className="
+                  mt-7
+
                   flex
                   flex-col
-                  gap-3
+                  gap-4
 
-                  pt-2
+                  border-t
+                  border-[#167394]/10
+
+                  pt-6
 
                   sm:flex-row
                   sm:items-center
@@ -513,256 +485,158 @@ export function ContactForm() {
                   {pending ? "در حال ثبت…" : "ثبت درخواست محرمانه"}
                 </ActionButton>
 
-                <span
+                <p
                   className="
-                    text-[10px]
+                    max-w-[320px]
+
+                    text-[13px]
                     font-medium
-                    leading-5
-                    text-ink-muted
+                    leading-6
+
+                    text-[#718187]
                   "
                 >
-                  پیش از ارسال، اطلاعات واردشده را بررسی کنید.
-                </span>
+                  پیش از ارسال، اطلاعات واردشده را یک‌بار بررسی کنید.
+                </p>
               </div>
             </form>
 
-            {/* -------------------------------------------------------------
-                PRIVACY NOTE
-            -------------------------------------------------------------- */}
+            {/* =======================================================
+                PRIVACY FOOTER
+            ======================================================== */}
 
             <div
               className="
                 relative
 
-                mt-8
-
                 border-t
-                border-dashed
-                border-line
+                border-[#167394]/10
 
-                pt-5
+                bg-[#f9fbfb]
+
+                px-5
+                py-4
+
+                sm:px-7
+                lg:px-8
               "
             >
               <span
                 aria-hidden="true"
                 className="
                   absolute
+                  bottom-0
                   right-0
-                  top-[-1px]
+                  top-0
 
-                  h-[2px]
-                  w-8
+                  w-[3px]
 
-                  bg-brand-accent
+                  bg-[#fc8502]
                 "
               />
 
               <p
                 className="
-                  text-[11px]
+                  text-[13px]
                   font-medium
-                  leading-[2]
+                  leading-7
 
-                  text-ink-muted
+                  text-[#65777d]
                 "
               >
-                با ثبت این فرم، با تماس کارشناسی DNH درباره همین درخواست موافقت
-                می‌کنید. از درج اطلاعات بانکی یا رمزهای شخصی خودداری کنید.
+                با ثبت این فرم، با تماس DNH درباره همین درخواست موافقت می‌کنید.
+                از ارسال رمز، اطلاعات بانکی یا اطلاعات حساس غیرمرتبط خودداری
+                کنید.
               </p>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ===================================================================
-          MOTION
-      ==================================================================== */}
-
-      <style>{`
-        @keyframes dnhContactIntro {
-          from {
-            opacity: 0;
-            transform: translate3d(14px, 12px, 0);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        @keyframes dnhContactForm {
-          from {
-            opacity: 0;
-            transform: translate3d(-16px, 16px, 0);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        @keyframes dnhContactTrust {
-          from {
-            opacity: 0;
-            transform: translate3d(0, 8px, 0);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        @keyframes dnhContactStatus {
-          from {
-            opacity: 0;
-            transform: translate3d(0, 6px, 0);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        .dnh-contact-intro {
-          opacity: 0;
-
-          animation:
-            dnhContactIntro
-            680ms
-            90ms
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        .dnh-contact-form {
-          opacity: 0;
-
-          animation:
-            dnhContactForm
-            760ms
-            180ms
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        .dnh-contact-trust {
-          opacity: 0;
-
-          animation:
-            dnhContactTrust
-            520ms
-            var(--dnh-trust-delay, 320ms)
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        .dnh-contact-status {
-          animation:
-            dnhContactStatus
-            380ms
-            cubic-bezier(.22, 1, .36, 1)
-            both;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .dnh-contact-intro,
-          .dnh-contact-form,
-          .dnh-contact-trust,
-          .dnh-contact-status {
-            opacity: 1;
-            transform: none;
-            animation: none;
-          }
-        }
-      `}</style>
-    </main>
+      </div>
+    </section>
   );
 }
 
 /* =============================================================================
-   TRUST
+   TRUST ROW
 ============================================================================= */
 
-function TrustItem({
+function TrustRow({
   icon: Icon,
   title,
   description,
   accent = false,
-  delay,
 }: {
   icon: typeof ShieldCheck;
   title: string;
   description: string;
   accent?: boolean;
-  delay: string;
 }) {
   return (
     <div
       className="
-        dnh-contact-trust
-
         group/trust
 
-        bg-white
+        grid
+        grid-cols-[38px_1fr]
+        gap-4
 
-        p-5
+        border-b
+        border-[#167394]/[0.08]
 
-        transition-[background-color,transform]
-        duration-300
+        py-5
 
-        hover:-translate-y-px
-        hover:bg-surface-soft
+        last:border-b-0
       "
-      style={
-        {
-          "--dnh-trust-delay": delay,
-        } as React.CSSProperties
-      }
     >
-      <Icon
+      <span
         aria-hidden="true"
-        className={`
-          mb-4
-          h-5
-          w-5
-
-          transition-transform
-          duration-300
-
-          group-hover/trust:-translate-y-0.5
-
-          ${accent ? "text-brand-accent" : "text-brand-primary"}
-        `}
-        strokeWidth={1.7}
-      />
-
-      <p
         className="
-          text-[13px]
-          font-black
-          text-ink
+          grid
+          size-9
+          place-items-center
+
+          border
+          border-[#167394]/10
+
+          bg-white
         "
       >
-        {title}
-      </p>
+        <Icon
+          strokeWidth={1.6}
+          className={`
+            size-[16px]
 
-      <p
-        className="
-          mt-2
+            ${accent ? "text-[#fc8502]" : "text-[#167394]"}
+          `}
+        />
+      </span>
 
-          text-[11px]
-          font-medium
-          leading-6
+      <div>
+        <p
+          className="
+            text-[14px]
+            font-black
+            text-[#31545e]
+          "
+        >
+          {title}
+        </p>
 
-          text-ink-muted
-        "
-      >
-        {description}
-      </p>
+        <p
+          className="
+            mt-1
+            max-w-[430px]
+
+            text-[13px]
+            font-medium
+            leading-6
+
+            text-[#718187]
+          "
+        >
+          {description}
+        </p>
+      </div>
     </div>
   );
 }
@@ -771,7 +645,7 @@ function TrustItem({
    BACKGROUND
 ============================================================================= */
 
-function ContactAtmosphere() {
+function SectionBackground() {
   return (
     <>
       <div
@@ -780,26 +654,10 @@ function ContactAtmosphere() {
           pointer-events-none
           absolute
           inset-0
-
-          opacity-[0.34]
         "
         style={{
-          backgroundImage: `
-            linear-gradient(
-              to right,
-              color-mix(in srgb, var(--dnh-primary) 4%, transparent) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              color-mix(in srgb, var(--dnh-primary) 3%, transparent) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "78px 78px",
-          maskImage: "linear-gradient(to bottom, black 0%, transparent 72%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 0%, transparent 72%)",
+          background:
+            "radial-gradient(circle at 12% 35%,rgba(22,115,148,.045),transparent 25%),linear-gradient(180deg,#f6f8f8 0%,#ffffff 100%)",
         }}
       />
 
@@ -807,36 +665,16 @@ function ContactAtmosphere() {
         aria-hidden="true"
         className="
           pointer-events-none
-
           absolute
-          right-[7%]
-          top-[18%]
+          inset-0
 
-          h-[280px]
-          w-[280px]
-
-          bg-brand-primary/[0.05]
-
-          blur-[100px]
+          opacity-[0.025]
         "
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-
-          absolute
-          inset-x-0
-          top-0
-
-          h-px
-
-          bg-gradient-to-r
-          from-transparent
-          via-brand-primary/25
-          to-transparent
-        "
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,rgba(22,115,148,.22) 1px,transparent 1px)",
+          backgroundSize: "118px 100%",
+        }}
       />
     </>
   );

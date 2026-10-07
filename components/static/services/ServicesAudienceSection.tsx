@@ -22,7 +22,7 @@ const AUDIENCES = [
     description:
       "وقتی یک انتخاب مهم مالی پیش روست و مسئله، ریسک، نقدشوندگی، افق زمانی و مسیرهای قابل بررسی باید پیش از تصمیم روشن شوند.",
     linkLabel: "مسیر تصمیم مالی بزرگ",
-    href: "/fa/who-we-help/big-financial-decision",
+    href: "/who-we-help/big-financial-decision",
     icon: CircleDollarSign,
   },
 
@@ -32,7 +32,7 @@ const AUDIENCES = [
     description:
       "وقتی دارایی‌های متعدد وجود دارند، اما ارتباط میان آن‌ها، تمرکز ریسک، نقدشوندگی و منطق کلی پرتفوی روشن نیست.",
     linkLabel: "بررسی مسئله پرتفوی",
-    href: "/fa/who-we-help/unstructured-portfolio",
+    href: "/who-we-help/unstructured-portfolio",
     icon: PieChart,
   },
 
@@ -42,7 +42,7 @@ const AUDIENCES = [
     description:
       "وقتی ساختار مالی، نقدینگی، تأمین مالی و تخصیص سرمایه باید در کنار ریسک و اهداف مجموعه بررسی شوند.",
     linkLabel: "بررسی مسیر کسب‌وکار و سرمایه",
-    href: "/fa/who-we-help/holdings-financial-capital-structure",
+    href: "/who-we-help/holdings-financial-capital-structure",
     icon: Building2,
   },
 ] as const;
@@ -266,7 +266,7 @@ export function ServicesAudienceSection() {
           </div>
 
           <ActionButton
-            href="/fa/financial-decision-assessment"
+            href="/financial-decision-assessment"
             variant="primary"
             size="md"
             icon={ArrowUpLeft}

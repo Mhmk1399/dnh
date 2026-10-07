@@ -1,12 +1,21 @@
+import Link from "next/link";
+
 import {
   ArrowLeft,
+  BriefcaseBusiness,
+  ClipboardCheck,
   Mail,
   MapPin,
   MessageCircleMore,
-  Navigation,
   Phone,
+  Send,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
+
+/* =============================================================================
+   TYPES
+============================================================================= */
 
 type ContactHeroProps = {
   phoneDisplay: string;
@@ -20,19 +29,50 @@ type ContactHeroProps = {
   address: string;
   googleMapsUrl: string;
 
-  cityLabel?: string;
+  responseNote?: string;
 };
 
-type ContactItemProps = {
+type ContactChannelProps = {
   icon: LucideIcon;
-  title: string;
+  label: string;
   value: string;
   action: string;
   href: string;
-  delay: number;
   external?: boolean;
   ltr?: boolean;
 };
+
+/* =============================================================================
+   ROUTES
+============================================================================= */
+
+const CONTACT_ROUTES = [
+  {
+    number: "01",
+    icon: Send,
+    title: "ارسال پیام",
+    description: "برای ارتباط عمومی یا مطرح کردن یک موضوع مشخص",
+    href: "#contact-form",
+  },
+  {
+    number: "02",
+    icon: ClipboardCheck,
+    title: "ارزیابی تصمیم مالی",
+    description: "اگر با یک تصمیم یا مسئله مالی مشخص روبه‌رو هستید",
+    href: "/financial-decision-assessment",
+  },
+  {
+    number: "03",
+    icon: BriefcaseBusiness,
+    title: "مشاوره راهبردی",
+    description: "برای موضوعاتی که به بررسی و گفت‌وگوی تخصصی نیاز دارند",
+    href: "/request-strategic-consultation",
+  },
+] as const;
+
+/* =============================================================================
+   CONTACT HERO
+============================================================================= */
 
 export function ContactHero({
   phoneDisplay,
@@ -42,673 +82,715 @@ export function ContactHero({
   email,
   address,
   googleMapsUrl,
-  cityLabel = "دفتر DNH",
+  responseNote = "درخواست‌ها پس از بررسی اولیه از مسیر مناسب پیگیری می‌شوند.",
 }: ContactHeroProps) {
   return (
     <section
+      id="contact-intro"
       dir="rtl"
       aria-labelledby="contact-hero-title"
       className="
         relative
         isolate
+        min-h-[100svh]
         overflow-hidden
-        bg-[#032d3b]
+
+        bg-[#021f2a]
+        text-white
       "
-      style={{
-        minHeight: "100dvh",
-      }}
     >
       <ContactBackground />
 
       <div
         className="
+          dnh-site-shell
           relative
           z-10
+
           mx-auto
-          grid
-          min-h-[100dvh]
+          flex
+          min-h-[100svh]
           w-full
           max-w-[1536px]
+          flex-col
 
-          pt-[110px]
+          px-5
+          pb-12
+          pt-[112px]
 
-          lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]
-          lg:pt-0
+          sm:px-8
+          sm:pb-14
+          sm:pt-[124px]
+
+          lg:px-12
+          lg:pb-14
+          lg:pt-[118px]
+
+          xl:px-16
+          2xl:px-20
         "
       >
-        {/* =========================================================
-            RIGHT — CONTACT
-        ========================================================== */}
+
+
+        {/* ===========================================================
+            MAIN GRID
+        ============================================================ */}
 
         <div
           className="
-            order-1
-            flex
-            items-center
+            grid
+            flex-1
+            gap-10
 
-            px-5
-            py-12
+            pt-10
 
-            sm:px-8
-            sm:py-16
-
-            lg:col-start-1
-            lg:row-start-1
-            lg:px-12
-            lg:pb-16
-            lg:pt-[130px]
-
-            xl:px-16
+            lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]
+            lg:items-stretch
+            lg:gap-0
+            lg:pt-12
+            lg:[direction:ltr]
           "
         >
-          <div className="w-full max-w-[650px]">
-            {/* Eyebrow */}
-            <div
-              className="
-                dnh-contact-enter
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-              style={{
-                animationDelay: "80ms",
-              }}
-            >
-              <span className="h-px w-10 bg-brand-accent" />
+          {/* =========================================================
+              LEFT — DIRECT CONTACT
+          ========================================================== */}
 
-              <span
-                className="
-                  text-[10px]
-                  font-black
-                  text-white/72
-
-                  sm:text-[11px]
-                "
-              >
-                ارتباط با DNH
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1
-              id="contact-hero-title"
-              className="
-                dnh-contact-enter
-
-                max-w-[650px]
-
-                text-[32px]
-                font-black
-                leading-[1.55]
-                tracking-[-0.04em]
-
-                text-white
-
-                sm:text-[40px]
-
-                lg:text-[46px]
-
-                xl:text-[52px]
-              "
-              style={{
-                animationDelay: "140ms",
-              }}
-            >
-              برای شروع گفت‌وگو،
-              <br />
-              <span className="text-brand-accent">مسیر ارتباطی مناسب</span> را
-              انتخاب کنید.
-            </h1>
-
-            {/* Description */}
-            <p
-              className="
-                dnh-contact-enter
-
-                mt-5
-                max-w-[600px]
-
-                text-[13px]
-                font-medium
-                leading-[2.15]
-
-                text-white/64
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-              style={{
-                animationDelay: "210ms",
-              }}
-            >
-              برای ارتباط مستقیم با DNH می‌توانید از تماس تلفنی، واتساپ، ایمیل
-              یا موقعیت دفتر استفاده کنید. مسیر مناسب خود را انتخاب کنید تا
-              ارتباط سریع‌تر و روشن‌تر آغاز شود.
-            </p>
-
-            {/* =====================================================
-                Contact rows
-            ====================================================== */}
-
-            <div
-              className="
-                mt-8
-                border-y
-                border-white/12
-
-                lg:mt-9
-              "
-            >
-              <ContactItem
-                icon={Phone}
-                title="تماس تلفنی"
-                value={phoneDisplay}
-                action="تماس مستقیم"
-                href={`tel:${phoneHref}`}
-                delay={290}
-                ltr
-              />
-
-              <ContactItem
-                icon={MessageCircleMore}
-                title="واتساپ"
-                value={whatsappDisplay}
-                action="شروع گفت‌وگو"
-                href={whatsappHref}
-                delay={360}
-                external
-                ltr
-              />
-
-              <ContactItem
-                icon={Mail}
-                title="ایمیل"
-                value={email}
-                action="ارسال ایمیل"
-                href={`mailto:${email}`}
-                delay={430}
-                ltr
-              />
-
-              <ContactItem
-                icon={MapPin}
-                title="آدرس دفتر"
-                value={address}
-                action="مسیریابی"
-                href={googleMapsUrl}
-                delay={500}
-                external
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================
-            LEFT — LOCATION
-        ========================================================== */}
-
-        <div
-          className="
-            dnh-contact-map
-
-            order-2
-            relative
-
-            min-h-[440px]
-
-            overflow-hidden
-
-            border-t
-            border-white/10
-
-            bg-[#eff8fa]
-
-            lg:col-start-2
-            lg:row-start-1
-            lg:min-h-[100dvh]
-            lg:border-l
-            lg:border-t-0
-            lg:border-white/10
-          "
-        >
-          <MapVisual />
-
-          {/* Map header */}
-          <div
+          <aside
+            dir="rtl"
+            aria-label="راه‌های ارتباط مستقیم با DNH"
             className="
-              absolute
-              left-5
-              top-6
-              z-20
+              relative
+              order-2
 
-              text-left
-
-              lg:left-8
-              lg:top-[130px]
-            "
-          >
-            <div
-              className="
-                flex
-                items-center
-                gap-3
-              "
-            >
-              <span className="h-8 w-px bg-brand-accent" />
-
-              <div>
-                <span
-                  className="
-                    block
-                    text-[9px]
-                    font-black
-                    text-brand-primary
-                  "
-                >
-                  موقعیت دفتر
-                </span>
-
-                <span
-                  className="
-                    mt-1
-                    block
-                    text-[8px]
-                    font-medium
-                    text-ink-muted
-                  "
-                >
-                  مسیر ارتباط حضوری
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Orange location point */}
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="باز کردن موقعیت دفتر DNH در گوگل مپ"
-            className="
-              dnh-contact-pin
-
-              group/map-pin
-
-              absolute
-              left-[51%]
-              top-[48%]
-              z-20
-
-              flex
-              h-10
-              w-10
-              -translate-x-1/2
-              -translate-y-1/2
-              items-center
-              justify-center
-
-              bg-brand-accent
-
-              text-white
-
-              shadow-[0_12px_30px_color-mix(in_srgb,var(--dnh-accent)_34%,transparent)]
-
-              outline-none
-
-              transition-[transform,box-shadow]
-              duration-300
-
-              hover:-translate-y-[55%]
-              hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--dnh-accent)_42%,transparent)]
-
-              focus-visible:ring-4
-              focus-visible:ring-focus/30
-            "
-          >
-            <MapPin
-              className="
-                h-[18px]
-                w-[18px]
-
-                transition-transform
-                duration-300
-
-                group-hover/map-pin:-translate-y-0.5
-              "
-              strokeWidth={1.8}
-            />
-          </a>
-
-          {/* Office location footer */}
-          <div
-            className="
-              absolute
-              inset-x-5
-              bottom-5
-              z-20
+              overflow-hidden
 
               border
-              border-white/15
+              border-white/[0.1]
 
-              bg-[#043544]/95
+              bg-white/[0.025]
 
-              px-4
-              py-4
-
-              text-white
-
-              shadow-[0_18px_44px_rgba(2,29,39,0.18)]
-
-              backdrop-blur-[12px]
-
-              sm:inset-x-8
-              sm:px-5
-
-              lg:bottom-8
+              lg:order-none
+              lg:col-start-1
+              lg:row-start-1
+              lg:border-l-0
             "
           >
             <div
+              aria-hidden="true"
+              className="
+                absolute
+                inset-x-0
+                top-0
+                h-[3px]
+                bg-[#fc8502]
+              "
+            />
+
+            <div
               className="
                 flex
+                h-full
                 flex-col
-                gap-4
 
-                sm:flex-row
-                sm:items-center
-                sm:justify-between
+                px-5
+                py-6
+
+                sm:px-6
+                sm:py-7
+
+                lg:px-7
+                lg:py-8
+
+                xl:px-8
               "
             >
-              <div className="min-w-0">
-                <div
+              {/* HEADER */}
+
+              <div
+                className="
+                  border-b
+                  border-white/[0.09]
+                  pb-6
+                "
+              >
+                <p
                   className="
-                    flex
-                    items-center
-                    gap-2
+                    text-[12px]
+                    font-black
+                    text-[#82cee4]/70
                   "
                 >
-                  <span className="h-2 w-2 bg-brand-accent" />
+                  راه‌های ارتباط مستقیم
+                </p>
 
-                  <span
-                    className="
-                      text-[11px]
-                      font-black
-                    "
-                  >
-                    {cityLabel}
-                  </span>
-                </div>
-
-                <address
+                <h2
                   className="
                     mt-2
-                    not-italic
 
-                    text-[10px]
-                    font-medium
-                    leading-[1.9]
+                    text-[23px]
+                    font-black
+                    leading-[1.7]
 
-                    text-white/62
+                    text-white
 
-                    sm:text-[11px]
+                    sm:text-[25px]
                   "
                 >
-                  {address}
-                </address>
+                  هر زمان مسیر مستقیم‌تری نیاز دارید.
+                </h2>
+
+                <p
+                  className="
+                    mt-3
+                    max-w-[430px]
+
+                    text-[14px]
+                    font-medium
+                    leading-7
+
+                    text-white/45
+                  "
+                >
+                  تماس، پیام، ایمیل یا هماهنگی مراجعه حضوری.
+                </p>
               </div>
 
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* CHANNELS */}
+
+              <div>
+                <ContactChannel
+                  icon={Phone}
+                  label="تماس تلفنی"
+                  value={phoneDisplay}
+                  action="تماس"
+                  href={`tel:${phoneHref}`}
+                  ltr
+                />
+
+                <ContactChannel
+                  icon={MessageCircleMore}
+                  label="واتساپ"
+                  value={whatsappDisplay}
+                  action="شروع گفتگو"
+                  href={whatsappHref}
+                  external
+                  ltr
+                />
+
+                <ContactChannel
+                  icon={Mail}
+                  label="ایمیل"
+                  value={email}
+                  action="ارسال ایمیل"
+                  href={`mailto:${email}`}
+                  ltr
+                />
+
+                <ContactChannel
+                  icon={MapPin}
+                  label="آدرس دفتر"
+                  value={address}
+                  action="مشاهده مسیر"
+                  href={googleMapsUrl}
+                  external
+                />
+              </div>
+
+              {/* RESPONSE */}
+
+              <div
                 className="
-                  group/navigation
+                  mt-auto
+                  border-t
+                  border-white/[0.09]
+                  pt-5
+                "
+              >
+                <div className="flex items-start gap-3">
+                  <ShieldCheck
+                    aria-hidden="true"
+                    strokeWidth={1.6}
+                    className="
+                      mt-[3px]
+                      size-[17px]
+                      shrink-0
+                      text-[#82cee4]/65
+                    "
+                  />
 
-                  inline-flex
-                  min-h-11
-                  shrink-0
+                  <div>
+                    <p
+                      className="
+                        text-[13px]
+                        font-black
+                        text-white/75
+                      "
+                    >
+                      نحوه پاسخگویی
+                    </p>
+
+                    <p
+                      className="
+                        mt-1
+                        text-[13px]
+                        font-medium
+                        leading-6
+                        text-white/40
+                      "
+                    >
+                      {responseNote}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* =========================================================
+              RIGHT — PRIMARY CONTACT ROUTING
+          ========================================================== */}
+
+          <div
+            dir="rtl"
+            className="
+              relative
+              order-1
+
+              flex
+              items-center
+
+              lg:order-none
+              lg:col-start-2
+              lg:row-start-1
+
+              lg:border
+              lg:border-white/[0.1]
+            "
+          >
+            {/* subtle field */}
+
+            <div
+              aria-hidden="true"
+              className="
+                pointer-events-none
+                absolute
+                inset-0
+
+                bg-[linear-gradient(115deg,rgba(255,255,255,.018),transparent_60%)]
+              "
+            />
+
+            <div
+              className="
+                relative
+                z-10
+                w-full
+
+                py-2
+
+                lg:px-10
+                lg:py-8
+
+                xl:px-14
+              "
+            >
+              {/* EYEBROW */}
+
+              <div
+                className="
+                  flex
                   items-center
-                  justify-center
-                  gap-2
+                  gap-3
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  className="
+                    h-px
+                    w-9
+                    bg-[#fc8502]
+                  "
+                />
 
-                  border-r
-                  border-white/16
+                <p
+                  className="
+                    text-[13px]
+                    font-black
+                    text-[#82cee4]
+                  "
+                >
+                  شروع ارتباط
+                </p>
+              </div>
 
-                  pr-4
+              {/* TITLE */}
 
-                  text-[10px]
+              <h1
+                id="contact-hero-title"
+                className="
+                  mt-5
+                  max-w-[800px]
+
+                  text-[36px]
                   font-black
+                  leading-[1.62]
+                  tracking-[-0.05em]
 
                   text-white
 
-                  outline-none
+                  sm:text-[44px]
 
-                  transition-colors
-                  duration-300
+                  lg:text-[50px]
+                  lg:leading-[1.52]
 
-                  hover:text-brand-accent
-
-                  focus-visible:ring-4
-                  focus-visible:ring-focus/25
-
-                  max-sm:border-r-0
-                  max-sm:border-t
-                  max-sm:border-white/12
-                  max-sm:pt-3
+                  xl:text-[57px]
                 "
               >
-                <Navigation
+                یک گفت‌وگوی روشن،
+                <br />
+                <span className="text-[#fc8502]">
+                  از مسیر درست شروع می‌شود.
+                </span>
+              </h1>
+
+              <p
+                className="
+                  mt-5
+                  max-w-[650px]
+
+                  text-[15px]
+                  font-medium
+                  leading-[2]
+
+                  text-white/52
+
+                  sm:text-[16px]
+                "
+              >
+                بسته به موضوع، مسیر مناسب را انتخاب کنید تا درخواست شما از ابتدا
+                در چارچوب درست بررسی شود.
+              </p>
+
+              {/* =====================================================
+                  ROUTES
+              ====================================================== */}
+
+              <div
+                className="
+                  mt-9
+                  border-y
+                  border-white/[0.09]
+                "
+              >
+                {CONTACT_ROUTES.map((route) => (
+                  <ContactRoute key={route.number} {...route} />
+                ))}
+              </div>
+
+              {/* FOOT NOTE */}
+
+              <div
+                className="
+                  mt-5
+                  flex
+                  items-start
+                  gap-3
+                "
+              >
+                <span
                   aria-hidden="true"
                   className="
-                    h-4
-                    w-4
-
-                    text-brand-accent
-
-                    transition-transform
-                    duration-300
-
-                    group-hover/navigation:-translate-x-0.5
-                    group-hover/navigation:-translate-y-0.5
+                    mt-[8px]
+                    h-[6px]
+                    w-[6px]
+                    shrink-0
+                    bg-[#fc8502]
                   "
-                  strokeWidth={1.7}
                 />
 
-                <span>مسیریابی در گوگل مپ</span>
-              </a>
+                <p
+                  className="
+                    max-w-[600px]
+
+                    text-[13px]
+                    font-medium
+                    leading-6
+
+                    text-white/34
+                  "
+                >
+                  اطلاعات اولیه صرفاً برای شناخت موضوع و هدایت درخواست به مسیر
+                  مناسب استفاده می‌شود.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* ===========================================================
-          Lightweight animations
-      ============================================================ */}
-
-      <style>{`
-        @keyframes dnhContactEnter {
-          from {
-            opacity: 0;
-            transform: translate3d(-14px, 10px, 0);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        @keyframes dnhContactMapEnter {
-          from {
-            opacity: 0;
-            transform: translate3d(-16px, 0, 0) scale(.988);
-          }
-
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-          }
-        }
-
-        @keyframes dnhContactPinEnter {
-          from {
-            opacity: 0;
-            transform:
-              translate(-50%, -50%)
-              scale(.65);
-          }
-
-          to {
-            opacity: 1;
-            transform:
-              translate(-50%, -50%)
-              scale(1);
-          }
-        }
-
-        .dnh-contact-enter {
-          opacity: 0;
-          animation:
-            dnhContactEnter
-            640ms
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        .dnh-contact-map {
-          opacity: 0;
-          animation:
-            dnhContactMapEnter
-            820ms
-            120ms
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        .dnh-contact-pin {
-          opacity: 0;
-          animation:
-            dnhContactPinEnter
-            480ms
-            720ms
-            cubic-bezier(.22, 1, .36, 1)
-            forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .dnh-contact-enter,
-          .dnh-contact-map,
-          .dnh-contact-pin {
-            opacity: 1;
-            animation: none;
-            transform: none;
-          }
-        }
-      `}</style>
     </section>
   );
 }
 
 /* =============================================================================
-   CONTACT ITEM
+   CONTACT ROUTE
 ============================================================================= */
 
-function ContactItem({
+function ContactRoute({
+  number,
   icon: Icon,
   title,
+  description,
+  href,
+}: (typeof CONTACT_ROUTES)[number]) {
+  return (
+    <Link
+      href={href}
+      className="
+        group/route
+        relative
+
+        grid
+        gap-4
+
+        border-b
+        border-white/[0.075]
+
+        py-5
+
+        last:border-b-0
+
+        outline-none
+
+        transition-colors
+        duration-200
+
+        hover:bg-white/[0.022]
+
+        focus-visible:bg-white/[0.03]
+        focus-visible:ring-2
+        focus-visible:ring-inset
+        focus-visible:ring-[#fc8502]/30
+
+        sm:grid-cols-[44px_minmax(0,1fr)_42px]
+        sm:items-center
+        sm:gap-5
+      "
+    >
+      {/* ICON */}
+
+      <span
+        aria-hidden="true"
+        className="
+          grid
+          size-10
+          place-items-center
+
+          border
+          border-white/[0.11]
+
+          text-[#82cee4]/75
+
+          transition-[border-color,color]
+          duration-200
+
+          group-hover/route:border-[#fc8502]/40
+          group-hover/route:text-[#fc8502]
+        "
+      >
+        <Icon strokeWidth={1.6} className="size-[17px]" />
+      </span>
+
+      {/* CONTENT */}
+
+      <span className="min-w-0">
+        <span
+          className="
+            flex
+            items-center
+            gap-3
+          "
+        >
+          <span
+            className="
+              text-[12px]
+              font-black
+              tabular-nums
+              text-white/24
+            "
+          >
+            {number}
+          </span>
+
+          <span
+            className="
+              text-[16px]
+              font-black
+              text-white
+            "
+          >
+            {title}
+          </span>
+        </span>
+
+        <span
+          className="
+            mt-1
+            block
+
+            text-[14px]
+            font-medium
+            leading-7
+
+            text-white/42
+          "
+        >
+          {description}
+        </span>
+      </span>
+
+      {/* ARROW */}
+
+      <span
+        className="
+          hidden
+          size-9
+          place-items-center
+
+          border
+          border-white/[0.09]
+
+          text-white/35
+
+          transition-[border-color,color,transform]
+          duration-200
+
+          group-hover/route:-translate-x-1
+          group-hover/route:border-[#fc8502]/35
+          group-hover/route:text-[#fc8502]
+
+          sm:grid
+        "
+      >
+        <ArrowLeft
+          aria-hidden="true"
+          strokeWidth={1.7}
+          className="size-[15px]"
+        />
+      </span>
+
+      {/* ORANGE RAIL */}
+
+      <span
+        aria-hidden="true"
+        className="
+          absolute
+          inset-y-0
+          right-0
+
+          w-[2px]
+
+          origin-bottom
+          scale-y-0
+
+          bg-[#fc8502]
+
+          transition-transform
+          duration-200
+
+          group-hover/route:scale-y-100
+        "
+      />
+    </Link>
+  );
+}
+
+/* =============================================================================
+   CONTACT CHANNEL
+============================================================================= */
+
+function ContactChannel({
+  icon: Icon,
+  label,
   value,
   action,
   href,
-  delay,
   external = false,
   ltr = false,
-}: ContactItemProps) {
+}: ContactChannelProps) {
   return (
     <a
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
       className="
-        dnh-contact-enter
-
-        group/contact-row
-
+        group/channel
         relative
 
         grid
-        min-h-[78px]
-        grid-cols-[44px_minmax(0,1fr)]
-        items-center
         gap-3
 
         border-b
-        border-white/10
+        border-white/[0.075]
 
-        px-1
-        py-3
-
-        outline-none
-
-        transition-[background-color,border-color]
-        duration-300
+        py-5
 
         last:border-b-0
 
-        hover:bg-white/[0.035]
+        outline-none
 
-        focus-visible:bg-white/[0.05]
-        focus-visible:ring-4
-        focus-visible:ring-focus/20
+        transition-colors
+        duration-200
 
-        sm:grid-cols-[46px_minmax(0,1fr)_125px]
+        hover:bg-white/[0.025]
+
+        focus-visible:bg-white/[0.035]
+        focus-visible:ring-2
+        focus-visible:ring-inset
+        focus-visible:ring-[#fc8502]/30
+
+        sm:grid-cols-[40px_minmax(0,1fr)_auto]
+        sm:items-center
         sm:gap-4
-        sm:px-2
       "
-      style={{
-        animationDelay: `${delay}ms`,
-      }}
     >
-      {/* Icon */}
+      {/* ICON */}
+
       <span
         aria-hidden="true"
         className="
-          flex
-          h-10
-          w-10
-          items-center
-          justify-center
+          grid
+          size-9
+          place-items-center
 
           border
-          border-white/18
+          border-white/[0.1]
 
-          text-white/80
+          text-[#82cee4]/70
 
-          transition-[background-color,border-color,color,transform]
-          duration-300
+          transition-[border-color,color]
+          duration-200
 
-          group-hover/contact-row:translate-x-[-2px]
-          group-hover/contact-row:border-brand-primary
-          group-hover/contact-row:bg-brand-primary
-          group-hover/contact-row:text-white
+          group-hover/channel:border-[#fc8502]/40
+          group-hover/channel:text-[#fc8502]
         "
       >
-        <Icon className="h-[17px] w-[17px]" strokeWidth={1.65} />
+        <Icon strokeWidth={1.6} className="size-[16px]" />
       </span>
 
-      {/* Content */}
+      {/* CONTENT */}
+
       <span className="min-w-0">
         <span
           className="
             block
-            text-[11px]
-            font-black
-            text-white
 
-            sm:text-[12px]
+            text-[13px]
+            font-black
+
+            text-white/75
           "
         >
-          {title}
+          {label}
         </span>
 
         <span
@@ -717,18 +799,19 @@ function ContactItem({
             mt-1
             block
 
-            text-[10px]
-            font-medium
-            leading-5
+            overflow-hidden
+            text-ellipsis
 
-            text-white/52
+            text-[14px]
+            font-medium
+            leading-6
+
+            text-white/42
 
             transition-colors
-            duration-300
+            duration-200
 
-            group-hover/contact-row:text-white/72
-
-            sm:text-[11px]
+            group-hover/channel:text-white/62
 
             ${ltr ? "text-right" : ""}
           `}
@@ -737,171 +820,68 @@ function ContactItem({
         </span>
       </span>
 
-      {/* Action */}
+      {/* ACTION */}
+
       <span
         className="
-          col-span-2
-
           flex
           items-center
-          justify-between
-          gap-3
+          gap-2
 
-          border-t
-          border-white/8
+          pr-[54px]
 
-          pt-3
-
-          text-[10px]
+          text-[12px]
           font-black
 
-          text-white/62
+          text-white/30
 
           transition-colors
-          duration-300
+          duration-200
 
-          group-hover/contact-row:text-brand-accent
+          group-hover/channel:text-[#fc8502]
 
-          sm:col-span-1
-          sm:border-r
-          sm:border-t-0
-          sm:border-white/12
-          sm:pr-4
-          sm:pt-0
+          sm:pr-0
         "
       >
-        <span>{action}</span>
+        {action}
 
         <ArrowLeft
           aria-hidden="true"
+          strokeWidth={1.7}
           className="
-            h-4
-            w-4
+            size-[14px]
 
             transition-transform
-            duration-300
+            duration-200
 
-            group-hover/contact-row:-translate-x-1
+            group-hover/channel:-translate-x-1
           "
-          strokeWidth={1.7}
         />
       </span>
+
+      {/* ACTIVE RAIL */}
+
+      <span
+        aria-hidden="true"
+        className="
+          absolute
+          inset-y-0
+          right-0
+
+          w-[2px]
+
+          origin-bottom
+          scale-y-0
+
+          bg-[#fc8502]
+
+          transition-transform
+          duration-200
+
+          group-hover/channel:scale-y-100
+        "
+      />
     </a>
-  );
-}
-
-/* =============================================================================
-   MAP VISUAL
-============================================================================= */
-
-function MapVisual() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          absolute
-          inset-0
-        "
-        style={{
-          background: `
-            linear-gradient(
-              135deg,
-              #f8fcfd 0%,
-              #eaf6f8 48%,
-              #f8fcfd 100%
-            )
-          `,
-        }}
-      />
-
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 700 900"
-        preserveAspectRatio="xMidYMid slice"
-        className="
-          absolute
-          inset-0
-          h-full
-          w-full
-        "
-        fill="none"
-      >
-        {/* city blocks */}
-        <g
-          fill="var(--dnh-primary)"
-          fillOpacity="0.055"
-          stroke="var(--dnh-primary)"
-          strokeOpacity="0.08"
-        >
-          <rect x="40" y="80" width="140" height="110" />
-          <rect x="210" y="50" width="120" height="180" />
-          <rect x="370" y="90" width="190" height="130" />
-          <rect x="580" y="30" width="90" height="170" />
-
-          <rect x="30" y="260" width="200" height="140" />
-          <rect x="270" y="270" width="100" height="190" />
-          <rect x="405" y="250" width="230" height="150" />
-
-          <rect x="65" y="460" width="130" height="190" />
-          <rect x="220" y="500" width="220" height="120" />
-          <rect x="490" y="445" width="150" height="210" />
-
-          <rect x="20" y="690" width="230" height="150" />
-          <rect x="290" y="675" width="130" height="180" />
-          <rect x="465" y="700" width="200" height="120" />
-        </g>
-
-        {/* primary roads */}
-        <path
-          d="M-30 200L730 610"
-          stroke="var(--dnh-primary)"
-          strokeOpacity="0.18"
-          strokeWidth="2"
-        />
-
-        <path
-          d="M80 -20L560 920"
-          stroke="var(--dnh-primary)"
-          strokeOpacity="0.14"
-          strokeWidth="2"
-        />
-
-        <path
-          d="M-20 560L730 170"
-          stroke="var(--dnh-primary)"
-          strokeOpacity="0.17"
-          strokeWidth="2"
-        />
-
-        {/* secondary roads */}
-        <g stroke="var(--dnh-primary)" strokeOpacity="0.07">
-          <path d="M0 330H700" />
-          <path d="M0 480H700" />
-          <path d="M0 720H700" />
-
-          <path d="M170 0V900" />
-          <path d="M355 0V900" />
-          <path d="M545 0V900" />
-        </g>
-
-        {/* orange axis */}
-        <path d="M0 470H700" stroke="var(--dnh-accent)" strokeOpacity="0.45" />
-
-        <path d="M350 0V900" stroke="var(--dnh-accent)" strokeOpacity="0.28" />
-      </svg>
-
-      {/* subtle atmosphere */}
-      <div
-        aria-hidden="true"
-        className="
-          absolute
-          inset-0
-
-          bg-[linear-gradient(180deg,transparent_0%,transparent_65%,rgba(255,255,255,.42)_100%)]
-        "
-      />
-    </>
   );
 }
 
@@ -912,6 +892,8 @@ function MapVisual() {
 function ContactBackground() {
   return (
     <>
+      {/* MAIN DARK FIELD */}
+
       <div
         aria-hidden="true"
         className="
@@ -921,15 +903,27 @@ function ContactBackground() {
         "
         style={{
           background: `
+            radial-gradient(
+              circle at 76% 32%,
+              rgba(22,115,148,.20),
+              transparent 28%
+            ),
+            radial-gradient(
+              circle at 18% 74%,
+              rgba(22,115,148,.10),
+              transparent 24%
+            ),
             linear-gradient(
-              105deg,
-              #043746 0%,
-              #032e3d 52%,
-              #022732 100%
+              118deg,
+              #021d27 0%,
+              #032f3e 46%,
+              #022631 100%
             )
           `,
         }}
       />
+
+      {/* ENGINEERING GRID */}
 
       <div
         aria-hidden="true"
@@ -938,23 +932,92 @@ function ContactBackground() {
           absolute
           inset-0
 
-          opacity-[0.11]
+          opacity-[0.045]
         "
         style={{
           backgroundImage: `
             linear-gradient(
               to right,
-              rgba(255,255,255,.09) 1px,
+              rgba(255,255,255,.08) 1px,
               transparent 1px
             ),
             linear-gradient(
               to bottom,
-              rgba(255,255,255,.06) 1px,
+              rgba(255,255,255,.055) 1px,
               transparent 1px
             )
           `,
-          backgroundSize: "86px 86px",
+          backgroundSize: "112px 112px",
         }}
+      />
+
+      {/* HORIZONTAL REFERENCE */}
+
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none
+
+          absolute
+          left-0
+          top-[46%]
+
+          hidden
+          h-px
+          w-[18%]
+
+          bg-gradient-to-r
+          from-transparent
+          to-[#fc8502]/25
+
+          lg:block
+        "
+      />
+
+      {/* VERTICAL REFERENCE */}
+
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none
+
+          absolute
+          bottom-0
+          right-[14%]
+
+          hidden
+          h-[150px]
+          w-px
+
+          bg-gradient-to-t
+          from-[#fc8502]/24
+          to-transparent
+
+          lg:block
+        "
+      />
+
+      {/* REFERENCE POINT */}
+
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none
+
+          absolute
+          bottom-[150px]
+          right-[14%]
+
+          hidden
+          h-[7px]
+          w-[7px]
+
+          translate-x-1/2
+
+          bg-[#fc8502]
+
+          lg:block
+        "
       />
     </>
   );

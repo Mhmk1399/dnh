@@ -208,7 +208,7 @@ export function PortfolioRiskSection() {
               </span>
 
               <Link
-                href="/fa/services/risk-management-wealth-protection"
+                href="/services/risk-management-wealth-protection"
                 className="
                   group/risk-link
 

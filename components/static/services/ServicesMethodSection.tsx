@@ -18,7 +18,7 @@ const FOUNDATIONS = [
     title: "معماری ثروت",
     description:
       "دیدن دارایی، نقدشوندگی، ریسک، اهداف و افق زمانی در یک تصویر منسجم‌تر.",
-    href: "/fa/dnh/wealth-architecture",
+    href: "/dnh/wealth-architecture",
     linkLabel: "آشنایی با معماری ثروت",
     icon: Landmark,
   },
@@ -27,7 +27,7 @@ const FOUNDATIONS = [
     title: "چارچوب DNH",
     description:
       "ساختار دادن به مسئله، سناریوها و مسیرهای قابل بررسی پیش از تصمیم.",
-    href: "/fa/dnh/framework",
+    href: "/dnh/framework",
     linkLabel: "آشنایی با چارچوب DNH",
     icon: Network,
   },
@@ -36,7 +36,7 @@ const FOUNDATIONS = [
     title: "میز هوشمندی DNH",
     description:
       "دیدن اقتصاد، بازار، نقدشوندگی و ریسک به‌عنوان بخشی از محیط تصمیم.",
-    href: "/fa/dnh/intelligence-desk",
+    href: "/dnh/intelligence-desk",
     linkLabel: "آشنایی با میز هوشمندی",
     icon: Radar,
   },

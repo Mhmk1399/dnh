@@ -242,7 +242,7 @@ export function IntelligenceDeskHero() {
               </ActionButton>
 
               <ActionButton
-                href="/fa/financial-decision-assessment"
+                href="/financial-decision-assessment"
                 variant="secondary"
                 size="lg"
                 icon={ArrowLeft}

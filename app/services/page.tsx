@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "خدمات DNH شامل استراتژی ثروت خصوصی، هوشمندی پرتفوی، مشاوره مالی راهبردی، مشاوره اقتصاد و بازار، مدیریت ریسک و Executive Briefings است.",
 
   alternates: {
-    canonical: "/fa/services",
+    canonical: "/services",
   },
 
   openGraph: {

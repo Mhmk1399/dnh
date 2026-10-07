@@ -231,7 +231,7 @@ export function WealthStrategyFitSection() {
           </div>
 
           <ActionButton
-            href="/fa/financial-decision-assessment"
+            href="/financial-decision-assessment"
             variant="primary"
             size="md"
             icon={ArrowLeft}

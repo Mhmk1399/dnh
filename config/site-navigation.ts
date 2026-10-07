@@ -342,8 +342,8 @@ export const MEGA_MENUS: Record<
       "گزارش‌ها، تحلیل‌ها و پژوهش‌های DNH برای شناخت بهتر شرایط، ریسک و پیامدهای راهبردی.",
 
     overview: {
-      title: "ورود به مرکز دانش DNH",
-      href: "/knowledge",
+      title: "چشم‌انداز هفتگی DNH",
+      href: "/knowledge/weekly-outlook",
     },
 
     items: KNOWLEDGE_ITEMS,
@@ -382,56 +382,41 @@ export const LEGAL_LINKS: SiteLink[] = [
 ];
 
 /* =============================================================================
-   Localized links
+   Public links
 ============================================================================= */
 
 /**
  * Current routing rule:
  *
- * Persian home:
- * /
- *
- * Persian content:
- * /fa/...
- *
- * English home:
- * /en
- *
- * English content:
- * /en/...
+ * The public website is Persian-only for now.
+ * Keep internal links unprefixed and normalize legacy locale-prefixed values.
  */
 export function getSiteHref(
   href: string,
   pathname = "/",
 ) {
-  if (
-    !href.startsWith("/") ||
-    /^\/(fa|en)(\/|$)/.test(href)
-  ) {
+  void pathname;
+
+  if (!href.startsWith("/")) {
     return href;
   }
 
-  const locale =
-    pathname.match(/^\/(fa|en)(?:\/|$)/)?.[1] ??
-    "fa";
-
-  if (href === "/") {
-    return locale === "en" ? "/en" : "/";
-  }
-
-  return `/${locale}${href}`;
+  return href.replace(/^\/(fa|en)(?=\/|$)/, "") || "/";
 }
 
 export function isSitePathActive(
   href: string,
   pathname: string,
 ) {
+  const normalizedHref =
+    href.replace(/^\/(fa|en)(?=\/|$)/, "") || "/";
+
   const path =
     pathname.replace(/^\/(fa|en)(?=\/|$)/, "") ||
     "/";
 
-  return href === "/"
+  return normalizedHref === "/"
     ? path === "/"
-    : path === href ||
-    path.startsWith(`${href}/`);
+    : path === normalizedHref ||
+    path.startsWith(`${normalizedHref}/`);
 }

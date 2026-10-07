@@ -34,7 +34,7 @@ const SERVICES: ServiceItem[] = [
     audience: "افراد، خانواده‌ها و صاحبان سرمایه",
     description:
       "ساختن تصویری ساختاریافته از ثروت، اهداف، نقدشوندگی، ریسک و مسیرهای قابل بررسی.",
-    href: "/fa/services/private-wealth-strategy",
+    href: "/services/private-wealth-strategy",
   },
 
   {
@@ -44,7 +44,7 @@ const SERVICES: ServiceItem[] = [
     audience: "دارندگان دارایی‌ها و پرتفوی‌های متنوع",
     description:
       "ارزیابی پراکندگی دارایی، تمرکز ریسک، نقدشوندگی و حوزه‌های نیازمند بازبینی.",
-    href: "/fa/services/portfolio-intelligence",
+    href: "/services/portfolio-intelligence",
   },
 
   {
@@ -54,7 +54,7 @@ const SERVICES: ServiceItem[] = [
     audience: "صاحبان کسب‌وکار، مدیران و هلدینگ‌ها",
     description:
       "بررسی ساختار مالی، سرمایه، نقدینگی، تأمین مالی و مسیر تصمیم در مسائل چندلایه کسب‌وکار.",
-    href: "/fa/services/strategic-financial-advisory",
+    href: "/services/strategic-financial-advisory",
   },
 
   {
@@ -64,7 +64,7 @@ const SERVICES: ServiceItem[] = [
     audience: "سرمایه‌گذاران و تصمیم‌گیرندگان",
     description:
       "تحلیل شرایط اقتصادی، سناریوهای مرتبط و پیامدهای راهبردی آن‌ها برای تصمیم.",
-    href: "/fa/services/macro-market-advisory",
+    href: "/services/macro-market-advisory",
   },
 
   {
@@ -74,7 +74,7 @@ const SERVICES: ServiceItem[] = [
     audience: "افراد، خانواده‌ها، صاحبان سرمایه و کسب‌وکارها",
     description:
       "شناخت ریسک‌های مهم و پنهان و ایجاد تصویری ساختاریافته از اولویت‌های حفاظتی.",
-    href: "/fa/services/risk-management-wealth-protection",
+    href: "/services/risk-management-wealth-protection",
   },
 
   {
@@ -84,7 +84,7 @@ const SERVICES: ServiceItem[] = [
     audience: "مدیران ارشد، هیئت‌مدیره و تصمیم‌گیرندگان کلیدی",
     description:
       "بررسی متمرکز یک موضوع مهم و جمع‌بندی نکات کلیدی، سناریوها و مسیرهای قابل بررسی.",
-    href: "/fa/services/executive-briefings",
+    href: "/services/executive-briefings",
   },
 ];
 
@@ -338,7 +338,7 @@ export function AdvisoryServicesSection() {
                 "
               >
                 <ActionButton
-                  href="/fa/services"
+                  href="/services"
                   variant="secondary"
                   size="md"
                   icon={ArrowLeft}
@@ -363,91 +363,13 @@ export function AdvisoryServicesSection() {
                   مشاهده همه خدمات
                 </ActionButton>
 
-                <p
-                  className="
-                    text-[9px]
-                    font-medium
-                    leading-[1.9]
-
-                    text-white/42
-
-                    sm:max-w-[220px]
-                  "
-                >
-                  انتخاب مسیر همکاری بعد از شناخت موقعیت و مسئله معنا پیدا
-                  می‌کند.
-                </p>
+             
               </div>
             </div>
           </Reveal>
         </div>
 
-        {/* =======================================================
-            Service matrix header
-        ======================================================== */}
-
-        <Reveal visible={isVisible} delay={180}>
-          <div
-            className="
-              mt-12
-
-              flex
-              items-center
-              justify-between
-              gap-5
-
-              border-b
-              border-white/15
-
-              pb-4
-
-              sm:mt-14
-
-              lg:mt-16
-            "
-          >
-            <div>
-              <p
-                dir="ltr"
-                className="
-                  text-[8px]
-                  font-black
-                  tracking-[0.2em]
-
-                  text-brand-accent
-                "
-              >
-                ADVISORY SERVICE MATRIX
-              </p>
-
-              <p
-                className="
-                  mt-2
-
-                  text-[10px]
-                  font-medium
-
-                  text-white/52
-                "
-              >
-                شش مسیر تخصصی برای موقعیت‌های متفاوت
-              </p>
-            </div>
-
-            <span
-              aria-hidden="true"
-              className="
-                hidden
-                h-px
-                w-24
-
-                bg-white/15
-
-                sm:block
-              "
-            />
-          </div>
-        </Reveal>
+      
 
         {/* =======================================================
             Service matrix
@@ -456,9 +378,9 @@ export function AdvisoryServicesSection() {
         <ul
           aria-label="خدمات تخصصی DNH"
           className="
-            grid
+            grid mt-8
 
-            border-x
+            border
             border-white/12
 
             md:grid-cols-2
@@ -474,85 +396,7 @@ export function AdvisoryServicesSection() {
           ))}
         </ul>
 
-        {/* =======================================================
-            Footer rail
-        ======================================================== */}
-
-        <Reveal visible={isVisible} delay={620}>
-          <div
-            className="
-              flex
-              items-center
-              justify-between
-              gap-5
-
-              border-t
-              border-white/15
-
-              pt-5
-            "
-          >
-            <p
-              className="
-                max-w-[650px]
-
-                text-[10px]
-                font-medium
-                leading-[1.9]
-
-                text-white/45
-
-                sm:text-[11px]
-              "
-            >
-              DNH پیش از پیشنهاد مسیر همکاری، تلاش می‌کند مسئله، پیچیدگی و نوع
-              تصمیم را دقیق‌تر ببیند.
-            </p>
-
-            <div
-              aria-hidden="true"
-              className="
-                hidden
-                shrink-0
-                items-center
-                gap-3
-
-                sm:flex
-              "
-            >
-              <span
-                className="
-                  h-[5px]
-                  w-[5px]
-
-                  bg-brand-accent
-                "
-              />
-
-              <span
-                className="
-                  h-px
-                  w-12
-
-                  bg-white/18
-                "
-              />
-
-              <span
-                dir="ltr"
-                className="
-                  text-[7px]
-                  font-bold
-                  tracking-[0.18em]
-
-                  text-white/35
-                "
-              >
-                DNH / ADVISORY
-              </span>
-            </div>
-          </div>
-        </Reveal>
+       
       </div>
     </section>
   );

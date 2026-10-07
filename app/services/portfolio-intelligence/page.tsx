@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "هوشمندی پرتفوی DNH برای بررسی ساختار دارایی‌ها، تمرکز ریسک، نقدشوندگی و حوزه‌های نیازمند بازبینی در پرتفوی‌های متنوع طراحی شده است.",
 
   alternates: {
-    canonical: "/fa/services/portfolio-intelligence",
+    canonical: "/services/portfolio-intelligence",
   },
 };
 

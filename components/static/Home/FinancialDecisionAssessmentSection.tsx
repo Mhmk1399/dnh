@@ -19,9 +19,9 @@ import {
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
-const ASSESSMENT_PATH = "/fa/financial-decision-assessment";
+const ASSESSMENT_PATH = "/financial-decision-assessment";
 
-const CONSULTATION_PATH = "/fa/request-strategic-consultation";
+const CONSULTATION_PATH = "/request-strategic-consultation";
 
 /* =============================================================================
    Assessment preview
@@ -387,98 +387,7 @@ export function FinancialDecisionAssessmentSection() {
         </div>
       </div>
 
-      {/* =========================================================
-          Bottom closing rail
-      ========================================================== */}
-
-      <Reveal visible={visible} delay={560}>
-        <div
-          className="
-            relative
-            z-10
-
-            border-t
-            border-white/10
-          "
-        >
-          <div
-            className="
-              dnh-site-shell
-              mx-auto
-
-              flex
-              flex-col
-              gap-4
-
-              py-5
-
-
-              lg:flex-row
-              lg:items-center
-              lg:justify-between
-
-
-            "
-          >
-            <p
-              className="
-                text-[10px]
-                font-medium
-                leading-[1.9]
-
-                text-white/38
-
-                sm:text-[11px]
-              "
-            >
-              DNH برای تصمیم‌سازی ساختاریافته طراحی شده است؛ نه برای سیگنال،
-              پیش‌بینی قطعی قیمت یا تضمین بازده.
-            </p>
-
-            <div
-              aria-hidden="true"
-              className="
-                hidden
-                items-center
-                gap-3
-
-                lg:flex
-              "
-            >
-              <span
-                dir="ltr"
-                className="
-                  text-[7px]
-                  font-bold
-                  tracking-[0.2em]
-
-                  text-white/28
-                "
-              >
-                TRUST → INTELLIGENCE → ASSESSMENT
-              </span>
-
-              <span
-                className="
-                  h-px
-                  w-16
-
-                  bg-white/14
-                "
-              />
-
-              <span
-                className="
-                  h-[6px]
-                  w-[6px]
-
-                  bg-brand-accent
-                "
-              />
-            </div>
-          </div>
-        </div>
-      </Reveal>
+     
     </section>
   );
 }

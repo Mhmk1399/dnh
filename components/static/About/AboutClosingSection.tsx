@@ -1,299 +1,456 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Focus, Network, PanelsTopLeft } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
+/* =============================================================================
+   ABOUT — DNH POINT OF VIEW
+
+   Purpose:
+   Explain the professional thinking behind DNH.
+
+   Design:
+   - Institutional
+   - Minimal
+   - Architectural
+   - No client-side animation
+   - No decorative flowchart
+   - No tiny microcopy
+============================================================================= */
+
 const PRINCIPLES = [
   {
-    title: "دیدن تصویر کامل‌تر",
-    description:
-      "تصمیم‌های مالی در خلأ شکل نمی‌گیرند؛ آن‌ها بخشی از یک تصویر بزرگ‌تر هستند.",
+    number: "01",
+    icon: PanelsTopLeft,
+    title: "تصویر کامل‌تر",
+    description: "دارایی، ریسک، زمان و اهداف باید در یک تصویر واحد دیده شوند.",
   },
   {
+    number: "02",
+    icon: Network,
     title: "ارتباط میان تصمیم‌ها",
-    description: "دارایی، ریسک، زمان و اهداف با یکدیگر در ارتباط‌اند.",
+    description: "هر تصمیم مالی می‌تواند بر بخش‌های دیگر ساختار اثر بگذارد.",
   },
   {
+    number: "03",
+    icon: Focus,
     title: "ساختار پیش از اقدام",
     description:
-      "پیش از هر اقدام، باید مسئله به‌صورت ساختاریافته دیده و تحلیل شود.",
+      "پیش از اقدام، مسئله، ریسک‌ها و مسیرهای قابل بررسی باید روشن شوند.",
   },
-];
+] as const;
 
 export function AboutClosingSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-
-        setVisible(true);
-        observer.disconnect();
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -8% 0px",
-      },
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
+      id="about-dnh-view"
       dir="rtl"
       aria-labelledby="about-closing-title"
       className="
         relative
         isolate
+        scroll-mt-24
         overflow-hidden
 
-        border-y
-        border-white/10
-
-        bg-[#032b39]
+        bg-[#022f3e]
         text-white
+
+        py-16
+
+        sm:scroll-mt-28
+        sm:py-20
+        lg:py-20
       "
     >
-      <ClosingBackground visible={visible} />
+      <SectionBackground />
 
       <div
         className="
+          dnh-site-shell
           relative
           z-10
+
           mx-auto
-          grid
           w-full
           max-w-[1536px]
 
-          gap-12
-
           px-5
-          py-16
-
           sm:px-8
-          sm:py-20
-
-          lg:min-h-[650px]
-          lg:grid-cols-[minmax(0,0.9fr)_90px_minmax(0,1fr)]
-          lg:items-center
-          lg:gap-10
           lg:px-12
-          lg:py-20
-
-          xl:grid-cols-[minmax(0,0.88fr)_110px_minmax(0,1.12fr)]
           xl:px-16
-
           2xl:px-20
         "
       >
-        {/* =========================================================
-            RIGHT — MAIN CONTENT
-        ========================================================== */}
+        {/* ===========================================================
+            TOP INDEX
+        ============================================================ */}
+
         <div
-          className={`
-            order-1
+          className="
+            flex
+            items-center
+            justify-between
+            gap-5
 
-            text-right
+            border-y
+            border-white/[0.09]
 
-            transition-[opacity,transform]
-            duration-[650ms]
-            ease-[cubic-bezier(.22,1,.36,1)]
-
-            motion-reduce:transform-none
-            motion-reduce:transition-none
-
-            lg:col-start-1
-            lg:row-start-1
-
-            ${
-              visible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
-            }
-          `}
+            py-3
+          "
         >
-          <div
-            className="
-              mb-5
-              flex
-              items-center
-              gap-3
-            "
-          >
+          <div className="flex items-center gap-3">
+            <span
+              className="
+                text-[12px]
+                font-black
+                tabular-nums
+
+                text-white/32
+              "
+            >
+              03
+            </span>
+
             <span
               aria-hidden="true"
               className="
-                h-px
-                w-10
-                bg-brand-accent
+                h-4
+                w-px
+
+                bg-white/12
               "
             />
 
             <span
               className="
-                text-[10px]
+                text-[12px]
                 font-black
-                text-white/70
 
-                sm:text-[11px]
+                text-white/58
               "
             >
-              نگاه DNH
+              نگاه حرفه‌ای DNH
             </span>
           </div>
 
-          <h2
-            id="about-closing-title"
+          <span
+            aria-hidden="true"
             className="
-              max-w-[650px]
+              h-[7px]
+              w-[7px]
 
-              text-[32px]
-              font-black
-              leading-[1.55]
-              tracking-[-0.04em]
-
-              text-white
-
-              sm:text-[40px]
-
-              lg:text-[46px]
-
-              xl:text-[52px]
+              bg-[#fc8502]
             "
-          >
-            تصمیم روشن‌تر،
-            <br />
-            از تصویر کامل‌تر
-            <br />
-            <span className="text-brand-accent">آغاز می‌شود.</span>
-          </h2>
-
-          <p
-            className="
-              mt-6
-              max-w-[620px]
-
-              text-[13px]
-              font-medium
-              leading-[2.2]
-
-              text-white/66
-
-              sm:text-[14px]
-
-              lg:text-[15px]
-            "
-          >
-            در DNH، تلاش می‌کنیم پیش از رسیدن به پاسخ، مسئله، ریسک، سناریو، زمان
-            و ساختار تصمیم در کنار یکدیگر دیده شوند؛ تا تصمیم مالی در یک تصویر
-            منسجم‌تر و واقع‌بینانه‌تر شکل بگیرد.
-          </p>
-
-          {/* CTA */}
-          <div
-            className="
-              mt-8
-              flex
-              flex-col
-              gap-3
-
-              sm:flex-row
-              sm:flex-wrap
-              sm:items-center
-            "
-          >
-            <ActionButton
-              href="/dnh/framework"
-              variant="primary"
-              size="md"
-              icon={ArrowLeft}
-              className="
-                w-full
-
-                bg-brand-accent
-
-                shadow-[0_16px_36px_color-mix(in_srgb,var(--dnh-accent)_24%,transparent)]
-
-                hover:bg-[#ec7d01]
-
-                sm:w-auto
-                sm:min-w-[220px]
-              "
-            >
-              آشنایی با چارچوب DNH
-            </ActionButton>
-
-            <ActionButton
-              href="/services"
-              variant="secondary"
-              size="md"
-              icon={ArrowLeft}
-              className="
-                w-full
-
-                border-white/20
-                bg-white/[0.03]
-                text-white
-                shadow-none
-
-                hover:border-white/40
-                hover:bg-white/[0.07]
-                hover:text-white
-
-                sm:w-auto
-              "
-            >
-              مشاهده خدمات DNH
-            </ActionButton>
-          </div>
+          />
         </div>
 
-        {/* =========================================================
-            CENTER AXIS
-        ========================================================== */}
-        <ClosingAxis visible={visible} />
+        {/* ===========================================================
+            MAIN
+        ============================================================ */}
 
-        {/* =========================================================
-            LEFT — PRINCIPLES
-        ========================================================== */}
         <div
           className="
-            order-2
+            grid
+            gap-12
 
-            lg:col-start-3
-            lg:row-start-1
+            pt-10
+
+            lg:grid-cols-[0.86fr_1.14fr]
+            lg:items-start
+            lg:gap-16
+            lg:pt-12
+
+            xl:gap-20
           "
         >
+          {/* =========================================================
+              CONTENT
+          ========================================================== */}
+
           <div
             className="
-              divide-y
-              divide-white/10
-
-              border-y
-              border-white/10
-
-              lg:border-y-0
-              lg:divide-y-0
+              lg:sticky
+              lg:top-28
             "
           >
-            {PRINCIPLES.map((item, index) => (
-              <Principle
-                key={item.title}
-                item={item}
-                index={index}
-                visible={visible}
+            <div
+              className="
+                mb-5
+                flex
+                items-center
+                gap-3
+              "
+            >
+              <span
+                aria-hidden="true"
+                className="
+                  h-px
+                  w-9
+
+                  bg-[#fc8502]
+                "
               />
-            ))}
+
+              <p
+                className="
+                  text-[13px]
+                  font-black
+
+                  text-[#82cee4]
+                "
+              >
+                از نگاه حرفه‌ای تا ساختار تصمیم
+              </p>
+            </div>
+
+            <h2
+              id="about-closing-title"
+              className="
+                max-w-[720px]
+
+                text-[30px]
+                font-black
+                leading-[1.7]
+                tracking-[-0.045em]
+
+                text-white
+
+                sm:text-[36px]
+
+                lg:text-[43px]
+                lg:leading-[1.58]
+              "
+            >
+              تصمیم مالی بهتر، از{" "}
+              <span className="text-[#fc8502]">دیدن تصویر کامل‌تر</span> شروع
+              می‌شود.
+            </h2>
+
+            <p
+              className="
+                mt-5
+                max-w-[610px]
+
+                text-[15px]
+                font-medium
+                leading-[2]
+
+                text-white/58
+
+                sm:text-[16px]
+              "
+            >
+              نگاه DNH به‌جای شروع از یک پاسخ آماده، ابتدا رابطه میان دارایی،
+              ریسک، زمان و اهداف را روشن می‌کند.
+            </p>
+
+            {/* CTA */}
+
+            <div
+              className="
+                mt-8
+
+                flex
+                flex-col
+                gap-3
+
+                sm:flex-row
+                sm:flex-wrap
+              "
+            >
+              <ActionButton
+                href="/dnh/framework"
+                variant="assessment"
+                size="lg"
+                icon={ArrowLeft}
+                className="
+                  w-full
+
+                  bg-[#fc8502]
+                  text-white
+
+                  hover:-translate-y-0.5
+                  hover:bg-[#ec7d01]
+
+                  sm:w-auto
+                  sm:min-w-[220px]
+                "
+              >
+                آشنایی با چارچوب DNH
+              </ActionButton>
+
+              <ActionButton
+                href="/services"
+                variant="secondary"
+                size="lg"
+                className="
+                  w-full
+
+                  border-white/15
+                  bg-transparent
+
+                  text-white
+                  shadow-none
+
+                  hover:-translate-y-0.5
+                  hover:border-white/30
+                  hover:bg-white/[0.04]
+                  hover:text-white
+
+                  sm:w-auto
+                "
+              >
+                مشاهده خدمات
+              </ActionButton>
+            </div>
+          </div>
+
+          {/* =========================================================
+              PRINCIPLE REGISTER
+          ========================================================== */}
+
+          <div
+            className="
+              border
+              border-white/[0.11]
+
+              bg-white/[0.018]
+            "
+          >
+            {/* -----------------------------------------------
+                REGISTER HEADER
+            ------------------------------------------------ */}
+
+            <div
+              className="
+                grid
+                gap-3
+
+                border-b
+                border-white/[0.09]
+
+                px-5
+                py-5
+
+                sm:px-6
+
+                lg:grid-cols-[180px_1fr]
+                lg:items-center
+                lg:gap-7
+                lg:px-7
+              "
+            >
+              <p
+                className="
+                  text-[13px]
+                  font-black
+
+                  text-white/42
+                "
+              >
+                منطق تصمیم
+              </p>
+
+              <p
+                className="
+                  text-[15px]
+                  font-black
+                  leading-7
+
+                  text-white
+
+                  lg:border-r
+                  lg:border-white/[0.09]
+                  lg:pr-7
+                "
+              >
+                سه اصل برای خواندن مسئله پیش از تصمیم
+              </p>
+            </div>
+
+            {/* -----------------------------------------------
+                PRINCIPLES
+            ------------------------------------------------ */}
+
+            <div>
+              {PRINCIPLES.map((item) => (
+                <PrincipleRow key={item.number} {...item} />
+              ))}
+            </div>
+
+            {/* -----------------------------------------------
+                BOTTOM STATEMENT
+            ------------------------------------------------ */}
+
+            <div
+              className="
+                relative
+
+                border-t
+                border-white/[0.09]
+
+                bg-black/[0.08]
+
+                px-5
+                py-5
+
+                sm:px-6
+                lg:px-7
+              "
+            >
+              <span
+                aria-hidden="true"
+                className="
+                  absolute
+                  inset-y-0
+                  right-0
+
+                  w-[3px]
+
+                  bg-[#fc8502]
+                "
+              />
+
+              <div
+                className="
+                  flex
+                  items-start
+                  gap-3
+                "
+              >
+                <span
+                  aria-hidden="true"
+                  className="
+                    mt-[9px]
+
+                    h-[6px]
+                    w-[6px]
+
+                    shrink-0
+
+                    bg-[#82cee4]
+                  "
+                />
+
+                <p
+                  className="
+                    max-w-[720px]
+
+                    text-[14px]
+                    font-bold
+                    leading-7
+
+                    text-white/58
+
+                    sm:text-[15px]
+                  "
+                >
+                  هدف، پیچیده‌تر کردن تصمیم نیست؛{" "}
+                  <span className="text-white">
+                    هدف، روشن‌تر کردن ساختاری است که تصمیم در آن شکل می‌گیرد.
+                  </span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -302,362 +459,158 @@ export function AboutClosingSection() {
 }
 
 /* =============================================================================
-   PRINCIPLE
+   PRINCIPLE ROW
 ============================================================================= */
 
-function Principle({
-  item,
-  index,
-  visible,
-}: {
-  item: (typeof PRINCIPLES)[number];
-  index: number;
-  visible: boolean;
-}) {
+function PrincipleRow({
+  number,
+  icon: Icon,
+  title,
+  description,
+}: (typeof PRINCIPLES)[number]) {
   return (
-    <div
-      className={`
+    <article
+      className="
         group/principle
-
         relative
 
+        grid
+        gap-4
+
+        border-b
+        border-white/[0.075]
+
+        px-5
         py-6
 
-        transition-[opacity,transform]
-        duration-[560ms]
-        ease-[cubic-bezier(.22,1,.36,1)]
+        last:border-b-0
 
-        motion-reduce:transform-none
-        motion-reduce:transition-none
+        transition-colors
+        duration-200
 
-        lg:py-7
+        hover:bg-white/[0.025]
 
-        ${visible ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"}
-      `}
-      style={{
-        transitionDelay: `${180 + index * 90}ms`,
-      }}
+        sm:px-6
+
+        lg:grid-cols-[62px_190px_1fr]
+        lg:items-center
+        lg:gap-6
+        lg:px-7
+      "
     >
-      <div
+      {/* NUMBER */}
+
+      <span
         className="
-          flex
-          items-start
-          gap-4
+          text-[13px]
+          font-black
+          tabular-nums
+
+          text-white/26
         "
       >
-        {/* Marker */}
-        <span
-          aria-hidden="true"
-          className="
-            mt-[8px]
+        {number}
+      </span>
 
-            h-2
-            w-2
-            shrink-0
+      {/* TITLE */}
 
-            bg-brand-primary
-
-            transition-[background-color,transform]
-            duration-300
-
-            group-hover/principle:translate-x-[-2px]
-            group-hover/principle:bg-brand-accent
-          "
-        />
-
-        <div className="min-w-0 flex-1">
-          <div
-            className="
-              flex
-              items-center
-              gap-4
-            "
-          >
-            <h3
-              className="
-                text-[16px]
-                font-black
-                text-white
-
-                sm:text-[17px]
-              "
-            >
-              {item.title}
-            </h3>
-
-            <span
-              aria-hidden="true"
-              className="
-                h-px
-                w-10
-
-                bg-white/18
-
-                transition-[width,background-color]
-                duration-300
-
-                group-hover/principle:w-14
-                group-hover/principle:bg-brand-accent
-              "
-            />
-          </div>
-
-          <p
-            className="
-              mt-3
-              max-w-[390px]
-
-              text-[12px]
-              font-medium
-              leading-[2]
-
-              text-white/55
-
-              transition-colors
-              duration-300
-
-              group-hover/principle:text-white/72
-
-              sm:text-[13px]
-            "
-          >
-            {item.description}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   CENTER AXIS
-============================================================================= */
-
-function ClosingAxis({ visible }: { visible: boolean }) {
-  return (
-    <>
-      {/* Desktop */}
       <div
-        aria-hidden="true"
         className="
-          relative
-
-          hidden
-          h-[460px]
-
-          lg:col-start-2
-          lg:row-start-1
-          lg:block
-        "
-      >
-        {/* Top half */}
-        <span
-          className={`
-            absolute
-            left-1/2
-            top-1/2
-
-            h-1/2
-            w-px
-
-            origin-bottom
-            -translate-x-1/2
-
-            bg-gradient-to-t
-            from-white/35
-            to-white/5
-
-            transition-transform
-            duration-[850ms]
-            ease-[cubic-bezier(.22,1,.36,1)]
-
-            motion-reduce:transform-none
-
-            ${visible ? "scale-y-100" : "scale-y-0"}
-          `}
-        />
-
-        {/* Bottom half */}
-        <span
-          className={`
-            absolute
-            bottom-0
-            left-1/2
-
-            h-1/2
-            w-px
-
-            origin-top
-            -translate-x-1/2
-
-            bg-gradient-to-b
-            from-white/35
-            to-white/5
-
-            transition-transform
-            duration-[850ms]
-            ease-[cubic-bezier(.22,1,.36,1)]
-
-            motion-reduce:transform-none
-
-            ${visible ? "scale-y-100" : "scale-y-0"}
-          `}
-        />
-
-        <AxisMarker
-          label="نگاه"
-          top="10%"
-          active={false}
-          visible={visible}
-          delay={300}
-        />
-
-        <AxisMarker
-          label="ساختار"
-          top="50%"
-          active
-          visible={visible}
-          delay={400}
-        />
-
-        <AxisMarker
-          label="تصمیم"
-          top="90%"
-          active={false}
-          visible={visible}
-          delay={500}
-        />
-      </div>
-
-      {/* Mobile signature line */}
-      <div
-        aria-hidden="true"
-        className="
-          order-2
-
           flex
           items-center
           gap-3
-
-          lg:hidden
         "
       >
-        <span
-          className={`
-            h-px
-            flex-1
+        <div
+          className="
+            grid
+            size-8
+            shrink-0
+            place-items-center
 
-            origin-right
-            bg-white/15
+            border
+            border-white/[0.1]
 
-            transition-transform
-            duration-700
+            transition-colors
+            duration-200
 
-            ${visible ? "scale-x-100" : "scale-x-0"}
-          `}
-        />
+            group-hover/principle:border-[#fc8502]/35
+          "
+        >
+          <Icon
+            aria-hidden="true"
+            strokeWidth={1.6}
+            className="
+              size-[14px]
 
-        <span
-          className={`
-            h-2.5
-            w-2.5
+              text-[#82cee4]/75
 
-            bg-brand-accent
+              transition-colors
+              duration-200
 
-            transition-[opacity,transform]
-            delay-300
-            duration-400
+              group-hover/principle:text-[#fc8502]
+            "
+          />
+        </div>
 
-            ${visible ? "scale-100 opacity-100" : "scale-50 opacity-0"}
-          `}
-        />
+        <h3
+          className="
+            text-[16px]
+            font-black
+            leading-7
 
-        <span
-          className={`
-            h-px
-            flex-1
+            text-white
 
-            origin-left
-            bg-white/15
-
-            transition-transform
-            duration-700
-
-            ${visible ? "scale-x-100" : "scale-x-0"}
-          `}
-        />
+            sm:text-[14px]
+          "
+        >
+          {title}
+        </h3>
       </div>
-    </>
-  );
-}
 
-function AxisMarker({
-  label,
-  top,
-  active,
-  visible,
-  delay,
-}: {
-  label: string;
-  top: string;
-  active: boolean;
-  visible: boolean;
-  delay: number;
-}) {
-  return (
-    <div
-      className="
-        absolute
-        left-1/2
+      {/* DESCRIPTION */}
 
-        flex
-        -translate-x-1/2
-        -translate-y-1/2
-        items-center
-        gap-3
-      "
-      style={{
-        top,
-      }}
-    >
-      <span
-        className={`
-          h-2.5
-          w-2.5
-          shrink-0
+      <p
+        className="
+          text-[14px]
+          font-medium
+          leading-7
 
-          ${
-            active
-              ? "bg-brand-accent shadow-[0_0_20px_color-mix(in_srgb,var(--dnh-accent)_32%,transparent)]"
-              : "bg-brand-primary"
-          }
+          text-white/52
 
-          transition-[opacity,transform]
-          duration-400
+          lg:border-r
+          lg:border-white/[0.075]
+          lg:pr-6
 
-          ${visible ? "scale-100 opacity-100" : "scale-50 opacity-0"}
-        `}
-        style={{
-          transitionDelay: `${delay}ms`,
-        }}
-      />
+          sm:text-[13px]
+        "
+      >
+        {description}
+      </p>
+
+      {/* HOVER RAIL */}
 
       <span
+        aria-hidden="true"
         className="
           absolute
-          right-5
+          inset-y-0
+          right-0
 
-          whitespace-nowrap
+          w-[2px]
 
-          text-[9px]
-          font-bold
+          origin-bottom
+          scale-y-0
 
-          text-white/48
+          bg-[#fc8502]
+
+          transition-transform
+          duration-200
+
+          group-hover/principle:scale-y-100
         "
-      >
-        {label}
-      </span>
-    </div>
+      />
+    </article>
   );
 }
 
@@ -665,10 +618,9 @@ function AxisMarker({
    BACKGROUND
 ============================================================================= */
 
-function ClosingBackground({ visible }: { visible: boolean }) {
+function SectionBackground() {
   return (
     <>
-      {/* Main gradient */}
       <div
         aria-hidden="true"
         className="
@@ -677,18 +629,11 @@ function ClosingBackground({ visible }: { visible: boolean }) {
           inset-0
         "
         style={{
-          background: `
-            linear-gradient(
-              105deg,
-              #032733 0%,
-              #043543 46%,
-              #02242f 100%
-            )
-          `,
+          background:
+            "radial-gradient(circle at 78% 35%,rgba(22,115,148,.17),transparent 29%),linear-gradient(112deg,#022936 0%,#033746 52%,#022833 100%)",
         }}
       />
 
-      {/* Grid */}
       <div
         aria-hidden="true"
         className="
@@ -696,102 +641,13 @@ function ClosingBackground({ visible }: { visible: boolean }) {
           absolute
           inset-0
 
-          opacity-[0.12]
+          opacity-[0.035]
         "
         style={{
-          backgroundImage: `
-            linear-gradient(
-              to right,
-              rgba(255,255,255,.11) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(255,255,255,.08) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "88px 88px",
+          backgroundImage:
+            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px)",
+          backgroundSize: "118px 100%",
         }}
-      />
-
-      {/* Architectural planes */}
-      <div
-        aria-hidden="true"
-        className={`
-          pointer-events-none
-
-          absolute
-          inset-y-[8%]
-          left-[21%]
-
-          hidden
-          w-[24%]
-
-          origin-right
-
-          border-x
-          border-white/[0.07]
-
-          bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent)]
-
-          transition-[opacity,transform]
-          duration-[900ms]
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          lg:block
-
-          ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.97] opacity-0"}
-        `}
-      />
-
-      <div
-        aria-hidden="true"
-        className={`
-          pointer-events-none
-
-          absolute
-          inset-y-[14%]
-          right-[24%]
-
-          hidden
-          w-[16%]
-
-          origin-left
-
-          border-x
-          border-white/[0.05]
-
-          bg-[linear-gradient(90deg,transparent,rgba(22,115,148,.08),transparent)]
-
-          transition-[opacity,transform]
-          duration-[900ms]
-          delay-100
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          lg:block
-
-          ${visible ? "scale-x-100 opacity-100" : "scale-x-[0.97] opacity-0"}
-        `}
-      />
-
-      {/* tiny reference marker */}
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          left-[52%]
-          top-[46%]
-
-          hidden
-          h-1
-          w-1
-
-          bg-red-500
-
-          lg:block
-        "
       />
     </>
   );

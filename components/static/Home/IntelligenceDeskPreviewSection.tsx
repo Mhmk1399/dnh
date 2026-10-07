@@ -297,7 +297,7 @@ export function IntelligenceDeskPreviewSection() {
           <Reveal visible={visible} delay={310}>
             <div className="mt-8">
               <ActionButton
-                href="/fa/dnh/intelligence-desk"
+                href="/dnh/intelligence-desk"
                 variant="primary"
                 size="md"
                 icon={ArrowLeft}

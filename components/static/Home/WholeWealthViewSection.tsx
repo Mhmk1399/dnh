@@ -263,7 +263,7 @@ export function WholeWealthViewSection() {
           <Reveal visible={visible} delay={310}>
             <div className="mt-8">
               <ActionButton
-                href="/fa/dnh/wealth-architecture"
+                href="/dnh/wealth-architecture"
                 variant="secondary"
                 size="md"
                 icon={ArrowLeft}
@@ -730,64 +730,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
           })}
         </div>
       </div>
-
-      {/* =========================================================
-          Footer rail
-      ========================================================== */}
-
-      <div
-        className="
-          flex
-          items-center
-          justify-between
-          gap-4
-
-          border-t
-          border-line
-
-          bg-surface-soft/55
-
-          px-5
-          py-4
-
-          sm:px-7
-
-          lg:px-8
-        "
-      >
-        <p
-          dir="ltr"
-          className="
-            text-[7px]
-            font-black
-            tracking-[0.18em]
-
-            text-brand-primary/55
-          "
-        >
-          ASSETS / LIQUIDITY / RISK / HORIZON
-        </p>
-
-        <span
-          aria-hidden="true"
-          className="
-            h-px
-            flex-1
-
-            bg-brand-primary/12
-          "
-        />
-
-        <span
-          aria-hidden="true"
-          className="
-            h-[5px]
-            w-[5px]
-
-            bg-brand-accent
-          "
-        />
-      </div>
+ 
     </div>
   );
 }

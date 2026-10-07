@@ -192,7 +192,7 @@ export function ServicesFinalCtaSection() {
             "
           >
             <ActionButton
-              href="/fa/financial-decision-assessment"
+              href="/financial-decision-assessment"
               variant="assessment"
               size="lg"
               icon={ArrowLeft}
@@ -216,7 +216,7 @@ export function ServicesFinalCtaSection() {
             </ActionButton>
 
             <ActionButton
-              href="/fa/request-strategic-consultation"
+              href="/request-strategic-consultation"
               variant="secondary"
               size="lg"
               icon={ArrowUpLeft}
