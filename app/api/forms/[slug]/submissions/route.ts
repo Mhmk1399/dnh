@@ -11,7 +11,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
   const { slug } = await params;
   const body = await readJson(request);
   if (!body) return NextResponse.json({ message: "اطلاعات ارسالی معتبر نیست." }, { status: 400 });
-  if (cleanText(body.company, 200)) return NextResponse.json({ message: "درخواست قابل پذیرش نیست." }, { status: 400 });
+  if (cleanText(body.faxNumber, 200)) return NextResponse.json({ message: "درخواست قابل پذیرش نیست." }, { status: 400 });
   try {
     await connect();
     const form = await DynamicForm.findOne({ slug, status: "published" }).lean();

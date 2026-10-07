@@ -46,7 +46,7 @@ export function DynamicLeadForm({ form }: { form: PublicDynamicForm }) {
     if (!validateCurrent()) return;
     setBusy(true); setFailure("");
     try {
-      const response = await fetch(`/api/forms/${form.slug}/submissions`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answers: values, company: honeypotRef.current?.value ?? "" }) });
+      const response = await fetch(`/api/forms/${form.slug}/submissions`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answers: values, faxNumber: honeypotRef.current?.value ?? "" }) });
       const payload = await response.json() as { message?: string; reference?: string; errors?: Record<string, string> };
       if (!response.ok) { if (payload.errors) setErrors(payload.errors); throw new Error(payload.message || "ثبت درخواست انجام نشد."); }
       setReceipt({ message: payload.message || form.successMessage, reference: payload.reference || "—" }); setValues({}); setStep(0);
@@ -62,7 +62,7 @@ export function DynamicLeadForm({ form }: { form: PublicDynamicForm }) {
     <form className="p-5 sm:p-8" onSubmit={(event) => { event.preventDefault(); if (step < form.steps.length - 1) { if (validateCurrent()) changeStep(step + 1); } else void submit(); }} noValidate>
       <div className="border-b border-line pb-6"><p dir="ltr" className="text-[9px] font-black tracking-[.2em] text-brand-primary">STEP / {String(step + 1).padStart(2, "0")}</p><h2 ref={headingRef} tabIndex={-1} className="mt-2 scroll-mt-32 text-xl font-black outline-none sm:text-2xl">{current.title}</h2>{current.description && <p className="mt-2 text-sm leading-7 text-ink-muted">{current.description}</p>}</div>
       <div className="mt-7 space-y-6">{current.fields.map((field) => <PublicField key={field.id} field={field} value={values[field.id]} error={errors[field.id]} onChange={(value) => { setValues((all) => ({ ...all, [field.id]: value })); setErrors((all) => ({ ...all, [field.id]: "" })); }}/>)}</div>
-      <input ref={honeypotRef} type="text" name="company" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px] h-px w-px opacity-0" aria-hidden="true" />
+      <input ref={honeypotRef} type="text" name="fax_number" tabIndex={-1} autoComplete="new-password" readOnly data-lpignore="true" data-1p-ignore="true" data-bwignore="true" className="fixed -left-[9999px] top-0 h-px w-px opacity-0" aria-hidden="true" />
       {failure && <p role="alert" className="mt-6 border border-red-200 bg-red-50 px-4 py-3 text-xs leading-6 text-red-800">{failure}</p>}
       <div className="mt-8 flex items-center justify-between gap-3 border-t border-line pt-6"><button type="button" disabled={step === 0 || busy} onClick={() => changeStep(step - 1)} className="inline-flex items-center gap-2 px-2 py-3 text-xs font-black text-ink disabled:opacity-30"><ArrowRight size={16}/>مرحله قبل</button><button disabled={busy} className="inline-flex min-w-36 items-center justify-center gap-2 bg-brand-accent px-5 py-3.5 text-xs font-black text-white transition hover:bg-[#df7300] focus:outline-none focus:ring-4 focus:ring-brand-accent/25 disabled:opacity-50">{busy ? "در حال ثبت…" : step === form.steps.length - 1 ? form.submitLabel : "مرحله بعد"}<ArrowLeft size={16}/></button></div>
       <p className="mt-6 flex items-start gap-2 text-[11px] leading-6 text-ink-muted"><LockKeyhole className="mt-1 h-3.5 w-3.5 shrink-0 text-brand-primary"/>اطلاعات این فرم محرمانه است و تنها برای بررسی درخواست مشاوره شما استفاده می‌شود.</p>

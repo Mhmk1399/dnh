@@ -106,7 +106,8 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const forceSolid =
     pathname === "/admin/forms" ||
     pathname.startsWith("/admin/forms/") ||
-    pathname.startsWith("/forms/");
+    pathname.startsWith("/forms/") ||
+    pathname === "/test-form";
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
