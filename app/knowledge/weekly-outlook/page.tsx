@@ -8,7 +8,7 @@ const page = () => {
   return (
     <div>
       <WeeklyOutlookHero />
-      <WeeklyOutlookSummarySection
+      {/* <WeeklyOutlookSummarySection
         edition="نسخه هفتگی"
         headline="تیتر اصلی جمع‌بندی این هفته"
         summary="یک جمع‌بندی کوتاه از مهم‌ترین تغییرات و زمینه تصمیم در این نسخه."
@@ -103,7 +103,7 @@ const page = () => {
             implication: "ممکن است نیاز به بازبینی شرایط نقدینگی ایجاد کند.",
           },
         ]}
-      />
+      /> */}
     </div>
   );
 };
