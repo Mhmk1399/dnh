@@ -262,16 +262,11 @@ export default async function AdminPage() {
 
         <div className="relative z-10 flex min-h-[205px] flex-col justify-between gap-6 p-5 sm:p-7 lg:flex-row lg:items-end lg:gap-6 lg:p-8 xl:min-h-[220px]">
           <div className="relative min-w-0 flex-1 lg:self-center">
-            <p
-              dir="ltr"
-              className="w-fit text-[9px] font-extrabold tracking-[.2em] text-[#1781a1] sm:text-[10px]"
-            >
-              DNH / ADMIN COMMAND CENTER
-            </p>
+            
             <h1 className="mt-3 text-[26px] font-black leading-[1.5] tracking-[-.025em] text-[#123646] sm:text-[31px] lg:text-[34px] xl:text-[38px]">
               به داشبورد مدیریت خوش آمدید
             </h1>
-            <p className="mt-2 max-w-[580px] text-xs font-medium leading-7 text-[#67889c] sm:text-[13px]">
+            <p className="mt-2 max-w-[580px] text-xs font-medium leading-7 text-[#67889c] sm:text-[12px]">
               در این بخش می‌توانید وضعیت کلی سامانه، گزارش‌های مهم و دسترسی سریع
               به بخش‌های مختلف را مشاهده کنید.
             </p>

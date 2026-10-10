@@ -22,7 +22,7 @@ export function AdminRecordView({
 }) {
   return (
     <details
-      className="group border border-line bg-white"
+      className="group overflow-hidden rounded-[24px] border border-line bg-white"
       open={defaultOpen}
     >
       <summary className="cursor-pointer list-none p-5 focus:outline-none focus:ring-4 focus:ring-brand-accent/10">
@@ -46,7 +46,7 @@ export function AdminRecordView({
             ) : null}
           </div>
 
-          <span className="grid h-10 w-10 place-items-center bg-surface-soft text-brand-primary transition group-open:bg-brand-primary group-open:text-white">
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-surface-soft text-brand-primary transition group-open:bg-brand-primary group-open:text-white">
             <FileText size={17} aria-hidden="true" />
           </span>
         </div>

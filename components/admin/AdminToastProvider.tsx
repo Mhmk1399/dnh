@@ -9,7 +9,7 @@ export function AdminToastProvider() {
       gutter={10}
       containerStyle={{
         top: 18,
-        zIndex: 2147483647,
+        zIndex: "var(--dnh-layer-toast)",
       }}
       toastOptions={{
         duration: 4200,

@@ -1,12 +1,8 @@
 "use client";
 
 import {
-  useEffect,
-  useId,
-  useRef,
   useState,
   type FormEvent,
-  type MouseEvent,
   type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
@@ -18,9 +14,9 @@ import {
   Save,
   ShieldCheck,
   UserRound,
-  X,
 } from "lucide-react";
 
+import { AdminModal } from "@/components/admin/AdminModal";
 import { adminToast } from "@/components/admin/adminToast";
 import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { DeleteRecordButton } from "@/components/admin/DeleteRecordButton";
@@ -129,6 +125,7 @@ function tableActionButtonClass({
     items-center
     justify-center
     gap-2
+    rounded-[14px]
     border
     text-xs
     font-black
@@ -147,141 +144,10 @@ function tableActionButtonClass({
   `;
 }
 
-function AdminModal({
-  open,
-  onClose,
-  eyebrow,
-  title,
-  children,
-  size = "md",
-}: {
-  open: boolean;
-  onClose: () => void;
-  eyebrow: string;
-  title: string;
-  children: ReactNode;
-  size?: "md" | "lg";
-}) {
-  const titleId = useId();
-  const closeRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const originalOverflow = document.body.style.overflow;
-
-    document.body.style.overflow = "hidden";
-    closeRef.current?.focus({ preventScroll: true });
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Escape") return;
-
-      event.preventDefault();
-      onClose();
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [onClose, open]);
-
-  function handleBackdropClick(event: MouseEvent<HTMLDivElement>) {
-    if (event.target !== event.currentTarget) return;
-
-    onClose();
-  }
-
-  if (!open) return null;
-
-  return (
-    <div
-      dir="rtl"
-      className={`
-        fixed
-        inset-0
-        z-[9000]
-        grid
-        place-items-center
-        bg-[#02151d]/55
-        p-4
-        backdrop-blur-[7px]
-      `}
-      onClick={handleBackdropClick}
-    >
-      <section
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        className={`
-          h-fit
-          max-h-[calc(100dvh-32px)]
-          ${size === "lg" ? "w-[min(720px,calc(100vw-28px))]" : "w-[min(560px,calc(100vw-28px))]"}
-          overflow-y-auto
-          border
-          border-line
-          bg-white
-          text-ink
-          shadow-[0_30px_100px_rgba(3,45,59,0.24)]
-        `}
-      >
-        <div className="border-b border-line bg-[#fbfdfd] p-5">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p
-                dir="ltr"
-                className="text-[10px] font-black tracking-[0.22em] text-brand-primary"
-              >
-                {eyebrow}
-              </p>
-              <h2
-                id={titleId}
-                className="mt-2 text-xl font-black leading-8 text-ink"
-              >
-                {title}
-              </h2>
-            </div>
-
-            <button
-              ref={closeRef}
-              type="button"
-              onClick={onClose}
-              className="
-                grid
-                h-10
-                w-10
-                cursor-pointer
-                place-items-center
-                border
-                border-line
-                bg-white
-                text-ink-muted
-                transition
-                hover:border-brand-primary
-                hover:text-ink
-                focus-visible:outline-none
-                focus-visible:ring-4
-                focus-visible:ring-focus/20
-              "
-              aria-label="بستن پنجره"
-            >
-              <X size={18} aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-
-        {children}
-      </section>
-    </div>
-  );
-}
-
 function UserViewPanel({ user }: { user: AdminUserTableActionUser }) {
   return (
     <div className="p-5">
-      <div className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
+      <div className="grid gap-px overflow-hidden rounded-[18px] border border-line bg-line sm:grid-cols-2">
         <UserViewItem
           icon={UserRound}
           label="نام و نام خانوادگی"
@@ -428,7 +294,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
               setForm((value) => ({ ...value, firstName: event.target.value }))
             }
             aria-invalid={Boolean(fieldErrors.firstName)}
-            className="mt-2 w-full border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+            className="mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
           />
         </UserField>
 
@@ -439,7 +305,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
               setForm((value) => ({ ...value, lastName: event.target.value }))
             }
             aria-invalid={Boolean(fieldErrors.lastName)}
-            className="mt-2 w-full border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+            className="mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
           />
         </UserField>
 
@@ -452,7 +318,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
               setForm((value) => ({ ...value, phone: event.target.value }))
             }
             aria-invalid={Boolean(fieldErrors.phone)}
-            className="mt-2 w-full border border-line bg-white px-3.5 py-3 text-left text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+            className="mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-left text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
           />
         </UserField>
 
@@ -466,7 +332,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
               }))
             }
             aria-invalid={Boolean(fieldErrors.role)}
-            className="mt-2 w-full border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+            className="mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
           >
             <option value="user">کاربر</option>
             <option value="admin">مدیر</option>
@@ -478,7 +344,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
         <div className="px-5 pb-5">
           <p
             role={error ? "alert" : "status"}
-            className={`border p-3 text-xs leading-6 ${
+            className={`rounded-[14px] border p-3 text-xs leading-6 ${
               error
                 ? "border-red-200 bg-red-50 text-red-800"
                 : "border-emerald-200 bg-emerald-50 text-emerald-800"
@@ -493,7 +359,7 @@ function UserQuickEditForm({ user }: { user: AdminUserTableActionUser }) {
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 bg-brand-primary px-5 py-2.5 text-xs font-black text-white transition hover:bg-brand-secondary disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25"
+          className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-brand-primary px-5 py-2.5 text-xs font-black text-white transition hover:bg-brand-secondary disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25"
         >
           <Save size={15} aria-hidden="true" />
           {busy ? "در حال ذخیره..." : "ذخیره تغییرات"}

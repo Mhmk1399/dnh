@@ -8,6 +8,10 @@
 :root {
   --dnh-layer-navigation-scrim: 50;
   --dnh-layer-navigation: 60;
+  --dnh-layer-backdrop: 500;
+  --dnh-layer-dialog: 600;
+  --dnh-layer-sheet: 700;
+  --dnh-layer-toast: 900;
   --dnh-shell-max: 1440px;
   --dnh-shell-gutter: 24px;
   --dnh-scrollbar-track: color-mix(in srgb, var(--dnh-secondary) 76%, #031f2a);

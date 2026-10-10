@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  ArrowLeft,
-  Eye,
-  FilePenLine,
-  Plus,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 
 import {
   AdminDataTable,
   type AdminTableColumn,
 } from "@/components/admin/AdminDataTable";
 import { AdminDynamicForm } from "@/components/admin/AdminDynamicForm";
+import {
+  FormTableActions,
+  type AdminDynamicFormTableRow,
+} from "@/components/admin/forms/FormTableActions";
 import { AdminStatusBadge, type AdminStatusTone } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
@@ -35,18 +34,9 @@ const typeLabel = {
 } as const;
 
 type FormStatus = keyof typeof statusLabel;
-type FormType = keyof typeof typeLabel;
 
-type AdminFormRow = {
-  id: string;
-  title: string;
-  slug: string;
-  status: FormStatus;
-  formType: FormType;
-  serviceName: string;
-  revision: number;
+type AdminFormRow = Omit<AdminDynamicFormTableRow, "updatedAt"> & {
   updatedAt: Date;
-  submissions: number;
 };
 
 const statusTone: Record<FormStatus, AdminStatusTone> = {
@@ -201,32 +191,17 @@ export default async function FormsPage({
           minWidth={980}
           actions={[
             {
-              type: "link",
-              label: "ویرایش",
-              href: (form) => `/admin/forms/${form.id}/edit`,
-              icon: FilePenLine,
-              primary: true,
-            },
-            {
-              type: "link",
-              label: "مشاهده عمومی",
-              href: (form) => `/forms/${form.slug}`,
-              icon: Eye,
-              hidden: (form) => form.status !== "published",
-            },
-            {
-              type: "link",
-              label: "پاسخ‌ها",
-              href: (form) => `/admin/forms/${form.id}/submissions`,
-              icon: ArrowLeft,
-            },
-            {
-              type: "delete",
-              label: "حذف",
-              endpoint: (form) => `/api/admin/forms/${form.id}`,
-              title: (form) => `حذف فرم «${form.title}»`,
-              description: (form) =>
-                `این عملیات فرم /forms/${form.slug} و همه پاسخ‌های ثبت‌شده آن را حذف می‌کند و قابل بازگشت نیست.`,
+              type: "custom",
+              label: "عملیات فرم",
+              render: (form, compact) => (
+                <FormTableActions
+                  form={{
+                    ...form,
+                    updatedAt: form.updatedAt.toISOString(),
+                  }}
+                  compact={compact}
+                />
+              ),
             },
           ]}
         />

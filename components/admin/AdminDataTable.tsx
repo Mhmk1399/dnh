@@ -79,7 +79,7 @@ export function AdminDataTable<T>({
   }
 
   return (
-    <section className="border border-line bg-white/92 shadow-[0_18px_52px_rgba(3,45,59,0.05)] backdrop-blur-xl">
+    <section className="overflow-hidden rounded-[24px] border border-line bg-white/92 shadow-[0_18px_52px_rgba(3,45,59,0.05)] backdrop-blur-xl">
       {title || code ? (
         <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
           <div>
@@ -95,7 +95,7 @@ export function AdminDataTable<T>({
               <h2 className="mt-1 text-base font-black text-ink">{title}</h2>
             ) : null}
           </div>
-          <span className="border border-line bg-[#fbfdfd] px-3 py-1.5 text-[10px] font-black text-ink-muted">
+          <span className="rounded-full border border-line bg-[#fbfdfd] px-3 py-1.5 text-[10px] font-black text-ink-muted">
             {rows.length.toLocaleString("fa-IR")} رکورد
           </span>
         </header>
@@ -246,6 +246,7 @@ function AdminTableActions<T>({
               justify-center
               gap-2
               border
+              rounded-[14px]
               text-xs
               font-black
               transition
@@ -279,7 +280,7 @@ export function AdminTableEmptyState({
   description: string;
 }) {
   return (
-    <div className="border border-dashed border-line bg-white/90 px-6 py-20 text-center shadow-[0_18px_52px_rgba(3,45,59,0.04)]">
+    <div className="rounded-[24px] border border-dashed border-line bg-white/90 px-6 py-20 text-center shadow-[0_18px_52px_rgba(3,45,59,0.04)]">
       <Database className="mx-auto h-10 w-10 text-brand-primary/30" />
       <h2 className="mt-5 text-lg font-black text-ink">{title}</h2>
       <p className="mx-auto mt-2 max-w-md text-sm leading-7 text-ink-muted">

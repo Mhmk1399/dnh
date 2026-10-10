@@ -79,7 +79,7 @@ const blockLabels: Record<WeeklyOutlookBlockType, string> = {
 };
 
 const inputClass =
-  "mt-2 w-full border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10";
+  "mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10";
 
 export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   const router = useRouter();
@@ -370,13 +370,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               گزارش‌های هفتگی / بازگشت
             </Link>
 
-            <p
-              dir="ltr"
-              className="mt-5 text-[10px] font-black tracking-[.22em] text-ink-muted"
-            >
-              WEEKLY OUTLOOK BUILDER / REV{" "}
-              {report.revision.toString().padStart(2, "0")}
-            </p>
+        
 
             <h1 className="mt-2 text-3xl font-black tracking-[-.04em] text-ink">
               {reportId ? "ویرایش گزارش هفتگی" : "گزارش هفتگی جدید"}
@@ -387,7 +381,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             <button
               disabled={busy || report.status === "archived"}
               onClick={() => save("save")}
-              className="inline-flex min-h-11 cursor-pointer items-center gap-2 border border-brand-primary bg-white px-4 py-2.5 text-xs font-black text-brand-primary transition hover:bg-brand-primary hover:text-white disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-brand-primary bg-white px-4 py-2.5 text-xs font-black text-brand-primary transition hover:bg-brand-primary hover:text-white disabled:pointer-events-none disabled:opacity-50"
             >
               <Save size={16} />
               ذخیره
@@ -397,7 +391,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               <button
                 disabled={busy}
                 onClick={() => save("unpublish")}
-                className="min-h-11 cursor-pointer border border-line bg-white px-4 py-2.5 text-xs font-black text-ink transition hover:border-brand-primary disabled:pointer-events-none disabled:opacity-50"
+                className="min-h-11 cursor-pointer rounded-[14px] border border-line bg-white px-4 py-2.5 text-xs font-black text-ink transition hover:border-brand-primary disabled:pointer-events-none disabled:opacity-50"
               >
                 توقف انتشار
               </button>
@@ -407,7 +401,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               <button
                 disabled={busy}
                 onClick={() => save("publish")}
-                className="inline-flex min-h-11 cursor-pointer items-center gap-2 bg-brand-accent px-5 py-2.5 text-xs font-black text-white transition hover:bg-[#ec7d01] disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] bg-brand-accent px-5 py-2.5 text-xs font-black text-white transition hover:bg-[#ec7d01] disabled:pointer-events-none disabled:opacity-50"
               >
                 <Send size={16} />
                 انتشار
@@ -418,7 +412,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               <button
                 disabled={busy}
                 onClick={() => save("archive")}
-                className="inline-flex min-h-11 cursor-pointer items-center gap-2 border border-red-200 bg-white px-4 py-2.5 text-xs font-black text-red-700 transition hover:border-red-400 disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-red-200 bg-white px-4 py-2.5 text-xs font-black text-red-700 transition hover:border-red-400 disabled:pointer-events-none disabled:opacity-50"
               >
                 بایگانی
               </button>
@@ -428,7 +422,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
         <div className="mt-4 flex min-h-8 flex-wrap items-center gap-3 text-xs">
           <span
-            className={`border px-2 py-1 font-bold ${
+            className={`rounded-full border px-2 py-1 font-bold ${
               !reportId || dirty
                 ? "border-orange-200 bg-orange-50 text-orange-800"
                 : "border-emerald-200 bg-emerald-50 text-emerald-800"
@@ -441,7 +435,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 : "ذخیره‌شده"}
           </span>
 
-          <span className="border border-line bg-white px-2 py-1 font-bold text-ink-muted">
+          <span className="rounded-full border border-line bg-white px-2 py-1 font-bold text-ink-muted">
             {report.status === "published"
               ? "منتشرشده"
               : report.status === "archived"
@@ -463,7 +457,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       </header>
 
       <div className="mt-7 grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)_390px]">
-        <aside className="border border-line bg-[#f6fbfc] xl:sticky xl:top-28">
+        <aside className="overflow-hidden rounded-[24px] border border-line bg-[#f6fbfc] xl:sticky xl:top-28">
           <div className="border-b border-line p-4">
             <p
               dir="ltr"
@@ -538,7 +532,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         </aside>
 
         <main className="space-y-6">
-          <section className="border border-line bg-white">
+          <section className="overflow-hidden rounded-[24px] border border-line bg-white">
             <SectionHeader code="01 / IDENTITY" title="مشخصات گزارش" />
 
             <div className="grid gap-5 p-5 md:grid-cols-2">
@@ -648,7 +642,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
           {current ? (
             <section
               ref={sectionEditorRef}
-              className="scroll-mt-28 border border-line bg-white"
+              className="scroll-mt-28 overflow-hidden rounded-[24px] border border-line bg-white"
             >
               <SectionHeader
                 code={`SECTION / ${String(activeSection + 1).padStart(2, "0")}`}
@@ -770,7 +764,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
           ) : null}
 
           {current ? (
-            <section className="border border-line bg-white">
+            <section className="overflow-hidden rounded-[24px] border border-line bg-white">
               <SectionHeader
                 code={`${blockCount.toString().padStart(2, "0")} BLOCKS`}
                 title="ادیتور محتوای سکشن"
@@ -792,7 +786,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                     key={type}
                     type="button"
                     onClick={() => addBlock(type)}
-                    className="inline-flex min-h-10 cursor-pointer items-center gap-2 border border-line bg-white px-3 py-2 text-[11px] font-black text-ink transition hover:border-brand-primary hover:text-brand-primary"
+                    className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-[14px] border border-line bg-white px-3 py-2 text-[11px] font-black text-ink transition hover:border-brand-primary hover:text-brand-primary"
                   >
                     <BlockMiniIcon type={type} />
                     {blockLabels[type]}
@@ -839,7 +833,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         </main>
 
         <aside className="xl:sticky xl:top-28">
-          <div className="border border-[#0c526a] bg-[#0d607b] p-5 text-white">
+          <div className="rounded-t-[24px] border border-[#0c526a] bg-[#0d607b] p-5 text-white">
             <div className="flex items-center justify-between gap-4">
               <p
                 dir="ltr"
@@ -869,7 +863,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             </div>
           </div>
 
-          <div className="border-x border-b border-line bg-white p-5">
+          <div className="rounded-b-[24px] border-x border-b border-line bg-white p-5">
             <p className="text-[11px] font-black text-brand-primary">
               ساختار صفحه
             </p>
@@ -878,7 +872,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               {report.sections.map((section, index) => (
                 <li
                   key={section.id}
-                  className="border border-line bg-[#fbfdfd]"
+                  className="overflow-hidden rounded-[14px] border border-line bg-[#fbfdfd]"
                 >
                   <button
                     type="button"
@@ -943,7 +937,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
           {reportId && report.status === "published" ? (
             <Link
               href={`/knowledge/weekly-outlook/${report.slug}`}
-              className="mt-3 flex min-h-12 items-center justify-center gap-2 border border-line bg-white p-3 text-[11px] font-bold transition hover:border-brand-primary"
+              className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-[14px] border border-line bg-white p-3 text-[11px] font-bold transition hover:border-brand-primary"
             >
               <Eye size={14} />
               مشاهده صفحه عمومی
@@ -953,7 +947,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       </div>
 
       {report.status !== "archived" ? (
-        <div className="fixed bottom-3 left-3 right-3 z-40 flex items-center justify-between gap-2 border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden">
+        <div className="fixed bottom-3 left-3 right-3 z-40 flex items-center justify-between gap-2 rounded-[22px] border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden">
           <div className="min-w-0">
             <p className="truncate text-[10px] font-black text-ink">
               {report.title || "گزارش جدید"}
@@ -976,7 +970,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             <button
               disabled={busy}
               onClick={() => save("save")}
-              className="inline-flex min-h-10 cursor-pointer items-center gap-1 border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:pointer-events-none disabled:opacity-50"
             >
               <Save size={13} />
               ذخیره
@@ -986,7 +980,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               <button
                 disabled={busy}
                 onClick={() => save("publish")}
-                className="inline-flex min-h-10 cursor-pointer items-center gap-1 bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:pointer-events-none disabled:opacity-50"
               >
                 <Send size={13} />
                 انتشار
@@ -1190,7 +1184,7 @@ function BlockEditor({
       ) : null}
 
       {block.type === "divider" ? (
-        <div className="border border-dashed border-line bg-[#fbfdfd] p-6 text-center text-xs font-bold text-ink-muted">
+        <div className="rounded-[16px] border border-dashed border-line bg-[#fbfdfd] p-6 text-center text-xs font-bold text-ink-muted">
           جداکننده بصری در صفحه گزارش نمایش داده می‌شود.
         </div>
       ) : null}
@@ -1278,7 +1272,7 @@ function IconButton({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="grid h-9 w-9 cursor-pointer place-items-center border border-line bg-white text-ink transition hover:border-brand-accent hover:text-brand-primary disabled:pointer-events-none disabled:opacity-25"
+      className="grid h-9 w-9 cursor-pointer place-items-center rounded-xl border border-line bg-white text-ink transition hover:border-brand-accent hover:text-brand-primary disabled:pointer-events-none disabled:opacity-25"
     >
       {children}
     </button>

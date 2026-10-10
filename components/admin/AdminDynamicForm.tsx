@@ -66,6 +66,7 @@ export function AdminDynamicForm({
       className={`
         grid
         gap-3
+        rounded-[24px]
         border
         border-line
         bg-white/90
@@ -92,7 +93,7 @@ export function AdminDynamicForm({
               <select
                 name={field.name}
                 defaultValue={field.defaultValue}
-                className="mt-2 w-full border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                className="mt-2 w-full rounded-[14px] border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
               >
                 {field.options.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -107,21 +108,21 @@ export function AdminDynamicForm({
                 dir={field.dir}
                 defaultValue={field.defaultValue}
                 placeholder={field.placeholder}
-                className="mt-2 w-full border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                className="mt-2 w-full rounded-[14px] border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
               />
             )}
           </label>
         );
       })}
 
-      <button className="min-h-11 cursor-pointer self-end bg-brand-primary px-5 py-3 text-xs font-black text-white transition hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25">
+      <button className="min-h-11 cursor-pointer self-end rounded-[14px] bg-brand-primary px-5 py-3 text-xs font-black text-white transition hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25">
         {submitLabel}
       </button>
 
       {resetHref ? (
         <Link
           href={resetHref}
-          className="inline-flex min-h-11 items-center justify-center self-end border border-line bg-white px-4 py-3 text-xs font-black text-ink-muted transition hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
+          className="inline-flex min-h-11 items-center justify-center self-end rounded-[14px] border border-line bg-white px-4 py-3 text-xs font-black text-ink-muted transition hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
         >
           پاک کردن
         </Link>

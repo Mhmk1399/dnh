@@ -96,12 +96,7 @@ export default async function AdminUsersPage({
           <Link href="/admin" className="text-xs font-black text-brand-primary">
             دفتر مدیریت / بازگشت
           </Link>
-          <p
-            dir="ltr"
-            className="mt-5 text-[10px] font-black tracking-[0.22em] text-brand-primary"
-          >
-            DNH / USER REGISTRY
-          </p>
+      
           <h1 className="mt-2 text-3xl font-black tracking-[-0.04em] text-ink sm:text-4xl">
             مدیریت کاربران
           </h1>
