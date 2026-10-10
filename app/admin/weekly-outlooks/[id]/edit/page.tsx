@@ -46,6 +46,7 @@ export default async function EditWeeklyOutlookPage({
     slug: row.slug,
     edition: row.edition,
     reportDate: new Date(row.reportDate).toISOString().slice(0, 10),
+    dateCalendar: row.dateCalendar ?? "jalali",
     excerpt: row.excerpt,
     coverImage: row.coverImage || "",
     coverImageAlt: row.coverImageAlt || "",
@@ -104,6 +105,17 @@ export default async function EditWeeklyOutlookPage({
             src: block.src ?? "",
             alt: block.alt ?? "",
             caption: block.caption,
+          };
+        }
+
+        if (block.type === "button") {
+          return {
+            id: block.id,
+            type: "button",
+            label: block.label ?? "",
+            href: block.href ?? "/",
+            variant: block.variant ?? "primary",
+            note: block.note,
           };
         }
 

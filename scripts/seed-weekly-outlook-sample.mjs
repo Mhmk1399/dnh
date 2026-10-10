@@ -46,6 +46,10 @@ const blockSchema = new Schema(
     src: String,
     alt: String,
     caption: String,
+    label: String,
+    href: String,
+    variant: String,
+    note: String,
   },
   { _id: false },
 );
@@ -75,6 +79,13 @@ const weeklyOutlookReportSchema = new Schema(
     },
     edition: { type: String, required: true, maxlength: 120 },
     reportDate: { type: Date, required: true, index: true },
+    dateCalendar: {
+      type: String,
+      enum: ["jalali", "gregorian"],
+      default: "jalali",
+      required: true,
+      index: true,
+    },
     excerpt: { type: String, required: true, maxlength: 900 },
     coverImage: { type: String, default: "" },
     coverImageAlt: { type: String, default: "" },
@@ -116,6 +127,7 @@ const sampleReport = {
   slug: "global-economic-weekly-2026-10-02",
   edition: "DNH Global Economic Weekly",
   reportDate: new Date("2026-10-02T12:00:00.000Z"),
+  dateCalendar: "gregorian",
   excerpt:
     "گزارش هفتگی اقتصاد جهان برای هفته منتهی به ۱۱ مهر ۱۴۰۵؛ تمرکز این نسخه بر نرخ‌های بلندمدت بالا، بازار انرژی، داده‌های اشتغال آمریکا و پیامدهای آن برای تصمیم‌گیری مالی است.",
   coverImage: "",

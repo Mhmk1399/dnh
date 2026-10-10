@@ -20,6 +20,15 @@ export const WEEKLY_OUTLOOK_SECTION_ICONS = [
   "asset",
   "watch",
   "conclusion",
+  "trend",
+  "liquidity",
+  "currency",
+  "inflation",
+  "portfolio",
+  "timeline",
+  "target",
+  "warning",
+  "opportunity",
 ] as const;
 
 export const WEEKLY_OUTLOOK_BLOCK_TYPES = [
@@ -29,6 +38,7 @@ export const WEEKLY_OUTLOOK_BLOCK_TYPES = [
   "callout",
   "quote",
   "image",
+  "button",
   "divider",
 ] as const;
 
@@ -37,6 +47,17 @@ export const WEEKLY_OUTLOOK_CALLOUT_TONES = [
   "risk",
   "opportunity",
   "neutral",
+] as const;
+
+export const WEEKLY_OUTLOOK_BUTTON_VARIANTS = [
+  "primary",
+  "secondary",
+  "outline",
+] as const;
+
+export const WEEKLY_OUTLOOK_DATE_CALENDARS = [
+  "jalali",
+  "gregorian",
 ] as const;
 
 export type WeeklyOutlookStatus =
@@ -53,6 +74,12 @@ export type WeeklyOutlookCalloutTone =
 
 export type WeeklyOutlookBlockType =
   (typeof WEEKLY_OUTLOOK_BLOCK_TYPES)[number];
+
+export type WeeklyOutlookButtonVariant =
+  (typeof WEEKLY_OUTLOOK_BUTTON_VARIANTS)[number];
+
+export type WeeklyOutlookDateCalendar =
+  (typeof WEEKLY_OUTLOOK_DATE_CALENDARS)[number];
 
 type BaseWeeklyOutlookBlock = {
   id: string;
@@ -100,6 +127,15 @@ export type WeeklyOutlookImageBlock =
     caption?: string;
   };
 
+export type WeeklyOutlookButtonBlock =
+  BaseWeeklyOutlookBlock & {
+    type: "button";
+    label: string;
+    href: string;
+    variant: WeeklyOutlookButtonVariant;
+    note?: string;
+  };
+
 export type WeeklyOutlookDividerBlock =
   BaseWeeklyOutlookBlock & {
     type: "divider";
@@ -112,6 +148,7 @@ export type WeeklyOutlookBlock =
   | WeeklyOutlookCalloutBlock
   | WeeklyOutlookQuoteBlock
   | WeeklyOutlookImageBlock
+  | WeeklyOutlookButtonBlock
   | WeeklyOutlookDividerBlock;
 
 export type WeeklyOutlookSectionDefinition = {
@@ -129,6 +166,7 @@ export type WeeklyOutlookReportDefinition = {
   slug: string;
   edition: string;
   reportDate: string;
+  dateCalendar: WeeklyOutlookDateCalendar;
   excerpt: string;
   coverImage?: string;
   coverImageAlt?: string;
@@ -153,6 +191,7 @@ export type WeeklyOutlookListItem = {
   slug: string;
   edition: string;
   reportDate: string;
+  dateCalendar: WeeklyOutlookDateCalendar;
   excerpt: string;
   coverImage?: string;
   coverImageAlt?: string;
@@ -175,6 +214,7 @@ export function createWeeklyOutlookTemplate(): WeeklyOutlookReportDefinition {
     slug: "",
     edition: "نسخه هفتگی",
     reportDate: new Date().toISOString().slice(0, 10),
+    dateCalendar: "jalali",
     excerpt:
       "جمع‌بندی کوتاه این نسخه از چشم‌انداز هفتگی DNH را اینجا وارد کنید.",
     coverImage: "",

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import { dateOnlyToStorageDate } from "@/lib/weekly-outlook-date";
 import {
   validateWeeklyOutlookReport,
   WeeklyOutlookDefinitionError,
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
 
     const report = await WeeklyOutlookReport.create({
       ...definition,
-      reportDate: new Date(definition.reportDate),
+      reportDate: dateOnlyToStorageDate(definition.reportDate),
       revision: 1,
       createdBy: user.id,
       publishedAt: null,

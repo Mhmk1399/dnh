@@ -10,6 +10,7 @@ import type {
   WeeklyOutlookListItem,
   WeeklyOutlookSectionDefinition,
 } from "@/lib/weekly-outlook";
+import { normalizeWeeklyOutlookDateCalendar } from "@/lib/weekly-outlook-date";
 
 type WeeklyOutlookLean = WeeklyOutlookReportRecord & {
   _id: unknown;
@@ -90,6 +91,17 @@ function mapSections(
         };
       }
 
+      if (block.type === "button") {
+        return {
+          id: block.id,
+          type: "button",
+          label: block.label ?? "",
+          href: block.href ?? "/",
+          variant: block.variant ?? "primary",
+          note: block.note,
+        };
+      }
+
       if (block.type === "divider") {
         return {
           id: block.id,
@@ -113,6 +125,7 @@ function mapReport(row: WeeklyOutlookLean): PublicWeeklyOutlookReport {
     slug: row.slug,
     edition: row.edition,
     reportDate: reportDate(row.reportDate),
+    dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
     excerpt: row.excerpt,
     coverImage: row.coverImage || undefined,
     coverImageAlt: row.coverImageAlt || undefined,
@@ -134,6 +147,7 @@ function mapListItem(row: WeeklyOutlookLean): WeeklyOutlookListItem {
     slug: row.slug,
     edition: row.edition,
     reportDate: reportDate(row.reportDate),
+    dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
     excerpt: row.excerpt,
     coverImage: row.coverImage || undefined,
     coverImageAlt: row.coverImageAlt || undefined,
@@ -150,7 +164,7 @@ export async function getPublishedWeeklyOutlookList(): Promise<
 
     const rows = await WeeklyOutlookReport.find({ status: "published" })
       .select(
-        "title slug edition reportDate excerpt coverImage coverImageAlt sections publishedAt",
+        "title slug edition reportDate dateCalendar excerpt coverImage coverImageAlt sections publishedAt",
       )
       .sort({ reportDate: -1, updatedAt: -1 })
       .limit(100)

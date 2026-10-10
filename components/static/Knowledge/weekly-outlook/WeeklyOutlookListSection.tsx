@@ -1,16 +1,11 @@
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, FileText, Layers3 } from "lucide-react";
 import type { WeeklyOutlookListItem } from "@/lib/weekly-outlook";
+import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";
 
 type WeeklyOutlookListSectionProps = {
   reports: WeeklyOutlookListItem[];
 };
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("fa-IR", {
-    dateStyle: "long",
-  }).format(new Date(value));
-}
 
 export function WeeklyOutlookListSection({
   reports,
@@ -124,7 +119,11 @@ function ReportCard({
       <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-line pt-4 text-[12px] font-bold text-ink-muted">
         <span className="inline-flex items-center gap-2">
           <CalendarDays aria-hidden="true" size={15} />
-          {formatDate(report.reportDate)}
+          {formatWeeklyOutlookDate(
+            report.reportDate,
+            report.dateCalendar,
+            "long",
+          )}
         </span>
 
         <span className="h-1 w-1 bg-brand-accent" aria-hidden="true" />

@@ -1,7 +1,9 @@
 import { model, models, Schema, type Model, type Types } from "mongoose";
 import type {
   WeeklyOutlookBlockType,
+  WeeklyOutlookButtonVariant,
   WeeklyOutlookCalloutTone,
+  WeeklyOutlookDateCalendar,
   WeeklyOutlookSectionIcon,
   WeeklyOutlookSectionTone,
   WeeklyOutlookStatus,
@@ -12,6 +14,7 @@ export type WeeklyOutlookReportRecord = {
   slug: string;
   edition: string;
   reportDate: Date;
+  dateCalendar: WeeklyOutlookDateCalendar;
   excerpt: string;
   coverImage?: string;
   coverImageAlt?: string;
@@ -37,6 +40,10 @@ export type WeeklyOutlookReportRecord = {
       src?: string;
       alt?: string;
       caption?: string;
+      label?: string;
+      href?: string;
+      variant?: WeeklyOutlookButtonVariant;
+      note?: string;
     }>;
   }>;
   revision: number;
@@ -59,6 +66,10 @@ const blockSchema = new Schema(
     src: String,
     alt: String,
     caption: String,
+    label: String,
+    href: String,
+    variant: String,
+    note: String,
   },
   { _id: false },
 );
@@ -88,6 +99,13 @@ const weeklyOutlookReportSchema = new Schema<WeeklyOutlookReportRecord>(
     },
     edition: { type: String, required: true, maxlength: 120 },
     reportDate: { type: Date, required: true, index: true },
+    dateCalendar: {
+      type: String,
+      enum: ["jalali", "gregorian"],
+      default: "jalali",
+      required: true,
+      index: true,
+    },
     excerpt: { type: String, required: true, maxlength: 900 },
     coverImage: { type: String, default: "" },
     coverImageAlt: { type: String, default: "" },

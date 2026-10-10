@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import { dateOnlyToStorageDate } from "@/lib/weekly-outlook-date";
 import {
   WEEKLY_OUTLOOK_STATUSES,
   type WeeklyOutlookStatus,
@@ -55,6 +56,7 @@ export async function GET(
       report: {
         ...report,
         _id: String(report._id),
+        dateCalendar: report.dateCalendar ?? "jalali",
         createdBy: String(report.createdBy),
       },
     });
@@ -131,7 +133,7 @@ export async function PATCH(
 
     const update = {
       ...definition,
-      reportDate: new Date(definition.reportDate),
+      reportDate: dateOnlyToStorageDate(definition.reportDate),
       status: requestedStatus,
       revision: expectedRevision + 1,
       ...(requestedStatus === "published"

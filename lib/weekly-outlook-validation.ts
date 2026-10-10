@@ -1,16 +1,21 @@
 import {
   WEEKLY_OUTLOOK_BLOCK_TYPES,
+  WEEKLY_OUTLOOK_BUTTON_VARIANTS,
   WEEKLY_OUTLOOK_CALLOUT_TONES,
+  WEEKLY_OUTLOOK_DATE_CALENDARS,
   WEEKLY_OUTLOOK_SECTION_ICONS,
   WEEKLY_OUTLOOK_SECTION_TONES,
   WEEKLY_OUTLOOK_STATUSES,
   makeWeeklyOutlookStableId,
   type WeeklyOutlookBlock,
+  type WeeklyOutlookButtonVariant,
   type WeeklyOutlookCalloutTone,
+  type WeeklyOutlookDateCalendar,
   type WeeklyOutlookReportDefinition,
   type WeeklyOutlookSectionDefinition,
   type WeeklyOutlookStatus,
 } from "@/lib/weekly-outlook";
+import { parseIsoDateOnly } from "@/lib/weekly-outlook-date";
 import { cleanText } from "@/lib/validation";
 
 export class WeeklyOutlookDefinitionError extends Error {
@@ -101,14 +106,14 @@ function ensureUniqueStableIds(sections: WeeklyOutlookSectionDefinition[]) {
 
 function parseDate(value: unknown, issues: Record<string, string>) {
   const dateText = cleanText(value, 30);
-  const date = new Date(dateText);
+  const date = parseIsoDateOnly(dateText);
 
-  if (!dateText || Number.isNaN(date.getTime())) {
+  if (!date) {
     issues.reportDate = "تاریخ گزارش معتبر نیست.";
     return new Date().toISOString().slice(0, 10);
   }
 
-  return date.toISOString().slice(0, 10);
+  return dateText;
 }
 
 function parseImageSrc(value: unknown, path: string, issues: Record<string, string>) {
@@ -124,6 +129,29 @@ function parseImageSrc(value: unknown, path: string, issues: Record<string, stri
   }
 
   return src;
+}
+
+function parseLinkHref(
+  value: unknown,
+  path: string,
+  issues: Record<string, string>,
+) {
+  const href = cleanText(value, 900);
+
+  if (!href) {
+    issues[path] = "آدرس دکمه الزامی است.";
+    return "";
+  }
+
+  const isInternal = href.startsWith("/") || href.startsWith("#");
+  const isRemote = /^https:\/\/[^\s]+$/i.test(href);
+
+  if (!isInternal && !isRemote) {
+    issues[path] =
+      "آدرس دکمه باید مسیر داخلی سایت، لینک بخشی از صفحه یا لینک امن https باشد.";
+  }
+
+  return href;
 }
 
 function parseListItems(value: unknown, maxItems = 24) {
@@ -227,6 +255,28 @@ function parseBlock(
     };
   }
 
+  if (type === "button") {
+    const label = cleanText(value.label, 120);
+    const href = parseLinkHref(value.href, `${path}.href`, issues);
+    const variant: WeeklyOutlookButtonVariant = isOneOf(
+      value.variant,
+      WEEKLY_OUTLOOK_BUTTON_VARIANTS,
+    )
+      ? value.variant
+      : "primary";
+
+    if (!label) issues[`${path}.label`] = "متن دکمه الزامی است.";
+
+    return {
+      id,
+      type,
+      label,
+      href,
+      variant,
+      note: cleanText(value.note, 220) || undefined,
+    };
+  }
+
   if (type === "divider") {
     return { id, type };
   }
@@ -289,6 +339,12 @@ export function validateWeeklyOutlookReport(
   const title = cleanText(value.title, 180);
   const slug = normalizeWeeklyOutlookSlug(value.slug);
   const reportDate = parseDate(value.reportDate, issues);
+  const dateCalendar: WeeklyOutlookDateCalendar = isOneOf(
+    value.dateCalendar,
+    WEEKLY_OUTLOOK_DATE_CALENDARS,
+  )
+    ? value.dateCalendar
+    : "jalali";
   const status =
     requestedStatus ??
     (isOneOf(value.status, WEEKLY_OUTLOOK_STATUSES)
@@ -332,6 +388,7 @@ export function validateWeeklyOutlookReport(
     slug,
     edition: cleanText(value.edition, 120),
     reportDate,
+    dateCalendar,
     excerpt: cleanLongText(value.excerpt, 900),
     coverImage: coverImage || undefined,
     coverImageAlt: cleanText(value.coverImageAlt, 220) || undefined,

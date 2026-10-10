@@ -4,17 +4,34 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import {
+  Activity,
   ArrowDown,
   ArrowUp,
+  Banknote,
+  BarChart3,
   Eye,
+  ExternalLink,
   FileText,
   Image as ImageIcon,
+  Landmark,
   ListChecks,
+  Link2,
+  LineChart,
   Plus,
   Quote,
   Save,
   Send,
+  ShieldAlert,
+  Sparkles,
+  Target,
+  TrendingUp,
   Trash2,
+  TriangleAlert,
+  WalletCards,
+  Clock3,
+  CircleDollarSign,
+  Layers3,
+  type LucideIcon,
 } from "lucide-react";
 import { adminToast, adminToastMessage } from "@/components/admin/adminToast";
 import {
@@ -22,13 +39,24 @@ import {
   makeWeeklyOutlookStableId,
   type WeeklyOutlookBlock,
   type WeeklyOutlookBlockType,
+  type WeeklyOutlookButtonVariant,
   type WeeklyOutlookCalloutTone,
+  type WeeklyOutlookDateCalendar,
   type WeeklyOutlookReportDefinition,
   type WeeklyOutlookSectionDefinition,
   type WeeklyOutlookSectionIcon,
   type WeeklyOutlookSectionTone,
   type WeeklyOutlookStatus,
 } from "@/lib/weekly-outlook";
+import {
+  formatWeeklyOutlookDate,
+  gregorianToJalaliDateParts,
+  jalaliMonthLength,
+  jalaliMonthNames,
+  jalaliToGregorianDateString,
+  todayIsoDate,
+  weeklyOutlookDateCalendarLabels,
+} from "@/lib/weekly-outlook-date";
 import { normalizeWeeklyOutlookSlug } from "@/lib/weekly-outlook-validation";
 
 type Props = {
@@ -59,7 +87,35 @@ const sectionIconLabels: Record<WeeklyOutlookSectionIcon, string> = {
   asset: "دارایی",
   watch: "رصد",
   conclusion: "نتیجه‌گیری",
+  trend: "روند",
+  liquidity: "نقدینگی",
+  currency: "ارز",
+  inflation: "تورم",
+  portfolio: "پرتفوی",
+  timeline: "افق زمانی",
+  target: "هدف",
+  warning: "هشدار",
+  opportunity: "فرصت",
 };
+
+const sectionIconMap = {
+  overview: FileText,
+  risk: ShieldAlert,
+  market: BarChart3,
+  policy: Landmark,
+  asset: CircleDollarSign,
+  watch: Eye,
+  conclusion: Layers3,
+  trend: TrendingUp,
+  liquidity: WalletCards,
+  currency: Banknote,
+  inflation: LineChart,
+  portfolio: Activity,
+  timeline: Clock3,
+  target: Target,
+  warning: TriangleAlert,
+  opportunity: Sparkles,
+} satisfies Record<WeeklyOutlookSectionIcon, LucideIcon>;
 
 const calloutToneLabels: Record<WeeklyOutlookCalloutTone, string> = {
   info: "اطلاعات",
@@ -75,11 +131,31 @@ const blockLabels: Record<WeeklyOutlookBlockType, string> = {
   callout: "نکته",
   quote: "نقل‌قول",
   image: "تصویر",
+  button: "دکمه",
   divider: "جداکننده",
+};
+
+const buttonVariantLabels: Record<WeeklyOutlookButtonVariant, string> = {
+  primary: "اصلی نفتی",
+  secondary: "تأکیدی نارنجی",
+  outline: "خطی ساده",
 };
 
 const inputClass =
   "mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10";
+
+const dateCalendarOptions: WeeklyOutlookDateCalendar[] = [
+  "jalali",
+  "gregorian",
+];
+
+function buildJalaliYearOptions(selectedYear: number) {
+  const currentYear = gregorianToJalaliDateParts(todayIsoDate()).year;
+  const min = Math.min(currentYear - 10, selectedYear - 2);
+  const max = Math.max(currentYear + 4, selectedYear + 2);
+
+  return Array.from({ length: max - min + 1 }, (_, index) => max - index);
+}
 
 export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   const router = useRouter();
@@ -94,6 +170,9 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
   const current =
     report.sections[activeSection] ?? report.sections[0] ?? null;
+  const CurrentSectionIcon = current
+    ? sectionIconMap[current.icon]
+    : FileText;
   const blockCount = useMemo(
     () =>
       report.sections.reduce(
@@ -252,6 +331,15 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         src: "",
         alt: "",
         caption: "",
+      };
+    } else if (type === "button") {
+      block = {
+        id,
+        type,
+        label: "مشاهده جزئیات",
+        href: "/request-strategic-consultation",
+        variant: "primary",
+        note: "",
       };
     } else if (type === "divider") {
       block = { id, type };
@@ -460,10 +548,9 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         <aside className="overflow-hidden rounded-[24px] border border-line bg-[#f6fbfc] xl:sticky xl:top-28">
           <div className="border-b border-line p-4">
             <p
-              dir="ltr"
-              className="text-[11px] font-black tracking-[.2em] text-brand-primary"
+               className="text-[11px] font-black tracking-[.2em] text-brand-primary"
             >
-              REPORT / SECTIONS
+              فهرست سکشن‌ها
             </p>
 
             <div className="mt-2 flex items-center justify-between gap-4">
@@ -499,7 +586,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                         : "text-ink-muted"
                     }`}
                   >
-                    SECTION / {String(index + 1).padStart(2, "0")}
+                    سکشن {String(index + 1).padStart(2, "0")}
                   </span>
 
                   <span className="mt-1 block text-sm font-black">
@@ -533,7 +620,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
         <main className="space-y-6">
           <section className="overflow-hidden rounded-[24px] border border-line bg-white">
-            <SectionHeader code="01 / IDENTITY" title="مشخصات گزارش" />
+            <SectionHeader code="مرحله ۰۱" title="مشخصات گزارش" />
 
             <div className="grid gap-5 p-5 md:grid-cols-2">
               <Label text="عنوان گزارش">
@@ -572,16 +659,11 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 />
               </Label>
 
-              <Label text="تاریخ گزارش">
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={report.reportDate}
-                  onChange={(event) =>
-                    update({ reportDate: event.target.value })
-                  }
-                />
-              </Label>
+              <ReportDateField
+                reportDate={report.reportDate}
+                dateCalendar={report.dateCalendar}
+                onChange={update}
+              />
 
               <div className="md:col-span-2">
                 <Label text="توضیح کوتاه لیست گزارش‌ها">
@@ -645,7 +727,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               className="scroll-mt-28 overflow-hidden rounded-[24px] border border-line bg-white"
             >
               <SectionHeader
-                code={`SECTION / ${String(activeSection + 1).padStart(2, "0")}`}
+                code={`سکشن ${String(activeSection + 1).padStart(2, "0")}`}
                 title="تنظیم سکشن"
                 actions={
                   <div className="flex gap-1">
@@ -710,23 +792,33 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                   />
                 </Label>
 
-                <Label text="آیکن سکشن">
-                  <select
-                    className={inputClass}
-                    value={current.icon}
-                    onChange={(event) =>
-                      updateSection(activeSection, {
-                        icon: event.target.value as WeeklyOutlookSectionIcon,
-                      })
-                    }
-                  >
-                    {Object.entries(sectionIconLabels).map(([value, label]) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </Label>
+                <div>
+                  <p className="text-xs font-bold text-ink">آیکن سکشن</p>
+
+                  <div className="mt-2 grid gap-3 sm:grid-cols-[52px_1fr]">
+                    <span className="grid h-[50px] w-[52px] place-items-center rounded-[16px] border border-brand-primary/15 bg-[#eef8fb] text-brand-primary">
+                      <CurrentSectionIcon aria-hidden="true" size={20} />
+                    </span>
+
+                    <select
+                      className="w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                      value={current.icon}
+                      onChange={(event) =>
+                        updateSection(activeSection, {
+                          icon: event.target.value as WeeklyOutlookSectionIcon,
+                        })
+                      }
+                    >
+                      {Object.entries(sectionIconLabels).map(
+                        ([value, label]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </div>
+                </div>
 
                 <Label text="پس‌زمینه سکشن">
                   <select
@@ -766,7 +858,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
           {current ? (
             <section className="overflow-hidden rounded-[24px] border border-line bg-white">
               <SectionHeader
-                code={`${blockCount.toString().padStart(2, "0")} BLOCKS`}
+                code={`${blockCount.toLocaleString("fa-IR")} بلوک`}
                 title="ادیتور محتوای سکشن"
               />
 
@@ -779,6 +871,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                     "callout",
                     "quote",
                     "image",
+                    "button",
                     "divider",
                   ] as WeeklyOutlookBlockType[]
                 ).map((type) => (
@@ -839,10 +932,10 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 dir="ltr"
                 className="text-[11px] font-black tracking-[.2em] text-white/60"
               >
-                LIVE / REPORT PREVIEW
+                نمایش زنده گزارش
               </p>
 
-              <Eye size={16} />
+               
             </div>
 
             <h2 className="mt-5 text-xl font-black leading-8">
@@ -859,7 +952,11 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             >
               /knowledge/weekly-outlook/{report.slug || "report-slug"}
               <br />
-              {report.reportDate}
+              {formatWeeklyOutlookDate(
+                report.reportDate,
+                report.dateCalendar,
+                "medium",
+              )}
             </div>
           </div>
 
@@ -993,6 +1090,163 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   );
 }
 
+function ReportDateField({
+  reportDate,
+  dateCalendar,
+  onChange,
+}: {
+  reportDate: string;
+  dateCalendar: WeeklyOutlookDateCalendar;
+  onChange: (patch: Partial<WeeklyOutlookReportDefinition>) => void;
+}) {
+  const calendar = dateCalendar ?? "jalali";
+  const jalaliDate = gregorianToJalaliDateParts(reportDate);
+  const jalaliYears = buildJalaliYearOptions(jalaliDate.year);
+  const days = Array.from(
+    { length: jalaliMonthLength(jalaliDate.year, jalaliDate.month) },
+    (_, index) => index + 1,
+  );
+
+  function updateJalaliDate(patch: Partial<JalaliDateControls>) {
+    const next = {
+      year: patch.year ?? jalaliDate.year,
+      month: patch.month ?? jalaliDate.month,
+      day: patch.day ?? jalaliDate.day,
+    };
+    const day = Math.min(next.day, jalaliMonthLength(next.year, next.month));
+
+    onChange({
+      reportDate: jalaliToGregorianDateString(
+        next.year,
+        next.month,
+        day,
+      ),
+    });
+  }
+
+  return (
+    <div className="md:col-span-2">
+      <div className="rounded-[18px] border border-line bg-[#fbfdfd] p-4">
+        <div className="grid gap-4 md:grid-cols-[180px_1fr] md:items-start">
+          <Label
+            text="نوع تقویم"
+            help="نوع نمایش تاریخ در سایت و پنل ادمین"
+          >
+            <select
+              className={inputClass}
+              value={calendar}
+              onChange={(event) =>
+                onChange({
+                  dateCalendar: event.target
+                    .value as WeeklyOutlookDateCalendar,
+                })
+              }
+            >
+              {dateCalendarOptions.map((option) => (
+                <option key={option} value={option}>
+                  {weeklyOutlookDateCalendarLabels[option]}
+                </option>
+              ))}
+            </select>
+          </Label>
+
+          {calendar === "gregorian" ? (
+            <Label
+              text="تاریخ میلادی"
+              help="برای مرتب‌سازی، مقدار استاندارد تاریخ همزمان ذخیره می‌شود."
+            >
+              <input
+                type="date"
+                className={inputClass}
+                value={reportDate}
+                onChange={(event) =>
+                  onChange({
+                    reportDate: event.target.value || todayIsoDate(),
+                  })
+                }
+              />
+            </Label>
+          ) : (
+            <div>
+              <p className="text-xs font-bold text-ink">
+                تاریخ شمسی گزارش
+              </p>
+
+              <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                <select
+                  aria-label="روز تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.day}
+                  onChange={(event) =>
+                    updateJalaliDate({ day: Number(event.target.value) })
+                  }
+                >
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day.toLocaleString("fa-IR")}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  aria-label="ماه تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.month}
+                  onChange={(event) =>
+                    updateJalaliDate({ month: Number(event.target.value) })
+                  }
+                >
+                  {jalaliMonthNames.map((month, index) => (
+                    <option key={month} value={index + 1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  aria-label="سال تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.year}
+                  onChange={(event) =>
+                    updateJalaliDate({ year: Number(event.target.value) })
+                  }
+                >
+                  {jalaliYears.map((year) => (
+                    <option key={year} value={year}>
+                      {year.toLocaleString("fa-IR", {
+                        useGrouping: false,
+                      })}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <p className="mt-2 text-[10px] leading-5 text-ink-muted">
+                برای مرتب‌سازی و لینک‌دهی، معادل میلادی تاریخ همزمان ذخیره
+                می‌شود.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3 text-[11px] font-bold text-ink-muted">
+          <span className="text-brand-primary">نمایش عمومی:</span>
+          <span>{formatWeeklyOutlookDate(reportDate, calendar, "long")}</span>
+          <span dir="ltr" className="text-brand-primary/60">
+            تاریخ ذخیره‌شده / {reportDate}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type JalaliDateControls = {
+  year: number;
+  month: number;
+  day: number;
+};
+
 function BlockEditor({
   block,
   index,
@@ -1014,7 +1268,7 @@ function BlockEditor({
             dir="ltr"
             className="text-[11px] font-black tracking-[.16em] text-ink-muted"
           >
-            BLOCK / {String(index + 1).padStart(2, "0")}
+            بلوک {String(index + 1).padStart(2, "0")}
           </span>
 
           <h3 className="mt-1 text-sm font-black">
@@ -1241,7 +1495,7 @@ function SectionHeader({
     <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
       <div>
         <p
-          dir="ltr"
+          
           className="text-[11px] font-black tracking-[.18em] text-brand-primary"
         >
           {code}

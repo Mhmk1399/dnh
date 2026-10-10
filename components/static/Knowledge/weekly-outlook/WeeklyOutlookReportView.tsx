@@ -1,23 +1,36 @@
 import Link from "next/link";
 import {
+  Activity,
+  ArrowLeft,
   ArrowRight,
   BarChart3,
+  Banknote,
   CircleDollarSign,
+  Clock3,
   Eye,
+  ExternalLink,
   FileText,
   Landmark,
   Layers3,
+  LineChart,
   Quote,
   ShieldAlert,
+  Sparkles,
+  Target,
+  TrendingUp,
+  TriangleAlert,
+  WalletCards,
 } from "lucide-react";
 import type {
   PublicWeeklyOutlookReport,
   WeeklyOutlookBlock,
+  WeeklyOutlookButtonVariant,
   WeeklyOutlookCalloutTone,
   WeeklyOutlookSectionDefinition,
   WeeklyOutlookSectionIcon,
   WeeklyOutlookSectionTone,
 } from "@/lib/weekly-outlook";
+import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";
 
 type WeeklyOutlookReportViewProps = {
   report: PublicWeeklyOutlookReport;
@@ -31,7 +44,23 @@ const iconMap = {
   asset: CircleDollarSign,
   watch: Eye,
   conclusion: Layers3,
+  trend: TrendingUp,
+  liquidity: WalletCards,
+  currency: Banknote,
+  inflation: LineChart,
+  portfolio: Activity,
+  timeline: Clock3,
+  target: Target,
+  warning: TriangleAlert,
+  opportunity: Sparkles,
 } satisfies Record<WeeklyOutlookSectionIcon, typeof FileText>;
+
+const buttonVariantClasses = {
+  primary: "bg-brand-primary text-white hover:bg-brand-secondary",
+  secondary: "bg-brand-accent text-white hover:bg-[#ec7d01]",
+  outline:
+    "border border-current/15 bg-transparent text-current hover:border-brand-accent hover:text-brand-accent",
+} satisfies Record<WeeklyOutlookButtonVariant, string>;
 
 const toneClasses = {
   light: {
@@ -93,12 +122,6 @@ const calloutClasses = {
   neutral: "border-line bg-[#f7f9fa] text-ink",
 } satisfies Record<WeeklyOutlookCalloutTone, string>;
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("fa-IR", {
-    dateStyle: "long",
-  }).format(new Date(value));
-}
-
 export function WeeklyOutlookReportView({
   report,
 }: WeeklyOutlookReportViewProps) {
@@ -133,7 +156,11 @@ export function WeeklyOutlookReportView({
               </p>
 
               <p className="mt-4 inline-flex items-center gap-2 border border-white/10 bg-white/[0.035] px-3 py-2 text-xs font-bold text-white/58">
-                {formatDate(report.reportDate)}
+                {formatWeeklyOutlookDate(
+                  report.reportDate,
+                  report.dateCalendar,
+                  "long",
+                )}
               </p>
             </div>
 
@@ -366,6 +393,47 @@ function ReportBlock({
           </figcaption>
         ) : null}
       </figure>
+    );
+  }
+
+  if (block.type === "button") {
+    const isExternal = block.href.startsWith("https://");
+    const isHash = block.href.startsWith("#");
+    const className = `inline-flex min-h-12 items-center justify-center gap-2 px-5 py-3 text-[13px] font-black transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent ${buttonVariantClasses[block.variant]}`;
+    const content = (
+      <>
+        {block.label}
+        {isExternal ? (
+          <ExternalLink aria-hidden="true" size={15} />
+        ) : (
+          <ArrowLeft aria-hidden="true" size={15} />
+        )}
+      </>
+    );
+
+    return (
+      <div className="px-5 py-6 sm:px-7 lg:px-9">
+        {block.note ? (
+          <p className={`mb-3 text-[13px] font-medium leading-7 ${textClass}`}>
+            {block.note}
+          </p>
+        ) : null}
+
+        {isExternal || isHash ? (
+          <a
+            href={block.href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer" : undefined}
+            className={className}
+          >
+            {content}
+          </a>
+        ) : (
+          <Link href={block.href} className={className}>
+            {content}
+          </Link>
+        )}
+      </div>
     );
   }
 

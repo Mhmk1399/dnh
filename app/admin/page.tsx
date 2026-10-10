@@ -33,6 +33,11 @@ import FormSubmission from "@/lib/models/FormSubmission";
 import Lead from "@/lib/models/Lead";
 import User from "@/lib/models/User";
 import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import type { WeeklyOutlookDateCalendar } from "@/lib/weekly-outlook";
+import {
+  formatWeeklyOutlookDate,
+  normalizeWeeklyOutlookDateCalendar,
+} from "@/lib/weekly-outlook-date";
 
 export const metadata: Metadata = { title: "داشبورد" };
 export const dynamic = "force-dynamic";
@@ -42,11 +47,6 @@ const dateTimeFormatter = new Intl.DateTimeFormat("fa-IR", {
   timeStyle: "short",
   timeZone: "Asia/Tehran",
 });
-const dateFormatter = new Intl.DateTimeFormat("fa-IR", {
-  dateStyle: "medium",
-  timeZone: "Asia/Tehran",
-});
-
 type AdminUserRow = {
   _id: unknown;
   firstName: string;
@@ -90,6 +90,7 @@ type AdminReportRow = {
   edition: string;
   status: "draft" | "published" | "archived";
   reportDate: Date;
+  dateCalendar?: WeeklyOutlookDateCalendar;
   updatedAt: Date;
 };
 
@@ -188,7 +189,7 @@ export default async function AdminPage() {
         .limit(5)
         .lean(),
       WeeklyOutlookReport.find({})
-        .select("title slug edition status reportDate updatedAt")
+        .select("title slug edition status reportDate dateCalendar updatedAt")
         .sort({ updatedAt: -1 })
         .limit(5)
         .lean(),
@@ -505,10 +506,6 @@ export default async function AdminPage() {
 
 function formatDateTime(value: Date) {
   return dateTimeFormatter.format(new Date(value));
-}
-
-function formatDate(value: Date) {
-  return dateFormatter.format(new Date(value));
 }
 
 /** Illustrated mountains are inline SVG; no additional image file is needed. */
@@ -868,7 +865,11 @@ function RecentReport({
         </span>
         <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] leading-5 text-[#819cac]">
           <CalendarDays size={12} aria-hidden="true" />
-          {formatDate(report.reportDate)}
+          {formatWeeklyOutlookDate(
+            report.reportDate,
+            normalizeWeeklyOutlookDateCalendar(report.dateCalendar),
+            "medium",
+          )}
           <span className="text-[#b4c4cc]">·</span>
           <span dir="ltr">{report.edition}</span>
         </span>

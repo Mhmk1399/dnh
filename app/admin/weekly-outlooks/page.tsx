@@ -16,7 +16,15 @@ import { AdminStatusBadge, type AdminStatusTone } from "@/components/admin/Admin
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
-import type { WeeklyOutlookStatus } from "@/lib/weekly-outlook";
+import type {
+  WeeklyOutlookDateCalendar,
+  WeeklyOutlookStatus,
+} from "@/lib/weekly-outlook";
+import {
+  formatWeeklyOutlookDate,
+  normalizeWeeklyOutlookDateCalendar,
+  weeklyOutlookDateCalendarLabels,
+} from "@/lib/weekly-outlook-date";
 
 export const metadata: Metadata = {
   title: "گزارش‌های هفتگی",
@@ -36,17 +44,13 @@ const statusTone: Record<WeeklyOutlookStatus, AdminStatusTone> = {
   archived: "muted",
 };
 
-const reportDateFormatter = new Intl.DateTimeFormat("fa-IR", {
-  dateStyle: "medium",
-  timeZone: "Asia/Tehran",
-});
-
 type ReportRow = {
   _id: unknown;
   title: string;
   slug: string;
   edition: string;
   reportDate: Date;
+  dateCalendar?: WeeklyOutlookDateCalendar;
   status: WeeklyOutlookStatus;
   revision: number;
   sections: unknown[];
@@ -91,7 +95,9 @@ export default async function WeeklyOutlooksAdminPage({
     }
 
     const rows = await WeeklyOutlookReport.find(filter)
-      .select("title slug edition reportDate status revision sections updatedAt")
+      .select(
+        "title slug edition reportDate dateCalendar status revision sections updatedAt",
+      )
       .sort({ reportDate: -1, updatedAt: -1 })
       .limit(150)
       .lean();
@@ -239,8 +245,20 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
       key: "date",
       header: "تاریخ",
       cell: (report) => (
-        <span className="text-xs leading-6 text-ink-muted">
-          {reportDateFormatter.format(report.reportDate)}
+        <span className="block text-xs leading-6 text-ink-muted">
+          {formatWeeklyOutlookDate(
+            report.reportDate,
+            normalizeWeeklyOutlookDateCalendar(report.dateCalendar),
+            "medium",
+          )}
+
+          <span className="mt-1 block text-[10px] font-bold text-brand-primary/60">
+            {
+              weeklyOutlookDateCalendarLabels[
+                normalizeWeeklyOutlookDateCalendar(report.dateCalendar)
+              ]
+            }
+          </span>
         </span>
       ),
     },
