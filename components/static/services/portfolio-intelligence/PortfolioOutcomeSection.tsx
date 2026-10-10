@@ -212,7 +212,7 @@ export function PortfolioOutcomeSection() {
 
               <span
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-bold
 
                   text-brand-primary/55
@@ -283,7 +283,7 @@ export function PortfolioOutcomeSection() {
               <div>
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-black
                     text-brand-accent
                   "
@@ -314,7 +314,7 @@ export function PortfolioOutcomeSection() {
                 aria-hidden="true"
                 className="
                   hidden
-                  h-[9px] w-[9px]
+                  h-[11px] w-[11px]
                   shrink-0
 
                   bg-brand-accent

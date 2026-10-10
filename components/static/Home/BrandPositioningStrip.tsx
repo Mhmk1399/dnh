@@ -487,13 +487,13 @@ function PositioningRailItem({
         className="
           mt-1
 
-          text-[8px]
+          text-[11px]
           font-bold
           tracking-[0.13em]
 
           text-brand-primary/60
 
-          lg:text-[9px]
+          lg:text-[11px]
         "
       >
         {item.en}
@@ -616,7 +616,7 @@ function PositioningMobileItem({
           mt-1
 
           text-right
-          text-[7px]
+          text-[11px]
           font-bold
           tracking-[0.12em]
 
@@ -630,7 +630,7 @@ function PositioningMobileItem({
         className="
           mt-3
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 

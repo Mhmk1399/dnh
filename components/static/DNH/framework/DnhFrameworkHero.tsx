@@ -315,7 +315,7 @@ export function DnhFrameworkHero() {
                 <span
                   aria-hidden="true"
                   className="
-                    mt-[8px]
+                    mt-[11px]
 
                     h-[6px]
                     w-[6px]
@@ -327,7 +327,7 @@ export function DnhFrameworkHero() {
 
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-medium
                     leading-[2]
 
@@ -385,7 +385,7 @@ export function DnhFrameworkHero() {
 
               text-white/20
 
-              sm:text-[7px]
+              sm:text-[11px]
             "
           >
             DATA → NAVIGATION → HORIZON
@@ -480,7 +480,7 @@ function FrameworkArchitecture() {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.22em]
 
@@ -635,7 +635,7 @@ function FrameworkArchitecture() {
               className="
                 mt-1.5
 
-                text-[9px]
+                text-[11px]
                 font-bold
                 leading-[1.9]
 
@@ -780,7 +780,7 @@ function FrameworkLayer({
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.16em]
 
@@ -792,7 +792,7 @@ function FrameworkLayer({
 
           <span
             className="
-              text-[9px]
+              text-[11px]
               font-bold
 
               text-white/42
@@ -822,7 +822,7 @@ function FrameworkLayer({
             mt-2
             max-w-[520px]
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.95]
 
@@ -865,7 +865,7 @@ function FrameworkLayer({
           left-5
           top-5
 
-          text-[8px]
+          text-[11px]
           font-black
 
           text-white/[0.12]

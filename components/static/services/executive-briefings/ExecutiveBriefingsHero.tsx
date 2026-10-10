@@ -350,7 +350,7 @@ function ExecutiveBriefVisual() {
           <div className="flex items-center gap-3">
             <span
               aria-hidden="true"
-              className="h-[7px] w-[7px] bg-brand-accent"
+              className="h-[11px] w-[11px] bg-brand-accent"
             />
 
             <p
@@ -567,10 +567,10 @@ function ExecutiveBriefVisual() {
           <span
             aria-hidden="true"
             className="
-              mt-[9px]
+              mt-[11px]
 
-              h-[7px]
-              w-[7px]
+              h-[11px]
+              w-[11px]
 
               shrink-0
 
@@ -638,8 +638,8 @@ function BriefOutput({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

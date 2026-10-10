@@ -165,7 +165,7 @@ export function IntelligenceBoundarySection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.18em]
 
@@ -246,7 +246,7 @@ export function IntelligenceBoundarySection() {
               className="
                 max-w-[680px]
 
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[2]
 
@@ -379,7 +379,7 @@ function MutedLabel({ children }: { children: React.ReactNode }) {
       className="
         relative
 
-        text-[8px]
+        text-[11px]
         font-black
         tracking-[0.12em]
 

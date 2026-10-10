@@ -998,7 +998,7 @@ function WealthCutaway() {
 
             block
 
-            text-[7px]
+            text-[11px]
 
             font-bold
 

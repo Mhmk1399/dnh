@@ -425,8 +425,8 @@ function DecisionReadinessSheet() {
 
           <span
             className="
-              h-[8px]
-              w-[8px]
+              h-[11px]
+              w-[11px]
 
               bg-brand-accent
             "
@@ -491,10 +491,10 @@ function DecisionReadinessSheet() {
           <span
             aria-hidden="true"
             className="
-              mt-[8px]
+              mt-[11px]
 
-              h-[8px]
-              w-[8px]
+              h-[11px]
+              w-[11px]
 
               shrink-0
 
@@ -590,8 +590,8 @@ function DecisionDimensionRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

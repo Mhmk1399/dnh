@@ -189,7 +189,7 @@ export function AdvisoryServicesSection() {
           top-0
           z-[2]
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent
@@ -525,7 +525,7 @@ function ServiceMatrixItem({
                 dir="ltr"
                 className="
                   text-right
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.17em]
 
@@ -602,7 +602,7 @@ function ServiceMatrixItem({
           >
             <p
               className="
-                text-[8px]
+                text-[11px]
                 font-black
 
                 text-white/38
@@ -663,7 +663,7 @@ function ServiceMatrixItem({
           >
             <span
               className="
-                text-[9px]
+                text-[11px]
                 font-bold
 
                 text-white/42

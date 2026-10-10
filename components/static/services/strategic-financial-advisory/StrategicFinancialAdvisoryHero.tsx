@@ -633,7 +633,7 @@ function DecisionArchitecture() {
               className="
                 mt-1.5
 
-                text-[8px]
+                text-[11px]
                 font-bold
 
                 text-white/35
@@ -774,7 +774,7 @@ function DecisionArchitecture() {
             <p
               className="
                 mt-1.5
-                text-[9px]
+                text-[11px]
                 font-bold
                 text-white/34
               "
@@ -850,7 +850,7 @@ function DecisionArchitecture() {
         >
           <p
             className="
-              text-[8px]
+              text-[11px]
               font-medium
               text-white/30
             "

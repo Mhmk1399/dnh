@@ -194,7 +194,7 @@ export function StrategicAdvisoryArchitectureSection() {
                 از بررسی اجزا تا تصویر تصمیم
               </p>
 
-              <p className="mt-1.5 text-[9px] font-medium text-white/27">
+              <p className="mt-1.5 text-[11px] font-medium text-white/27">
                 نمایش مفهومی، نه مدل داخلی DNH
               </p>
             </div>
@@ -284,7 +284,7 @@ export function StrategicAdvisoryArchitectureSection() {
 
                   max-w-[390px]
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   leading-6
 
@@ -407,8 +407,8 @@ export function StrategicAdvisoryArchitectureSection() {
                   className="
                     mb-4
 
-                    h-[8px]
-                    w-[8px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-accent
 
@@ -446,7 +446,7 @@ export function StrategicAdvisoryArchitectureSection() {
 
                 <p
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-bold
                     leading-5
 
@@ -523,7 +523,7 @@ export function StrategicAdvisoryArchitectureSection() {
 
                   max-w-[390px]
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   leading-6
 
@@ -624,8 +624,8 @@ export function StrategicAdvisoryArchitectureSection() {
                   bottom-[-3px]
                   left-1/2
 
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   -translate-x-1/2
 
@@ -676,7 +676,7 @@ export function StrategicAdvisoryArchitectureSection() {
                 className="
                   mt-2
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   leading-5
 
@@ -762,7 +762,7 @@ export function StrategicAdvisoryArchitectureSection() {
 
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-bold
 
                   text-white/38
@@ -776,7 +776,7 @@ export function StrategicAdvisoryArchitectureSection() {
               className="
                 max-w-[490px]
 
-                text-[8px]
+                text-[11px]
                 font-medium
                 leading-5
 

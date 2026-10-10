@@ -287,7 +287,7 @@ export function ServicesMethodSection() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-black
 
                   text-brand-accent
@@ -336,8 +336,8 @@ export function ServicesMethodSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[8px]
-                  w-[8px]
+                  h-[11px]
+                  w-[11px]
 
                   bg-brand-accent
                 "
@@ -517,8 +517,8 @@ function Foundation({
               -bottom-[4px]
               -left-[4px]
 
-              h-[8px]
-              w-[8px]
+              h-[11px]
+              w-[11px]
 
               bg-brand-accent
             "
@@ -575,7 +575,7 @@ function Foundation({
         >
           <span
             className="
-              text-[9px]
+              text-[11px]
               font-black
 
               text-brand-primary

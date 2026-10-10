@@ -198,7 +198,7 @@ export function MacroMarketEnvironmentSection() {
               "
             >
               <div className="mb-5 flex items-center gap-3">
-                <span className="h-[7px] w-[7px] bg-[#82cee4]/75" />
+                <span className="h-[11px] w-[11px] bg-[#82cee4]/75" />
 
                 <p className="text-[15px] font-black text-white/78">
                   شرایط امروز
@@ -299,8 +299,8 @@ export function MacroMarketEnvironmentSection() {
                   className="
                     mb-4
 
-                    h-[8px]
-                    w-[8px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-accent
 
@@ -347,8 +347,8 @@ export function MacroMarketEnvironmentSection() {
               <div className="mb-5 flex items-center gap-3">
                 <span
                   className="
-                    h-[7px]
-                    w-[7px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-accent
 
@@ -420,7 +420,7 @@ export function MacroMarketEnvironmentSection() {
 
             <div>
               <div className="mb-4 flex items-center gap-3">
-                <span className="h-[7px] w-[7px] bg-[#82cee4]/75" />
+                <span className="h-[11px] w-[11px] bg-[#82cee4]/75" />
 
                 <p className="text-[15px] font-black text-white/75">
                   شرایط امروز
@@ -469,8 +469,8 @@ export function MacroMarketEnvironmentSection() {
                   mb-3
                   block
 
-                  h-[8px]
-                  w-[8px]
+                  h-[11px]
+                  w-[11px]
 
                   bg-brand-accent
 
@@ -489,7 +489,7 @@ export function MacroMarketEnvironmentSection() {
 
             <div>
               <div className="mb-4 flex items-center gap-3">
-                <span className="h-[7px] w-[7px] bg-brand-accent" />
+                <span className="h-[11px] w-[11px] bg-brand-accent" />
 
                 <p className="text-[15px] font-black text-brand-accent">
                   پیامد برای تصمیم
@@ -539,10 +539,10 @@ export function MacroMarketEnvironmentSection() {
             <span
               aria-hidden="true"
               className="
-                mt-[8px]
+                mt-[11px]
 
-                h-[7px]
-                w-[7px]
+                h-[11px]
+                w-[11px]
 
                 shrink-0
 
@@ -723,8 +723,8 @@ function MobileConnector({ accent = false }: { accent?: boolean }) {
           bottom-[-3px]
           left-1/2
 
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           -translate-x-1/2
 

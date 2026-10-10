@@ -69,7 +69,7 @@ export default async function TestFormPage() {
             <div>
               <div className="mb-4 flex items-center justify-between gap-4 border-b border-line pb-3">
                 <p className="text-xs font-black text-ink">نسخه زنده فرم</p>
-                <span dir="ltr" className="text-[9px] font-black tracking-[.18em] text-brand-primary">
+                <span dir="ltr" className="text-[11px] font-black tracking-[.18em] text-brand-primary">
                   DATABASE / LIVE
                 </span>
               </div>
@@ -106,7 +106,7 @@ function RouteReference({
         {active ? "01" : "02"}
       </span>
       <span className="min-w-0 flex-1">
-        <span dir="ltr" className="block text-[8px] font-black tracking-[.18em] text-brand-primary">{code}</span>
+        <span dir="ltr" className="block text-[11px] font-black tracking-[.18em] text-brand-primary">{code}</span>
         <span className="mt-1 block text-xs font-black text-ink">{title}</span>
         <span dir="ltr" className="mt-1 block truncate text-left text-[10px] text-ink-muted">{route}</span>
       </span>
@@ -127,7 +127,7 @@ function MissingFormState() {
       <div className="flex h-12 w-12 items-center justify-center border border-brand-primary/20 bg-surface-soft text-brand-primary">
         <FileText size={22} aria-hidden="true" />
       </div>
-      <p dir="ltr" className="mt-8 text-[9px] font-black tracking-[.2em] text-brand-primary">
+      <p dir="ltr" className="mt-8 text-[11px] font-black tracking-[.2em] text-brand-primary">
         SETUP / REQUIRED
       </p>
       <h2 id="missing-form-title" className="mt-2 text-2xl font-black leading-10 text-ink">

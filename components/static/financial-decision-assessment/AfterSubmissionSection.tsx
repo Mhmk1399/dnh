@@ -338,7 +338,7 @@ export function AfterSubmissionSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.19em]
 
@@ -374,8 +374,8 @@ export function AfterSubmissionSection() {
                 <span
                   aria-hidden="true"
                   className="
-                    h-[7px]
-                    w-[7px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-primary
                   "
@@ -383,7 +383,7 @@ export function AfterSubmissionSection() {
 
                 <span
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-bold
 
                     text-ink-muted
@@ -448,7 +448,7 @@ export function AfterSubmissionSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.18em]
 
@@ -497,7 +497,7 @@ export function AfterSubmissionSection() {
                 >
                   <p
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-medium
                       leading-[1.9]
 
@@ -574,7 +574,7 @@ export function AfterSubmissionSection() {
                     dir="ltr"
                     className="
                       text-right
-                      text-[7px]
+                      text-[11px]
                       font-black
                       tracking-[0.18em]
 
@@ -691,7 +691,7 @@ export function AfterSubmissionSection() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-medium
 
                   text-ink-muted
@@ -1165,7 +1165,7 @@ function PathCard({ path }: { path: (typeof NEXT_PATHS)[number] }) {
         className="
           mt-2
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -1259,7 +1259,7 @@ function Reassurance({
             className="
               mt-2
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[1.9]
 

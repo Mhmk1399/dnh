@@ -500,7 +500,7 @@ export function ContactHero({
                 <span
                   aria-hidden="true"
                   className="
-                    mt-[8px]
+                    mt-[11px]
                     h-[6px]
                     w-[6px]
                     shrink-0
@@ -1009,8 +1009,8 @@ function ContactBackground() {
           right-[14%]
 
           hidden
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           translate-x-1/2
 

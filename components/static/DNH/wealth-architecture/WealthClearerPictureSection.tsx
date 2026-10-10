@@ -950,7 +950,7 @@ function ConvergingPictureVisual() {
             className="
               whitespace-nowrap
 
-              text-[9px]
+              text-[11px]
               font-bold
               text-brand-primary
             "
@@ -1048,7 +1048,7 @@ function SummaryRail() {
               className="
                 mb-3
 
-                text-[9px]
+                text-[11px]
                 font-black
 
                 text-ink
@@ -1182,7 +1182,7 @@ function MobileSummaryRail() {
           >
             <span
               className="
-                text-[9px]
+                text-[11px]
                 font-black
                 text-ink
               "
@@ -1457,7 +1457,7 @@ function ReferenceFooterBand() {
 
           <span
             className="
-              text-[7px]
+              text-[11px]
               font-bold
               uppercase
               leading-[1.7]

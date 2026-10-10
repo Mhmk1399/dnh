@@ -273,10 +273,10 @@ export function MacroMarketReviewSection() {
             <span
               aria-hidden="true"
               className="
-                mt-[9px]
+                mt-[11px]
 
-                h-[7px]
-                w-[7px]
+                h-[11px]
+                w-[11px]
 
                 shrink-0
 
@@ -351,8 +351,8 @@ function DesktopReviewItem({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             ${accent ? "bg-brand-accent" : "bg-brand-primary/32"}
           `}
@@ -476,10 +476,10 @@ function MobileReviewItem({
         <span
           aria-hidden="true"
           className={`
-            mt-[8px]
+            mt-[11px]
 
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

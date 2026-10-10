@@ -274,7 +274,7 @@ export function IntelligenceLayersSection() {
                     <p
                       dir="ltr"
                       className="
-                        text-[7px]
+                        text-[11px]
                         font-black
                         tracking-[0.18em]
 
@@ -325,8 +325,8 @@ export function IntelligenceLayersSection() {
 
                     <span
                       className="
-                        h-[7px]
-                        w-[7px]
+                        h-[11px]
+                        w-[11px]
 
                         bg-brand-accent
                       "
@@ -390,7 +390,7 @@ export function IntelligenceLayersSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.19em]
 
@@ -481,7 +481,7 @@ export function IntelligenceLayersSection() {
                 className="
                   max-w-[470px]
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   leading-[2]
 
@@ -653,7 +653,7 @@ function LayerBar({
           className="
             max-w-[570px]
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.95]
 
@@ -756,8 +756,8 @@ function OutputRow({
       <span
         aria-hidden="true"
         className={`
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           transition-[transform,box-shadow]
           duration-300

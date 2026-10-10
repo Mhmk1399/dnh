@@ -214,7 +214,7 @@ export function PortfolioReviewSection() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-black
                   text-brand-accent
                 "
@@ -245,7 +245,7 @@ export function PortfolioReviewSection() {
               aria-hidden="true"
               className="
                 hidden
-                h-[9px] w-[9px]
+                h-[11px] w-[11px]
                 shrink-0
 
                 bg-brand-accent
@@ -276,7 +276,7 @@ export function PortfolioReviewSection() {
             className="
               max-w-[700px]
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[2]
 

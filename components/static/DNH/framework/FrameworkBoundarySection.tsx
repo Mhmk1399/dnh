@@ -335,7 +335,7 @@ export function FrameworkBoundarySection() {
                     <p
                       dir="ltr"
                       className="
-                        text-[7px]
+                        text-[11px]
                         font-black
                         tracking-[0.19em]
 
@@ -365,7 +365,7 @@ export function FrameworkBoundarySection() {
                         mt-2
                         max-w-[480px]
 
-                        text-[9px]
+                        text-[11px]
                         font-medium
                         leading-[1.9]
 
@@ -456,7 +456,7 @@ export function FrameworkBoundarySection() {
 
                   <p
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-medium
                       leading-[1.9]
 
@@ -562,7 +562,7 @@ export function FrameworkBoundarySection() {
                     <p
                       dir="ltr"
                       className="
-                        text-[7px]
+                        text-[11px]
                         font-black
                         tracking-[0.19em]
 
@@ -592,7 +592,7 @@ export function FrameworkBoundarySection() {
                         mt-2
                         max-w-[480px]
 
-                        text-[9px]
+                        text-[11px]
                         font-medium
                         leading-[1.9]
 
@@ -697,7 +697,7 @@ export function FrameworkBoundarySection() {
 
                   <p
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-medium
                       leading-[1.9]
 
@@ -802,7 +802,7 @@ export function FrameworkBoundarySection() {
               <span
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.2em]
 
@@ -836,7 +836,7 @@ export function FrameworkBoundarySection() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-medium
 
                   text-ink-muted
@@ -982,7 +982,7 @@ function VisibleRow({
           <span
             className="
               font-mono
-              text-[9px]
+              text-[11px]
               font-black
 
               text-brand-accent
@@ -1007,7 +1007,7 @@ function VisibleRow({
           className="
             mt-1.5
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 

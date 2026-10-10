@@ -199,7 +199,7 @@ export function PortfolioRiskSection() {
             >
               <span
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-medium
                   text-white/27
                 "
@@ -216,7 +216,7 @@ export function PortfolioRiskSection() {
                   min-h-10
                   items-center gap-2
 
-                  text-[9px]
+                  text-[11px]
                   font-black
 
                   text-[#82cee4]
@@ -396,7 +396,7 @@ function RiskLensVisual() {
             <p
               className="
                 mt-1
-                text-[8px]
+                text-[11px]
                 font-medium
 
                 text-white/27
@@ -410,7 +410,7 @@ function RiskLensVisual() {
         <span
           aria-hidden="true"
           className="
-            h-[7px] w-[7px]
+            h-[11px] w-[11px]
 
             bg-brand-accent
 
@@ -452,7 +452,7 @@ function RiskLensVisual() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-black
 
                   text-[#82cee4]/65
@@ -477,7 +477,7 @@ function RiskLensVisual() {
 
             <span
               className="
-                text-[9px]
+                text-[11px]
                 font-bold
 
                 text-white/25
@@ -570,7 +570,7 @@ function RiskLensVisual() {
             <div>
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-black
 
                   text-brand-accent
@@ -753,7 +753,7 @@ function RiskLensVisual() {
 
                 -translate-x-1/2
 
-                text-[8px]
+                text-[11px]
                 font-black
 
                 text-brand-accent
@@ -822,7 +822,7 @@ function RiskLensVisual() {
       >
         <p
           className="
-            text-[9px]
+            text-[11px]
             font-medium
 
             text-white/28
@@ -989,7 +989,7 @@ function Background() {
           absolute
           right-[18%] top-0
 
-          h-[7px] w-[2px]
+          h-[11px] w-[2px]
 
           bg-brand-accent
         "

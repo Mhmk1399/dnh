@@ -361,7 +361,7 @@ function ButtonShine({ variant }: { variant: ActionButtonVariant }) {
         absolute
         rotate-[21deg]
         bg-page/[0.13]
-        blur-[9px]
+        blur-[11px]
         transition-transform
         duration-700
         ease-[cubic-bezier(.22,1,.36,1)]

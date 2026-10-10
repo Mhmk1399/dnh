@@ -332,8 +332,8 @@ export function StrategicConsultationFitSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[9px]
-                  w-[9px]
+                  h-[11px]
+                  w-[11px]
                   bg-[#fc8502]
                 "
               />

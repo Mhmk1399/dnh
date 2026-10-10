@@ -387,7 +387,7 @@ export function HomeHero() {
                 text-white
 
                 shadow-none
-                backdrop-blur-[8px]
+                backdrop-blur-[11px]
 
                 hover:border-white/55
                 hover:bg-white/[0.10]

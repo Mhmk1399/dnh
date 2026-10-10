@@ -257,8 +257,8 @@ export function MacroMarketContextSection() {
                     <span
                       aria-hidden="true"
                       className="
-                        h-[8px]
-                        w-[8px]
+                        h-[11px]
+                        w-[11px]
 
                         bg-brand-primary/35
                       "
@@ -461,8 +461,8 @@ export function MacroMarketContextSection() {
                 <span
                   aria-hidden="true"
                   className="
-                    h-[7px]
-                    w-[7px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-primary/30
                   "
@@ -514,8 +514,8 @@ export function MacroMarketContextSection() {
                 <span
                   aria-hidden="true"
                   className="
-                    h-[7px]
-                    w-[7px]
+                    h-[11px]
+                    w-[11px]
 
                     bg-brand-accent
                   "
@@ -647,8 +647,8 @@ function ContextFactor({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

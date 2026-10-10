@@ -465,8 +465,8 @@ function DecisionEnvironmentVisual() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 
@@ -635,8 +635,8 @@ function DecisionEnvironmentVisual() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[9px]
-                  w-[9px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 

@@ -383,10 +383,10 @@ export function ExecutiveBriefingsFocusSection() {
             <span
               aria-hidden="true"
               className="
-                mt-[9px]
+                mt-[11px]
 
-                h-[7px]
-                w-[7px]
+                h-[11px]
+                w-[11px]
 
                 shrink-0
 
@@ -463,8 +463,8 @@ function FocusLensRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 
@@ -556,8 +556,8 @@ function MobileFocusLens({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

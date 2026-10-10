@@ -410,7 +410,7 @@ function FrameworkLayer({
 
         <span
           className="
-            text-[8px]
+            text-[11px]
             font-black
 
             text-ink-muted/30
@@ -472,7 +472,7 @@ function FrameworkLayer({
             dir="ltr"
             className={`
               text-right
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.18em]
 
@@ -552,7 +552,7 @@ function FrameworkLayer({
 
                     pr-3
 
-                    text-[9px]
+                    text-[11px]
                     font-bold
 
                     text-ink-muted

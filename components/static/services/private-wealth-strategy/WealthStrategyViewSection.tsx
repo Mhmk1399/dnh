@@ -201,7 +201,7 @@ export function WealthStrategyViewSection() {
               <div className="mb-6">
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-black
                     text-[#82cee4]/72
                   "
@@ -323,8 +323,8 @@ export function WealthStrategyViewSection() {
                   left-1/2
                   top-[14%]
 
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   -translate-x-1/2
 
@@ -364,7 +364,7 @@ export function WealthStrategyViewSection() {
                   <div>
                     <p
                       className="
-                        text-[9px]
+                        text-[11px]
                         font-black
                         text-brand-accent
                       "
@@ -394,8 +394,8 @@ export function WealthStrategyViewSection() {
                     aria-hidden="true"
                     className="
                       mt-1
-                      h-[8px]
-                      w-[8px]
+                      h-[11px]
+                      w-[11px]
                       shrink-0
 
                       bg-brand-accent
@@ -521,7 +521,7 @@ export function WealthStrategyViewSection() {
               className="
                 max-w-[720px]
 
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[2]
 
@@ -662,7 +662,7 @@ function InputRow({
 
       <p
         className="
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 

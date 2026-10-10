@@ -553,7 +553,7 @@ export function PrivacyConfidentialitySection() {
                     dir="ltr"
                     className="
                       text-right
-                      text-[7px]
+                      text-[11px]
                       font-black
                       tracking-[0.18em]
 
@@ -949,7 +949,7 @@ function NeededRow({
           className="
             mt-2
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.95]
 
@@ -1079,7 +1079,7 @@ function NotNeededRow({
           className="
             mt-1.5
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -1278,7 +1278,7 @@ function TrustPoint({
             className="
               mt-2
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[1.9]
 
@@ -1371,7 +1371,7 @@ function Background() {
           right-[17%]
           top-0
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent

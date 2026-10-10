@@ -321,8 +321,8 @@ export function StrategicAdvisoryReviewSection() {
                   right-[-4px]
                   top-1/2
 
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   -translate-y-1/2
 
@@ -337,8 +337,8 @@ export function StrategicAdvisoryReviewSection() {
                   left-[-4px]
                   top-1/2
 
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   -translate-y-1/2
 
@@ -375,7 +375,7 @@ export function StrategicAdvisoryReviewSection() {
 
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-bold
 
                   text-[#71848a]
@@ -429,7 +429,7 @@ export function StrategicAdvisoryReviewSection() {
                   className="
                     mt-1
 
-                    text-[9px]
+                    text-[11px]
                     font-medium
 
                     text-[#71848a]
@@ -692,7 +692,7 @@ function MobileReviewArea({
         <span
           aria-hidden="true"
           className="
-            mt-[7px]
+            mt-[11px]
 
             h-[5px]
             w-[5px]

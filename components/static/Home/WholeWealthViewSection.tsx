@@ -364,7 +364,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.2em]
 
@@ -394,8 +394,8 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
           aria-hidden="true"
           className="
             mt-1
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             bg-brand-accent
           "
@@ -519,7 +519,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
               className="
                 mt-1
 
-                text-[7px]
+                text-[11px]
                 font-bold
                 tracking-[0.16em]
 
@@ -557,7 +557,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
         >
           <p
             className="
-              text-[9px]
+              text-[11px]
               font-medium
 
               text-ink-muted
@@ -716,7 +716,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
                   className="
                     mt-3
 
-                    text-[8px]
+                    text-[11px]
                     font-medium
                     leading-[1.9]
 
@@ -866,7 +866,7 @@ function Dimension({
           className="
             mt-3
 
-            text-[8px]
+            text-[11px]
             font-medium
             leading-[1.9]
 

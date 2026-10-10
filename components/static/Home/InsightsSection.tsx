@@ -426,7 +426,7 @@ export function InsightsSection() {
                       dir="ltr"
                       className="
                         text-right
-                        text-[7px]
+                        text-[11px]
                         font-black
                         tracking-[0.19em]
 
@@ -439,7 +439,7 @@ export function InsightsSection() {
                     <p
                       className="
                         mt-1
-                        text-[9px]
+                        text-[11px]
                         font-medium
 
                         text-white/40
@@ -885,7 +885,7 @@ function InsightLens({
           mt-7
 
           text-right
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.17em]
 

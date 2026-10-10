@@ -397,7 +397,7 @@ function IntelligenceReport({ visible }: { visible: boolean }) {
             <p
               dir="ltr"
               className="
-                text-[8px]
+                text-[11px]
                 font-black
                 tracking-[0.2em]
 
@@ -432,7 +432,7 @@ function IntelligenceReport({ visible }: { visible: boolean }) {
         >
           <p
             className="
-              text-[8px]
+              text-[11px]
               font-bold
               tracking-[0.16em]
 
@@ -446,7 +446,7 @@ function IntelligenceReport({ visible }: { visible: boolean }) {
             className="
               mt-1
 
-              text-[8px]
+              text-[11px]
               font-medium
 
               text-ink-muted/65
@@ -512,7 +512,7 @@ function IntelligenceReport({ visible }: { visible: boolean }) {
             <p
               dir="ltr"
               className="
-                text-[7px]
+                text-[11px]
                 font-black
                 tracking-[0.18em]
 
@@ -604,7 +604,7 @@ function IntelligenceReport({ visible }: { visible: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.2em]
 
@@ -737,7 +737,7 @@ function IntelligenceRow({
           <span
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-bold
               tracking-[0.13em]
 
@@ -753,7 +753,7 @@ function IntelligenceRow({
             mt-2
             max-w-[520px]
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 

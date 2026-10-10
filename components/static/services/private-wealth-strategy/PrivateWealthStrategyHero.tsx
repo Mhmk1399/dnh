@@ -318,7 +318,7 @@ function WealthStructureView() {
           <p
             className="
               mt-1
-              text-[8px]
+              text-[11px]
               font-medium
               text-white/30
             "
@@ -456,7 +456,7 @@ function WealthStructureView() {
             <div>
               <p
                 className="
-                  text-[8px]
+                  text-[11px]
                   font-black
                   text-brand-accent
                 "
@@ -500,7 +500,7 @@ function WealthStructureView() {
 
               <span
                 className="
-                  h-[8px] w-[8px]
+                  h-[11px] w-[11px]
                   bg-brand-accent
                 "
               />
@@ -595,7 +595,7 @@ function WealthDimension({
 
       <p
         className="
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -645,7 +645,7 @@ function RailWord({
   return (
     <span
       className={`
-        text-[8px]
+        text-[11px]
         font-black
 
         ${active ? "text-brand-accent" : "text-white/25"}

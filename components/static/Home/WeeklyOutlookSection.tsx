@@ -437,7 +437,7 @@ export function WeeklyOutlookSection() {
                 <span
                   dir="ltr"
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-black
                     tracking-[0.2em]
 
@@ -481,7 +481,7 @@ export function WeeklyOutlookSection() {
                   px-3
                   py-2
 
-                  text-[8px]
+                  text-[11px]
                   font-black
 
                   text-brand-accent
@@ -493,7 +493,7 @@ export function WeeklyOutlookSection() {
               <span
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.16em]
 
@@ -630,7 +630,7 @@ export function WeeklyOutlookSection() {
                   dir="ltr"
                   className="
                     text-right
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.2em]
 
@@ -794,7 +794,7 @@ function Metric({
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.17em]
 
@@ -870,7 +870,7 @@ function Metric({
           justify-between
         "
       >
-        <span className="text-[7px] font-bold text-ink-muted/40">LOW</span>
+        <span className="text-[11px] font-bold text-ink-muted/40">LOW</span>
 
         <span
           className={`
@@ -883,7 +883,7 @@ function Metric({
           {metric.value}
         </span>
 
-        <span className="text-[7px] font-bold text-ink-muted/40">HIGH</span>
+        <span className="text-[11px] font-bold text-ink-muted/40">HIGH</span>
       </div>
     </div>
   );
@@ -945,7 +945,7 @@ function WeeklyChart({ visible }: { visible: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.18em]
 
@@ -985,7 +985,7 @@ function WeeklyChart({ visible }: { visible: boolean }) {
             "
           />
 
-          <span className="text-[8px] font-bold text-ink-muted">
+          <span className="text-[11px] font-bold text-ink-muted">
             شاخص نمایشی
           </span>
         </div>
@@ -1191,7 +1191,7 @@ function WeeklyChart({ visible }: { visible: boolean }) {
 
         <p
           className="
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -1228,7 +1228,7 @@ function WeeklySummary() {
       <p
         dir="ltr"
         className="
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.18em]
 
@@ -1399,7 +1399,7 @@ function FocusCard({
         <p
           dir="ltr"
           className="
-            text-[7px]
+            text-[11px]
             font-black
             tracking-[0.17em]
 
@@ -1514,7 +1514,7 @@ function SummaryRow({
 
         <span
           className="
-            text-[9px]
+            text-[11px]
             font-medium
 
             text-ink-muted

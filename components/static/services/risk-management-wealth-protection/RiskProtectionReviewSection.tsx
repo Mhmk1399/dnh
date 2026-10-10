@@ -312,8 +312,8 @@ function RiskLens() {
           className="
             mb-2
 
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             bg-brand-accent
           "
@@ -520,8 +520,8 @@ function LensLabel({ title, className }: { title: string; className: string }) {
     >
       <span
         className="
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           shrink-0
 
@@ -617,8 +617,8 @@ function RiskLedgerRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

@@ -631,8 +631,8 @@ function HeroBackground() {
           right-[14%]
 
           hidden
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           translate-x-1/2
 

@@ -875,7 +875,7 @@ function MobileTransitionLegend() {
               dir="ltr"
               className={`
                 block
-                text-[8px]
+                text-[11px]
                 font-black
                 leading-none
 
@@ -922,7 +922,7 @@ function MobileTransitionLegend() {
 
               px-2
 
-              text-[8px]
+              text-[11px]
               font-extrabold
               leading-none
               text-ink
@@ -1084,7 +1084,7 @@ function SectionBackground() {
         <span
           dir="ltr"
           className="
-            text-[8px]
+            text-[11px]
             font-bold
             uppercase
             tracking-[0.28em]

@@ -670,7 +670,7 @@ function FrameworkInstrument() {
 
             bg-[#053548]/80
 
-            backdrop-blur-[8px]
+            backdrop-blur-[11px]
           "
         >
           {FRAMEWORK.map((item, index) => (
@@ -736,7 +736,7 @@ function FrameworkInstrument() {
                   className="
                     mt-1
                     text-right
-                    text-[7px]
+                    text-[11px]
                     font-bold
                     tracking-[0.14em]
                     text-white/42
@@ -840,7 +840,7 @@ function FrameworkVisualLabel({
               mt-0.5
 
               text-right
-              text-[7px]
+              text-[11px]
               font-bold
               tracking-[0.14em]
 
@@ -857,7 +857,7 @@ function FrameworkVisualLabel({
           mt-3
           max-w-[200px]
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -950,7 +950,7 @@ function FrameworkBackground() {
           top-0
           z-[2]
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent

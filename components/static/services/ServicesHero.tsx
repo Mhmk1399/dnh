@@ -374,7 +374,7 @@ function ServiceIndex() {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.19em]
 
@@ -466,7 +466,7 @@ function ServiceIndex() {
       >
         <p
           className="
-            text-[8px]
+            text-[11px]
             font-medium
 
             text-white/30
@@ -484,7 +484,7 @@ function ServiceIndex() {
             items-center
             gap-2
 
-            text-[8px]
+            text-[11px]
             font-black
 
             text-[#82cee4]
@@ -652,7 +652,7 @@ function ContextLink({ href, children }: { href: string; children: string }) {
     <Link
       href={href}
       className="
-        text-[9px]
+        text-[11px]
         font-bold
 
         text-white/35

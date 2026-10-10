@@ -278,7 +278,7 @@ export function RiskProtectionExposureSection() {
               >
                 <span
                   aria-hidden="true"
-                  className="h-[7px] w-[7px] bg-[#82cee4]/65"
+                  className="h-[11px] w-[11px] bg-[#82cee4]/65"
                 />
 
                 <p
@@ -394,8 +394,8 @@ function DiagnosticRow({
         <span
           aria-hidden="true"
           className={`
-            h-[8px]
-            w-[8px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 
@@ -534,8 +534,8 @@ function MobileDiagnostic({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

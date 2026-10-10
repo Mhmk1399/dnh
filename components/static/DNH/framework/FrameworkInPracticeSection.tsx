@@ -178,7 +178,7 @@ export function FrameworkInPracticeSection() {
               className="
                 mt-3
 
-                text-[9px]
+                text-[11px]
                 font-medium
 
                 text-ink-muted/60
@@ -233,7 +233,7 @@ export function FrameworkInPracticeSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.18em]
 
@@ -361,7 +361,7 @@ export function FrameworkInPracticeSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.18em]
 
@@ -453,7 +453,7 @@ export function FrameworkInPracticeSection() {
               className="
                 max-w-[730px]
 
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[2]
 
