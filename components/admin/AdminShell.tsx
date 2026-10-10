@@ -1,19 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
   type MouseEvent,
 } from "react";
 import {
+  ArrowLeft,
   ArrowUpLeft,
-  BarChart3,
   Bell,
+  CalendarDays,
   ChevronDown,
+  ChevronLeft,
   Clock3,
   ClipboardList,
   Home,
@@ -30,6 +33,7 @@ import {
   Settings,
   ShieldCheck,
   Sparkles,
+  UserRound,
   UsersRound,
   X,
   type LucideIcon,
@@ -37,6 +41,7 @@ import {
 
 import { AdminToastProvider } from "@/components/admin/AdminToastProvider";
 import type { SafeUser } from "@/lib/auth";
+import Image from "next/image";
 
 type AdminShellProps = {
   user: SafeUser;
@@ -51,18 +56,19 @@ type AdminNavItem = {
   exact?: boolean;
 };
 
-type AdminNavGroupDefinition = {
+type AdminNavGroup = {
   title: string;
   items: AdminNavItem[];
 };
 
-const adminNavGroups: AdminNavGroupDefinition[] = [
+// Existing destinations are intentionally unchanged.
+const adminNavGroups: AdminNavGroup[] = [
   {
     title: "نمای کلی",
     items: [
       {
         title: "داشبورد",
-        description: "داشبورد عملیات",
+        description: "نمای کلی و آمار",
         href: "/admin",
         icon: Home,
         exact: true,
@@ -101,306 +107,619 @@ const adminNavGroups: AdminNavGroupDefinition[] = [
         href: "/admin/users",
         icon: UsersRound,
       },
-      {
-        title: "نقش‌ها و دسترسی‌ها",
-        description: "کنترل سطح دسترسی",
-        href: "/admin/users",
-        icon: ShieldCheck,
-      },
-    ],
-  },
-  {
-    title: "ارتباطات",
-    items: [
-      {
-        title: "پیام‌ها",
-        description: "تماس‌ها و درخواست‌ها",
-        href: "/admin#intake",
-        icon: Mail,
-        exact: true,
-      },
-      {
-        title: "ورودی‌های سایت",
-        description: "لیدها و فرم‌های ثبت‌شده",
-        href: "/admin#intake",
-        icon: Inbox,
-        exact: true,
-      },
-    ],
-  },
-  {
-    title: "تنظیمات و سیستم",
-    items: [
-      {
-        title: "تنظیمات",
-        description: "پیکربندی پنل",
-        href: "/admin#system",
-        icon: Settings,
-        exact: true,
-      },
-      {
-        title: "گزارش فعالیت‌ها",
-        description: "ردگیری عملیات اخیر",
-        href: "/admin#activity",
-        icon: Clock3,
-        exact: true,
-      },
     ],
   },
 ];
+
+const allNavItems = adminNavGroups.flatMap((group) => group.items);
+const accountName = (user: SafeUser) =>
+  [user.firstName, user.lastName].filter(Boolean).join(" ").trim() ||
+  "مدیر سیستم";
+
+function normalizeSearch(text: string) {
+  return text
+    .normalize("NFKC")
+    .replace(/[يى]/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/[\u064B-\u065F\u0670\u200C]/g, "")
+    .replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
+    .replace(/[٠-٩]/g, (digit) => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
 
 export function AdminShell({ user, children }: AdminShellProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [desktopCollapsed, setDesktopCollapsed] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
+    const frame = requestAnimationFrame(() => {
       try {
-        const storedPreference = window.localStorage.getItem(
-          "dnh-admin-sidebar-collapsed",
+        setDesktopCollapsed(
+          localStorage.getItem("dnh-admin-sidebar-collapsed") === "true",
         );
-
-        if (storedPreference) {
-          setDesktopCollapsed(storedPreference === "true");
-        }
       } catch {
-        // localStorage can be unavailable in stricter browser contexts.
+        // The preference is optional; the sidebar still works without storage.
       }
     });
-
-    return () => window.cancelAnimationFrame(frame);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => {
+    const updateHash = () => setCurrentHash(window.location.hash);
+    const frame = requestAnimationFrame(updateHash);
+    window.addEventListener("hashchange", updateHash);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", updateHash);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setMobileOpen(false));
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
+
   function toggleDesktopSidebar() {
-    setDesktopCollapsed((current) => {
-      const next = !current;
-
+    setDesktopCollapsed((previous) => {
+      const next = !previous;
       try {
-        window.localStorage.setItem(
-          "dnh-admin-sidebar-collapsed",
-          String(next),
-        );
+        localStorage.setItem("dnh-admin-sidebar-collapsed", String(next));
       } catch {
-        // Preference persistence is optional; keep the UI action working.
+        // Keep the toggle functional when storage is unavailable.
       }
-
       return next;
     });
   }
 
+  const sidebarWidth = desktopCollapsed ? "84px" : "264px";
+
   return (
     <div
       dir="rtl"
-      style={
-        {
-          "--admin-sidebar-width": desktopCollapsed ? "88px" : "292px",
-        } as CSSProperties
-      }
-      className="min-h-screen bg-[#eef6f8] text-ink"
+      style={{ "--admin-sidebar-width": sidebarWidth } as CSSProperties}
+      className="relative min-h-screen overflow-x-clip bg-[#f1f8fa] text-[#133648]"
     >
       <AdminAtmosphere />
 
       <aside
-        className="
-          fixed
-          inset-y-0
-          right-0
-          z-50
-          hidden
-          w-[var(--admin-sidebar-width)]
-          border-l
-          border-white/10
-          bg-[#032d3b]
-          text-white
-          shadow-[0_28px_90px_rgba(1,22,30,0.28)]
-          transition-[width]
-          duration-300
-          ease-[cubic-bezier(.22,1,.36,1)]
-          xl:block
-        "
         aria-label="ناوبری پنل مدیریت"
+        className="fixed inset-y-0 right-0 z-50 hidden w-[var(--admin-sidebar-width)] border-l border-[#0b4351] bg-[#042e3b] text-white shadow-[-12px_0_44px_rgba(3,45,59,.13)] transition-[width] duration-300 ease-out xl:block"
       >
         <SidebarContent
           user={user}
           pathname={pathname}
-          onNavigate={() => setMobileOpen(false)}
+          hash={currentHash}
           collapsed={desktopCollapsed}
+          onNavigate={() => undefined}
           onToggleCollapsed={toggleDesktopSidebar}
         />
       </aside>
 
-      <header
-        className="
-          sticky
-          top-0
-          z-40
-          border-b
-          border-line
-          bg-white/90
-          px-4
-          py-3
-          backdrop-blur-2xl
-          xl:hidden
-        "
-      >
-        <div className="flex items-center justify-between gap-3">
-          <button
-            type="button"
-            className="
-              inline-flex
-              min-h-11
-              cursor-pointer
-              items-center
-              gap-2
-              border
-              border-line
-              bg-white
-              px-3
-              text-xs
-              font-black
-              text-ink
-              transition
-              hover:border-brand-primary
-              focus-visible:outline-none
-              focus-visible:ring-4
-              focus-visible:ring-focus/20
-            "
-            aria-label="باز کردن منوی مدیریت"
-            aria-haspopup="dialog"
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu size={20} aria-hidden="true" />
-            منوی ادمین
-          </button>
+      <div className="relative z-10 min-h-screen min-w-0 transition-[padding] duration-300 ease-out xl:pr-[var(--admin-sidebar-width)]">
+        <header className="sticky top-0 z-40 border-b border-[#e4eef2] bg-white/90 shadow-[0_3px_24px_rgba(15,62,80,.035)] backdrop-blur-2xl">
+          <div className="flex h-[66px] items-center gap-2 px-3 sm:gap-3 sm:px-6 lg:gap-6 lg:px-8">
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              aria-label="باز کردن منوی مدیریت"
+              aria-haspopup="dialog"
+              aria-expanded={mobileOpen}
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#deecf1] bg-[#f6fbfd] text-[#0c5065] transition hover:bg-[#eaf5f8] focus-visible:outline-2 focus-visible:outline-[#ff8a00] xl:hidden"
+            >
+              <Menu size={20} />
+            </button>
 
-          <AdminBrand compact user={user} />
-        </div>
-      </header>
+            <div className="min-w-0 xl:hidden">
+              <p className="truncate text-sm font-black text-[#093443]">
+                مدیریت DNH
+              </p>
+              <p className="text-[10px] text-[#8299a8]">داشبورد عملیات</p>
+            </div>
 
-      {mobileOpen ? (
+            <div className="hidden shrink-0 items-center gap-2 text-[11px] font-bold text-[#728ba0] lg:flex">
+              <CalendarDays
+                size={17}
+                className="text-[#157493]"
+                aria-hidden="true"
+              />
+              <TehranClock showDate />
+            </div>
+
+            <div className="mx-auto hidden w-full max-w-[440px] min-w-0 sm:block">
+              <AdminSearch />
+            </div>
+
+            <div className="mr-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+              <TehranClock compact />
+              <NotificationPopover />
+              <Link
+                href="/admin#system"
+                aria-label="دسترسی‌های مدیریتی"
+                title="دسترسی‌های مدیریتی"
+                className="hidden h-10 w-10 place-items-center rounded-xl text-[#42647a] transition hover:bg-[#ecf5f8] hover:text-[#0c718e] sm:grid"
+              >
+                <Settings size={19} />
+              </Link>
+              <UserDropdown user={user} />
+            </div>
+          </div>
+
+          <div className="border-t border-[#edf3f6] px-4 pb-3 pt-2 sm:hidden">
+            <AdminSearch compact />
+          </div>
+        </header>
+
+        <main className="relative min-w-0">
+          <div className="mx-auto w-full max-w-[1650px] min-w-0 px-3 py-4 sm:px-5 sm:py-6 lg:px-7 lg:py-7 xl:px-7">
+            {children}
+          </div>
+        </main>
+      </div>
+
+      {mobileOpen && (
         <MobileAdminDrawer
           user={user}
           pathname={pathname}
+          hash={currentHash}
           onDismiss={() => setMobileOpen(false)}
         />
-      ) : null}
-
-      <main
-        className="
-          relative
-          z-10
-          min-h-screen
-          transition-[padding]
-          duration-300
-          ease-[cubic-bezier(.22,1,.36,1)]
-          xl:pr-[var(--admin-sidebar-width)]
-        "
-      >
-        <DesktopAdminTopbar user={user} />
-
-        <div className="mx-auto w-full max-w-[1560px] px-4 py-6 sm:px-6 lg:px-8 xl:px-8 xl:py-7">
-          {children}
-        </div>
-      </main>
+      )}
 
       <AdminToastProvider />
     </div>
   );
 }
 
-function DesktopAdminTopbar({ user }: { user: SafeUser }) {
-  return (
-    <div
-      className="
-        sticky
-        top-0
-        z-30
-        hidden
-        h-[66px]
-        items-center
-        justify-between
-        gap-5
-        border-b
-        border-line
-        bg-white/90
-        px-8
-        shadow-[0_8px_28px_rgba(3,45,59,0.04)]
-        backdrop-blur-2xl
-        xl:flex
-      "
-    >
-      <div className="flex min-w-0 items-center gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center border border-line bg-surface-soft text-brand-primary">
-          <UsersRound size={18} aria-hidden="true" />
-        </span>
+function TehranClock({
+  showDate = false,
+  compact = false,
+}: {
+  showDate?: boolean;
+  compact?: boolean;
+}) {
+  const [now, setNow] = useState<Date | null>(null);
 
-        <div className="min-w-0">
-          <p className="truncate text-xs font-black text-ink">
-            {user.firstName} {user.lastName}
+  useEffect(() => {
+    const refresh = () => setNow(new Date());
+    const frame = requestAnimationFrame(refresh);
+    const timer = window.setInterval(refresh, 15_000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, []);
+
+  const clock = now
+    ? new Intl.DateTimeFormat("fa-IR", {
+        timeZone: "Asia/Tehran",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+      }).format(now)
+    : "--:--";
+
+  if (compact) {
+    return (
+      <span
+        title="ساعت تهران"
+        dir="ltr"
+        className="inline whitespace-nowrap text-[10px] font-bold tabular-nums text-[#7f96a6] lg:hidden"
+      >
+        {clock}
+      </span>
+    );
+  }
+
+  if (!showDate) return <time suppressHydrationWarning>{clock}</time>;
+
+  const date = now
+    ? new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        timeZone: "Asia/Tehran",
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(now)
+    : "تاریخ امروز";
+
+  return (
+    <span className="flex items-center gap-3 whitespace-nowrap">
+      <span>{date}</span>
+      <span className="h-4 w-px bg-[#dce9ee]" />
+      <Clock3 size={16} className="text-[#157493]" aria-hidden="true" />
+      <time className="tabular-nums" suppressHydrationWarning>
+        {clock}
+      </time>
+    </span>
+  );
+}
+
+type SearchResult = {
+  key: string;
+  label: string;
+  description: string;
+  icon: LucideIcon;
+  href?: string;
+  target?: HTMLElement;
+};
+
+function AdminSearch({ compact = false }: { compact?: boolean }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const areaRef = useRef<HTMLDivElement>(null);
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const normalized = useMemo(() => normalizeSearch(query), [query]);
+
+  useEffect(() => {
+    function handleShortcut(event: KeyboardEvent) {
+      const matchesViewport =
+        window.matchMedia("(min-width: 640px)").matches !== compact;
+      if (!matchesViewport) return;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        inputRef.current?.focus();
+        setOpen(true);
+      } else if (event.key === "Escape") {
+        setOpen(false);
+        inputRef.current?.blur();
+      }
+    }
+    document.addEventListener("keydown", handleShortcut);
+    return () => document.removeEventListener("keydown", handleShortcut);
+  }, [compact]);
+
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (!areaRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () =>
+      document.removeEventListener("pointerdown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const frame = requestAnimationFrame(() => {
+      const matchedNav = allNavItems
+        .filter(
+          (item) =>
+            !normalized ||
+            normalizeSearch(`${item.title} ${item.description}`).includes(
+              normalized,
+            ),
+        )
+        .map(
+          (item): SearchResult => ({
+            key: `nav-${item.href}-${item.title}`,
+            label: item.title,
+            description: item.description,
+            icon: item.icon,
+            href: item.href,
+          }),
+        );
+
+      if (!normalized) {
+        setResults(matchedNav.slice(0, 6));
+        return;
+      }
+
+      // No extra API or database logic: search existing navigation and actual
+      // records visible on the currently rendered page (including table rows).
+      const seen = new Set<string>();
+      const displayed: SearchResult[] = [];
+      const elements = document.querySelectorAll<HTMLElement>(
+        "main [data-admin-searchable], main a[href], main tbody tr",
+      );
+
+      for (const element of Array.from(elements).slice(0, 180)) {
+        const label = (
+          element.dataset.adminSearchLabel ||
+          element.textContent ||
+          ""
+        )
+          .replace(/\s+/g, " ")
+          .trim();
+        const href =
+          element instanceof HTMLAnchorElement
+            ? element.getAttribute("href")
+            : undefined;
+        if (
+          !label ||
+          label.length < 2 ||
+          !normalizeSearch(label).includes(normalized)
+        )
+          continue;
+        const key = `${href ?? "row"}-${label}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        displayed.push({
+          key: `data-${key}`,
+          label: label.slice(0, 80),
+          description: href ? "محتوای این صفحه" : "نمایش مورد در همین صفحه",
+          icon: Search,
+          href: href || undefined,
+          target: element,
+        });
+        if (displayed.length >= 7) break;
+      }
+
+      setResults([...matchedNav, ...displayed].slice(0, 10));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [normalized, open, pathname]);
+
+  function choose(result: SearchResult) {
+    setOpen(false);
+    setQuery("");
+    if (result.href) {
+      if (result.href.startsWith("#")) {
+        document
+          .querySelector(result.href)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        router.push(result.href);
+      }
+    } else {
+      result.target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  return (
+    <div ref={areaRef} className="relative w-full">
+      <form
+        role="search"
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (results[0]) choose(results[0]);
+          else setOpen(true);
+        }}
+      >
+        <label className="relative block">
+          <span className="sr-only">
+            جستجو در منو و اطلاعات قابل مشاهده پنل
+          </span>
+          <Search
+            aria-hidden="true"
+            size={18}
+            className="pointer-events-none absolute right-3.5 top-1/2 z-10 -translate-y-1/2 text-[#92a9b8]"
+          />
+          <input
+            ref={inputRef}
+            type="search"
+            autoComplete="off"
+            spellCheck={false}
+            value={query}
+            onFocus={() => setOpen(true)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setOpen(true);
+            }}
+            placeholder={
+              compact
+                ? "جستجو در پنل مدیریت..."
+                : "جستجو در بخش‌ها، فرم‌ها، گزارش‌ها و..."
+            }
+            aria-expanded={open}
+            aria-controls={
+              compact ? "admin-search-mobile" : "admin-search-desktop"
+            }
+            className="h-10 w-full rounded-[13px] border border-[#e3edf1] bg-[#f6f9fb] py-2 pr-11 pl-14 text-right text-xs font-medium text-[#214459] shadow-[inset_0_1px_3px_rgba(9,51,66,.025)] outline-none transition placeholder:text-[#a4b5c2] focus:border-[#95c9d6] focus:bg-white focus:ring-4 focus:ring-[#1b8da9]/10 sm:h-11"
+          />
+          {!compact && (
+            <span
+              dir="ltr"
+              className="pointer-events-none absolute left-3 top-1/2 hidden -translate-y-1/2 rounded-md border border-[#e2eaf0] bg-white px-1.5 py-0.5 text-[10px] font-bold text-[#9bafbc] lg:block"
+            >
+              Ctrl K
+            </span>
+          )}
+        </label>
+      </form>
+
+      {open && (
+        <div
+          id={compact ? "admin-search-mobile" : "admin-search-desktop"}
+          className="absolute inset-x-0 top-full z-[80] mt-2 max-h-[min(70vh,410px)] overflow-y-auto rounded-2xl border border-[#e1edf1] bg-white p-2.5 shadow-[0_20px_60px_rgba(4,41,57,.17)]"
+        >
+          <p className="px-2 pb-2 pt-1 text-[10px] font-bold text-[#95a9b6]">
+            {normalized ? "نتایج جستجو" : "دسترسی سریع"}
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-ink-muted">
-            مدیر سیستم
+          {results.length ? (
+            <ul className="space-y-1" aria-label="نتایج جستجو">
+              {results.map((result) => {
+                const Icon = result.icon;
+                return (
+                  <li key={result.key}>
+                    <button
+                      type="button"
+                      onClick={() => choose(result)}
+                      className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-right transition hover:bg-[#eff8fb] focus-visible:bg-[#eff8fb] focus-visible:outline-2 focus-visible:outline-[#2b9cbd]"
+                    >
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#e8f5fa] text-[#167a9b]">
+                        <Icon size={17} aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-xs font-bold text-[#13394c]">
+                          {result.label}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[10px] text-[#8aa0ae]">
+                          {result.description}
+                        </span>
+                      </span>
+                      <ArrowLeft
+                        size={15}
+                        className="shrink-0 text-[#91afbd]"
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="px-3 py-7 text-center text-xs text-[#829baa]">
+              موردی در منو یا اطلاعات همین صفحه پیدا نشد.
+            </p>
+          )}
+          <p className="border-t border-[#edf2f5] px-2 pt-2 text-[10px] leading-5 text-[#9aafbb]">
+            جستجو در صفحات مدیریت و اطلاعات نمایش‌داده‌شده انجام می‌شود.
           </p>
         </div>
+      )}
+    </div>
+  );
+}
 
-        <ChevronDown size={15} className="text-ink-muted" aria-hidden="true" />
+function UserDropdown({ user }: { user: SafeUser }) {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const name = accountName(user);
 
-        <button
-          type="button"
-          className="relative grid h-10 w-10 cursor-pointer place-items-center border border-line bg-white text-ink-muted transition hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
-          aria-label="اعلان‌ها"
-        >
-          <Bell size={17} aria-hidden="true" />
-          <span className="absolute left-2 top-2 h-1.5 w-1.5 bg-brand-accent" />
-        </button>
+  useEffect(() => {
+    function onPointerDown(event: globalThis.PointerEvent) {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function onEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onEscape);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, []);
 
-        <button
-          type="button"
-          className="grid h-10 w-10 cursor-pointer place-items-center border border-line bg-white text-ink-muted transition hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
-          aria-label="تنظیمات سریع"
-        >
-          <Settings size={17} aria-hidden="true" />
-        </button>
-      </div>
-
-      <label className="relative hidden w-[min(420px,34vw)] lg:block">
-        <span className="sr-only">جست‌وجو در پنل مدیریت</span>
-        <input
-          type="search"
-          placeholder="جست‌وجو در بخش‌ها، گزارش‌ها و ..."
-          className="
-            h-11
-            w-full
-            border
-            border-line
-            bg-[#f8fbfc]/90
-            pr-11
-            pl-4
-            text-xs
-            font-bold
-            text-ink
-            outline-none
-            transition
-            placeholder:text-ink-muted/50
-            focus:border-brand-primary
-            focus:bg-white
-            focus:ring-4
-            focus:ring-focus/10
-          "
-        />
-        <Search
-          size={17}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted/60"
+  return (
+    <div ref={wrapperRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`حساب کاربری ${name}`}
+        className="flex min-h-10 items-center gap-2 rounded-xl px-1.5 py-1 text-right transition hover:bg-[#f0f7fa] focus-visible:outline-2 focus-visible:outline-[#ff8a00]"
+      >
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#e9f0f4] to-[#d4e0e6] text-[#7691a2] ring-2 ring-white">
+          <UserRound size={19} aria-hidden="true" />
+        </span>
+        <span className="hidden min-w-0 text-right md:block">
+          <span className="block max-w-[135px] truncate text-[12px] font-extrabold text-[#173747]">
+            {name}
+          </span>
+          <span className="block text-[10px] text-[#9aaebb]">مدیر سیستم</span>
+        </span>
+        <ChevronDown
+          size={14}
+          className="hidden text-[#6f8b9f] sm:block"
           aria-hidden="true"
         />
-      </label>
+      </button>
 
-      <div className="flex items-center gap-3 text-[11px] font-black text-ink-muted">
-        <span>۱۰:۴۵</span>
-        <Clock3 size={16} aria-hidden="true" />
-      </div>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-0 top-full z-[80] mt-2 w-[265px] max-w-[calc(100vw-24px)] rounded-2xl border border-[#e0ecf1] bg-white p-2 shadow-[0_20px_60px_rgba(4,41,57,.17)]"
+        >
+          <div className="rounded-xl bg-[#f1f8fa] px-3 py-3">
+            <p className="text-sm font-extrabold text-[#103748]">{name}</p>
+            <p className="mt-1 text-[11px] text-[#6d8796]">مدیر سیستم</p>
+            {user.phone && (
+              <p
+                dir="ltr"
+                className="mt-2 text-left text-[11px] tabular-nums text-[#6d8796]"
+              >
+                {user.phone}
+              </p>
+            )}
+          </div>
+          <Link
+            role="menuitem"
+            href="/admin/users"
+            onClick={() => setOpen(false)}
+            className="mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-bold text-[#31556a] hover:bg-[#edf7fa]"
+          >
+            <UsersRound size={17} /> مدیریت کاربران
+          </Link>
+          <Link
+            role="menuitem"
+            href="/"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-bold text-[#31556a] hover:bg-[#edf7fa]"
+          >
+            <ArrowUpLeft size={17} /> مشاهده سایت
+          </Link>
+          <div className="my-2 h-px bg-[#e6eff3]" />
+          <form action="/api/auth/logout" method="post">
+            <button
+              type="submit"
+              role="menuitem"
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-right text-xs font-bold text-[#b94a47] transition hover:bg-red-50"
+            >
+              <LogOut size={17} /> خروج امن از حساب
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NotificationPopover() {
+  const [open, setOpen] = useState(false);
+  const areaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function closeOutside(event: globalThis.PointerEvent) {
+      if (!areaRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    document.addEventListener("pointerdown", closeOutside);
+    return () => document.removeEventListener("pointerdown", closeOutside);
+  }, []);
+
+  return (
+    <div ref={areaRef} className="relative">
+      <button
+        type="button"
+        aria-label="پیام‌ها و اعلان‌ها"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+        className="relative grid h-10 w-10 place-items-center rounded-xl text-[#45667b] transition hover:bg-[#eff7fa] hover:text-[#087d9c] focus-visible:outline-2 focus-visible:outline-[#ff8a00]"
+      >
+        <Bell size={19} />
+      </button>
+      {open && (
+        <div
+          role="dialog"
+          aria-label="پیام‌ها و اعلان‌ها"
+          className="absolute left-0 top-full z-[80] mt-2 w-[290px] max-w-[calc(100vw-22px)] rounded-2xl border border-[#dfeaf0] bg-white p-4 shadow-[0_20px_60px_rgba(4,41,57,.17)]"
+        >
+          <div className="flex items-center gap-2 text-sm font-black text-[#153b4c]">
+            <Bell size={17} className="text-[#0b839e]" /> پیام‌ها و اعلان‌ها
+          </div>
+          <p className="mt-2 text-xs leading-6 text-[#708c9f]">
+            برای بررسی پیام‌ها و سرنخ‌های ثبت‌شده در سایت، بخش ورودی‌ها را باز
+            کنید.
+          </p>
+          <Link
+            href="/admin#intake"
+            onClick={() => setOpen(false)}
+            className="mt-4 flex items-center justify-between rounded-xl bg-[#edf8fb] px-3 py-3 text-xs font-extrabold text-[#0f7492] hover:bg-[#e3f3f8]"
+          >
+            مشاهده آخرین ورودی‌ها <ArrowLeft size={16} />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
@@ -408,452 +727,187 @@ function DesktopAdminTopbar({ user }: { user: SafeUser }) {
 function SidebarContent({
   user,
   pathname,
+  hash,
+  collapsed,
   onNavigate,
-  collapsed = false,
   onToggleCollapsed,
 }: {
   user: SafeUser;
   pathname: string;
+  hash: string;
+  collapsed: boolean;
   onNavigate: () => void;
-  collapsed?: boolean;
   onToggleCollapsed?: () => void;
 }) {
   return (
-    <div className="relative flex h-full flex-col overflow-hidden">
-      <div
+    <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-[linear-gradient(180deg,#073b48_0%,#043442_42%,#032b37_100%)]">
+      <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#053846_0%,#03313f_48%,#022733_100%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[linear-gradient(135deg,rgba(22,115,148,.28),transparent_58%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 h-72 w-full bg-[linear-gradient(315deg,rgba(252,133,2,.12),transparent_56%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_65%_0%,rgba(33,160,170,.18),transparent_72%)]"
       />
 
       <div
-        className={`
-          relative
-          z-10
-          border-b
-          border-white/10
-
-          ${collapsed ? "p-3" : "p-5"}
-        `}
+        className={`relative z-10 flex shrink-0 items-center border-b border-white/10 ${collapsed ? "flex-col gap-3 px-2.5 py-5" : "justify-between gap-2 px-4 py-5"}`}
       >
-        <div
-          className={`
-            gap-3
-
-            ${collapsed ? "grid" : "flex items-center justify-between"}
-          `}
+        <Link
+          href="/admin"
+          onClick={onNavigate}
+          title="مدیریت DNH"
+          className={`flex min-w-0 items-center ${collapsed ? "justify-center" : "gap-2.5"}`}
         >
-          <AdminBrand collapsed={collapsed} user={user} />
-
-          {onToggleCollapsed ? (
-            <button
-              type="button"
-              onClick={onToggleCollapsed}
-              aria-label={
-                collapsed
-                  ? "باز کردن سایدبار مدیریت"
-                  : "جمع کردن سایدبار مدیریت"
-              }
-              title={
-                collapsed
-                  ? "باز کردن سایدبار مدیریت"
-                  : "جمع کردن سایدبار مدیریت"
-              }
-              className={`
-                grid
-                h-10
-                w-10
-                cursor-pointer
-                place-items-center
-                border
-                border-white/10
-                bg-white/[0.055]
-                text-white/72
-                transition
-                hover:border-brand-accent/42
-                hover:bg-white/[0.09]
-                hover:text-white
-                focus-visible:outline-none
-                focus-visible:ring-4
-                focus-visible:ring-brand-accent/20
-
-                ${collapsed ? "mx-auto" : ""}
-              `}
-            >
-              {collapsed ? (
-                <PanelRightOpen size={18} aria-hidden="true" />
-              ) : (
-                <PanelRightClose size={18} aria-hidden="true" />
-              )}
-            </button>
-          ) : null}
-        </div>
-
-        {!collapsed ? (
-          <div className="mt-5 border border-white/10 bg-white/[0.055] p-3">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-black">
-                  {user.firstName} {user.lastName}
-                </p>
-                <p
-                  dir="ltr"
-                  className="mt-1 truncate text-left text-[11px] text-white/48"
-                >
-                  {user.phone}
-                </p>
-              </div>
-              <span className="border border-brand-accent/34 bg-brand-accent/10 px-2 py-1 text-[10px] font-black text-brand-accent">
-                مدیر
-              </span>
-            </div>
-          </div>
-        ) : null}
+          <span
+            className={`grid  ${!collapsed ? "w-36 " : "w-16"}  h-14   shrink-0 place-items-center   text-[#ff9100]`}
+          >
+            <Image
+              alt="DNH"
+              width={120}
+              height={120}
+              src="/assets/images/LOGOWHITE.svg"
+            />
+          </span>
+        </Link>
+        {onToggleCollapsed && (
+          <button
+            type="button"
+            onClick={onToggleCollapsed}
+            title={collapsed ? "باز کردن سایدبار" : "جمع کردن سایدبار"}
+            aria-label={collapsed ? "باز کردن سایدبار" : "جمع کردن سایدبار"}
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.045] text-white/65 transition hover:bg-white/10 hover:text-white"
+          >
+            {collapsed ? (
+              <PanelRightOpen size={17} />
+            ) : (
+              <PanelRightClose size={17} />
+            )}
+          </button>
+        )}
       </div>
 
-      <div
-        className={`
-          relative
-          z-10
-          flex-1
-          overflow-y-auto
-          py-4
-
-          ${collapsed ? "px-3" : "px-3.5"}
-        `}
+      <nav
+        aria-label="بخش‌های مدیریت"
         data-lenis-prevent
+        className={`relative z-10 min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain py-4 [scrollbar-color:#4f8793_transparent] [scrollbar-width:thin] ${collapsed ? "px-2" : "px-3"}`}
       >
         {adminNavGroups.map((group) => (
-          <AdminNavGroup
-            key={group.title}
-            title={group.title}
-            items={group.items}
-            pathname={pathname}
-            onNavigate={onNavigate}
-            collapsed={collapsed}
-          />
+          <div key={group.title}>
+            {collapsed ? (
+              <div
+                aria-hidden="true"
+                className="mx-auto mb-2 h-px w-8 bg-white/10"
+              />
+            ) : (
+              <p className="mb-2 px-3 pt-1 text-[10px] font-bold text-[#7ca3b2]">
+                {group.title}
+              </p>
+            )}
+            <ul className="space-y-1">
+              {group.items.map((item) => (
+                <li key={`${group.title}-${item.title}-${item.href}`}>
+                  <SidebarLink
+                    item={item}
+                    pathname={pathname}
+                    hash={hash}
+                    collapsed={collapsed}
+                    onNavigate={onNavigate}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </div>
+      </nav>
 
       <div
-        className={`
-          relative
-          z-10
-          border-t
-          border-white/10
-
-          ${collapsed ? "p-3" : "p-4"}
-        `}
+        className={`relative z-10 shrink-0 space-y-2 border-t border-white/10 ${collapsed ? "p-2" : "p-3"}`}
       >
         <Link
           href="/"
           onClick={onNavigate}
-          aria-label="مشاهده سایت"
-          title={collapsed ? "مشاهده سایت" : undefined}
-          className={`
-            mb-3
-            flex
-            min-h-11
-            items-center
-            border
-            border-white/10
-            bg-white/[0.055]
-            text-xs
-            font-black
-            text-white/82
-            transition
-            hover:border-brand-accent/45
-            hover:bg-white/[0.085]
-            hover:text-white
-            focus-visible:outline-none
-            focus-visible:ring-4
-            focus-visible:ring-brand-accent/20
-
-            ${
-              collapsed
-                ? "w-full justify-center px-0"
-                : "justify-between px-3"
-            }
-          `}
+          title="مشاهده سایت"
+          className={`flex min-h-11 items-center rounded-xl border border-white/10 bg-white/[0.055] text-xs font-bold text-white/85 transition hover:bg-white/10 ${collapsed ? "justify-center" : "justify-between px-3"}`}
         >
           <span className="inline-flex items-center gap-2">
-            <LayoutDashboard size={16} aria-hidden="true" />
-            {!collapsed ? "مشاهده سایت" : null}
+            <LayoutDashboard size={17} />
+            {!collapsed && "مشاهده سایت"}
           </span>
-
-          {!collapsed ? <ArrowUpLeft size={14} aria-hidden="true" /> : null}
+          {!collapsed && <ArrowUpLeft size={16} className="text-white/60" />}
         </Link>
-
         <form action="/api/auth/logout" method="post">
           <button
             type="submit"
-            aria-label="خروج امن"
-            title={collapsed ? "خروج امن" : undefined}
-            className={`
-              flex
-              min-h-11
-              w-full
-              cursor-pointer
-              items-center
-              border
-              border-white/10
-              bg-white/[0.035]
-              text-xs
-              font-black
-              text-white/72
-              transition
-              hover:border-red-300/45
-              hover:bg-red-500/10
-              hover:text-red-100
-              focus-visible:outline-none
-              focus-visible:ring-4
-              focus-visible:ring-red-300/20
-
-              ${
-                collapsed
-                  ? "justify-center px-0"
-                  : "justify-between px-3"
-              }
-            `}
+            title="خروج امن"
+            className={`flex min-h-11 w-full items-center rounded-xl border border-white/10 bg-white/[0.035] text-right text-xs font-bold text-white/75 transition hover:border-red-300/20 hover:bg-red-500/10 hover:text-red-100 ${collapsed ? "justify-center" : "justify-between px-3"}`}
           >
             <span className="inline-flex items-center gap-2">
-              <LogOut size={16} aria-hidden="true" />
-              {!collapsed ? "خروج امن" : null}
+              <LogOut size={17} />
+              {!collapsed && "خروج امن"}
             </span>
-            {!collapsed ? <ShieldCheck size={14} aria-hidden="true" /> : null}
+            {!collapsed && <ShieldCheck size={15} className="text-white/40" />}
           </button>
         </form>
+        {!collapsed && (
+          <p className="truncate px-1 pt-1 text-center text-[10px] text-white/35">
+            {accountName(user)}
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
-function AdminBrand({
-  collapsed = false,
-  compact = false,
-  user,
-}: {
-  collapsed?: boolean;
-  compact?: boolean;
-  user: SafeUser;
-}) {
-  if (compact) {
-    return (
-      <Link
-        href="/admin"
-        className="flex min-w-0 items-center gap-2"
-        aria-label="داشبورد مدیریت DNH"
-      >
-        <span className="grid h-9 w-9 place-items-center bg-brand-primary text-white">
-          <BarChart3 size={18} aria-hidden="true" />
-        </span>
-        <span className="min-w-0">
-          <span className="block truncate text-sm font-black">مدیریت DNH</span>
-          <span className="block truncate text-[10px] text-ink-muted">
-            {user.firstName} {user.lastName}
-          </span>
-        </span>
-      </Link>
-    );
-  }
-
-  return (
-    <Link
-      href="/admin"
-      className={`
-        group
-        flex
-        min-w-0
-        items-center
-        transition
-
-        ${collapsed ? "justify-center" : "gap-3"}
-      `}
-      aria-label="داشبورد مدیریت DNH"
-    >
-      <span
-        aria-hidden="true"
-        className="
-          grid
-          h-11
-          w-11
-          shrink-0
-          place-items-center
-          border
-          border-brand-accent/30
-          bg-brand-accent/10
-          text-brand-accent
-          transition
-          group-hover:border-brand-accent/55
-          group-hover:bg-brand-accent
-          group-hover:text-white
-        "
-      >
-        <Sparkles size={20} />
-      </span>
-
-      {!collapsed ? (
-        <span className="min-w-0">
-          <span className="block truncate text-base font-black leading-7">
-            مدیریت DNH
-          </span>
-          <span className="block truncate text-[10px] font-bold text-white/48">
-            داشبورد عملیات
-          </span>
-        </span>
-      ) : null}
-    </Link>
-  );
-}
-
-function AdminNavGroup({
-  title,
-  items,
-  pathname,
-  onNavigate,
-  collapsed,
-}: {
-  title: string;
-  items: AdminNavItem[];
-  pathname: string;
-  onNavigate: () => void;
-  collapsed: boolean;
-}) {
-  return (
-    <nav aria-label={title} className={collapsed ? "mb-4" : "mb-5"}>
-      {collapsed ? (
-        <span
-          aria-hidden="true"
-          className="mx-auto mb-2 block h-px w-8 bg-white/12"
-        />
-      ) : (
-        <h2 className="mb-2 px-3 text-[10px] font-black text-white/42">
-          {title}
-        </h2>
-      )}
-
-      <ul className="space-y-1.5">
-        {items.map((item) => (
-          <li key={`${title}-${item.title}-${item.href}`}>
-            <AdminNavLink
-              item={item}
-              pathname={pathname}
-              onNavigate={onNavigate}
-              collapsed={collapsed}
-            />
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
-
-function AdminNavLink({
+function SidebarLink({
   item,
   pathname,
-  onNavigate,
+  hash,
   collapsed,
+  onNavigate,
 }: {
   item: AdminNavItem;
   pathname: string;
-  onNavigate: () => void;
+  hash: string;
   collapsed: boolean;
+  onNavigate: () => void;
 }) {
   const Icon = item.icon;
-  const hrefPath = item.href.split("#")[0];
-  const active = item.exact
-    ? pathname === hrefPath
-    : pathname === hrefPath || pathname.startsWith(`${hrefPath}/`);
+  const [path, fragment] = item.href.split("#");
+  const hasHash = Boolean(fragment);
+  const active = hasHash
+    ? pathname === path && hash === `#${fragment}`
+    : item.exact
+      ? pathname === path && !hash
+      : pathname === path || pathname.startsWith(`${path}/`);
 
   return (
     <Link
       href={item.href}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
-      aria-label={collapsed ? item.title : undefined}
       title={collapsed ? item.title : undefined}
-      className={`
-        group
-        relative
-        flex
-        items-center
-        overflow-hidden
-        border
-        text-right
-        transition
-        focus-visible:outline-none
-        focus-visible:ring-4
-        focus-visible:ring-brand-accent/20
-
-        ${
-          active
-            ? "border-brand-accent bg-brand-accent text-white shadow-[0_10px_26px_rgba(252,133,2,.20)]"
-            : "border-white/8 bg-white/[0.045] text-white/84 hover:border-white/16 hover:bg-white/[0.075] hover:text-white"
-        }
-
-        ${
-          collapsed
-            ? "min-h-12 justify-center px-0 py-1"
-            : "min-h-[50px] gap-3 px-3 py-2"
-        }
-      `}
+      aria-label={collapsed ? item.title : undefined}
+      className={`group relative flex min-h-[43px] items-center overflow-hidden rounded-xl text-right transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#ffa12e] ${collapsed ? "justify-center px-1" : "gap-3 px-3"} ${
+        active
+          ? "bg-[linear-gradient(110deg,#ff8b00,#ff990a)] font-extrabold text-white shadow-[0_7px_19px_rgba(255,132,0,.23)]"
+          : "text-white/75 hover:bg-white/[0.08] hover:text-white"
+      }`}
     >
-      <span
+      <Icon
+        size={18}
+        strokeWidth={1.85}
         aria-hidden="true"
-        className={`
-          grid
-          h-9
-          w-9
-          shrink-0
-          place-items-center
-          border
-          transition
-
-          ${
-            active
-              ? "border-white/18 bg-white/14 text-white"
-              : "border-white/10 bg-white/[0.045] text-white/58 group-hover:text-white"
-          }
-        `}
-      >
-        <Icon size={17} strokeWidth={1.75} />
-      </span>
-
-      {!collapsed ? (
+        className="shrink-0"
+      />
+      {!collapsed && (
         <>
-          <span className="min-w-0 flex-1">
-            <span className="block truncate text-[13px] font-black">
-              {item.title}
-            </span>
-            <span
-              className={`
-                mt-0.5
-                block
-                truncate
-                text-[10px]
-                font-medium
-
-                ${active ? "text-white/70" : "text-white/42"}
-              `}
-            >
-              {item.description}
-            </span>
+          <span className="min-w-0 flex-1 truncate text-[12px] font-bold">
+            {item.title}
           </span>
-
-          <ArrowUpLeft
-            size={14}
-            className={active ? "text-white/82" : "text-white/38"}
+          <ChevronLeft
+            size={16}
             aria-hidden="true"
+            className={`shrink-0 ${active ? "text-white/85" : "text-white/35 transition group-hover:text-white/80"}`}
           />
         </>
-      ) : null}
+      )}
     </Link>
   );
 }
@@ -861,10 +915,12 @@ function AdminNavLink({
 function MobileAdminDrawer({
   user,
   pathname,
+  hash,
   onDismiss,
 }: {
   user: SafeUser;
   pathname: string;
+  hash: string;
   onDismiss: () => void;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -872,84 +928,52 @@ function MobileAdminDrawer({
 
   useEffect(() => {
     const dialog = dialogRef.current;
-
     if (!dialog) return;
-
     dialog.showModal();
     closeRef.current?.focus({ preventScroll: true });
-
     return () => {
       if (dialog.open) dialog.close();
     };
   }, []);
 
-  function dismissOnBackdrop(event: MouseEvent<HTMLDialogElement>) {
-    if (event.target !== event.currentTarget) return;
-    onDismiss();
+  function handleBackdrop(event: MouseEvent<HTMLDialogElement>) {
+    if (event.target === event.currentTarget) onDismiss();
   }
 
   return (
     <dialog
       ref={dialogRef}
       dir="rtl"
-      className="
-        fixed
-        inset-y-0
-        right-0
-        m-0
-        h-dvh
-        max-h-none
-        w-[min(440px,calc(100vw-18px))]
-        max-w-none
-        border-0
-        bg-transparent
-        p-0
-        text-white
-        backdrop:bg-[#02151d]/54
-        backdrop:backdrop-blur-[6px]
-      "
-      aria-labelledby="admin-mobile-menu-title"
+      aria-label="منوی مدیریت"
       onCancel={(event) => {
         event.preventDefault();
         onDismiss();
       }}
-      onClick={dismissOnBackdrop}
+      onClick={handleBackdrop}
+      className="fixed inset-y-0 right-0 m-0 h-dvh max-h-none w-[min(336px,88vw)] max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-[#041d28]/60 backdrop:backdrop-blur-[3px] xl:hidden"
     >
-      <div className="h-full overflow-hidden border-l border-white/10 bg-[#032d3b] shadow-[0_24px_80px_rgba(1,22,30,0.28)]">
-        <div className="flex items-center justify-between border-b border-white/10 p-4">
-          <div>
-            <p id="admin-mobile-menu-title" className="text-sm font-black">
-              مدیریت DNH
-            </p>
-            <p className="mt-1 text-[10px] text-white/50">
-              دسترسی سریع به پنل
-            </p>
-          </div>
+      <div className="flex h-full min-h-0 flex-col bg-[#042f3d] shadow-[-20px_0_70px_rgba(0,20,30,.32)]">
+        <div className="z-10 flex shrink-0 items-center justify-between border-b border-white/10 bg-[#073947] px-4 py-3">
+          <span className="text-xs font-black text-white/90">منوی مدیریت</span>
           <button
             ref={closeRef}
             type="button"
             onClick={onDismiss}
-            className="
-              grid
-              h-11
-              w-11
-              cursor-pointer
-              place-items-center
-              border
-              border-white/12
-              bg-white/8
-              transition
-              hover:bg-white/12
-              focus-visible:outline-none
-              focus-visible:ring-4
-              focus-visible:ring-brand-accent/20
-            "
-            aria-label="بستن منوی مدیریت"
+            aria-label="بستن منو"
+            className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 transition hover:bg-white/10"
           >
-            <X size={21} aria-hidden="true" />
+            <X size={19} />
           </button>
         </div>
-        <SidebarContent user={user} pathname={pathname} onNavigate={onDismiss} />
+        <div className="min-h-0 flex-1">
+          <SidebarContent
+            user={user}
+            pathname={pathname}
+            hash={hash}
+            collapsed={false}
+            onNavigate={onDismiss}
+          />
+        </div>
       </div>
     </dialog>
   );
@@ -957,20 +981,13 @@ function MobileAdminDrawer({
 
 function AdminAtmosphere() {
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,#eef6f8_0%,#ffffff_44%,#e5f1f4_100%)]" />
-      <div
-        className="absolute inset-0 opacity-[0.3]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, color-mix(in srgb, var(--dnh-primary) 8%, transparent) 1px, transparent 1px),
-            linear-gradient(to bottom, color-mix(in srgb, var(--dnh-primary) 7%, transparent) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-        }}
-      />
-      <div className="absolute left-[6%] top-[9%] h-[320px] w-[420px] bg-brand-primary/[0.075] blur-3xl" />
-      <div className="absolute bottom-[8%] right-[18%] h-[260px] w-[420px] bg-brand-accent/[0.08] blur-3xl" />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,#f0f8fa_0%,#f8fcfd_48%,#edf6f8_100%)]" />
+      <div className="absolute -left-32 top-24 h-96 w-[32rem] rounded-full bg-[#87d1da]/10 blur-3xl" />
+      <div className="absolute bottom-0 right-[17%] h-80 w-80 rounded-full bg-[#ff9d40]/[0.035] blur-3xl" />
     </div>
   );
 }
