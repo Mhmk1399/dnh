@@ -5,6 +5,7 @@ import connect from "@/lib/data";
 import { FORM_STATUSES, type DynamicFormStatus } from "@/lib/dynamic-forms";
 import { FormDefinitionError, validateFormDefinition } from "@/lib/dynamic-form-validation";
 import DynamicForm from "@/lib/models/DynamicForm";
+import FormSubmission from "@/lib/models/FormSubmission";
 import { readJson } from "@/lib/validation";
 
 async function authorize() { const user = await getCurrentUser(); return user?.role === "admin" ? user : null; }
@@ -48,5 +49,23 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (error instanceof FormDefinitionError) return NextResponse.json({ message: "تعریف فرم نیاز به اصلاح دارد.", errors: error.issues }, { status: 422 });
     if (typeof error === "object" && error && "code" in error && error.code === 11000) return NextResponse.json({ message: "این شناسه مسیر قبلاً استفاده شده است.", errors: { slug: "شناسه مسیر تکراری است." } }, { status: 409 });
     return NextResponse.json({ message: "ذخیره تغییرات انجام نشد." }, { status: 503 });
+  }
+}
+
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!await authorize()) return NextResponse.json({ message: "دسترسی مدیر لازم است." }, { status: 403 });
+  const { id } = await params;
+  if (!Types.ObjectId.isValid(id)) return NextResponse.json({ message: "شناسه فرم معتبر نیست." }, { status: 400 });
+  try {
+    await connect();
+    const form = await DynamicForm.findById(id).select("_id").lean();
+    if (!form) return NextResponse.json({ message: "فرم پیدا نشد." }, { status: 404 });
+    await Promise.all([
+      DynamicForm.deleteOne({ _id: id }),
+      FormSubmission.deleteMany({ formId: id }),
+    ]);
+    return NextResponse.json({ message: "فرم و پاسخ‌های وابسته حذف شدند." });
+  } catch {
+    return NextResponse.json({ message: "حذف فرم انجام نشد." }, { status: 503 });
   }
 }

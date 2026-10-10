@@ -2,14 +2,24 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Archive, ArrowDown, ArrowUp, ChevronLeft, ChevronRight, Copy, Eye, FileText, Plus, Save, Send, Trash2 } from "lucide-react";
+import { adminToast, adminToastMessage } from "@/components/admin/adminToast";
 import { createFormTemplate, makeStableId, type DynamicFieldDefinition, type DynamicFormDefinition, type DynamicFormStatus, type DynamicStepDefinition } from "@/lib/dynamic-forms";
 import { normalizeSlug } from "@/lib/dynamic-form-validation";
 import { SERVICE_CATALOG } from "@/lib/services";
 
 type Props = { initial?: DynamicFormDefinition; formId?: string };
 type Notice = { kind: "success" | "error"; message: string } | null;
+type Confirmation =
+  | {
+      title: string;
+      description: string;
+      actionLabel: string;
+      intent: "warning" | "danger";
+      onConfirm: () => void;
+    }
+  | null;
 
 const fieldLabels: Record<DynamicFieldDefinition["type"], string> = { text: "متن کوتاه", textarea: "متن بلند", phone: "موبایل", email: "ایمیل", number: "عدد", select: "فهرست", radio: "گزینه‌ای", checkbox: "تأیید" };
 const stepLabels: Record<DynamicStepDefinition["stepType"], string> = { identity: "هویت", contact: "تماس", questions: "پرسش‌ها", confirmation: "تأیید", custom: "سفارشی" };
@@ -22,6 +32,7 @@ export function FormBuilder({ initial, formId }: Props) {
   const [busy, setBusy] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
+  const [confirmation, setConfirmation] = useState<Confirmation>(null);
   const fieldCount = useMemo(() => form.steps.reduce((total, step) => total + step.fields.length, 0), [form.steps]);
   const current = form.steps[activeStep] ?? form.steps[0];
 
@@ -32,24 +43,73 @@ export function FormBuilder({ initial, formId }: Props) {
   }
   function move<T>(items: T[], index: number, direction: -1 | 1) { const target = index + direction; if (target < 0 || target >= items.length) return items; const copy = [...items]; [copy[index], copy[target]] = [copy[target], copy[index]]; return copy; }
   function addStep() {
-    if (form.steps.length >= 10) return setNotice({ kind: "error", message: "حداکثر ۱۰ مرحله مجاز است." });
+    if (form.steps.length >= 10) {
+      const message = "حداکثر ۱۰ مرحله مجاز است.";
+      adminToast.error(message);
+      return setNotice({ kind: "error", message });
+    }
     const step: DynamicStepDefinition = { id: makeStableId("step"), title: `مرحله ${form.steps.length + 1}`, stepType: "custom", fields: [] };
+    adminToast.success("مرحله جدید اضافه شد.");
     update({ steps: [...form.steps, step] }); setActiveStep(form.steps.length); setPreviewStep(form.steps.length);
   }
   function removeStep(index: number) {
-    if (form.steps.length === 1) return setNotice({ kind: "error", message: "حداقل یک مرحله باید باقی بماند." });
-    if (!confirm("این مرحله و تمام فیلدهای آن حذف شود؟")) return;
-    update({ steps: form.steps.filter((_, i) => i !== index) }); setActiveStep(Math.max(0, index - 1)); setPreviewStep(0);
+    if (form.steps.length === 1) {
+      const message = "حداقل یک مرحله باید باقی بماند.";
+      adminToast.error(message);
+      return setNotice({ kind: "error", message });
+    }
+    setConfirmation({
+      title: "حذف مرحله",
+      description: "این مرحله و تمام فیلدهای داخل آن از ساختار فرم حذف می‌شود.",
+      actionLabel: "حذف مرحله",
+      intent: "danger",
+      onConfirm: () => {
+        adminToast.success("مرحله حذف شد.");
+        update({ steps: form.steps.filter((_, i) => i !== index) }); setActiveStep(Math.max(0, index - 1)); setPreviewStep(0);
+      },
+    });
   }
   function addField() {
-    if (fieldCount >= 30) return setNotice({ kind: "error", message: "حداکثر ۳۰ فیلد در هر فرم مجاز است." });
+    if (fieldCount >= 30) {
+      const message = "حداکثر ۳۰ فیلد در هر فرم مجاز است.";
+      adminToast.error(message);
+      return setNotice({ kind: "error", message });
+    }
     const field: DynamicFieldDefinition = { id: makeStableId("field"), type: "text", label: "فیلد جدید", required: false, minLength: 0, maxLength: 200 };
+    adminToast.success("فیلد جدید اضافه شد.");
     updateStep(activeStep, { fields: [...current.fields, field] });
   }
 
-  async function save(action: "save" | "publish" | "unpublish" | "archive") {
-    if (action === "archive" && !confirm("فرم بایگانی شود؟ لینک عمومی آن از دسترس خارج خواهد شد.")) return;
+  function save(action: "save" | "publish" | "unpublish" | "archive") {
+    if (action === "archive") {
+      setConfirmation({
+        title: "بایگانی فرم",
+        description: "با بایگانی، لینک عمومی فرم از دسترس خارج می‌شود و کاربران دیگر نمی‌توانند آن را ارسال کنند.",
+        actionLabel: "بایگانی فرم",
+        intent: "warning",
+        onConfirm: () => {
+          void persist(action);
+        },
+      });
+      return;
+    }
+
+    void persist(action);
+  }
+
+  async function persist(action: "save" | "publish" | "unpublish" | "archive") {
     setBusy(true); setNotice(null);
+    const toastId = adminToast.loading(
+      action === "publish"
+        ? "در حال انتشار فرم..."
+        : action === "unpublish"
+          ? "در حال توقف انتشار فرم..."
+          : action === "archive"
+            ? "در حال بایگانی فرم..."
+            : formId
+              ? "در حال ذخیره فرم..."
+              : "در حال ساخت فرم...",
+    );
     try {
       const response = await fetch(formId ? `/api/admin/forms/${formId}` : "/api/admin/forms", {
         method: formId ? "PATCH" : "POST", headers: { "Content-Type": "application/json" },
@@ -60,10 +120,24 @@ export function FormBuilder({ initial, formId }: Props) {
         const detail = payload.errors ? Object.values(payload.errors)[0] : undefined;
         throw new Error([payload.message, detail].filter(Boolean).join(" ") || "ذخیره انجام نشد.");
       }
-      if (!formId && payload.id) { router.replace(`/admin/forms/${payload.id}/edit`); router.refresh(); return; }
+      if (!formId && payload.id) {
+        adminToast.dismiss(toastId);
+        adminToast.success(payload.message ?? "فرم جدید ساخته شد.");
+        router.replace(`/admin/forms/${payload.id}/edit`);
+        router.refresh();
+        return;
+      }
       setForm((value) => ({ ...value, revision: payload.revision ?? value.revision, status: payload.status ?? value.status }));
-      setDirty(false); setNotice({ kind: "success", message: payload.message ?? "ذخیره شد." }); router.refresh();
-    } catch (error) { setNotice({ kind: "error", message: error instanceof Error ? error.message : "خطای پیش‌بینی‌نشده" }); }
+      setDirty(false);
+      adminToast.dismiss(toastId);
+      adminToast.success(payload.message ?? "ذخیره شد.");
+      setNotice({ kind: "success", message: payload.message ?? "ذخیره شد." }); router.refresh();
+    } catch (error) {
+      const message = adminToastMessage(error, "خطای پیش‌بینی‌نشده");
+      adminToast.dismiss(toastId);
+      adminToast.error(message);
+      setNotice({ kind: "error", message });
+    }
     finally { setBusy(false); }
   }
 
@@ -98,7 +172,7 @@ export function FormBuilder({ initial, formId }: Props) {
               <Label text="شناسه مسیر انگلیسی" help={`/forms/${form.slug || "form-slug"}`}><input dir="ltr" className={`${input} text-left`} value={form.slug} onChange={(e) => update({ slug: normalizeSlug(e.target.value) })}/></Label>
               <Label text="نوع فرم"><select className={input} value={form.formType} onChange={(e) => update({ formType: e.target.value as DynamicFormDefinition["formType"] })}><option value="single_step">تک‌مرحله‌ای</option><option value="multi_step">چندمرحله‌ای</option><option value="service_assessment">ارزیابی خدمت</option></select></Label>
               <Label text="خدمت مرتبط"><select className={input} value={form.serviceKey} onChange={(e) => { const service = SERVICE_CATALOG.find((item) => item.key === e.target.value)!; update({ serviceKey: service.key, serviceName: service.name, serviceRoute: service.route }); }}>{SERVICE_CATALOG.map((service) => <option key={service.key} value={service.key}>{service.name}</option>)}</select></Label>
-              <div className="md:col-span-2"><Label text="توضیح فرم"><textarea className={`${input} min-h-24 resize-y`} value={form.description} onChange={(e) => update({ description: e.target.value })}/></Label></div>
+              <div className="md:col-span-2"><Label text="توضیح فرم"><textarea className={`${input} min-h-24 resize-none`} value={form.description} onChange={(e) => update({ description: e.target.value })}/></Label></div>
               <Label text="متن دکمه ثبت"><input className={input} value={form.submitLabel} onChange={(e) => update({ submitLabel: e.target.value })}/></Label>
               <Label text="پیام موفقیت"><input className={input} value={form.successMessage} onChange={(e) => update({ successMessage: e.target.value })}/></Label>
             </div>
@@ -112,7 +186,7 @@ export function FormBuilder({ initial, formId }: Props) {
 
           <section className="border border-line bg-white">
             <SectionHeader code={`${fieldCount.toString().padStart(2, "0")} / 30 FIELDS`} title="فیلدهای این مرحله" actions={<button onClick={addField} className="inline-flex items-center gap-1.5 bg-brand-primary px-3 py-2 text-[11px] font-black text-white"><Plus size={14}/>فیلد جدید</button>} />
-            {current.fields.length === 0 ? <div className="p-12 text-center"><FileText className="mx-auto h-8 w-8 text-brand-primary/30"/><p className="mt-4 text-sm font-bold">این مرحله هنوز فیلدی ندارد.</p><p className="mt-2 text-xs text-ink-muted">یک فیلد متنی، انتخابی یا تأیید اضافه کنید.</p></div> : <div className="divide-y divide-line">{current.fields.map((field, index) => <FieldEditor key={field.id} field={field} index={index} input={input} onChange={(patch) => updateField(activeStep, index, patch)} onMove={(direction) => updateStep(activeStep, { fields: move(current.fields, index, direction) })} onRemove={() => { if (confirm("این فیلد حذف شود؟")) updateStep(activeStep, { fields: current.fields.filter((_, i) => i !== index) }); }}/>)}</div>}
+            {current.fields.length === 0 ? <div className="p-12 text-center"><FileText className="mx-auto h-8 w-8 text-brand-primary/30"/><p className="mt-4 text-sm font-bold">این مرحله هنوز فیلدی ندارد.</p><p className="mt-2 text-xs text-ink-muted">یک فیلد متنی، انتخابی یا تأیید اضافه کنید.</p></div> : <div className="divide-y divide-line">{current.fields.map((field, index) => <FieldEditor key={field.id} field={field} index={index} input={input} onChange={(patch) => updateField(activeStep, index, patch)} onMove={(direction) => updateStep(activeStep, { fields: move(current.fields, index, direction) })} onRemove={() => setConfirmation({ title: "حذف فیلد", description: "این فیلد از مرحله فعلی حذف می‌شود.", actionLabel: "حذف فیلد", intent: "danger", onConfirm: () => { adminToast.success("فیلد حذف شد."); updateStep(activeStep, { fields: current.fields.filter((_, i) => i !== index) }); } })}/>)}</div>}
           </section>
         </main>
 
@@ -122,7 +196,8 @@ export function FormBuilder({ initial, formId }: Props) {
           {formId && <div className="mt-3 grid grid-cols-2 gap-2">{form.status === "published" ? <Link href={`/forms/${form.slug}`} className="flex items-center justify-center gap-2 border border-line bg-white p-3 text-[11px] font-bold"><Eye size={14}/>صفحه عمومی</Link> : <div className="flex items-center justify-center border border-dashed border-line bg-white p-3 text-center text-[10px] leading-5 text-ink-muted">انتشار، نشانی عمومی را فعال می‌کند</div>}<Link href={`/admin/forms/${formId}/submissions`} className="flex items-center justify-center gap-2 border border-line bg-white p-3 text-[11px] font-bold"><Copy size={14}/>پاسخ‌ها</Link></div>}
         </aside>
       </div>
-      {form.status !== "archived" && <div className="fixed bottom-3 left-3 right-20 z-40 flex items-center justify-between gap-2 border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden"><div className="min-w-0"><p className="truncate text-[10px] font-black text-ink">{form.title || "فرم جدید"}</p><p className={`mt-0.5 text-[11px] ${!formId || dirty ? "text-orange-700" : "text-emerald-700"}`}>{!formId ? "هنوز ذخیره نشده" : dirty ? "تغییرات ذخیره‌نشده" : "ذخیره‌شده"}</p></div><div className="flex shrink-0 gap-1.5"><button disabled={busy} onClick={() => save("save")} className="inline-flex items-center gap-1 border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:opacity-50"><Save size={13}/>ذخیره</button>{formId && form.status === "published" ? <button disabled={busy} onClick={() => save("unpublish")} className="border border-line px-3 py-2 text-[10px] font-black text-ink disabled:opacity-50">توقف</button> : formId ? <button disabled={busy} onClick={() => save("publish")} className="inline-flex items-center gap-1 bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:opacity-50"><Send size={13}/>انتشار</button> : null}</div></div>}
+      <ConfirmationDialog confirmation={confirmation} onClose={() => setConfirmation(null)} />
+      {form.status !== "archived" && <div className="fixed bottom-3 left-3 right-3 z-40 flex items-center justify-between gap-2 border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden"><div className="min-w-0"><p className="truncate text-[10px] font-black text-ink">{form.title || "فرم جدید"}</p><p className={`mt-0.5 text-[11px] ${!formId || dirty ? "text-orange-700" : "text-emerald-700"}`}>{!formId ? "هنوز ذخیره نشده" : dirty ? "تغییرات ذخیره‌نشده" : "ذخیره‌شده"}</p></div><div className="flex shrink-0 gap-1.5"><button disabled={busy} onClick={() => save("save")} className="inline-flex items-center gap-1 border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:opacity-50"><Save size={13}/>ذخیره</button>{formId && form.status === "published" ? <button disabled={busy} onClick={() => save("unpublish")} className="border border-line px-3 py-2 text-[10px] font-black text-ink disabled:opacity-50">توقف</button> : formId ? <button disabled={busy} onClick={() => save("publish")} className="inline-flex items-center gap-1 bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:opacity-50"><Send size={13}/>انتشار</button> : null}</div></div>}
     </div>
   );
 }
@@ -132,7 +207,102 @@ function FieldEditor({ field, index, input, onChange, onMove, onRemove }: { fiel
   return <article className="p-5"><div className="mb-5 flex items-center justify-between"><div><span dir="ltr" className="text-[11px] font-black tracking-[.16em] text-ink-muted">FIELD / {String(index + 1).padStart(2, "0")}</span><h3 className="mt-1 text-sm font-black">{field.label || "بدون عنوان"}</h3></div><div className="flex"><IconButton label="بالا" disabled={index === 0} onClick={() => onMove(-1)}><ArrowUp size={14}/></IconButton><IconButton label="پایین" onClick={() => onMove(1)}><ArrowDown size={14}/></IconButton><IconButton label="حذف" onClick={onRemove}><Trash2 size={14}/></IconButton></div></div><div className="grid gap-4 md:grid-cols-2"><Label text="عنوان"><input className={input} value={field.label} onChange={(e) => onChange({ label: e.target.value })}/></Label><Label text="نوع"><select className={input} value={field.type} onChange={(e) => { const type = e.target.value as DynamicFieldDefinition["type"]; onChange({ type, options: type === "select" || type === "radio" ? field.options ?? ["گزینه اول"] : undefined }); }}>{Object.entries(fieldLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></Label><Label text="متن راهنما"><input className={input} value={field.placeholder ?? ""} onChange={(e) => onChange({ placeholder: e.target.value })}/></Label><Label text="توضیح کمکی"><input className={input} value={field.helpText ?? ""} onChange={(e) => onChange({ helpText: e.target.value })}/></Label><Label text="حداقل طول"><input type="number" min="0" max="5000" className={input} value={field.minLength ?? 0} onChange={(e) => onChange({ minLength: Number(e.target.value) })}/></Label><Label text="حداکثر طول"><input type="number" min="1" max="5000" className={input} value={field.maxLength ?? 200} onChange={(e) => onChange({ maxLength: Number(e.target.value) })}/></Label>{choice && <div className="md:col-span-2"><Label text="گزینه‌ها" help="هر گزینه در یک خط"><textarea className={`${input} min-h-28`} value={(field.options ?? []).join("\n")} onChange={(e) => onChange({ options: e.target.value.split("\n").slice(0, 50) })}/></Label></div>}<label className="flex items-center gap-2 text-xs font-bold"><input type="checkbox" checked={field.required} onChange={(e) => onChange({ required: e.target.checked })} className="h-4 w-4 accent-[#fc8502]"/>تکمیل این فیلد الزامی است</label></div></article>;
 }
 
-function PreviewField({ field }: { field: DynamicFieldDefinition }) { const className = "mt-2 w-full border border-line bg-white px-3 py-2.5 text-xs outline-none"; return <div><label className="text-xs font-bold">{field.label}{field.required && <span className="mr-1 text-brand-accent">*</span>}</label>{field.type === "textarea" ? <textarea disabled placeholder={field.placeholder} className={`${className} min-h-20`}/> : field.type === "select" ? <select disabled className={className}><option>{field.placeholder || "انتخاب کنید"}</option>{field.options?.map((option, optionIndex) => <option key={`${field.id}-option-${optionIndex}`}>{option}</option>)}</select> : field.type === "radio" ? <div className="mt-2 space-y-2">{field.options?.map((option, optionIndex) => <label key={`${field.id}-option-${optionIndex}`} className="flex gap-2 text-xs"><input disabled type="radio"/>{option}</label>)}</div> : field.type === "checkbox" ? <label className="mt-2 flex gap-2 text-xs"><input disabled type="checkbox"/>{field.placeholder || "تأیید می‌کنم"}</label> : <input disabled type={field.type === "email" ? "email" : field.type === "number" ? "number" : "text"} placeholder={field.placeholder} className={className}/>} {field.helpText && <p className="mt-1 text-[10px] text-ink-muted">{field.helpText}</p>}</div>; }
+function PreviewField({ field }: { field: DynamicFieldDefinition }) { const className = "mt-2 w-full border border-line bg-white px-3 py-2.5 text-xs outline-none"; return <div><label className="text-xs font-bold">{field.label}{field.required && <span className="mr-1 text-brand-accent">*</span>}</label>{field.type === "textarea" ? <textarea disabled placeholder={field.placeholder} className={`${className} min-h-20 resize-none`}/> : field.type === "select" ? <select disabled className={className}><option>{field.placeholder || "انتخاب کنید"}</option>{field.options?.map((option, optionIndex) => <option key={`${field.id}-option-${optionIndex}`}>{option}</option>)}</select> : field.type === "radio" ? <div className="mt-2 space-y-2">{field.options?.map((option, optionIndex) => <label key={`${field.id}-option-${optionIndex}`} className="flex gap-2 text-xs"><input disabled type="radio"/>{option}</label>)}</div> : field.type === "checkbox" ? <label className="mt-2 flex gap-2 text-xs"><input disabled type="checkbox"/>{field.placeholder || "تأیید می‌کنم"}</label> : <input disabled type={field.type === "email" ? "email" : field.type === "number" ? "number" : "text"} placeholder={field.placeholder} className={className}/>} {field.helpText && <p className="mt-1 text-[10px] text-ink-muted">{field.helpText}</p>}</div>; }
+function ConfirmationDialog({ confirmation, onClose }: { confirmation: Confirmation; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+
+    if (!confirmation || !dialog) return;
+
+    dialog.showModal();
+    cancelRef.current?.focus({ preventScroll: true });
+
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, [confirmation]);
+
+  if (!confirmation) return null;
+
+  return (
+    <dialog
+      ref={dialogRef}
+      dir="rtl"
+      aria-labelledby="dynamic-form-confirmation-title"
+      aria-describedby="dynamic-form-confirmation-description"
+      className="
+        fixed
+        inset-0
+        m-auto
+        h-fit
+        max-h-[calc(100dvh-32px)]
+        w-[min(440px,calc(100vw-32px))]
+        max-w-none
+        overflow-y-auto
+        border
+        border-line
+        bg-white
+        p-0
+        text-ink
+        shadow-[0_28px_90px_rgba(3,45,59,0.26)]
+        backdrop:bg-[#02151d]/45
+        backdrop:backdrop-blur-[7px]
+      "
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+    >
+      <div className="border-b border-line p-5">
+        <p
+          dir="ltr"
+          className="text-[10px] font-black tracking-[0.18em] text-brand-primary"
+        >
+          CONFIRM ACTION
+        </p>
+        <h2
+          id="dynamic-form-confirmation-title"
+          className="mt-2 text-lg font-black"
+        >
+          {confirmation.title}
+        </h2>
+        <p
+          id="dynamic-form-confirmation-description"
+          className="mt-3 text-xs leading-7 text-ink-muted"
+        >
+          {confirmation.description}
+        </p>
+      </div>
+      <div className="flex flex-col-reverse gap-2 p-4 sm:flex-row sm:justify-end">
+        <button
+          ref={cancelRef}
+          type="button"
+          onClick={onClose}
+          className="min-h-11 cursor-pointer border border-line bg-white px-5 text-xs font-black text-ink transition hover:border-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
+        >
+          انصراف
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            confirmation.onConfirm();
+            onClose();
+          }}
+          className={`min-h-11 cursor-pointer px-5 text-xs font-black text-white transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25 ${
+            confirmation.intent === "danger"
+              ? "bg-red-700 hover:bg-red-800"
+              : "bg-brand-accent hover:bg-[#ec7d01]"
+          }`}
+        >
+          {confirmation.actionLabel}
+        </button>
+      </div>
+    </dialog>
+  );
+}
 function Label({ text, help, children }: { text: string; help?: string; children: React.ReactNode }) { return <label className="text-xs font-bold text-ink"><span className="flex justify-between gap-2"><span>{text}</span>{help && <span dir="ltr" className="font-normal text-ink-muted">{help}</span>}</span>{children}</label>; }
 function IconButton({ label, disabled, onClick, children }: { label: string; disabled?: boolean; onClick: () => void; children: React.ReactNode }) { return <button type="button" aria-label={label} title={label} disabled={disabled} onClick={onClick} className="border border-line bg-white p-2 text-ink transition hover:border-brand-accent hover:text-brand-accent disabled:opacity-25">{children}</button>; }
 function SectionHeader({ code, title, actions }: { code: string; title: string; actions?: React.ReactNode }) { return <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4"><div><p dir="ltr" className="text-[11px] font-black tracking-[.18em] text-brand-primary">{code}</p><h2 className="mt-1 text-base font-black">{title}</h2></div>{actions}</header>; }
