@@ -10,7 +10,6 @@ import {
   Banknote,
   BarChart3,
   Eye,
-  ExternalLink,
   FileText,
   Image as ImageIcon,
   Landmark,
@@ -46,6 +45,7 @@ import {
   type WeeklyOutlookSectionDefinition,
   type WeeklyOutlookSectionIcon,
   type WeeklyOutlookSectionTone,
+  type WeeklyOutlookSectionVisual,
   type WeeklyOutlookStatus,
 } from "@/lib/weekly-outlook";
 import {
@@ -77,6 +77,28 @@ const sectionToneLabels: Record<WeeklyOutlookSectionTone, string> = {
   dark: "تیره",
   teal: "نفتی",
   accent: "تأکیدی",
+};
+
+const sectionVisualLabels: Record<WeeklyOutlookSectionVisual, string> = {
+  plain: "ساده و آرام",
+  grid: "شبکه تحلیلی",
+  gradient: "گرادیانت مدیریتی",
+  blueprint: "نقشه معماری",
+  market: "خطوط بازار",
+  spotlight: "نور متمرکز",
+  glass: "لایه‌های شیشه‌ای",
+  accent: "خط تأکیدی",
+};
+
+const sectionVisualDescriptions: Record<WeeklyOutlookSectionVisual, string> = {
+  plain: "برای گزارش‌های متنی و رسمی با کمترین تزئین.",
+  grid: "پس‌زمینه شبکه‌ای سبک برای حس تحلیل و داده.",
+  gradient: "عمق نرم و مدیریتی با گرادیانت برند.",
+  blueprint: "حس نقشه و معماری تصمیم برای بخش‌های ساختاری.",
+  market: "خطوط روند و ریتم بازار برای تحلیل‌های اقتصادی.",
+  spotlight: "تمرکز روی جمع‌بندی یا پیام اصلی سکشن.",
+  glass: "لایه‌های شفاف و مدرن برای روایت‌های چندلایه.",
+  accent: "یک خط نارنجی کنترل‌شده برای بخش‌های مهم.",
 };
 
 const sectionIconLabels: Record<WeeklyOutlookSectionIcon, string> = {
@@ -261,6 +283,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       summary: "",
       icon: "overview",
       tone: "light",
+      visual: "grid",
       blocks: [
         {
           id: makeWeeklyOutlookStableId("block"),
@@ -601,7 +624,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                     }`}
                   >
                     {section.blocks.length.toLocaleString("fa-IR")} بلوک ·{" "}
-                    {sectionToneLabels[section.tone]}
+                    {sectionToneLabels[section.tone]} ·{" "}
+                    {sectionVisualLabels[section.visual ?? "grid"]}
                   </span>
                 </button>
               </li>
@@ -839,6 +863,45 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 </Label>
 
                 <div className="md:col-span-2">
+                  <p className="text-xs font-bold text-ink">
+                    نمای بصری سکشن
+                  </p>
+
+                  <div className="mt-2 grid gap-3 lg:grid-cols-[168px_1fr]">
+                    <SectionVisualPreview visual={current.visual ?? "grid"} />
+
+                    <div>
+                      <select
+                        className="w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                        value={current.visual ?? "grid"}
+                        onChange={(event) =>
+                          updateSection(activeSection, {
+                            visual: event.target
+                              .value as WeeklyOutlookSectionVisual,
+                          })
+                        }
+                      >
+                        {Object.entries(sectionVisualLabels).map(
+                          ([value, label]) => (
+                            <option key={value} value={value}>
+                              {label}
+                            </option>
+                          ),
+                        )}
+                      </select>
+
+                      <p className="mt-2 text-[10px] leading-5 text-ink-muted">
+                        {
+                          sectionVisualDescriptions[
+                            current.visual ?? "grid"
+                          ]
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-2">
                   <Label text="خلاصه سکشن">
                     <textarea
                       className={`${inputClass} min-h-24 resize-none leading-7`}
@@ -1022,7 +1085,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                       </span>
                       <span className="mt-1 block text-[10px] leading-5 text-ink-muted">
                         {section.blocks.length.toLocaleString("fa-IR")} بلوک ·{" "}
-                        {sectionToneLabels[section.tone]}
+                        {sectionToneLabels[section.tone]} ·{" "}
+                        {sectionVisualLabels[section.visual ?? "grid"]}
                       </span>
                     </span>
                   </button>
@@ -1437,6 +1501,61 @@ function BlockEditor({
         </div>
       ) : null}
 
+      {block.type === "button" ? (
+        <div className="grid gap-4 md:grid-cols-[190px_1fr]">
+          <Label text="حالت دکمه">
+            <select
+              className={inputClass}
+              value={block.variant}
+              onChange={(event) =>
+                onChange({
+                  variant: event.target.value as WeeklyOutlookButtonVariant,
+                })
+              }
+            >
+              {Object.entries(buttonVariantLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </Label>
+
+          <Label text="متن دکمه">
+            <input
+              className={inputClass}
+              value={block.label}
+              onChange={(event) => onChange({ label: event.target.value })}
+            />
+          </Label>
+
+          <div className="md:col-span-2">
+            <Label
+              text="آدرس لینک"
+              help="مسیر داخلی مثل /services، لینک داخل صفحه مثل #summary یا لینک امن https"
+            >
+              <input
+                dir="ltr"
+                className={`${inputClass} text-left`}
+                placeholder="/request-strategic-consultation"
+                value={block.href}
+                onChange={(event) => onChange({ href: event.target.value })}
+              />
+            </Label>
+          </div>
+
+          <div className="md:col-span-2">
+            <Label text="توضیح کوتاه بالای دکمه">
+              <input
+                className={inputClass}
+                value={block.note ?? ""}
+                onChange={(event) => onChange({ note: event.target.value })}
+              />
+            </Label>
+          </div>
+        </div>
+      ) : null}
+
       {block.type === "divider" ? (
         <div className="rounded-[16px] border border-dashed border-line bg-[#fbfdfd] p-6 text-center text-xs font-bold text-ink-muted">
           جداکننده بصری در صفحه گزارش نمایش داده می‌شود.
@@ -1446,12 +1565,117 @@ function BlockEditor({
   );
 }
 
+function SectionVisualPreview({
+  visual,
+}: {
+  visual: WeeklyOutlookSectionVisual;
+}) {
+  return (
+    <div className="relative min-h-[96px] overflow-hidden rounded-[18px] border border-brand-primary/12 bg-[#f7fbfc]">
+      {visual === "plain" ? (
+        <>
+          <span className="absolute inset-x-5 top-1/2 h-px bg-brand-primary/14" />
+          <span className="absolute right-5 top-5 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "grid" ? (
+        <>
+          <span
+            className="absolute inset-0 opacity-60"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,rgba(22,115,148,.12) 1px,transparent 1px),linear-gradient(to bottom,rgba(22,115,148,.1) 1px,transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+          <span className="absolute bottom-5 right-6 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "gradient" ? (
+        <>
+          <span className="absolute inset-0 bg-[radial-gradient(circle_at_75%_28%,rgba(252,133,2,.28),transparent_30%),linear-gradient(135deg,rgba(22,115,148,.22),rgba(255,255,255,.8))]" />
+          <span className="absolute bottom-5 left-5 h-px w-20 bg-brand-primary/30" />
+        </>
+      ) : null}
+
+      {visual === "blueprint" ? (
+        <>
+          <span
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,rgba(22,115,148,.14) 1px,transparent 1px),linear-gradient(to bottom,rgba(22,115,148,.1) 1px,transparent 1px)",
+              backgroundSize: "18px 18px",
+            }}
+          />
+          <span className="absolute left-8 top-5 h-12 w-16 border border-brand-primary/25" />
+          <span className="absolute left-14 top-4 h-14 w-px rotate-[32deg] bg-brand-primary/20" />
+          <span className="absolute right-7 bottom-6 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "market" ? (
+        <svg
+          viewBox="0 0 160 96"
+          className="absolute inset-0 h-full w-full text-brand-primary"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M18 66C34 56 42 68 56 51C70 34 83 48 97 35C112 21 125 33 144 20"
+            stroke="currentColor"
+            strokeOpacity=".38"
+            strokeWidth="2"
+          />
+          <path
+            d="M18 74H144M34 18V78M70 18V78M106 18V78"
+            stroke="currentColor"
+            strokeOpacity=".1"
+          />
+          <rect x="96" y="31" width="7" height="7" fill="var(--dnh-accent)" />
+        </svg>
+      ) : null}
+
+      {visual === "spotlight" ? (
+        <>
+          <span className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(252,133,2,.34),transparent_28%),radial-gradient(circle_at_50%_45%,rgba(22,115,148,.20),transparent_48%)]" />
+          <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "glass" ? (
+        <>
+          <span className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 to-white" />
+          <span className="absolute right-6 top-4 h-16 w-12 border border-brand-primary/16 bg-white/45" />
+          <span className="absolute right-16 top-8 h-16 w-12 border border-brand-primary/18 bg-white/35" />
+          <span className="absolute left-7 bottom-6 h-px w-16 bg-brand-accent/75" />
+        </>
+      ) : null}
+
+      {visual === "accent" ? (
+        <>
+          <span className="absolute inset-y-5 right-7 w-px bg-brand-accent" />
+          <span className="absolute bottom-6 right-7 h-px w-24 bg-brand-primary/22" />
+          <span className="absolute right-[23px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      <span className="absolute bottom-3 right-3 text-[10px] font-black text-brand-primary/70">
+        {sectionVisualLabels[visual]}
+      </span>
+    </div>
+  );
+}
+
 function BlockMiniIcon({ type }: { type: WeeklyOutlookBlockType }) {
   const className = "h-3.5 w-3.5";
 
   if (type === "list") return <ListChecks className={className} />;
   if (type === "quote") return <Quote className={className} />;
   if (type === "image") return <ImageIcon className={className} />;
+  if (type === "button") return <Link2 className={className} />;
   if (type === "heading") return <FileText className={className} />;
 
   return <Plus className={className} />;
@@ -1472,8 +1696,7 @@ function Label({
       {children}
       {help ? (
         <span
-          dir="ltr"
-          className="mt-1 block text-left text-[10px] font-normal text-ink-muted"
+          className="mt-1 block text-[10px] font-normal leading-5 text-ink-muted"
         >
           {help}
         </span>

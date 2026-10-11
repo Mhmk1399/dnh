@@ -15,8 +15,8 @@ import {
 import { AdminStatusBadge, type AdminStatusTone } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import DynamicForm from "@/lib/models/DynamicForm";
-import FormSubmission from "@/lib/models/FormSubmission";
+import DynamicForm from "@/models/DynamicForm";
+import FormSubmission from "@/models/FormSubmission";
 
 export const metadata: Metadata = { title: "فرم‌های پویا" };
 export const dynamic = "force-dynamic";
@@ -182,7 +182,7 @@ export default async function FormsPage({
       ) : (
         <AdminDataTable
           title="لیست فرم‌ها"
-          code="FORMS / DATA TABLE"
+          code="جدول فرم‌ها"
           rows={forms}
           getRowId={(form) => form.id}
           columns={formColumns}
@@ -252,7 +252,7 @@ const formColumns: AdminTableColumn<AdminFormRow>[] = [
     cell: (form) => (
       <div className="text-xs">
         <p dir="ltr" className="font-black text-ink">
-          REV / {String(form.revision).padStart(2, "0")}
+          نسخه {String(form.revision).padStart(2, "0")}
         </p>
         <p className="mt-2 text-ink-muted">
           {form.submissions.toLocaleString("fa-IR")} پاسخ

@@ -5,7 +5,7 @@ import { FormBuilder } from "@/components/dynamic-forms/FormBuilder";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import type { DynamicFormDefinition } from "@/lib/dynamic-forms";
-import DynamicForm from "@/lib/models/DynamicForm";
+import DynamicForm from "@/models/DynamicForm";
 
 export const metadata: Metadata = { title: "ویرایش فرم | مدیریت DNH" };
 export const dynamic = "force-dynamic";

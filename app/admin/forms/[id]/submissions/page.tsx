@@ -15,9 +15,9 @@ import {
 } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import DynamicForm from "@/lib/models/DynamicForm";
-import FormSubmission from "@/lib/models/FormSubmission";
-import User from "@/lib/models/User";
+import DynamicForm from "@/models/DynamicForm";
+import FormSubmission from "@/models/FormSubmission";
+import User from "@/models/User";
 
 export const metadata: Metadata = { title: "پاسخ‌های فرم | مدیریت DNH" };
 export const dynamic = "force-dynamic";
@@ -193,7 +193,7 @@ export default async function SubmissionsPage({
         <>
           <AdminDataTable
             title="جدول پاسخ‌ها"
-            code="SUBMISSIONS / DATA TABLE"
+            code="جدول پاسخ‌ها"
             rows={rows}
             getRowId={(submission) => submission.id}
             columns={submissionColumns}
@@ -312,7 +312,7 @@ const submissionColumns: AdminTableColumn<SubmissionRow>[] = [
     header: "نسخه فرم",
     cell: (submission) => (
       <span dir="ltr" className="font-black text-ink">
-        FORM REV / {String(submission.formRevision).padStart(2, "0")}
+        نسخه فرم {String(submission.formRevision).padStart(2, "0")}
       </span>
     ),
   },

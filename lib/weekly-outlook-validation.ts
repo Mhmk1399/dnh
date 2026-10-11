@@ -5,6 +5,7 @@ import {
   WEEKLY_OUTLOOK_DATE_CALENDARS,
   WEEKLY_OUTLOOK_SECTION_ICONS,
   WEEKLY_OUTLOOK_SECTION_TONES,
+  WEEKLY_OUTLOOK_SECTION_VISUALS,
   WEEKLY_OUTLOOK_STATUSES,
   makeWeeklyOutlookStableId,
   type WeeklyOutlookBlock,
@@ -13,6 +14,7 @@ import {
   type WeeklyOutlookDateCalendar,
   type WeeklyOutlookReportDefinition,
   type WeeklyOutlookSectionDefinition,
+  type WeeklyOutlookSectionVisual,
   type WeeklyOutlookStatus,
 } from "@/lib/weekly-outlook";
 import { parseIsoDateOnly } from "@/lib/weekly-outlook-date";
@@ -306,6 +308,12 @@ function parseSection(
   const tone = isOneOf(value.tone, WEEKLY_OUTLOOK_SECTION_TONES)
     ? value.tone
     : "light";
+  const visual: WeeklyOutlookSectionVisual = isOneOf(
+    value.visual,
+    WEEKLY_OUTLOOK_SECTION_VISUALS,
+  )
+    ? value.visual
+    : "grid";
 
   if (!title) issues[`${path}.title`] = "عنوان سکشن الزامی است.";
   if (blocksRaw.length > 40) {
@@ -319,6 +327,7 @@ function parseSection(
     summary: cleanLongText(value.summary, 700) || undefined,
     icon,
     tone,
+    visual,
     blocks: blocksRaw
       .slice(0, 40)
       .map((block, blockIndex) =>

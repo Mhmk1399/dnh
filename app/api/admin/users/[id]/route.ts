@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import Session from "@/lib/models/Session";
-import User from "@/lib/models/User";
+import Session from "@/models/Session";
+import User from "@/models/User";
 import { readJson } from "@/lib/validation";
 
 async function authorize() {

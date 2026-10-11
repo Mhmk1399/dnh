@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import FormSubmission from "@/lib/models/FormSubmission";
+import FormSubmission from "@/models/FormSubmission";
 
 async function authorize() {
   const user = await getCurrentUser();

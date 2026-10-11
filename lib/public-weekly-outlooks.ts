@@ -3,7 +3,7 @@ import "server-only";
 import connect from "@/lib/data";
 import WeeklyOutlookReport, {
   type WeeklyOutlookReportRecord,
-} from "@/lib/models/WeeklyOutlookReport";
+} from "@/models/WeeklyOutlookReport";
 import type {
   PublicWeeklyOutlookReport,
   WeeklyOutlookBlock,
@@ -44,6 +44,7 @@ function mapSections(
     summary: section.summary,
     icon: section.icon,
     tone: section.tone,
+    visual: section.visual ?? "grid",
     blocks: section.blocks.map((block) => {
       if (block.type === "heading") {
         return {

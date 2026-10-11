@@ -23,6 +23,7 @@ type ServiceItem = {
   title: string;
   audience: string;
   description: string;
+  outcome: string;
   href: string;
 };
 
@@ -31,59 +32,71 @@ const SERVICES: ServiceItem[] = [
     key: "private-wealth",
     label: "PRIVATE WEALTH",
     title: "استراتژی ثروت خصوصی",
-    audience: "افراد، خانواده‌ها و صاحبان سرمایه",
+    audience: "افراد دارای دارایی، خانواده‌ها و صاحبان سرمایه",
     description:
-      "ساختن تصویری ساختاریافته از ثروت، اهداف، نقدشوندگی، ریسک و مسیرهای قابل بررسی.",
+      "بررسی یکپارچه دارایی‌ها، اهداف مالی، نقدینگی و ریسک‌ها برای شناخت وضعیت ثروت و مسیرهای راهبردی پیش‌رو.",
+    outcome:
+      "تصویری ساختاریافته از وضعیت ثروت، ریسک‌های مهم و گزینه‌های قابل بررسی.",
     href: "/services/private-wealth-strategy",
   },
 
   {
     key: "portfolio",
     label: "PORTFOLIO INTELLIGENCE",
-    title: "هوشمندی پرتفوی",
-    audience: "دارندگان دارایی‌ها و پرتفوی‌های متنوع",
+    title: "هوشمندی پرتفوی سرمایه‌گذاری",
+    audience: "افراد دارای سبد سرمایه‌گذاری یا دارایی‌های متنوع",
     description:
-      "ارزیابی پراکندگی دارایی، تمرکز ریسک، نقدشوندگی و حوزه‌های نیازمند بازبینی.",
+      "ارزیابی ترکیب دارایی‌ها، تمرکز ریسک، نقدشوندگی و تناسب سبد سرمایه‌گذاری با اهداف و افق مالی.",
+    outcome:
+      "شناخت نقاط ضعف ساختار پرتفوی و حوزه‌های نیازمند بازبینی.",
     href: "/services/portfolio-intelligence",
   },
 
   {
     key: "strategic-advisory",
-    label: "STRATEGIC ADVISORY",
+    label: "STRATEGIC FINANCIAL ADVISORY",
     title: "مشاوره مالی راهبردی",
-    audience: "صاحبان کسب‌وکار، مدیران و هلدینگ‌ها",
+    audience: "صاحبان کسب‌وکار، مدیران، شرکت‌ها و هلدینگ‌ها",
     description:
-      "بررسی ساختار مالی، سرمایه، نقدینگی، تأمین مالی و مسیر تصمیم در مسائل چندلایه کسب‌وکار.",
+      "بررسی ساختار سرمایه، نقدینگی، تأمین مالی و گزینه‌های تصمیم‌گیری در مسائل مالی پیچیده کسب‌وکار.",
+    outcome:
+      "شناخت گزینه‌ها، ریسک‌ها و مسیرهای قابل بررسی برای تصمیم‌های مالی سازمان.",
     href: "/services/strategic-financial-advisory",
   },
 
   {
     key: "macro-market",
-    label: "MACRO & MARKET",
-    title: "مشاوره اقتصاد و بازار",
-    audience: "سرمایه‌گذاران و تصمیم‌گیرندگان",
+    label: "MACRO & MARKET ADVISORY",
+    title: "مشاوره اقتصاد کلان و بازارهای مالی",
+    audience: "سرمایه‌گذاران، مدیران و تصمیم‌گیرندگان مالی",
     description:
-      "تحلیل شرایط اقتصادی، سناریوهای مرتبط و پیامدهای راهبردی آن‌ها برای تصمیم.",
+      "تحلیل تورم، نرخ ارز، سیاست‌های اقتصادی و تغییرات بازار برای بررسی سناریوها و پیامدهای آن‌ها بر تصمیم‌های مالی.",
+    outcome:
+      "شناخت شرایط اقتصادی، ریسک‌های محیطی و پیامدهای احتمالی سناریوهای مختلف.",
     href: "/services/macro-market-advisory",
   },
 
   {
     key: "risk-protection",
-    label: "RISK & PROTECTION",
+    label: "RISK MANAGEMENT & WEALTH PROTECTION",
     title: "مدیریت ریسک و حفاظت از ثروت",
-    audience: "افراد، خانواده‌ها، صاحبان سرمایه و کسب‌وکارها",
+    audience: "افراد دارای دارایی، خانواده‌ها، صاحبان سرمایه و کسب‌وکارها",
     description:
-      "شناخت ریسک‌های مهم و پنهان و ایجاد تصویری ساختاریافته از اولویت‌های حفاظتی.",
+      "شناسایی ریسک‌های پنهان و آشکار در ساختار ثروت، از تمرکز دارایی و نقدشوندگی تا تورم و تغییرات اقتصادی.",
+    outcome:
+      "تصویری روشن‌تر از ریسک‌های مهم و اولویت‌های مدیریت و حفاظت از ثروت.",
     href: "/services/risk-management-wealth-protection",
   },
 
   {
     key: "executive",
     label: "EXECUTIVE BRIEFINGS",
-    title: "نشست‌های مدیران",
-    audience: "مدیران ارشد، هیئت‌مدیره و تصمیم‌گیرندگان کلیدی",
+    title: "نشست‌های راهبردی مدیران",
+    audience: "مدیران ارشد، اعضای هیئت‌مدیره و تصمیم‌گیرندگان کلیدی",
     description:
-      "بررسی متمرکز یک موضوع مهم و جمع‌بندی نکات کلیدی، سناریوها و مسیرهای قابل بررسی.",
+      "بررسی متمرکز یک مسئله مهم مالی یا اقتصادی، با ارائه تحلیل، سناریوهای مرتبط و جمع‌بندی نکات مؤثر بر تصمیم.",
+    outcome:
+      "جمع‌بندی مدیریتی از مسئله، ریسک‌ها و مسیرهای قابل بررسی.",
     href: "/services/executive-briefings",
   },
 ];
@@ -177,23 +190,6 @@ export function AdvisoryServicesSection() {
             "linear-gradient(to right, rgba(255,255,255,.10) 1px, transparent 1px)",
           backgroundSize: "120px 100%",
         }}
-      />
-
-      {/* top marker */}
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[20%]
-          top-0
-          z-[2]
-
-          h-[11px]
-          w-[2px]
-
-          bg-brand-accent
-        "
       />
 
       {/* =========================================================
@@ -321,9 +317,10 @@ export function AdvisoryServicesSection() {
                   lg:text-[15px]
                 "
               >
-                خدمات DNH به‌عنوان پکیج‌های جدا از هم تعریف نشده‌اند. نقطه شروع،
-                شناخت مسئله‌ای است که باید بررسی شود؛ از ساختار ثروت و پرتفوی تا
-                ریسک، محیط اقتصادی و تصمیم‌های مالی پیچیده.
+                هر تصمیم مالی، شرایط و پیچیدگی‌های خاص خود را دارد. خدمات DNH با
+                تمرکز بر شناخت مسئله، بررسی ساختار مالی، ارزیابی ریسک‌ها و تحلیل
+                گزینه‌های پیش‌رو طراحی شده‌اند تا افراد، خانواده‌ها و کسب‌وکارها
+                بتوانند مسیر مناسب‌تری برای تصمیم‌های مهم مالی خود شناسایی کنند.
               </p>
 
               <div
@@ -362,14 +359,10 @@ export function AdvisoryServicesSection() {
                 >
                   مشاهده همه خدمات
                 </ActionButton>
-
-             
               </div>
             </div>
           </Reveal>
         </div>
-
-      
 
         {/* =======================================================
             Service matrix
@@ -395,8 +388,6 @@ export function AdvisoryServicesSection() {
             />
           ))}
         </ul>
-
-       
       </div>
     </section>
   );
@@ -457,7 +448,7 @@ function ServiceMatrixItem({
             relative
 
             flex
-            min-h-[255px]
+            min-h-[335px]
             h-full
             flex-col
 
@@ -481,7 +472,7 @@ function ServiceMatrixItem({
             sm:px-6
             sm:py-7
 
-            lg:min-h-[275px]
+            lg:min-h-[355px]
             lg:px-8
             lg:py-8
           "
@@ -647,6 +638,45 @@ function ServiceMatrixItem({
             {service.description}
           </p>
 
+          <div
+            className="
+              mt-5
+
+              border-t
+              border-white/10
+
+              pt-4
+            "
+          >
+            <p
+              className="
+                text-[10px]
+                font-black
+
+                text-brand-accent/85
+              "
+            >
+              خروجی مورد انتظار
+            </p>
+
+            <p
+              className="
+                mt-1.5
+                max-w-[520px]
+
+                text-[10px]
+                font-bold
+                leading-[2]
+
+                text-white/62
+
+                sm:text-[11px]
+              "
+            >
+              {service.outcome}
+            </p>
+          </div>
+
           {/* footer */}
 
           <div
@@ -748,8 +778,11 @@ function useInViewOnce<T extends HTMLElement>() {
     if (!element || isVisible) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsVisible(true);
-      return;
+      const frame = window.requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const observer = new IntersectionObserver(

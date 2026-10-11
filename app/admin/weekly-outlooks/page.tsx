@@ -15,7 +15,7 @@ import { AdminDynamicForm } from "@/components/admin/AdminDynamicForm";
 import { AdminStatusBadge, type AdminStatusTone } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
 import type {
   WeeklyOutlookDateCalendar,
   WeeklyOutlookStatus,
@@ -122,7 +122,7 @@ export default async function WeeklyOutlooksAdminPage({
               dir="ltr"
               className="mt-5 text-[10px] font-black tracking-[0.22em] text-brand-primary"
             >
-              DNH / WEEKLY OUTLOOK DESK
+              میز گزارش‌های هفتگی
             </p>
             <h1 className="mt-2 text-3xl font-black tracking-[-0.04em] text-ink sm:text-4xl">
               گزارش‌های چشم‌انداز هفتگی
@@ -179,7 +179,7 @@ export default async function WeeklyOutlooksAdminPage({
       ) : (
         <AdminDataTable
           title="لیست گزارش‌ها"
-          code="REPORTS / DATA TABLE"
+          code="جدول گزارش‌ها"
           rows={reports}
           getRowId={(report) => report.id}
           columns={reportColumns}
@@ -277,7 +277,7 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
       cell: (report) => (
         <div className="text-xs">
           <p dir="ltr" className="font-black text-ink">
-            REV / {String(report.revision).padStart(2, "0")}
+            نسخه {String(report.revision).padStart(2, "0")}
           </p>
           <p className="mt-2 text-ink-muted">
             {report.sections.length.toLocaleString("fa-IR")} سکشن

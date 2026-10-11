@@ -5,7 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { UserEditForm } from "@/components/admin/users/UserEditForm";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import User from "@/lib/models/User";
+import User from "@/models/User";
 
 export const metadata: Metadata = { title: "ویرایش کاربر | مدیریت DNH" };
 export const dynamic = "force-dynamic";

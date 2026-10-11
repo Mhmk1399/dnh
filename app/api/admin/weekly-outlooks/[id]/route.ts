@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
 import { dateOnlyToStorageDate } from "@/lib/weekly-outlook-date";
 import {
   WEEKLY_OUTLOOK_STATUSES,

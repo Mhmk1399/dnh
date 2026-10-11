@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import { FormDefinitionError, validateFormDefinition } from "@/lib/dynamic-form-validation";
-import DynamicForm from "@/lib/models/DynamicForm";
+import DynamicForm from "@/models/DynamicForm";
 import { readJson } from "@/lib/validation";
 
 export async function POST(request: Request) {

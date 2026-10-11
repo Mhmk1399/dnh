@@ -9,8 +9,8 @@ import { AdminRecordView } from "@/components/admin/AdminRecordView";
 import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import Session from "@/lib/models/Session";
-import User from "@/lib/models/User";
+import Session from "@/models/Session";
+import User from "@/models/User";
 
 export const metadata: Metadata = { title: "نمایش کاربر | مدیریت DNH" };
 export const dynamic = "force-dynamic";

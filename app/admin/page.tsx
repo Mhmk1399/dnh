@@ -27,12 +27,12 @@ import {
 import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import Contact from "@/lib/models/Contact";
-import DynamicForm from "@/lib/models/DynamicForm";
-import FormSubmission from "@/lib/models/FormSubmission";
-import Lead from "@/lib/models/Lead";
-import User from "@/lib/models/User";
-import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import Contact from "@/models/Contact";
+import DynamicForm from "@/models/DynamicForm";
+import FormSubmission from "@/models/FormSubmission";
+import Lead from "@/models/Lead";
+import User from "@/models/User";
+import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
 import type { WeeklyOutlookDateCalendar } from "@/lib/weekly-outlook";
 import {
   formatWeeklyOutlookDate,
@@ -910,7 +910,7 @@ function RecentForm({ form }: { form: DashboardData["forms"][number] }) {
           </span>
           <span className="px-1">·</span>
           <span dir="ltr" className="inline-block">
-            REV {String(form.revision).padStart(2, "0")}
+            نسخه {String(form.revision).padStart(2, "0")}
           </span>
         </span>
       </span>

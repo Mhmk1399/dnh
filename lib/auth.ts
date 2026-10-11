@@ -2,8 +2,8 @@ import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } fr
 import { promisify } from "node:util";
 import { cookies } from "next/headers";
 import connect from "@/lib/data";
-import Session from "@/lib/models/Session";
-import User from "@/lib/models/User";
+import Session from "@/models/Session";
+import User from "@/models/User";
 
 const scrypt = promisify(scryptCallback);
 const SESSION_COOKIE = "dnh_session";

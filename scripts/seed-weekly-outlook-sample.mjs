@@ -62,6 +62,7 @@ const sectionSchema = new Schema(
     summary: String,
     icon: { type: String, required: true },
     tone: { type: String, required: true },
+    visual: { type: String, default: "grid" },
     blocks: { type: [blockSchema], default: [] },
   },
   { _id: false },

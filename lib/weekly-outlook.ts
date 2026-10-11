@@ -12,6 +12,17 @@ export const WEEKLY_OUTLOOK_SECTION_TONES = [
   "accent",
 ] as const;
 
+export const WEEKLY_OUTLOOK_SECTION_VISUALS = [
+  "plain",
+  "grid",
+  "gradient",
+  "blueprint",
+  "market",
+  "spotlight",
+  "glass",
+  "accent",
+] as const;
+
 export const WEEKLY_OUTLOOK_SECTION_ICONS = [
   "overview",
   "risk",
@@ -65,6 +76,9 @@ export type WeeklyOutlookStatus =
 
 export type WeeklyOutlookSectionTone =
   (typeof WEEKLY_OUTLOOK_SECTION_TONES)[number];
+
+export type WeeklyOutlookSectionVisual =
+  (typeof WEEKLY_OUTLOOK_SECTION_VISUALS)[number];
 
 export type WeeklyOutlookSectionIcon =
   (typeof WEEKLY_OUTLOOK_SECTION_ICONS)[number];
@@ -158,6 +172,7 @@ export type WeeklyOutlookSectionDefinition = {
   summary?: string;
   icon: WeeklyOutlookSectionIcon;
   tone: WeeklyOutlookSectionTone;
+  visual: WeeklyOutlookSectionVisual;
   blocks: WeeklyOutlookBlock[];
 };
 
@@ -231,6 +246,7 @@ export function createWeeklyOutlookTemplate(): WeeklyOutlookReportDefinition {
         summary: "مهم‌ترین متغیرهایی که زمینه تصمیم این هفته را شکل دادند.",
         icon: "overview",
         tone: "light",
+        visual: "gradient",
         blocks: [
           {
             id: makeWeeklyOutlookStableId("block"),
@@ -255,6 +271,7 @@ export function createWeeklyOutlookTemplate(): WeeklyOutlookReportDefinition {
         summary: "تحلیل اقتصاد، بازارها، سیاست پولی و دارایی‌ها.",
         icon: "market",
         tone: "soft",
+        visual: "blueprint",
         blocks: [
           {
             id: makeWeeklyOutlookStableId("block"),
@@ -276,6 +293,7 @@ export function createWeeklyOutlookTemplate(): WeeklyOutlookReportDefinition {
         summary: "گزارش با برداشت راهبردی و متغیرهای قابل رصد تمام می‌شود.",
         icon: "conclusion",
         tone: "dark",
+        visual: "spotlight",
         blocks: [
           {
             id: makeWeeklyOutlookStableId("block"),

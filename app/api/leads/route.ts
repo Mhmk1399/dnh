@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "@/lib/data";
 import { getCurrentUser } from "@/lib/auth";
-import Lead from "@/lib/models/Lead";
+import Lead from "@/models/Lead";
 import { cleanText, isValidPhone, normalizeIranianPhone, readJson, type FieldErrors } from "@/lib/validation";
 
 export async function POST(request: Request) {

@@ -19,21 +19,21 @@ const FRAMEWORK = [
     en: "DATA INTELLIGENCE",
     title: "هوشمندی داده",
     description:
-      "شناخت داده‌ها و متغیرهای مؤثر بر محیط تصمیم؛ از اقتصاد و نقدینگی تا بازار، ساختار مالی و شرایط مسئله.",
+      "بررسی داده‌های اقتصادی، وضعیت دارایی‌ها و عوامل مؤثر بر تصمیم مالی؛ از تورم و نرخ ارز تا نقدینگی، شرایط بازار و ساختار مالی.",
   },
   {
     key: "N",
     en: "NAVIGATION STRATEGY",
     title: "راهبرد مسیر",
     description:
-      "تبدیل داده و تحلیل به سناریو، مسیرهای قابل بررسی و اولویت‌های تصمیم در شرایط عدم‌قطعیت.",
+      "تبدیل اطلاعات و تحلیل‌ها به سناریوهای قابل بررسی، با تمرکز بر شناخت ریسک‌ها، مقایسه گزینه‌ها و انتخاب مسیر تصمیم‌گیری در شرایط عدم‌قطعیت.",
   },
   {
     key: "H",
     en: "HORIZON ARCHITECTURE",
     title: "معماری افق",
     description:
-      "هماهنگ‌کردن تصمیم امروز با ساختار بلندمدت ثروت، نقدشوندگی، اهداف و افق زمانی.",
+      "هماهنگ‌کردن تصمیم‌های امروز با اهداف آینده، با درنظرگرفتن ساختار ثروت، نیازهای نقدینگی، تاب‌آوری دارایی‌ها و افق زمانی.",
   },
 ] as const;
 
@@ -163,7 +163,7 @@ export function DnhFrameworkSection() {
                 sm:text-[11px]
               "
             >
-              چارچوب DNH
+              چارچوب اختصاصی DNH
             </span>
           </div>
 
@@ -189,13 +189,12 @@ export function DnhFrameworkSection() {
               lg:text-[45px]
               lg:leading-[1.5]
 
-              xl:text-[50px]
+            
             "
           >
-            از داده تا تصمیم؛
+            از تحلیل داده‌ها تا تصمیم مالی آگاهانه؛
             <br />
-            <span className="text-brand-accent">یک مسیر ساختاریافته</span> برای
-            دیدن افق.
+            <span className="text-brand-accent">با نگاهی به آینده.</span>
           </h2>
 
           {/* body */}
@@ -219,9 +218,10 @@ export function DnhFrameworkSection() {
               lg:text-[15px]
             "
           >
-            چارچوب DNH برای نگاه ساختاری به تصمیم‌های مالی و ثروت طراحی شده است؛
-            مسیری که از شناخت محیط تصمیم آغاز می‌شود، به سناریو و جهت حرکت
-            می‌رسد و تصمیم امروز را در نسبت با افق بلندمدت قرار می‌دهد.
+            چارچوب DNH روشی ساختاریافته برای بررسی تصمیم‌های مالی و مدیریت ثروت
+            است. این رویکرد با شناخت شرایط اقتصادی و مالی آغاز می‌شود، به
+            ارزیابی ریسک‌ها و سناریوهای مختلف می‌رسد و در نهایت، گزینه‌های
+            تصمیم‌گیری را با اهداف و افق بلندمدت ثروت هماهنگ می‌کند.
           </p>
 
           {/* public boundary */}
@@ -250,11 +250,12 @@ export function DnhFrameworkSection() {
 
                 text-white/58
 
-                sm:text-[12px]
+                sm:text-[14px]
               "
             >
-              این Framework برای سیگنال‌دهی، پیش‌بینی قطعی قیمت یا جایگزینی
-              قضاوت حرفه‌ای طراحی نشده است.
+              چارچوب DNH برای تحلیل ساختاری و پشتیبانی از تصمیم‌های مالی طراحی
+              شده است؛ نه برای ارائه سیگنال معاملاتی، پیش‌بینی قطعی قیمت یا
+              جایگزینی قضاوت تخصصی.
             </p>
           </div>
 
@@ -785,7 +786,7 @@ function FrameworkVisualLabel({
       <div
         className="
           flex
-          items-start
+          items-center
           gap-3
         "
       >
@@ -833,22 +834,6 @@ function FrameworkVisualLabel({
           >
             {item.title}
           </h3>
-
-          <p
-            dir="ltr"
-            className="
-              mt-0.5
-
-              text-right
-              text-[11px]
-              font-bold
-              tracking-[0.14em]
-
-              text-white/42
-            "
-          >
-            {item.en}
-          </p>
         </div>
       </div>
 
@@ -857,7 +842,7 @@ function FrameworkVisualLabel({
           mt-3
           max-w-[200px]
 
-          text-[11px]
+          text-[13px]
           font-medium
           leading-[1.9]
 
@@ -938,42 +923,6 @@ function FrameworkBackground() {
           WebkitMaskImage:
             "linear-gradient(to right, black 0%, rgba(0,0,0,.72) 62%, transparent 100%)",
         }}
-      />
-
-      {/* top marker */}
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[22%]
-          top-0
-          z-[2]
-
-          h-[11px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-
-      {/* bottom axis */}
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          bottom-0
-          left-[8%]
-          right-[8%]
-
-          h-px
-
-          bg-gradient-to-r
-          from-transparent
-          via-white/10
-          to-transparent
-        "
       />
     </>
   );

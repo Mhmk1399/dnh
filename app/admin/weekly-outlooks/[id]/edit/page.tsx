@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { WeeklyOutlookBuilder } from "@/components/weekly-outlooks/WeeklyOutlookBuilder";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import WeeklyOutlookReport from "@/lib/models/WeeklyOutlookReport";
+import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
 import type {
   WeeklyOutlookBlock,
   WeeklyOutlookReportDefinition,
@@ -61,6 +61,7 @@ export default async function EditWeeklyOutlookPage({
       summary: section.summary,
       icon: section.icon,
       tone: section.tone,
+      visual: section.visual ?? "grid",
       blocks: section.blocks.map((block) => {
         if (block.type === "heading") {
           return {

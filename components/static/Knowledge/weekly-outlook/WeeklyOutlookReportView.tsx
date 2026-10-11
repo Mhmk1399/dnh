@@ -29,6 +29,7 @@ import type {
   WeeklyOutlookSectionDefinition,
   WeeklyOutlookSectionIcon,
   WeeklyOutlookSectionTone,
+  WeeklyOutlookSectionVisual,
 } from "@/lib/weekly-outlook";
 import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";
 
@@ -236,14 +237,9 @@ function ReportSection({
 
   return (
     <section className={`relative isolate overflow-hidden py-14 sm:py-16 lg:py-20 ${tone.section}`}>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,currentColor 1px,transparent 1px),linear-gradient(to bottom,currentColor 1px,transparent 1px)",
-          backgroundSize: "118px 118px",
-        }}
+      <SectionVisualLayer
+        visual={section.visual ?? "grid"}
+        tone={section.tone}
       />
 
       <div className="dnh-site-shell relative z-10 mx-auto grid w-full max-w-[1536px] gap-8 px-5 sm:px-8 lg:grid-cols-[0.38fr_1fr] lg:gap-14 lg:px-12 xl:px-16 2xl:px-20">
@@ -293,6 +289,178 @@ function ReportSection({
         </div>
       </div>
     </section>
+  );
+}
+
+function SectionVisualLayer({
+  visual,
+  tone,
+}: {
+  visual: WeeklyOutlookSectionVisual;
+  tone: WeeklyOutlookSectionTone;
+}) {
+  const dark = tone === "dark" || tone === "teal";
+  const gridColor = dark
+    ? "rgba(255,255,255,.085)"
+    : "rgba(22,115,148,.075)";
+  const lineColor = dark
+    ? "rgba(255,255,255,.16)"
+    : "rgba(22,115,148,.16)";
+
+  if (visual === "plain") {
+    return null;
+  }
+
+  if (visual === "gradient") {
+    return (
+      <>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: dark
+              ? "radial-gradient(circle at 78% 18%,rgba(252,133,2,.18),transparent 28%),radial-gradient(circle at 10% 72%,rgba(115,216,250,.11),transparent 34%)"
+              : "radial-gradient(circle at 82% 16%,rgba(252,133,2,.18),transparent 28%),radial-gradient(circle at 10% 70%,rgba(22,115,148,.10),transparent 34%)",
+          }}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[10%] top-16 h-px w-48 bg-brand-accent/35"
+        />
+      </>
+    );
+  }
+
+  if (visual === "blueprint") {
+    return (
+      <>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-80"
+          style={{
+            backgroundImage: `linear-gradient(to right,${gridColor} 1px,transparent 1px),linear-gradient(to bottom,${gridColor} 1px,transparent 1px)`,
+            backgroundSize: "72px 72px",
+          }}
+        />
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 900 520"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-55"
+          fill="none"
+        >
+          <path
+            d="M72 350L454 128L832 350M140 118L748 410M760 96L222 436"
+            stroke={lineColor}
+          />
+          <rect
+            x="320"
+            y="152"
+            width="250"
+            height="178"
+            stroke={lineColor}
+          />
+          <path
+            d="M320 152L445 88L570 152M570 152L710 102"
+            stroke={lineColor}
+          />
+        </svg>
+      </>
+    );
+  }
+
+  if (visual === "market") {
+    return (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1200 520"
+        className="pointer-events-none absolute inset-x-0 top-8 h-[420px] w-full opacity-55"
+        fill="none"
+      >
+        <path
+          d="M20 360C122 310 174 372 276 248C384 116 468 310 574 202C696 78 808 222 930 126C1038 40 1110 98 1180 56"
+          stroke="currentColor"
+          strokeOpacity={dark ? 0.16 : 0.12}
+          strokeWidth="2"
+        />
+        <path
+          d="M48 426H1152M160 80V440M360 80V440M560 80V440M760 80V440M960 80V440"
+          stroke="currentColor"
+          strokeOpacity={dark ? 0.075 : 0.06}
+        />
+        <rect
+          x="572"
+          y="194"
+          width="9"
+          height="9"
+          fill="var(--dnh-accent)"
+        />
+      </svg>
+    );
+  }
+
+  if (visual === "spotlight") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: dark
+            ? "radial-gradient(circle at 50% 34%,rgba(252,133,2,.22),transparent 18%),radial-gradient(circle at 50% 34%,rgba(116,216,250,.13),transparent 44%)"
+            : "radial-gradient(circle at 50% 34%,rgba(252,133,2,.18),transparent 18%),radial-gradient(circle at 50% 34%,rgba(22,115,148,.10),transparent 44%)",
+        }}
+      />
+    );
+  }
+
+  if (visual === "glass") {
+    return (
+      <>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            background: dark
+              ? "linear-gradient(126deg,rgba(255,255,255,.06),transparent 42%,rgba(252,133,2,.08))"
+              : "linear-gradient(126deg,rgba(22,115,148,.08),transparent 42%,rgba(252,133,2,.09))",
+          }}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[8%] top-20 h-44 w-28 border border-current/10 bg-current/[0.025]"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[18%] top-36 h-52 w-32 border border-current/10 bg-current/[0.018]"
+        />
+      </>
+    );
+  }
+
+  if (visual === "accent") {
+    return (
+      <>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-16 right-[max(1.25rem,calc((100vw-1536px)/2+5rem))] w-px bg-brand-accent/55"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[max(1.25rem,calc((100vw-1536px)/2+5rem))] top-28 h-3 w-3 translate-x-1/2 bg-brand-accent"
+        />
+      </>
+    );
+  }
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 opacity-[0.055]"
+      style={{
+        backgroundImage:
+          "linear-gradient(to right,currentColor 1px,transparent 1px),linear-gradient(to bottom,currentColor 1px,transparent 1px)",
+        backgroundSize: "118px 118px",
+      }}
+    />
   );
 }
 

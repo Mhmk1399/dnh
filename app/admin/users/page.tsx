@@ -12,7 +12,7 @@ import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { UserTableActions } from "@/components/admin/users/UserTableActions";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import User from "@/lib/models/User";
+import User from "@/models/User";
 
 export const metadata: Metadata = { title: "کاربران | مدیریت DNH" };
 export const dynamic = "force-dynamic";
@@ -147,7 +147,7 @@ export default async function AdminUsersPage({
       ) : (
         <AdminDataTable
           title="جدول کاربران"
-          code="USERS / DATA TABLE"
+          code="جدول کاربران"
           rows={users}
           getRowId={(user) => user.id}
           columns={userColumns}

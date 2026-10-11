@@ -4,8 +4,8 @@ import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import { FORM_STATUSES, type DynamicFormStatus } from "@/lib/dynamic-forms";
 import { FormDefinitionError, validateFormDefinition } from "@/lib/dynamic-form-validation";
-import DynamicForm from "@/lib/models/DynamicForm";
-import FormSubmission from "@/lib/models/FormSubmission";
+import DynamicForm from "@/models/DynamicForm";
+import FormSubmission from "@/models/FormSubmission";
 import { readJson } from "@/lib/validation";
 
 async function authorize() { const user = await getCurrentUser(); return user?.role === "admin" ? user : null; }
