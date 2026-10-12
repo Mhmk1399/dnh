@@ -35,21 +35,21 @@ const CONSULTATION_PATH = "/request-strategic-consultation";
 
 const ASSESSMENT_ITEMS = [
   {
-    label: "موضوع تصمیم",
+    label: "موضوع اصلی تصمیم",
     en: "DECISION",
-    value: "چه مسئله‌ای باید روشن شود؟",
+    value: "موضوع اصلی تصمیم یا مسئله مالی چیست؟",
     icon: Layers3,
   },
   {
     label: "افق زمانی",
     en: "HORIZON",
-    value: "این تصمیم برای چه زمانی است؟",
+    value: "افق زمانی تصمیم چقدر است؟",
     icon: Clock3,
   },
   {
-    label: "سطح پیچیدگی",
+    label: "پیچیدگی و فوریت",
     en: "COMPLEXITY",
-    value: "چه متغیرهایی باید کنار هم دیده شوند؟",
+    value: "سطح تقریبی پیچیدگی و فوریت چقدر است؟",
     icon: Route,
   },
 ] as const;
@@ -191,7 +191,7 @@ export function FinancialDecisionAssessmentSection() {
                   sm:text-[11px]
                 "
               >
-                نقطه شروع
+                شروع مسیر تصمیم‌گیری
               </span>
             </div>
           </Reveal>
@@ -217,10 +217,9 @@ export function FinancialDecisionAssessmentSection() {
                 xl:text-[53px]
               "
             >
-              قبل از انتخاب مسیر،
+              قبل از تصمیم بعدی،
               <br />
-              باید <span className="text-brand-accent">مسئله درست</span> دیده
-              شود.
+              <span className="text-brand-accent">مسئله را درست تعریف کنید.</span>
             </h2>
           </Reveal>
 
@@ -241,9 +240,10 @@ export function FinancialDecisionAssessmentSection() {
                 lg:text-[15px]
               "
             >
-              هر تصمیم مهم مالی، پیش از آنکه به یک انتخاب تبدیل شود، به درک درست
-              مسئله، شرایط، فوریت و مسیرهای پیش رو نیاز دارد. Assessment اولیه
-              DNH برای همین نقطه آغاز طراحی شده است.
+              بسیاری از تصمیم‌های مالی زمانی پیچیده می‌شوند که هنوز مسئله اصلی،
+              محدودیت‌ها، ریسک‌ها و گزینه‌های پیش‌رو به‌درستی مشخص نشده‌اند.
+              ارزیابی اولیه DNH کمک می‌کند پیش از ورود به مشاوره تخصصی، تصویر
+              روشن‌تری از نوع مسئله، میزان فوریت، سطح پیچیدگی و مسیر مناسب داشته باشید.
             </p>
           </Reveal>
 
@@ -362,9 +362,9 @@ export function FinancialDecisionAssessmentSection() {
                     sm:text-[11px]
                   "
                 >
-                  در مرحله اول فقط اطلاعات لازم برای شناخت مسئله دریافت می‌شود؛
-                  نیازی به ارسال اطلاعات بانکی، اسناد حساس یا جزئیات کامل
-                  دارایی‌ها نیست.
+                  در این مرحله نیازی به ارائه جزئیات کامل دارایی‌ها یا اطلاعات
+                  مالی حساس نیست. هدف، شناخت اولیه شرایط و مشخص‌کردن مناسب‌ترین
+                  مسیر برای ادامه بررسی است.
                 </p>
               </div>
             </div>

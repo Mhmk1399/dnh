@@ -18,7 +18,7 @@ const HERO_MOBILE = "/assets/images/dnh-hero-mobile.png";
 
 const ASSESSMENT_HREF = "/financial-decision-assessment";
 
-const WEALTH_ARCHITECTURE_HREF = "/dnh/wealth-architecture";
+const SERVICES_HREF = "#advisory-services";
 
 /* =============================================================================
    Hero
@@ -268,7 +268,7 @@ export function HomeHero() {
                 sm:text-[11px]
               "
             >
-              DNH | معماری ثروت و مشاوره مالی استراتژیک
+              معماری ثروت و تصمیم‌سازی مالی
             </p>
           </div>
 
@@ -299,13 +299,11 @@ export function HomeHero() {
               
             "
           >
-            تصمیم‌های مالی مهم،
+            برای تصمیم‌های مالی مهم،
             <br />
-            <span className="text-brand-accent">
-              {" "}
-              به نگاهی فراتر از سرمایه‌گذاری
-            </span>{" "}
-            نیاز دارند.
+            <span className="text-brand-accent">فقط اطلاعات بیشتر کافی نیست؛</span>
+            <br />
+            به یک ساختار روشن نیاز دارید.
           </h1>
 
           {/* =====================================================
@@ -333,10 +331,11 @@ export function HomeHero() {
               lg:leading-[2.1]
             "
           >
-            DNH با رویکردی تخصصی به معماری ثروت، تحلیل ریسک و مشاوره مالی
-            استراتژیک، به سرمایه‌گذاران، خانواده‌ها و صاحبان کسب‌وکار کمک می‌کند
-            ساختار دارایی‌ها، گزینه‌های پیش‌رو و پیامد تصمیم‌های مالی خود را
-            شفاف‌تر ارزیابی کنند.
+            ما در DNH به افراد، خانواده‌ها، صاحبان سرمایه، مدیران و کسب‌وکارها
+            کمک می‌کنیم تا پیش از تصمیم‌های مهم مالی، تصویر روشن‌تری از دارایی‌ها،
+            ریسک‌ها، نقدشوندگی، شرایط اقتصادی و مسیرهای پیش‌رو داشته باشند. هدف ما
+            صرفاً پیشنهاد یک بازار یا دارایی نیست؛ مسئله مالی شما به‌صورت یکپارچه
+            بررسی می‌شود تا عوامل، ریسک‌ها و مسیرهای قابل بررسی روشن شوند.
           </p>
 
           {/* =====================================================
@@ -375,11 +374,11 @@ export function HomeHero() {
                 sm:min-w-[250px]
               "
             >
-              ارزیابی اولیه تصمیم مالی
+              شروع ارزیابی اولیه تصمیم مالی
             </ActionButton>
 
             <ActionButton
-              href={WEALTH_ARCHITECTURE_HREF}
+              href={SERVICES_HREF}
               variant="secondary"
               size="md"
               icon={ArrowLeft}
@@ -402,7 +401,7 @@ export function HomeHero() {
                 sm:min-w-[215px]
               "
             >
-              آشنایی با معماری ثروت
+              مشاهده خدمات DNH
             </ActionButton>
           </div>
 
