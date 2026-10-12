@@ -156,7 +156,7 @@ export function AssessmentContactSection() {
             className="
               hidden
 
-              text-[7px]
+              text-[11px]
               font-bold
               tracking-[0.22em]
 
@@ -331,7 +331,7 @@ export function AssessmentContactSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.2em]
 
@@ -428,7 +428,7 @@ export function AssessmentContactSection() {
                   items-center
                   gap-3
 
-                  text-[9px]
+                  text-[11px]
                   font-bold
 
                   text-white/38
@@ -521,7 +521,7 @@ export function AssessmentContactSection() {
               className="
                 max-w-[700px]
 
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[1.9]
 

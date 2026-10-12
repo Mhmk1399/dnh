@@ -211,7 +211,7 @@ export function FrameworkCtaSection() {
             <p
               dir="ltr"
               className="
-                text-[7px]
+                text-[11px]
                 font-black
                 tracking-[0.2em]
 
@@ -275,7 +275,7 @@ export function FrameworkCtaSection() {
                 items-center
                 gap-3
 
-                text-[9px]
+                text-[11px]
                 font-bold
 
                 text-white/36
@@ -354,7 +354,7 @@ export function FrameworkCtaSection() {
             className="
               max-w-[430px]
 
-              text-[8px]
+              text-[11px]
               font-medium
               leading-[1.9]
 
@@ -390,7 +390,7 @@ function FrameworkWord({ letter, label }: { letter: string; label: string }) {
       <span
         className="
           font-mono
-          text-[9px]
+          text-[11px]
           font-black
 
           text-brand-accent

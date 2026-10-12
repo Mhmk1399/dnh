@@ -372,7 +372,7 @@ export function ResearchSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-black
                     tracking-[0.19em]
 
@@ -418,7 +418,7 @@ export function ResearchSection() {
                     px-3
                     py-2
 
-                    text-[8px]
+                    text-[11px]
                     font-black
 
                     text-brand-accent
@@ -472,7 +472,7 @@ export function ResearchSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.18em]
 
@@ -536,7 +536,7 @@ export function ResearchSection() {
                           px-3
                           py-2
 
-                          text-[7px]
+                          text-[11px]
                           font-bold
 
                           text-brand-primary/70
@@ -785,7 +785,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.18em]
 
@@ -912,7 +912,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
       >
         <span
           className="
-            text-[7px]
+            text-[11px]
             font-bold
 
             text-ink-muted/45
@@ -923,7 +923,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
 
         <span
           className="
-            text-[7px]
+            text-[11px]
             font-bold
 
             text-ink-muted/45
@@ -934,7 +934,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
 
         <span
           className="
-            text-[7px]
+            text-[11px]
             font-bold
 
             text-ink-muted/45
@@ -945,7 +945,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
 
         <span
           className="
-            text-[7px]
+            text-[11px]
             font-bold
 
             text-brand-accent
@@ -967,7 +967,7 @@ function ResearchChart({ visible }: { visible: boolean }) {
 
           pr-4
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -1109,7 +1109,7 @@ function ResearchFormatCard({
           mt-6
 
           text-right
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.17em]
 
@@ -1205,7 +1205,7 @@ function DocumentSection({
       <p
         dir="ltr"
         className="
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.17em]
 
@@ -1232,7 +1232,7 @@ function DocumentSection({
         className="
           mt-3
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -1300,7 +1300,7 @@ function LibraryMetric({
       <p
         dir="ltr"
         className="
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.17em]
 
@@ -1336,7 +1336,7 @@ function LibraryMetric({
             className="
               mt-2
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[1.9]
 

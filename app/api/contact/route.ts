@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "@/lib/data";
 import { getCurrentUser } from "@/lib/auth";
-import Contact from "@/lib/models/Contact";
+import Contact from "@/models/Contact";
 import { cleanText, isValidEmail, isValidPhone, normalizeIranianPhone, readJson, type FieldErrors } from "@/lib/validation";
 
 export async function POST(request: Request) {

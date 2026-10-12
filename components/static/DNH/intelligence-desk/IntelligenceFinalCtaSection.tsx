@@ -320,7 +320,7 @@ function DecisionHorizon() {
           className="
             max-w-[460px]
 
-            text-[8px] md:text-xs
+            text-[11px] md:text-xs
             font-medium
             leading-[1.9]
 
@@ -374,8 +374,8 @@ function DecisionHorizon() {
             right-0
             top-1/2
 
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             -translate-y-1/2
 

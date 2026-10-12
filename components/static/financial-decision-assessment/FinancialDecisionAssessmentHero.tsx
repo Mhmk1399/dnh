@@ -469,7 +469,7 @@ export function FinancialDecisionAssessmentHero() {
         >
           <p
             className="
-              text-[9px]
+              text-[11px]
               font-medium
 
               text-white/35
@@ -489,7 +489,7 @@ export function FinancialDecisionAssessmentHero() {
             <span
               dir="ltr"
               className="
-                text-[7px]
+                text-[11px]
                 font-bold
                 tracking-[0.18em]
 
@@ -609,7 +609,7 @@ function AssessmentPreview({ mounted }: { mounted: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[8px]
+              text-[11px]
               font-black
               tracking-[0.19em]
 
@@ -645,7 +645,7 @@ function AssessmentPreview({ mounted }: { mounted: boolean }) {
             px-3
             py-2
 
-            text-[8px]
+            text-[11px]
             font-black
 
             text-brand-accent
@@ -696,7 +696,7 @@ function AssessmentPreview({ mounted }: { mounted: boolean }) {
               className="
                 mt-1
 
-                text-[8px]
+                text-[11px]
                 font-medium
                 leading-[1.8]
 
@@ -710,8 +710,8 @@ function AssessmentPreview({ mounted }: { mounted: boolean }) {
           <span
             aria-hidden="true"
             className="
-              h-[8px]
-              w-[8px]
+              h-[11px]
+              w-[11px]
 
               bg-brand-accent
             "
@@ -786,7 +786,7 @@ function AssessmentPreview({ mounted }: { mounted: boolean }) {
             className="
               mt-1
 
-              text-[8px]
+              text-[11px]
               font-medium
               leading-[1.8]
 
@@ -940,7 +940,7 @@ function PreviewItem({
           className="
             mt-1.5
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.8]
 
@@ -953,7 +953,7 @@ function PreviewItem({
 
       <span
         className="
-          text-[9px]
+          text-[11px]
           font-black
 
           text-white/18
@@ -1015,7 +1015,7 @@ function HeroBackground() {
           left-[22%]
           top-0
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent

@@ -226,7 +226,7 @@ export function PortfolioWarningSignsSection() {
               aria-hidden="true"
               className="
                 hidden
-                h-[7px] w-[7px]
+                h-[11px] w-[11px]
 
                 bg-brand-accent
 
@@ -311,7 +311,7 @@ export function PortfolioWarningSignsSection() {
           <div>
             <p
               className="
-                text-[9px]
+                text-[11px]
                 font-black
                 text-brand-accent
               "

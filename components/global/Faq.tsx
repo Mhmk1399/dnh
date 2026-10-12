@@ -77,8 +77,8 @@ export default function Faq({ question, answer, icon }: FaqProps) {
           select-none
           items-center
           gap-[10px]
-          px-[9px]
-          py-[8px]
+          px-[11px]
+          py-[11px]
           text-right
           outline-none
           focus-visible:ring-4
@@ -214,7 +214,7 @@ export default function Faq({ question, answer, icon }: FaqProps) {
             <p
               className="
                 max-w-[540px]
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[2.1]
                 text-ink-muted

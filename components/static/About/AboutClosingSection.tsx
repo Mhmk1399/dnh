@@ -135,8 +135,8 @@ export function AboutClosingSection() {
           <span
             aria-hidden="true"
             className="
-              h-[7px]
-              w-[7px]
+              h-[11px]
+              w-[11px]
 
               bg-[#fc8502]
             "
@@ -420,7 +420,7 @@ export function AboutClosingSection() {
                 <span
                   aria-hidden="true"
                   className="
-                    mt-[9px]
+                    mt-[11px]
 
                     h-[6px]
                     w-[6px]

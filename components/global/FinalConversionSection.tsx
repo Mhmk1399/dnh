@@ -363,8 +363,8 @@ export default function FinalConversionSection() {
 
           z-[-5]
 
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           rounded-full
 
@@ -383,8 +383,8 @@ export default function FinalConversionSection() {
 
           z-[-5]
 
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           rounded-full
 
@@ -401,8 +401,8 @@ export default function FinalConversionSection() {
 
           z-[-5]
 
-          h-[8px]
-          w-[8px]
+          h-[11px]
+          w-[11px]
 
           rounded-full
 
@@ -874,7 +874,7 @@ function ConversionStepCard({ step }: { step: ConversionStep }) {
 
           px-[6px]
 
-          text-[8px]
+          text-[11px]
           font-black
 
           text-brand-accent
@@ -981,7 +981,7 @@ function ConversionStepCard({ step }: { step: ConversionStep }) {
 
           max-w-[145px]
 
-          text-[8px]
+          text-[11px]
           font-medium
 
           leading-[1.9]
@@ -990,7 +990,7 @@ function ConversionStepCard({ step }: { step: ConversionStep }) {
 
           sm:text-[8.5px]
 
-          lg:text-[9px]
+          lg:text-[11px]
         "
       >
         {step.description}

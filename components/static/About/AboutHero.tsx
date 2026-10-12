@@ -297,7 +297,7 @@ export function AboutHero() {
 
                 shadow-none
 
-                backdrop-blur-[8px]
+                backdrop-blur-[11px]
 
                 hover:border-brand-accent
                 hover:bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_10%,transparent)]

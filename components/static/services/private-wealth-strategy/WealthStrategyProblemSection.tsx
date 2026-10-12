@@ -283,7 +283,7 @@ export function WealthStrategyProblemSection() {
             <div className="relative z-10">
               <p
                 className="
-                  text-[9px]
+                  text-[11px]
                   font-black
 
                   text-brand-accent
@@ -378,7 +378,7 @@ export function WealthStrategyProblemSection() {
               >
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-black
 
                     text-brand-accent

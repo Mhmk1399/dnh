@@ -2,10 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { iranSans } from "@/next-persian-fonts/IranSans";
-import Footer from "@/components/global/Footer";
+import { PublicChrome } from "@/components/global/PublicChrome";
 import SmoothScroll from "@/components/global/SmoothScroll";
-import { Navbar } from "@/components/global/Navbar";
-import { FloatingContact } from "@/components/ui/FloatingContact";
 import { PwaRegister } from "@/components/global/PwaRegister";
 
 const siteDescription =
@@ -78,16 +76,7 @@ export default function RootLayout({
       <body className={`${iranSans.className} ${iranSans.variable}`}>
         <SmoothScroll />
         <PwaRegister />
-        <Navbar />
-        <FloatingContact
-          phone="+98XXXXXXXXXX"
-          phoneDisplay="Û°Û²Û± XXXX XXXX"
-          whatsappNumber="+989XXXXXXXXX"
-          email="info@your-domain.com"
-        />
-
-        <main>{children}</main>
-        <Footer />
+        <PublicChrome>{children}</PublicChrome>
       </body>
     </html>
   );

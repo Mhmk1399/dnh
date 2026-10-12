@@ -266,7 +266,7 @@ export function WhyAssessmentSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.19em]
 
@@ -440,7 +440,7 @@ export function WhyAssessmentSection() {
                   <p
                     dir="ltr"
                     className="
-                      text-[7px]
+                      text-[11px]
                       font-black
                       tracking-[0.18em]
 
@@ -676,7 +676,7 @@ function ReasonRow({
           <span
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-bold
               tracking-[0.15em]
 

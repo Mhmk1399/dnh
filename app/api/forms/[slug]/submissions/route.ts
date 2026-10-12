@@ -2,8 +2,8 @@ import { randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import DynamicForm from "@/lib/models/DynamicForm";
-import FormSubmission from "@/lib/models/FormSubmission";
+import DynamicForm from "@/models/DynamicForm";
+import FormSubmission from "@/models/FormSubmission";
 import { SubmissionError, validateSubmission } from "@/lib/submission-validation";
 import { cleanText, readJson } from "@/lib/validation";
 

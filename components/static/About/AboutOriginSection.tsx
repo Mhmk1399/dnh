@@ -302,7 +302,7 @@ function DecisionArchitecture({ visible }: { visible: boolean }) {
 
         <span
           className="
-            text-[8px]
+            text-[11px]
             font-bold
             tracking-[0.1em]
             text-brand-primary/50
@@ -602,7 +602,7 @@ function DecisionArchitecture({ visible }: { visible: boolean }) {
         <span
           className="
             whitespace-nowrap
-            text-[9px]
+            text-[11px]
             font-black
             text-brand-primary
           "

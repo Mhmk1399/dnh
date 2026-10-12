@@ -417,7 +417,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
 
         shadow-[0_34px_100px_rgba(0,0,0,.16)]
 
-        backdrop-blur-[8px]
+        backdrop-blur-[11px]
 
         transition-[opacity,transform,border-color,box-shadow]
         duration-700
@@ -483,7 +483,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
           <p
             dir="ltr"
             className="
-              text-[8px]
+              text-[11px]
               font-black
               tracking-[0.19em]
 
@@ -519,7 +519,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
             px-3
             py-2
 
-            text-[8px]
+            text-[11px]
             font-black
 
             text-brand-accent
@@ -571,7 +571,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
         <p
           dir="ltr"
           className="
-            text-[7px]
+            text-[11px]
             font-black
             tracking-[0.2em]
 
@@ -625,7 +625,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
               >
                 <span
                   className="
-                      text-[9px]
+                      text-[11px]
                       font-black
 
                       text-brand-accent
@@ -729,7 +729,7 @@ function AssessmentPreview({ visible }: { visible: boolean }) {
             className="
               mt-1
 
-              text-[8px]
+              text-[11px]
               font-medium
 
               text-white/35
@@ -872,7 +872,7 @@ function AssessmentItem({
           className="
             mt-1.5
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -980,7 +980,7 @@ function Background() {
           right-[16%]
           top-0
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent

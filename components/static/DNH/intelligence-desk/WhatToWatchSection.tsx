@@ -322,7 +322,7 @@ function WatchRow({
           className="
             text-right
 
-            text-[7px]
+            text-[11px]
             font-black
             tracking-[0.16em]
 

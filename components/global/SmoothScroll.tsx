@@ -1,10 +1,14 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ReactLenis } from "lenis/react";
 
 export default function SmoothScroll() {
+  const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
+
+  const isAdminRoute = pathname === "/admin" || pathname?.startsWith("/admin/");
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -16,7 +20,7 @@ export default function SmoothScroll() {
     return () => reducedMotion.removeEventListener("change", updatePreference);
   }, []);
 
-  if (!enabled) return null;
+  if (isAdminRoute || !enabled) return null;
 
   return (
     <ReactLenis

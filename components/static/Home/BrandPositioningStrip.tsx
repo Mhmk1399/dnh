@@ -11,25 +11,32 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const POSITIONING_ITEMS = [
   {
-    fa: "ثروت خصوصی",
-    en: "PRIVATE WEALTH",
-    description: "نگاه ساختاری به ثروت، اهداف و تصمیم‌های مالی.",
+    fa: "معماری ثروت خصوصی",
+    en: "1",
+
+    description:
+      "نگاه یکپارچه به دارایی‌ها، اهداف مالی و نیازهای نقدینگی هر فرد یا خانواده.",
   },
   {
-    fa: "هوشمندی اقتصاد و محیط تصمیم",
-    en: "MACRO INTELLIGENCE",
+    fa: "هوشمندی اقتصاد کلان",
+    en: "2",
+
     description:
-      "دیدن متغیرهای اقتصادی در نسبت با تصمیم، نه برای پیش‌بینی بازار.",
+      "بررسی تورم، ارز و تغییرات اقتصادی برای شناخت بهتر شرایط تصمیم‌گیری مالی.",
   },
   {
     fa: "معماری ریسک",
-    en: "RISK ARCHITECTURE",
-    description: "شناخت ریسک‌ها و ارتباط آن‌ها با ساختار مالی.",
+    en: "3",
+
+    description:
+      "شناسایی ریسک‌های مؤثر بر دارایی و نقدینگی، برای درک آسیب‌پذیری‌های ساختار ثروت.",
   },
   {
     fa: "افق بلندمدت ثروت",
-    en: "LONG-TERM WEALTH",
-    description: "هماهنگ‌کردن تصمیم امروز با افق و ساختار بلندمدت.",
+    en: "4",
+
+    description:
+      "هماهنگ‌کردن تصمیم‌های مالی امروز با اهداف آینده و پایداری ساختار ثروت.",
   },
 ] as const;
 
@@ -223,9 +230,10 @@ export function BrandPositioningStrip() {
                 lg:text-[15px]
               "
             >
-              DNH ثروت را فقط از زاویه سرمایه‌گذاری نمی‌بیند؛ ساختار مالی، ریسک،
-              محیط تصمیم و افق بلندمدت را در یک نگاه منسجم کنار هم قرار می‌دهد
-              تا مسئله پیش از انتخاب مسیر، روشن‌تر دیده شود.
+              مدیریت ثروت تنها انتخاب یک بازار یا دارایی نیست. در DNH، ساختار
+              دارایی‌ها، شرایط اقتصادی، ریسک‌ها و اهداف بلندمدت در کنار یکدیگر
+              بررسی می‌شوند تا افراد، خانواده‌ها و صاحبان کسب‌وکار بتوانند با
+              شناخت روشن‌تری از وضعیت مالی خود تصمیم بگیرند.
             </p>
           </div>
         </header>
@@ -327,24 +335,7 @@ export function BrandPositioningStrip() {
 
             sm:mt-10
           "
-        >
-          <p
-            className="
-              max-w-[720px]
-
-              text-[11px]
-              font-medium
-              leading-[1.9]
-
-              text-ink-muted
-
-              sm:text-[12px]
-            "
-          >
-            بازار و اقتصاد در DNH ابزار هوشمندی و تصمیم‌سازی‌اند؛ نه هویت اصلی
-            برند.
-          </p>
-        </div>
+        ></div>
       </div>
 
       <PositioningMotionStyles />
@@ -476,28 +467,11 @@ function PositioningRailItem({
 
           group-hover/axis:text-brand-primary
 
-          lg:text-[14px]
+          lg:text-[16px]
         "
       >
         {item.fa}
       </h3>
-
-      <p
-        dir="ltr"
-        className="
-          mt-1
-
-          text-[8px]
-          font-bold
-          tracking-[0.13em]
-
-          text-brand-primary/60
-
-          lg:text-[9px]
-        "
-      >
-        {item.en}
-      </p>
 
       <p
         className="
@@ -511,7 +485,7 @@ function PositioningRailItem({
 
           text-ink-muted
 
-          lg:text-[11px]
+          lg:text-[13px]
         "
       >
         {item.description}
@@ -611,26 +585,10 @@ function PositioningMobileItem({
       </h3>
 
       <p
-        dir="ltr"
-        className="
-          mt-1
-
-          text-right
-          text-[7px]
-          font-bold
-          tracking-[0.12em]
-
-          text-brand-primary/55
-        "
-      >
-        {item.en}
-      </p>
-
-      <p
         className="
           mt-3
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -703,27 +661,6 @@ function PositioningBackground() {
             "linear-gradient(to right, transparent, black 16%, black 84%, transparent)",
         }}
       />
-
-      {/* left atmosphere */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          -bottom-[130px]
-          -left-[120px]
-
-          h-[280px]
-          w-[420px]
-
-          bg-brand-primary/[0.055]
-
-          blur-[100px]
-        "
-      />
-
-      {/* tiny brand marker */}
     </>
   );
 }

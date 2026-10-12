@@ -162,7 +162,7 @@ export function IntelligenceViewSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[9px] font-black tracking-[0.18em] text-brand-primary/45
+                    text-[11px] font-black tracking-[0.18em] text-brand-primary/45
                   "
                 >
                   INTELLIGENCE VIEW
@@ -197,7 +197,7 @@ export function IntelligenceViewSection() {
                 </p>
                 <span
                   dir="ltr"
-                  className="text-[8px] font-bold tracking-[0.14em] text-ink-muted"
+                  className="text-[11px] font-bold tracking-[0.14em] text-ink-muted"
                 >
                   WHAT TO WATCH → IMPLICATION
                 </span>
@@ -220,7 +220,7 @@ export function IntelligenceViewSection() {
                   <div>
                     <p
                       className="
-                        text-[9px] font-black text-brand-accent
+                        text-[11px] font-black text-brand-accent
                       "
                     >
                       خروجی مورد انتظار
@@ -335,7 +335,7 @@ function AreaCard({
             <span
               dir="ltr"
               className="
-                text-[8px] font-black tracking-[0.16em] text-brand-primary/42
+                text-[11px] font-black tracking-[0.16em] text-brand-primary/42
               "
             >
               {item.en}
@@ -396,7 +396,7 @@ function MiniSignal({ title, width }: { title: string; width: string }) {
       <div className="flex items-center justify-between">
         <span
           dir="ltr"
-          className="text-[8px] font-black tracking-[0.14em] text-ink-muted"
+          className="text-[11px] font-black tracking-[0.14em] text-ink-muted"
         >
           {title}
         </span>
@@ -437,7 +437,7 @@ function MicroLabel({ children }: { children: React.ReactNode }) {
   return (
     <span
       dir="ltr"
-      className="text-[8px] font-black tracking-[0.14em] text-brand-primary/42"
+      className="text-[11px] font-black tracking-[0.14em] text-brand-primary/42"
     >
       {children}
     </span>

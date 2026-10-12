@@ -215,7 +215,7 @@ export function PortfolioIntelligenceHero() {
                   inline-flex
                   items-center gap-2
 
-                  text-[9px]
+                  text-[11px]
                   font-black
                   text-[#82cee4]
 
@@ -392,7 +392,7 @@ function PortfolioMeaningVisual() {
         <span
           aria-hidden="true"
           className="
-            h-[7px] w-[7px]
+            h-[11px] w-[11px]
 
             bg-brand-accent
 
@@ -552,7 +552,7 @@ function PortfolioMeaningVisual() {
             className="
               shrink-0
 
-              text-[9px]
+              text-[11px]
               font-black
 
               text-brand-accent
@@ -634,7 +634,7 @@ function FlowPanel({
         <div className="min-w-0">
           <p
             className={`
-              text-[9px]
+              text-[11px]
               font-black
               leading-[1.8]
 
@@ -662,7 +662,7 @@ function FlowPanel({
           className={`
             shrink-0
             pt-1
-            text-[8px]
+            text-[11px]
             font-black
 
             ${muted ? "text-white/25" : "text-brand-accent/75"}
@@ -744,7 +744,7 @@ function AssetTile({
           mt-1
           block
           break-words
-          text-[8px]
+          text-[11px]
           font-medium
           leading-[1.8]
           text-white/35
@@ -854,7 +854,7 @@ function IntelligenceBridge() {
           gap-1.5
 
           text-center
-          text-[8px]
+          text-[11px]
           font-black
           leading-[1.7]
           text-[#82cee4]/62
@@ -967,7 +967,7 @@ function InsightCard({
             mt-1
 
             break-words
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -1021,7 +1021,7 @@ function HeroBackground() {
           absolute
           right-[18%] top-0
 
-          h-[7px] w-[2px]
+          h-[11px] w-[2px]
 
           bg-brand-accent
         "

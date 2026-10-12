@@ -528,7 +528,7 @@ function AudienceRow({
             className="
               hidden
 
-              text-[9px]
+              text-[11px]
               font-black
 
               text-brand-primary

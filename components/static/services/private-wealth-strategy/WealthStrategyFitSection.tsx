@@ -204,7 +204,7 @@ export function WealthStrategyFitSection() {
           <div>
             <p
               className="
-                text-[9px]
+                text-[11px]
                 font-black
                 text-brand-accent
               "
@@ -274,7 +274,7 @@ export function WealthStrategyFitSection() {
             className="
               max-w-[680px]
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[2]
 

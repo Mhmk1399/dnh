@@ -468,7 +468,7 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
           >
             <p
               className="
-                text-[8px]
+                text-[11px]
                 font-black
 
                 text-brand-accent

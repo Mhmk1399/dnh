@@ -232,7 +232,7 @@ export function StrategicAdvisoryContextSection() {
                   className="
                     mt-1.5
 
-                    text-[9px]
+                    text-[11px]
                     font-medium
 
                     text-[#6b7e85]

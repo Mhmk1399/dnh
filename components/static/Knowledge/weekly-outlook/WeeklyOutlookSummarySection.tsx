@@ -116,8 +116,8 @@ export function WeeklyOutlookSummarySection({
               <span
                 aria-hidden="true"
                 className="
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   bg-[#fc8502]
                 "

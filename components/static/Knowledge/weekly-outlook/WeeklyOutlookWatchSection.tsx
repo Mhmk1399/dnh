@@ -338,7 +338,7 @@ export function WeeklyOutlookWatchSection({
               <span
                 aria-hidden="true"
                 className="
-                  mt-[8px]
+                  mt-[11px]
                   h-[6px]
                   w-[6px]
                   shrink-0
@@ -498,7 +498,7 @@ function WatchItemRow({
           <span
             aria-hidden="true"
             className="
-              mt-[9px]
+              mt-[11px]
               h-[5px]
               w-[5px]
               shrink-0

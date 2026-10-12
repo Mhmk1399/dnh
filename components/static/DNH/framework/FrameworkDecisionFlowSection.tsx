@@ -236,7 +236,7 @@ export function FrameworkDecisionFlowSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.2em]
 
@@ -264,7 +264,7 @@ export function FrameworkDecisionFlowSection() {
               className="
                 max-w-[470px]
 
-                text-[8px]
+                text-[11px]
                 font-medium
                 leading-[1.9]
 
@@ -342,7 +342,7 @@ export function FrameworkDecisionFlowSection() {
                 <p
                   dir="ltr"
                   className="
-                    text-[7px]
+                    text-[11px]
                     font-black
                     tracking-[0.19em]
 
@@ -487,7 +487,7 @@ export function FrameworkDecisionFlowSection() {
               className="
                 max-w-[750px]
 
-                text-[9px]
+                text-[11px]
                 font-medium
                 leading-[2]
 
@@ -655,7 +655,7 @@ function DecisionStage({
             className="
               mt-1
 
-              text-[9px]
+              text-[11px]
               font-bold
 
               text-white/46
@@ -763,7 +763,7 @@ function DecisionStage({
           left-5
           top-5
 
-          text-[8px]
+          text-[11px]
           font-black
 
           text-white/[0.10]

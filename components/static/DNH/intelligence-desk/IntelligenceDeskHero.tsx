@@ -408,7 +408,7 @@ function IntelligenceField() {
             className="
               mt-1
 
-              text-[8px]
+              text-[11px]
               font-medium
 
               text-white/36
@@ -982,7 +982,7 @@ function IntelligenceLabel({
 
       <p
         className="
-          mt-1 text-[9px] font-bold
+          mt-1 text-[11px] font-bold
           text-white/44 sm:text-[10px]
         "
       >

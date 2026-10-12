@@ -786,7 +786,7 @@ function WealthStructureVisual() {
           className="
             block
 
-            text-[7px]
+            text-[11px]
             font-bold
             uppercase
             leading-[1.8]

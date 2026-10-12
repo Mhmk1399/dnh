@@ -246,8 +246,8 @@ export function MajorDecisionClaritySection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[8px]
-                  w-[8px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 
@@ -320,8 +320,8 @@ export function MajorDecisionClaritySection() {
                   <span
                     aria-hidden="true"
                     className="
-                      h-[8px]
-                      w-[8px]
+                      h-[11px]
+                      w-[11px]
 
                       bg-brand-accent
                     "

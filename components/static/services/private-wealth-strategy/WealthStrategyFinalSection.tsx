@@ -317,7 +317,7 @@ function Outcome({
         className="
           mt-1.5
 
-          text-[8px] lg:text-xs
+          text-[11px] lg:text-xs
           font-medium
           leading-[1.9]
 

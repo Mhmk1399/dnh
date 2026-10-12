@@ -24,26 +24,26 @@ const WEALTH_DIMENSIONS = [
     title: "دارایی‌ها",
     en: "ASSETS",
     description:
-      "دیدن دارایی‌ها در نسبت با کل ساختار، نه به‌صورت جزیره‌های جدا.",
+      "بررسی ترکیب دارایی‌ها و نقش هرکدام در ساختار کلی ثروت.",
     icon: Layers3,
   },
   {
     title: "نقدینگی",
     en: "LIQUIDITY",
-    description: "شناخت نیاز، محدودیت و انعطاف نقدینگی در مسیر تصمیم.",
+    description: "شناخت منابع نقدشونده و توان پاسخ‌گویی به نیازها و تعهدات مالی.",
     icon: WalletCards,
   },
   {
     title: "ریسک",
     en: "RISK",
     description:
-      "بررسی ریسک‌هایی که می‌توانند تعادل ساختار ثروت را تغییر دهند.",
+      "شناسایی ریسک‌های مؤثر بر ارزش، تمرکز و پایداری دارایی‌ها.",
     icon: ShieldCheck,
   },
   {
     title: "افق زمانی",
     en: "HORIZON",
-    description: "قرار دادن تصمیم امروز در نسبت با نیازها و اهداف آینده.",
+    description: "هماهنگی ساختار دارایی‌ها با اهداف کوتاه‌مدت و بلندمدت.",
     icon: Clock3,
   },
 ] as const;
@@ -221,10 +221,11 @@ export function WholeWealthViewSection() {
                 lg:text-[15px]
               "
             >
-              در نگاه DNH، هر دارایی فقط زمانی معنا پیدا می‌کند که نقش آن در
-              کنار نقدینگی، ریسک، افق زمانی و کل ساختار ثروت دیده شود. هدف،
-              ساختن یک تصویر منسجم برای تصمیم است؛ نه صرفاً جمع‌کردن دارایی‌های
-              بیشتر.
+              ارزش یک ساختار ثروت، تنها به تعداد یا ارزش دارایی‌های آن وابسته
+              نیست؛ بلکه به نقش هر دارایی، میزان ریسک، دسترسی به نقدینگی و تناسب
+              آن با اهداف مالی بستگی دارد. در رویکرد DNH، این عوامل به‌صورت
+              یکپارچه بررسی می‌شوند تا تصویری روشن‌تر از وضعیت ثروت و گزینه‌های
+              تصمیم‌گیری شکل بگیرد.
             </p>
           </Reveal>
 
@@ -251,10 +252,10 @@ export function WholeWealthViewSection() {
                   sm:text-[14px]
                 "
               >
-                مسئله فقط «چه دارایی‌ای داریم؟» نیست؛
+              مسئله فقط این نیست که «چه دارایی‌هایی داریم»؛
                 <br />
                 <span className="text-brand-primary">
-                  مسئله این است که هر بخش چه نقشی در کل ساختار دارد.
+                بلکه این است که هر دارایی چه نقشی در ساختار ثروت و اهداف آینده ما دارد.
                 </span>
               </p>
             </div>
@@ -283,7 +284,7 @@ export function WholeWealthViewSection() {
                   sm:min-w-[235px]
                 "
               >
-                مشاهده معماری ثروت
+        آشنایی با معماری ثروت
               </ActionButton>
             </div>
           </Reveal>
@@ -361,18 +362,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
         "
       >
         <div>
-          <p
-            dir="ltr"
-            className="
-              text-[7px]
-              font-black
-              tracking-[0.2em]
-
-              text-brand-primary/65
-            "
-          >
-            WHOLE WEALTH VIEW
-          </p>
+         
 
           <p
             className="
@@ -394,8 +384,8 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
           aria-hidden="true"
           className="
             mt-1
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             bg-brand-accent
           "
@@ -514,20 +504,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
               تصمیم
             </p>
 
-            <p
-              dir="ltr"
-              className="
-                mt-1
-
-                text-[7px]
-                font-bold
-                tracking-[0.16em]
-
-                text-brand-primary/50
-              "
-            >
-              DECISION CONTEXT
-            </p>
+          
           </div>
         </div>
 
@@ -557,13 +534,13 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
         >
           <p
             className="
-              text-[9px]
+              text-[12px]
               font-medium
 
               text-ink-muted
             "
           >
-            هر جزء، در نسبت با کل ساختار معنا پیدا می‌کند.
+          هر دارایی زمانی معنا پیدا می‌کند که نقش آن در کل ساختار ثروت روشن باشد.
           </p>
         </div>
       </div>
@@ -631,20 +608,7 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
                 تصمیم
               </p>
 
-              <p
-                dir="ltr"
-                className="
-                  mt-1
-
-                  text-[6px]
-                  font-bold
-                  tracking-[0.14em]
-
-                  text-brand-primary/50
-                "
-              >
-                DECISION CONTEXT
-              </p>
+            
             </div>
           </div>
         </div>
@@ -696,27 +660,13 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
                   {item.title}
                 </h3>
 
-                <p
-                  dir="ltr"
-                  className="
-                    mt-1
-
-                    text-right
-                    text-[6px]
-                    font-bold
-                    tracking-[0.14em]
-
-                    text-brand-primary/50
-                  "
-                >
-                  {item.en}
-                </p>
+               
 
                 <p
                   className="
                     mt-3
 
-                    text-[8px]
+                    text-[11px]
                     font-medium
                     leading-[1.9]
 
@@ -730,7 +680,6 @@ function WholeWealthMap({ visible }: { visible: boolean }) {
           })}
         </div>
       </div>
- 
     </div>
   );
 }
@@ -802,7 +751,7 @@ function Dimension({
         <div
           className="
             flex
-            items-start
+            items-center
             gap-3
           "
         >
@@ -844,21 +793,7 @@ function Dimension({
               {item.title}
             </h3>
 
-            <p
-              dir="ltr"
-              className="
-                mt-1
-
-                text-right
-                text-[6px]
-                font-bold
-                tracking-[0.14em]
-
-                text-brand-primary/50
-              "
-            >
-              {item.en}
-            </p>
+           
           </div>
         </div>
 
@@ -866,7 +801,7 @@ function Dimension({
           className="
             mt-3
 
-            text-[8px]
+            text-[11px]
             font-medium
             leading-[1.9]
 

@@ -2,7 +2,7 @@ import "server-only";
 
 import connect from "@/lib/data";
 import type { PublicDynamicForm } from "@/lib/dynamic-forms";
-import DynamicForm from "@/lib/models/DynamicForm";
+import DynamicForm from "@/models/DynamicForm";
 
 export async function getPublishedDynamicForm(
   slug: string,

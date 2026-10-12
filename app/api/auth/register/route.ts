@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSession, hashPassword } from "@/lib/auth";
 import connect from "@/lib/data";
-import User from "@/lib/models/User";
+import User from "@/models/User";
 import { cleanText, isValidPhone, normalizeIranianPhone, readJson, type FieldErrors } from "@/lib/validation";
 
 export async function POST(request: Request) {

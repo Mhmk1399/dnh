@@ -142,7 +142,7 @@ export function StrategicImplicationsSection() {
           <p
             className="
               max-w-[700px]
-              text-[9px] font-medium leading-[2]
+              text-[11px] font-medium leading-[2]
               text-ink-muted
               sm:text-[10px]
             "
@@ -223,7 +223,7 @@ function Step({ step, last }: { step: (typeof STEPS)[number]; last: boolean }) {
         <span
           dir="ltr"
           className="
-            text-[7px] font-black tracking-[0.17em]
+            text-[11px] font-black tracking-[0.17em]
             text-brand-primary/35
           "
         >

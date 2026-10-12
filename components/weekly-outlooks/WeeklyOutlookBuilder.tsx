@@ -1,0 +1,1757 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useMemo, useRef, useState } from "react";
+import {
+  Activity,
+  ArrowDown,
+  ArrowUp,
+  Banknote,
+  BarChart3,
+  Eye,
+  FileText,
+  Image as ImageIcon,
+  Landmark,
+  ListChecks,
+  Link2,
+  LineChart,
+  Plus,
+  Quote,
+  Save,
+  Send,
+  ShieldAlert,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Trash2,
+  TriangleAlert,
+  WalletCards,
+  Clock3,
+  CircleDollarSign,
+  Layers3,
+  type LucideIcon,
+} from "lucide-react";
+import { adminToast, adminToastMessage } from "@/components/admin/adminToast";
+import {
+  createWeeklyOutlookTemplate,
+  makeWeeklyOutlookStableId,
+  type WeeklyOutlookBlock,
+  type WeeklyOutlookBlockType,
+  type WeeklyOutlookButtonVariant,
+  type WeeklyOutlookCalloutTone,
+  type WeeklyOutlookDateCalendar,
+  type WeeklyOutlookReportDefinition,
+  type WeeklyOutlookSectionDefinition,
+  type WeeklyOutlookSectionIcon,
+  type WeeklyOutlookSectionTone,
+  type WeeklyOutlookSectionVisual,
+  type WeeklyOutlookStatus,
+} from "@/lib/weekly-outlook";
+import {
+  formatWeeklyOutlookDate,
+  gregorianToJalaliDateParts,
+  jalaliMonthLength,
+  jalaliMonthNames,
+  jalaliToGregorianDateString,
+  todayIsoDate,
+  weeklyOutlookDateCalendarLabels,
+} from "@/lib/weekly-outlook-date";
+import { normalizeWeeklyOutlookSlug } from "@/lib/weekly-outlook-validation";
+
+type Props = {
+  initial?: WeeklyOutlookReportDefinition;
+  reportId?: string;
+};
+
+type Notice =
+  | {
+      kind: "success" | "error";
+      message: string;
+    }
+  | null;
+
+const sectionToneLabels: Record<WeeklyOutlookSectionTone, string> = {
+  light: "روشن",
+  soft: "نرم",
+  dark: "تیره",
+  teal: "نفتی",
+  accent: "تأکیدی",
+};
+
+const sectionVisualLabels: Record<WeeklyOutlookSectionVisual, string> = {
+  plain: "ساده و آرام",
+  grid: "شبکه تحلیلی",
+  gradient: "گرادیانت مدیریتی",
+  blueprint: "نقشه معماری",
+  market: "خطوط بازار",
+  spotlight: "نور متمرکز",
+  glass: "لایه‌های شیشه‌ای",
+  accent: "خط تأکیدی",
+};
+
+const sectionVisualDescriptions: Record<WeeklyOutlookSectionVisual, string> = {
+  plain: "برای گزارش‌های متنی و رسمی با کمترین تزئین.",
+  grid: "پس‌زمینه شبکه‌ای سبک برای حس تحلیل و داده.",
+  gradient: "عمق نرم و مدیریتی با گرادیانت برند.",
+  blueprint: "حس نقشه و معماری تصمیم برای بخش‌های ساختاری.",
+  market: "خطوط روند و ریتم بازار برای تحلیل‌های اقتصادی.",
+  spotlight: "تمرکز روی جمع‌بندی یا پیام اصلی سکشن.",
+  glass: "لایه‌های شفاف و مدرن برای روایت‌های چندلایه.",
+  accent: "یک خط نارنجی کنترل‌شده برای بخش‌های مهم.",
+};
+
+const sectionIconLabels: Record<WeeklyOutlookSectionIcon, string> = {
+  overview: "نمای کلی",
+  risk: "ریسک",
+  market: "بازار",
+  policy: "سیاست پولی",
+  asset: "دارایی",
+  watch: "رصد",
+  conclusion: "نتیجه‌گیری",
+  trend: "روند",
+  liquidity: "نقدینگی",
+  currency: "ارز",
+  inflation: "تورم",
+  portfolio: "پرتفوی",
+  timeline: "افق زمانی",
+  target: "هدف",
+  warning: "هشدار",
+  opportunity: "فرصت",
+};
+
+const sectionIconMap = {
+  overview: FileText,
+  risk: ShieldAlert,
+  market: BarChart3,
+  policy: Landmark,
+  asset: CircleDollarSign,
+  watch: Eye,
+  conclusion: Layers3,
+  trend: TrendingUp,
+  liquidity: WalletCards,
+  currency: Banknote,
+  inflation: LineChart,
+  portfolio: Activity,
+  timeline: Clock3,
+  target: Target,
+  warning: TriangleAlert,
+  opportunity: Sparkles,
+} satisfies Record<WeeklyOutlookSectionIcon, LucideIcon>;
+
+const calloutToneLabels: Record<WeeklyOutlookCalloutTone, string> = {
+  info: "اطلاعات",
+  risk: "ریسک",
+  opportunity: "فرصت",
+  neutral: "خنثی",
+};
+
+const blockLabels: Record<WeeklyOutlookBlockType, string> = {
+  paragraph: "پاراگراف",
+  heading: "تیتر",
+  list: "لیست",
+  callout: "نکته",
+  quote: "نقل‌قول",
+  image: "تصویر",
+  button: "دکمه",
+  divider: "جداکننده",
+};
+
+const buttonVariantLabels: Record<WeeklyOutlookButtonVariant, string> = {
+  primary: "اصلی نفتی",
+  secondary: "تأکیدی نارنجی",
+  outline: "خطی ساده",
+};
+
+const inputClass =
+  "mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10";
+
+const dateCalendarOptions: WeeklyOutlookDateCalendar[] = [
+  "jalali",
+  "gregorian",
+];
+
+function buildJalaliYearOptions(selectedYear: number) {
+  const currentYear = gregorianToJalaliDateParts(todayIsoDate()).year;
+  const min = Math.min(currentYear - 10, selectedYear - 2);
+  const max = Math.max(currentYear + 4, selectedYear + 2);
+
+  return Array.from({ length: max - min + 1 }, (_, index) => max - index);
+}
+
+export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
+  const router = useRouter();
+  const [report, setReport] = useState<WeeklyOutlookReportDefinition>(
+    () => initial ?? createWeeklyOutlookTemplate(),
+  );
+  const [activeSection, setActiveSection] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  const [notice, setNotice] = useState<Notice>(null);
+  const sectionEditorRef = useRef<HTMLElement | null>(null);
+
+  const current =
+    report.sections[activeSection] ?? report.sections[0] ?? null;
+  const CurrentSectionIcon = current
+    ? sectionIconMap[current.icon]
+    : FileText;
+  const blockCount = useMemo(
+    () =>
+      report.sections.reduce(
+        (total, section) => total + section.blocks.length,
+        0,
+      ),
+    [report.sections],
+  );
+
+  function update(patch: Partial<WeeklyOutlookReportDefinition>) {
+    setReport((value) => ({ ...value, ...patch }));
+    setDirty(true);
+    setNotice(null);
+  }
+
+  function selectSection(index: number, scrollToEditor = true) {
+    setActiveSection(index);
+
+    if (!scrollToEditor) return;
+
+    window.requestAnimationFrame(() => {
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      sectionEditorRef.current?.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  }
+
+  function updateSection(
+    index: number,
+    patch: Partial<WeeklyOutlookSectionDefinition>,
+  ) {
+    update({
+      sections: report.sections.map((section, sectionIndex) =>
+        sectionIndex === index ? { ...section, ...patch } : section,
+      ),
+    });
+  }
+
+  function updateBlock(
+    sectionIndex: number,
+    blockIndex: number,
+    patch: Partial<WeeklyOutlookBlock>,
+  ) {
+    const section = report.sections[sectionIndex];
+
+    if (!section) return;
+
+    updateSection(sectionIndex, {
+      blocks: section.blocks.map((block, index) =>
+        index === blockIndex
+          ? ({ ...block, ...patch } as WeeklyOutlookBlock)
+          : block,
+      ),
+    });
+  }
+
+  function move<T>(items: T[], index: number, direction: -1 | 1) {
+    const target = index + direction;
+
+    if (target < 0 || target >= items.length) return items;
+
+    const copy = [...items];
+    [copy[index], copy[target]] = [copy[target], copy[index]];
+
+    return copy;
+  }
+
+  function addSection() {
+    if (report.sections.length >= 24) {
+      const message = "حداکثر ۲۴ سکشن مجاز است.";
+
+      adminToast.error(message);
+      setNotice({ kind: "error", message });
+      return;
+    }
+
+    const section: WeeklyOutlookSectionDefinition = {
+      id: makeWeeklyOutlookStableId("section"),
+      eyebrow: "سکشن جدید",
+      title: `سکشن ${report.sections.length + 1}`,
+      summary: "",
+      icon: "overview",
+      tone: "light",
+      visual: "grid",
+      blocks: [
+        {
+          id: makeWeeklyOutlookStableId("block"),
+          type: "paragraph",
+          text: "متن این سکشن را وارد کنید.",
+        },
+      ],
+    };
+
+    update({ sections: [...report.sections, section] });
+    adminToast.success("سکشن جدید اضافه شد.");
+    selectSection(report.sections.length);
+  }
+
+  function removeSection(index: number) {
+    if (report.sections.length === 1) {
+      const message = "حداقل یک سکشن باید باقی بماند.";
+
+      adminToast.error(message);
+      setNotice({ kind: "error", message });
+      return;
+    }
+
+    update({
+      sections: report.sections.filter((_, sectionIndex) => sectionIndex !== index),
+    });
+    adminToast.success("سکشن حذف شد.");
+    setActiveSection(Math.max(0, index - 1));
+  }
+
+  function addBlock(type: WeeklyOutlookBlockType) {
+    if (!current) return;
+
+    if (blockCount >= 220) {
+      const message = "حداکثر ۲۲۰ بلوک مجاز است.";
+
+      adminToast.error(message);
+      setNotice({ kind: "error", message });
+      return;
+    }
+
+    const id = makeWeeklyOutlookStableId("block");
+    let block: WeeklyOutlookBlock;
+
+    if (type === "heading") {
+      block = { id, type, level: "h3", text: "تیتر جدید" };
+    } else if (type === "list") {
+      block = { id, type, items: ["آیتم اول", "آیتم دوم"] };
+    } else if (type === "callout") {
+      block = {
+        id,
+        type,
+        tone: "info",
+        title: "نکته",
+        text: "متن نکته یا برداشت کلیدی را وارد کنید.",
+      };
+    } else if (type === "quote") {
+      block = {
+        id,
+        type,
+        text: "متن نقل‌قول یا گزاره برجسته را وارد کنید.",
+        cite: "",
+      };
+    } else if (type === "image") {
+      block = {
+        id,
+        type,
+        src: "",
+        alt: "",
+        caption: "",
+      };
+    } else if (type === "button") {
+      block = {
+        id,
+        type,
+        label: "مشاهده جزئیات",
+        href: "/request-strategic-consultation",
+        variant: "primary",
+        note: "",
+      };
+    } else if (type === "divider") {
+      block = { id, type };
+    } else {
+      block = {
+        id,
+        type: "paragraph",
+        text: "متن پاراگراف را وارد کنید.",
+      };
+    }
+
+    updateSection(activeSection, {
+      blocks: [...current.blocks, block],
+    });
+    adminToast.success("بلوک جدید اضافه شد.");
+  }
+
+  async function save(action: "save" | "publish" | "unpublish" | "archive") {
+    setBusy(true);
+    setNotice(null);
+    const toastId = adminToast.loading(
+      action === "publish"
+        ? "در حال انتشار گزارش..."
+        : action === "unpublish"
+          ? "در حال توقف انتشار گزارش..."
+          : action === "archive"
+            ? "در حال بایگانی گزارش..."
+            : reportId
+              ? "در حال ذخیره گزارش..."
+              : "در حال ساخت گزارش...",
+    );
+
+    try {
+      const response = await fetch(
+        reportId ? `/api/admin/weekly-outlooks/${reportId}` : "/api/admin/weekly-outlooks",
+        {
+          method: reportId ? "PATCH" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(
+            reportId
+              ? {
+                  ...report,
+                  action,
+                  expectedRevision: report.revision,
+                }
+              : report,
+          ),
+        },
+      );
+      const payload = (await response.json()) as {
+        message?: string;
+        id?: string;
+        revision?: number;
+        status?: WeeklyOutlookStatus;
+        errors?: Record<string, string>;
+      };
+
+      if (!response.ok) {
+        const detail = payload.errors
+          ? Object.values(payload.errors)[0]
+          : undefined;
+
+        throw new Error(
+          [payload.message, detail].filter(Boolean).join(" ") ||
+            "ذخیره انجام نشد.",
+        );
+      }
+
+      if (!reportId && payload.id) {
+        adminToast.dismiss(toastId);
+        adminToast.success(payload.message ?? "گزارش جدید ساخته شد.");
+        router.replace(`/admin/weekly-outlooks/${payload.id}/edit`);
+        router.refresh();
+        return;
+      }
+
+      setReport((value) => ({
+        ...value,
+        revision: payload.revision ?? value.revision,
+        status: payload.status ?? value.status,
+      }));
+      setDirty(false);
+      adminToast.dismiss(toastId);
+      adminToast.success(payload.message ?? "ذخیره شد.");
+      setNotice({
+        kind: "success",
+        message: payload.message ?? "ذخیره شد.",
+      });
+      router.refresh();
+    } catch (error) {
+      const message = adminToastMessage(error, "خطای پیش‌بینی‌نشده");
+
+      adminToast.dismiss(toastId);
+      adminToast.error(message);
+      setNotice({
+        kind: "error",
+        message,
+      });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div
+      dir="rtl"
+      className="mx-auto max-w-[1600px] px-4 py-8 pb-28 sm:px-7 lg:px-10 xl:pb-10"
+    >
+      <header className="border-b border-line pb-7">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <Link
+              href="/admin/weekly-outlooks"
+              className="text-xs font-bold text-brand-primary hover:text-brand-accent"
+            >
+              گزارش‌های هفتگی / بازگشت
+            </Link>
+
+        
+
+            <h1 className="mt-2 text-3xl font-black tracking-[-.04em] text-ink">
+              {reportId ? "ویرایش گزارش هفتگی" : "گزارش هفتگی جدید"}
+            </h1>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <button
+              disabled={busy || report.status === "archived"}
+              onClick={() => save("save")}
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-brand-primary bg-white px-4 py-2.5 text-xs font-black text-brand-primary transition hover:bg-brand-primary hover:text-white disabled:pointer-events-none disabled:opacity-50"
+            >
+              <Save size={16} />
+              ذخیره
+            </button>
+
+            {reportId && report.status === "published" ? (
+              <button
+                disabled={busy}
+                onClick={() => save("unpublish")}
+                className="min-h-11 cursor-pointer rounded-[14px] border border-line bg-white px-4 py-2.5 text-xs font-black text-ink transition hover:border-brand-primary disabled:pointer-events-none disabled:opacity-50"
+              >
+                توقف انتشار
+              </button>
+            ) : null}
+
+            {reportId && report.status !== "archived" ? (
+              <button
+                disabled={busy}
+                onClick={() => save("publish")}
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] bg-brand-accent px-5 py-2.5 text-xs font-black text-white transition hover:bg-[#ec7d01] disabled:pointer-events-none disabled:opacity-50"
+              >
+                <Send size={16} />
+                انتشار
+              </button>
+            ) : null}
+
+            {reportId && report.status !== "archived" ? (
+              <button
+                disabled={busy}
+                onClick={() => save("archive")}
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-red-200 bg-white px-4 py-2.5 text-xs font-black text-red-700 transition hover:border-red-400 disabled:pointer-events-none disabled:opacity-50"
+              >
+                بایگانی
+              </button>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="mt-4 flex min-h-8 flex-wrap items-center gap-3 text-xs">
+          <span
+            className={`rounded-full border px-2 py-1 font-bold ${
+              !reportId || dirty
+                ? "border-orange-200 bg-orange-50 text-orange-800"
+                : "border-emerald-200 bg-emerald-50 text-emerald-800"
+            }`}
+          >
+            {!reportId
+              ? "گزارش جدید · ذخیره‌نشده"
+              : dirty
+                ? "تغییرات ذخیره‌نشده"
+                : "ذخیره‌شده"}
+          </span>
+
+          <span className="rounded-full border border-line bg-white px-2 py-1 font-bold text-ink-muted">
+            {report.status === "published"
+              ? "منتشرشده"
+              : report.status === "archived"
+                ? "بایگانی‌شده"
+                : "پیش‌نویس"}
+          </span>
+
+          {notice ? (
+            <span
+              role={notice.kind === "error" ? "alert" : "status"}
+              className={
+                notice.kind === "error" ? "text-red-700" : "text-emerald-700"
+              }
+            >
+              {notice.message}
+            </span>
+          ) : null}
+        </div>
+      </header>
+
+      <div className="mt-7 grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)_390px]">
+        <aside className="overflow-hidden rounded-[24px] border border-line bg-[#f6fbfc] xl:sticky xl:top-28">
+          <div className="border-b border-line p-4">
+            <p
+               className="text-[11px] font-black tracking-[.2em] text-brand-primary"
+            >
+              فهرست سکشن‌ها
+            </p>
+
+            <div className="mt-2 flex items-center justify-between gap-4">
+              <h2 className="font-black">سکشن‌های گزارش</h2>
+
+              <span className="text-xs text-ink-muted">
+                {report.sections.length.toLocaleString("fa-IR")} / ۲۴
+              </span>
+            </div>
+          </div>
+
+          <ol>
+            {report.sections.map((section, index) => (
+              <li
+                key={section.id}
+                className="border-b border-line last:border-0"
+              >
+                <button
+                  type="button"
+                  onClick={() => selectSection(index)}
+                  aria-current={activeSection === index ? "true" : undefined}
+                  className={`w-full cursor-pointer px-4 py-4 text-right transition ${
+                    activeSection === index
+                      ? "bg-brand-primary text-white"
+                      : "hover:bg-white"
+                  }`}
+                >
+                  <span
+                    dir="ltr"
+                    className={`text-[11px] font-black tracking-[.16em] ${
+                      activeSection === index
+                        ? "text-white/70"
+                        : "text-ink-muted"
+                    }`}
+                  >
+                    سکشن {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <span className="mt-1 block text-sm font-black">
+                    {section.title || "بدون عنوان"}
+                  </span>
+
+                  <span
+                    className={`mt-1 block text-[10px] ${
+                      activeSection === index
+                        ? "text-white/70"
+                        : "text-ink-muted"
+                    }`}
+                  >
+                    {section.blocks.length.toLocaleString("fa-IR")} بلوک ·{" "}
+                    {sectionToneLabels[section.tone]} ·{" "}
+                    {sectionVisualLabels[section.visual ?? "grid"]}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+
+          <button
+            type="button"
+            onClick={addSection}
+            className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 border-t border-dashed border-brand-primary/30 p-4 text-xs font-black text-brand-primary transition hover:bg-white"
+          >
+            <Plus size={15} />
+            افزودن سکشن
+          </button>
+        </aside>
+
+        <main className="space-y-6">
+          <section className="overflow-hidden rounded-[24px] border border-line bg-white">
+            <SectionHeader code="مرحله ۰۱" title="مشخصات گزارش" />
+
+            <div className="grid gap-5 p-5 md:grid-cols-2">
+              <Label text="عنوان گزارش">
+                <input
+                  className={inputClass}
+                  value={report.title}
+                  onChange={(event) =>
+                    update({ title: event.target.value })
+                  }
+                />
+              </Label>
+
+              <Label
+                text="شناسه مسیر انگلیسی"
+                help={`/knowledge/weekly-outlook/${report.slug || "report-slug"}`}
+              >
+                <input
+                  dir="ltr"
+                  className={`${inputClass} text-left`}
+                  value={report.slug}
+                  onChange={(event) =>
+                    update({
+                      slug: normalizeWeeklyOutlookSlug(event.target.value),
+                    })
+                  }
+                />
+              </Label>
+
+              <Label text="نام نسخه">
+                <input
+                  className={inputClass}
+                  value={report.edition}
+                  onChange={(event) =>
+                    update({ edition: event.target.value })
+                  }
+                />
+              </Label>
+
+              <ReportDateField
+                reportDate={report.reportDate}
+                dateCalendar={report.dateCalendar}
+                onChange={update}
+              />
+
+              <div className="md:col-span-2">
+                <Label text="توضیح کوتاه لیست گزارش‌ها">
+                  <textarea
+                    className={`${inputClass} min-h-28 resize-none leading-7`}
+                    value={report.excerpt}
+                    onChange={(event) =>
+                      update({ excerpt: event.target.value })
+                    }
+                  />
+                </Label>
+              </div>
+
+              <Label text="تصویر اصلی گزارش">
+                <input
+                  dir="ltr"
+                  className={`${inputClass} text-left`}
+                  placeholder="/assets/images/report-cover.jpg یا https://..."
+                  value={report.coverImage ?? ""}
+                  onChange={(event) =>
+                    update({ coverImage: event.target.value })
+                  }
+                />
+              </Label>
+
+              <Label text="متن جایگزین تصویر اصلی">
+                <input
+                  className={inputClass}
+                  value={report.coverImageAlt ?? ""}
+                  onChange={(event) =>
+                    update({ coverImageAlt: event.target.value })
+                  }
+                />
+              </Label>
+
+              <Label text="عنوان سئو">
+                <input
+                  className={inputClass}
+                  value={report.seoTitle ?? ""}
+                  onChange={(event) =>
+                    update({ seoTitle: event.target.value })
+                  }
+                />
+              </Label>
+
+              <Label text="توضیح سئو">
+                <input
+                  className={inputClass}
+                  value={report.seoDescription ?? ""}
+                  onChange={(event) =>
+                    update({ seoDescription: event.target.value })
+                  }
+                />
+              </Label>
+            </div>
+          </section>
+
+          {current ? (
+            <section
+              ref={sectionEditorRef}
+              className="scroll-mt-28 overflow-hidden rounded-[24px] border border-line bg-white"
+            >
+              <SectionHeader
+                code={`سکشن ${String(activeSection + 1).padStart(2, "0")}`}
+                title="تنظیم سکشن"
+                actions={
+                  <div className="flex gap-1">
+                    <IconButton
+                      label="انتقال به بالا"
+                      disabled={activeSection === 0}
+                      onClick={() => {
+                        update({
+                          sections: move(report.sections, activeSection, -1),
+                        });
+                        setActiveSection(activeSection - 1);
+                      }}
+                    >
+                      <ArrowUp size={15} />
+                    </IconButton>
+
+                    <IconButton
+                      label="انتقال به پایین"
+                      disabled={activeSection === report.sections.length - 1}
+                      onClick={() => {
+                        update({
+                          sections: move(report.sections, activeSection, 1),
+                        });
+                        setActiveSection(activeSection + 1);
+                      }}
+                    >
+                      <ArrowDown size={15} />
+                    </IconButton>
+
+                    <IconButton
+                      label="حذف سکشن"
+                      onClick={() => removeSection(activeSection)}
+                    >
+                      <Trash2 size={15} />
+                    </IconButton>
+                  </div>
+                }
+              />
+
+              <div className="grid gap-5 p-5 md:grid-cols-2">
+                <Label text="عنوان سکشن">
+                  <input
+                    className={inputClass}
+                    value={current.title}
+                    onChange={(event) =>
+                      updateSection(activeSection, {
+                        title: event.target.value,
+                      })
+                    }
+                  />
+                </Label>
+
+                <Label text="برچسب بالای سکشن">
+                  <input
+                    className={inputClass}
+                    value={current.eyebrow ?? ""}
+                    onChange={(event) =>
+                      updateSection(activeSection, {
+                        eyebrow: event.target.value,
+                      })
+                    }
+                  />
+                </Label>
+
+                <div>
+                  <p className="text-xs font-bold text-ink">آیکن سکشن</p>
+
+                  <div className="mt-2 grid gap-3 sm:grid-cols-[52px_1fr]">
+                    <span className="grid h-[50px] w-[52px] place-items-center rounded-[16px] border border-brand-primary/15 bg-[#eef8fb] text-brand-primary">
+                      <CurrentSectionIcon aria-hidden="true" size={20} />
+                    </span>
+
+                    <select
+                      className="w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                      value={current.icon}
+                      onChange={(event) =>
+                        updateSection(activeSection, {
+                          icon: event.target.value as WeeklyOutlookSectionIcon,
+                        })
+                      }
+                    >
+                      {Object.entries(sectionIconLabels).map(
+                        ([value, label]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </div>
+                </div>
+
+                <Label text="پس‌زمینه سکشن">
+                  <select
+                    className={inputClass}
+                    value={current.tone}
+                    onChange={(event) =>
+                      updateSection(activeSection, {
+                        tone: event.target.value as WeeklyOutlookSectionTone,
+                      })
+                    }
+                  >
+                    {Object.entries(sectionToneLabels).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </Label>
+
+                <div className="md:col-span-2">
+                  <p className="text-xs font-bold text-ink">
+                    نمای بصری سکشن
+                  </p>
+
+                  <div className="mt-2 grid gap-3 lg:grid-cols-[168px_1fr]">
+                    <SectionVisualPreview visual={current.visual ?? "grid"} />
+
+                    <div>
+                      <select
+                        className="w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                        value={current.visual ?? "grid"}
+                        onChange={(event) =>
+                          updateSection(activeSection, {
+                            visual: event.target
+                              .value as WeeklyOutlookSectionVisual,
+                          })
+                        }
+                      >
+                        {Object.entries(sectionVisualLabels).map(
+                          ([value, label]) => (
+                            <option key={value} value={value}>
+                              {label}
+                            </option>
+                          ),
+                        )}
+                      </select>
+
+                      <p className="mt-2 text-[10px] leading-5 text-ink-muted">
+                        {
+                          sectionVisualDescriptions[
+                            current.visual ?? "grid"
+                          ]
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-2">
+                  <Label text="خلاصه سکشن">
+                    <textarea
+                      className={`${inputClass} min-h-24 resize-none leading-7`}
+                      value={current.summary ?? ""}
+                      onChange={(event) =>
+                        updateSection(activeSection, {
+                          summary: event.target.value,
+                        })
+                      }
+                    />
+                  </Label>
+                </div>
+              </div>
+            </section>
+          ) : null}
+
+          {current ? (
+            <section className="overflow-hidden rounded-[24px] border border-line bg-white">
+              <SectionHeader
+                code={`${blockCount.toLocaleString("fa-IR")} بلوک`}
+                title="ادیتور محتوای سکشن"
+              />
+
+              <div className="flex flex-wrap gap-2 border-b border-line bg-[#f8fbfc] p-4">
+                {(
+                  [
+                    "paragraph",
+                    "heading",
+                    "list",
+                    "callout",
+                    "quote",
+                    "image",
+                    "button",
+                    "divider",
+                  ] as WeeklyOutlookBlockType[]
+                ).map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => addBlock(type)}
+                    className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-[14px] border border-line bg-white px-3 py-2 text-[11px] font-black text-ink transition hover:border-brand-primary hover:text-brand-primary"
+                  >
+                    <BlockMiniIcon type={type} />
+                    {blockLabels[type]}
+                  </button>
+                ))}
+              </div>
+
+              {current.blocks.length === 0 ? (
+                <div className="p-12 text-center">
+                  <FileText className="mx-auto h-8 w-8 text-brand-primary/30" />
+                  <p className="mt-4 text-sm font-bold">
+                    این سکشن هنوز محتوایی ندارد.
+                  </p>
+                </div>
+              ) : (
+                <div className="divide-y divide-line">
+                  {current.blocks.map((block, index) => (
+                    <BlockEditor
+                      key={block.id}
+                      block={block}
+                      index={index}
+                      onChange={(patch) =>
+                        updateBlock(activeSection, index, patch)
+                      }
+                      onMove={(direction) =>
+                        updateSection(activeSection, {
+                          blocks: move(current.blocks, index, direction),
+                        })
+                      }
+                      onRemove={() => {
+                        adminToast.success("بلوک حذف شد.");
+                        updateSection(activeSection, {
+                          blocks: current.blocks.filter(
+                            (_, blockIndex) => blockIndex !== index,
+                          ),
+                        });
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
+          ) : null}
+        </main>
+
+        <aside className="xl:sticky xl:top-28">
+          <div className="rounded-t-[24px] border border-[#0c526a] bg-[#0d607b] p-5 text-white">
+            <div className="flex items-center justify-between gap-4">
+              <p
+                dir="ltr"
+                className="text-[11px] font-black tracking-[.2em] text-white/60"
+              >
+                نمایش زنده گزارش
+              </p>
+
+               
+            </div>
+
+            <h2 className="mt-5 text-xl font-black leading-8">
+              {report.title || "عنوان گزارش شما"}
+            </h2>
+
+            <p className="mt-3 text-xs leading-6 text-white/70">
+              {report.excerpt || "توضیح کوتاه گزارش"}
+            </p>
+
+            <div
+              dir="ltr"
+              className="mt-5 border-t border-white/20 pt-3 text-left text-[11px] tracking-wider text-white/60"
+            >
+              /knowledge/weekly-outlook/{report.slug || "report-slug"}
+              <br />
+              {formatWeeklyOutlookDate(
+                report.reportDate,
+                report.dateCalendar,
+                "medium",
+              )}
+            </div>
+          </div>
+
+          <div className="rounded-b-[24px] border-x border-b border-line bg-white p-5">
+            <p className="text-[11px] font-black text-brand-primary">
+              ساختار صفحه
+            </p>
+
+            <ol className="mt-4 space-y-3">
+              {report.sections.map((section, index) => (
+                <li
+                  key={section.id}
+                  className="overflow-hidden rounded-[14px] border border-line bg-[#fbfdfd]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => selectSection(index)}
+                    aria-current={activeSection === index ? "true" : undefined}
+                    className={`
+                      group
+                      flex
+                      w-full
+                      cursor-pointer
+                      items-start
+                      gap-3
+                      p-3
+                      text-right
+                      transition
+                      hover:border-brand-primary
+                      hover:bg-[#f3fbfd]
+                      focus-visible:outline-none
+                      focus-visible:ring-4
+                      focus-visible:ring-brand-accent/15
+
+                      ${
+                        activeSection === index
+                          ? "bg-[#edf8fb] shadow-[inset_3px_0_0_var(--dnh-accent)]"
+                          : ""
+                      }
+                    `}
+                  >
+                    <span
+                      dir="ltr"
+                      className={`
+                        shrink-0
+                        text-[10px]
+                        font-black
+                        transition
+
+                        ${
+                          activeSection === index
+                            ? "text-brand-accent"
+                            : "text-brand-primary/50 group-hover:text-brand-primary"
+                        }
+                      `}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-black text-ink">
+                        {section.title || "بدون عنوان"}
+                      </span>
+                      <span className="mt-1 block text-[10px] leading-5 text-ink-muted">
+                        {section.blocks.length.toLocaleString("fa-IR")} بلوک ·{" "}
+                        {sectionToneLabels[section.tone]} ·{" "}
+                        {sectionVisualLabels[section.visual ?? "grid"]}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {reportId && report.status === "published" ? (
+            <Link
+              href={`/knowledge/weekly-outlook/${report.slug}`}
+              className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-[14px] border border-line bg-white p-3 text-[11px] font-bold transition hover:border-brand-primary"
+            >
+              <Eye size={14} />
+              مشاهده صفحه عمومی
+            </Link>
+          ) : null}
+        </aside>
+      </div>
+
+      {report.status !== "archived" ? (
+        <div className="fixed bottom-3 left-3 right-3 z-40 flex items-center justify-between gap-2 rounded-[22px] border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden">
+          <div className="min-w-0">
+            <p className="truncate text-[10px] font-black text-ink">
+              {report.title || "گزارش جدید"}
+            </p>
+
+            <p
+              className={`mt-0.5 text-[11px] ${
+                !reportId || dirty ? "text-orange-700" : "text-emerald-700"
+              }`}
+            >
+              {!reportId
+                ? "هنوز ذخیره نشده"
+                : dirty
+                  ? "تغییرات ذخیره‌نشده"
+                  : "ذخیره‌شده"}
+            </p>
+          </div>
+
+          <div className="flex shrink-0 gap-1.5">
+            <button
+              disabled={busy}
+              onClick={() => save("save")}
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:pointer-events-none disabled:opacity-50"
+            >
+              <Save size={13} />
+              ذخیره
+            </button>
+
+            {reportId ? (
+              <button
+                disabled={busy}
+                onClick={() => save("publish")}
+                className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:pointer-events-none disabled:opacity-50"
+              >
+                <Send size={13} />
+                انتشار
+              </button>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function ReportDateField({
+  reportDate,
+  dateCalendar,
+  onChange,
+}: {
+  reportDate: string;
+  dateCalendar: WeeklyOutlookDateCalendar;
+  onChange: (patch: Partial<WeeklyOutlookReportDefinition>) => void;
+}) {
+  const calendar = dateCalendar ?? "jalali";
+  const jalaliDate = gregorianToJalaliDateParts(reportDate);
+  const jalaliYears = buildJalaliYearOptions(jalaliDate.year);
+  const days = Array.from(
+    { length: jalaliMonthLength(jalaliDate.year, jalaliDate.month) },
+    (_, index) => index + 1,
+  );
+
+  function updateJalaliDate(patch: Partial<JalaliDateControls>) {
+    const next = {
+      year: patch.year ?? jalaliDate.year,
+      month: patch.month ?? jalaliDate.month,
+      day: patch.day ?? jalaliDate.day,
+    };
+    const day = Math.min(next.day, jalaliMonthLength(next.year, next.month));
+
+    onChange({
+      reportDate: jalaliToGregorianDateString(
+        next.year,
+        next.month,
+        day,
+      ),
+    });
+  }
+
+  return (
+    <div className="md:col-span-2">
+      <div className="rounded-[18px] border border-line bg-[#fbfdfd] p-4">
+        <div className="grid gap-4 md:grid-cols-[180px_1fr] md:items-start">
+          <Label
+            text="نوع تقویم"
+            help="نوع نمایش تاریخ در سایت و پنل ادمین"
+          >
+            <select
+              className={inputClass}
+              value={calendar}
+              onChange={(event) =>
+                onChange({
+                  dateCalendar: event.target
+                    .value as WeeklyOutlookDateCalendar,
+                })
+              }
+            >
+              {dateCalendarOptions.map((option) => (
+                <option key={option} value={option}>
+                  {weeklyOutlookDateCalendarLabels[option]}
+                </option>
+              ))}
+            </select>
+          </Label>
+
+          {calendar === "gregorian" ? (
+            <Label
+              text="تاریخ میلادی"
+              help="برای مرتب‌سازی، مقدار استاندارد تاریخ همزمان ذخیره می‌شود."
+            >
+              <input
+                type="date"
+                className={inputClass}
+                value={reportDate}
+                onChange={(event) =>
+                  onChange({
+                    reportDate: event.target.value || todayIsoDate(),
+                  })
+                }
+              />
+            </Label>
+          ) : (
+            <div>
+              <p className="text-xs font-bold text-ink">
+                تاریخ شمسی گزارش
+              </p>
+
+              <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                <select
+                  aria-label="روز تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.day}
+                  onChange={(event) =>
+                    updateJalaliDate({ day: Number(event.target.value) })
+                  }
+                >
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day.toLocaleString("fa-IR")}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  aria-label="ماه تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.month}
+                  onChange={(event) =>
+                    updateJalaliDate({ month: Number(event.target.value) })
+                  }
+                >
+                  {jalaliMonthNames.map((month, index) => (
+                    <option key={month} value={index + 1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  aria-label="سال تاریخ شمسی"
+                  className={inputClass}
+                  value={jalaliDate.year}
+                  onChange={(event) =>
+                    updateJalaliDate({ year: Number(event.target.value) })
+                  }
+                >
+                  {jalaliYears.map((year) => (
+                    <option key={year} value={year}>
+                      {year.toLocaleString("fa-IR", {
+                        useGrouping: false,
+                      })}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <p className="mt-2 text-[10px] leading-5 text-ink-muted">
+                برای مرتب‌سازی و لینک‌دهی، معادل میلادی تاریخ همزمان ذخیره
+                می‌شود.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3 text-[11px] font-bold text-ink-muted">
+          <span className="text-brand-primary">نمایش عمومی:</span>
+          <span>{formatWeeklyOutlookDate(reportDate, calendar, "long")}</span>
+          <span dir="ltr" className="text-brand-primary/60">
+            تاریخ ذخیره‌شده / {reportDate}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type JalaliDateControls = {
+  year: number;
+  month: number;
+  day: number;
+};
+
+function BlockEditor({
+  block,
+  index,
+  onChange,
+  onMove,
+  onRemove,
+}: {
+  block: WeeklyOutlookBlock;
+  index: number;
+  onChange: (patch: Partial<WeeklyOutlookBlock>) => void;
+  onMove: (direction: -1 | 1) => void;
+  onRemove: () => void;
+}) {
+  return (
+    <article className="p-5">
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <div>
+          <span
+            dir="ltr"
+            className="text-[11px] font-black tracking-[.16em] text-ink-muted"
+          >
+            بلوک {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <h3 className="mt-1 text-sm font-black">
+            {blockLabels[block.type]}
+          </h3>
+        </div>
+
+        <div className="flex">
+          <IconButton label="بالا" disabled={index === 0} onClick={() => onMove(-1)}>
+            <ArrowUp size={14} />
+          </IconButton>
+
+          <IconButton label="پایین" onClick={() => onMove(1)}>
+            <ArrowDown size={14} />
+          </IconButton>
+
+          <IconButton label="حذف بلوک" onClick={onRemove}>
+            <Trash2 size={14} />
+          </IconButton>
+        </div>
+      </div>
+
+      {block.type === "paragraph" ? (
+        <Label text="متن پاراگراف">
+          <textarea
+            className={`${inputClass} min-h-36 resize-none leading-8`}
+            value={block.text}
+            onChange={(event) => onChange({ text: event.target.value })}
+          />
+        </Label>
+      ) : null}
+
+      {block.type === "heading" ? (
+        <div className="grid gap-4 md:grid-cols-[180px_1fr]">
+          <Label text="سطح تیتر">
+            <select
+              className={inputClass}
+              value={block.level}
+              onChange={(event) =>
+                onChange({ level: event.target.value as "h2" | "h3" })
+              }
+            >
+              <option value="h2">تیتر اصلی سکشن</option>
+              <option value="h3">زیربخش</option>
+            </select>
+          </Label>
+
+          <Label text="متن تیتر">
+            <input
+              className={inputClass}
+              value={block.text}
+              onChange={(event) => onChange({ text: event.target.value })}
+            />
+          </Label>
+        </div>
+      ) : null}
+
+      {block.type === "list" ? (
+        <Label text="آیتم‌های لیست">
+          <textarea
+            className={`${inputClass} min-h-44 resize-none leading-8`}
+            value={block.items.join("\n")}
+            onChange={(event) =>
+              onChange({
+                items: event.target.value
+                  .split("\n")
+                  .map((item) => item.trim())
+                  .filter(Boolean),
+              })
+            }
+          />
+        </Label>
+      ) : null}
+
+      {block.type === "callout" ? (
+        <div className="grid gap-4 md:grid-cols-[180px_1fr]">
+          <Label text="رنگ نکته">
+            <select
+              className={inputClass}
+              value={block.tone}
+              onChange={(event) =>
+                onChange({
+                  tone: event.target.value as WeeklyOutlookCalloutTone,
+                })
+              }
+            >
+              {Object.entries(calloutToneLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </Label>
+
+          <Label text="عنوان نکته">
+            <input
+              className={inputClass}
+              value={block.title ?? ""}
+              onChange={(event) => onChange({ title: event.target.value })}
+            />
+          </Label>
+
+          <div className="md:col-span-2">
+            <Label text="متن نکته">
+              <textarea
+                className={`${inputClass} min-h-32 resize-none leading-8`}
+                value={block.text}
+                onChange={(event) => onChange({ text: event.target.value })}
+              />
+            </Label>
+          </div>
+        </div>
+      ) : null}
+
+      {block.type === "quote" ? (
+        <div className="grid gap-4">
+          <Label text="متن نقل‌قول">
+            <textarea
+              className={`${inputClass} min-h-32 resize-none leading-8`}
+              value={block.text}
+              onChange={(event) => onChange({ text: event.target.value })}
+            />
+          </Label>
+
+          <Label text="منبع یا توضیح کوتاه">
+            <input
+              className={inputClass}
+              value={block.cite ?? ""}
+              onChange={(event) => onChange({ cite: event.target.value })}
+            />
+          </Label>
+        </div>
+      ) : null}
+
+      {block.type === "image" ? (
+        <div className="grid gap-4 md:grid-cols-2">
+          <Label text="آدرس تصویر">
+            <input
+              dir="ltr"
+              className={`${inputClass} text-left`}
+              placeholder="/assets/images/report.jpg یا https://..."
+              value={block.src}
+              onChange={(event) => onChange({ src: event.target.value })}
+            />
+          </Label>
+
+          <Label text="متن جایگزین">
+            <input
+              className={inputClass}
+              value={block.alt}
+              onChange={(event) => onChange({ alt: event.target.value })}
+            />
+          </Label>
+
+          <div className="md:col-span-2">
+            <Label text="کپشن تصویر">
+              <input
+                className={inputClass}
+                value={block.caption ?? ""}
+                onChange={(event) =>
+                  onChange({ caption: event.target.value })
+                }
+              />
+            </Label>
+          </div>
+        </div>
+      ) : null}
+
+      {block.type === "button" ? (
+        <div className="grid gap-4 md:grid-cols-[190px_1fr]">
+          <Label text="حالت دکمه">
+            <select
+              className={inputClass}
+              value={block.variant}
+              onChange={(event) =>
+                onChange({
+                  variant: event.target.value as WeeklyOutlookButtonVariant,
+                })
+              }
+            >
+              {Object.entries(buttonVariantLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </Label>
+
+          <Label text="متن دکمه">
+            <input
+              className={inputClass}
+              value={block.label}
+              onChange={(event) => onChange({ label: event.target.value })}
+            />
+          </Label>
+
+          <div className="md:col-span-2">
+            <Label
+              text="آدرس لینک"
+              help="مسیر داخلی مثل /services، لینک داخل صفحه مثل #summary یا لینک امن https"
+            >
+              <input
+                dir="ltr"
+                className={`${inputClass} text-left`}
+                placeholder="/request-strategic-consultation"
+                value={block.href}
+                onChange={(event) => onChange({ href: event.target.value })}
+              />
+            </Label>
+          </div>
+
+          <div className="md:col-span-2">
+            <Label text="توضیح کوتاه بالای دکمه">
+              <input
+                className={inputClass}
+                value={block.note ?? ""}
+                onChange={(event) => onChange({ note: event.target.value })}
+              />
+            </Label>
+          </div>
+        </div>
+      ) : null}
+
+      {block.type === "divider" ? (
+        <div className="rounded-[16px] border border-dashed border-line bg-[#fbfdfd] p-6 text-center text-xs font-bold text-ink-muted">
+          جداکننده بصری در صفحه گزارش نمایش داده می‌شود.
+        </div>
+      ) : null}
+    </article>
+  );
+}
+
+function SectionVisualPreview({
+  visual,
+}: {
+  visual: WeeklyOutlookSectionVisual;
+}) {
+  return (
+    <div className="relative min-h-[96px] overflow-hidden rounded-[18px] border border-brand-primary/12 bg-[#f7fbfc]">
+      {visual === "plain" ? (
+        <>
+          <span className="absolute inset-x-5 top-1/2 h-px bg-brand-primary/14" />
+          <span className="absolute right-5 top-5 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "grid" ? (
+        <>
+          <span
+            className="absolute inset-0 opacity-60"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,rgba(22,115,148,.12) 1px,transparent 1px),linear-gradient(to bottom,rgba(22,115,148,.1) 1px,transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+          <span className="absolute bottom-5 right-6 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "gradient" ? (
+        <>
+          <span className="absolute inset-0 bg-[radial-gradient(circle_at_75%_28%,rgba(252,133,2,.28),transparent_30%),linear-gradient(135deg,rgba(22,115,148,.22),rgba(255,255,255,.8))]" />
+          <span className="absolute bottom-5 left-5 h-px w-20 bg-brand-primary/30" />
+        </>
+      ) : null}
+
+      {visual === "blueprint" ? (
+        <>
+          <span
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right,rgba(22,115,148,.14) 1px,transparent 1px),linear-gradient(to bottom,rgba(22,115,148,.1) 1px,transparent 1px)",
+              backgroundSize: "18px 18px",
+            }}
+          />
+          <span className="absolute left-8 top-5 h-12 w-16 border border-brand-primary/25" />
+          <span className="absolute left-14 top-4 h-14 w-px rotate-[32deg] bg-brand-primary/20" />
+          <span className="absolute right-7 bottom-6 h-2 w-2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "market" ? (
+        <svg
+          viewBox="0 0 160 96"
+          className="absolute inset-0 h-full w-full text-brand-primary"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M18 66C34 56 42 68 56 51C70 34 83 48 97 35C112 21 125 33 144 20"
+            stroke="currentColor"
+            strokeOpacity=".38"
+            strokeWidth="2"
+          />
+          <path
+            d="M18 74H144M34 18V78M70 18V78M106 18V78"
+            stroke="currentColor"
+            strokeOpacity=".1"
+          />
+          <rect x="96" y="31" width="7" height="7" fill="var(--dnh-accent)" />
+        </svg>
+      ) : null}
+
+      {visual === "spotlight" ? (
+        <>
+          <span className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(252,133,2,.34),transparent_28%),radial-gradient(circle_at_50%_45%,rgba(22,115,148,.20),transparent_48%)]" />
+          <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      {visual === "glass" ? (
+        <>
+          <span className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 to-white" />
+          <span className="absolute right-6 top-4 h-16 w-12 border border-brand-primary/16 bg-white/45" />
+          <span className="absolute right-16 top-8 h-16 w-12 border border-brand-primary/18 bg-white/35" />
+          <span className="absolute left-7 bottom-6 h-px w-16 bg-brand-accent/75" />
+        </>
+      ) : null}
+
+      {visual === "accent" ? (
+        <>
+          <span className="absolute inset-y-5 right-7 w-px bg-brand-accent" />
+          <span className="absolute bottom-6 right-7 h-px w-24 bg-brand-primary/22" />
+          <span className="absolute right-[23px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 bg-brand-accent" />
+        </>
+      ) : null}
+
+      <span className="absolute bottom-3 right-3 text-[10px] font-black text-brand-primary/70">
+        {sectionVisualLabels[visual]}
+      </span>
+    </div>
+  );
+}
+
+function BlockMiniIcon({ type }: { type: WeeklyOutlookBlockType }) {
+  const className = "h-3.5 w-3.5";
+
+  if (type === "list") return <ListChecks className={className} />;
+  if (type === "quote") return <Quote className={className} />;
+  if (type === "image") return <ImageIcon className={className} />;
+  if (type === "button") return <Link2 className={className} />;
+  if (type === "heading") return <FileText className={className} />;
+
+  return <Plus className={className} />;
+}
+
+function Label({
+  text,
+  help,
+  children,
+}: {
+  text: string;
+  help?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block text-xs font-bold text-ink">
+      {text}
+      {children}
+      {help ? (
+        <span
+          className="mt-1 block text-[10px] font-normal leading-5 text-ink-muted"
+        >
+          {help}
+        </span>
+      ) : null}
+    </label>
+  );
+}
+
+function SectionHeader({
+  code,
+  title,
+  actions,
+}: {
+  code: string;
+  title: string;
+  actions?: React.ReactNode;
+}) {
+  return (
+    <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
+      <div>
+        <p
+          
+          className="text-[11px] font-black tracking-[.18em] text-brand-primary"
+        >
+          {code}
+        </p>
+
+        <h2 className="mt-1 text-base font-black">{title}</h2>
+      </div>
+
+      {actions}
+    </header>
+  );
+}
+
+function IconButton({
+  label,
+  disabled,
+  onClick,
+  children,
+}: {
+  label: string;
+  disabled?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="grid h-9 w-9 cursor-pointer place-items-center rounded-xl border border-line bg-white text-ink transition hover:border-brand-accent hover:text-brand-primary disabled:pointer-events-none disabled:opacity-25"
+    >
+      {children}
+    </button>
+  );
+}

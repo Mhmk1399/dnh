@@ -243,8 +243,8 @@ export function HoldingFinancialPressureSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[8px]
-                  w-[8px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 
@@ -547,10 +547,10 @@ export function HoldingFinancialPressureSection() {
                 <span
                   aria-hidden="true"
                   className="
-                    mt-[9px]
+                    mt-[11px]
 
-                    h-[7px]
-                    w-[7px]
+                    h-[11px]
+                    w-[11px]
 
                     shrink-0
 
@@ -644,8 +644,8 @@ function PanelTitle({
       <span
         aria-hidden="true"
         className={`
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           shrink-0
 
@@ -693,8 +693,8 @@ function LocalDecisionRow({ title, text }: { title: string; text: string }) {
         <span
           aria-hidden="true"
           className="
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 
@@ -774,8 +774,8 @@ function GroupViewRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

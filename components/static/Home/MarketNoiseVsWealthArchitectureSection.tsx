@@ -174,7 +174,7 @@ export function MarketNoiseVsWealthArchitectureSection() {
                 sm:text-[11px]
               "
             >
-              از هیجان بازار تا ساختار تصمیم
+              فراتر از نوسانات بازار، به سوی تصمیم‌گیری آگاهانه
             </span>
           </div>
 
@@ -197,17 +197,16 @@ export function MarketNoiseVsWealthArchitectureSection() {
 
               sm:text-[38px]
 
-              lg:text-[44px]
+              lg:text-[40px]
               lg:leading-[1.55]
 
-              xl:text-[48px]
+              *:
             "
           >
-            بازار مهم است؛
+            بازار تغییر می‌کند؛
             <br />
-            اما تصمیم مالی
-            <br />
-            <span className="text-brand-primary">فقط بازار نیست.</span>
+            تصمیم‌های مالی{" "}
+            <span className="text-brand-primary">به ساختار نیاز دارند.</span>
           </h2>
 
           {/* description */}
@@ -231,9 +230,11 @@ export function MarketNoiseVsWealthArchitectureSection() {
               lg:text-[15px]
             "
           >
-            خبر، نوسان و تحلیل بازار بخشی از محیط تصمیم‌اند؛ اما در نگاه DNH،
-            این عوامل در کنار ساختار مالی، ریسک، نقدینگی، سناریوها و افق زمانی
-            دیده می‌شوند تا تصمیم فقط واکنشی به اتفاق امروز نباشد.
+            اخبار اقتصادی، نوسانات قیمت و تغییرات بازار بر تصمیم‌های مالی اثر
+            می‌گذارند؛ اما به‌تنهایی برای انتخاب مسیر کافی نیستند. در رویکرد
+            DNH، شرایط بازار در کنار ساختار دارایی‌ها، ریسک‌ها، نیازهای نقدینگی
+            و اهداف بلندمدت بررسی می‌شود تا تصمیم‌ها بر پایه تحلیل و سناریوهای
+            قابل ارزیابی شکل بگیرند، نه صرفاً واکنش به اتفاقات روز.
           </p>
 
           {/* statement */}
@@ -267,10 +268,10 @@ export function MarketNoiseVsWealthArchitectureSection() {
                 lg:text-[18px]
               "
             >
-              بازار یک ورودی است؛
+              بازار اطلاعات می‌دهد؛
               <br />
               <span className="text-brand-primary">
-                ساختار، زمینه تصمیم است.
+                ساختار مالی به تصمیم معنا می‌بخشد.
               </span>
             </p>
           </div>
@@ -484,7 +485,7 @@ function DecisionField() {
                 className="
                   mt-1
 
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.2em]
 
@@ -594,8 +595,8 @@ function DecisionField() {
           >
             <span
               className="
-                h-[8px]
-                w-[8px]
+                h-[11px]
+                w-[11px]
                 bg-brand-accent
               "
             />
@@ -614,7 +615,7 @@ function DecisionField() {
 
               rotate-90
 
-              text-[7px]
+              text-[11px]
               font-bold
               tracking-[0.22em]
 
@@ -667,7 +668,7 @@ function DecisionField() {
                 className="
                   mt-1
 
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.2em]
 
@@ -781,7 +782,7 @@ function DecisionField() {
                 dir="ltr"
                 className="
                   mt-1
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.16em]
                   text-ink-muted/60
@@ -813,7 +814,7 @@ function DecisionField() {
                   px-3
                   py-2
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
 
                   text-ink-muted
@@ -874,8 +875,8 @@ function DecisionField() {
           >
             <span
               className="
-                h-[7px]
-                w-[7px]
+                h-[11px]
+                w-[11px]
                 bg-brand-accent
               "
             />
@@ -917,7 +918,7 @@ function DecisionField() {
                 dir="ltr"
                 className="
                   mt-1
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.16em]
                   text-brand-primary/50
@@ -992,7 +993,7 @@ function DecisionField() {
 
                 <p
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-medium
                     leading-[1.8]
 
@@ -1119,15 +1120,15 @@ function StructureItem({
     >
       <div
         className="
-          pt-[7px]
+          pt-[11px]
         "
       >
         <span
           aria-hidden="true"
           className="
             block
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             border
             border-brand-primary/65
@@ -1163,7 +1164,7 @@ function StructureItem({
           className="
             mt-1
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.8]
 

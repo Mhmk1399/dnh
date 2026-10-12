@@ -448,8 +448,8 @@ function ProcessRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
             shrink-0
 
             ${active ? "bg-[#fc8502]" : "border border-[#167394]/25"}

@@ -465,7 +465,7 @@ export function AssessmentFormSection() {
                   <p
                     dir="ltr"
                     className="
-                      text-[7px]
+                      text-[11px]
                       font-black
                       tracking-[0.18em]
 
@@ -490,7 +490,7 @@ export function AssessmentFormSection() {
                     className="
                       mt-2
 
-                      text-[9px]
+                      text-[11px]
                       font-medium
                       leading-[1.9]
 
@@ -565,7 +565,7 @@ export function AssessmentFormSection() {
                         className="
                           mt-1
 
-                          text-[8px]
+                          text-[11px]
                           font-medium
                           leading-[1.9]
 
@@ -601,7 +601,7 @@ export function AssessmentFormSection() {
               >
                 <p
                   className="
-                    text-[8px]
+                    text-[11px]
                     font-bold
 
                     text-ink-muted
@@ -623,7 +623,7 @@ export function AssessmentFormSection() {
                   <a
                     href="#privacy-confidentiality"
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-bold
 
                       text-brand-primary
@@ -639,7 +639,7 @@ export function AssessmentFormSection() {
                   <a
                     href="#after-submission"
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-bold
 
                       text-brand-primary
@@ -753,7 +753,7 @@ export function AssessmentFormSection() {
                     <p
                       dir="ltr"
                       className="
-                        text-[7px]
+                        text-[11px]
                         font-black
                         tracking-[0.18em]
 
@@ -781,7 +781,7 @@ export function AssessmentFormSection() {
 
                   <p
                     className="
-                      text-[9px]
+                      text-[11px]
                       font-bold
 
                       text-ink-muted
@@ -1091,7 +1091,7 @@ function ProfileStep({
                 className="
                     mt-2
 
-                    text-[9px]
+                    text-[11px]
                     font-medium
                     leading-[1.9]
 
@@ -1334,7 +1334,7 @@ function TimingStep({
                     className="
                         mt-1
 
-                        text-[9px]
+                        text-[11px]
                         font-medium
                         leading-[1.9]
 
@@ -1508,7 +1508,7 @@ function ContactStep({
 
         <p
           className="
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -1567,7 +1567,7 @@ function SuccessState() {
         className="
           mt-7
 
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.2em]
 
@@ -1694,7 +1694,7 @@ function ProgressStep({
 
           border
 
-          text-[9px]
+          text-[11px]
           font-black
 
           ${
@@ -1812,7 +1812,7 @@ function FieldLabel({
           className="
             mt-1
 
-            text-[8px]
+            text-[11px]
             font-medium
             leading-[1.8]
 

@@ -214,8 +214,8 @@ export function ExecutiveBriefingsDecisionViewSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[9px]
-                  w-[9px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 
@@ -357,8 +357,8 @@ export function ExecutiveBriefingsDecisionViewSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 
@@ -463,8 +463,8 @@ function DecisionColumn({
         <span
           aria-hidden="true"
           className={`
-            h-[8px]
-            w-[8px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 
@@ -587,8 +587,8 @@ function MobileDecisionItem({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

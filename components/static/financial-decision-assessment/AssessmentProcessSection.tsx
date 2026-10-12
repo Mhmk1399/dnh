@@ -306,7 +306,7 @@ export function AssessmentProcessSection() {
 
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-medium
                     leading-[1.9]
 
@@ -399,7 +399,7 @@ export function AssessmentProcessSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.2em]
 
@@ -500,7 +500,7 @@ export function AssessmentProcessSection() {
 
                 <p
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-medium
                     leading-[1.9]
 
@@ -566,7 +566,7 @@ export function AssessmentProcessSection() {
               <p
                 dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-black
                   tracking-[0.18em]
 
@@ -724,7 +724,7 @@ function ProcessRow({
 
         <span
           className="
-            text-[7px]
+            text-[11px]
             font-black
             tracking-[0.14em]
 
@@ -856,7 +856,7 @@ function ProcessRow({
       >
         <p
           className="
-            text-[7px]
+            text-[11px]
             font-bold
 
             text-white/26

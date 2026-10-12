@@ -237,7 +237,7 @@ export function WealthStrategyReviewSection() {
                 <div>
                   <p
                     className="
-                      text-[8px]
+                      text-[11px]
                       font-black
                       opacity-60
                     "
@@ -264,7 +264,7 @@ export function WealthStrategyReviewSection() {
                   aria-hidden="true"
                   className="
                     hidden
-                    h-[8px] w-[8px]
+                    h-[11px] w-[11px]
 
                     bg-[#073142]
 
@@ -302,7 +302,7 @@ export function WealthStrategyReviewSection() {
             className="
               max-w-[720px]
 
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[2]
 
@@ -535,7 +535,7 @@ function Background() {
           left-[18%]
           top-0
 
-          h-[7px]
+          h-[11px]
           w-[2px]
 
           bg-brand-accent

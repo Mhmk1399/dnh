@@ -265,7 +265,7 @@ function Signal({
   return (
     <span
       className={`
-        text-[9px]
+        text-[11px]
         font-black
 
         ${active ? "text-brand-accent" : "text-white/27"}

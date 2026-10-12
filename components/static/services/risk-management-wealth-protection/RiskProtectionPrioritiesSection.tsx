@@ -212,8 +212,8 @@ export function RiskProtectionPrioritiesSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   shrink-0
 

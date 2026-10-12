@@ -314,7 +314,7 @@ function DecisionField() {
             className="
               mt-1
 
-              text-[8px]
+              text-[11px]
               font-medium
 
               text-white/28
@@ -387,7 +387,7 @@ function DecisionField() {
           className="
             mb-4
 
-            text-[8px]
+            text-[11px]
             font-black
 
             text-[#82cee4]/48
@@ -609,7 +609,7 @@ function DecisionField() {
             <div>
               <p
                 className="
-                  text-[8px]
+                  text-[11px]
                   font-black
 
                   opacity-60
@@ -689,7 +689,7 @@ function DecisionField() {
           className="
             mb-4
 
-            text-[9px]
+            text-[11px]
             font-black
 
             text-white/48
@@ -741,7 +741,7 @@ function DecisionField() {
             text-[#073142]
           "
         >
-          <p className="text-[8px] font-black opacity-60">نتیجه</p>
+          <p className="text-[11px] font-black opacity-60">نتیجه</p>
 
           <p
             className="
@@ -830,7 +830,7 @@ function InputNode({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
 
       <span
         className="
-          text-[9px]
+          text-[11px]
           font-black
 
           text-white/62
@@ -846,8 +846,8 @@ function InputNode({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
           -bottom-[4px]
           left-1/2
 
-          h-[7px]
-          w-[7px]
+          h-[11px]
+          w-[11px]
 
           -translate-x-1/2
 
@@ -906,7 +906,7 @@ function InputNodeMobile({
 
       <span
         className="
-          text-[9px]
+          text-[11px]
           font-black
 
           text-white/62
@@ -987,7 +987,7 @@ function RoutingStep({
         <div>
           <p
             className="
-              text-[8px]
+              text-[11px]
               font-black
 
               text-brand-accent
@@ -1015,7 +1015,7 @@ function RoutingStep({
         className="
           mt-3
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 
@@ -1307,7 +1307,7 @@ function FieldLabel({
         absolute
         ${className}
 
-        text-[9px]
+        text-[11px]
         font-black
 
         text-white/30
@@ -1332,7 +1332,7 @@ function RailItem({
   return (
     <span
       className={`
-        text-[9px]
+        text-[11px]
         font-black
 
         ${active ? "text-brand-accent" : "text-white/28"}

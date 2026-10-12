@@ -239,7 +239,7 @@ export function WeeklyOutlookSection() {
                     sm:text-[11px]
                   "
                 >
-                  DNH Weekly Outlook
+                  چشم‌انداز هفتگی DNH
                 </span>
               </div>
 
@@ -265,11 +265,9 @@ export function WeeklyOutlookSection() {
               >
                 این هفته،
                 <br />
-                <span className="text-brand-primary">
-                  چه چیزی در محیط تصمیم
-                </span>
+                <span className="text-brand-primary">کدام تغییرات اقتصادی</span>
                 <br />
-                مهم‌تر شده است؟
+                برای تصمیم‌های مالی اهمیت دارند؟
               </h2>
             </div>
           </Reveal>
@@ -291,10 +289,11 @@ export function WeeklyOutlookSection() {
                   lg:text-[15px]
                 "
               >
-                DNH Weekly Outlook مهم‌ترین تغییرات محیط اقتصادی، ریسک‌ها و
-                شرایط دارایی‌ها را در یک تصویر فشرده کنار هم قرار می‌دهد؛ نه
-                برای پیش‌بینی بازار، بلکه برای شناخت بهتر زمینه‌ای که تصمیم در
-                آن گرفته می‌شود.
+                چشم‌انداز هفتگی DNH، مهم‌ترین تحولات اقتصاد کلان، ریسک‌های
+                بازار، شرایط نقدینگی و عوامل اثرگذار بر دارایی‌ها را در یک گزارش
+                تحلیلی و ساختاریافته بررسی می‌کند. هدف این گزارش، کمک به درک
+                بهتر تغییرات محیط اقتصادی و پیامدهای احتمالی آن‌ها برای
+                تصمیم‌های مالی است؛ نه پیش‌بینی قطعی بازار.
               </p>
 
               <div
@@ -321,11 +320,8 @@ export function WeeklyOutlookSection() {
                     sm:min-w-[235px]
                   "
                 >
-                  مشاهده Weekly Outlook
+                  مشاهده چشم‌انداز هفتگی DNH
                 </ActionButton>
-
-                
-               
               </div>
             </div>
           </Reveal>
@@ -417,36 +413,7 @@ export function WeeklyOutlookSection() {
             "
           >
             <div>
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-3
-                "
-              >
-                <span
-                  aria-hidden="true"
-                  className="
-                    h-2
-                    w-2
-
-                    bg-brand-accent
-                  "
-                />
-
-                <span
-                  dir="ltr"
-                  className="
-                    text-[8px]
-                    font-black
-                    tracking-[0.2em]
-
-                    text-brand-primary
-                  "
-                >
-                  DNH WEEKLY OUTLOOK
-                </span>
-              </div>
+             
 
               <h3
                 className="
@@ -481,7 +448,7 @@ export function WeeklyOutlookSection() {
                   px-3
                   py-2
 
-                  text-[8px]
+                  text-[11px]
                   font-black
 
                   text-brand-accent
@@ -491,16 +458,15 @@ export function WeeklyOutlookSection() {
               </span>
 
               <span
-                dir="ltr"
                 className="
-                  text-[7px]
+                  text-[11px]
                   font-bold
                   tracking-[0.16em]
 
                   text-ink-muted/45
                 "
               >
-                WEEK 41
+                هفته 41
               </span>
             </div>
           </header>
@@ -626,20 +592,6 @@ export function WeeklyOutlookSection() {
               </span>
 
               <div>
-                <p
-                  dir="ltr"
-                  className="
-                    text-right
-                    text-[7px]
-                    font-black
-                    tracking-[0.2em]
-
-                    text-brand-accent
-                  "
-                >
-                  DNH NOTE
-                </p>
-
                 <p
                   className="
                     mt-1
@@ -792,19 +744,6 @@ function Metric({
 
         <div className="text-left">
           <p
-            dir="ltr"
-            className="
-              text-[7px]
-              font-black
-              tracking-[0.17em]
-
-              text-ink-muted/45
-            "
-          >
-            {metric.en}
-          </p>
-
-          <p
             className={`
               mt-1
               text-[13px]
@@ -870,7 +809,7 @@ function Metric({
           justify-between
         "
       >
-        <span className="text-[7px] font-bold text-ink-muted/40">LOW</span>
+        <span className="text-[11px] font-bold text-ink-muted/40">LOW</span>
 
         <span
           className={`
@@ -883,7 +822,7 @@ function Metric({
           {metric.value}
         </span>
 
-        <span className="text-[7px] font-bold text-ink-muted/40">HIGH</span>
+        <span className="text-[11px] font-bold text-ink-muted/40">HIGH</span>
       </div>
     </div>
   );
@@ -942,19 +881,6 @@ function WeeklyChart({ visible }: { visible: boolean }) {
         "
       >
         <div>
-          <p
-            dir="ltr"
-            className="
-              text-[7px]
-              font-black
-              tracking-[0.18em]
-
-              text-brand-primary/55
-            "
-          >
-            DECISION ENVIRONMENT
-          </p>
-
           <h4
             className="
               mt-2
@@ -985,7 +911,7 @@ function WeeklyChart({ visible }: { visible: boolean }) {
             "
           />
 
-          <span className="text-[8px] font-bold text-ink-muted">
+          <span className="text-[11px] font-bold text-ink-muted">
             شاخص نمایشی
           </span>
         </div>
@@ -1191,7 +1117,7 @@ function WeeklyChart({ visible }: { visible: boolean }) {
 
         <p
           className="
-            text-[9px]
+            text-[12px]
             font-medium
             leading-[1.9]
 
@@ -1225,19 +1151,6 @@ function WeeklySummary() {
         lg:px-8
       "
     >
-      <p
-        dir="ltr"
-        className="
-          text-[7px]
-          font-black
-          tracking-[0.18em]
-
-          text-brand-primary/55
-        "
-      >
-        EXECUTIVE SUMMARY
-      </p>
-
       <h4
         className="
           mt-2
@@ -1256,7 +1169,7 @@ function WeeklySummary() {
         className="
           mt-3
 
-          text-[10px]
+          text-[12px]
           font-medium
           leading-[2]
 
@@ -1388,45 +1301,6 @@ function FocusCard({
         `}
       />
 
-      <div
-        className="
-          flex
-          items-center
-          justify-between
-          gap-4
-        "
-      >
-        <p
-          dir="ltr"
-          className="
-            text-[7px]
-            font-black
-            tracking-[0.17em]
-
-            text-ink-muted/48
-          "
-        >
-          {item.eyebrow}
-        </p>
-
-        <ArrowUpLeft
-          className="
-            h-4
-            w-4
-
-            text-ink-muted/25
-
-            transition-[color,transform]
-            duration-300
-
-            group-hover/focus:-translate-x-1
-            group-hover/focus:-translate-y-1
-            group-hover/focus:text-brand-accent
-          "
-          strokeWidth={1.5}
-        />
-      </div>
-
       <h4
         className={`
           mt-7
@@ -1444,7 +1318,7 @@ function FocusCard({
         className="
           mt-3
 
-          text-[10px]
+          text-[12px]
           font-medium
           leading-[2]
 
@@ -1514,7 +1388,7 @@ function SummaryRow({
 
         <span
           className="
-            text-[9px]
+            text-[11px]
             font-medium
 
             text-ink-muted

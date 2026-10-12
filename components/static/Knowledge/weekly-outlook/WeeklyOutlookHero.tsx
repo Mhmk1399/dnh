@@ -232,7 +232,7 @@ export function WeeklyOutlookHero() {
               "
             >
               <ActionButton
-                href="#weekly-outlook-summary"
+                href="#weekly-outlook-reports"
                 variant="assessment"
                 size="lg"
                 icon={ArrowLeft}
@@ -249,7 +249,7 @@ export function WeeklyOutlookHero() {
                   sm:min-w-[230px]
                 "
               >
-                مشاهده جمع‌بندی هفته
+                مشاهده گزارش‌های هفتگی
               </ActionButton>
 
               <ActionButton

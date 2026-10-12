@@ -303,8 +303,8 @@ export function ServiceContextSection() {
               <span
                 aria-hidden="true"
                 className="
-                  h-[7px]
-                  w-[7px]
+                  h-[11px]
+                  w-[11px]
 
                   bg-brand-accent
 
@@ -539,7 +539,7 @@ function ContextLink({ href, children }: { href: string; children: string }) {
         items-center
         gap-2
 
-        text-[9px]
+        text-[11px]
         font-bold
 
         text-white/34

@@ -508,8 +508,8 @@ function Portrait({ visible }: { visible: boolean }) {
           <span
             aria-hidden="true"
             className="
-              h-[7px]
-              w-[7px]
+              h-[11px]
+              w-[11px]
 
               bg-brand-accent
             "
@@ -518,7 +518,7 @@ function Portrait({ visible }: { visible: boolean }) {
           <span
             dir="ltr"
             className="
-              text-[7px]
+              text-[11px]
               font-black
               tracking-[0.2em]
 
@@ -592,7 +592,7 @@ function Portrait({ visible }: { visible: boolean }) {
               mt-2
 
               text-right
-              text-[8px]
+              text-[11px]
               font-bold
               leading-[1.8]
               tracking-[0.08em]
@@ -655,8 +655,8 @@ function Portrait({ visible }: { visible: boolean }) {
 
         <span
           className="
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             bg-brand-accent
           "
@@ -761,7 +761,7 @@ function FocusItem({
           className="
             mt-1.5
 
-            text-[9px]
+            text-[11px]
             font-medium
             leading-[1.9]
 
@@ -832,7 +832,7 @@ function AuthorityCell({
         dir="ltr"
         className="
           text-right
-          text-[7px]
+          text-[11px]
           font-black
           tracking-[0.17em]
 
@@ -859,7 +859,7 @@ function AuthorityCell({
         className="
           mt-2
 
-          text-[9px]
+          text-[11px]
           font-medium
           leading-[1.9]
 

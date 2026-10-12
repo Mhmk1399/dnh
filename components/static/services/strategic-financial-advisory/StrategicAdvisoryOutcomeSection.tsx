@@ -250,7 +250,7 @@ export function StrategicAdvisoryOutcomeSection() {
                 className="
                   mt-1.5
 
-                  text-[9px]
+                  text-[11px]
                   font-medium
 
                   text-[#768a90]
@@ -375,8 +375,8 @@ function OutcomeRow({
         <span
           aria-hidden="true"
           className={`
-            h-[7px]
-            w-[7px]
+            h-[11px]
+            w-[11px]
 
             shrink-0
 

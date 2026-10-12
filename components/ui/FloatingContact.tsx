@@ -285,7 +285,7 @@ export function FloatingContact({
             aria-hidden="true"
             className="
               absolute
-              -bottom-[7px]
+              -bottom-[11px]
               right-[25px]
 
               h-[14px]
@@ -410,7 +410,7 @@ export function FloatingContact({
 
                 <span
                   className="
-                    text-[9px]
+                    text-[11px]
                     font-black
                     tracking-[0.06em]
                     text-brand-primary
@@ -542,7 +542,7 @@ export function FloatingContact({
 
           <p
             className="
-              text-[9px]
+              text-[11px]
               font-medium
               leading-[1.8]
               text-ink-muted
@@ -679,8 +679,8 @@ export function FloatingContact({
             aria-hidden="true"
             className="
               absolute
-              left-[9px]
-              top-[9px]
+              left-[11px]
+              top-[11px]
 
               h-2
               w-2

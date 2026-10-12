@@ -58,7 +58,7 @@ export function ContactPage() {
               </div>
               <span
                 dir="ltr"
-                className="text-[9px] font-bold tracking-[0.18em] text-ink-muted"
+                className="text-[11px] font-bold tracking-[0.18em] text-ink-muted"
               >
                 FORM / 01-A
               </span>
