@@ -9,6 +9,7 @@ import type { LucideIcon } from "lucide-react";
 
 export type ActionButtonVariant = "primary" | "secondary" | "assessment";
 export type ActionButtonSize = "sm" | "md" | "lg";
+export type ActionButtonShape = "default" | "square";
 export type ActionButtonIconPosition = "start" | "end";
 export type ActionButtonContentAlignment = "center" | "between";
 
@@ -17,6 +18,8 @@ type SharedActionButtonProps = {
   className?: string;
   variant?: ActionButtonVariant;
   size?: ActionButtonSize;
+  /** Opt-in: square body AND square icon frame; legacy style remains default. */
+  shape?: ActionButtonShape;
   icon?: LucideIcon;
   iconPosition?: ActionButtonIconPosition;
   contentAlignment?: ActionButtonContentAlignment;
@@ -130,6 +133,7 @@ export function ActionButton(props: ActionButtonProps) {
     className = "",
     variant = "primary",
     size = "md",
+    shape = "default",
     icon: Icon,
     iconPosition = "end",
     contentAlignment = "center",
@@ -161,11 +165,18 @@ export function ActionButton(props: ActionButtonProps) {
     ${contentAlignment === "between" ? "justify-between" : "justify-center"}
     ${fullWidth ? "w-full" : ""}
     ${unavailable ? "pointer-events-none opacity-50" : ""}
+    ${shape === "square" ? "rounded-none" : ""}
     ${className}
   `;
 
   const icon = Icon ? (
-    <ActionIcon icon={Icon} variant={variant} loading={loading} />
+    <ActionIcon
+      icon={Icon}
+      variant={variant}
+      loading={loading}
+      shape={shape}
+      iconPosition={iconPosition}
+    />
   ) : null;
 
   const content = (
@@ -189,6 +200,7 @@ export function ActionButton(props: ActionButtonProps) {
       "className",
       "variant",
       "size",
+      "shape",
       "icon",
       "iconPosition",
       "contentAlignment",
@@ -219,6 +231,7 @@ export function ActionButton(props: ActionButtonProps) {
     "className",
     "variant",
     "size",
+    "shape",
     "icon",
     "iconPosition",
     "contentAlignment",
@@ -255,22 +268,39 @@ function omitKeys<T extends object, K extends keyof T>(
   return result as Omit<T, K>;
 }
 
+/**
+ * `start` and `end` are logical flex positions. With dir="rtl" the end is
+ * visually left; with dir="ltr" it is right. Motion follows the icon edge.
+ */
+const hoverTowardEnd =
+  "rtl:group-hover/action:-translate-x-[2px] ltr:group-hover/action:translate-x-[2px]";
+const hoverTowardStart =
+  "rtl:group-hover/action:translate-x-[2px] ltr:group-hover/action:-translate-x-[2px]";
+
 function ActionIcon({
   icon: Icon,
   variant,
   loading,
+  shape,
+  iconPosition,
 }: {
   icon: LucideIcon;
   variant: ActionButtonVariant;
   loading: boolean;
+  shape: ActionButtonShape;
+  iconPosition: ActionButtonIconPosition;
 }) {
+  const frameRadius = shape === "square" ? "rounded-none" : "rounded-full";
+  const hoverDirection =
+    iconPosition === "end" ? hoverTowardEnd : hoverTowardStart;
+
   if (variant === "assessment") {
     return (
       <span
         aria-hidden="true"
-        className="
+        className={`
           absolute
-          left-2
+          end-2
           top-1/2
           z-10
           flex
@@ -279,33 +309,32 @@ function ActionIcon({
           -translate-y-1/2
           items-center
           justify-center
-          rounded-full
+          ${frameRadius}
           bg-brand-accent
           text-white
           shadow-[0_8px_20px_color-mix(in_srgb,var(--dnh-accent)_30%,transparent)]
           transition-[transform,box-shadow]
           duration-[450ms]
           ease-[cubic-bezier(.22,1,.36,1)]
-          group-hover/action:-translate-x-[2px]
-          group-hover/action:-translate-y-1/2
+          ${hoverTowardEnd}
           group-hover/action:scale-[1.04]
-          group-active/action:-translate-y-1/2
           group-active/action:scale-[0.9]
           motion-reduce:transition-none
-        "
+        `}
       >
         {loading ? (
           <LoadingIndicator />
         ) : (
           <Icon
             strokeWidth={1.8}
-            className="
+            className={`
               h-4
               w-4
               transition-transform
               duration-[400ms]
-              group-hover/action:-translate-x-[2px]
-            "
+              ${hoverTowardEnd}
+              motion-reduce:transform-none
+            `}
           />
         )}
       </span>
@@ -324,14 +353,14 @@ function ActionIcon({
         shrink-0
         items-center
         justify-center
-        rounded-full
+        ${frameRadius}
         transition-all
         duration-300
         ${
           variant === "primary"
             ? `
               bg-page/10
-              group-hover/action:-translate-x-[2px]
+              ${hoverDirection}
               group-hover/action:bg-page/15
             `
             : `
@@ -341,6 +370,7 @@ function ActionIcon({
               group-hover/action:text-[var(--dnh-text-on-brand)]
             `
         }
+        motion-reduce:transform-none
       `}
     >
       {loading ? (
@@ -369,18 +399,20 @@ function ButtonShine({ variant }: { variant: ActionButtonVariant }) {
         ${
           variant === "assessment"
             ? `
-              -left-[80px]
+              -start-[80px]
               -top-[30px]
               h-[120px]
               w-[34px]
-              group-hover/action:translate-x-[380px]
+              rtl:group-hover/action:-translate-x-[380px]
+              ltr:group-hover/action:translate-x-[380px]
             `
             : `
-              -left-[75px]
+              -start-[75px]
               -top-[30px]
               h-[110px]
               w-8
-              group-hover/action:translate-x-[300px]
+              rtl:group-hover/action:-translate-x-[300px]
+              ltr:group-hover/action:translate-x-[300px]
             `
         }
       `}
