@@ -9,6 +9,7 @@
       "order": 1,
       "id": "hero",
       "type": "hero",
+      
       "eyebrow": "معماری ثروت و تصمیم‌سازی مالی",
       "heading": "برای تصمیم‌های مالی مهم، فقط اطلاعات بیشتر کافی نیست؛ به یک ساختار روشن برای تصمیم‌گیری نیاز دارید.",
       "heading_highlight": "ساختار روشن برای تصمیم‌گیری",
@@ -38,9 +39,9 @@
       ],
       "trust_line": "دکتر نسیم محمدحسنی معمار ثروت خصوصی، مشاور مالی راهبردی و بنیان‌گذار چارچوب DNH",
       "media": {
-        "src": "",
-        "mobile_src": "",
-        "alt": "",
+        "src": "/assets/images/dnh-hero-desktop.png",
+        "mobile_src": "/assets/images/dnh-hero-mobile.png",
+        "alt": "تصویر زمینه هدر صفحه اصلی DNH",
         "width": 1920,
         "height": 1080
       }
@@ -84,7 +85,7 @@
           "cta": "بررسی مسئله مالی کسب‌وکار",
           "href": "/services/strategic-financial-advisory",
           "icon": "advisory",
-           "media": {
+          "media": {
             "src": "/assets/images/strategic-financial-advisory.webp",
             "alt": ""
           }
@@ -120,7 +121,7 @@
           "cta": "درخواست نشست تخصصی",
           "href": "/services/executive-briefings",
           "icon": "briefing",
-         "media": {
+          "media": {
             "src": "/assets/images/executive-briefings.webp",
             "alt": ""
           }

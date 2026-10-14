@@ -100,8 +100,7 @@ export default function HomePage() {
 
         <HomeInsights />
 
-        <AboutDrNasimSection />
-        <FinancialDecisionAssessmentSection />
+      
       </main>
     </>
   );

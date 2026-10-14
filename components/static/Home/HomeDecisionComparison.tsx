@@ -1,23 +1,27 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ArrowLeft, ArrowRight, ListChecks, Waves } from "lucide-react";
+import Image from "next/image";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BarChart3,
+  Box,
+  Clock3,
+  LineChart,
+  ListChecks,
+  Network,
+  Newspaper,
+  PieChart,
+  RefreshCcw,
+  Target,
+  Users,
+  Waves,
+} from "lucide-react";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
 import homeFa from "@/config/DNH_Homepage_Final_FA.json";
 import homeEn from "@/config/DNH_Homepage_Final_EN.json";
-
-type ComparisonItem = {
-  id: string;
-  text: string;
-};
-
-type ComparisonColumn = {
-  id: string;
-  title: string;
-  items: ComparisonItem[];
-};
 
 type ComparisonContent = {
   id: "market-noise-vs-structured-decision";
@@ -26,68 +30,20 @@ type ComparisonContent = {
   heading: string;
   heading_highlight?: string;
   intro: string;
-  columns: ComparisonColumn[];
+  columns: Array<{ id: string; title: string; items: Array<{ id: string; text: string }> }>;
   closing: string;
-  ctas: Array<{
-    id: string;
-    label: string;
-    type: "primary" | "secondary";
-    href: string;
-  }>;
+  ctas: Array<{ id: string; label: string; type: "primary" | "secondary"; href: string }>;
 };
+
+const reactiveIcons = [Newspaper, LineChart, Users, RefreshCcw, Box];
+const structuredIcons = [Target, PieChart, BarChart3, Clock3, Network];
 
 export function HomeDecisionComparison() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
   const homepage = locale === "en" ? homeEn : homeFa;
   const content = homepage.sections.find(
-    (section) =>
-      section.id === "market-noise-vs-structured-decision" &&
-      section.type === "comparison",
+    (section) => section.id === "market-noise-vs-structured-decision" && section.type === "comparison",
   ) as ComparisonContent | undefined;
-
-  // The content is visible in the initial HTML. Motion enhances only elements
-  // that are still below the viewport, and each element is observed just once.
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (
-      !section ||
-      typeof IntersectionObserver === "undefined" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const pending = new Set<HTMLElement>();
-    section
-      .querySelectorAll<HTMLElement>("[data-comparison-entry]")
-      .forEach((element) => {
-        element.removeAttribute("data-reveal");
-        if (element.getBoundingClientRect().top > window.innerHeight - 32) {
-          element.dataset.reveal = "pending";
-          pending.add(element);
-        }
-      });
-
-    if (pending.size === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const element = entry.target as HTMLElement;
-          element.dataset.reveal = "shown";
-          observer.unobserve(element);
-          pending.delete(element);
-        }
-        if (pending.size === 0) observer.disconnect();
-      },
-      { threshold: 0.06, rootMargin: "0px 0px -24px 0px" },
-    );
-
-    pending.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, [locale]);
 
   if (!content) return null;
 
@@ -96,159 +52,71 @@ export function HomeDecisionComparison() {
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   return (
-    <section
-      ref={sectionRef}
-      id={content.id}
-      dir={direction}
-      lang={languageTag}
-      aria-labelledby="home-decision-comparison-heading"
-      className="relative isolate border-t border-line bg-surface-soft py-12 text-ink sm:py-14 lg:py-[4.5rem]"
-    >
-      <div className="dnh-site-shell">
-        <header className="grid min-w-0 gap-4 pb-7 md:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] md:items-end md:gap-10 md:pb-9">
-          <div className="min-w-0 text-start">
-            <div className="flex min-w-0 items-center gap-3 text-xs font-semibold leading-[1.8] text-brand-primary sm:text-[13px]">
-              <span
-                aria-hidden="true"
-                className="h-[2px] w-8 shrink-0 bg-brand-accent"
-              />
-              <p>{content.eyebrow}</p>
-            </div>
-            <h2
-              id="home-decision-comparison-heading"
-              className="mt-3 max-w-[34ch] text-pretty text-start text-[clamp(1.75rem,6.1vw,2.25rem)] font-extrabold leading-[1.55] [overflow-wrap:break-word] md:text-[clamp(2rem,3.2vw,2.625rem)]"
-            >
-              {highlightIndex < 0 ? (
-                content.heading
-              ) : (
-                <>
-                  {content.heading.slice(0, highlightIndex)}
-                  <span className="text-brand-accent">
-                    {content.heading.slice(
-                      highlightIndex,
-                      highlightIndex + highlight.length,
-                    )}
-                  </span>
-                  {content.heading.slice(highlightIndex + highlight.length)}
-                </>
-              )}
-            </h2>
+    <section id={content.id} dir={direction} lang={languageTag} aria-labelledby="home-decision-comparison-heading" className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24">
+      <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
+        <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
+          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <p>{content.eyebrow}</p>
+            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
           </div>
-          <p
-            className={`min-w-0 max-w-[77ch] text-start text-[14px] text-ink-muted sm:text-[15px] ${
-              isRTL ? "leading-[1.9]" : "leading-[1.7]"
-            }`}
-          >
-            {content.intro}
-          </p>
+          <h2 id="home-decision-comparison-heading" className={`mt-5 max-w-[22ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.7rem,4.8vw,4rem)] lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}>
+            {highlightIndex < 0 ? content.heading : (
+              <>
+                {content.heading.slice(0, highlightIndex)}
+                <span className="text-brand-accent">{content.heading.slice(highlightIndex, highlightIndex + highlight.length)}</span>
+                {content.heading.slice(highlightIndex + highlight.length)}
+              </>
+            )}
+          </h2>
+          <p className={`mt-4 max-w-[74ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}>{content.intro}</p>
         </header>
 
-        <div className="grid min-w-0 grid-cols-1 border border-line md:grid-cols-2">
+        <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[780px] lg:aspect-auto">
+          <Image src="/assets/images/strategic-financial-advisory.webp" alt="" fill sizes="(max-width: 1023px) calc(100vw - 24px), 42vw" className="object-cover object-center" />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/45 via-brand-primary/5 to-transparent" />
+          <span aria-hidden="true" className="absolute end-6 top-6 size-6 bg-brand-accent" />
+          <div aria-hidden="true" className="absolute bottom-8 end-8 start-8 border border-white/25 bg-ink/55 p-5 text-white backdrop-blur-sm">
+            <BarChart3 size={36} strokeWidth={1.5} />
+            <span className="mt-5 block h-px w-12 bg-brand-accent" />
+          </div>
+        </div>
+
+        <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mt-7">
           {content.columns.map((column) => {
             const structured = column.id === "structured";
-            const Icon = structured ? ListChecks : Waves;
-
+            const HeaderIcon = structured ? ListChecks : Waves;
+            const icons = structured ? structuredIcons : reactiveIcons;
             return (
-              <article
-                key={column.id}
-                data-comparison-entry=""
-                className={`min-w-0 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 ${
-                  structured
-                    ? "relative bg-[color-mix(in_srgb,var(--dnh-secondary)_24%,var(--dnh-text)_76%)] text-[var(--dnh-text-on-brand)]"
-                    : "bg-page text-ink"
-                }`}
-              >
-                <div
-                  className={`flex min-w-0 items-center gap-3 border-b px-4 py-4 sm:px-6 md:min-h-[76px] lg:px-8 ${
-                    structured ? "border-white/20" : "border-line"
-                  }`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`flex size-10 shrink-0 items-center justify-center border ${
-                      structured
-                        ? "border-white/25 text-brand-accent"
-                        : "border-line text-brand-primary"
-                    }`}
-                  >
-                    <Icon size={21} strokeWidth={1.65} />
-                  </span>
-                  <h3 className="min-w-0 text-start text-[17px] font-bold leading-[1.6] [overflow-wrap:break-word] sm:text-[19px] lg:text-[21px]">
-                    {column.title}
-                  </h3>
-                  <span
-                    aria-hidden="true"
-                    className={`ms-auto h-px w-8 shrink-0 sm:w-12 ${
-                      structured ? "bg-brand-accent" : "bg-line"
-                    }`}
-                  />
+              <article key={column.id} className="min-w-0 border border-line bg-page">
+                <div className={`flex min-h-16 items-center gap-3 px-4 py-3 text-white sm:px-5 ${structured ? "bg-brand-primary" : "bg-brand-accent"}`}>
+                  <HeaderIcon size={25} strokeWidth={1.65} />
+                  <h3 className={`text-[19px] font-black sm:text-[21px] ${isRTL ? "leading-[1.6]" : "leading-[1.35]"}`}>{column.title}</h3>
                 </div>
-
-                <ol className="min-w-0">
-                  {column.items.map((item, index) => (
-                    <li
-                      key={item.id}
-                      className={`group flex min-w-0 items-start gap-3 border-b px-4 py-3.5 last:border-b-0 sm:gap-4 sm:px-6 sm:py-4 lg:px-8 ${
-                        structured
-                          ? "border-white/15 hover:bg-white/5"
-                          : "border-line hover:bg-surface-soft"
-                      } motion-safe:transition-colors motion-safe:duration-200`}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`mt-0.5 shrink-0 text-[11px] font-semibold tabular-nums leading-[1.8] ${
-                          structured
-                            ? "text-brand-accent"
-                            : "text-brand-primary"
-                        }`}
-                      >
-                        <bdi dir="ltr">
-                          {String(index + 1).padStart(2, "0")}
-                        </bdi>
-                      </span>
-                      <span
-                        className={`min-w-0 flex-1 text-start text-[14px] font-medium [overflow-wrap:break-word] sm:text-[15px] ${
-                          isRTL ? "leading-[1.9]" : "leading-[1.7]"
-                        } ${structured ? "text-white/95" : "text-ink"}`}
-                      >
-                        {item.text}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
+                <ul role="list" className="divide-y divide-line">
+                  {column.items.map((item, index) => {
+                    const Icon = icons[index] ?? Target;
+                    return (
+                      <li key={item.id} className="flex min-w-0 items-start gap-3 p-4 sm:p-5">
+                        <span aria-hidden="true" className={`flex size-8 shrink-0 items-center justify-center ${structured ? "bg-surface-soft text-brand-primary" : "bg-[color-mix(in_srgb,var(--dnh-accent)_8%,white)] text-brand-accent"}`}>
+                          <Icon size={20} strokeWidth={1.65} />
+                        </span>
+                        <span className={`min-w-0 flex-1 text-start text-[14px] font-semibold text-ink-muted sm:text-[13px] ${isRTL ? "leading-[1.85]" : "leading-[1.65]"}`}>{item.text}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
               </article>
             );
           })}
         </div>
 
-        <footer
-          data-comparison-entry=""
-          className="grid min-w-0 items-center gap-5 border-b border-s border-e border-line bg-page px-4 py-5 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:px-6 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 lg:px-8"
-        >
-          <p
-            className={`min-w-0 max-w-[84ch] border-s-2 border-brand-accent ps-3 text-start text-[14px] text-ink-muted sm:ps-4 sm:text-[15px] ${
-              isRTL ? "leading-[1.9]" : "leading-[1.7]"
-            }`}
-          >
-            {content.closing}
-          </p>
-          <div className="flex min-w-0 flex-wrap items-center gap-3">
-            {content.ctas.map((cta) => (
-              <ActionButton
-                key={cta.id}
-                href={cta.href}
-                variant={cta.type}
-                shape="square"
-                size="md"
-                icon={Arrow}
-                iconPosition="end"
-                dir={direction}
-                className="min-h-11 w-full min-w-0 max-w-full whitespace-normal text-start text-[13px] [overflow-wrap:anywhere] sm:w-auto"
-              >
-                {cta.label}
-              </ActionButton>
-            ))}
-          </div>
+        <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
+          <p className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}>{content.closing}</p>
+          {content.ctas.map((cta) => (
+            <ActionButton key={cta.id} href={cta.href} variant={cta.type} shape="square" size="md" icon={Arrow} iconPosition="end" dir={direction} className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto">
+              {cta.label}
+            </ActionButton>
+          ))}
         </footer>
       </div>
     </section>

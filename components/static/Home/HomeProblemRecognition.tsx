@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Activity,
   ArrowLeft,
   ArrowRight,
+  BarChart3,
   Building2,
   Compass,
   Layers3,
@@ -26,21 +27,19 @@ const problemIcons = {
   briefing: UsersRound,
 } as const;
 
-type ProblemItem = {
-  id: string;
-  title: string;
-  description: string;
-  icon: keyof typeof problemIcons;
-};
-
-type ProblemRecognitionContent = {
+type ProblemContent = {
   id: "problem-recognition";
   type: "problem_list";
   eyebrow: string;
   heading: string;
   heading_highlight?: string;
   intro: string;
-  items: ProblemItem[];
+  items: Array<{
+    id: string;
+    title: string;
+    description: string;
+    icon: keyof typeof problemIcons;
+  }>;
   closing: string;
   ctas: Array<{
     id: string;
@@ -52,58 +51,11 @@ type ProblemRecognitionContent = {
 
 export function HomeProblemRecognition() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
-
   const homepage = locale === "en" ? homeEn : homeFa;
   const content = homepage.sections.find(
     (section) =>
       section.id === "problem-recognition" && section.type === "problem_list",
-  ) as ProblemRecognitionContent | undefined;
-
-  // Enhance only off-screen rows. Without JS, all content remains visible.
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (
-      !root ||
-      typeof IntersectionObserver === "undefined" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const pending = new Set<HTMLElement>();
-
-    root
-      .querySelectorAll<HTMLElement>("[data-problem-entry]")
-      .forEach((row) => {
-        row.removeAttribute("data-reveal");
-        if (row.getBoundingClientRect().top > window.innerHeight - 48) {
-          row.dataset.reveal = "pending";
-          pending.add(row);
-        }
-      });
-
-    if (pending.size === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const row = entry.target as HTMLElement;
-          row.dataset.reveal = "shown";
-          pending.delete(row);
-          observer.unobserve(row);
-        });
-
-        if (pending.size === 0) observer.disconnect();
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -32px 0px" },
-    );
-
-    pending.forEach((row) => observer.observe(row));
-    return () => observer.disconnect();
-  }, [locale]);
+  ) as ProblemContent | undefined;
 
   if (!content) return null;
 
@@ -113,87 +65,93 @@ export function HomeProblemRecognition() {
 
   return (
     <section
-      ref={sectionRef}
       id={content.id}
       dir={direction}
       lang={languageTag}
       aria-labelledby="home-problem-recognition-heading"
-      className="relative isolate overflow-x-clip border-y border-line/20 bg-[color-mix(in_srgb,var(--dnh-secondary)_18%,var(--dnh-text)_82%)] py-12 text-[var(--dnh-text-on-brand)] sm:py-14 lg:py-16"
+      className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
     >
-      <div className="dnh-site-shell">
-        <header className="grid min-w-0 gap-4 pb-7 sm:gap-5 sm:pb-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end lg:gap-12 lg:pb-9">
-          <div className="min-w-0 text-start">
-            <div className="flex min-w-0 items-center gap-2.5 text-[11px] font-medium leading-[1.9] text-page/70 sm:text-[12px]">
-              <span
-                aria-hidden="true"
-                className="h-px w-6 shrink-0 bg-brand-accent sm:w-8"
-              />
-              <p className="min-w-0">{content.eyebrow}</p>
-            </div>
-
-            <h2
-              id="home-problem-recognition-heading"
-              className={`mt-3 max-w-[30ch] text-pretty text-start text-[clamp(1.625rem,6.7vw,2rem)] font-extrabold [overflow-wrap:break-word] sm:text-[34px] lg:text-[40px] xl:text-[44px] ${
-                isRTL ? "leading-[1.65]" : "leading-[1.3]"
-              }`}
-            >
-              {highlightIndex === -1 ? (
-                content.heading
-              ) : (
-                <>
-                  {content.heading.slice(0, highlightIndex)}
-                  <span className="text-brand-accent">
-                    {content.heading.slice(
-                      highlightIndex,
-                      highlightIndex + highlight.length,
-                    )}
-                  </span>
-                  {content.heading.slice(highlightIndex + highlight.length)}
-                </>
-              )}
-            </h2>
+      <div className="dnh-site-shell relative z-10 grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.9fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-4 ">
+        <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
+          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+            <p>{content.eyebrow}</p>
           </div>
-
+          <h2
+            id="home-problem-recognition-heading"
+            className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,7.8vw,3rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.65rem,4.8vw,3rem)] lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.14]"}`}
+          >
+            {highlightIndex < 0 ? (
+              content.heading
+            ) : (
+              <>
+                {content.heading.slice(0, highlightIndex)}
+                <span className="text-brand-accent">
+                  {content.heading.slice(
+                    highlightIndex,
+                    highlightIndex + highlight.length,
+                  )}
+                </span>
+                {content.heading.slice(highlightIndex + highlight.length)}
+              </>
+            )}
+          </h2>
           <p
-            className={`min-w-0 max-w-[66ch] text-start text-[13px] text-page/75 sm:text-[14px] lg:mb-1 lg:text-[15px] ${
-              isRTL ? "leading-[2]" : "leading-[1.8]"
-            }`}
+            className={`mt-4 max-w-[94ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
         </header>
 
-        {/* These are independent situations, not sequential steps. */}
-        <ul role="list" className="grid min-w-0 grid-cols-1 gap-x-8 border-t border-page/15 md:grid-cols-2 md:gap-x-10 lg:gap-x-14">
+        <div className="relative aspect-[4/5] min-h-[430px] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:max-h-full lg:aspect-auto">
+          <Image
+            src="/assets/images/detect.webp"
+            alt=""
+            fill
+            sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
+            className="object-cover object-center"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-brand-primary/15"
+          />
+        </div>
+
+        <ul
+          role="list"
+          className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 lg:col-start-1 lg:row-start-2  "
+        >
           {content.items.map((item) => {
             const Icon = problemIcons[item.icon] ?? Compass;
-
             return (
               <li
                 key={item.id}
-                data-problem-entry=""
-                className="group flex min-w-0 items-start gap-3 border-b border-page/15 py-5 motion-safe:transition-[opacity,transform] motion-safe:duration-300 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:gap-4 sm:py-6"
+                className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-8 shrink-0 items-center justify-center bg-page/5 text-page/75 transition-colors duration-200 group-hover:text-brand-accent motion-reduce:transition-none sm:size-9"
-                >
-                  <Icon size={19} strokeWidth={1.6} />
-                </span>
-
-                <div className="min-w-0 flex-1 text-start">
+                <div className="relative h-20 overflow-hidden bg-[linear-gradient(125deg,var(--dnh-primary),color-mix(in_srgb,var(--dnh-secondary)_70%,var(--dnh-text)))]">
+                  <span
+                    aria-hidden="true"
+                    className="absolute end-3 top-3 size-4 bg-brand-accent"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-5 bottom-0 h-px bg-white/35"
+                  />
+                </div>
+                <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
+                  <span
+                    aria-hidden="true"
+                    className="absolute start-4 top-0 flex size-11 -translate-y-1/2 items-center justify-center border border-line bg-surface-soft text-brand-primary sm:start-5"
+                  >
+                    <Icon size={21} strokeWidth={1.6} />
+                  </span>
                   <h3
-                    className={`text-pretty text-[16px] font-bold text-page [overflow-wrap:break-word] sm:text-[17px] lg:text-[18px] ${
-                      isRTL ? "leading-[1.85]" : "leading-[1.55]"
-                    }`}
+                    className={`text-start text-[16px] font-black sm:text-[17px] ${isRTL ? "leading-[1.75]" : "leading-[1.42]"}`}
                   >
                     {item.title}
                   </h3>
-
                   <p
-                    className={`mt-1.5 max-w-[65ch] text-[13px] font-normal text-page/70 sm:mt-2 sm:text-[14px] ${
-                      isRTL ? "leading-[1.95]" : "leading-[1.75]"
-                    }`}
+                    className={`mt-2 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
                   >
                     {item.description}
                   </p>
@@ -203,16 +161,13 @@ export function HomeProblemRecognition() {
           })}
         </ul>
 
-        <div className="mt-7 flex min-w-0 flex-col gap-5 sm:mt-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
           <p
-            className={`min-w-0 max-w-[88ch] flex-1 border-s-2 border-brand-accent/80 ps-4 text-start text-[13px] font-normal text-page/80 sm:ps-5 sm:text-[14px] ${
-              isRTL ? "leading-[1.95]" : "leading-[1.75]"
-            }`}
+            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.7]"}`}
           >
             {content.closing}
           </p>
-
-          <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap lg:shrink-0">
+          <div className="flex flex-wrap gap-3">
             {content.ctas.map((cta) => (
               <ActionButton
                 key={cta.id}
@@ -223,13 +178,13 @@ export function HomeProblemRecognition() {
                 icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="min-h-11 w-full min-w-0 whitespace-normal text-center shadow-none [overflow-wrap:anywhere] hover:shadow-none sm:w-auto sm:max-w-full"
+                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto"
               >
                 {cta.label}
               </ActionButton>
             ))}
           </div>
-        </div>
+        </footer>
       </div>
     </section>
   );
