@@ -1,962 +1,255 @@
 "use client";
 
 import Image from "next/image";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BriefcaseBusiness,
+  GraduationCap,
+  Layers3,
+  Quote,
+} from "lucide-react";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-
-import { ArrowLeft, BrainCircuit, Layers3, ShieldCheck } from "lucide-react";
-
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import homeFa from "@/config/DNH_Homepage_Final_FA.json";
+import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
-const ABOUT_IMAGE = "/assets/images/about-hero-desktop.png";
+const credentialIcons = {
+  experience: BriefcaseBusiness,
+  portfolio: Layers3,
+  education: GraduationCap,
+} as const;
 
-/* =============================================================================
-   Professional focus
-============================================================================= */
-
-const FOCUS_AREAS = [
-  {
-    title: "ساختار سرمایه و نقدینگی",
-    description: "دیدن ارتباط میان منابع مالی، نقدینگی و ساختار کلی تصمیم.",
-    icon: Layers3,
-  },
-  {
-    title: "ریسک و تحلیل سناریو",
-    description: "بررسی عدم‌قطعیت‌ها و مسیرهای ممکن پیش از تصمیم.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "تصمیم‌سازی مالی",
-    description: "تبدیل تحلیل به یک تصویر روشن‌تر برای انتخاب‌های مهم.",
-    icon: BrainCircuit,
-  },
-] as const;
-
-/* =============================================================================
-   Section
-============================================================================= */
+type AboutContent = {
+  id: "about-dr-nasim";
+  type: "about";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  paragraphs: Array<{ id: string; text: string }>;
+  credentials: Array<{
+    id: string;
+    value: string;
+    label: string;
+    icon: keyof typeof credentialIcons;
+  }>;
+  philosophy_intro: string;
+  philosophy_quote: string;
+  philosophy_media: {
+    src: string;
+    alt: string;
+  };
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+  media: {
+    src: string;
+    mobile_src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+};
 
 export function AboutDrNasimSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const homepage = locale === "en" ? homeEn : homeFa;
+  const content = homepage.sections.find(
+    (section) => section.id === "about-dr-nasim" && section.type === "about",
+  ) as AboutContent | undefined;
 
-  const [visible, setVisible] = useState(false);
+  if (!content) return null;
 
-  useEffect(() => {
-    const node = sectionRef.current;
-
-    if (!node) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        setVisible(true);
-        observer.disconnect();
-      },
-      {
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px",
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
+  const highlight = content.heading_highlight ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <section
-      ref={sectionRef}
-      id="about-dr-nasim"
-      dir="rtl"
-      aria-labelledby="about-dr-nasim-title"
-      className="
-        relative
-        isolate
-        overflow-hidden
-
-        bg-[#032f3f]
-        text-white
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="home-about-dr-nasim-heading"
+      className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
     >
-      <Background />
-
       <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute start-0 top-0 size-56 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--dnh-primary)_10%,white)_25%,transparent_25%,transparent_50%,color-mix(in_srgb,var(--dnh-primary)_7%,white)_50%,color-mix(in_srgb,var(--dnh-primary)_7%,white)_75%,transparent_75%)] bg-[length:84px_84px] opacity-50"
+      />
 
-          mx-auto
-          grid
-          w-full
-
-          gap-12
-
-          py-16
-
-          sm:py-20
-
-          lg:grid-cols-[0.92fr_1.08fr]
-          lg:items-center
-          lg:gap-16
-          lg:py-24
-
-          xl:grid-cols-[0.86fr_1.14fr]
-          xl:gap-20
-          xl:py-28
-
-        "
-      >
-        {/* =========================================================
-            CONTENT — RIGHT
-        ========================================================== */}
-
-        <div
-          className="
-            order-1
-
-            lg:col-start-1
-            lg:row-start-1
-          "
-        >
-          <Reveal visible={visible} delay={40}>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-            >
-              <span
-                aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
-              />
-
-              <span
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-white/72
-
-                  sm:text-[11px]
-                "
+      <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.78fr)_minmax(0,1.35fr)] lg:grid-rows-[auto_auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
+        <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <p>{content.eyebrow}</p>
+            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
+            {content.english_label &&
+            content.english_label !== content.eyebrow ? (
+              <bdi
+                dir="ltr"
+                className="w-full text-[10px] font-medium tracking-[0.28em] text-ink-muted"
               >
-                دکتر نسیم محمدحسنی
-              </span>
-            </div>
-          </Reveal>
+                {content.english_label}
+              </bdi>
+            ) : null}
+          </div>
 
-          <Reveal visible={visible} delay={100}>
-            <h2
-              id="about-dr-nasim-title"
-              className="
-                max-w-[700px]
+          <h2
+            id="home-about-dr-nasim-heading"
+            className={`mt-5 max-w-[28ch] text-pretty text-[clamp(2rem,7.3vw,3.1rem)] font-black tracking-[-0.035em] sm:text-[clamp(2.6rem,4.6vw,3.25rem)] ${
+              isRTL ? "leading-[1.48]" : "leading-[1.13]"
+            }`}
+          >
+            {highlightIndex < 0 ? (
+              content.heading
+            ) : (
+              <>
+                {content.heading.slice(0, highlightIndex)}
+                <span className="text-brand-accent">
+                  {content.heading.slice(
+                    highlightIndex,
+                    highlightIndex + highlight.length,
+                  )}
+                </span>
+                {content.heading.slice(highlightIndex + highlight.length)}
+              </>
+            )}
+          </h2>
+        </header>
 
-                text-[32px]
-                font-black
-                leading-[1.62]
-                tracking-[-0.045em]
-
-                text-white
-
-                sm:text-[39px]
-
-                lg:text-[46px]
-                lg:leading-[1.52]
-
-                xl:text-[51px]
-              "
-            >
-              پشت چارچوب DNH،
-              <br />
-              <span className="text-brand-accent">سال‌ها تصمیم‌سازی مالی</span>
-              <br />
-              و مدیریت ثروت قرار دارد.
-            </h2>
-          </Reveal>
-
-          <Reveal visible={visible} delay={170}>
+        <div className="space-y-4 text-start lg:col-start-2 lg:row-start-2">
+          {content.paragraphs.map((paragraph) => (
             <p
-              className="
-                mt-6
-                max-w-[650px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-white/62
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
+              key={paragraph.id}
+              className={`border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:text-[16px] ${
+                isRTL ? "leading-[2]" : "leading-[1.75]"
+              }`}
             >
-              دکتر نسیم محمدحسنی، معمار ثروت خصوصی، مشاور مالی راهبردی و بنیان‌گذار
-              چارچوب DNH است. رویکرد حرفه‌ای او بر پیوند میان تحلیل مالی، مدیریت
-              ریسک، ساختار سرمایه، نقدینگی، سرمایه‌گذاری و تصمیم‌سازی در شرایط
-              عدم‌قطعیت شکل گرفته است. او دارای کارشناسی ارشد مدیریت مالی و
-              دکترای مهندسی مالی است.
+              {paragraph.text}
             </p>
-          </Reveal>
-
-          {/* =====================================================
-              Quote
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={230}>
-            <blockquote
-              className="
-                group/quote
-
-                relative
-
-                mt-8
-
-                max-w-[640px]
-
-                border-r-2
-                border-brand-accent
-
-                pr-5
-
-                sm:pr-6
-              "
-            >
-              <span
-                aria-hidden="true"
-                className="
-                  absolute
-                  -right-[5px]
-                  top-0
-
-                  h-3
-                  w-3
-
-                  bg-brand-accent
-
-                  transition-transform
-                  duration-300
-
-                  group-hover/quote:scale-125
-                "
-              />
-
-              <p
-                className="
-                  text-[16px]
-                  font-black
-                  leading-[2]
-
-                  text-white
-
-                  sm:text-[18px]
-
-                  lg:text-[19px]
-                "
-              >
-                «ثروت فقط چیزی نیست که در اختیار داریم؛ ساختاری است که باید برای
-                حفظ، توسعه و هدایت آن طراحی شود.»
-              </p>
-            </blockquote>
-          </Reveal>
-
-          {/* =====================================================
-              Authority / System distinction
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={290}>
-            <div
-              className="
-                mt-8
-
-                grid
-                gap-px
-
-                overflow-hidden
-
-                border
-                border-white/12
-
-                bg-white/12
-
-                sm:grid-cols-2
-              "
-            >
-              <AuthorityCell
-                eyebrow="HUMAN AUTHORITY"
-                title="تخصص و قضاوت حرفه‌ای"
-                description="نقش دکتر نسیم در DNH؛ مرجع تخصص، نگاه حرفه‌ای و تصمیم‌سازی."
-                accent
-              />
-
-              <AuthorityCell
-                eyebrow="DNH SYSTEM"
-                title="سیستم و چارچوب"
-                description="نقش DNH؛ ساختار، Framework، Intelligence و مسیر قابل توسعه."
-              />
-            </div>
-          </Reveal>
-
-          {/* =====================================================
-              CTA
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={360}>
-            <div
-              className="
-                mt-8
-
-                flex
-                flex-col
-                gap-4
-
-                sm:flex-row
-                sm:items-center
-              "
-            >
-              <ActionButton
-                href="/about"
-                variant="secondary"
-                size="md"
-                icon={ArrowLeft}
-                className="
-                  w-full
-
-                  border-white/28
-                  bg-white/[0.055]
-
-                  text-white
-
-                  shadow-none
-
-                  hover:border-white/50
-                  hover:bg-white/[0.10]
-                  hover:text-white
-
-                  sm:w-auto
-                  sm:min-w-[230px]
-                "
-              >
-                آشنایی بیشتر با دکتر نسیم محمدحسنی
-              </ActionButton>
-
-              <p
-                className="
-                  text-[11px]
-                  font-medium
-                  leading-[1.9]
-
-                  text-white/38
-
-                  sm:max-w-[240px]
-                "
-              >
-                فلسفه حرفه‌ای، نگاه به ثروت و نقش ایشان در شکل‌گیری DNH
-              </p>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* =========================================================
-            PORTRAIT — LEFT
-        ========================================================== */}
-
-        <div
-          className="
-            order-2
-
-            lg:col-start-2
-            lg:row-start-1
-          "
-        >
-          <Portrait visible={visible} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =============================================================================
-   Portrait
-============================================================================= */
-
-function Portrait({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className={`
-        group/portrait
-
-        relative
-        mx-auto
-
-        min-h-[560px]
-        w-full
-        max-w-[720px]
-
-        overflow-hidden
-
-        border
-        border-white/12
-
-        bg-[#07394b]
-
-        transition-[opacity,transform,border-color,box-shadow]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        hover:border-white/22
-        hover:shadow-[0_32px_90px_rgba(0,0,0,.18)]
-
-        sm:min-h-[650px]
-
-        lg:min-h-[720px]
-
-        ${visible ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}
-
-        motion-reduce:translate-x-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: "140ms",
-      }}
-    >
-      {/* image */}
-
-      <Image
-        src={ABOUT_IMAGE}
-        alt="دکتر نسیم محمدحسنی"
-        fill
-        sizes="
-          (min-width: 1280px) 650px,
-          (min-width: 1024px) 48vw,
-          100vw
-        "
-        className="
-          object-cover
-          object-center
-
-          transition-transform
-          duration-[900ms]
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          group-hover/portrait:scale-[1.025]
-        "
-      />
-
-      {/* image treatment */}
-
-      <div
-        aria-hidden="true"
-        className="
-          absolute
-          inset-0
-
-          bg-[linear-gradient(180deg,rgba(2,40,54,.02)_18%,rgba(2,42,56,.10)_48%,rgba(2,38,51,.88)_100%)]
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          absolute
-          inset-0
-
-          bg-[linear-gradient(90deg,rgba(3,47,63,.25)_0%,transparent_42%,rgba(3,47,63,.08)_100%)]
-        "
-      />
-
-      {/* top label */}
-
-      <div
-        className="
-          absolute
-          left-5
-          right-5
-          top-5
-
-          flex
-          items-center
-          justify-between
-          gap-5
-
-          sm:left-7
-          sm:right-7
-          sm:top-7
-        "
-      >
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
-        >
-          <span
-            aria-hidden="true"
-            className="
-              h-[11px]
-              w-[11px]
-
-              bg-brand-accent
-            "
-          />
-
-          <span
-            dir="ltr"
-            className="
-              text-[11px]
-              font-black
-              tracking-[0.2em]
-
-              text-white/72
-            "
-          >
-            DNH / HUMAN AUTHORITY
-          </span>
-        </div>
-
-        <span
-          aria-hidden="true"
-          className="
-            h-px
-            w-14
-
-            bg-white/24
-
-            transition-[width,background-color]
-            duration-500
-
-            group-hover/portrait:w-24
-            group-hover/portrait:bg-brand-accent/70
-          "
-        />
-      </div>
-
-      {/* =========================================================
-          bottom content
-      ========================================================== */}
-
-      <div
-        className="
-          absolute
-          inset-x-0
-          bottom-0
-
-          p-5
-
-          sm:p-7
-
-          lg:p-8
-        "
-      >
-        {/* title */}
-
-        <div
-          className="
-            border-b
-            border-white/16
-
-            pb-5
-          "
-        >
-          <p
-            className="
-              text-[19px]
-              font-black
-
-              text-white
-
-              sm:text-[22px]
-            "
-          >
-            دکتر نسیم محمدحسنی
-          </p>
-
-          <p
-            dir="ltr"
-            className="
-              mt-2
-
-              text-right
-              text-[11px]
-              font-bold
-              leading-[1.8]
-              tracking-[0.08em]
-
-              text-white/52
-            "
-          >
-            PRIVATE WEALTH ARCHITECT
-            <br />
-            STRATEGIC FINANCIAL ADVISOR
-            <br />
-            FOUNDER OF THE DNH FRAMEWORK
-          </p>
-        </div>
-
-        {/* focus */}
-
-        <div
-          className="
-            mt-5
-
-            divide-y
-            divide-white/10
-          "
-        >
-          {FOCUS_AREAS.map((item, index) => (
-            <FocusItem key={item.title} item={item} index={index} />
           ))}
         </div>
-      </div>
 
-      {/* orange architectural marker */}
-
-      <div
-        aria-hidden="true"
-        className="
-          absolute
-          bottom-[39%]
-          right-0
-
-          hidden
-          items-center
-
-          sm:flex
-        "
-      >
-        <span
-          className="
-            h-px
-            w-12
-
-            bg-brand-accent/75
-
-            transition-[width]
-            duration-500
-
-            group-hover/portrait:w-20
-          "
-        />
-
-        <span
-          className="
-            h-[11px]
-            w-[11px]
-
-            bg-brand-accent
-          "
-        />
-      </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Focus item
-============================================================================= */
-
-function FocusItem({
-  item,
-  index,
-}: {
-  item: (typeof FOCUS_AREAS)[number];
-  index: number;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <div
-      className="
-        group/focus
-
-        flex
-        items-start
-        gap-4
-
-        py-4
-
-        first:pt-0
-        last:pb-0
-      "
-    >
-      <span
-        className="
-          flex
-          h-9
-          w-9
-          shrink-0
-
-          items-center
-          justify-center
-
-          border
-          border-white/15
-
-          text-[#7fc6de]
-
-          transition-[border-color,background-color,color,transform]
-          duration-300
-
-          group-hover/focus:-translate-y-0.5
-          group-hover/focus:border-brand-accent/60
-          group-hover/focus:bg-brand-accent
-          group-hover/focus:text-white
-        "
-      >
-        <Icon className="h-4 w-4" strokeWidth={1.5} />
-      </span>
-
-      <div>
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
-        >
-          <h3
-            className="
-              text-[11px]
-              font-black
-
-              text-white
-            "
-          >
-            {item.title}
-          </h3>
-
+        <div className="relative aspect-[4/5] min-h-[480px] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-5 lg:row-start-1 lg:h-full lg:min-h-[790px] lg:aspect-auto">
+          <Image
+            src={content.media.src}
+            alt={content.media.alt}
+            fill
+            sizes="(max-width: 1023px) calc(100vw - 24px), 34vw"
+            className="object-cover object-center"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-ink/22 via-transparent to-transparent"
+          />
           <span
             aria-hidden="true"
-            className="
-              h-px
-              w-5
-
-              bg-white/18
-
-              transition-[width,background-color]
-              duration-300
-
-              group-hover/focus:w-10
-              group-hover/focus:bg-brand-accent/70
-            "
+            className="absolute end-6 top-6 size-6 bg-brand-accent"
           />
         </div>
 
-        <p
-          className="
-            mt-1.5
+        {/* <dl className="grid min-w-0 grid-cols-1 border border-line bg-surface-soft sm:grid-cols-2 xl:grid-cols-4 lg:col-start-2 lg:row-start-3">
+          {content.credentials.map((credential) => {
+            const Icon = credentialIcons[credential.icon] ?? GraduationCap;
 
-            text-[11px]
-            font-medium
-            leading-[1.9]
+            return (
+              <div
+                key={credential.id}
+                className="flex min-h-[118px] items-center gap-3 border-b border-line p-4 text-start last:border-b-0 sm:border-e sm:[&:nth-last-child(-n+2)]:border-b-0 xl:border-b-0"
+              >
+                <Icon
+                  aria-hidden="true"
+                  size={26}
+                  strokeWidth={1.55}
+                  className="shrink-0 text-brand-primary"
+                />
+                <div>
+                  {credential.value ? (
+                    <dd className="text-[26px] font-black text-brand-accent">
+                      <bdi dir="auto">{credential.value}</bdi>
+                    </dd>
+                  ) : null}
+                  <dt
+                    className={`text-[12px] font-bold text-ink sm:text-[11px] ${
+                      isRTL ? "leading-[1.75]" : "leading-[1.45]"
+                    }`}
+                  >
+                    {credential.label}
+                  </dt>
+                </div>
+              </div>
+            );
+          })}
+        </dl> */}
 
-            text-white/43
-          "
-        >
-          {item.description}
-        </p>
+        <blockquote className="relative isolate min-h-[170px] overflow-hidden border border-line p-5 sm:p-7 lg:col-start-2 lg:row-start-4">
+          <Image
+            src={content.philosophy_media.src}
+            alt={content.philosophy_media.alt}
+            fill
+            sizes="(max-width: 1023px) calc(100vw - 24px), 58vw"
+            className="-z-20 object-cover object-center"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 bg-page/88"
+          />
+          <div className="flex items-center gap-3 text-start text-[13px] font-bold text-brand-primary sm:text-[14px]">
+            <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+            <p>{content.philosophy_intro}</p>
+          </div>
+          <Quote
+            aria-hidden="true"
+            size={28}
+            strokeWidth={1.5}
+            className="mt-4 text-brand-accent"
+          />
+          <p
+            className={`mt-2 max-w-[50ch] text-start text-[18px] font-black sm:text-[22px] ${
+              isRTL ? "leading-[1.75]" : "leading-[1.45]"
+            }`}
+          >
+            {content.philosophy_quote}
+          </p>
+        </blockquote>
+
+        <footer className="grid min-w-0 gap-4 lg:col-start-2 lg:row-start-5">
+          <p
+            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[13px] ${
+              isRTL ? "leading-[1.9]" : "leading-[1.7]"
+            }`}
+          >
+            {content.closing}
+          </p>
+
+          <div className="flex justify-start">
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                shape="square"
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                dir={direction}
+                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto sm:min-w-[290px]"
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
+          </div>
+        </footer>
       </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Authority cell
-============================================================================= */
-
-function AuthorityCell({
-  eyebrow,
-  title,
-  description,
-  accent = false,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-  accent?: boolean;
-}) {
-  return (
-    <div
-      className="
-        group/cell
-
-        relative
-
-        bg-[#043547]
-
-        px-5
-        py-5
-
-        transition-colors
-        duration-300
-
-        hover:bg-[#064055]
-      "
-    >
-      <span
-        aria-hidden="true"
-        className={`
-          absolute
-          right-0
-          top-0
-
-          h-[2px]
-
-          transition-[width]
-          duration-500
-
-          ${
-            accent
-              ? "w-12 bg-brand-accent group-hover/cell:w-full"
-              : "w-6 bg-white/15 group-hover/cell:w-full group-hover/cell:bg-brand-primary"
-          }
-        `}
-      />
-
-      <p
-        dir="ltr"
-        className="
-          text-right
-          text-[11px]
-          font-black
-          tracking-[0.17em]
-
-          text-white/36
-        "
-      >
-        {eyebrow}
-      </p>
-
-      <h3
-        className="
-          mt-3
-
-          text-[12px]
-          font-black
-
-          text-white
-        "
-      >
-        {title}
-      </h3>
-
-      <p
-        className="
-          mt-2
-
-          text-[11px]
-          font-medium
-          leading-[1.9]
-
-          text-white/42
-        "
-      >
-        {description}
-      </p>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Reveal
-============================================================================= */
-
-function Reveal({
-  children,
-  visible,
-  delay,
-}: {
-  children: ReactNode;
-  visible: boolean;
-  delay: number;
-}) {
-  return (
-    <div
-      className={`
-        transition-[opacity,transform]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}
-
-        motion-reduce:translate-y-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 78% 26%,rgba(22,115,148,.22),transparent 30%),linear-gradient(115deg,#022b39 0%,#033647 50%,#022f3e 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.10]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.09) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[17%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
+    </section>
   );
 }

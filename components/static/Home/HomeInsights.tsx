@@ -71,7 +71,7 @@ export function HomeInsights() {
             <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
             {content.english_label && content.english_label !== content.eyebrow ? <bdi dir="ltr" className="w-full text-[11px] font-medium tracking-[0.3em] text-ink-muted">{content.english_label}</bdi> : null}
           </div>
-          <h2 id="home-insights-heading" className={`mx-auto mt-5 max-w-[26ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,4.2rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}>
+          <h2 id="home-insights-heading" className={`mx-auto mt-5 max-w-[36ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}>
             {highlightIndex < 0 ? content.heading : (
               <>
                 {content.heading.slice(0, highlightIndex)}

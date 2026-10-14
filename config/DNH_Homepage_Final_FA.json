@@ -9,7 +9,7 @@
       "order": 1,
       "id": "hero",
       "type": "hero",
-      
+
       "eyebrow": "معماری ثروت و تصمیم‌سازی مالی",
       "heading": "برای تصمیم‌های مالی مهم، فقط اطلاعات بیشتر کافی نیست؛ به یک ساختار روشن برای تصمیم‌گیری نیاز دارید.",
       "heading_highlight": "ساختار روشن برای تصمیم‌گیری",
@@ -141,37 +141,61 @@
           "id": "major-financial-decision",
           "title": "در آستانه یک تصمیم مالی مهم هستید",
           "description": "اما چند مسیر مختلف پیش روی شماست و نمی‌دانید کدام عوامل باید قبل از تصمیم بررسی شوند.",
-          "icon": "decision"
+          "icon": "decision",
+          "media": {
+            "src": "/assets/images/major-financial-decision.jpg",
+            "alt": "تصویری مفهومی از یک تصمیم مالی مهم"
+          }
         },
         {
           "id": "unstructured-holdings",
-          "title": "دارایی‌های مختلفی دارید",
+          "title": "دارایی‌های مختلفی از جمله طلا و دارایی‌های نقدینگی  دارید",
           "description": "اما تصویر روشنی از نقش هر دارایی، میزان ریسک، نقدشوندگی و هماهنگی آن‌ها با اهداف خود ندارید.",
-          "icon": "portfolio"
+          "icon": "portfolio",
+          "media": {
+            "src": "/assets/images/unstructured-portfolio.png",
+            "alt": "تصویری مفهومی از دارایی‌های پراکنده و پرتفوی بدون ساختار"
+          }
         },
         {
           "id": "inflation-and-market-noise",
           "title": "تصمیم‌های مالی شما تحت تأثیر تورم، ارز، اخبار و تغییرات بازار قرار می‌گیرند",
           "description": "و به دنبال روشی هستید که به‌جای واکنش به شرایط روز، تصمیم‌ها را بر اساس یک نگاه ساختاریافته بررسی کنید.",
-          "icon": "market"
+          "icon": "market",
+          "media": {
+            "src": "/assets/images/macro-market-advisory.webp",
+            "alt": "تصویری مفهومی از اقتصاد، تورم، ارز و تغییرات بازار"
+          }
         },
         {
           "id": "concentration-and-illiquidity",
           "title": "بخشی از سرمایه شما در دارایی‌های متمرکز یا کم‌نقدشونده قرار دارد",
           "description": "و می‌خواهید بدانید این ساختار چه ریسک‌هایی می‌تواند برای ثروت شما ایجاد کند.",
-          "icon": "risk"
+          "icon": "risk",
+          "media": {
+            "src": "/assets/images/risk-management-wealth-protection.webp",
+            "alt": "تصویری مفهومی از تمرکز دارایی و ریسک نقدشوندگی"
+          }
         },
         {
           "id": "business-capital",
           "title": "در کسب‌وکار خود با مسئله سرمایه، نقدینگی، تأمین مالی یا تخصیص منابع روبه‌رو هستید",
           "description": "و تصمیم شما می‌تواند بر ساختار مالی و آینده کسب‌وکار اثر بگذارد.",
-          "icon": "advisory"
+          "icon": "advisory",
+          "media": {
+            "src": "/assets/images/complex-financial-structure.png",
+            "alt": "تصویری مفهومی از ساختار مالی و سرمایه کسب‌وکار"
+          }
         },
         {
           "id": "board-level-decision",
           "title": "در سطح مدیریت یا هیئت‌مدیره با یک تصمیم مالی مهم مواجه هستید",
           "description": "و قبل از تصمیم نهایی به یک بررسی متمرکز از مسئله، ریسک‌ها، سناریوها و گزینه‌های پیش‌رو نیاز دارید.",
-          "icon": "briefing"
+          "icon": "briefing",
+          "media": {
+            "src": "/assets/images/executive-briefings.webp",
+            "alt": "تصویری مفهومی از تصمیم‌گیری مالی در سطح مدیریت و هیئت‌مدیره"
+          }
         }
       ],
       "closing": "اگر یکی از این شرایط برای شما آشناست، ممکن است مسئله اصلی فقط انتخاب یک بازار یا دارایی نباشد؛ بلکه به یک تصویر روشن‌تر از وضعیت موجود، ریسک‌ها، سناریوهای پیش‌رو و ساختار تصمیم نیاز داشته باشید.",
@@ -590,40 +614,71 @@
       "heading": "تحلیل زمانی ارزشمند است که بتواند به درک بهتر یک تصمیم واقعی کمک کند.",
       "heading_highlight": "درک بهتر یک تصمیم واقعی",
       "intro": "در DNH، پژوهش و تحلیل فقط برای تولید محتوا نیست. هر گزارش، یادداشت پژوهشی یا پرونده تحلیلی با هدف روشن‌ترکردن یک مسئله، شناسایی ریسک‌ها و بررسی پیامدهای تصمیم طراحی می‌شود.",
+      "media": {
+        "src": "/assets/images/private-wealth-strategyhero-desktop.png",
+        "alt": "نمای معماری معاصر برای بخش پژوهش‌ها و پرونده‌های تحلیلی DNH",
+        "width": 1800,
+        "height": 1013
+      },
       "items": [
         {
           "id": "dnh-research",
           "title": "پژوهش‌های DNH",
           "english_label": "DNH Research",
           "description": "مجموعه‌ای از یادداشت‌های پژوهشی، گزارش‌های ریسک کلان، تحلیل‌های تخصیص دارایی، گزارش‌های حفاظت از ثروت و بررسی‌های ساختاری بازار که برای شناخت بهتر محیط تصمیم‌گیری تهیه می‌شوند.",
-          "href": "/knowledge/research"
+          "href": "/knowledge/research",
+          "icon": "research",
+          "media": {
+            "src": "/assets/images/private-wealth-strategy.webp",
+            "alt": "نمایی مفهومی از پژوهش‌های معماری ثروت DNH"
+          }
         },
         {
           "id": "research-notes",
           "title": "یادداشت‌های پژوهشی",
           "english_label": "Research Notes",
           "description": "تحلیل متمرکز موضوعات مالی، اقتصادی و سرمایه‌ای که می‌توانند بر ساختار ثروت و تصمیم‌های مهم اثرگذار باشند.",
-          "href": "/knowledge/research"
+          "href": "/knowledge/research",
+          "icon": "note",
+          "media": {
+            "src": "/assets/images/big-financial-decision.png",
+            "alt": "تصویری مفهومی از یادداشت‌ها و تحلیل‌های پژوهشی"
+          }
         },
         {
           "id": "macro-risk-reports",
           "title": "گزارش‌های ریسک کلان",
           "english_label": "Macro Risk Reports",
           "description": "بررسی ریسک‌های اقتصادی، سیاستی و محیطی و پیامدهایی که ممکن است برای سرمایه، نقدشوندگی و تصمیم‌گیری ایجاد کنند.",
-          "href": "/knowledge/research"
+          "href": "/knowledge/research",
+          "icon": "risk",
+          "media": {
+            "src": "/assets/images/macro-market-advisory.webp",
+            "alt": "تصویری مفهومی از تحلیل ریسک‌های اقتصاد کلان"
+          }
         },
         {
           "id": "asset-allocation-studies",
           "title": "مطالعات تخصیص دارایی و حفاظت از ثروت",
           "description": "بررسی نقش دارایی‌های مختلف، ساختار ریسک و عواملی که می‌توانند بر تاب‌آوری و حفظ ثروت در شرایط مختلف اثر بگذارند.",
-          "href": "/knowledge/research"
+          "href": "/knowledge/research",
+          "icon": "allocation",
+          "media": {
+            "src": "/assets/images/portfolio-intelligence.webp",
+            "alt": "تصویری مفهومی از تخصیص دارایی و حفاظت از ثروت"
+          }
         },
         {
           "id": "case-studies",
           "title": "پرونده‌های تحلیلی DNH",
           "english_label": "Case Studies",
           "description": "نمونه‌هایی از مسائل واقعی که نشان می‌دهند چگونه می‌توان یک تصمیم مالی پیچیده را از زاویه ساختار سرمایه، نقدینگی، ریسک، سناریو و گزینه‌های پیش‌رو بررسی کرد.",
-          "href": "/knowledge/case-studies"
+          "href": "/knowledge/case-studies",
+          "icon": "case-study",
+          "media": {
+            "src": "/assets/images/complex-financial-structure.png",
+            "alt": "تصویری مفهومی از پرونده‌های تحلیلی تصمیم‌های مالی"
+          }
         }
       ],
       "case_study_note": "پرونده‌های منتشرشده به‌صورت ناشناس و بدون اطلاعات مالی یا هویتی حساس ارائه می‌شوند و تمرکز آن‌ها بر فرآیند تحلیل و منطق تصمیم‌سازی است، نه نمایش نتیجه یا وعده بازده.",
@@ -643,7 +698,7 @@
       ]
     },
     {
-      "order": 12,
+      "order": 13,
       "id": "about-dr-nasim",
       "type": "about",
       "eyebrow": "درباره دکتر نسیم محمدحسنی",
@@ -660,8 +715,38 @@
           "text": "او دارای کارشناسی ارشد مدیریت مالی و دکترای مهندسی مالی است و بیش از ۱۵ سال تجربه در حوزه مدیریت مالی و بیش از ۵ سال تجربه در زمینه سرمایه‌گذاری و مدیریت دارایی دارد."
         }
       ],
+      "credentials": [
+        {
+          "id": "financial-management",
+          "value": "+۱۵",
+          "label": "سال سابقه مدیریت مالی",
+          "icon": "experience"
+        },
+        {
+          "id": "investment-management",
+          "value": "+۵",
+          "label": "سال تجربه سرمایه‌گذاری و مدیریت دارایی",
+          "icon": "portfolio"
+        },
+        {
+          "id": "masters-degree",
+          "value": "",
+          "label": "کارشناسی ارشد مدیریت مالی",
+          "icon": "education"
+        },
+        {
+          "id": "doctorate-degree",
+          "value": "",
+          "label": "دکترای مهندسی مالی",
+          "icon": "education"
+        }
+      ],
       "philosophy_intro": "فلسفه اصلی این رویکرد ساده است:",
       "philosophy_quote": "ثروت فقط چیزی نیست که در اختیار داریم؛ ساختاری است که باید برای حفظ، توسعه و هدایت آن طراحی شود.",
+      "philosophy_media": {
+        "src": "/assets/images/wealth-architecture-background.png",
+        "alt": ""
+      },
       "closing": "در DNH، نقش دکتر نسیم منبع تخصص، تجربه و اعتبار حرفه‌ای است و DNH به‌عنوان یک سیستم مستقل برای معماری ثروت و تصمیم‌سازی مالی توسعه پیدا می‌کند.",
       "ctas": [
         {
@@ -672,60 +757,75 @@
         }
       ],
       "media": {
-        "src": "",
-        "mobile_src": "",
-        "alt": "",
+        "src": "/assets/images/dr-nasim-home-desktop.png",
+        "mobile_src": "/assets/images/dr-nasim-home-mobile.png",
+        "alt": "پرتره دکتر نسیم محمدحسنی، بنیان‌گذار چارچوب DNH",
         "width": 960,
         "height": 1200
       }
     },
     {
-      "order": 13,
+      "order": 12,
       "id": "financial-decision-assessment",
       "type": "final_cta",
       "eyebrow": "شروع مسیر تصمیم‌گیری",
       "english_label": "Financial Decision Assessment",
       "heading": "قبل از تصمیم بعدی، مسئله را درست تعریف کنید.",
       "heading_highlight": "مسئله را درست تعریف کنید",
+      "media": {
+        "src": "/assets/images/detect.webp",
+        "alt": "نمای معماری مفهومی از حرکت از پیچیدگی به شفافیت در تصمیم مالی",
+        "width": 900,
+        "height": 1600
+      },
       "paragraphs": [
         {
           "id": "challenge",
-          "text": "بسیاری از تصمیم‌های مالی زمانی پیچیده می‌شوند که هنوز مسئله اصلی، محدودیت‌ها، ریسک‌ها و گزینه‌های پیش‌رو به‌درستی مشخص نشده‌اند."
+          "text": "بسیاری از تصمیم‌های مالی زمانی پیچیده می‌شوند که هنوز مسئله اصلی، محدودیت‌ها، ریسک‌ها و گزینه‌های پیش‌رو به‌درستی مشخص نشده‌اند.",
+          "icon": "decision"
         },
         {
           "id": "assessment",
-          "text": "ارزیابی اولیه DNH کمک می‌کند پیش از ورود به مشاوره تخصصی، تصویر روشن‌تری از نوع مسئله، میزان فوریت، سطح پیچیدگی و مسیر مناسب برای بررسی آن داشته باشید."
+          "text": "ارزیابی اولیه DNH کمک می‌کند پیش از ورود به مشاوره تخصصی، تصویر روشن‌تری از نوع مسئله، میزان فوریت، سطح پیچیدگی و مسیر مناسب برای بررسی آن داشته باشید.",
+          "icon": "scope"
         },
         {
           "id": "privacy",
-          "text": "در این مرحله نیازی به ارائه جزئیات کامل دارایی‌ها یا اطلاعات مالی حساس نیست. هدف، شناخت اولیه شرایط و مشخص‌کردن مناسب‌ترین مسیر برای ادامه بررسی است."
+          "text": "در این مرحله نیازی به ارائه جزئیات کامل دارایی‌ها یا اطلاعات مالی حساس نیست. هدف، شناخت اولیه شرایط و مشخص‌کردن مناسب‌ترین مسیر برای ادامه بررسی است.",
+          "icon": "privacy"
         }
       ],
       "assessment_title": "در ارزیابی اولیه بررسی می‌شود:",
       "assessment_items": [
         {
           "id": "decision-topic",
-          "text": "موضوع اصلی تصمیم یا مسئله مالی"
+          "text": "موضوع اصلی تصمیم یا مسئله مالی",
+          "icon": "document"
         },
         {
           "id": "goals-and-priorities",
-          "text": "اهداف و اولویت‌های شما"
+          "text": "اهداف و اولویت‌های شما",
+          "icon": "goal"
         },
         {
           "id": "time-horizon",
-          "text": "افق زمانی تصمیم"
+          "text": "افق زمانی تصمیم",
+          "icon": "time"
         },
         {
           "id": "complexity-and-urgency",
-          "text": "سطح تقریبی پیچیدگی و فوریت"
+          "text": "سطح تقریبی پیچیدگی و فوریت",
+          "icon": "urgency"
         },
         {
           "id": "constraints-and-risks",
-          "text": "مهم‌ترین محدودیت‌ها و ریسک‌های قابل شناسایی"
+          "text": "مهم‌ترین محدودیت‌ها و ریسک‌های قابل شناسایی",
+          "icon": "risk"
         },
         {
           "id": "service-fit",
-          "text": "تناسب مسئله با خدمات DNH"
+          "text": "تناسب مسئله با خدمات DNH",
+          "icon": "fit"
         }
       ],
       "closing": "پس از بررسی اولیه، در صورت تناسب، مسیر بعدی می‌تواند شامل جلسه مشاوره راهبردی، بررسی تخصصی پرونده یا نشست مدیران باشد.",

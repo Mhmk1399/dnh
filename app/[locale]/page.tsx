@@ -6,6 +6,7 @@ import { HomeFramework } from "@/components/static/Home/WholeWealthViewSection";
 import { HomeIntelligenceDesk } from "@/components/static/Home/HomeIntelligenceDesk";
 import { HomeWeeklyOutlook } from "@/components/static/Home/HomeWeeklyOutlook";
 import { HomeInsights } from "@/components/static/Home/HomeInsights";
+import { HomeResearchCaseStudies } from "@/components/static/Home/HomeResearchCaseStudies";
 import { AboutDrNasimSection } from "@/components/static/Home/AboutDrNasimSection";
 import { FinancialDecisionAssessmentSection } from "@/components/static/Home/FinancialDecisionAssessmentSection";
 import type { Metadata } from "next";
@@ -100,7 +101,11 @@ export default function HomePage() {
 
         <HomeInsights />
 
-      
+        <HomeResearchCaseStudies />
+
+        <FinancialDecisionAssessmentSection />
+
+        <AboutDrNasimSection />
       </main>
     </>
   );

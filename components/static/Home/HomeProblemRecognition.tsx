@@ -5,7 +5,6 @@ import {
   Activity,
   ArrowLeft,
   ArrowRight,
-  BarChart3,
   Building2,
   Compass,
   Layers3,
@@ -39,6 +38,10 @@ type ProblemContent = {
     title: string;
     description: string;
     icon: keyof typeof problemIcons;
+    media: {
+      src: string;
+      alt: string;
+    };
   }>;
   closing: string;
   ctas: Array<{
@@ -128,7 +131,18 @@ export function HomeProblemRecognition() {
                 key={item.id}
                 className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-                <div className="relative h-20 overflow-hidden bg-[linear-gradient(125deg,var(--dnh-primary),color-mix(in_srgb,var(--dnh-secondary)_70%,var(--dnh-text)))]">
+                <div className="relative aspect-[16/7] overflow-hidden bg-brand-primary">
+                  <Image
+                    src={item.media.src}
+                    alt={item.media.alt}
+                    fill
+                    sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 1279px) 48vw, 20vw"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-brand-primary/10"
+                  />
                   <span
                     aria-hidden="true"
                     className="absolute end-3 top-3 size-4 bg-brand-accent"

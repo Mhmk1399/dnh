@@ -1,991 +1,264 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type ReactNode,
-} from "react";
-
+import Image from "next/image";
 import {
   ArrowLeft,
-  ArrowUpLeft,
+  ArrowRight,
+  BarChart3,
   Clock3,
-  Layers3,
+  FileText,
+  Flag,
+  Focus,
+  Gauge,
   Route,
   ShieldCheck,
+  Target,
 } from "lucide-react";
 
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import homeFa from "@/config/DNH_Homepage_Final_FA.json";
+import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
-const ASSESSMENT_PATH = "/financial-decision-assessment";
+const paragraphIcons = {
+  decision: BarChart3,
+  scope: Focus,
+  privacy: ShieldCheck,
+} as const;
 
-const CONSULTATION_PATH = "/request-strategic-consultation";
+const assessmentIcons = {
+  document: FileText,
+  goal: Flag,
+  time: Clock3,
+  urgency: Gauge,
+  risk: ShieldCheck,
+  fit: Route,
+} as const;
 
-/* =============================================================================
-   Assessment preview
-
-   این‌ها همان چیزهایی هستند که Assessment باید در مرحله اول روشن کند:
-   - مسئله
-   - افق زمانی
-   - فوریت / پیچیدگی
-   - مسیر اولیه مناسب
-============================================================================= */
-
-const ASSESSMENT_ITEMS = [
-  {
-    label: "موضوع اصلی تصمیم",
-    en: "DECISION",
-    value: "موضوع اصلی تصمیم یا مسئله مالی چیست؟",
-    icon: Layers3,
-  },
-  {
-    label: "افق زمانی",
-    en: "HORIZON",
-    value: "افق زمانی تصمیم چقدر است؟",
-    icon: Clock3,
-  },
-  {
-    label: "پیچیدگی و فوریت",
-    en: "COMPLEXITY",
-    value: "سطح تقریبی پیچیدگی و فوریت چقدر است؟",
-    icon: Route,
-  },
-] as const;
-
-const NEXT_STEPS = [
-  {
-    title: "شناخت اولیه مسئله",
-    en: "ASSESSMENT",
-  },
-  {
-    title: "بررسی تناسب و دامنه",
-    en: "FIT & SCOPE",
-  },
-  {
-    title: "هدایت به مسیر مناسب",
-    en: "NEXT STEP",
-  },
-] as const;
-
-/* =============================================================================
-   Component
-============================================================================= */
+type AssessmentContent = {
+  id: "financial-decision-assessment";
+  type: "final_cta";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  media: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  paragraphs: Array<{
+    id: string;
+    text: string;
+    icon: keyof typeof paragraphIcons;
+  }>;
+  assessment_title: string;
+  assessment_items: Array<{
+    id: string;
+    text: string;
+    icon: keyof typeof assessmentIcons;
+  }>;
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
 export function FinancialDecisionAssessmentSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const homepage = locale === "en" ? homeEn : homeFa;
+  const content = homepage.sections.find(
+    (section) =>
+      section.id === "financial-decision-assessment" &&
+      section.type === "final_cta",
+  ) as AssessmentContent | undefined;
 
-  const [visible, setVisible] = useState(false);
+  if (!content) return null;
 
-  useEffect(() => {
-    const node = sectionRef.current;
-
-    if (!node) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        setVisible(true);
-        observer.disconnect();
-      },
-      {
-        threshold: 0.16,
-        rootMargin: "0px 0px -6% 0px",
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
+  const highlight = content.heading_highlight ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <section
-      ref={sectionRef}
-      id="financial-decision-assessment"
-      dir="rtl"
-      aria-labelledby="financial-decision-assessment-title"
-      className="
-        relative
-        isolate
-        overflow-hidden
-
-        bg-[#022c3a]
-        text-white
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="home-assessment-heading"
+      className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
     >
-      <Background />
-
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
-
-          mx-auto
-          grid
-          w-full
-
-          gap-12
-
-          py-16
-
-          sm:py-20
-
-          lg:grid-cols-[0.88fr_1.12fr]
-          lg:items-center
-          lg:gap-16
-          lg:py-24
-
-          xl:grid-cols-[0.82fr_1.18fr]
-          xl:gap-20
-          xl:py-28
-
-        "
-      >
-        {/* =========================================================
-            CONTENT
-        ========================================================== */}
-
-        <div
-          className="
-            order-1
-
-            lg:col-start-1
-            lg:row-start-1
-          "
-        >
-          <Reveal visible={visible} delay={40}>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-            >
-              <span
-                aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
-              />
-
-              <span
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-white/72
-
-                  sm:text-[11px]
-                "
-              >
-                شروع مسیر تصمیم‌گیری
-              </span>
-            </div>
-          </Reveal>
-
-          <Reveal visible={visible} delay={100}>
-            <h2
-              id="financial-decision-assessment-title"
-              className="
-                max-w-[700px]
-
-                text-[32px]
-                font-black
-                leading-[1.62]
-                tracking-[-0.045em]
-
-                text-white
-
-                sm:text-[40px]
-
-                lg:text-[47px]
-                lg:leading-[1.5]
-
-                xl:text-[53px]
-              "
-            >
-              قبل از تصمیم بعدی،
-              <br />
-              <span className="text-brand-accent">مسئله را درست تعریف کنید.</span>
-            </h2>
-          </Reveal>
-
-          <Reveal visible={visible} delay={170}>
-            <p
-              className="
-                mt-6
-                max-w-[640px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-white/62
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              بسیاری از تصمیم‌های مالی زمانی پیچیده می‌شوند که هنوز مسئله اصلی،
-              محدودیت‌ها، ریسک‌ها و گزینه‌های پیش‌رو به‌درستی مشخص نشده‌اند.
-              ارزیابی اولیه DNH کمک می‌کند پیش از ورود به مشاوره تخصصی، تصویر
-              روشن‌تری از نوع مسئله، میزان فوریت، سطح پیچیدگی و مسیر مناسب داشته باشید.
-            </p>
-          </Reveal>
-
-          {/* =====================================================
-              primary action
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={240}>
-            <div
-              className="
-                mt-8
-
-                flex
-                flex-col
-                gap-3
-
-                sm:flex-row
-                sm:flex-wrap
-                sm:items-center
-              "
-            >
-              <ActionButton
-                href={ASSESSMENT_PATH}
-                variant="assessment"
-                size="lg"
-                icon={ArrowLeft}
-                className="
-                  w-full
-
-                  bg-brand-accent
-                  text-white
-
-                  shadow-[0_18px_42px_rgba(252,133,2,.20)]
-
-                  hover:bg-[#eb7c01]
-
-                  sm:w-auto
-                  sm:min-w-[275px]
-                "
-              >
-                شروع ارزیابی اولیه تصمیم مالی
-              </ActionButton>
-
-              <ActionButton
-                href={CONSULTATION_PATH}
-                variant="secondary"
-                size="lg"
-                icon={ArrowLeft}
-                className="
-                  w-full
-
-                  border-white/25
-                  bg-white/[0.045]
-
-                  text-white
-
-                  shadow-none
-
-                  hover:border-white/45
-                  hover:bg-white/[0.085]
-                  hover:text-white
-
-                  sm:w-auto
-                  sm:min-w-[230px]
-                "
-              >
-                درخواست مشاوره راهبردی
-              </ActionButton>
-            </div>
-          </Reveal>
-
-          {/* =====================================================
-              privacy / boundary
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={310}>
-            <div
-              className="
-                mt-8
-                max-w-[640px]
-
-                border-t
-                border-white/12
-
-                pt-5
-              "
-            >
-              <div
-                className="
-                  flex
-                  items-start
-                  gap-3
-                "
-              >
-                <ShieldCheck
-                  aria-hidden="true"
-                  className="
-                    mt-1
-                    h-4
-                    w-4
-                    shrink-0
-
-                    text-[#77c6de]
-                  "
-                  strokeWidth={1.5}
-                />
-
-                <p
-                  className="
-                    text-[10px]
-                    font-medium
-                    leading-[2]
-
-                    text-white/43
-
-                    sm:text-[11px]
-                  "
-                >
-                  در این مرحله نیازی به ارائه جزئیات کامل دارایی‌ها یا اطلاعات
-                  مالی حساس نیست. هدف، شناخت اولیه شرایط و مشخص‌کردن مناسب‌ترین
-                  مسیر برای ادامه بررسی است.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* =========================================================
-            ASSESSMENT PREVIEW
-        ========================================================== */}
-
-        <div
-          className="
-            order-2
-
-            lg:col-start-2
-            lg:row-start-1
-          "
-        >
-          <AssessmentPreview visible={visible} />
-        </div>
-      </div>
-
-     
-    </section>
-  );
-}
-
-/* =============================================================================
-   Assessment preview
-============================================================================= */
-
-function AssessmentPreview({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className={`
-        group/assessment
-
-        relative
-        mx-auto
-
-        w-full
-        max-w-[760px]
-
-        overflow-hidden
-
-        border
-        border-white/14
-
-        bg-white/[0.055]
-
-        shadow-[0_34px_100px_rgba(0,0,0,.16)]
-
-        backdrop-blur-[11px]
-
-        transition-[opacity,transform,border-color,box-shadow]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        hover:-translate-y-[3px]
-        hover:border-white/24
-        hover:shadow-[0_42px_120px_rgba(0,0,0,.22)]
-
-        ${visible ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}
-
-        motion-reduce:translate-x-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: "140ms",
-      }}
-    >
-      {/* =======================================================
-          Top accent
-      ======================================================== */}
-
       <div
         aria-hidden="true"
-        className="
-          absolute
-          inset-x-0
-          top-0
-
-          flex
-          h-[3px]
-        "
-      >
-        <span className="w-[22%] bg-brand-accent" />
-        <span className="flex-1 bg-[#5aacc8]" />
-      </div>
-
-      {/* =======================================================
-          Header
-      ======================================================== */}
-
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--dnh-primary)_7%,white),transparent)]"
+      />
       <div
-        className="
-          flex
-          items-start
-          justify-between
-          gap-5
+        aria-hidden="true"
+        className="pointer-events-none absolute end-0 top-0 size-40 border-b border-s border-line opacity-70"
+      />
 
-          border-b
-          border-white/12
-
-          px-5
-          pb-5
-          pt-7
-
-          sm:px-7
-
-          lg:px-8
-        "
-      >
-        <div>
-          <p
-            dir="ltr"
-            className="
-              text-[11px]
-              font-black
-              tracking-[0.19em]
-
-              text-[#79c9e2]
-            "
-          >
-            FINANCIAL DECISION ASSESSMENT
-          </p>
-
-          <p
-            className="
-              mt-2
-
-              text-[16px]
-              font-black
-
-              text-white
-
-              sm:text-[18px]
-            "
-          >
-            شناخت اولیه موقعیت شما
-          </p>
-        </div>
-
-        <span
-          className="
-            border
-            border-brand-accent/30
-
-            bg-brand-accent/[0.08]
-
-            px-3
-            py-2
-
-            text-[11px]
-            font-black
-
-            text-brand-accent
-          "
-        >
-          مرحله اولیه
-        </span>
-      </div>
-
-      {/* =======================================================
-          Assessment items
-      ======================================================== */}
-
-      <div
-        className="
-          divide-y
-          divide-white/10
-        "
-      >
-        {ASSESSMENT_ITEMS.map((item, index) => (
-          <AssessmentItem
-            key={item.en}
-            item={item}
-            index={index}
-            visible={visible}
-          />
-        ))}
-      </div>
-
-      {/* =======================================================
-          Next step
-      ======================================================== */}
-
-      <div
-        className="
-          border-t
-          border-white/12
-
-          bg-black/[0.08]
-
-          px-5
-          py-6
-
-          sm:px-7
-
-          lg:px-8
-        "
-      >
-        <p
-          dir="ltr"
-          className="
-            text-[11px]
-            font-black
-            tracking-[0.2em]
-
-            text-white/35
-          "
-        >
-          WHAT HAPPENS NEXT
-        </p>
-
-        <div
-          className="
-            mt-5
-
-            grid
-            gap-3
-
-            sm:grid-cols-3
-          "
-        >
-          {NEXT_STEPS.map((step, index) => (
-            <div
-              key={step.en}
-              className="
-                  group/step
-
-                  relative
-
-                  border
-                  border-white/10
-
-                  bg-white/[0.035]
-
-                  px-4
-                  py-4
-
-                  transition-[background-color,border-color,transform]
-                  duration-300
-
-                  hover:-translate-y-0.5
-                  hover:border-brand-accent/35
-                  hover:bg-white/[0.07]
-                "
-            >
-              <div
-                className="
-                    flex
-                    items-center
-                    justify-between
-                    gap-3
-                  "
-              >
-                <span
-                  className="
-                      text-[11px]
-                      font-black
-
-                      text-brand-accent
-                    "
-                >
-                  0{index + 1}
-                </span>
-
-                {index < NEXT_STEPS.length - 1 && (
-                  <ArrowLeft
-                    aria-hidden="true"
-                    className="
-                        hidden
-                        h-3.5
-                        w-3.5
-
-                        text-white/18
-
-                        sm:block
-                      "
-                    strokeWidth={1.4}
-                  />
-                )}
-              </div>
-
-              <p
-                className="
-                    mt-3
-
-                    text-[10px]
-                    font-black
-
-                    text-white
-                  "
-              >
-                {step.title}
-              </p>
-
-              <p
+      <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.82fr)_minmax(0,1.32fr)] lg:grid-rows-[auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
+        <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+            <p>{content.eyebrow}</p>
+            {content.english_label &&
+            content.english_label !== content.eyebrow ? (
+              <bdi
                 dir="ltr"
-                className="
-                    mt-1
-
-                    text-right
-                    text-[6px]
-                    font-bold
-                    tracking-[0.14em]
-
-                    text-white/30
-                  "
+                className="w-full text-[10px] font-medium tracking-[0.28em] text-ink-muted"
               >
-                {step.en}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+                {content.english_label}
+              </bdi>
+            ) : null}
+          </div>
 
-      {/* =======================================================
-          final link cue
-      ======================================================== */}
-
-      <div
-        className="
-          group/start
-
-          flex
-          items-center
-          justify-between
-          gap-5
-
-          border-t
-          border-white/12
-
-          px-5
-          py-5
-
-          transition-colors
-          duration-300
-
-          hover:bg-white/[0.035]
-
-          sm:px-7
-
-          lg:px-8
-        "
-      >
-        <div>
-          <p
-            className="
-              text-[10px]
-              font-black
-
-              text-white
-            "
+          <h2
+            id="home-assessment-heading"
+            className={`mt-5 max-w-[86ch] text-pretty text-[clamp(2rem,7.4vw,3.15rem)] font-black tracking-[-0.035em] sm:text-[clamp(2.65rem,4.7vw,2.5rem)] ${
+              isRTL ? "leading-[1.48]" : "leading-[1.13]"
+            }`}
           >
-            نقطه شروع، شناخت بهتر مسئله است.
-          </p>
+            {highlightIndex < 0 ? (
+              content.heading
+            ) : (
+              <>
+                {content.heading.slice(0, highlightIndex)}
+                <span className="text-brand-accent">
+                  {content.heading.slice(
+                    highlightIndex,
+                    highlightIndex + highlight.length,
+                  )}
+                </span>
+                {content.heading.slice(highlightIndex + highlight.length)}
+              </>
+            )}
+          </h2>
+        </header>
 
-          <p
-            className="
-              mt-1
+        <div className="grid min-w-0 gap-3 sm:grid-cols-3 lg:col-start-2 lg:row-start-2 lg:mt-2">
+          {content.paragraphs.map((paragraph) => {
+            const Icon = paragraphIcons[paragraph.icon] ?? Target;
 
-              text-[11px]
-              font-medium
-
-              text-white/35
-            "
-          >
-            قبل از انتخاب خدمت یا مسیر همکاری
-          </p>
+            return (
+              <article
+                key={paragraph.id}
+                className="border-s border-line py-2 ps-4 text-start sm:min-h-[190px] sm:pe-3"
+              >
+                <Icon
+                  aria-hidden="true"
+                  size={27}
+                  strokeWidth={1.55}
+                  className="text-brand-primary"
+                />
+                <p
+                  className={`mt-4 text-[13px] text-ink-muted sm:text-[14px] ${
+                    isRTL ? "leading-[1.95]" : "leading-[1.7]"
+                  }`}
+                >
+                  {paragraph.text}
+                </p>
+              </article>
+            );
+          })}
         </div>
 
-        <ArrowUpLeft
-          aria-hidden="true"
-          className="
-            h-4
-            w-4
-            shrink-0
-
-            text-brand-accent
-
-            transition-transform
-            duration-300
-
-            group-hover/start:-translate-x-1
-            group-hover/start:-translate-y-1
-          "
-          strokeWidth={1.6}
-        />
-      </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Assessment item
-============================================================================= */
-
-function AssessmentItem({
-  item,
-  index,
-  visible,
-}: {
-  item: (typeof ASSESSMENT_ITEMS)[number];
-  index: number;
-  visible: boolean;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <div
-      className={`
-        group/item
-
-        grid
-        grid-cols-[42px_1fr_auto]
-        items-center
-        gap-4
-
-        px-5
-        py-5
-
-        transition-[opacity,transform,background-color]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        hover:bg-white/[0.045]
-
-        sm:px-7
-
-        lg:px-8
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}
-      `}
-      style={
-        {
-          transitionDelay: `${230 + index * 80}ms`,
-        } as CSSProperties
-      }
-    >
-      <span
-        className="
-          flex
-          h-10
-          w-10
-
-          items-center
-          justify-center
-
-          border
-          border-white/14
-
-          text-[#7cc5dc]
-
-          transition-[background-color,border-color,color,transform]
-          duration-300
-
-          group-hover/item:-translate-y-0.5
-          group-hover/item:border-brand-accent
-          group-hover/item:bg-brand-accent
-          group-hover/item:text-white
-        "
-      >
-        <Icon className="h-4 w-4" strokeWidth={1.5} />
-      </span>
-
-      <div>
-        <div
-          className="
-            flex
-            flex-wrap
-            items-baseline
-            gap-x-3
-            gap-y-1
-          "
-        >
-          <h3
-            className="
-              text-[11px]
-              font-black
-
-              text-white
-            "
-          >
-            {item.label}
-          </h3>
-
+        <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:h-full lg:min-h-[760px] lg:aspect-auto">
+          <Image
+            src={content.media.src}
+            alt={content.media.alt}
+            fill
+            sizes="(max-width: 1023px) calc(100vw - 24px), 34vw"
+            className="object-cover object-center"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-brand-primary/5"
+          />
           <span
-            dir="ltr"
-            className="
-              text-[6px]
-              font-bold
-              tracking-[0.15em]
-
-              text-white/28
-            "
-          >
-            {item.en}
-          </span>
+            aria-hidden="true"
+            className="absolute end-6 top-6 size-6 bg-brand-accent"
+          />
         </div>
 
-        <p
-          className="
-            mt-1.5
+        <div className="border border-line bg-page lg:col-start-2 lg:row-start-3 lg:mt-2">
+          <div className="flex items-center gap-3 border-b border-line px-5 py-4 sm:px-6">
+            <Target
+              aria-hidden="true"
+              size={24}
+              strokeWidth={1.6}
+              className="text-brand-primary"
+            />
+            <h3 className="text-[16px] font-black sm:text-[18px]">
+              {content.assessment_title}
+            </h3>
+            <span aria-hidden="true" className="ms-auto h-[2px] w-10 bg-brand-accent" />
+          </div>
 
-            text-[11px]
-            font-medium
-            leading-[1.9]
+          <ul className="grid min-w-0 grid-cols-1 sm:grid-cols-2">
+            {content.assessment_items.map((item) => {
+              const Icon = assessmentIcons[item.icon] ?? FileText;
 
-            text-white/42
-          "
-        >
-          {item.value}
-        </p>
+              return (
+                <li
+                  key={item.id}
+                  className="flex min-h-[68px] items-center gap-3 border-b border-line px-4 py-3 text-start odd:sm:border-e sm:px-5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-primary"
+                  >
+                    <Icon size={20} strokeWidth={1.6} />
+                  </span>
+                  <span
+                    className={`text-[13px] font-bold text-ink sm:text-[14px] ${
+                      isRTL ? "leading-[1.75]" : "leading-[1.45]"
+                    }`}
+                  >
+                    {item.text}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <footer className="grid min-w-0 gap-4 lg:col-start-2 lg:row-start-4 lg:mt-1">
+          <p
+            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${
+              isRTL ? "leading-[1.9]" : "leading-[1.7]"
+            }`}
+          >
+            {content.closing}
+          </p>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                shape="square"
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                contentAlignment="between"
+                dir={direction}
+                className={`w-full shadow-none hover:shadow-none ${
+                  cta.type === "primary"
+                    ? "bg-brand-accent hover:bg-brand-primary"
+                    : "border-brand-primary bg-page"
+                }`}
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
+          </div>
+        </footer>
       </div>
-
-      <span
-        aria-hidden="true"
-        className="
-          h-px
-          w-8
-
-          bg-white/12
-
-          transition-[width,background-color]
-          duration-300
-
-          group-hover/item:w-14
-          group-hover/item:bg-brand-accent/70
-        "
-      />
-    </div>
-  );
-}
-
-/* =============================================================================
-   Reveal
-============================================================================= */
-
-function Reveal({
-  children,
-  visible,
-  delay,
-}: {
-  children: ReactNode;
-  visible: boolean;
-  delay: number;
-}) {
-  return (
-    <div
-      className={`
-        transition-[opacity,transform]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}
-
-        motion-reduce:translate-y-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 74% 32%,rgba(22,115,148,.28),transparent 30%),linear-gradient(115deg,#022936 0%,#033849 48%,#022c3a 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.09]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.09) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          right-[16%]
-          top-0
-
-          h-[11px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
+    </section>
   );
 }

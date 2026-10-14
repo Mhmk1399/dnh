@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -26,14 +26,15 @@ const serviceIcons = {
   briefing: Presentation,
 } as const;
 
+type ServiceIconKey = keyof typeof serviceIcons;
+
 type ServiceItem = {
   id: string;
   title: string;
   description: string;
   cta: string;
   href: string;
-  icon: keyof typeof serviceIcons;
-  media?: { src: string; alt: string };
+  icon: ServiceIconKey;
 };
 
 type ServicesContent = {
@@ -47,10 +48,56 @@ type ServicesContent = {
 
 export function HomeServices() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
   const homepage = locale === "en" ? homeEn : homeFa;
   const content = homepage.sections.find(
     (section) => section.id === "services" && section.type === "service_cards",
   ) as ServicesContent | undefined;
+
+  // Progressive enhancement: HTML and content are visible without JS.
+  // Only cards still below the viewport are animated, once, on entry.
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (
+      !root ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const waiting = new Set<HTMLElement>();
+
+    root.querySelectorAll<HTMLElement>("[data-service-reveal]").forEach((card) => {
+      card.removeAttribute("data-reveal");
+
+      if (card.getBoundingClientRect().top > window.innerHeight - 40) {
+        card.dataset.reveal = "pending";
+        waiting.add(card);
+      }
+    });
+
+    if (waiting.size === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const card = entry.target as HTMLElement;
+          card.dataset.reveal = "shown";
+          observer.unobserve(card);
+          waiting.delete(card);
+        });
+
+        if (waiting.size === 0) observer.disconnect();
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
+    );
+
+    waiting.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, [locale]);
 
   if (!content) return null;
 
@@ -60,91 +107,128 @@ export function HomeServices() {
 
   return (
     <section
+      ref={sectionRef}
       id={content.id}
       dir={direction}
       lang={languageTag}
       aria-labelledby="home-services-heading"
-      className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
+      className="relative isolate overflow-x-clip border-t border-line bg-surface-soft py-16 text-ink sm:py-20 md:py-24 xl:py-28"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute -start-8 top-0 grid grid-cols-3 opacity-70">
-        {Array.from({ length: 9 }).map((_, index) => (
-          <span key={index} className={`size-14 border border-line/60 sm:size-20 ${index % 4 === 0 ? "bg-[color-mix(in_srgb,var(--dnh-primary)_10%,white)]" : "bg-transparent"}`} />
-        ))}
-      </div>
+      <div className="dnh-site-shell">
+        <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,0.76fr)_minmax(0,1.76fr)] lg:gap-12 xl:gap-16">
+          <header className="min-w-0 text-start lg:sticky lg:top-28 lg:self-start lg:flex lg:min-h-[min(34rem,calc(100svh-10rem))] lg:flex-col lg:justify-center lg:py-6">
+            <div className="flex items-center gap-3 text-[12px] font-semibold leading-[1.8] text-brand-primary sm:text-[13px]">
+              <span
+                aria-hidden="true"
+                className="h-px w-9 shrink-0 bg-brand-accent sm:w-12"
+              />
+              <p className="min-w-0">{content.eyebrow}</p>
+            </div>
 
-      <div className="dnh-site-shell relative z-10">
-        <header className="mx-auto max-w-[980px] text-center">
-          <div className="flex items-center justify-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
-            <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
-            <p>{content.eyebrow}</p>
-          </div>
-          <h2
-            id="home-services-heading"
-            className={`mx-auto mt-5 max-w-[22ch] text-pretty text-[clamp(2rem,8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,4rem)] lg:text-[clamp(3.2rem,4.5vw,4.7rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.12]"}`}
-          >
-            {highlightIndex < 0 ? content.heading : (
-              <>
-                {content.heading.slice(0, highlightIndex)}
-                <span className="text-brand-accent">{content.heading.slice(highlightIndex, highlightIndex + highlight.length)}</span>
-                {content.heading.slice(highlightIndex + highlight.length)}
-              </>
-            )}
-          </h2>
-        </header>
+            <h2
+              id="home-services-heading"
+              className="mt-5 max-w-[24ch] text-pretty text-start text-[clamp(1.875rem,7vw,2.25rem)] font-extrabold leading-[1.6] [overflow-wrap:break-word] sm:mt-6 md:max-w-[26ch] md:text-[clamp(2.25rem,4.7vw,2.875rem)] md:leading-[1.55] lg:max-w-none lg:text-[clamp(2.625rem,3.35vw,3.375rem)] lg:leading-[1.5]"
+            >
+              {highlightIndex === -1 ? (
+                content.heading
+              ) : (
+                <>
+                  {content.heading.slice(0, highlightIndex)}
+                  <span className="text-brand-accent">
+                    {content.heading.slice(
+                      highlightIndex,
+                      highlightIndex + highlight.length,
+                    )}
+                  </span>
+                  {content.heading.slice(highlightIndex + highlight.length)}
+                </>
+              )}
+            </h2>
 
-        <div className="mt-9 grid min-w-0 grid-cols-1 gap-5 sm:mt-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
-          {content.services.map((service) => {
-            const Icon = serviceIcons[service.icon] ?? Landmark;
-            const imageSrc = service.media?.src.trim() ?? "";
+            <div
+              aria-hidden="true"
+              className="mt-8 flex items-center gap-2 sm:mt-10 lg:mt-12"
+            >
+              <span className="h-[2px] w-12 bg-brand-accent" />
+              <span className="h-px min-w-0 flex-1 bg-line" />
+            </div>
+          </header>
 
-            return (
-              <article key={service.id} className="group relative flex min-w-0 flex-col border border-line bg-page transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none">
-                <div className="relative aspect-[16/8] overflow-hidden bg-brand-primary">
-                  {imageSrc ? (
-                    <Image
-                      src={imageSrc}
-                      alt={service.media?.alt ?? ""}
-                      fill
-                      sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1279px) 48vw, 31vw"
-                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                    />
-                  ) : null}
-                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-e from-transparent via-transparent to-ink/45" />
-                  <span aria-hidden="true" className="absolute end-4 top-4 size-5 bg-brand-accent" />
-                </div>
+          <div className="grid min-w-0 grid-cols-1 gap-px border border-line bg-line md:grid-cols-2">
+            {content.services.map((service, index) => {
+              const Icon = serviceIcons[service.icon] ?? Landmark;
+              const featured = index === 0;
 
-                <div className="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
-                  <div className="flex min-w-0 items-start gap-4">
-                    <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center bg-surface-soft text-brand-primary">
-                      <Icon size={23} strokeWidth={1.65} />
+              return (
+                <article
+                  key={service.id}
+                  data-servi=""
+                  className={`group relative flex min-w-0 flex-col overflow-hidden p-5 sm:p-7 lg:p-7 xl:p-8 motion-safe:transition-[opacity,transform,backgroundprimary-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-3 motion-safe:data-[reveal=pending]:opacity-0 ${
+                    featured
+                      ? "bg-brand-primary text-[var(--dnh-text-on-brand)]"
+                      : "bg-page text-ink hover:bg-surface-soft"
+                  }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 start-0 w-[3px] origin-top scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100 group-focus-within:scale-y-100"
+                  />
+
+                  <div className="mb-7 flex items-start justify-between gap-4 sm:mb-8">
+                    <span
+                      aria-hidden="true"
+                      className={`flex size-12 shrink-0 items-center justify-center border sm:size-14 ${
+                        featured
+                          ? "border-[color-mix(in_srgb,var(--dnh-text-on-brand)_30%,transparent)] bg-brand-secondary/40 text-[var(--dnh-text-on-brand)]"
+                          : "border-line bg-surface-soft text-brand-primary"
+                      }`}
+                    >
+                      <Icon size={24} strokeWidth={1.65} />
                     </span>
-                    <h3 className={`min-w-0 text-start text-[20px] font-black [overflow-wrap:break-word] sm:text-[22px] ${isRTL ? "leading-[1.65]" : "leading-[1.35]"}`}>
-                      {service.title}
-                    </h3>
+                    <span
+                      aria-hidden="true"
+                      className={`mt-6 h-px w-10 shrink-0 sm:w-12 ${
+                        featured
+                          ? "bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_35%,transparent)]"
+                          : "bg-line"
+                      }`}
+                    />
                   </div>
 
-                  <p className={`mt-4 min-w-0 text-start text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}`}>
+                  <h3 className="max-w-[28ch] text-start text-[19px] font-bold leading-[1.75] [overflow-wrap:break-word] sm:text-[21px] lg:text-[22px]">
+                    {service.title}
+                  </h3>
+
+                  <p
+                    className={`mt-3 min-w-0 text-start text-[14px] font-normal sm:mt-4 sm:text-[15px] ${
+                      isRTL ? "leading-[1.95]" : "leading-[1.72]"
+                    } ${
+                      featured
+                        ? "text-[color-mix(in_srgb,var(--dnh-text-on-brand)_90%,transparent)]"
+                        : "text-ink-muted"
+                    }`}
+                  >
                     {service.description}
                   </p>
 
-                  <div className="mt-auto pt-5">
+                  <div className="mt-auto min-w-0 pt-7 sm:pt-8">
                     <ActionButton
                       href={service.href}
                       variant="secondary"
                       shape="square"
-                      size="sm"
+                      size="md"
                       icon={Arrow}
                       iconPosition="end"
                       dir={direction}
-                      className="min-h-11 max-w-full border-0 bg-transparent px-0 text-start text-[13px] text-brand-primary shadow-none hover:bg-transparent hover:shadow-none"
+                      className="min-h-11 w-full min-w-0 whitespace-normal text-start text-[13px] [overflow-wrap:anywhere] sm:w-auto sm:max-w-full"
                     >
                       {service.cta}
                     </ActionButton>
                   </div>
-                </div>
-              </article>
-            );
-          })}
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

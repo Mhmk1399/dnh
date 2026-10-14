@@ -54,7 +54,7 @@ export function HomeWhoWeHelp() {
             <p>{content.eyebrow}</p>
             <span aria-hidden="true" className="h-[2px] w-12 bg-brand-accent" />
           </div>
-          <h2 id="home-who-we-help-heading" className={`mt-5 text-pretty text-[clamp(2rem,7.7vw,3.2rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,4.3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}>
+          <h2 id="home-who-we-help-heading" className={`mt-5 text-pretty text-[clamp(2rem,7.7vw,3.2rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}>
             {highlightIndex < 0 ? content.heading : (
               <>
                 {content.heading.slice(0, highlightIndex)}
