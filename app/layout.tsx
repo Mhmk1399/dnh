@@ -5,11 +5,16 @@ import { iranSans } from "@/next-persian-fonts/IranSans";
 import { PublicChrome } from "@/components/global/PublicChrome";
 import SmoothScroll from "@/components/global/SmoothScroll";
 import { PwaRegister } from "@/components/global/PwaRegister";
+import { LanguageProvider } from "@/components/providers/LanguageProvider";
+import { SITE_LANGUAGES } from "@/lib/site-language";
+import { getRequestLanguage, getSiteUrl } from "@/lib/site-seo";
+import homepageFa from "@/config/DNH_Homepage_Final_FA.json";
+import homepageEn from "@/config/DNH_Homepage_Final_EN.json";
 
 const siteDescription =
   "معماری ثروت و مشاوره مالی راهبردی برای تصمیم‌های مالی مهم.";
 
-export const metadata: Metadata = {
+const siteMetadata: Metadata = {
   title: {
     default: "DNH",
     template: "%s | DNH",
@@ -58,6 +63,26 @@ export const metadata: Metadata = {
   },
 };
 
+export async function generateMetadata(): Promise<Metadata> {
+  const { locale, pathname } = await getRequestLanguage();
+  const homepage = locale === "fa" ? homepageFa : homepageEn;
+  const isPrivatePage = /^(?:\/admin|\/dashboard|\/test(?:-form)?)(?:\/|$)/.test(pathname);
+  return {
+    ...siteMetadata,
+    metadataBase: new URL(getSiteUrl()),
+    description: homepage.seo.description,
+    robots: isPrivatePage
+      ? { index: false, follow: false }
+      : undefined,
+    openGraph: {
+      type: "website",
+      siteName: "DNH",
+      locale: locale === "fa" ? "fa_IR" : "en_US",
+      alternateLocale: isPrivatePage ? undefined : locale === "fa" ? "en_US" : "fa_IR",
+    },
+  };
+}
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -66,17 +91,20 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { locale } = await getRequestLanguage();
   return (
-    <html lang="fa" dir="rtl">
+    <html lang={locale} dir={SITE_LANGUAGES[locale].direction}>
       <body className={`${iranSans.className} ${iranSans.variable}`}>
-        <SmoothScroll />
-        <PwaRegister />
-        <PublicChrome>{children}</PublicChrome>
+        <LanguageProvider initialLocale={locale}>
+          <SmoothScroll />
+          <PwaRegister />
+          <PublicChrome>{children}</PublicChrome>
+        </LanguageProvider>
       </body>
     </html>
   );

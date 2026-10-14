@@ -1,0 +1,256 @@
+{
+  "fa": {
+    "navbar": {
+      "home": "دی‌ان‌اچ؛ صفحه اصلی",
+      "navigation": "منوی اصلی",
+      "auth": "ورود و ثبت‌نام",
+      "login": "ورود",
+      "signup": "ثبت‌نام",
+      "consultation": "درخواست مشاوره",
+      "mobileConsultation": "مشاوره",
+      "menu": "منو",
+      "openMenu": "باز کردن منوی اصلی",
+      "closeMenu": "بستن منوی اصلی",
+      "paths": "مسیر تخصصی",
+      "help": "برای انتخاب مسیر به راهنمایی نیاز دارید؟",
+      "assessment": "ارزیابی تصمیم مالی",
+      "quickAccess": "دسترسی سریع",
+      "choosePath": "مسیرتان را انتخاب کنید.",
+      "mobileLinks": "لینک‌های اصلی موبایل",
+      "specialistLinks": "خدمات و مسیرهای تخصصی",
+      "conversation": "یک گفت‌وگو، شروع یک تصمیم روشن‌تر.",
+      "strategicConsultation": "درخواست مشاوره راهبردی",
+      "myAssessment": "ارزیابی موقعیت مالی من",
+      "switchLabel": "تغییر زبان به انگلیسی",
+      "switchCode": "EN"
+    },
+    "footer": {
+      "label": "پاورقی وب‌سایت DNH",
+      "eyebrow": "از یک گفت‌وگو شروع کنیم",
+      "heading": "تصمیم مهم بعدی،",
+      "headingHighlight": "با تصویری روشن‌تر.",
+      "description": "موقعیت مالی خود را بشناسید و مسیر مناسب همکاری با DNH را پیدا کنید.",
+      "consultation": "درخواست مشاوره راهبردی",
+      "assessment": "ارزیابی تصمیم مالی",
+      "home": "DNH، صفحه اصلی",
+      "brandTitle": "معماری ثروت، برای فردای شما.",
+      "brandDescription": "داده، تحلیل و نگاه راهبردی؛ برای دیدن ارتباط میان ثروت، ریسک و تصمیم‌های مهم زندگی.",
+      "navigation": "دسترسی سریع پاورقی",
+      "legal": "اطلاعات حقوقی",
+      "copyright": "تمامی حقوق محفوظ است.",
+      "socialTitle": "در شبکه‌های اجتماعی",
+      "socialPending": "پیوندهای شبکه‌های اجتماعی هنوز فعال نیستند.",
+      "newWindow": "در پنجره جدید",
+      "unavailable": "هنوز فعال نیست",
+      "groups": {
+        "dnh": "دنیای DNH",
+        "services": "خدمات تخصصی",
+        "contact": "همراه شما"
+      },
+      "socials": {
+        "instagram": "اینستاگرام",
+        "linkedin": "لینکدین",
+        "telegram": "تلگرام"
+      }
+    }
+  },
+  "en": {
+    "navbar": {
+      "home": "DNH home",
+      "navigation": "Main navigation",
+      "auth": "Sign in and register",
+      "login": "Sign in",
+      "signup": "Register",
+      "consultation": "Request consultation",
+      "mobileConsultation": "Consultation",
+      "menu": "Menu",
+      "openMenu": "Open main menu",
+      "closeMenu": "Close main menu",
+      "paths": "specialist paths",
+      "help": "Need help choosing a path?",
+      "assessment": "Financial decision assessment",
+      "quickAccess": "Quick access",
+      "choosePath": "Choose your path.",
+      "mobileLinks": "Primary mobile links",
+      "specialistLinks": "Services and specialist paths",
+      "conversation": "One conversation can begin a clearer decision.",
+      "strategicConsultation": "Request a strategic consultation",
+      "myAssessment": "Assess my financial situation",
+      "switchLabel": "Switch language to Persian",
+      "switchCode": "FA"
+    },
+    "footer": {
+      "label": "DNH website footer",
+      "eyebrow": "Let's begin with a conversation",
+      "heading": "Your next important decision,",
+      "headingHighlight": "with a clearer perspective.",
+      "description": "Understand your financial situation and find the right way to work with DNH.",
+      "consultation": "Request a strategic consultation",
+      "assessment": "Financial decision assessment",
+      "home": "DNH home",
+      "brandTitle": "Wealth architecture for your future.",
+      "brandDescription": "Data, analysis and strategic thinking to understand the connections between wealth, risk and important life decisions.",
+      "navigation": "Footer quick access",
+      "legal": "Legal information",
+      "copyright": "All rights reserved.",
+      "socialTitle": "Find us on social media",
+      "socialPending": "Social profile links are not yet available.",
+      "newWindow": "opens in a new window",
+      "unavailable": "not yet available",
+      "groups": {
+        "dnh": "Explore DNH",
+        "services": "Specialist services",
+        "contact": "Your next step"
+      },
+      "socials": {
+        "instagram": "Instagram",
+        "linkedin": "LinkedIn",
+        "telegram": "Telegram"
+      }
+    },
+    "navigation": {
+      "/": "Home",
+      "dnh": "DNH",
+      "services": "Services",
+      "who-we-help": "Who We Help",
+      "knowledge": "Knowledge & Research",
+      "/about": "About DNH"
+    },
+    "menus": {
+      "dnh": {
+        "title": "DNH",
+        "eyebrow": "A system for financial decisions",
+        "headline": "Look beyond the assets.\nUnderstand the structure behind your wealth.",
+        "description": "Wealth architecture, the DNH framework and the Intelligence Desk form the core of DNH's analytical approach.",
+        "overview_title": "Begin with wealth architecture"
+      },
+      "services": {
+        "title": "Specialist Services",
+        "eyebrow": "Ways to work together",
+        "headline": "The right service begins\nwith the right question.",
+        "description": "Six specialist paths for examining wealth structure, portfolios, risk, the economic environment and complex financial decisions.",
+        "overview_title": "Explore all services"
+      },
+      "who-we-help": {
+        "title": "Who We Help",
+        "eyebrow": "Begin with your circumstances",
+        "headline": "Before choosing a solution,\nunderstand the question.",
+        "description": "The right DNH path starts with understanding your circumstances, complexity and the kind of decision you face.",
+        "overview_title": "Begin with an initial financial decision assessment"
+      },
+      "knowledge": {
+        "title": "Knowledge & Research",
+        "eyebrow": "Research & Insight Hub",
+        "headline": "Analysis for decisions,\nnot market excitement.",
+        "description": "DNH reports, analyses and research to better understand conditions, risks and strategic implications.",
+        "overview_title": "DNH Weekly Outlook"
+      }
+    },
+    "links": {
+      "/": {
+        "title": "Home"
+      },
+      "/about": {
+        "title": "About DNH"
+      },
+      "/services": {
+        "title": "Service overview"
+      },
+      "/knowledge": {
+        "title": "Knowledge & Insights"
+      },
+      "/contact": {
+        "title": "Contact"
+      },
+      "/financial-decision-assessment": {
+        "title": "Financial decision assessment"
+      },
+      "/request-strategic-consultation": {
+        "title": "Request a strategic consultation"
+      },
+      "/dnh/wealth-architecture": {
+        "title": "Wealth Architecture",
+        "description": "View wealth as a coherent structure of assets, risk, liquidity, goals and decisions."
+      },
+      "/dnh/framework": {
+        "title": "The DNH Framework",
+        "description": "DNH's approach to turning data and uncertainty into scenarios and paths for decisions."
+      },
+      "/dnh/intelligence-desk": {
+        "title": "DNH Intelligence Desk",
+        "description": "Monitor the economy, markets, risks and decision variables through a strategic perspective."
+      },
+      "/services/private-wealth-strategy": {
+        "title": "Private Wealth Strategy",
+        "description": "Develop a coherent view of wealth, goals, liquidity, risks and paths to explore."
+      },
+      "/services/portfolio-intelligence": {
+        "title": "Portfolio Intelligence",
+        "description": "Assess portfolio structure, risk concentration, liquidity and areas for review."
+      },
+      "/services/strategic-financial-advisory": {
+        "title": "Strategic Financial Advisory",
+        "description": "Examine decisions connecting capital, liquidity, financing and business prospects."
+      },
+      "/services/macro-market-advisory": {
+        "title": "Macro & Market Advisory",
+        "description": "Analyse economic conditions, relevant scenarios and their strategic implications."
+      },
+      "/services/risk-management-wealth-protection": {
+        "title": "Risk Management & Wealth Protection",
+        "description": "Identify significant risks and develop a structured view of protection priorities."
+      },
+      "/services/executive-briefings": {
+        "title": "Executive Briefings",
+        "description": "Focused reviews for senior management, boards, capital owners and key decision-makers."
+      },
+      "/who-we-help/big-financial-decision": {
+        "title": "A Major Financial Decision",
+        "description": "Clarify the question, risks, liquidity, time horizons and scenarios before an important choice."
+      },
+      "/who-we-help/unstructured-portfolio": {
+        "title": "A Portfolio Without a Clear Architecture",
+        "description": "Connect diverse assets into a coherent wealth structure."
+      },
+      "/who-we-help/holdings-financial-capital-structure": {
+        "title": "Holdings & Financial Capital Structure",
+        "description": "Review capital, liquidity, financing, risks and organisational goals together."
+      },
+      "/knowledge/weekly-outlook": {
+        "title": "DNH Weekly Outlook",
+        "description": "A concise review of conditions, macro risks, assets and what to watch."
+      },
+      "/knowledge/insights": {
+        "title": "Insights",
+        "description": "Decision-focused analysis of wealth architecture, risk, liquidity and financial choices."
+      },
+      "/knowledge/research": {
+        "title": "Research",
+        "description": "DNH research notes, macro reports, charts and publishable studies."
+      },
+      "/knowledge/case-studies": {
+        "title": "Case Studies",
+        "description": "Anonymised cases illustrating the logic of reviewing questions, scenarios and decisions."
+      },
+      "/knowledge/faq": {
+        "title": "Frequently Asked Questions",
+        "description": "Clear answers about services, confidentiality, professional boundaries and collaboration."
+      },
+      "/legal/privacy-policy": {
+        "title": "Privacy Policy"
+      },
+      "/legal/terms-of-use": {
+        "title": "Terms of Use"
+      },
+      "/legal/financial-disclaimer": {
+        "title": "Financial Disclaimer"
+      },
+      "/legal/data-protection-advisory-limitation": {
+        "title": "Data Protection & Advisory Limits"
+      },
+      "/legal/no-investment-guarantee-no-trading-signal": {
+        "title": "No Investment Guarantee or Trading Signals"
+      }
+    }
+  }
+}

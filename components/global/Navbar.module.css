@@ -241,6 +241,32 @@
   align-items: center;
   gap: 6px;
 }
+.languageSwitch {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid var(--dnh-border);
+  background: var(--dnh-bg-soft);
+  color: var(--dnh-primary);
+  font-size: 11px;
+  font-weight: 700;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+.languageSwitch:hover {
+  background: var(--dnh-primary);
+  color: var(--dnh-text-on-brand);
+}
+.header:not([data-scrolled="true"]) .languageSwitch {
+  border-color: color-mix(in srgb, var(--dnh-text-on-brand) 25%, transparent);
+  background: transparent;
+  color: var(--dnh-text-on-brand);
+}
+.header:not([data-scrolled="true"]) .languageSwitch:hover {
+  background: color-mix(in srgb, var(--dnh-text-on-brand) 10%, transparent);
+}
 .authButton {
   min-height: 42px;
   padding-inline: 14px;
@@ -512,7 +538,9 @@
 
 .mobileDialog {
   position: fixed;
-  inset: 0 0 0 auto;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inset-inline-end: auto;
   width: min(100%, 440px);
   max-width: 100%;
   height: 100dvh;
@@ -638,7 +666,7 @@
   width: 100%;
   min-height: 62px;
   padding: 14px 4px;
-  text-align: right;
+  text-align: start;
   font-size: 14px;
   font-weight: 750;
 }
@@ -840,6 +868,17 @@
   .drawerFooter p {
     display: none;
   }
+}
+@media (max-width: 374px) {
+  .mobileConsult { display: none; }
+}
+.header[dir="ltr"] .introLink:hover svg { transform: translateX(4px); }
+.header[dir="ltr"] .navigationCard:hover .cardArrow { transform: translate(2px, -2px); }
+.mobileDialog[dir="ltr"][open] { animation-name: drawer-in-ltr; }
+.mobileDialog[dir="ltr"] { box-shadow: 20px 0 80px #0003; }
+@keyframes drawer-in-ltr {
+  from { transform: translateX(-40px); opacity: 0; }
+  to { transform: none; opacity: 1; }
 }
 @keyframes drawer-in {
   from {

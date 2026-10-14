@@ -151,10 +151,9 @@ export default async function SubmissionsPage({
         </Link>
 
         <p
-          dir="ltr"
-          className="mt-6 text-[10px] font-black tracking-[0.22em] text-brand-primary"
+          className="mt-6 text-[10px] font-black text-brand-primary"
         >
-          SUBMISSION DOSSIER / MAX 200
+          پرونده پاسخ‌ها / حداکثر ۲۰۰ پاسخ
         </p>
 
         <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -214,10 +213,9 @@ export default async function SubmissionsPage({
           <div className="space-y-4">
             <div className="border border-line bg-white/92 px-5 py-4">
               <p
-                dir="ltr"
-                className="text-[10px] font-black tracking-[0.2em] text-brand-primary"
+                className="text-[10px] font-black text-brand-primary"
               >
-                SUBMISSIONS / DYNAMIC VIEW
+                جزئیات پاسخ‌های ثبت‌شده
               </p>
               <h2 className="mt-1 text-base font-black text-ink">
                 نمایش جزئیات پاسخ‌ها

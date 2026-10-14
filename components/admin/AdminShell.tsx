@@ -86,7 +86,7 @@ const adminNavGroups: AdminNavGroup[] = [
       },
       {
         title: "گزارش‌های هفتگی",
-        description: "نسخه‌های Weekly Outlook",
+        description: "نسخه‌های گزارش هفتگی",
         href: "/admin/weekly-outlooks",
         icon: Newspaper,
       },
@@ -179,6 +179,7 @@ export function AdminShell({ user, children }: AdminShellProps) {
 
   return (
     <div
+      lang="fa"
       dir="rtl"
       style={{ "--admin-sidebar-width": sidebarWidth } as CSSProperties}
       className="relative min-h-screen overflow-x-clip bg-[#f1f8fa] text-[#133648]"

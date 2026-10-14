@@ -6,6 +6,14 @@
  * - Footer
  */
 
+import shellContent from "@/config/site-shell.json";
+import {
+  getLocaleFromPathname,
+  getLocalizedSiteHref,
+  stripLocalePrefix,
+  type SiteLocale,
+} from "@/lib/site-language";
+
 export type MegaMenuKey =
   | "dnh"
   | "services"
@@ -388,35 +396,69 @@ export const LEGAL_LINKS: SiteLink[] = [
 /**
  * Current routing rule:
  *
- * The public website is Persian-only for now.
- * Keep internal links unprefixed and normalize legacy locale-prefixed values.
+ * Content keeps language-neutral hrefs; public navigation uses /fa and /en.
+ * Shared admin, API and asset URLs remain unprefixed.
  */
 export function getSiteHref(
   href: string,
   pathname = "/",
 ) {
-  void pathname;
-
-  if (!href.startsWith("/")) {
-    return href;
-  }
-
-  return href.replace(/^\/(fa|en)(?=\/|$)/, "") || "/";
+  return getLocalizedSiteHref(href, getLocaleFromPathname(pathname) ?? "fa");
 }
 
 export function isSitePathActive(
   href: string,
   pathname: string,
 ) {
-  const normalizedHref =
-    href.replace(/^\/(fa|en)(?=\/|$)/, "") || "/";
-
-  const path =
-    pathname.replace(/^\/(fa|en)(?=\/|$)/, "") ||
-    "/";
+  const normalizedHref = stripLocalePrefix(href.split(/[?#]/, 1)[0]);
+  const path = stripLocalePrefix(pathname);
 
   return normalizedHref === "/"
     ? path === "/"
     : path === normalizedHref ||
     path.startsWith(`${normalizedHref}/`);
+}
+
+/** Translate labels while keeping route and icon identities unchanged. */
+export function getLocalizedSiteNavigation(locale: SiteLocale) {
+  const links: Record<string, { title: string; description?: string }> =
+    shellContent.en.links;
+  const titles: Record<string, string> = shellContent.en.navigation;
+
+  function translateLink<T extends SiteLink>(item: T): T {
+    return locale === "en" && links[item.href]
+      ? { ...item, ...links[item.href] }
+      : item;
+  }
+
+  const navigation = NAVIGATION.map((item) => ({
+    ...item,
+    title:
+      locale === "en"
+        ? titles[item.menu ?? item.href ?? ""] ?? item.title
+        : item.title,
+  }));
+  const megaMenus = { ...MEGA_MENUS };
+  if (locale === "en") {
+    for (const key of Object.keys(MEGA_MENUS) as MegaMenuKey[]) {
+      const content = shellContent.en.menus[key];
+      const menu = MEGA_MENUS[key];
+      megaMenus[key] = {
+        ...menu,
+        title: content.title,
+        eyebrow: content.eyebrow,
+        headline: content.headline,
+        description: content.description,
+        overview: { ...menu.overview, title: content.overview_title },
+        items: menu.items.map(translateLink),
+      };
+    }
+  }
+
+  return {
+    navigation,
+    megaMenus,
+    legalLinks: LEGAL_LINKS.map(translateLink),
+    translateLink,
+  };
 }

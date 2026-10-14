@@ -60,10 +60,9 @@ export default async function AdminUserViewPage({
             کاربران / بازگشت
           </Link>
           <p
-            dir="ltr"
-            className="mt-5 text-[10px] font-black tracking-[0.22em] text-brand-primary"
+            className="mt-5 text-[10px] font-black text-brand-primary"
           >
-            USER / VIEW
+            پرونده کاربر
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-[-0.04em] text-ink sm:text-4xl">
             {fullName}
@@ -113,12 +112,10 @@ export default async function AdminUserViewPage({
           {
             label: "شماره موبایل",
             value: user.phone,
-            code: "PHONE",
           },
           {
             label: "نشست‌های فعال",
             value: `${sessionCount.toLocaleString("fa-IR")} نشست`,
-            code: "ACTIVE SESSIONS",
           },
           {
             label: "تاریخ ثبت‌نام",

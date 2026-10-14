@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 
 import { ArrowDownLeft, ArrowLeft, CircleDot } from "lucide-react";
 

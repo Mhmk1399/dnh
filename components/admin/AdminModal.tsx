@@ -137,6 +137,7 @@ export function AdminModal({
       />
 
       <div
+        lang="fa"
         dir="rtl"
         className="
           fixed
@@ -173,8 +174,7 @@ export function AdminModal({
               <div>
                 {eyebrow ? (
                   <p
-                    dir="ltr"
-                    className={`text-[10px] font-black tracking-[0.22em] ${
+                    className={`text-[10px] font-black ${
                       tone === "danger" ? "text-red-700" : "text-brand-primary"
                     }`}
                   >

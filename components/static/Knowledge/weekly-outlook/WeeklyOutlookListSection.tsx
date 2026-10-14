@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { ArrowLeft, CalendarDays, FileText, Layers3 } from "lucide-react";
 import type { WeeklyOutlookListItem } from "@/lib/weekly-outlook";
 import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";

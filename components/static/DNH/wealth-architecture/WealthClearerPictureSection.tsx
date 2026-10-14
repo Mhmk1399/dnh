@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { ActionButton } from "@/components/ui/ActionButton";

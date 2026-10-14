@@ -111,7 +111,7 @@ export function DeleteRecordButton({
       <AdminModal
         open={open}
         onClose={closeDialog}
-        eyebrow="DELETE / RECORD"
+        eyebrow="حذف رکورد"
         title={title}
         size="sm"
         tone="danger"

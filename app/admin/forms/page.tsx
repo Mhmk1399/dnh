@@ -123,10 +123,9 @@ export default async function FormsPage({
             دفتر مدیریت / بازگشت
           </Link>
           <p
-            dir="ltr"
-            className="mt-5 text-[10px] font-black tracking-[0.22em] text-brand-primary"
+            className="mt-5 text-[10px] font-black text-brand-primary"
           >
-            DNH / FORM PROTOCOLS
+            مدیریت فرم‌های پویا
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-[-0.04em] text-ink sm:text-4xl">
             فرم‌های دریافت سرنخ

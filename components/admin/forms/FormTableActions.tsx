@@ -221,7 +221,7 @@ export function FormTableActions({
       <AdminModal
         open={viewOpen}
         onClose={() => setViewOpen(false)}
-        eyebrow="FORM / VIEW"
+        eyebrow="نمایش فرم"
         title={`جزئیات فرم «${form.title}»`}
         size="lg"
       >
@@ -236,7 +236,7 @@ export function FormTableActions({
       <AdminModal
         open={editOpen}
         onClose={() => setEditOpen(false)}
-        eyebrow="FORM / QUICK EDIT"
+        eyebrow="ویرایش سریع فرم"
         title="ویرایش سریع فرم"
         size="xl"
       >

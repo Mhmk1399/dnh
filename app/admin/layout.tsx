@@ -5,6 +5,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false },
   title: {
     default: "مدیریت | DNH",
     template: "%s | مدیریت DNH",

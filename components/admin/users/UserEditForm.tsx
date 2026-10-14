@@ -82,10 +82,9 @@ export function UserEditForm({
       <header className="flex flex-col gap-4 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p
-            dir="ltr"
-            className="text-[10px] font-black tracking-[0.2em] text-brand-primary"
+            className="text-[10px] font-black text-brand-primary"
           >
-            USER / EDIT
+            ویرایش کاربر
           </p>
           <h1 className="mt-1 text-xl font-black text-ink">
             ویرایش کاربر

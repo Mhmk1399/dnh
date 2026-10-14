@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, LoaderCircle, LockKeyhole } from "lucide-react";

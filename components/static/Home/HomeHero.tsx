@@ -1,238 +1,195 @@
-/* eslint-disable @next/next/no-img-element -- The picture sources use optimized next/image props. */
+"use client";
+
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getImageProps } from "next/image";
 
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homepage from "@/config/DNH_Homepage_Final_FA.json";
+import homeFa from "@/config/DNH_Homepage_Final_FA.json";
+import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type HeroContent = {
-  id: string;
+  id: "hero";
+  type: "hero";
   eyebrow: string;
   heading: string;
-  paragraphs: { id: string; text: string }[];
-  ctas: {
+  heading_highlight?: string;
+  paragraphs: Array<{ id: string; text: string }>;
+  ctas: Array<{
     id: string;
     label: string;
     type: "primary" | "secondary";
     href: string;
-  }[];
+  }>;
   trust_line: string;
   media: {
     src: string;
-    mobile_src: string;
+    mobile_src?: string;
     alt: string;
     width: number;
     height: number;
   };
 };
 
-export function HomeHero({
-  content = homepage.sections.find((section) => section.id === "hero") as
-    | HeroContent
-    | undefined,
-  locale = homepage.locale,
-  direction = homepage.direction === "ltr" ? "ltr" : "rtl",
-}: {
-  content?: HeroContent;
-  locale?: string;
-  direction?: "rtl" | "ltr";
-} = {}) {
-  if (!content) return null;
+export function HomeHero() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const homepage = locale === "en" ? homeEn : homeFa;
+  const hero = homepage.sections.find(
+    (section) => section.id === "hero" && section.type === "hero",
+  ) as HeroContent | undefined;
 
-  const desktopSrc = content.media.src.trim();
-  const mobileSrc = content.media.mobile_src.trim();
-  const imageSrc = desktopSrc || mobileSrc;
-  const imageProps = imageSrc
+  if (!hero) return null;
+
+  const highlight = hero.heading_highlight ?? "";
+  const highlightIndex = highlight ? hero.heading.indexOf(highlight) : -1;
+  const imageSrc = hero.media.src.trim();
+  const mobileImageSrc = hero.media.mobile_src?.trim() ?? "";
+  const imageSizes =
+    "(max-width: 767px) calc(100vw - 24px), (max-width: 1023px) calc(100vw - 32px), (max-width: 1439px) 43vw, 610px";
+
+  // One <picture>, with a mobile <source> when available, avoids fetching
+  // two different assets for the same viewport. No source means no request.
+  const desktopImage = imageSrc
     ? getImageProps({
         src: imageSrc,
-        alt: content.media.alt || content.trust_line,
-        width: content.media.width,
-        height: content.media.height,
-        sizes: "100vw",
+        alt: hero.media.alt,
+        fill: true,
+        sizes: imageSizes,
         loading: "eager",
         fetchPriority: "high",
+        className: "absolute inset-0 h-full w-full object-cover object-center",
       }).props
     : null;
-  const mobileImageProps =
-    desktopSrc && mobileSrc && desktopSrc !== mobileSrc
+
+  const mobileImage =
+    desktopImage && mobileImageSrc
       ? getImageProps({
-          src: mobileSrc,
-          alt: content.media.alt || content.trust_line,
-          width: content.media.width,
-          height: content.media.height,
-          sizes: "100vw",
+          src: mobileImageSrc,
+          alt: hero.media.alt,
+          fill: true,
+          sizes: "(max-width: 767px) calc(100vw - 24px), 100vw",
         }).props
       : null;
 
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id={content.id}
+      id={hero.id}
       dir={direction}
-      lang={locale}
-      aria-labelledby={`${content.id}-title`}
-      className="
-        relative isolate scroll-mt-24 overflow-hidden
-        bg-[color-mix(in_srgb,var(--dnh-text)_80%,var(--dnh-secondary))]
-        text-start text-[var(--dnh-text-on-brand)]
-      "
+      lang={languageTag}
+      aria-labelledby="home-hero-heading"
+      className="relative isolate overflow-hidden bg-[color-mix(in_srgb,var(--dnh-secondary)_24%,var(--dnh-text)_76%)] text-[var(--dnh-text-on-brand)]"
     >
-      {imageProps ? (
-        <link
-          rel="preload"
-          as="image"
-          imageSrcSet={imageProps.srcSet}
-          imageSizes="100vw"
-          media={mobileImageProps ? "(min-width: 1024px)" : undefined}
-          fetchPriority="high"
-        />
-      ) : null}
-      {mobileImageProps ? (
-        <link
-          rel="preload"
-          as="image"
-          imageSrcSet={mobileImageProps.srcSet}
-          imageSizes="100vw"
-          media="(max-width: 1023px)"
-          fetchPriority="high"
-        />
-      ) : null}
-
       <div
-        className="
-          dnh-site-shell grid min-w-0 grid-cols-1 gap-y-7
-          pb-10 pt-[calc(7.5rem+env(safe-area-inset-top))]
-          sm:gap-y-8 sm:pb-14 sm:pt-[calc(8rem+env(safe-area-inset-top))]
-          lg:min-h-[100svh] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]
-          lg:content-center lg:gap-x-12 lg:gap-y-8
-          lg:pb-16 lg:pt-[calc(9rem+env(safe-area-inset-top))]
-          xl:gap-x-20
-        "
-      >
-        <div className="relative z-10 min-w-0 lg:col-start-1 lg:row-start-1">
-          <div className="mb-5 flex items-center gap-3 sm:mb-6">
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-secondary/20 via-transparent to-brand-primary/15"
+      />
+
+      <div className="dnh-site-shell relative z-10 grid min-w-0 gap-y-8 pb-12 pt-[calc(7.5rem+env(safe-area-inset-top))] sm:gap-y-9 sm:pb-16 sm:pt-36 md:gap-y-10 md:pb-20 lg:min-h-svh lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:content-center lg:gap-x-10 lg:gap-y-7 lg:pb-20 lg:pt-[clamp(10rem,16svh,13rem)] xl:gap-x-14">
+        <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
+          <div className="flex min-w-0 items-center gap-3 text-[12px] font-semibold leading-[1.8] text-white/90 sm:text-[13px] lg:text-[14px]">
             <span
               aria-hidden="true"
               className="h-px w-8 shrink-0 bg-brand-accent sm:w-10"
             />
-            <p className="text-xs font-bold leading-7 text-page/85 sm:text-[13px]">
-              {content.eyebrow}
-            </p>
+            <p className="min-w-0">{hero.eyebrow}</p>
           </div>
 
           <h1
-            id={`${content.id}-title`}
-            className="
-              text-[clamp(1.75rem,5.4vw,3rem)] font-black leading-[1.6]
-              [overflow-wrap:anywhere]
-              lg:text-[clamp(2rem,3.1vw,3.5rem)] lg:leading-[1.55]
-            "
+            id="home-hero-heading"
+            className="mt-5 max-w-[30ch] text-pretty text-start text-[clamp(1.75rem,8vw,2.125rem)] font-extrabold leading-[1.55] [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.25rem,5vw,2.75rem)] sm:leading-[1.5] md:text-[clamp(2.375rem,4.8vw,2.875rem)] lg:mt-7 lg:max-w-none lg:text-[clamp(2.875rem,3.75vw,2.5rem)] lg:leading-[1.45]"
           >
-            {content.heading}
+            {highlightIndex < 0 ? (
+              hero.heading
+            ) : (
+              <>
+                {hero.heading.slice(0, highlightIndex)}
+                <span className="text-brand-accent">
+                  {hero.heading.slice(
+                    highlightIndex,
+                    highlightIndex + highlight.length,
+                  )}
+                </span>
+                {hero.heading.slice(highlightIndex + highlight.length)}
+              </>
+            )}
           </h1>
 
-          <div className="mt-6 max-w-[42rem] space-y-4 sm:mt-7">
-            {content.paragraphs.map((paragraph) => (
-              <p
-                key={paragraph.id}
-                className="text-[13px] font-medium leading-[2.05] text-page/80 sm:text-sm lg:text-[15px]"
-              >
-                {paragraph.text}
-              </p>
+          <div
+            className={`mt-6 max-w-[88ch] space-y-4 text-start text-[14px] font-normal text-white/90 sm:mt-7 sm:space-y-5 sm:text-[15px] lg:mt-8 lg:text-[16px] ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}`}
+          >
+            {hero.paragraphs.map((paragraph) => (
+              <p key={paragraph.id}>{paragraph.text}</p>
             ))}
           </div>
+        </header>
+
+        <div className="relative isolate aspect-[4/3] min-w-0 overflow-hidden border border-line/40 bg-brand-primary/10 sm:aspect-[16/10] md:aspect-[2/1] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:min-h-[540px] lg:aspect-auto lg:self-stretch">
+          {desktopImage ? (
+            <>
+              {mobileImage ? (
+                <>
+                  <link
+                    rel="preload"
+                    as="image"
+                    media="(max-width: 767px)"
+                    imageSrcSet={mobileImage.srcSet}
+                    imageSizes={mobileImage.sizes}
+                  />
+                  <link
+                    rel="preload"
+                    as="image"
+                    media="(min-width: 768px)"
+                    imageSrcSet={desktopImage.srcSet}
+                    imageSizes={desktopImage.sizes}
+                  />
+                </>
+              ) : (
+                <link
+                  rel="preload"
+                  as="image"
+                  imageSrcSet={desktopImage.srcSet}
+                  imageSizes={desktopImage.sizes}
+                />
+              )}
+              <picture className="absolute inset-0 block h-full w-full">
+                {mobileImage ? (
+                  <source
+                    media="(max-width: 767px)"
+                    srcSet={mobileImage.srcSet}
+                    sizes={mobileImage.sizes}
+                  />
+                ) : null}
+                {/* eslint-disable-next-line @next/next/no-img-element -- getImageProps supplies Next's optimized srcSet for responsive art direction. */}
+                <img {...desktopImage} />
+              </picture>
+            </>
+          ) : null}
         </div>
 
-        <figure
-          aria-hidden={imageProps ? undefined : true}
-          className="
-            relative m-0 aspect-[4/3] min-w-0 overflow-hidden
-            border border-page/15 bg-brand-secondary/15
-            sm:aspect-video
-            lg:absolute lg:inset-0 lg:z-0 lg:aspect-auto lg:border-0
-          "
-        >
-          {imageProps ? (
-            <picture className="absolute inset-0 block h-full w-full">
-              {mobileImageProps ? (
-                <source
-                  media="(max-width: 1023px)"
-                  srcSet={mobileImageProps.srcSet}
-                  sizes="100vw"
-                />
-              ) : null}
-              <img
-                {...imageProps}
-                alt={imageProps.alt}
-                className="h-full w-full object-cover object-center"
-              />
-            </picture>
-          ) : null}
-
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none absolute inset-0 hidden lg:block
-              from-[color-mix(in_srgb,var(--dnh-text)_92%,var(--dnh-secondary))]
-              from-10%
-              via-[color-mix(in_srgb,var(--dnh-text)_80%,var(--dnh-secondary))]/85
-              via-45% to-transparent
-              rtl:bg-linear-to-l ltr:bg-linear-to-r
-            "
-          />
-        </figure>
-
-        <div
-          className="
-            relative z-10 flex min-w-0 flex-col gap-3
-            sm:flex-row sm:flex-wrap
-            lg:col-start-1 lg:row-start-2
-          "
-        >
-          {content.ctas.map((cta) => (
+        <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:col-start-1 lg:row-start-2 lg:pt-2">
+          {hero.ctas.map((cta) => (
             <ActionButton
               key={cta.id}
               href={cta.href}
               variant={cta.type}
               shape="square"
-              size="md"
-              className={
-                cta.type === "primary"
-                  ? "w-full border border-page/25 shadow-none sm:w-auto"
-                  : "w-full border-page/30 bg-page/5 text-page shadow-none hover:border-page/60 hover:bg-page/10 hover:text-page sm:w-auto"
-              }
+              size="lg"
+              icon={Arrow}
+              iconPosition="end"
+              dir={direction}
+              className="min-h-11 min-w-0 w-full whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto sm:max-w-full"
             >
-              <span className="flex min-w-0 items-center justify-center gap-3">
-                <span className="min-w-0 text-start leading-6">{cta.label}</span>
-                <span
-                  aria-hidden="true"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center border border-current/20"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-4 w-4 ltr:rotate-180"
-                  >
-                    <path
-                      d="M19 12H5M5 12L10 7M5 12L10 17"
-                      stroke="currentColor"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </span>
+              {cta.label}
             </ActionButton>
           ))}
         </div>
 
         <p
-          className="
-            relative z-10 min-w-0 border-t border-page/20 pt-5
-            text-xs font-medium leading-[2] text-page/75
-            sm:text-[13px] lg:col-start-1 lg:row-start-3
-          "
+          className={`min-w-0 max-w-[68ch] border-s-2 border-brand-accent/80 ps-4 text-start text-[13px] font-medium text-white/85 sm:ps-5 sm:text-[14px] lg:col-start-1 lg:row-start-3 lg:mt-1 ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}`}
         >
-          {content.trust_line}
+          {hero.trust_line}
         </p>
       </div>
     </section>

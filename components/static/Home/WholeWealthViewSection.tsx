@@ -1,931 +1,248 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import {
-  ArrowLeft,
-  Clock3,
-  Landmark,
-  Layers3,
-  ShieldCheck,
-  WalletCards,
-} from "lucide-react";
-
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import homeFa from "@/config/DNH_Homepage_Final_FA.json";
+import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
-/* =============================================================================
-   Whole wealth dimensions
+type FrameworkPillar = {
+  id: string;
+  code: string;
+  title: string;
+  english_label?: string;
+  description: string;
+};
 
-   این‌ها Step نیستند؛ ابعاد هم‌زمان یک تصویر کل‌نگر از ثروت‌اند.
-============================================================================= */
+type FrameworkContent = {
+  id: "dnh-framework";
+  type: "framework";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  intro: string;
+  pillars: FrameworkPillar[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
-const WEALTH_DIMENSIONS = [
-  {
-    title: "دارایی‌ها",
-    en: "ASSETS",
-    description:
-      "هر دارایی باید در ساختار کلی ثروت، نقش و هدف مشخصی داشته باشد.",
-    icon: Layers3,
-  },
-  {
-    title: "نقدینگی",
-    en: "LIQUIDITY",
-    description: "بخشی از توان مدیریت فرصت‌ها، تعهدات و شرایط پیش‌بینی‌نشده.",
-    icon: WalletCards,
-  },
-  {
-    title: "ریسک",
-    en: "RISK",
-    description:
-      "شناخت تمرکز سرمایه، آسیب‌پذیری و ریسک‌های مؤثر بر ساختار دارایی.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "افق زمانی",
-    en: "HORIZON",
-    description: "هماهنگی نقش دارایی‌ها با اهداف و افق زمانی کوتاه‌مدت و بلندمدت.",
-    icon: Clock3,
-  },
-] as const;
+export function HomeFramework() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
 
-/* =============================================================================
-   Section
-============================================================================= */
+  const homepage = locale === "en" ? homeEn : homeFa;
+  const content = homepage.sections.find(
+    (section) => section.id === "dnh-framework" && section.type === "framework",
+  ) as FrameworkContent | undefined;
 
-export function WholeWealthViewSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
+  // Keep initial HTML visible. Animate only elements entering from below,
+  // once per element, without continuous scroll listeners or extra packages.
   useEffect(() => {
-    const node = sectionRef.current;
-
-    if (!node) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
+    const root = sectionRef.current;
+    if (
+      !root ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+    const waiting = new Set<HTMLElement>();
 
-        setVisible(true);
-        observer.disconnect();
+    root
+      .querySelectorAll<HTMLElement>("[data-framework-entry]")
+      .forEach((element) => {
+        element.removeAttribute("data-reveal");
+        if (element.getBoundingClientRect().top > window.innerHeight - 32) {
+          element.dataset.reveal = "pending";
+          waiting.add(element);
+        }
+      });
+
+    if (!waiting.size) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+
+          const element = entry.target as HTMLElement;
+          element.dataset.reveal = "shown";
+          observer.unobserve(element);
+          waiting.delete(element);
+        }
+        if (!waiting.size) observer.disconnect();
       },
-      {
-        threshold: 0.16,
-        rootMargin: "0px 0px -8% 0px",
-      },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
     );
 
-    observer.observe(node);
-
+    waiting.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
-  }, []);
+  }, [locale]);
+
+  if (!content) return null;
+
+  const highlight = content.heading_highlight ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <section
       ref={sectionRef}
-      id="whole-wealth-view"
-      dir="rtl"
-      aria-labelledby="whole-wealth-view-title"
-      className="
-        relative
-        isolate
-        overflow-hidden
-
-        border-b
-        border-line
-
-        bg-surface-soft
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="home-framework-heading"
+      className="relative isolate border-t border-line bg-[color-mix(in_srgb,var(--dnh-secondary)_24%,var(--dnh-text)_76%)] py-12 text-[var(--dnh-text-on-brand)] sm:py-14 lg:py-[4.5rem]"
     >
-      <Background />
-
-      <div
-        className="
-          relative
-          z-10
-          dnh-site-shell
-          mx-auto
-
-          grid
-          w-full
-
-          gap-12
-
-          py-16
-
-          sm:py-20
-
-          lg:grid-cols-[0.88fr_1.12fr]
-          lg:items-center
-          lg:gap-16
-          lg:py-24
-
-          xl:grid-cols-[0.82fr_1.18fr]
-          xl:gap-20
-          xl:py-28
-
-        "
-      >
-        {/* =========================================================
-            CONTENT
-        ========================================================== */}
-
-        <div
-          className="
-            order-1
-            text-right
-
-            lg:col-start-1
-            lg:row-start-1
-          "
+      <div className="dnh-site-shell">
+        <header
+          data-framework-entry=""
+          className="grid min-w-0 items-end gap-5 pb-7 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-9 md:pb-9 xl:gap-16"
         >
-          <Reveal visible={visible} delay={40}>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-            >
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
               <span
                 aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-                  bg-brand-accent
-                "
+                className="h-[2px] w-8 shrink-0 bg-brand-accent"
               />
-
-              <span
-                className="
-                  text-[10px]
-                  font-black
-                  text-brand-primary
-
-                  sm:text-[11px]
-                "
-              >
-                نگاه یکپارچه به ثروت
-              </span>
+              <p className="min-w-0 text-[12px] font-semibold leading-[1.8] sm:text-[13px]">
+                {content.eyebrow}
+              </p>
+              {content.english_label &&
+                content.english_label !== content.eyebrow && (
+                  <span className="ms-auto text-[11px] font-medium text-[color-mix(in_srgb,var(--dnh-text-on-brand)_65%,transparent)]">
+                    <bdi dir="ltr">{content.english_label}</bdi>
+                  </span>
+                )}
             </div>
-          </Reveal>
 
-          <Reveal visible={visible} delay={100}>
             <h2
-              id="whole-wealth-view-title"
-              className="
-                max-w-[660px]
-
-                text-[31px]
-                font-black
-                leading-[1.62]
-                tracking-[-0.045em]
-
-                text-ink
-
-                sm:text-[38px]
-
-                lg:text-[44px]
-                lg:leading-[1.55]
-
-                xl:text-[49px]
-              "
+              id="home-framework-heading"
+              className="mt-3 max-w-[28ch] text-pretty text-start text-[clamp(1.8rem,6.3vw,2.25rem)] font-extrabold leading-[1.55] [overflow-wrap:break-word] md:text-[clamp(2rem,3.2vw,2.75rem)]"
             >
-              هر دارایی باید
-              <br />
-              در ساختار ثروت شما
-              <br />
-              <span className="text-brand-primary">یک نقش مشخص داشته باشد.</span>
+              {highlightIndex < 0 ? (
+                content.heading
+              ) : (
+                <>
+                  {content.heading.slice(0, highlightIndex)}
+                  <span className="text-brand-accent">
+                    {content.heading.slice(
+                      highlightIndex,
+                      highlightIndex + highlight.length,
+                    )}
+                  </span>
+                  {content.heading.slice(highlightIndex + highlight.length)}
+                </>
+              )}
             </h2>
-          </Reveal>
-
-          <Reveal visible={visible} delay={170}>
-            <p
-              className="
-                mt-6
-                max-w-[610px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-ink-muted
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              داشتن دارایی‌های متعدد، به‌تنهایی به معنای داشتن یک ساختار مالی
-              منسجم نیست. آنچه اهمیت دارد این است که بدانیم هر دارایی چه نقشی در
-              مجموعه ثروت دارد، چه میزان ریسک ایجاد می‌کند، تا چه اندازه
-              نقدشونده است و چگونه با اهداف و افق زمانی هماهنگ می‌شود.
-            </p>
-          </Reveal>
-
-          <Reveal visible={visible} delay={240}>
-            <div
-              className="
-                mt-8
-                max-w-[570px]
-
-                border-r-2
-                border-brand-accent
-
-                pr-5
-              "
-            >
-              <p
-                className="
-                  text-[13px]
-                  font-black
-                  leading-[2]
-
-                  text-ink
-
-                  sm:text-[14px]
-                "
-              >
-              مسئله فقط این نیست که «چه دارایی‌هایی داریم»؛
-                <br />
-                <span className="text-brand-primary">
-                بلکه این است که هر دارایی چه نقشی در ساختار ثروت و اهداف آینده ما دارد.
-                </span>
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal visible={visible} delay={310}>
-            <div className="mt-8">
-              <ActionButton
-                href="/dnh/wealth-architecture"
-                variant="secondary"
-                size="md"
-                icon={ArrowLeft}
-                className="
-                  w-full
-
-                  border-line-strong
-                  bg-page/75
-                  text-ink
-
-                  shadow-none
-
-                  hover:bg-page
-                  hover:text-brand-primary
-
-                  sm:w-auto
-                  sm:min-w-[235px]
-                "
-              >
-                بررسی ساختار ثروت و پرتفوی من
-              </ActionButton>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* =========================================================
-            VISUAL
-        ========================================================== */}
-
-        <div
-          className="
-            order-2
-
-            lg:col-start-2
-            lg:row-start-1
-          "
-        >
-          <WholeWealthMap visible={visible} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =============================================================================
-   Whole wealth map
-============================================================================= */
-
-function WholeWealthMap({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className={`
-        relative
-        mx-auto
-
-        w-full
-        max-w-[820px]
-
-        overflow-hidden
-
-        border
-        border-line
-
-        bg-page/85
-
-        shadow-[0_30px_90px_color-mix(in_srgb,var(--dnh-primary)_9%,transparent)]
-
-        transition-all
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${visible ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}
-      `}
-    >
-      {/* =========================================================
-          Header
-      ========================================================== */}
-
-      <div
-        className="
-          flex
-          items-start
-          justify-between
-          gap-5
-
-          border-b
-          border-line
-
-          px-5
-          py-6
-
-          sm:px-7
-
-          lg:px-8
-        "
-      >
-        <div>
-         
+          </div>
 
           <p
-            className="
-              mt-2
-
-              text-[14px]
-              font-black
-
-              text-ink
-
-              sm:text-[16px]
-            "
+            className={`min-w-0 max-w-[70ch] border-s border-[color-mix(in_srgb,var(--dnh-text-on-brand)_22%,transparent)] ps-4 text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_86%,transparent)] sm:text-[15px] md:ps-6 ${
+              isRTL ? "leading-[1.95]" : "leading-[1.75]"
+            }`}
           >
-            نقشه ساختار ثروت
+            {content.intro}
           </p>
-        </div>
+        </header>
 
-        <span
-          aria-hidden="true"
-          className="
-            mt-1
-            h-[11px]
-            w-[11px]
-
-            bg-brand-accent
-          "
-        />
-      </div>
-
-      {/* =========================================================
-          Desktop architecture
-      ========================================================== */}
-
-      <div
-        className="
-          relative
-          hidden
-
-          min-h-[520px]
-
-          md:block
-        "
-      >
-        {/* horizontal axis */}
-
-        <span
-          aria-hidden="true"
-          className="
-            absolute
-            left-[11%]
-            right-[11%]
-            top-1/2
-
-            h-px
-
-            -translate-y-1/2
-
-            bg-brand-primary/18
-          "
-        />
-
-        {/* vertical axis */}
-
-        <span
-          aria-hidden="true"
-          className="
-            absolute
-            bottom-[12%]
-            left-1/2
-            top-[12%]
-
-            w-px
-
-            -translate-x-1/2
-
-            bg-brand-primary/18
-          "
-        />
-
-        {/* center */}
-
-        <div
-          className={`
-            absolute
-            left-1/2
-            top-1/2
-
-            z-20
-
-            flex
-            h-[138px]
-            w-[138px]
-
-            -translate-x-1/2
-            -translate-y-1/2
-
-            items-center
-            justify-center
-
-            border
-            border-brand-primary/35
-
-            bg-page
-
-            shadow-[0_0_0_14px_color-mix(in_srgb,var(--dnh-primary)_4%,transparent)]
-
-            transition-all
-            duration-500
-
-            ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"}
-          `}
-          style={{
-            transitionDelay: "260ms",
-          }}
-        >
-          <div className="text-center">
-            <Landmark
-              aria-hidden="true"
-              className="
-                mx-auto
-                h-5
-                w-5
-
-                text-brand-primary
-              "
-              strokeWidth={1.5}
-            />
-
-            <p
-              className="
-                mt-3
-
-                text-[14px]
-                font-black
-
-                text-ink
-              "
-            >
-              تصمیم
-            </p>
-
-          
-          </div>
-        </div>
-
-        {/* dimensions */}
-
-        {WEALTH_DIMENSIONS.map((item, index) => (
-          <Dimension
-            key={item.en}
-            item={item}
-            index={index}
-            visible={visible}
+        {/* One continuous architectural structure, not three oversized cards. */}
+        <div className="relative border-y border-[color-mix(in_srgb,var(--dnh-text-on-brand)_21%,transparent)]">
+          <span
+            aria-hidden="true"
+            className="absolute start-0 top-[-1px] h-[2px] w-14 bg-brand-accent"
           />
-        ))}
 
-        {/* supporting label */}
-
-        <div
-          className="
-            absolute
-            bottom-7
-            left-1/2
-
-            -translate-x-1/2
-
-            text-center
-          "
-        >
-          <p
-            className="
-              text-[12px]
-              font-medium
-
-              text-ink-muted
-            "
-          >
-          هر دارایی زمانی معنا پیدا می‌کند که نقش آن در کل ساختار ثروت روشن باشد.
-          </p>
-        </div>
-      </div>
-
-      {/* =========================================================
-          Mobile architecture
-      ========================================================== */}
-
-      <div
-        className="
-          md:hidden
-        "
-      >
-        <div
-          className="
-            flex
-            items-center
-            justify-center
-
-            border-b
-            border-line
-
-            px-5
-            py-8
-          "
-        >
-          <div
-            className="
-              flex
-              h-[110px]
-              w-[110px]
-
-              items-center
-              justify-center
-
-              border
-              border-brand-primary/30
-
-              bg-page
-            "
-          >
-            <div className="text-center">
-              <Landmark
-                aria-hidden="true"
-                className="
-                  mx-auto
-                  h-4
-                  w-4
-
-                  text-brand-primary
-                "
-                strokeWidth={1.5}
-              />
-
-              <p
-                className="
-                  mt-2
-
-                  text-[12px]
-                  font-black
-
-                  text-ink
-                "
+          <ol className="grid min-w-0 lg:grid-cols-3 lg:[&>li+li]:border-s lg:[&>li+li]:border-[color-mix(in_srgb,var(--dnh-text-on-brand)_21%,transparent)]">
+            {content.pillars.map((pillar) => (
+              <li
+                key={pillar.id}
+                data-framework-entry=""
+                className="group relative grid min-w-0 grid-cols-[3.25rem_minmax(0,1fr)] gap-x-4 border-b border-[color-mix(in_srgb,var(--dnh-text-on-brand)_18%,transparent)] py-5 last:border-b-0 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-x-6 sm:py-6 lg:flex lg:flex-col lg:gap-0 lg:border-b-0 lg:px-7 lg:py-7 lg:hover:bg-[color-mix(in_srgb,var(--dnh-text-on-brand)_4%,transparent)] lg:first:ps-0 lg:last:pe-0 xl:px-9"
               >
-                تصمیم
-              </p>
-
-            
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="
-            grid
-            grid-cols-2
-          "
-        >
-          {WEALTH_DIMENSIONS.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={item.en}
-                className={`
-                  min-h-[150px]
-
-                  px-4
-                  py-5
-
-                  ${index % 2 === 0 ? "border-l border-line" : ""}
-
-                  ${index < 2 ? "border-b border-line" : ""}
-                `}
-              >
-                <Icon
+                <span
                   aria-hidden="true"
-                  className="
-                    h-4
-                    w-4
-
-                    text-brand-primary
-                  "
-                  strokeWidth={1.5}
+                  className="absolute bottom-0 start-0 h-px w-0 bg-brand-accent motion-safe:transition-[width] motion-safe:duration-300 group-hover:w-16 lg:bottom-auto lg:top-0"
                 />
 
-                <h3
-                  className="
-                    mt-3
+                <div className="flex min-w-0 items-start gap-2.5 lg:items-center lg:gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="mt-3 hidden h-1.5 w-1.5 shrink-0 bg-brand-accent lg:block"
+                  />
+                  <bdi
+                    dir="ltr"
+                    className="block text-start text-[clamp(2.45rem,8vw,3.25rem)] font-extrabold leading-none text-[color-mix(in_srgb,var(--dnh-text-on-brand)_92%,transparent)] lg:text-[3.75rem]"
+                  >
+                    {pillar.code}
+                  </bdi>
+                </div>
 
-                    text-[11px]
-                    font-black
+                <div className="min-w-0 lg:mt-5">
+                  <h3 className="min-w-0 text-start text-[18px] font-bold leading-[1.6] [overflow-wrap:break-word] sm:text-[20px] lg:text-[21px]">
+                    {pillar.title}
+                  </h3>
 
-                    text-ink
-                  "
-                >
-                  {item.title}
-                </h3>
+                  {pillar.english_label &&
+                    pillar.english_label !== pillar.title && (
+                      <p className="mt-0.5 text-start text-[12px] leading-[1.6] text-brand-accent">
+                        <bdi dir="ltr">{pillar.english_label}</bdi>
+                      </p>
+                    )}
 
-               
-
-                <p
-                  className="
-                    mt-3
-
-                    text-[11px]
-                    font-medium
-                    leading-[1.9]
-
-                    text-ink-muted
-                  "
-                >
-                  {item.description}
-                </p>
-              </div>
-            );
-          })}
+                  <p
+                    className={`mt-2.5 min-w-0 max-w-[62ch] text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_82%,transparent)] sm:mt-3 sm:text-[15px] ${
+                      isRTL ? "leading-[1.9]" : "leading-[1.72]"
+                    }`}
+                  >
+                    {pillar.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
-      </div>
-    </div>
-  );
-}
 
-/* =============================================================================
-   Dimension
-============================================================================= */
-
-function Dimension({
-  item,
-  index,
-  visible,
-}: {
-  item: (typeof WEALTH_DIMENSIONS)[number];
-  index: number;
-  visible: boolean;
-}) {
-  const Icon = item.icon;
-
-  const positions = [
-    "right-[7%] top-[12%]",
-    "left-[7%] top-[12%]",
-    "right-[7%] bottom-[14%]",
-    "left-[7%] bottom-[14%]",
-  ];
-
-  return (
-    <div
-      className={`
-        absolute
-        z-10
-
-        w-[220px]
-
-        transition-all
-        duration-500
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${positions[index]}
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}
-      `}
-      style={
-        {
-          transitionDelay: `${340 + index * 75}ms`,
-        } as CSSProperties
-      }
-    >
-      <div
-        className="
-          group/dimension
-
-          border
-          border-line
-
-          bg-page/92
-
-          px-4
-          py-4
-
-          transition-[border-color,transform,background-color]
-          duration-300
-
-          hover:-translate-y-0.5
-          hover:border-brand-primary/40
-          hover:bg-page
-        "
-      >
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
+        <footer
+          data-framework-entry=""
+          className="grid min-w-0 items-center gap-5 pt-6 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:pt-7 md:grid-cols-[minmax(0,1fr)_auto] md:gap-8"
         >
-          <span
-            className="
-              flex
-              h-9
-              w-9
-              shrink-0
-
-              items-center
-              justify-center
-
-              border
-              border-line
-
-              text-brand-primary
-
-              transition-colors
-              duration-300
-
-              group-hover/dimension:border-brand-primary
-              group-hover/dimension:bg-brand-primary
-              group-hover/dimension:text-white
-            "
+          <p
+            className={`min-w-0 max-w-[80ch] border-s-2 border-brand-accent ps-3 text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_88%,transparent)] sm:ps-4 sm:text-[15px] ${
+              isRTL ? "leading-[1.9]" : "leading-[1.72]"
+            }`}
           >
-            <Icon className="h-4 w-4" strokeWidth={1.5} />
-          </span>
+            {content.closing}
+          </p>
 
-          <div>
-            <h3
-              className="
-                text-[11px]
-                font-black
-
-                text-ink
-              "
-            >
-              {item.title}
-            </h3>
-
-           
+          <div className="flex min-w-0 flex-wrap gap-3">
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                shape="square"
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                dir={direction}
+                className="min-h-11 w-full min-w-0 max-w-full whitespace-normal text-start text-[13px] [overflow-wrap:anywhere] sm:w-auto"
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
           </div>
-        </div>
-
-        <p
-          className="
-            mt-3
-
-            text-[11px]
-            font-medium
-            leading-[1.9]
-
-            text-ink-muted
-          "
-        >
-          {item.description}
-        </p>
+        </footer>
       </div>
-    </div>
-  );
-}
-
-/* =============================================================================
-   Reveal
-============================================================================= */
-
-function Reveal({
-  children,
-  visible,
-  delay,
-}: {
-  children: React.ReactNode;
-  visible: boolean;
-  delay: number;
-}) {
-  return (
-    <div
-      className={`
-        transition-all
-        duration-[600ms]
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-2.5 opacity-0"}
-
-        motion-reduce:translate-y-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background: `
-            linear-gradient(
-              115deg,
-              color-mix(
-                in srgb,
-                var(--dnh-primary) 7%,
-                white
-              ) 0%,
-              white 52%,
-              white 100%
-            )
-          `,
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.2]
-        "
-        style={{
-          backgroundImage: `
-            linear-gradient(
-              to right,
-              color-mix(
-                in srgb,
-                var(--dnh-primary) 4%,
-                transparent
-              ) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              color-mix(
-                in srgb,
-                var(--dnh-primary) 3%,
-                transparent
-              ) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "96px 96px",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          right-[16%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
+    </section>
   );
 }

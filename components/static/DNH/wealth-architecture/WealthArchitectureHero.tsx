@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { ArrowDown, ArrowLeft } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";

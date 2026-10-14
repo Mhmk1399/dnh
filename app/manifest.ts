@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
       "وب‌اپلیکیشن DNH برای معماری ثروت، مشاوره مالی راهبردی و ارزیابی تصمیم‌های مالی.",
     lang: "fa-IR",
     dir: "rtl",
-    start_url: "/",
+    start_url: "/fa",
     scope: "/",
     display: "standalone",
     orientation: "portrait",

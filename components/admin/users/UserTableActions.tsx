@@ -92,7 +92,7 @@ export function UserTableActions({
       <AdminModal
         open={viewOpen}
         onClose={() => setViewOpen(false)}
-        eyebrow="USER / VIEW"
+        eyebrow="نمایش کاربر"
         title={`جزئیات ${user.firstName} ${user.lastName}`}
         size="md"
       >
@@ -102,7 +102,7 @@ export function UserTableActions({
       <AdminModal
         open={editOpen}
         onClose={() => setEditOpen(false)}
-        eyebrow="USER / QUICK EDIT"
+        eyebrow="ویرایش سریع کاربر"
         title="ویرایش سریع کاربر"
         size="lg"
       >

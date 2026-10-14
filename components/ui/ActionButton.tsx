@@ -1,4 +1,5 @@
-import Link, { type LinkProps } from "next/link";
+import type { LinkProps } from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 
 import type {
   AnchorHTMLAttributes,

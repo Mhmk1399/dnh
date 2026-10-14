@@ -1,0 +1,751 @@
+{
+  "page": "home",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "section_count": 13,
+  "sections": [
+    {
+      "order": 1,
+      "id": "hero",
+      "type": "hero",
+      "eyebrow": "Wealth Architecture & Financial Decision-Making",
+      "heading": "Major financial decisions require more than information. They need a clear decision framework.",
+      "paragraphs": [
+        {
+          "id": "context",
+          "text": "DNH helps individuals, families, investors, business leaders and companies understand their assets, risk exposures, liquidity, economic context and available options before making major financial decisions."
+        },
+        {
+          "id": "approach",
+          "text": "Rather than focusing on a single market or asset, we review your financial situation as a whole. The aim is to clarify the factors that matter, the risks involved and the strategic options worth evaluating."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start your initial assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        },
+        {
+          "id": "services",
+          "label": "Explore DNH services",
+          "type": "secondary",
+          "href": "/services"
+        }
+      ],
+      "trust_line": "Dr. Nasim Mohammadhasani — Private Wealth Architect, Strategic Financial Advisor and Founder of the DNH Framework",
+      "media": {
+        "src": "",
+        "mobile_src": "",
+        "alt": "",
+        "width": 1920,
+        "height": 1080
+      },
+      "heading_highlight": "a clear decision framework"
+    },
+    {
+      "order": 2,
+      "id": "services",
+      "type": "service_cards",
+      "eyebrow": "DNH Services",
+      "heading": "Which financial challenge needs a clearer strategy?",
+      "services": [
+        {
+          "id": "private-wealth-strategy",
+          "title": "Private Wealth Strategy",
+          "description": "Bring your assets, financial goals, liquidity and risk exposures into one coherent view. For individuals and families whose holdings need a clearer overall structure and strategic direction.",
+          "cta": "Explore private wealth strategy",
+          "href": "/services/private-wealth-strategy",
+          "icon": "wealth",
+          "media": {
+            "src": "/assets/images/private-wealth-strategy.webp",
+            "alt": ""
+          }
+        },
+        {
+          "id": "portfolio-intelligence",
+          "title": "Portfolio Intelligence",
+          "description": "Assess portfolio composition, concentration risk, liquidity and areas that warrant further review. For investors who want to understand whether their holdings work together in line with their objectives and circumstances.",
+          "cta": "Assess your portfolio",
+          "href": "/services/portfolio-intelligence",
+          "icon": "portfolio",
+          "media": {
+            "src": "/assets/images/portfolio-intelligence.webp",
+            "alt": ""
+          }
+        },
+        {
+          "id": "strategic-financial-advisory",
+          "title": "Strategic Financial Advisory",
+          "description": "Evaluate decisions that connect capital structure, liquidity, financing and the long-term direction of the business. For business owners, executives, companies and holding groups facing consequential financial decisions.",
+          "cta": "Explore business financial advisory",
+          "href": "/services/strategic-financial-advisory",
+          "icon": "advisory",
+          "media": {
+            "src": "/assets/images/strategic-financial-advisory.webp",
+            "alt": ""
+          }
+        },
+        {
+          "id": "macro-market-advisory",
+          "title": "Macro & Market Advisory",
+          "description": "Assess macroeconomic conditions, relevant scenarios and their strategic implications. For decision-makers whose financial choices are exposed to inflation, exchange-rate movements, economic policy and changing market conditions.",
+          "cta": "Explore macro and market advisory",
+          "href": "/services/macro-market-advisory",
+          "icon": "market",
+          "media": {
+            "src": "/assets/images/macro-market-advisory.webp",
+            "alt": ""
+          }
+        },
+        {
+          "id": "risk-management-wealth-protection",
+          "title": "Risk Management & Wealth Protection",
+          "description": "Identify material risks and vulnerabilities across assets, capital, liquidity and financial structure. For individuals and businesses seeking a clearer understanding of their exposures and protection priorities.",
+          "cta": "Assess your financial risks",
+          "href": "/services/risk-management-wealth-protection",
+          "icon": "risk",
+          "media": {
+            "src": "/assets/images/risk-management-wealth-protection.webp",
+            "alt": ""
+          }
+        },
+        {
+          "id": "executive-briefings",
+          "title": "Executive Briefings",
+          "description": "Focused analysis of a significant financial issue for senior executives, board members, investors and key decision-makers. Each briefing clarifies the issue, relevant risks, scenarios and strategic options for consideration.",
+          "cta": "Request an executive briefing",
+          "href": "/services/executive-briefings",
+          "icon": "briefing",
+          "media": {
+            "src": "/assets/images/executive-briefings.webp",
+            "alt": ""
+          }
+        }
+      ],
+      "heading_highlight": "a clearer strategy"
+    },
+    {
+      "order": 3,
+      "id": "problem-recognition",
+      "type": "problem_list",
+      "eyebrow": "Clarify the Decision Before You Act",
+      "heading": "Do any of these situations sound familiar?",
+      "intro": "The difficulty in many financial decisions is not a lack of information. It is the absence of a coherent view of the circumstances, risk exposures and implications of each option.",
+      "items": [
+        {
+          "id": "major-financial-decision",
+          "title": "A major financial decision is approaching",
+          "description": "You have several options, but need clarity on what to assess before choosing a course of action.",
+          "icon": "decision"
+        },
+        {
+          "id": "unstructured-holdings",
+          "title": "You own a range of assets",
+          "description": "It is not yet clear how each holding contributes to your goals, what risks it carries or how readily it can be converted to cash.",
+          "icon": "portfolio"
+        },
+        {
+          "id": "inflation-and-market-noise",
+          "title": "Inflation, exchange rates and market headlines shape your decisions",
+          "description": "You want a structured way to assess changing conditions, rather than react to each day's news and volatility.",
+          "icon": "market"
+        },
+        {
+          "id": "concentration-and-illiquidity",
+          "title": "Your capital is concentrated or tied up in illiquid assets",
+          "description": "You need to understand the vulnerabilities this may create across your overall wealth.",
+          "icon": "risk"
+        },
+        {
+          "id": "business-capital",
+          "title": "Your business faces a capital, liquidity or financing decision",
+          "description": "You need to assess how financing and resource allocation choices could affect the business's financial structure and future.",
+          "icon": "advisory"
+        },
+        {
+          "id": "board-level-decision",
+          "title": "A financial decision requires executive or board-level review",
+          "description": "You need a focused assessment of the issue, risk exposures, scenarios and options before a final decision.",
+          "icon": "briefing"
+        }
+      ],
+      "closing": "If any of these situations feels familiar, the issue may go beyond choosing a market or asset. A clearer view of your financial position, risk exposures, scenarios and decision framework can help define the next step.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start your initial assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "heading_highlight": "situations"
+    },
+    {
+      "order": 4,
+      "id": "who-we-help",
+      "type": "audience_cards",
+      "eyebrow": "Who We Help",
+      "heading": "Different financial challenges call for different approaches.",
+      "intro": "DNH works with individuals and businesses facing significant financial decisions, complex financial structures or a need to reassess how their wealth and capital are organized.",
+      "audiences": [
+        {
+          "id": "major-financial-decision",
+          "title": "You are preparing for a major financial decision",
+          "description": "A significant investment, capital allocation, major asset transaction, financing decision or change in financial structure requires more than a comparison of options. The review needs to account for risk exposures, liquidity, constraints, time horizon and alternative scenarios before you commit.",
+          "cta": "Assess your financial decision",
+          "href": "/who-we-help/big-financial-decision",
+          "icon": "decision"
+        },
+        {
+          "id": "unstructured-portfolio",
+          "title": "You have multiple assets, but no coherent portfolio structure",
+          "description": "Holdings accumulated over time may reflect different market conditions, headlines or short-term opportunities rather than a consistent strategy. The key question is whether the portfolio as a whole aligns with your financial objectives, risk tolerance and needs.",
+          "cta": "Review your wealth and portfolio",
+          "href": "/who-we-help/unstructured-portfolio",
+          "icon": "portfolio"
+        },
+        {
+          "id": "complex-business-capital",
+          "title": "Your business or holding company has a complex financial structure",
+          "description": "Income-generating and non-income-generating assets, liquidity, financing and investment decisions all shape business performance. Capital allocation therefore calls for an integrated assessment of the company's financial structure and risk exposures.",
+          "cta": "Request a strategic financial assessment",
+          "href": "/who-we-help/holdings-financial-capital-structure",
+          "icon": "holdings"
+        }
+      ],
+      "heading_highlight": "different approaches"
+    },
+    {
+      "order": 5,
+      "id": "market-noise-vs-structured-decision",
+      "type": "comparison",
+      "eyebrow": "From Market Noise to Structured Decisions",
+      "heading": "Your financial decisions need a framework, not a reaction to every market move.",
+      "intro": "Headlines, commentary, price movements, inflation and exchange-rate shifts are part of the market environment. The challenge is to use that information as context for decisions, rather than let it drive short-term reactions and disconnected choices.",
+      "columns": [
+        {
+          "id": "reactive",
+          "title": "Reactive Decision-Making",
+          "items": [
+            {
+              "id": "news-and-emotion",
+              "text": "Acting on headlines, fear or market enthusiasm"
+            },
+            {
+              "id": "short-term-fluctuations",
+              "text": "Focusing on short-term price movements"
+            },
+            {
+              "id": "opportunities-without-structure",
+              "text": "Chasing opportunities without considering how they fit your overall wealth"
+            },
+            {
+              "id": "frequent-changes",
+              "text": "Changing course repeatedly as market conditions shift"
+            },
+            {
+              "id": "isolated-assets",
+              "text": "Viewing each asset in isolation"
+            }
+          ]
+        },
+        {
+          "id": "structured",
+          "title": "Structured Decision-Making",
+          "items": [
+            {
+              "id": "financial-position-and-goals",
+              "text": "Establishing your financial position and objectives"
+            },
+            {
+              "id": "risk-and-liquidity",
+              "text": "Assessing risk exposures and liquidity"
+            },
+            {
+              "id": "scenario-analysis",
+              "text": "Evaluating alternative scenarios before committing"
+            },
+            {
+              "id": "time-horizon-and-consequences",
+              "text": "Considering your time horizon and the implications of each choice"
+            },
+            {
+              "id": "assets-within-wealth-structure",
+              "text": "Assessing each asset in the context of your overall wealth"
+            }
+          ]
+        }
+      ],
+      "closing": "DNH's focus is not on predicting markets with certainty. It is on understanding risk, evaluating scenarios and making decisions in the context of your overall wealth when the future remains uncertain.",
+      "ctas": [
+        {
+          "id": "framework",
+          "label": "Explore the DNH decision framework",
+          "type": "primary",
+          "href": "/dnh/framework"
+        }
+      ],
+      "heading_highlight": "need a framework"
+    },
+    {
+      "order": 6,
+      "id": "dnh-framework",
+      "type": "framework",
+      "eyebrow": "The DNH Framework",
+      "english_label": "DNH Framework",
+      "heading": "Better decisions begin with a better process.",
+      "intro": "No single metric, market or forecast is enough to assess a financial decision. The DNH framework brings together three perspectives: your current position, the strategic options available and how today's choices fit the long-term structure of your wealth.",
+      "pillars": [
+        {
+          "id": "data",
+          "code": "D",
+          "title": "Data Intelligence",
+          "english_label": "Data Intelligence",
+          "description": "Assess the data and variables that shape a decision: economic conditions, inflation, exchange rates and liquidity, alongside assets, financial structure and the specific circumstances of the individual or business."
+        },
+        {
+          "id": "navigation",
+          "code": "N",
+          "title": "Navigation Strategy",
+          "english_label": "Navigation Strategy",
+          "description": "Translate data and analysis into scenarios and strategic options for evaluation. The review considers risk exposures, priorities and constraints before comparing potential courses of action."
+        },
+        {
+          "id": "horizon",
+          "code": "H",
+          "title": "Horizon Architecture",
+          "english_label": "Horizon Architecture",
+          "description": "Assess how today's choices fit your long-term objectives, liquidity requirements, financial resilience and overall wealth structure."
+        }
+      ],
+      "closing": "The DNH framework supports a disciplined financial decision process. It does not provide trading signals or claim certainty about future market outcomes.",
+      "ctas": [
+        {
+          "id": "framework",
+          "label": "Explore the DNH framework",
+          "type": "primary",
+          "href": "/dnh/framework"
+        }
+      ],
+      "heading_highlight": "a better process"
+    },
+    {
+      "order": 7,
+      "id": "whole-wealth-view",
+      "type": "asset_roles",
+      "eyebrow": "An Integrated View of Wealth",
+      "english_label": "Strategic Allocation / Whole-Wealth View",
+      "heading": "Every asset should serve a clear purpose within your wealth.",
+      "intro": "A collection of assets is not necessarily a coherent wealth strategy. Each holding needs to be understood in terms of its role, risk exposure, liquidity and fit with your financial objectives and time horizon.",
+      "assets": [
+        {
+          "id": "gold",
+          "title": "Gold",
+          "description": "May play a role in wealth preservation and the management of inflation risk."
+        },
+        {
+          "id": "currency",
+          "title": "Foreign Currencies",
+          "description": "May help address currency exposures, maintain financial flexibility and support the movement of capital."
+        },
+        {
+          "id": "equities",
+          "title": "Equities",
+          "description": "May support long-term capital growth, with careful attention to investment risk and concentration."
+        },
+        {
+          "id": "real-estate",
+          "title": "Real Estate",
+          "description": "May form a long-term component of wealth, but liquidity constraints and capital concentration need careful assessment."
+        },
+        {
+          "id": "fixed-income",
+          "title": "Fixed Income",
+          "description": "May contribute to income, financial stability and a more balanced overall risk profile."
+        },
+        {
+          "id": "liquidity",
+          "title": "Liquidity",
+          "description": "Readily available capital supports your ability to meet obligations, respond to opportunities and manage unexpected circumstances."
+        },
+        {
+          "id": "alternatives",
+          "title": "Alternative Assets",
+          "description": "May offer diversification and reduce reliance on core holdings where they fit your objectives and circumstances."
+        }
+      ],
+      "closing": "DNH assesses assets as part of an integrated whole. Each holding is considered in relation to your objectives, risk exposures, liquidity needs, time horizon and the structure of your wider wealth.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Review your wealth and portfolio",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "heading_highlight": "a clear purpose"
+    },
+    {
+      "order": 8,
+      "id": "dnh-intelligence-desk",
+      "type": "intelligence_desk",
+      "eyebrow": "DNH Intelligence Desk",
+      "english_label": "DNH Intelligence Desk",
+      "heading": "See the bigger picture behind your next financial decision.",
+      "paragraphs": [
+        {
+          "id": "context",
+          "text": "Major financial decisions are shaped by more than one market. Inflation, exchange rates, liquidity, economic policy, market behavior and evolving risk exposures can all influence the same decision."
+        },
+        {
+          "id": "approach",
+          "text": "The DNH Intelligence Desk brings these factors into one structured perspective. Instead of piecing together separate headlines and market movements, you can assess the broader conditions that matter to your wealth and capital."
+        }
+      ],
+      "items": [
+        {
+          "id": "macro-risk",
+          "title": "Macro Risk View",
+          "english_label": "Macro Risk View",
+          "description": "Assess the wider economic risks and external pressures that may affect capital, liquidity and financial decisions."
+        },
+        {
+          "id": "asset-view",
+          "title": "Asset View",
+          "english_label": "Asset View",
+          "description": "Review the conditions and role of each asset class within the overall wealth structure, without direct buy or sell recommendations."
+        },
+        {
+          "id": "liquidity-view",
+          "title": "Liquidity View",
+          "english_label": "Liquidity View",
+          "description": "Assess liquidity conditions and how changes may influence financial flexibility, risk exposures and available opportunities."
+        },
+        {
+          "id": "what-to-watch",
+          "title": "What to Watch",
+          "english_label": "What to Watch",
+          "description": "Identify the developments and variables most relevant to financial decisions in the period ahead."
+        },
+        {
+          "id": "strategic-implications",
+          "title": "Strategic Implications",
+          "english_label": "Strategic Implications",
+          "description": "Connect data and changing conditions to the risks, scenarios and strategic implications that warrant consideration before a decision."
+        }
+      ],
+      "closing": "The DNH Intelligence Desk provides context for wealth decisions, not trading signals or price forecasts. Its role is to clarify the financial environment, assess risk and support a structured decision process.",
+      "ctas": [
+        {
+          "id": "intelligence-desk",
+          "label": "Explore the DNH Intelligence Desk",
+          "type": "primary",
+          "href": "/dnh/intelligence-desk"
+        }
+      ],
+      "media": {
+        "src": "",
+        "mobile_src": "",
+        "alt": "",
+        "width": 1600,
+        "height": 1000
+      },
+      "heading_highlight": "the bigger picture"
+    },
+    {
+      "order": 9,
+      "id": "weekly-outlook",
+      "type": "weekly_outlook",
+      "eyebrow": "DNH Weekly Outlook",
+      "english_label": "DNH Weekly Outlook",
+      "heading": "A weekly perspective on the developments that matter to your financial decisions.",
+      "paragraphs": [
+        {
+          "id": "context",
+          "text": "More news does not necessarily mean greater clarity. When markets, economic policy and risk exposures shift quickly, the challenge is to identify what is relevant to your decisions."
+        },
+        {
+          "id": "purpose",
+          "text": "The DNH Weekly Outlook distills key developments and economic variables into a concise, structured briefing, highlighting the issues that warrant attention in the week ahead."
+        }
+      ],
+      "items": [
+        {
+          "id": "executive-summary",
+          "title": "Executive Summary",
+          "english_label": "Executive Summary",
+          "description": "A concise overview of the week's developments and their relevance to financial decision-making."
+        },
+        {
+          "id": "macro-risk",
+          "title": "Macro Risk View",
+          "english_label": "Macro Risk View",
+          "description": "An assessment of economic, policy and external risks to consider in the week ahead."
+        },
+        {
+          "id": "asset-view",
+          "title": "Asset View",
+          "english_label": "Asset View",
+          "description": "A review of asset-class conditions and their implications for capital and wealth, without buy or sell signals."
+        },
+        {
+          "id": "what-to-watch",
+          "title": "What to Watch",
+          "english_label": "What to Watch",
+          "description": "The variables and events that could change risk exposures, liquidity or the context for a decision."
+        },
+        {
+          "id": "dnh-note",
+          "title": "DNH Note",
+          "english_label": "DNH Note",
+          "description": "Dr. Nasim's analytical perspective on the week's central issue and its implications for financial decision-makers."
+        }
+      ],
+      "closing": "The DNH Weekly Outlook offers a structured view of risks and the financial environment, not certain market predictions. It is designed to help you identify the issues that deserve consideration before a decision.",
+      "ctas": [
+        {
+          "id": "weekly-outlook",
+          "label": "Read the latest Weekly Outlook",
+          "type": "primary",
+          "href": "/knowledge/weekly-outlook"
+        }
+      ],
+      "heading_highlight": "developments that matter"
+    },
+    {
+      "order": 10,
+      "id": "insights",
+      "type": "insight_categories",
+      "eyebrow": "DNH Insights",
+      "english_label": "DNH Insights",
+      "heading": "Look beyond daily headlines to understand what a financial decision really involves.",
+      "paragraphs": [
+        {
+          "id": "scope",
+          "text": "DNH Insights brings together financial analysis and expert perspectives on the issues that shape wealth, capital and financial decisions."
+        },
+        {
+          "id": "purpose",
+          "text": "Rather than report the news or forecast short-term prices, each article examines a financial issue through the lenses of risk, financial structure, behavior, liquidity and the implications of a decision."
+        }
+      ],
+      "categories": [
+        {
+          "id": "wealth-architecture",
+          "title": "Wealth Architecture",
+          "english_label": "Wealth Architecture",
+          "description": "How assets, objectives, risk exposures and financial needs fit together within a coherent wealth structure."
+        },
+        {
+          "id": "financial-decision-making",
+          "title": "Financial Decision-Making",
+          "english_label": "Financial Decision-Making",
+          "description": "The factors that make a financial decision well-reasoned, defensible and appropriate to an individual's or business's circumstances."
+        },
+        {
+          "id": "risk-and-protection",
+          "title": "Risk & Wealth Protection",
+          "english_label": "Risk & Wealth Protection",
+          "description": "Hidden exposures, asset concentration, liquidity constraints and other factors that may affect financial resilience."
+        },
+        {
+          "id": "asset-allocation",
+          "title": "Asset Allocation",
+          "english_label": "Asset Allocation",
+          "description": "The role of different asset classes in the overall wealth strategy, assessed against risk, objectives and time horizon."
+        },
+        {
+          "id": "economy-inflation-currency",
+          "title": "Economics, Inflation & Exchange Rates",
+          "description": "Economic developments and their potential implications for capital, purchasing power, liquidity and financial decisions."
+        },
+        {
+          "id": "behavioral-finance",
+          "title": "Behavioral Finance",
+          "english_label": "Behavioral Finance",
+          "description": "How fear, excitement, cognitive biases and herd behavior can influence the quality of financial decisions."
+        }
+      ],
+      "closing": "DNH Insights helps you examine the underlying issue, understand risk more clearly and approach financial decisions with a structured perspective.",
+      "ctas": [
+        {
+          "id": "all-insights",
+          "label": "Explore DNH Insights",
+          "type": "primary",
+          "href": "/knowledge/insights"
+        }
+      ],
+      "heading_highlight": "beyond daily headlines"
+    },
+    {
+      "order": 11,
+      "id": "research-and-case-studies",
+      "type": "research_case_studies",
+      "eyebrow": "DNH Research & Case Studies",
+      "english_label": "DNH Research & Case Studies",
+      "heading": "Research matters when it brings clarity to real financial decisions.",
+      "intro": "DNH research is developed to inform decisions, not simply to publish more content. Each report, research note and case study examines a defined financial issue, the risks involved and the implications of the available choices.",
+      "items": [
+        {
+          "id": "dnh-research",
+          "title": "DNH Research",
+          "english_label": "DNH Research",
+          "description": "Research notes, macro risk reports, asset allocation studies, wealth protection analysis and market reviews that place financial decisions in their wider context.",
+          "href": "/knowledge/research"
+        },
+        {
+          "id": "research-notes",
+          "title": "Research Notes",
+          "english_label": "Research Notes",
+          "description": "Focused analysis of financial, economic and capital-related issues that may influence wealth structure and significant financial decisions.",
+          "href": "/knowledge/research"
+        },
+        {
+          "id": "macro-risk-reports",
+          "title": "Macro Risk Reports",
+          "english_label": "Macro Risk Reports",
+          "description": "Assessment of economic, policy and external risks, with attention to their potential implications for capital, liquidity and decision-making.",
+          "href": "/knowledge/research"
+        },
+        {
+          "id": "asset-allocation-studies",
+          "title": "Asset Allocation & Wealth Protection Studies",
+          "description": "Analysis of asset roles, the overall risk profile and the factors that may influence financial resilience and wealth preservation under different conditions.",
+          "href": "/knowledge/research"
+        },
+        {
+          "id": "case-studies",
+          "title": "DNH Case Studies",
+          "english_label": "Case Studies",
+          "description": "Real-world financial issues examined through capital structure, liquidity, risk exposures, scenario analysis and the strategic options available.",
+          "href": "/knowledge/case-studies"
+        }
+      ],
+      "case_study_note": "Published case studies are anonymized and omit sensitive financial and personal information. They illustrate the analytical process and the reasoning behind a decision, not investment performance or promised returns.",
+      "ctas": [
+        {
+          "id": "research",
+          "label": "Explore DNH research",
+          "type": "primary",
+          "href": "/knowledge/research"
+        },
+        {
+          "id": "case-studies",
+          "label": "Explore case studies",
+          "type": "secondary",
+          "href": "/knowledge/case-studies"
+        }
+      ],
+      "heading_highlight": "clarity to real financial decisions"
+    },
+    {
+      "order": 12,
+      "id": "about-dr-nasim",
+      "type": "about",
+      "eyebrow": "About Dr. Nasim Mohammadhasani",
+      "english_label": "About Dr. Nasim Mohammadhasani",
+      "heading": "DNH is built on years of experience in financial decision-making and wealth management.",
+      "paragraphs": [
+        {
+          "id": "profile",
+          "text": "Dr. Nasim Mohammadhasani is a private wealth architect, strategic financial advisor and founder of the DNH framework. Her approach integrates financial analysis, risk management, capital structure, liquidity and investment with a disciplined process for making decisions under uncertainty."
+        },
+        {
+          "id": "education-and-experience",
+          "text": "She holds a master's degree in financial management and a doctorate in financial engineering. Her experience spans more than 15 years in financial management and more than 5 years in investment and asset management."
+        }
+      ],
+      "philosophy_intro": "Her approach rests on a clear principle:",
+      "philosophy_quote": "Wealth is more than the assets we own. It needs a coherent structure to preserve it, develop it and give it direction.",
+      "closing": "Dr. Nasim's expertise, experience and professional standing underpin DNH, which is being developed as a standalone framework for wealth architecture and financial decision-making.",
+      "ctas": [
+        {
+          "id": "about",
+          "label": "Meet Dr. Nasim Mohammadhasani",
+          "type": "primary",
+          "href": "/about"
+        }
+      ],
+      "media": {
+        "src": "",
+        "mobile_src": "",
+        "alt": "",
+        "width": 960,
+        "height": 1200
+      },
+      "heading_highlight": "financial decision-making and wealth management"
+    },
+    {
+      "order": 13,
+      "id": "financial-decision-assessment",
+      "type": "final_cta",
+      "eyebrow": "Start with a Clearer Financial Picture",
+      "english_label": "Financial Decision Assessment",
+      "heading": "Before your next financial decision, clarify what needs to be decided.",
+      "paragraphs": [
+        {
+          "id": "challenge",
+          "text": "Financial decisions become harder when the underlying issue, constraints, risk exposures and available options have not been clearly defined."
+        },
+        {
+          "id": "assessment",
+          "text": "DNH's initial assessment helps establish the nature of your financial challenge, its urgency and complexity, and the most appropriate approach to reviewing it before specialist advisory work begins."
+        },
+        {
+          "id": "privacy",
+          "text": "You do not need to disclose a full breakdown of your assets or sensitive financial information at this stage. The purpose is to understand your circumstances at an initial level and identify a suitable next step."
+        }
+      ],
+      "assessment_title": "What the initial assessment covers:",
+      "assessment_items": [
+        {
+          "id": "decision-topic",
+          "text": "The financial decision or underlying issue"
+        },
+        {
+          "id": "goals-and-priorities",
+          "text": "Your goals and priorities"
+        },
+        {
+          "id": "time-horizon",
+          "text": "Your decision time horizon"
+        },
+        {
+          "id": "complexity-and-urgency",
+          "text": "An initial view of complexity and urgency"
+        },
+        {
+          "id": "constraints-and-risks",
+          "text": "Key constraints and identifiable risk exposures"
+        },
+        {
+          "id": "service-fit",
+          "text": "Whether DNH services are appropriate for your needs"
+        }
+      ],
+      "closing": "If the initial review indicates a suitable fit, the next step may be a strategic consultation, a specialist review of your financial situation or an executive briefing.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start your initial assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        },
+        {
+          "id": "consultation",
+          "label": "Request a strategic consultation",
+          "type": "secondary",
+          "href": "/request-strategic-consultation"
+        }
+      ],
+      "heading_highlight": "clarify what needs to be decided"
+    }
+  ],
+  "seo": {
+    "title": "Dr. Nasim Mohammadhasani | Wealth Architecture & Financial Advisory",
+    "description": "Explore Dr. Nasim Mohammadhasani's DNH framework for wealth architecture, risk assessment and strategic financial advisory for families, investors and businesses."
+  }
+}

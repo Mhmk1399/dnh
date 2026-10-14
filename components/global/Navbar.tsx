@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { usePathname } from "next/navigation";
 import {
   useCallback,
@@ -14,7 +14,9 @@ import {
 } from "react";
 import {
   ArrowLeft,
+  ArrowRight,
   ArrowUpLeft,
+  ArrowUpRight,
   BrainCircuit,
   BriefcaseBusiness,
   Building2,
@@ -33,11 +35,14 @@ import {
 } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import shellContent from "@/config/site-shell.json";
+import { getLocaleFromPathname, stripLocalePrefix } from "@/lib/site-language";
 import {
   ASSESSMENT_PATH,
   CONSULTATION_PATH,
   MEGA_MENUS,
-  NAVIGATION,
+  getLocalizedSiteNavigation,
   getSiteHref,
   isSitePathActive,
   type MegaItem,
@@ -85,6 +90,11 @@ export function Navbar() {
 }
 
 function NavigationShell({ pathname }: { pathname: string }) {
+  const { locale, direction, languageTag, isRTL } = useLanguage();
+  const copy = shellContent[locale].navbar;
+  const { navigation, megaMenus } = getLocalizedSiteNavigation(locale);
+  const DirectionArrow = isRTL ? ArrowLeft : ArrowRight;
+  const DiagonalArrow = isRTL ? ArrowUpLeft : ArrowUpRight;
   const scrolled = useSyncExternalStore(
     subscribeToScroll,
     getScrollSnapshot,
@@ -103,11 +113,12 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const id = useId();
   const href = (path: string) => getSiteHref(path, pathname);
   const elevated = scrolled || openMenu !== null;
+  const publicPath = stripLocalePrefix(pathname);
   const forceSolid =
-    pathname === "/admin/forms" ||
-    pathname.startsWith("/admin/forms/") ||
-    pathname.startsWith("/forms/") ||
-    pathname === "/test-form";
+    publicPath === "/admin/forms" ||
+    publicPath.startsWith("/admin/forms/") ||
+    publicPath.startsWith("/forms/") ||
+    publicPath === "/test-form";
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -198,7 +209,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
         ref={shellRef}
         className={styles.header}
          data-scrolled={forceSolid || elevated || scrolled || openMenu !== null}
-        dir="rtl"
+        dir={direction}
         onPointerEnter={clearTimers}
         onPointerLeave={(event) => {
           if (event.pointerType === "mouse") scheduleClose();
@@ -216,11 +227,11 @@ function NavigationShell({ pathname }: { pathname: string }) {
             <Link
               href="/"
               className={styles.brand}
-              aria-label="دی‌ان‌اچ؛ صفحه اصلی"
+              aria-label={copy.home}
               onClick={closeDesktop}
             >
               <Image
-                src={elevated ? PRIMARY_LOGO_SRC : WHITE_LOGO_SRC}
+                src={forceSolid || elevated ? PRIMARY_LOGO_SRC : WHITE_LOGO_SRC}
                 alt="DNH"
                 width={140}
                 height={44}
@@ -229,11 +240,11 @@ function NavigationShell({ pathname }: { pathname: string }) {
                 unoptimized
               />
             </Link>
-            <nav className={styles.desktopNavigation} aria-label="منوی اصلی">
-              {NAVIGATION.map((item) => {
+            <nav className={styles.desktopNavigation} aria-label={copy.navigation}>
+              {navigation.map((item) => {
                 const menu = item.menu;
                 const active = menu
-                  ? MEGA_MENUS[menu].items.some((link) =>
+                  ? megaMenus[menu].items.some((link) =>
                       isSitePathActive(link.href, pathname),
                     ) ||
                     (item.href ? isSitePathActive(item.href, pathname) : false)
@@ -292,7 +303,8 @@ function NavigationShell({ pathname }: { pathname: string }) {
               })}
             </nav>
             <div className={styles.desktopAction}>
-              <div className={styles.authActions} aria-label="ورود و ثبت‌نام">
+              <LanguageSwitch onSwitch={closeDesktop} />
+              <div className={styles.authActions} aria-label={copy.auth}>
                 <ActionButton
                   href={LOGIN_PATH}
                   variant="secondary"
@@ -300,7 +312,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
                   className={styles.authButton}
                   onClick={closeDesktop}
                 >
-                  ورود
+                  {copy.login}
                 </ActionButton>
                 <ActionButton
                   href={SIGNUP_PATH}
@@ -309,32 +321,33 @@ function NavigationShell({ pathname }: { pathname: string }) {
                   className={styles.authButton}
                   onClick={closeDesktop}
                 >
-                  ثبت‌نام
+                  {copy.signup}
                 </ActionButton>
               </div>
               <ActionButton
                 href={href(CONSULTATION_PATH)}
-                icon={ArrowUpLeft}
+                icon={DiagonalArrow}
                 size="sm"
                 className={styles.consultButton}
                 onClick={closeDesktop}
               >
-                درخواست مشاوره
+                {copy.consultation}
               </ActionButton>
             </div>
             <div className={styles.mobileActions}>
+              <LanguageSwitch onSwitch={closeDesktop} />
               <Link
                 className={styles.mobileConsult}
                 href={href(CONSULTATION_PATH)}
               >
-                مشاوره
-                <ArrowUpLeft size={15} aria-hidden="true" />
+                {copy.mobileConsultation}
+                <DiagonalArrow size={15} aria-hidden="true" />
               </Link>
               <button
                 ref={mobileTriggerRef}
                 type="button"
                 className={styles.menuToggle}
-                aria-label="باز کردن منوی اصلی"
+                aria-label={copy.openMenu}
                 aria-haspopup="dialog"
                 aria-expanded={mobileOpen}
                 aria-controls={`${id}-mobile`}
@@ -344,13 +357,13 @@ function NavigationShell({ pathname }: { pathname: string }) {
                 }}
               >
                 <Menu size={22} strokeWidth={1.7} aria-hidden="true" />
-                <span className={styles.menuLabel}>منو</span>
+                <span className={styles.menuLabel}>{copy.menu}</span>
               </button>
             </div>
           </div>
 
           {MENU_KEYS.map((menuKey) => {
-            const menu = MEGA_MENUS[menuKey];
+            const menu = megaMenus[menuKey];
             const opened = openMenu === menuKey;
             return (
               <div
@@ -380,15 +393,15 @@ function NavigationShell({ pathname }: { pathname: string }) {
                       onClick={closeDesktop}
                     >
                       {menu.overview.title}
-                      <ArrowLeft size={17} aria-hidden="true" />
+                      <DirectionArrow size={17} aria-hidden="true" />
                     </Link>
                   </aside>
                   <div className={styles.megaContent}>
                     <div className={styles.megaHeading}>
                       <h2>{menu.title}</h2>
                       <span>
-                        {new Intl.NumberFormat("fa").format(menu.items.length)}{" "}
-                        مسیر تخصصی
+                        {new Intl.NumberFormat(languageTag).format(menu.items.length)}{" "}
+                        {copy.paths}
                       </span>
                     </div>
                     <nav
@@ -406,10 +419,10 @@ function NavigationShell({ pathname }: { pathname: string }) {
                       ))}
                     </nav>
                     <div className={styles.megaFoot}>
-                      <span>برای انتخاب مسیر به راهنمایی نیاز دارید؟</span>
+                      <span>{copy.help}</span>
                       <Link href={href(ASSESSMENT_PATH)} onClick={closeDesktop}>
-                        ارزیابی تصمیم مالی
-                        <ArrowLeft size={14} aria-hidden="true" />
+                        {copy.assessment}
+                        <DirectionArrow size={14} aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -441,6 +454,8 @@ function NavigationCard({
   onNavigate: () => void;
   compact?: boolean;
 }) {
+  const { isRTL } = useLanguage();
+  const DiagonalArrow = isRTL ? ArrowUpLeft : ArrowUpRight;
   const Icon = ICONS[item.icon];
   const active = isSitePathActive(item.href, pathname);
   return (
@@ -459,7 +474,7 @@ function NavigationCard({
         <span className={styles.cardTitle}>{item.title}</span>
         <span className={styles.cardDescription}>{item.description}</span>
       </span>
-      <ArrowUpLeft size={16} aria-hidden="true" className={styles.cardArrow} />
+      <DiagonalArrow size={16} aria-hidden="true" className={styles.cardArrow} />
     </Link>
   );
 }
@@ -473,12 +488,17 @@ function MobileNavigation({
   pathname: string;
   onDismiss: () => void;
 }) {
+  const { locale, direction, languageTag, isRTL } = useLanguage();
+  const copy = shellContent[locale].navbar;
+  const { navigation, megaMenus } = getLocalizedSiteNavigation(locale);
+  const DirectionArrow = isRTL ? ArrowLeft : ArrowRight;
+  const DiagonalArrow = isRTL ? ArrowUpLeft : ArrowUpRight;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const [expanded, setExpanded] = useState<MegaMenuKey | null>(
     () =>
       MENU_KEYS.find((key) =>
-        MEGA_MENUS[key].items.some((item) =>
+        megaMenus[key].items.some((item) =>
           isSitePathActive(item.href, pathname),
         ),
       ) ?? "services",
@@ -521,7 +541,7 @@ function MobileNavigation({
     <dialog
       ref={dialogRef}
       id={id}
-      dir="rtl"
+      dir={direction}
       className={styles.mobileDialog}
       aria-labelledby={`${id}-title`}
       onCancel={(event) => {
@@ -531,7 +551,7 @@ function MobileNavigation({
       onClick={dismissOnBackdrop}
     >
       <div className={styles.drawerHeader}>
-        <Link href="/" onClick={onDismiss} aria-label="دی‌ان‌اچ؛ صفحه اصلی">
+        <Link href="/" onClick={onDismiss} aria-label={copy.home}>
           <Image
             src={PRIMARY_LOGO_SRC}
             alt="DNH"
@@ -540,22 +560,23 @@ function MobileNavigation({
             unoptimized
           />
         </Link>
+        <LanguageSwitch onSwitch={onDismiss} />
         <button
           ref={closeRef}
           type="button"
           onClick={onDismiss}
           className={styles.closeButton}
-          aria-label="بستن منوی اصلی"
+          aria-label={copy.closeMenu}
         >
           <X size={22} aria-hidden="true" />
         </button>
       </div>
       <div className={styles.drawerBody} data-lenis-prevent>
         <div className={styles.drawerIntro}>
-          <span className={styles.drawerEyebrow}>دسترسی سریع</span>
-          <h2 id={`${id}-title`}>مسیرتان را انتخاب کنید.</h2>
+          <span className={styles.drawerEyebrow}>{copy.quickAccess}</span>
+          <h2 id={`${id}-title`}>{copy.choosePath}</h2>
         </div>
-        <div className={styles.mobileAuthActions} aria-label="ورود و ثبت‌نام">
+        <div className={styles.mobileAuthActions} aria-label={copy.auth}>
           <ActionButton
             href={LOGIN_PATH}
             variant="secondary"
@@ -563,7 +584,7 @@ function MobileNavigation({
             fullWidth
             onClick={onDismiss}
           >
-            ورود
+            {copy.login}
           </ActionButton>
           <ActionButton
             href={SIGNUP_PATH}
@@ -572,11 +593,11 @@ function MobileNavigation({
             fullWidth
             onClick={onDismiss}
           >
-            ثبت‌نام
+            {copy.signup}
           </ActionButton>
         </div>
-        <nav aria-label="لینک‌های اصلی موبایل" className={styles.quickLinks}>
-          {NAVIGATION.filter((item) => !item.menu).map((item) => (
+        <nav aria-label={copy.mobileLinks} className={styles.quickLinks}>
+          {navigation.filter((item) => !item.menu).map((item) => (
             <Link
               key={item.href}
               href={getSiteHref(item.href!, pathname)}
@@ -586,13 +607,13 @@ function MobileNavigation({
               }
             >
               {item.title}
-              <ArrowUpLeft size={15} aria-hidden="true" />
+              <DiagonalArrow size={15} aria-hidden="true" />
             </Link>
           ))}
         </nav>
-        <nav aria-label="خدمات و مسیرهای تخصصی" className={styles.mobileGroups}>
+        <nav aria-label={copy.specialistLinks} className={styles.mobileGroups}>
           {MENU_KEYS.map((key) => {
-            const menu = MEGA_MENUS[key];
+            const menu = megaMenus[key];
             const opened = expanded === key;
             return (
               <div key={key} className={styles.mobileGroup} data-open={opened}>
@@ -606,7 +627,7 @@ function MobileNavigation({
                   <span>
                     {menu.title}
                     <span className={styles.groupCount}>
-                      {new Intl.NumberFormat("fa").format(menu.items.length)}
+                      {new Intl.NumberFormat(languageTag).format(menu.items.length)}
                     </span>
                   </span>
                   <ChevronDown
@@ -639,7 +660,7 @@ function MobileNavigation({
                         onClick={onDismiss}
                       >
                         {menu.overview.title}
-                        <ArrowLeft size={16} aria-hidden="true" />
+                        <DirectionArrow size={16} aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -650,24 +671,47 @@ function MobileNavigation({
         </nav>
       </div>
       <div className={styles.drawerFooter}>
-        <p>یک گفت‌وگو، شروع یک تصمیم روشن‌تر.</p>
+        <p>{copy.conversation}</p>
         <ActionButton
           href={getSiteHref(CONSULTATION_PATH, pathname)}
-          icon={ArrowLeft}
+          icon={DirectionArrow}
           fullWidth
           onClick={onDismiss}
         >
-          درخواست مشاوره راهبردی
+          {copy.strategicConsultation}
         </ActionButton>
         <Link
           href={getSiteHref(ASSESSMENT_PATH, pathname)}
           className={styles.assessmentLink}
           onClick={onDismiss}
         >
-          ارزیابی موقعیت مالی من
-          <ArrowLeft size={14} aria-hidden="true" />
+          {copy.myAssessment}
+          <DirectionArrow size={14} aria-hidden="true" />
         </Link>
       </div>
     </dialog>
+  );
+}
+
+function LanguageSwitch({ onSwitch }: { onSwitch: () => void }) {
+  const pathname = usePathname();
+  const { locale, toggleLocale } = useLanguage();
+  const copy = shellContent[locale].navbar;
+  if (!getLocaleFromPathname(pathname)) return null;
+
+  return (
+    <button
+      type="button"
+      className={styles.languageSwitch}
+      aria-label={copy.switchLabel}
+      title={copy.switchLabel}
+      data-language-switch
+      onClick={() => {
+        onSwitch();
+        toggleLocale();
+      }}
+    >
+      <bdi lang="en" dir="ltr">{copy.switchCode}</bdi>
+    </button>
   );
 }

@@ -1,8 +1,9 @@
-const STATIC_CACHE = "dnh-static-v1";
-const RUNTIME_CACHE = "dnh-runtime-v1";
+const STATIC_CACHE = "dnh-static-v2";
+const RUNTIME_CACHE = "dnh-runtime-v2";
 
 const PRECACHE_URLS = [
-  "/",
+  "/fa",
+  "/en",
   "/manifest.webmanifest",
   "/favicon.ico",
   "/icons/icon-192x192.png",
@@ -39,7 +40,8 @@ async function networkFirst(request) {
     return response;
   } catch (error) {
     const cachedResponse = await caches.match(request);
-    const cachedHome = await caches.match("/");
+    const locale = /^\/en(?:\/|$)/.test(new URL(request.url).pathname) ? "en" : "fa";
+    const cachedHome = await caches.match(`/${locale}`);
 
     return cachedResponse || cachedHome || Response.error();
   }
@@ -103,7 +105,8 @@ self.addEventListener("fetch", (event) => {
 
   if (request.method !== "GET") return;
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith("/api/")) return;
+  if (/^\/api(?:\/|$)/.test(url.pathname)) return;
+  if (/^\/(?:(?:fa|en)\/)?(?:admin|dashboard|login|register)(?:\/|$)/.test(url.pathname)) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
