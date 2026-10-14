@@ -10,17 +10,16 @@ import { InsightsSection } from "@/components/static/Home/InsightsSection";
 import { ResearchSection } from "@/components/static/Home/ResearchSection";
 import { AboutDrNasimSection } from "@/components/static/Home/AboutDrNasimSection";
 import { FinancialDecisionAssessmentSection } from "@/components/static/Home/FinancialDecisionAssessmentSection";
-import { Metadata } from "next/types";
+import type { Metadata } from "next";
+import homepage from "@/config/DNH_Homepage_Final_FA.json";
 export const metadata: Metadata = {
-  title: "دکتر نسیم محمدحسنی | معماری ثروت و مشاوره مالی",
-
-  description:
-    "DNH، چارچوب تخصصی دکتر نسیم محمدحسنی برای معماری ثروت، ارزیابی ریسک و مشاوره مالی استراتژیک به سرمایه‌گذاران، خانواده‌ها و کسب‌وکارها.",
-  applicationName: "DNH",
+  title: homepage.seo.title,
+  description: homepage.seo.description,
+  applicationName: homepage.brand,
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    title: "DNH",
+    title: homepage.brand,
     statusBarStyle: "default",
   },
   formatDetection: {
