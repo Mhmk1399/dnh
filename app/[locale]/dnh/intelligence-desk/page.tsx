@@ -1,30 +1,48 @@
 import { localizePageMetadata } from "@/lib/site-seo";
 import { normalizeSiteLocale } from "@/lib/site-language";
-import { IntelligenceBoundarySection } from "@/components/static/DNH/intelligence-desk/IntelligenceBoundarySection";
 import { IntelligenceDeskHero } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskHero";
-import { IntelligenceFinalCtaSection } from "@/components/static/DNH/intelligence-desk/IntelligenceFinalCtaSection";
-import { IntelligenceLayersSection } from "@/components/static/DNH/intelligence-desk/IntelligenceLayersSection";
-import { IntelligenceViewSection } from "@/components/static/DNH/intelligence-desk/IntelligenceViewSection";
-import { StrategicImplicationsSection } from "@/components/static/DNH/intelligence-desk/StrategicImplicationsSection";
-import { WhatToWatchSection } from "@/components/static/DNH/intelligence-desk/WhatToWatchSection";
+import { IntelligenceDeskWhatWeMonitor } from "@/components/static/DNH/intelligence-desk/IntelligenceLayersSection";
+import { CurrentIntelligenceSnapshot } from "@/components/static/DNH/intelligence-desk/IntelligenceViewSection";
+import { IntelligenceDeskMacroRiskView } from "@/components/static/DNH/intelligence-desk/StrategicImplicationsSection";
+import { IntelligenceDeskEconomicPressure } from "@/components/static/DNH/intelligence-desk/HighlightedHeading";
+import { IntelligenceDeskAssetPositioning } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskAssetPositioning";
+import { IntelligenceDeskRiskTemperature } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskRiskTemperature";
+import { IntelligenceDeskWeeklyBias } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskWeeklyBias";
+import { IntelligenceDeskWhatToWatch } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskWhatToWatch";
+import { IntelligenceDeskStrategicImplications } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskStrategicImplications";
+import { IntelligenceDeskBoundaries } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskBoundaries";
+import { IntelligenceDeskFinalCTA } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskFinalCTA";
 
 const page = () => {
   return (
     <div>
       <IntelligenceDeskHero />
-      <IntelligenceViewSection />
-      <IntelligenceLayersSection />
-      <StrategicImplicationsSection />
-      <WhatToWatchSection />
-      <IntelligenceBoundarySection />
-      <IntelligenceFinalCtaSection />
+      <CurrentIntelligenceSnapshot />
+      <IntelligenceDeskWhatWeMonitor />
+      <IntelligenceDeskMacroRiskView />
+      <IntelligenceDeskEconomicPressure />
+      <IntelligenceDeskAssetPositioning />
+      <IntelligenceDeskRiskTemperature />
+      <IntelligenceDeskWeeklyBias />
+      <IntelligenceDeskWhatToWatch />
+      <IntelligenceDeskStrategicImplications />
+      <IntelligenceDeskBoundaries />
+      <IntelligenceDeskFinalCTA />
     </div>
   );
 };
 
 export default page;
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
-  return localizePageMetadata({}, "/dnh/intelligence-desk", normalizeSiteLocale(locale));
+  return localizePageMetadata(
+    {},
+    "/dnh/intelligence-desk",
+    normalizeSiteLocale(locale),
+  );
 }

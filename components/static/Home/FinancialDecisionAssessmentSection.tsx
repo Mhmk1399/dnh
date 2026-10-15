@@ -105,15 +105,7 @@ export function FinancialDecisionAssessmentSection() {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            {content.english_label &&
-            content.english_label !== content.eyebrow ? (
-              <bdi
-                dir="ltr"
-                className="w-full text-[10px] font-medium tracking-[0.28em] text-ink-muted"
-              >
-                {content.english_label}
-              </bdi>
-            ) : null}
+         
           </div>
 
           <h2

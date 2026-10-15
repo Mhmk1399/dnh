@@ -1,920 +1,318 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
-import { ArrowDownLeft } from "lucide-react";
+"use client";
 
-const INTELLIGENCE_LAYERS = [
-  {
-    key: "MACRO",
-    en: "MACRO RISK VIEW",
-    fa: "ریسک کلان",
-    description:
-      "اقتصاد و ریسک‌های کلان، زمینه‌ای را می‌سازند که تصمیم در آن شکل می‌گیرد.",
-  },
-  {
-    key: "ASSET",
-    en: "ASSET VIEW",
-    fa: "نمای دارایی",
-    description: "دارایی‌ها و بازارها در نسبت با تصویر کلی تصمیم دیده می‌شوند.",
-  },
-  {
-    key: "LIQUIDITY",
-    en: "LIQUIDITY VIEW",
-    fa: "نقدشوندگی",
-    description: "دسترسی به منابع و انعطاف نقدینگی، بخشی از کیفیت تصمیم است.",
-  },
-  {
-    key: "RISK",
-    en: "INFLATION / FX / POLICY",
-    fa: "تورم، ارز و سیاست‌گذاری",
-    description:
-      "متغیرهایی که می‌توانند قدرت خرید، ریسک و شرایط تصمیم را تغییر دهند.",
-  },
-] as const;
+import {
+  Activity,
+  ArrowLeft,
+  ArrowRight,
+  Banknote,
+  BarChart3,
+  Droplets,
+  Globe2,
+  Landmark,
+  Radar,
+  TrendingUp,
+  type LucideIcon,
+} from "lucide-react";
 
-/* =============================================================================
-   SECTION — SERVER COMPONENT
-============================================================================= */
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import intelligenceFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
+import intelligenceEn from "@/config/DNH_Intelligence_Desk_Final_EN.json";
 
-export function IntelligenceLayersSection() {
+type SectionLookup = {
+  id: string;
+  type: string;
+};
+
+type MonitoringItem = {
+  id:
+    | "inflation-purchasing-power"
+    | "currency"
+    | "liquidity"
+    | "economic-policy"
+    | "macro-geopolitical-risk"
+    | "market-conditions"
+    | "capital-behaviour";
+  title: string;
+  description: string;
+};
+
+type WhatWeMonitorContent = {
+  order: number;
+  id: "what-we-monitor";
+  type: "monitoring-areas";
+  eyebrow: string;
+  english_label: string;
+  heading: string;
+  heading_highlight: string;
+  intro: string;
+  items: MonitoringItem[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
+
+const itemIcons: Record<MonitoringItem["id"], LucideIcon> = {
+  "inflation-purchasing-power": TrendingUp,
+  currency: Banknote,
+  liquidity: Droplets,
+  "economic-policy": Landmark,
+  "macro-geopolitical-risk": Globe2,
+  "market-conditions": BarChart3,
+  "capital-behaviour": Activity,
+};
+
+function HighlightedHeading({
+  heading,
+  highlight,
+}: {
+  heading: string;
+  highlight: string;
+}) {
+  const index = highlight ? heading.indexOf(highlight) : -1;
+
+  if (index < 0) return <>{heading}</>;
+
   return (
-    <section
-      id="intelligence-layers"
-      dir="rtl"
-      aria-labelledby="intelligence-layers-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        bg-[#032f3f]
-        text-white
-
-        sm:scroll-mt-28
-      "
-    >
-      <Background />
-
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
-
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          py-16
-
-          sm:px-8
-          sm:py-20
-
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            Header
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.82fr_1.18fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
-
-              <span
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-white/62
-
-                  sm:text-[11px]
-                "
-              >
-                لایه‌های Intelligence
-              </span>
-            </div>
-
-            <h2
-              id="intelligence-layers-title"
-              className="
-                max-w-[730px]
-
-                text-[31px]
-                font-black
-                leading-[1.65]
-                tracking-[-0.045em]
-
-                text-white
-
-                sm:text-[38px]
-
-                lg:text-[45px]
-                lg:leading-[1.55]
-
-                xl:text-[50px]
-              "
-            >
-              هیچ متغیری،
-              <br />
-              به‌تنهایی{" "}
-              <span className="text-brand-accent">تصویر تصمیم نیست.</span>
-            </h2>
-          </div>
-
-          <div className="lg:pb-1">
-            <p
-              className="
-                max-w-[650px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-white/52
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              میز هوشمندی DNH چند لایه از محیط مالی را کنار هم می‌بیند تا اهمیت
-              هر متغیر در زمینه تصمیم معنا پیدا کند.
-            </p>
-          </div>
-        </div>
-
-        {/* =======================================================
-            MAIN
-        ======================================================== */}
-
-        <div
-          className="
-            mt-12
-
-            grid
-            gap-10
-
-            sm:mt-14
-
-            lg:mt-16
-            lg:grid-cols-[1.08fr_0.92fr]
-            lg:items-stretch
-            lg:gap-14
-          "
-        >
-          {/* =====================================================
-              LAYER STACK
-          ====================================================== */}
-
-          <div
-            className="
-              intelligence-stack
-
-              relative
-              overflow-hidden
-
-              border
-              border-white/12
-
-              bg-white/[0.025]
-
-              p-4
-
-              sm:p-6
-
-              lg:min-h-[570px]
-              lg:p-8
-            "
-          >
-            <StackBackground />
-
-            <div
-              className="
-                relative
-                z-10
-
-                flex
-                h-full
-                flex-col
-                justify-center
-
-                gap-3
-              "
-            >
-              {INTELLIGENCE_LAYERS.map((layer, index) => (
-                <LayerBar key={layer.key} layer={layer} index={index} />
-              ))}
-
-              {/* =================================================
-                  Synthesis
-              ================================================== */}
-
-              <div
-                className="
-                  group/result
-
-                  relative
-
-                  mt-3
-
-                  border
-                  border-brand-accent/30
-
-                  bg-brand-accent/[0.055]
-
-                  px-5
-                  py-5
-
-                  sm:px-6
-                "
-              >
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    inset-y-0
-                    right-0
-
-                    w-[3px]
-
-                    bg-brand-accent
-                  "
-                />
-
-                <div
-                  className="
-                    flex
-                    flex-col
-                    gap-5
-
-                    sm:flex-row
-                    sm:items-center
-                    sm:justify-between
-                  "
-                >
-                  <div>
-                    <p
-                      dir="ltr"
-                      className="
-                        text-[11px]
-                        font-black
-                        tracking-[0.18em]
-
-                        text-brand-accent
-                      "
-                    >
-                      DECISION INTELLIGENCE
-                    </p>
-
-                    <p
-                      className="
-                        mt-2
-
-                        text-[14px]
-                        font-black
-                        leading-[1.9]
-
-                        text-white
-
-                        sm:text-[16px]
-                      "
-                    >
-                      معنا در کنار هم دیده شدن لایه‌ها شکل می‌گیرد.
-                    </p>
-                  </div>
-
-                  <div
-                    aria-hidden="true"
-                    className="
-                      flex
-                      items-center
-                      gap-2
-                    "
-                  >
-                    <span
-                      className="
-                        h-px
-                        w-8
-
-                        bg-brand-accent/40
-
-                        transition-[width]
-                        duration-300
-
-                        group-hover/result:w-16
-                      "
-                    />
-
-                    <span
-                      className="
-                        h-[11px]
-                        w-[11px]
-
-                        bg-brand-accent
-                      "
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* subtle scan */}
-            <span
-              aria-hidden="true"
-              className="
-                intelligence-scan
-
-                pointer-events-none
-
-                absolute
-                inset-y-0
-                left-0
-
-                z-[5]
-
-                w-px
-
-                bg-gradient-to-b
-                from-transparent
-                via-[#82d6ed]/55
-                to-transparent
-
-                opacity-60
-              "
-            />
-          </div>
-
-          {/* =====================================================
-              OUTPUT SIDE
-          ====================================================== */}
-
-          <div
-            className="
-              relative
-
-              flex
-              flex-col
-              justify-between
-
-              border
-              border-white/12
-
-              bg-black/[0.07]
-
-              p-5
-
-              sm:p-7
-
-              lg:p-8
-            "
-          >
-            <div>
-              <p
-                dir="ltr"
-                className="
-                  text-[11px]
-                  font-black
-                  tracking-[0.19em]
-
-                  text-[#82cfe5]/60
-                "
-              >
-                FROM OBSERVATION TO MEANING
-              </p>
-
-              <h3
-                className="
-                  mt-4
-                  max-w-[470px]
-
-                  text-[22px]
-                  font-black
-                  leading-[1.85]
-
-                  text-white
-
-                  sm:text-[25px]
-                "
-              >
-                دیدن متغیرها کافی نیست؛
-                <br />
-                باید فهمید چرا مهم‌اند.
-              </h3>
-
-              <p
-                className="
-                  mt-5
-                  max-w-[540px]
-
-                  text-[11px]
-                  font-medium
-                  leading-[2.1]
-
-                  text-white/42
-
-                  sm:text-[12px]
-                "
-              >
-                هدف Intelligence Desk این است که مشاهده بازار و اقتصاد به شناخت
-                بهتر ریسک، شرایط و پیامدهای تصمیم تبدیل شود.
-              </p>
-            </div>
-
-            {/* ---------------------------------------------------
-                OUTPUT LEDGER
-            ---------------------------------------------------- */}
-
-            <div
-              className="
-                mt-10
-
-                border-y
-                border-white/10
-              "
-            >
-              <OutputRow en="WHAT TO WATCH" fa="چه چیزی نیازمند توجه است؟" />
-
-              <OutputRow
-                en="STRATEGIC IMPLICATION"
-                fa="این تغییر برای تصمیم چه معنایی دارد؟"
-                accent
-              />
-            </div>
-
-            {/* ---------------------------------------------------
-                Footer
-            ---------------------------------------------------- */}
-
-            <div
-              className="
-                mt-8
-
-                flex
-                flex-col
-                gap-5
-
-                border-r
-                border-white/10
-
-                pr-5
-              "
-            >
-              <p
-                className="
-                  max-w-[470px]
-
-                  text-[11px]
-                  font-medium
-                  leading-[2]
-
-                  text-white/30
-                "
-              >
-                خروجی این نگاه، سیگنال خرید یا فروش نیست؛ بلکه تصویر منظم‌تری از
-                محیط تصمیم است.
-              </p>
-
-              <Link
-                href="#strategic-implications"
-                className="
-                  group/link
-
-                  inline-flex
-                  min-h-11
-                  w-fit
-
-                  items-center
-                  gap-3
-
-                  text-[10px]
-                  font-black
-
-                  text-[#82cfe5]
-
-                  outline-none
-
-                  transition-colors
-                  duration-300
-
-                  hover:text-brand-accent
-
-                  focus-visible:ring-2
-                  focus-visible:ring-focus/50
-                "
-              >
-                داده چگونه به معنای راهبردی می‌رسد؟
-                <ArrowDownLeft
-                  aria-hidden="true"
-                  className="
-                    h-4
-                    w-4
-
-                    transition-transform
-                    duration-300
-
-                    group-hover/link:translate-y-1
-                    group-hover/link:-translate-x-1
-                  "
-                  strokeWidth={1.6}
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Motion />
-    </section>
+    <>
+      {heading.slice(0, index)}
+      <span className="text-brand-accent">
+        {heading.slice(index, index + highlight.length)}
+      </span>
+      {heading.slice(index + highlight.length)}
+    </>
   );
 }
 
-/* =============================================================================
-   Layer
-============================================================================= */
-
-function LayerBar({
-  layer,
-  index,
+function MonitoringRow({
+  item,
+  isRTL,
+  connectorSide,
 }: {
-  layer: (typeof INTELLIGENCE_LAYERS)[number];
-  index: number;
+  key?: string;
+  item: MonitoringItem;
+  isRTL: boolean;
+  connectorSide?: "start" | "end";
 }) {
-  const widths = ["lg:w-[100%]", "lg:w-[94%]", "lg:w-[88%]", "lg:w-[82%]"];
+  const Icon = itemIcons[item.id];
 
   return (
-    <article
-      className={`
-        group/layer
+    <article className="group relative min-w-0 border-b border-line px-4 py-5 last:border-b-0 sm:px-6 sm:py-6 lg:min-h-[10.25rem] lg:px-7 lg:py-7">
+      <div className="flex min-w-0 items-start gap-4 sm:gap-5">
+        <span className="flex size-11 shrink-0 items-center justify-center border border-line bg-page text-brand-primary transition-[border-color,color,background-color] duration-200 group-hover:border-brand-accent/70 group-hover:bg-brand-accent/10 group-hover:text-brand-accent motion-reduce:transition-none sm:size-12">
+          <Icon aria-hidden="true" size={20} strokeWidth={1.6} />
+        </span>
 
-        relative
-
-        w-full
-
-        overflow-hidden
-
-        border
-        border-white/10
-
-        bg-white/[0.035]
-
-        px-4
-        py-4
-
-        transition-[background-color,border-color,transform]
-        duration-300
-
-        hover:-translate-x-1
-        hover:border-[#82cfe5]/30
-        hover:bg-white/[0.06]
-
-        sm:px-5
-        sm:py-5
-
-        ${widths[index]}
-      `}
-    >
-      {/* left accent */}
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          inset-y-0
-          right-0
-
-          w-[2px]
-
-          bg-[#82cfe5]/20
-
-          transition-colors
-          duration-300
-
-          group-hover/layer:bg-brand-accent
-        "
-      />
-
-      <div
-        className="
-          grid
-          gap-3
-
-          sm:grid-cols-[125px_1fr]
-          sm:items-center
-          sm:gap-6
-        "
-      >
-        <div>
-          <p
-            dir="ltr"
-            className="
-              text-right
-              text-[6px]
-              font-black
-              tracking-[0.15em]
-
-              text-[#82cfe5]/55
-            "
+        <div className="min-w-0 flex-1 text-start">
+          <h3
+            className={`text-[16px] font-black text-ink sm:text-[17px] ${
+              isRTL ? "leading-[1.8]" : "leading-[1.38]"
+            }`}
           >
-            {layer.en}
-          </p>
-
+            {item.title}
+          </h3>
           <p
-            className="
-              mt-1.5
-
-              text-[11px]
-              font-black
-
-              text-white/78
-            "
+            className={`mt-2 text-[13.5px] font-medium text-ink-muted sm:text-[14px] ${
+              isRTL ? "leading-[1.95]" : "leading-[1.72]"
+            }`}
           >
-            {layer.fa}
+            {item.description}
           </p>
         </div>
-
-        <p
-          className="
-            max-w-[570px]
-
-            text-[11px]
-            font-medium
-            leading-[1.95]
-
-            text-white/36
-
-            sm:text-[10px]
-          "
-        >
-          {layer.description}
-        </p>
       </div>
 
-      {/* activity */}
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-4
-          top-1/2
-
-          h-[5px]
-          w-[5px]
-
-          -translate-y-1/2
-
-          bg-[#82cfe5]/35
-
-          transition-[background-color,box-shadow]
-          duration-300
-
-          group-hover/layer:bg-brand-accent
-          group-hover/layer:shadow-[0_0_12px_rgba(252,133,2,.55)]
-        "
-      />
+      {connectorSide ? (
+        <div
+          aria-hidden="true"
+          className={`absolute top-1/2 hidden -translate-y-1/2 items-center lg:flex ${
+            connectorSide === "end" ? "end-0" : "start-0"
+          }`}
+        >
+          <span className="h-px w-7 bg-brand-accent/60" />
+          <span className="size-2 border border-brand-accent bg-surface-soft transition-transform duration-200 group-hover:scale-125 motion-reduce:transition-none" />
+        </div>
+      ) : null}
     </article>
   );
 }
 
-/* =============================================================================
-   Output
-============================================================================= */
+export function IntelligenceDeskWhatWeMonitor() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const intelligence = locale === "en" ? intelligenceEn : intelligenceFa;
+  const content = intelligence.sections.find(
+    (section: SectionLookup) =>
+      section.id === "what-we-monitor" && section.type === "monitoring-areas",
+  ) as WhatWeMonitorContent | undefined;
 
-function OutputRow({
-  en,
-  fa,
-  accent = false,
-}: {
-  en: string;
-  fa: string;
-  accent?: boolean;
-}) {
+  if (!content) return null;
+
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+  const leftItems = content.items.filter((_, index) => index % 2 === 0);
+  const rightItems = content.items.filter((_, index) => index % 2 === 1);
+
   return (
-    <div
-      className="
-        group/output
-
-        flex
-        items-center
-        justify-between
-        gap-6
-
-        border-b
-        border-white/10
-
-        py-5
-
-        last:border-b-0
-      "
+    <section
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="what-we-monitor-heading"
+      className="relative isolate overflow-x-clip border-b border-line bg-page py-14 text-ink sm:py-16 lg:py-20 xl:py-24"
     >
-      <div>
-        <p
-          dir="ltr"
-          className={`
-            text-right
-            text-[6px]
-            font-black
-            tracking-[0.16em]
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 start-0 hidden w-px bg-line xl:block"
+      />
 
-            ${accent ? "text-brand-accent" : "text-[#82cfe5]/55"}
-          `}
-        >
-          {en}
-        </p>
+      <div className="dnh-site-shell relative z-10 min-w-0">
+        <header className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.66fr)_minmax(19rem,0.34fr)] lg:items-end lg:gap-12 xl:gap-16">
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
+              />
+              <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
+              </p>
+            </div>
 
-        <p
-          className="
-            mt-2
+            <h2
+              id="what-we-monitor-heading"
+              className={`mt-4 max-w-[29ch] text-pretty text-[clamp(1.85rem,7vw,2.35rem)] font-black [overflow-wrap:break-word] sm:mt-5 sm:text-[clamp(2.15rem,4.4vw,3rem)] lg:max-w-[25ch] lg:text-[clamp(2.55rem,3.25vw,3.4rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.12]"
+              }`}
+            >
+              <HighlightedHeading
+                heading={content.heading}
+                highlight={content.heading_highlight}
+              />
+            </h2>
+          </div>
 
-            text-[11px]
-            font-black
-            leading-[1.9]
+          <div className="min-w-0 border-s-2 border-brand-accent ps-4 text-start sm:ps-5">
+            <p
+              className={`text-[14px] font-medium text-ink-muted sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.78]"
+              }`}
+            >
+              {content.intro}
+            </p>
+          </div>
+        </header>
 
-            text-white/72
-          "
-        >
-          {fa}
-        </p>
+        <div className="mt-9 border-y border-line bg-surface-soft sm:mt-10 lg:mt-12">
+          <div className="lg:hidden">
+            <div className="flex min-w-0 items-center gap-4 border-b border-line bg-brand-primary px-4 py-5 text-white sm:px-6">
+              <span className="flex size-11 shrink-0 items-center justify-center border border-white/25 bg-white/5 text-brand-accent">
+                <Radar aria-hidden="true" size={20} strokeWidth={1.6} />
+              </span>
+              <div className="min-w-0 text-start">
+                <bdi
+                  dir="ltr"
+                  className="block text-[10px] font-bold uppercase tracking-[0.075em] text-white/60"
+                >
+                  {intelligence.brand}
+                </bdi>
+              </div>
+            </div>
+
+            <div className="min-w-0">
+              {content.items.map((item) => (
+                <MonitoringRow key={item.id} item={item} isRTL={isRTL} />
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden min-w-0 lg:grid lg:grid-cols-[minmax(0,1fr)_14rem_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_16rem_minmax(0,1fr)]">
+            <div className="min-w-0 border-e border-line">
+              {leftItems.map((item) => (
+                <MonitoringRow
+                  key={item.id}
+                  item={item}
+                  isRTL={isRTL}
+                  connectorSide="end"
+                />
+              ))}
+            </div>
+
+            <div className="relative isolate flex min-h-full items-center justify-center overflow-hidden bg-brand-primary px-6 py-10 text-white xl:px-8">
+              <div
+                aria-hidden="true"
+                className="absolute inset-y-0 start-1/2 w-px -translate-x-1/2 bg-white/10"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/10"
+              />
+
+              <div className="relative z-10 w-full text-center">
+                <span className="mx-auto flex size-14 items-center justify-center border border-white/25 bg-white/5 text-brand-accent xl:size-16">
+                  <Radar aria-hidden="true" size={25} strokeWidth={1.5} />
+                </span>
+
+                <bdi
+                  dir="ltr"
+                  className="mt-5 block text-[10px] font-bold uppercase tracking-[0.1em] text-white/55 xl:text-[11px]"
+                >
+                  {intelligence.brand}
+                </bdi>
+
+                <span
+                  aria-hidden="true"
+                  className="mx-auto mt-5 block h-[2px] w-12 bg-brand-accent"
+                />
+
+                <p
+                  className={`mt-5 text-[12.5px] font-semibold text-white/68 ${
+                    isRTL ? "leading-[1.9]" : "leading-[1.65]"
+                  }`}
+                >
+                  {content.closing}
+                </p>
+              </div>
+            </div>
+
+            <div className="min-w-0 border-s border-line">
+              {rightItems.map((item) => (
+                <MonitoringRow
+                  key={item.id}
+                  item={item}
+                  isRTL={isRTL}
+                  connectorSide="start"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-7 grid min-w-0 gap-5 border-s-2 border-brand-accent bg-surface-soft px-4 py-5 sm:mt-8 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-7">
+          <p
+            className={`min-w-0 max-w-[78ch] text-start text-[14px] font-semibold text-ink sm:text-[15px] ${
+              isRTL ? "leading-[1.95]" : "leading-[1.72]"
+            }`}
+          >
+            {content.closing}
+          </p>
+
+          {content.ctas[0] ? (
+            <ActionButton
+              href={content.ctas[0].href}
+              variant={content.ctas[0].type}
+              size="lg"
+              icon={Arrow}
+              iconPosition="end"
+              dir={direction}
+              className="min-h-12 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto"
+            >
+              {content.ctas[0].label}
+            </ActionButton>
+          ) : null}
+        </div>
       </div>
-
-      <span
-        aria-hidden="true"
-        className={`
-          h-[11px]
-          w-[11px]
-
-          transition-[transform,box-shadow]
-          duration-300
-
-          group-hover/output:scale-125
-
-          ${
-            accent
-              ? "bg-brand-accent group-hover/output:shadow-[0_0_14px_rgba(252,133,2,.6)]"
-              : "bg-[#82cfe5]/45"
-          }
-        `}
-      />
-    </div>
-  );
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 20% 40%,rgba(22,115,148,.18),transparent 32%),linear-gradient(112deg,#022b39 0%,#033847 54%,#022d3a 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.065]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[18%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
-  );
-}
-
-/* =============================================================================
-   Stack background
-============================================================================= */
-
-function StackBackground() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.10]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.055) 1px,transparent 1px)",
-          backgroundSize: "72px 72px",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-
-          absolute
-          -bottom-16
-          -left-8
-
-          font-mono
-          text-[160px]
-          font-black
-          leading-none
-
-          text-white/[0.018]
-
-          sm:text-[220px]
-        "
-      >
-        VIEW
-      </div>
-    </>
-  );
-}
-
-/* =============================================================================
-   CSS-only Motion
-============================================================================= */
-
-function Motion() {
-  return (
-    <style>{`
-      .intelligence-stack {
-        --scan-position: 0%;
-      }
-
-      .intelligence-scan {
-        animation:
-          dnh-intelligence-scan
-          7s
-          ease-in-out
-          infinite;
-      }
-
-      @keyframes dnh-intelligence-scan {
-        0%,
-        100% {
-          left: 4%;
-          opacity: .12;
-        }
-
-        50% {
-          left: 96%;
-          opacity: .5;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .intelligence-scan {
-          animation: none !important;
-          left: 50%;
-          opacity: .15;
-        }
-      }
-    `}</style>
+    </section>
   );
 }

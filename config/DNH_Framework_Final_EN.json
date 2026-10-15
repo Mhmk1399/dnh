@@ -1,0 +1,654 @@
+{
+  "page": "dnh-framework",
+  "route": "/dnh/framework",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "The DNH Framework",
+  "english_title": "The DNH Framework",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "dnh-framework-hero",
+      "type": "hero",
+      "eyebrow": "The DNH Framework",
+      "english_label": "The DNH Framework",
+      "heading": "Better decisions do not begin with more information; they begin with turning information into a clear path for decision-making.",
+      "paragraphs": [
+        {
+          "id": "context",
+          "text": "In important financial decisions, information is rarely scarce. Economic data, news, market analysis, currency movements, inflation, liquidity and different viewpoints are all available at the same time; but more information does not always create more clarity."
+        },
+        {
+          "id": "approach",
+          "text": "The DNH Framework is designed to bring structure to this complexity; an approach that helps first identify the conditions and variables that matter, then develop scenarios and paths to examine, and finally view today’s decision in relation to long-term goals and horizons."
+        },
+        {
+          "id": "pillars-intro",
+          "text": "The framework is built on three core layers:"
+        }
+      ],
+      "pillars": [
+        {
+          "id": "data",
+          "code": "D",
+          "title": "Data Intelligence",
+          "english_label": "Data Intelligence"
+        },
+        {
+          "id": "navigation",
+          "code": "N",
+          "title": "Navigation Strategy",
+          "english_label": "Navigation Strategy"
+        },
+        {
+          "id": "horizon",
+          "code": "H",
+          "title": "Horizon Architecture",
+          "english_label": "Horizon Architecture"
+        }
+      ],
+      "closing": "The purpose of the DNH Framework is not to provide a ready-made answer or a certain prediction. Its purpose is to create greater clarity for defining the issue, reviewing risks, comparing paths and making more coherent decisions.",
+      "ctas": [
+        {
+          "id": "pillars",
+          "label": "Explore the three layers of the DNH Framework",
+          "type": "primary",
+          "href": "#data-intelligence"
+        },
+        {
+          "id": "assessment",
+          "label": "Start an initial financial decision assessment",
+          "type": "secondary",
+          "href": "/financial-decision-assessment"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "why-decision-framework-matters",
+      "type": "problem-recognition",
+      "eyebrow": "Why a Decision Framework Matters",
+      "english_label": "Why a Decision Framework Matters",
+      "heading": "The problem is not always a lack of information; sometimes too much information makes the decision more complex.",
+      "intro": "Financial decisions are made in an environment where several variables can affect one another at the same time. A piece of news may be positive for one asset, a currency move may create another risk, liquidity may become more important, and at the same time your long-term goals may impose a different constraint on the decision.",
+      "items": [
+        {
+          "id": "information-overload",
+          "title": "You have a large amount of data but do not know which information actually matters",
+          "description": "Not all information carries the same weight or relevance for your specific question."
+        },
+        {
+          "id": "conflicting-analysis",
+          "title": "Different analyses lead to different conclusions",
+          "description": "Without a clear framework, comparing different viewpoints can create more ambiguity rather than less."
+        },
+        {
+          "id": "changing-economic-conditions",
+          "title": "Economic conditions keep changing",
+          "description": "Inflation, currencies, liquidity, economic policy and environmental risks can change earlier assumptions."
+        },
+        {
+          "id": "emotion-in-decisions",
+          "title": "Emotions enter the decision",
+          "description": "Fear, excitement, time pressure or collective market behaviour can pull a decision away from its main objectives."
+        },
+        {
+          "id": "connected-impact",
+          "title": "One decision can affect other parts of your wealth or business",
+          "description": "Reviewing one option without seeing its relationship with the wider structure can therefore produce an incomplete picture."
+        }
+      ],
+      "closing": "A decision framework helps you avoid reacting directly to every data point or market change. It first clarifies the question, the variables that matter, the risks involved and the paths that deserve examination.",
+      "ctas": [
+        {
+          "id": "process",
+          "label": "See how the DNH Framework structures this complexity",
+          "type": "primary",
+          "href": "#from-data-to-decision"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "id": "from-data-to-decision",
+      "type": "process-overview",
+      "eyebrow": "From Data to Decision",
+      "english_label": "From Data to Decision",
+      "heading": "The DNH Framework does not turn scattered information directly into a decision; between data and decision lie analysis, scenarios and the longer-term horizon.",
+      "intro": "At DNH, decision-making is viewed as a staged path:",
+      "steps": [
+        {
+          "id": "data-context",
+          "title": "Data & Context",
+          "english_label": "Data & Context",
+          "description": "Economic, financial and issue-specific conditions are identified first."
+        },
+        {
+          "id": "intelligence",
+          "title": "Intelligence",
+          "english_label": "Intelligence",
+          "description": "Relevant data is separated from lower-priority information to create a clearer view of the situation."
+        },
+        {
+          "id": "navigation",
+          "title": "Scenarios & Paths",
+          "english_label": "Navigation",
+          "description": "Risks, constraints and different decision options are examined."
+        },
+        {
+          "id": "horizon",
+          "title": "Horizon & Long-Term Structure",
+          "english_label": "Horizon",
+          "description": "The effect of the decision on goals, liquidity, resilience and the long-term structure is reviewed."
+        },
+        {
+          "id": "structured-decision",
+          "title": "Structured Decision",
+          "description": "A decision takes shape when it does more than respond to today’s conditions and its consequences can also be examined and defended."
+        }
+      ],
+      "closing": "The three D, N and H layers are three parts of one path: better understanding → better navigation → a decision that is better aligned with the future.",
+      "ctas": [
+        {
+          "id": "components",
+          "label": "Explore the components of the DNH Framework",
+          "type": "primary",
+          "href": "#data-intelligence"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "id": "data-intelligence",
+      "type": "framework-pillar",
+      "code": "D",
+      "eyebrow": "D: Data Intelligence",
+      "english_label": "D — Data Intelligence",
+      "heading": "Before deciding, we need to know what is actually influencing the issue.",
+      "paragraphs": [
+        {
+          "id": "layer-intro",
+          "text": "The first layer of the DNH Framework focuses on understanding the data and variables that shape the decision environment."
+        },
+        {
+          "id": "purpose",
+          "text": "The aim is not to collect as much information as possible. It is to bring together the data that may matter to the decision and turn a large volume of information into a usable picture for analysis."
+        },
+        {
+          "id": "scope-intro",
+          "text": "Depending on the issue, this picture may include areas such as:"
+        }
+      ],
+      "items": [
+        {
+          "id": "economic-conditions",
+          "title": "Economic Conditions",
+          "description": "Inflation, growth, economic policy and other relevant macro variables."
+        },
+        {
+          "id": "currency-purchasing-power",
+          "title": "Currencies & Purchasing Power",
+          "description": "Reviewing currency pressures and how they may affect capital and the decision."
+        },
+        {
+          "id": "liquidity",
+          "title": "Liquidity",
+          "description": "Understanding liquidity conditions in the market as well as the decision-maker’s specific position."
+        },
+        {
+          "id": "markets-asset-classes",
+          "title": "Markets & Asset Classes",
+          "description": "Reviewing asset conditions in relation to the issue, rather than treating them as isolated signals."
+        },
+        {
+          "id": "financial-structure",
+          "title": "Financial Structure",
+          "description": "Assets, obligations, concentration of capital and other relevant components."
+        },
+        {
+          "id": "individual-business-context",
+          "title": "Individual or Business Context",
+          "description": "Goals, constraints, time horizons and needs that can make a data point important for one decision and less relevant for another."
+        }
+      ],
+      "closing": "The output of this layer is not meant to be a table of numbers. The aim is to create a clearer picture of the situation and the variables that truly need to be considered in the decision.",
+      "ctas": [
+        {
+          "id": "navigation",
+          "label": "Explore the next layer: Navigation Strategy",
+          "type": "primary",
+          "href": "#navigation-strategy"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "id": "navigation-strategy",
+      "type": "framework-pillar",
+      "code": "N",
+      "eyebrow": "N: Navigation Strategy",
+      "english_label": "N — Navigation Strategy",
+      "heading": "Analysis becomes valuable when it can make the decision paths clearer.",
+      "paragraphs": [
+        {
+          "id": "context",
+          "text": "Once the conditions are understood, the problem is still not solved. Several paths may be available, and each can create a different combination of opportunities, constraints and risks."
+        },
+        {
+          "id": "purpose",
+          "text": "In the Navigation Strategy layer, data and analysis are turned into a structure that can be used for decision-making."
+        }
+      ],
+      "items": [
+        {
+          "id": "scenarios",
+          "title": "Different scenarios are considered",
+          "description": "Instead of depending on one certain future, several plausible situations are examined."
+        },
+        {
+          "id": "risk-prioritization",
+          "title": "Risks are prioritised",
+          "description": "Not all risks matter equally; the risks with greater potential impact on the decision need to be identified."
+        },
+        {
+          "id": "constraints",
+          "title": "Constraints are brought into the decision",
+          "description": "Liquidity, time, obligations, capital structure and other constraints are part of the decision itself."
+        },
+        {
+          "id": "options-comparison",
+          "title": "The available options are compared",
+          "description": "The question is not only what an option offers, but what is gained in each path and what risk or constraint is accepted."
+        },
+        {
+          "id": "decision-consequences",
+          "title": "The consequences become clearer",
+          "description": "The decision is not viewed only from the perspective of today; its effect on other parts of the structure is also examined."
+        }
+      ],
+      "closing": "This layer is not designed to issue a definitive instruction. Its purpose is to create a clearer map of the paths, risks and choices available to the decision-maker.",
+      "ctas": [
+        {
+          "id": "horizon",
+          "label": "Explore the next layer: Horizon Architecture",
+          "type": "primary",
+          "href": "#horizon-architecture"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "id": "horizon-architecture",
+      "type": "framework-pillar",
+      "code": "H",
+      "eyebrow": "H: Horizon Architecture",
+      "english_label": "H — Horizon Architecture",
+      "heading": "Today’s decision should align with the structure you are building for the future.",
+      "intro": "A decision may appear sensible in the short term, but when it is examined in relation to long-term goals, liquidity needs or the overall wealth structure, a different picture may emerge.",
+      "items": [
+        {
+          "id": "long-term-goals",
+          "title": "Long-Term Goals",
+          "description": "How does today’s decision align with future financial goals?"
+        },
+        {
+          "id": "liquidity",
+          "title": "Liquidity",
+          "description": "How much financial flexibility remains after the decision?"
+        },
+        {
+          "id": "resilience",
+          "title": "Resilience",
+          "description": "How well can the resulting structure withstand economic changes and different market cycles?"
+        },
+        {
+          "id": "whole-wealth-structure",
+          "title": "Overall Wealth Structure",
+          "description": "What effect does the decision have on the composition and balance of the rest of the wealth structure?"
+        },
+        {
+          "id": "time-horizon",
+          "title": "Time Horizon",
+          "description": "Does the nature of the decision align with the time available to achieve the goal?"
+        },
+        {
+          "id": "future-needs",
+          "title": "Future Needs",
+          "description": "Could today’s decision restrict the financial capacity required for future obligations and needs?"
+        }
+      ],
+      "closing_question": "Where does this decision fit within the financial and wealth structure we want to have in the future?",
+      "ctas": [
+        {
+          "id": "integration",
+          "label": "See how the three DNH layers work together",
+          "type": "primary",
+          "href": "#how-dnh-pillars-work-together"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "id": "how-dnh-pillars-work-together",
+      "type": "integration",
+      "eyebrow": "How the Three Layers Work Together",
+      "english_label": "How D, N & H Work Together",
+      "heading": "D, N and H are not three separate services; they are three perspectives within one decision-making process.",
+      "paragraphs": [
+        {
+          "id": "integration",
+          "text": "The strength of the DNH Framework appears when all three layers are considered in relation to one another."
+        },
+        {
+          "id": "example",
+          "text": "Imagine that you are facing an important decision about reallocating part of your capital."
+        }
+      ],
+      "steps": [
+        {
+          "id": "data",
+          "code": "D",
+          "title": "First, it sees the conditions",
+          "description": "Which variables are affecting the decision? What are the economic conditions? What is the current asset structure? What are your liquidity position, goals and constraints?"
+        },
+        {
+          "id": "navigation",
+          "code": "N",
+          "title": "Then, it examines the possible paths",
+          "description": "What options are available? What risks arise under different scenarios? Which constraints matter most, and what consequences should be considered before deciding?"
+        },
+        {
+          "id": "horizon",
+          "code": "H",
+          "title": "Finally, it places the decision in a wider horizon",
+          "description": "How does each path affect the long-term wealth structure, financial flexibility, goals and resilience?"
+        }
+      ],
+      "framework_logic": "Understand the conditions → examine the paths → align the decision with the future",
+      "closing": "The aim is not to find a “magic answer.” The aim is to help the decision-maker choose with a clearer understanding of the conditions, risks and consequences of the decision.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Review a financial issue through the DNH Framework",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "id": "decision-context",
+      "type": "decision-context",
+      "eyebrow": "What the DNH Framework Sees in a Decision",
+      "english_label": "The Decision Context",
+      "heading": "A financial decision is not just a number or an asset; it is a set of interconnected factors.",
+      "intro": "In the DNH Framework, the issue is reviewed in as complete a context as possible so that one factor does not take the place of the whole picture.",
+      "items": [
+        {
+          "id": "economic-conditions",
+          "title": "Economic Conditions",
+          "description": "Inflation, currencies, liquidity, economic policy and other macro variables."
+        },
+        {
+          "id": "asset-structure",
+          "title": "Asset Structure",
+          "description": "The asset mix and how the new decision relates to the current position."
+        },
+        {
+          "id": "risk",
+          "title": "Risk",
+          "description": "Probabilities, vulnerabilities and the degree to which the decision depends on particular conditions."
+        },
+        {
+          "id": "liquidity",
+          "title": "Liquidity",
+          "description": "Access to capital and the effect of the decision on financial flexibility."
+        },
+        {
+          "id": "goals",
+          "title": "Goals",
+          "description": "What the decision is ultimately expected to support."
+        },
+        {
+          "id": "constraints",
+          "title": "Constraints",
+          "description": "Time, financial obligations, available resources and other real-world limitations."
+        },
+        {
+          "id": "time-horizon",
+          "title": "Time Horizon",
+          "description": "The difference between a short-term need and a long-term goal."
+        },
+        {
+          "id": "scenarios",
+          "title": "Scenarios",
+          "description": "Different future conditions that may emerge and affect the outcome of the decision."
+        },
+        {
+          "id": "strategic-implications",
+          "title": "Strategic Implications",
+          "description": "How the decision may affect other parts of wealth, capital or the financial structure."
+        }
+      ],
+      "closing": "The DNH Framework helps these elements be seen together instead of allowing the most prominent headline or variable of the day to determine the decision.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start an assessment of my financial question",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "id": "where-framework-is-applied",
+      "type": "applications",
+      "eyebrow": "Where the DNH Framework Is Applied",
+      "english_label": "Where the DNH Framework Is Applied",
+      "heading": "The framework is consistent, but the question brought into it can be different.",
+      "intro": "DNH is not designed around a single asset or market. The logic of the framework can be applied to different questions involving wealth, capital and financial decision-making.",
+      "items": [
+        {
+          "id": "wealth-architecture",
+          "title": "Wealth Architecture",
+          "description": "When you need to see assets, risk, liquidity and goals as one integrated structure."
+        },
+        {
+          "id": "portfolio-intelligence",
+          "title": "Portfolio Structure & Intelligence",
+          "description": "When you want to examine the asset mix, risk concentration and how the portfolio aligns with your goals."
+        },
+        {
+          "id": "important-financial-decision",
+          "title": "An Important Financial Decision",
+          "description": "When buying, selling, reallocating or deploying capital could materially affect your financial position."
+        },
+        {
+          "id": "business-capital-liquidity",
+          "title": "Business Capital & Liquidity",
+          "description": "When a decision about capital, financing or resource allocation can affect the future of the business."
+        },
+        {
+          "id": "risk-wealth-protection",
+          "title": "Risk Management & Wealth Protection",
+          "description": "When the main question is identifying vulnerabilities and improving the resilience of the structure."
+        },
+        {
+          "id": "macro-market",
+          "title": "Economic & Market Conditions",
+          "description": "When inflation, currencies, policy and environmental changes need to be translated into understandable implications for your decision."
+        },
+        {
+          "id": "executive-decisions",
+          "title": "Decisions for Executives & Capital Owners",
+          "description": "When the issue is complex and requires a focused review of risks, scenarios and available paths before a final decision."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "services",
+          "label": "Explore services built on the DNH Framework",
+          "type": "primary",
+          "href": "/services"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "id": "decision-outputs",
+      "type": "outcomes",
+      "eyebrow": "What the DNH Framework Makes Clearer for the Decision-Maker",
+      "english_label": "Decision Outputs",
+      "heading": "The purpose of the framework is not to provide certainty; it is to reduce ambiguity and increase decision clarity.",
+      "intro": "After a question has been examined through the DNH Framework, the future is not expected to become predictable. What should become clearer are the parts of the decision that matter most.",
+      "items": [
+        {
+          "id": "problem-definition",
+          "title": "A Clearer Definition of the Question",
+          "description": "Clarify exactly what needs to be decided and which topics fall outside the main question."
+        },
+        {
+          "id": "key-variables",
+          "title": "The Key Decision Variables",
+          "description": "Identify which data and conditions can genuinely affect the outcome."
+        },
+        {
+          "id": "risks-vulnerabilities",
+          "title": "Risks & Vulnerabilities",
+          "description": "Identify the most important risks that should be considered before deciding."
+        },
+        {
+          "id": "constraints",
+          "title": "Constraints",
+          "description": "Clarify how liquidity, time, obligations or other conditions define the boundaries of the decision."
+        },
+        {
+          "id": "scenarios",
+          "title": "Scenarios to Examine",
+          "description": "Consider several plausible situations and consequences instead of depending on one prediction."
+        },
+        {
+          "id": "path-implications",
+          "title": "The Implications of Each Path",
+          "description": "Make clearer how each choice may affect other parts of the financial or wealth structure."
+        },
+        {
+          "id": "decision-priorities",
+          "title": "Decision Priorities",
+          "description": "Clarify which issues need to be reviewed or resolved first and which can follow later."
+        },
+        {
+          "id": "long-term-horizon",
+          "title": "Connection to the Long-Term Horizon",
+          "description": "Place today’s decision in relation to future goals and structure."
+        }
+      ],
+      "closing": "Ultimately, the value of the framework is in turning a scattered reaction into a clearer, more structured and more defensible decision process.",
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Review my question through the DNH Framework",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "id": "what-framework-is-not",
+      "type": "boundaries",
+      "eyebrow": "What the DNH Framework Is Not",
+      "english_label": "What the DNH Framework Is Not",
+      "heading": "The DNH Framework is designed to build a decision process—not to eliminate uncertainty.",
+      "intro": "To preserve DNH’s professional boundaries, it is as important to understand what the framework does not do as it is to understand what it does.",
+      "items": [
+        {
+          "id": "not-trading-system",
+          "title": "It is not a trading system",
+          "description": "The DNH Framework is not designed for short-term trading or automated execution of buy and sell decisions."
+        },
+        {
+          "id": "not-buy-sell-signal",
+          "title": "It is not a buy or sell signal",
+          "description": "The output of the framework is not a general instruction to buy or sell a particular asset."
+        },
+        {
+          "id": "not-certain-price-prediction",
+          "title": "It is not a certain price-prediction model",
+          "description": "Economic and market analysis is used to understand the decision environment, not to claim certain knowledge of the future."
+        },
+        {
+          "id": "not-return-guarantee",
+          "title": "It does not guarantee returns",
+          "description": "No decision framework can guarantee a specific financial result or eliminate risk."
+        },
+        {
+          "id": "not-professional-judgment-replacement",
+          "title": "It does not replace professional judgement",
+          "description": "The framework supports analysis and decision-making, while specialist decisions still require professional judgement and review of the specific circumstances of each case."
+        },
+        {
+          "id": "not-public-copyable-formula",
+          "title": "It is not a public, copyable formula",
+          "description": "The three-layer DNH structure and its overall logic can be described, but proprietary sources, variable weighting, internal scoring, processing sequence, exact scenario-construction logic, models and internal formulas are part of DNH’s proprietary know-how and are not publicly disclosed."
+        }
+      ],
+      "closing": "What the audience should understand is that DNH has a method, but it does not reduce that method to a simple, public formula.",
+      "ctas": [
+        {
+          "id": "about",
+          "label": "Explore DNH’s professional approach",
+          "type": "primary",
+          "href": "/about"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "id": "structured-assessment-cta",
+      "type": "final-cta",
+      "eyebrow": "Put Your Question Into a Clearer Framework",
+      "english_label": "Start With a Structured Assessment",
+      "heading": "Before looking for an answer, make sure you are seeing the question correctly.",
+      "paragraphs": [
+        {
+          "id": "challenge",
+          "text": "If you are facing an important financial decision, a complex asset structure, a new risk, a liquidity issue or a set of unclear options, the first step is not necessarily to choose a solution."
+        },
+        {
+          "id": "first-step",
+          "text": "First, clarify the main question, the variables that affect it, the constraints that exist and the scenarios that deserve examination."
+        },
+        {
+          "id": "assessment",
+          "text": "DNH’s initial assessment is designed for this point: an initial review to understand the type of question, the level of complexity and the appropriate path for further analysis."
+        },
+        {
+          "id": "privacy",
+          "text": "At this stage, you do not need to provide all financial information or sensitive details. The purpose is first to determine what needs to be examined and which path is most appropriate for moving forward."
+        },
+        {
+          "id": "next-step",
+          "text": "If the question aligns with DNH’s scope, the next step may involve a specialist review, wealth architecture, portfolio intelligence, strategic financial advisory or another relevant path."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start an initial financial decision assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        },
+        {
+          "id": "consultation",
+          "label": "Request a strategic consultation",
+          "type": "secondary",
+          "href": "/request-strategic-consultation"
+        }
+      ]
+    }
+  ]
+}

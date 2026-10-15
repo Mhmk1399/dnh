@@ -1,294 +1,223 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
 
-import { ArrowDownLeft } from "lucide-react";
+import {
+  Activity,
+  ArrowLeft,
+  ArrowRight,
+  Layers3,
+  RefreshCw,
+  Scale,
+  ShieldAlert,
+  type LucideIcon,
+} from "lucide-react";
 
-const STEPS = [
-  {
-    number: "01",
-    en: "OBSERVE",
-    title: "چه چیزی تغییر کرده؟",
-    text: "اقتصاد، بازار، نقدشوندگی و ریسک در زمینه تصمیم دیده می‌شوند.",
-  },
-  {
-    number: "02",
-    en: "INTERPRET",
-    title: "چرا این تغییر مهم است؟",
-    text: "اثر تغییر بر ریسک، سناریو و شرایط تصمیم بررسی می‌شود.",
-  },
-  {
-    number: "03",
-    en: "IMPLICATION",
-    title: "برای تصمیم چه معنایی دارد؟",
-    text: "نتیجه به یک پیامد راهبردی و مسیر قابل بررسی تبدیل می‌شود.",
-  },
-] as const;
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import intelligenceFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
+import intelligenceEn from "@/config/DNH_Intelligence_Desk_Final_EN.json";
 
-export function StrategicImplicationsSection() {
-  return (
-    <section
-      id="strategic-implications"
-      dir="rtl"
-      aria-labelledby="strategic-implications-title"
-      className="
-        relative isolate
-        scroll-mt-24 overflow-hidden
-        border-b border-line
-        bg-white
-        sm:scroll-mt-28
-      "
-    >
-      <Background />
+type SectionLookup = {
+  id: string;
+  type: string;
+};
 
-      <div
-        className="
-          dnh-site-shell relative z-10
-          mx-auto w-full max-w-[1536px]
+type RiskQuestion = {
+  id:
+    | "uncertainty-direction"
+    | "priority-risks"
+    | "sensitive-exposures"
+    | "assumptions-review"
+    | "decision-flexibility";
+  text: string;
+};
 
-          px-5 py-16
-          sm:px-8 sm:py-20
-          lg:px-12 lg:py-24
-          xl:px-16 xl:py-28
-          2xl:px-20
-        "
-      >
-        {/* Header */}
-        <div className="max-w-[820px]">
-          <div className="mb-5 flex items-center gap-3">
-            <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
+type MacroRiskContent = {
+  order: number;
+  id: "macro-risk-view";
+  type: "macro-risk";
+  eyebrow: string;
+  english_label: string;
+  heading: string;
+  heading_highlight: string;
+  intro: string;
+  questions: RiskQuestion[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
-            <span
-              className="
-                text-[10px] font-black text-brand-primary
-                sm:text-[11px]
-              "
-            >
-              پیامد راهبردی
-            </span>
-          </div>
+const questionIcons: Record<RiskQuestion["id"], LucideIcon> = {
+  "uncertainty-direction": Activity,
+  "priority-risks": ShieldAlert,
+  "sensitive-exposures": Layers3,
+  "assumptions-review": RefreshCw,
+  "decision-flexibility": Scale,
+};
 
-          <h2
-            id="strategic-implications-title"
-            className="
-              text-[31px] font-black leading-[1.65]
-              tracking-[-0.045em] text-ink
+function HighlightedHeading({
+  heading,
+  highlight,
+}: {
+  heading: string;
+  highlight: string;
+}) {
+  const index = highlight ? heading.indexOf(highlight) : -1;
 
-              sm:text-[38px]
-              lg:text-[45px] lg:leading-[1.55]
-              xl:text-[50px]
-            "
-          >
-            از دیدن تغییر،
-            <br />
-            تا فهمیدن{" "}
-            <span className="text-brand-primary">معنای آن برای تصمیم.</span>
-          </h2>
+  if (index < 0) return <>{heading}</>;
 
-          <p
-            className="
-              mt-5 max-w-[640px]
-              text-[13px] font-medium leading-[2.15]
-              text-ink-muted
-
-              sm:text-[14px]
-            "
-          >
-            Intelligence فقط مشاهده داده نیست؛ ارزش آن زمانی شکل می‌گیرد که
-            بدانیم تغییرات چرا برای تصمیم اهمیت دارند.
-          </p>
-        </div>
-
-        {/* Simple flow */}
-        <div
-          className="
-            relative mt-12
-            border-y border-line
-
-            sm:mt-14
-            lg:mt-16
-          "
-        >
-          {/* desktop connecting line */}
-          <span
-            aria-hidden="true"
-            className="
-              absolute left-[8%] right-[8%] top-[42px]
-              hidden h-px bg-line
-              lg:block
-            "
-          />
-
-          <div className="grid lg:grid-cols-3">
-            {STEPS.map((step, index) => (
-              <Step
-                key={step.number}
-                step={step}
-                last={index === STEPS.length - 1}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div
-          className="
-            mt-7
-            flex flex-col gap-5
-
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
-        >
-          <p
-            className="
-              max-w-[700px]
-              text-[11px] font-medium leading-[2]
-              text-ink-muted
-              sm:text-[10px]
-            "
-          >
-            هدف، پیش‌بینی نتیجه نیست؛ هدف، روشن‌تر کردن شرایط و مسیرهای قابل
-            بررسی است.
-          </p>
-
-          <Link
-            href="#what-to-watch"
-            className="
-              group inline-flex min-h-11 items-center gap-3
-              text-[10px] font-black text-brand-primary
-              outline-none
-              transition-colors duration-300
-              hover:text-brand-accent
-              focus-visible:ring-2 focus-visible:ring-focus/40
-            "
-          >
-            چه چیزهایی باید زیر نظر بمانند؟
-            <ArrowDownLeft
-              aria-hidden="true"
-              className="
-                h-4 w-4
-                transition-transform duration-300
-                group-hover:translate-y-1
-                group-hover:-translate-x-1
-              "
-              strokeWidth={1.6}
-            />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Step({ step, last }: { step: (typeof STEPS)[number]; last: boolean }) {
-  return (
-    <article
-      className={`
-        group relative
-        px-5 py-7
-
-        sm:px-7 sm:py-8
-        lg:px-8 lg:py-10
-
-        ${!last ? "border-b border-line lg:border-b-0 lg:border-l" : ""}
-      `}
-    >
-      {/* node */}
-      <div
-        className="
-          relative z-10
-          mb-6 flex items-center gap-4
-        "
-      >
-        <span
-          className="
-            flex h-10 w-10 items-center justify-center
-            border border-brand-primary/20
-            bg-white
-
-            font-mono text-[11px] font-black
-            text-brand-primary
-
-            transition-[background-color,color,border-color]
-            duration-300
-
-            group-hover:border-brand-primary
-            group-hover:bg-brand-primary
-            group-hover:text-white
-          "
-        >
-          {step.number}
-        </span>
-
-        <span
-          dir="ltr"
-          className="
-            text-[11px] font-black tracking-[0.17em]
-            text-brand-primary/35
-          "
-        >
-          {step.en}
-        </span>
-      </div>
-
-      <h3
-        className="
-          text-[16px] font-black leading-[1.9]
-          text-ink
-          sm:text-[18px]
-        "
-      >
-        {step.title}
-      </h3>
-
-      <p
-        className="
-          mt-3 max-w-[360px]
-          text-[11px] font-medium leading-[2]
-          text-ink-muted
-          sm:text-[12px]
-        "
-      >
-        {step.text}
-      </p>
-
-      <span
-        aria-hidden="true"
-        className="
-          mt-5 block h-[2px] w-7
-          bg-brand-primary/18
-
-          transition-[width,background-color]
-          duration-300
-
-          group-hover:w-14
-          group-hover:bg-brand-accent
-        "
-      />
-    </article>
-  );
-}
-
-function Background() {
   return (
     <>
+      {heading.slice(0, index)}
+      <span className="text-brand-accent">
+        {heading.slice(index, index + highlight.length)}
+      </span>
+      {heading.slice(index + highlight.length)}
+    </>
+  );
+}
+
+export function IntelligenceDeskMacroRiskView() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const intelligence = locale === "en" ? intelligenceEn : intelligenceFa;
+  const content = intelligence.sections.find(
+    (section: SectionLookup) =>
+      section.id === "macro-risk-view" && section.type === "macro-risk",
+  ) as MacroRiskContent | undefined;
+
+  if (!content) return null;
+
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+  const cta = content.ctas[0];
+
+  return (
+    <section
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="macro-risk-view-heading"
+      className="relative isolate overflow-hidden border-y border-line bg-page py-14 text-ink sm:py-16 lg:py-20 xl:py-24"
+    >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(112deg,color-mix(in srgb,var(--dnh-primary) 2%,white) 0%,white 60%,white 100%)",
-        }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-brand-accent"
       />
 
-      <span
-        aria-hidden="true"
-        className="
-          absolute right-[18%] top-0
-          h-[6px] w-[2px]
-          bg-brand-accent
-        "
-      />
-    </>
+      <div className="dnh-site-shell relative z-10 min-w-0">
+        <header className="grid min-w-0 gap-7 border-b border-line pb-8 sm:pb-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-end lg:gap-14 xl:gap-20">
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
+              />
+              <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
+              </p>
+         
+            </div>
+
+            <h2
+              id="macro-risk-view-heading"
+              className={`mt-4 max-w-[30ch] text-pretty text-[clamp(1.9rem,7vw,2.45rem)] font-black [overflow-wrap:break-word] sm:mt-5 sm:text-[clamp(2.2rem,4.5vw,3rem)] lg:text-[clamp(2.55rem,3.25vw,3.35rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.12]"
+              }`}
+            >
+              <HighlightedHeading
+                heading={content.heading}
+                highlight={content.heading_highlight}
+              />
+            </h2>
+          </div>
+
+          <div className="min-w-0 border-s-2 border-brand-primary/20 ps-4 text-start sm:ps-5">
+            <p
+              className={`text-[14px] font-medium text-ink-muted sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.78]"
+              }`}
+            >
+              {content.intro}
+            </p>
+          </div>
+        </header>
+
+        <div className="mt-9 grid min-w-0 gap-7 lg:mt-12 lg:grid-cols-[minmax(13rem,0.27fr)_minmax(0,0.73fr)] lg:gap-10 xl:grid-cols-[minmax(15rem,0.25fr)_minmax(0,0.75fr)] xl:gap-14">
+          <aside className="min-w-0 text-start lg:pt-3">
+            
+
+            <div className="mt-6   pt-5 sm:mt-7">
+              <div
+                className="grid grid-cols-[auto_1fr] items-center gap-3"
+                aria-hidden="true"
+              >
+                <span className="size-2 bg-brand-accent" />
+                <span className="h-px bg-line" />
+              </div>
+              <p
+                className={`mt-4 max-w-[24rem] text-[13px] font-semibold text-ink-muted sm:text-[14px] ${
+                  isRTL ? "leading-[1.95]" : "leading-[1.7]"
+                }`}
+              >
+                {content.closing}
+              </p>
+            </div>
+          </aside>
+
+          <div className="min-w-0 border-y  border-line bg-surface-soft">
+            <ul className="min-w-0 grid-cols-2 grid" aria-label={content.eyebrow}>
+              {content.questions.map((question) => {
+                const Icon = questionIcons[question.id];
+
+                return (
+                  <li
+                    key={question.id}
+                    className="group grid min-w-0 grid-cols-[3.25rem_minmax(0,1fr)] items-center gap-4 border-b border-line px-4 py-5 last:border-b-0 sm:grid-cols-[3.75rem_minmax(0,1fr)] sm:gap-5 sm:px-6 sm:py-6 lg:min-h-[7.2rem] lg:grid-cols-[4.25rem_minmax(0,1fr)_5.5rem] lg:px-7"
+                  >
+                    <span className="flex size-11 shrink-0 items-center justify-center border border-line bg-page text-brand-primary transition-[border-color,color,background-color] duration-200 group-hover:border-brand-accent group-hover:bg-brand-accent/5 group-hover:text-brand-accent motion-reduce:transition-none sm:size-12">
+                      <Icon aria-hidden="true" size={20} strokeWidth={1.6} />
+                    </span>
+
+                    <p
+                      className={`min-w-0 text-start text-[15px] font-extrabold text-ink transition-colors duration-200 group-hover:text-brand-primary motion-reduce:transition-none sm:text-[16px] lg:text-[17px] ${
+                        isRTL ? "leading-[1.85]" : "leading-[1.48]"
+                      }`}
+                    >
+                      {question.text}
+                    </p>
+
+                    <span
+                      aria-hidden="true"
+                      className="hidden items-center justify-end gap-2 lg:flex"
+                    >
+                      <span className="h-px w-10 bg-line transition-[width,background-color] duration-200 group-hover:w-12 group-hover:bg-brand-accent motion-reduce:transition-none" />
+                      <span className="size-2 border border-brand-primary bg-page transition-[border-color,background-color] duration-200 group-hover:border-brand-accent group-hover:bg-brand-accent motion-reduce:transition-none" />
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+
+        {cta ? (
+          <div className="mt-8 flex min-w-0 justify-start border-t border-line pt-7 sm:mt-10 sm:pt-8 lg:justify-end">
+            <ActionButton
+              href={cta.href}
+              variant={cta.type}
+              size="lg"
+              icon={Arrow}
+              iconPosition="end"
+              contentAlignment="between"
+              className="w-full sm:w-auto"
+            >
+              {cta.label}
+            </ActionButton>
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }

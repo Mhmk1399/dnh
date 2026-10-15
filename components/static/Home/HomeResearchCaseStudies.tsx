@@ -107,15 +107,7 @@ export function HomeResearchCaseStudies() {
                 aria-hidden="true"
                 className="h-[2px] w-11 bg-brand-accent"
               />
-              {content.english_label &&
-              content.english_label !== content.eyebrow ? (
-                <bdi
-                  dir="ltr"
-                  className="w-full text-[10px] font-medium tracking-[0.28em] text-ink-muted"
-                >
-                  {content.english_label}
-                </bdi>
-              ) : null}
+             
             </div>
 
             <h2
@@ -189,12 +181,9 @@ export function HomeResearchCaseStudies() {
                     aria-hidden="true"
                     className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent"
                   />
-              
                 </div>
 
                 <div className="relative flex flex-1 flex-col p-5 pt-8">
-                
-
                   <h3
                     className={`text-start text-[17px] font-black sm:text-[18px] ${
                       isRTL ? "leading-[1.7]" : "leading-[1.36]"
@@ -207,8 +196,6 @@ export function HomeResearchCaseStudies() {
                       {item.title}
                     </Link>
                   </h3>
-
-                
 
                   <p
                     className={`mt-3 text-start text-[13px] text-ink-muted ${

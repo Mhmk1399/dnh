@@ -1,488 +1,259 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
+
 import {
   ArrowLeft,
-  ArrowDownLeft,
-  CircleDot,
-  Landmark,
-  Layers3,
+  ArrowRight,
+  Compass,
   Droplets,
-  ShieldAlert,
+  Gauge,
+  Layers3,
+  Radar,
+  ThermometerSun,
+  type LucideIcon,
 } from "lucide-react";
 
-const INTELLIGENCE_AREAS = [
-  {
-    key: "01",
-    en: "MACRO RISK",
-    title: "ریسک کلان",
-    description:
-      "شرایط اقتصادی و ریسک‌های کلان که می‌توانند زمینه یک تصمیم مالی را تغییر دهند.",
-    note: "اثر بر سناریو، زمان و مسیر تصمیم",
-    icon: Landmark,
-  },
-  {
-    key: "02",
-    en: "ASSET VIEW",
-    title: "نمای دارایی",
-    description:
-      "نگاهی به بازارها و دارایی‌ها در نسبت با ساختار کلی تصمیم، نه به‌صورت جدا و تک‌بعدی.",
-    note: "اثر بر ترکیب نگاه و کیفیت ارزیابی",
-    icon: Layers3,
-  },
-  {
-    key: "03",
-    en: "LIQUIDITY",
-    title: "نقدشوندگی",
-    description:
-      "بررسی نقش نقدشوندگی و دسترسی به منابع در کیفیت و انعطاف تصمیم.",
-    note: "اثر بر امکان اجرا و قدرت واکنش",
-    icon: Droplets,
-  },
-  {
-    key: "04",
-    en: "POLICY / FX / INFLATION",
-    title: "تورم، ارز و سیاست‌گذاری",
-    description:
-      "متغیرهایی که می‌توانند بر قدرت خرید، ریسک و شرایط تصمیم اثر بگذارند.",
-    note: "اثر بر ریسک، هزینه و پایداری تصمیم",
-    icon: ShieldAlert,
-  },
-] as const;
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import intelligenceFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
+import intelligenceEn from "@/config/DNH_Intelligence_Desk_Final_EN.json";
 
-export function IntelligenceViewSection() {
+type SectionLookup = {
+  id: string;
+  type: string;
+};
+
+type SnapshotIndicator = {
+  id:
+    | "macro-risk-level"
+    | "asset-positioning"
+    | "dnh-risk-temperature"
+    | "liquidity-flow"
+    | "weekly-bias"
+    | "strategic-signal";
+  title: string;
+  english_label: string;
+  description: string;
+};
+
+type CurrentIntelligenceSnapshotContent = {
+  order: number;
+  id: "current-intelligence-snapshot";
+  type: "intelligence-snapshot";
+  eyebrow: string;
+  english_label: string;
+  heading: string;
+  heading_highlight: string;
+  intro: string;
+  indicators: SnapshotIndicator[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
+
+const indicatorIcons: Record<SnapshotIndicator["id"], LucideIcon> = {
+  "macro-risk-level": Gauge,
+  "asset-positioning": Layers3,
+  "dnh-risk-temperature": ThermometerSun,
+  "liquidity-flow": Droplets,
+  "weekly-bias": Compass,
+  "strategic-signal": Radar,
+};
+
+function HighlightedHeading({
+  heading,
+  highlight,
+}: {
+  heading: string;
+  highlight: string;
+}) {
+  const index = highlight ? heading.indexOf(highlight) : -1;
+
+  if (index < 0) return <>{heading}</>;
+
+  return (
+    <>
+      {heading.slice(0, index)}
+      <span className="text-brand-accent">
+        {heading.slice(index, index + highlight.length)}
+      </span>
+      {heading.slice(index + highlight.length)}
+    </>
+  );
+}
+
+export function CurrentIntelligenceSnapshot() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const intelligence = locale === "en" ? intelligenceEn : intelligenceFa;
+  const content = intelligence.sections.find(
+    (section: SectionLookup) =>
+      section.id === "current-intelligence-snapshot" &&
+      section.type === "intelligence-snapshot",
+  ) as CurrentIntelligenceSnapshotContent | undefined;
+
+  if (!content) return null;
+
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id="intelligence-view"
-      dir="rtl"
-      aria-labelledby="intelligence-view-title"
-      className="
-        relative isolate overflow-hidden border-b border-line bg-white
-        scroll-mt-24 sm:scroll-mt-28
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="current-intelligence-snapshot-heading"
+      className="relative isolate overflow-x-clip border-b border-line bg-surface-soft py-14 text-ink sm:py-16 lg:py-20 xl:py-24"
     >
-      <Background />
-
       <div
-        className="
-          dnh-site-shell relative z-10 mx-auto w-full max-w-[1536px]
-          px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28 2xl:px-20
-        "
-      >
-        {/* Header */}
-        <div
-          className="
-            grid gap-8 border-b border-line/80 pb-10
-            lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16 lg:pb-12
-          "
-        >
-          <div className="order-2 lg:order-2">
-            <p
-              className="
-                max-w-[760px]
-                text-[14px] leading-[2.25] text-ink-muted
-                sm:text-[15px]
-              "
-            >
-              میز هوشمندی DNH چند زاویه از محیط تصمیم را کنار هم قرار می‌دهد تا
-              متغیرهای مهم، ریسک‌ها و زمینه تصمیم واضح‌تر دیده شوند؛ نه برای
-              تولید سیگنال یا پیش‌بینی قطعی، بلکه برای روشن‌تر کردن معنای داده
-              در مسیر تصمیم.
-            </p>
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-accent/50 to-transparent"
+      />
 
-            <div
-              className="
-                mt-7 flex flex-wrap items-center gap-x-5 gap-y-3
-                text-[10px] font-bold text-brand-primary/80
-              "
-            >
-              <MetaDot label="ریسک کلان" />
-              <MetaDot label="نمای دارایی" />
-              <MetaDot label="نقدشوندگی" />
-              <MetaDot label="متغیرهای اثرگذار" />
-            </div>
-          </div>
-
-          <div className="order-1 text-right lg:order-1">
-            <div className="mb-4 flex items-center justify-start gap-3">
-              <span className="h-px w-10 bg-brand-accent" aria-hidden="true" />
-              <span className="text-[11px] font-black text-brand-primary">
-                نمای هوشمندی DNH
-              </span>
+      <div className="dnh-site-shell relative z-10 min-w-0">
+        <header className="grid min-w-0 gap-7 border-b border-line pb-8 lg:grid-cols-[minmax(0,0.63fr)_minmax(20rem,0.37fr)] lg:items-end lg:gap-12 lg:pb-10 xl:gap-16">
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
+              />
+              <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
+              </p>
+         
             </div>
 
             <h2
-              id="intelligence-view-title"
-              className="
-                max-w-[640px] mr-0 ml-auto
-                text-[34px] font-black leading-[1.45] tracking-[-0.045em] text-ink
-                sm:text-[44px]
-                lg:text-[56px] lg:leading-[1.35]
-              "
+              id="current-intelligence-snapshot-heading"
+              className={`mt-4 max-w-[28ch] text-pretty text-[clamp(1.85rem,7vw,2.35rem)] font-black [overflow-wrap:break-word] sm:mt-5 sm:text-[clamp(2.2rem,4.5vw,3rem)] lg:max-w-[24ch] lg:text-[clamp(2.6rem,3.35vw,3.45rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.12]"
+              }`}
             >
-              پیش از تصمیم،
-              <br />
-              باید بدانیم{" "}
-              <span className="text-brand-primary">چه چیزی اهمیت دارد.</span>
+              <HighlightedHeading
+                heading={content.heading}
+                highlight={content.heading_highlight}
+              />
             </h2>
+          </div>
+
+          <div
+            className={`min-w-0 border-s-2 border-brand-accent ps-4 text-start text-[14px] font-medium text-ink-muted sm:ps-5 sm:text-[15px] ${
+              isRTL ? "leading-[2]" : "leading-[1.78]"
+            }`}
+          >
+            <p>{content.intro}</p>
+          </div>
+        </header>
+
+        <div className="mt-8 overflow-hidden border border-line bg-page sm:mt-10 lg:mt-12">
+          <div className="flex min-w-0 items-center justify-between gap-4 border-b border-line bg-brand-primary px-4 py-3.5 text-white sm:px-6 sm:py-4">
+            <div className="min-w-0 text-start">
+              <bdi
+                dir="ltr"
+                className="block truncate text-[11px] font-bold uppercase tracking-[0.075em] text-white/65 sm:text-[12px]"
+              >
+                {content.english_label}
+              </bdi>
+            </div>
+            <span className="flex shrink-0 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.08em] text-white/55 sm:text-[11px]">
+              <span
+                aria-hidden="true"
+                className="size-1.5 bg-brand-accent shadow-[0_0_0_4px_rgba(252,133,2,0.12)]"
+              />
+              <span aria-hidden="true">DNH</span>
+            </span>
+          </div>
+
+          <div className="grid min-w-0 grid-cols-1 gap-px bg-line md:grid-cols-2 xl:grid-cols-3">
+            {content.indicators.map((indicator) => {
+              const Icon = indicatorIcons[indicator.id];
+
+              return (
+                <article
+                  key={indicator.id}
+                  className="group relative min-w-0 bg-page px-4 py-5 transition-colors duration-200 hover:bg-surface-soft motion-reduce:transition-none sm:px-6 sm:py-6 lg:min-h-[15.5rem] lg:px-7 lg:py-7"
+                >
+                  <div className="flex min-w-0 items-start justify-between gap-5">
+                    <span className="flex size-11 shrink-0 items-center justify-center border border-line bg-surface-soft text-brand-primary transition-[border-color,color,background-color] duration-200 group-hover:border-brand-accent/70 group-hover:bg-brand-accent/10 group-hover:text-brand-accent motion-reduce:transition-none sm:size-12">
+                      <Icon aria-hidden="true" size={20} strokeWidth={1.6} />
+                    </span>
+
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 h-px min-w-8 flex-1 bg-line"
+                    />
+
+                    <span
+                      aria-hidden="true"
+                      className="mt-[0.4rem] size-2 shrink-0 border border-brand-accent bg-page transition-transform duration-200 group-hover:scale-125 motion-reduce:transition-none"
+                    />
+                  </div>
+
+                  <div className="mt-5 min-w-0 text-start sm:mt-6">
+                    <h3
+                      className={`text-[17px] font-black text-ink sm:text-[18px] ${
+                        isRTL ? "leading-[1.75]" : "leading-[1.35]"
+                      }`}
+                    >
+                      {indicator.title}
+                    </h3>
+
+                    {locale === "fa" ? (
+                      <bdi
+                        dir="ltr"
+                        className="mt-1 block w-fit max-w-full text-[10px] font-bold uppercase tracking-[0.055em] text-brand-primary/70 sm:text-[11px]"
+                      >
+                        {indicator.english_label}
+                      </bdi>
+                    ) : null}
+
+                    <p
+                      className={`mt-3 text-[13.5px] font-medium text-ink-muted sm:text-[14px] ${
+                        isRTL ? "leading-[1.95]" : "leading-[1.72]"
+                      }`}
+                    >
+                      {indicator.description}
+                    </p>
+                  </div>
+
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-4 bottom-0 h-[2px] overflow-hidden bg-transparent sm:inset-x-6 lg:inset-x-7"
+                  >
+                    <span className="block h-full w-10 bg-brand-accent transition-[width] duration-200 group-hover:w-20 motion-reduce:transition-none" />
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
 
-        {/* Main content */}
-        <div
-          className="
-            mt-10 grid gap-8
-            lg:grid-cols-[1.05fr_0.95fr]
-            xl:gap-10
-          "
-        >
-          {/* Cards side */}
-          <div className="grid gap-5 sm:grid-cols-2">
-            {INTELLIGENCE_AREAS.map((item, index) => (
-              <AreaCard key={item.key} item={item} index={index} />
-            ))}
-          </div>
-
-          {/* Summary side */}
-          <aside
-            className="
-              relative overflow-hidden border border-line bg-[linear-gradient(180deg,white_0%,var(--dnh-bg-soft)_100%)]
-              p-5 sm:p-7 lg:p-8
-              shadow-[0_18px_60px_rgba(18,37,62,0.06)]
-            "
+        <div className="mt-7 grid min-w-0 gap-5 border-s-2 border-brand-accent bg-page px-4 py-5 sm:mt-8 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-7">
+          <p
+            className={`min-w-0 max-w-[78ch] text-start text-[14px] font-semibold text-ink sm:text-[15px] ${
+              isRTL ? "leading-[1.95]" : "leading-[1.72]"
+            }`}
           >
-            <div
-              aria-hidden="true"
-              className="
-                absolute inset-x-0 top-0 h-[2px]
-                bg-[linear-gradient(90deg,var(--dnh-primary)_0%,var(--dnh-accent)_100%)]
-              "
-            />
+            {content.closing}
+          </p>
 
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p
-                  dir="ltr"
-                  className="
-                    text-[11px] font-black tracking-[0.18em] text-brand-primary/45
-                  "
-                >
-                  INTELLIGENCE VIEW
-                </p>
-                <h3
-                  className="
-                    mt-3 text-[24px] font-black leading-[1.7] text-ink
-                    sm:text-[28px]
-                  "
-                >
-                  داده زمانی ارزش پیدا می‌کند
-                  <br />
-                  که معنای آن برای تصمیم روشن شود.
-                </h3>
-              </div>
-
-              <span
-                aria-hidden="true"
-                className="hidden h-16 w-px bg-line lg:block"
-              />
-            </div>
-
-            {/* visual block */}
-            <div
-              className="
-                mt-7 overflow-hidden border border-line bg-white/70 p-4 sm:p-5
-              "
+          {content.ctas[0] ? (
+            <ActionButton
+              href={content.ctas[0].href}
+              variant={content.ctas[0].type}
+              size="lg"
+              icon={Arrow}
+              iconPosition="end"
+              dir={direction}
+              className="min-h-12 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto"
             >
-              <div className="mb-4 flex items-center justify-between">
-                <p className="text-[10px] font-black text-brand-primary">
-                  نمای ساده از منطق بررسی
-                </p>
-                <span
-                  dir="ltr"
-                  className="text-[11px] font-bold tracking-[0.14em] text-ink-muted"
-                >
-                  WHAT TO WATCH → IMPLICATION
-                </span>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-[0.95fr_1.05fr]">
-                <div className="space-y-3">
-                  <MiniSignal title="Context" width="w-[82%]" />
-                  <MiniSignal title="Risk" width="w-[68%]" />
-                  <MiniSignal title="Liquidity" width="w-[56%]" />
-                  <MiniSignal title="Asset View" width="w-[74%]" />
-                </div>
-
-                <div
-                  className="
-                    flex min-h-[170px] flex-col justify-between
-                    border border-dashed border-line p-4
-                  "
-                >
-                  <div>
-                    <p
-                      className="
-                        text-[11px] font-black text-brand-accent
-                      "
-                    >
-                      خروجی مورد انتظار
-                    </p>
-                    <p
-                      className="
-                        mt-3 text-[16px] font-black leading-[1.9] text-brand-primary
-                      "
-                    >
-                      چه چیزی را باید زیر نظر داشت
-                      <br />و چرا برای تصمیم مهم است؟
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-x-4 gap-y-2">
-                    <MicroLabel>What to Watch</MicroLabel>
-                    <MicroDivider />
-                    <MicroLabel>Strategic Implications</MicroLabel>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* summary bullets */}
-            <div className="mt-7 grid gap-3">
-              <SummaryPoint>
-                این بخش به کاربر کمک می‌کند بفهمد دقیقاً کدام متغیرها باید
-                جدی‌تر دیده شوند.
-              </SummaryPoint>
-              <SummaryPoint>
-                معنا و اهمیت داده‌ها را در بستر تصمیم توضیح می‌دهد، نه در خلأ.
-              </SummaryPoint>
-              <SummaryPoint>
-                خروجی آن «درک بهتر محیط تصمیم» است، نه توصیه معاملاتی.
-              </SummaryPoint>
-            </div>
-
-            {/* Actions */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="#intelligence-layers"
-                className="
-                  group inline-flex min-h-12 items-center justify-center gap-2
-                  bg-brand-primary px-5 text-sm font-bold text-white
-                  transition duration-300 hover:bg-brand-secondary
-                  focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/20
-                  sm:min-w-[220px]
-                "
-              >
-                ساختار این نگاه را ببینید
-                <ArrowDownLeft
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 group-hover:-translate-x-0.5"
-                  strokeWidth={1.8}
-                />
-              </Link>
-
-              <Link
-                href="/financial-decision-assessment"
-                className="
-                  inline-flex min-h-12 items-center justify-center gap-2
-                  border border-line bg-white px-5 text-sm font-bold text-ink
-                  transition duration-300 hover:border-brand-primary/25 hover:bg-brand-primary/[0.04]
-                  focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/15
-                  sm:min-w-[220px]
-                "
-              >
-                ارزیابی اولیه تصمیم مالی
-                <ArrowLeft className="h-4 w-4" strokeWidth={1.8} />
-              </Link>
-            </div>
-          </aside>
+              {content.ctas[0].label}
+            </ActionButton>
+          ) : null}
         </div>
       </div>
     </section>
-  );
-}
-
-function AreaCard({
-  item,
-  index,
-}: {
-  item: (typeof INTELLIGENCE_AREAS)[number];
-  index: number;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <article
-      className="
-        group relative overflow-hidden border border-line bg-white
-        p-5 sm:p-6
-        shadow-[0_12px_40px_rgba(18,37,62,0.04)]
-        transition duration-300
-        hover:-translate-y-1 hover:border-brand-primary/18 hover:shadow-[0_18px_56px_rgba(18,37,62,0.08)]
-      "
-    >
-      <div
-        aria-hidden="true"
-        className="
-          absolute inset-x-0 top-0 h-[2px]
-          bg-[linear-gradient(90deg,var(--dnh-primary)_0%,transparent_85%)]
-          opacity-0 transition-opacity duration-300 group-hover:opacity-100
-        "
-      />
-
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] font-black text-brand-primary">
-              {item.key}
-            </span>
-            <span
-              dir="ltr"
-              className="
-                text-[11px] font-black tracking-[0.16em] text-brand-primary/42
-              "
-            >
-              {item.en}
-            </span>
-          </div>
-
-          <h3 className="mt-4 text-[20px] font-black text-ink">{item.title}</h3>
-        </div>
-
-        <div
-          className="
-            flex h-11 w-11 items-center justify-center
-            border border-line bg-[var(--dnh-bg-soft)]
-            text-brand-primary
-            transition duration-300
-            group-hover:border-brand-accent/30 group-hover:text-brand-accent
-          "
-        >
-          <Icon className="h-5 w-5" strokeWidth={1.8} />
-        </div>
-      </div>
-
-      <p
-        className="
-          mt-4 text-[13px] leading-[2.05] text-ink-muted
-        "
-      >
-        {item.description}
-      </p>
-
-      <div
-        className="
-          mt-5 border-t border-line pt-4
-        "
-      >
-        <p className="text-[10px] font-black text-brand-accent">چرا مهم است؟</p>
-        <p className="mt-2 text-[12px] leading-7 text-brand-primary">
-          {item.note}
-        </p>
-      </div>
-
-      <div
-        aria-hidden="true"
-        className="
-          mt-5 h-[2px] w-8 bg-brand-primary/16
-          transition-all duration-300 group-hover:w-16 group-hover:bg-brand-accent
-        "
-      />
-
-      <span className="sr-only">کارت شماره {index + 1}</span>
-    </article>
-  );
-}
-
-function MiniSignal({ title, width }: { title: string; width: string }) {
-  return (
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span
-          dir="ltr"
-          className="text-[11px] font-black tracking-[0.14em] text-ink-muted"
-        >
-          {title}
-        </span>
-        <span className="h-[5px] w-[5px] bg-brand-accent" />
-      </div>
-
-      <div className="h-9 border border-line bg-[var(--dnh-bg-soft)] p-1.5">
-        <div
-          className={`h-full ${width} bg-[linear-gradient(90deg,var(--dnh-primary)_0%,color-mix(in_srgb,var(--dnh-primary)_38%,white)_100%)]`}
-        />
-      </div>
-    </div>
-  );
-}
-
-function SummaryPoint({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-start gap-3">
-      <CircleDot
-        className="mt-1 h-4 w-4 shrink-0 text-brand-accent"
-        strokeWidth={1.8}
-      />
-      <p className="text-[13px] leading-[2.05] text-ink-muted">{children}</p>
-    </div>
-  );
-}
-
-function MetaDot({ label }: { label: string }) {
-  return (
-    <span className="inline-flex items-center gap-2">
-      <span aria-hidden="true" className="h-[5px] w-[5px] bg-brand-accent" />
-      <span>{label}</span>
-    </span>
-  );
-}
-
-function MicroLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      dir="ltr"
-      className="text-[11px] font-black tracking-[0.14em] text-brand-primary/42"
-    >
-      {children}
-    </span>
-  );
-}
-
-function MicroDivider() {
-  return (
-    <span aria-hidden="true" className="h-[4px] w-[4px] bg-brand-accent" />
-  );
-}
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(115deg,color-mix(in srgb,var(--dnh-primary) 3%,white) 0%,white 56%,white 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.12]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 5%,transparent) 1px,transparent 1px), linear-gradient(to bottom,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "120px 100%, 100% 120px",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute left-[-140px] top-[140px]
-          h-[280px] w-[280px] rounded-full opacity-[0.08]
-        "
-        style={{
-          background:
-            "radial-gradient(circle, var(--dnh-primary) 0%, transparent 72%)",
-        }}
-      />
-    </>
   );
 }

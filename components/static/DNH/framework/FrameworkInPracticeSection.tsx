@@ -1,717 +1,287 @@
-import { ArrowDownLeft, CircleDot } from "lucide-react";
+"use client";
 
+import { useEffect, useRef } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  GitBranch,
+  Map,
+  Scale,
+  ShieldCheck,
+  SlidersHorizontal,
+  type LucideIcon,
+} from "lucide-react";
+
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
+import frameworkEn from "@/config/DNH_Framework_Final_EN.json";
 
-/* =============================================================================
-   Conceptual example
-============================================================================= */
+type NavigationStrategyItem = {
+  id: string;
+  title: string;
+  description: string;
+};
 
-const QUESTIONS = [
-  {
-    key: "D",
-    en: "DATA INTELLIGENCE",
-    title: "چه چیزی بر این تصمیم اثر می‌گذارد؟",
-    text: "شرایط اقتصادی، نقدینگی، ساختار مالی، بازار و وضعیت خود تصمیم در کنار هم دیده می‌شوند.",
-  },
-  {
-    key: "N",
-    en: "NAVIGATION STRATEGY",
-    title: "چه مسیرهایی باید بررسی شوند؟",
-    text: "سناریوها، ریسک‌ها و گزینه‌های قابل بررسی روشن‌تر می‌شوند؛ بدون فرض یک پاسخ قطعی.",
-  },
-  {
-    key: "H",
-    en: "HORIZON ARCHITECTURE",
-    title: "این تصمیم در بلندمدت چه معنایی دارد؟",
-    text: "اثر آن بر ساختار ثروت، نقدشوندگی، تاب‌آوری، اهداف و افق زمانی دیده می‌شود.",
-  },
-] as const;
+type NavigationStrategyContent = {
+  order: number;
+  id: "navigation-strategy";
+  type: "framework-pillar";
+  code: "N";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  paragraphs: Array<{
+    id: string;
+    text: string;
+  }>;
+  items: NavigationStrategyItem[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
-/* =============================================================================
-   Section
-============================================================================= */
+const itemIcons: Record<string, LucideIcon> = {
+  scenarios: Map,
+  "risk-prioritization": ShieldCheck,
+  constraints: SlidersHorizontal,
+  "options-comparison": Scale,
+  "decision-consequences": GitBranch,
+};
 
-export function FrameworkInPracticeSection() {
+export function FrameworkNavigationStrategy() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const framework = locale === "en" ? frameworkEn : frameworkFa;
+  const content = framework.sections.find(
+    (section: { id?: string; type?: string }) =>
+      section.id === "navigation-strategy" &&
+      section.type === "framework-pillar",
+  ) as NavigationStrategyContent | undefined;
+
+  useEffect(() => {
+    const root = sectionRef.current;
+
+    if (
+      !root ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const waiting = new Set<HTMLElement>();
+
+    root
+      .querySelectorAll<HTMLElement>("[data-framework-reveal]")
+      .forEach((element) => {
+        element.removeAttribute("data-reveal");
+
+        if (element.getBoundingClientRect().top > window.innerHeight - 36) {
+          element.dataset.reveal = "pending";
+          waiting.add(element);
+        }
+      });
+
+    if (waiting.size === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const element = entry.target as HTMLElement;
+          element.dataset.reveal = "shown";
+          waiting.delete(element);
+          observer.unobserve(element);
+        });
+
+        if (waiting.size === 0) observer.disconnect();
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -28px 0px" },
+    );
+
+    waiting.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [locale]);
+
+  if (!content) return null;
+
+  const highlight = content.heading_highlight?.trim() ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id="framework-in-practice"
-      dir="rtl"
-      aria-labelledby="framework-in-practice-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        border-b
-        border-line
-
-        bg-page
-
-        sm:scroll-mt-28
-      "
+      ref={sectionRef}
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="framework-navigation-strategy-heading"
+      className="relative isolate overflow-x-clip border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-20 xl:py-24"
     >
-      <Background />
-
       <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-accent to-transparent opacity-65"
+      />
 
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          py-16
-
-          sm:px-8
-          sm:py-20
-
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            Header
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.82fr_1.18fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <div>
-            <div
-              className="
-                mb-5
-
-                flex
-                items-center
-                gap-3
-              "
-            >
+      <div className="dnh-site-shell relative">
+        <header className="grid min-w-0 gap-7 border-b border-line pb-8 sm:pb-9 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end lg:gap-12 lg:pb-10 xl:gap-16">
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 items-center gap-4">
               <span
                 aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
-              />
-
-              <p
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-brand-primary
-
-                  sm:text-[11px]
-                "
+                className="flex size-12 shrink-0 items-center justify-center border border-brand-accent bg-[color-mix(in_srgb,var(--dnh-accent)_7%,transparent)] sm:size-14"
               >
-                Framework در عمل
-              </p>
+                <bdi
+                  dir="ltr"
+                  className="text-[25px] font-black leading-none text-brand-accent sm:text-[29px]"
+                >
+                  {content.code}
+                </bdi>
+              </span>
+
+              <div className="min-w-0">
+                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                  {content.eyebrow}
+                </p>
+
+              
+              </div>
             </div>
 
             <h2
-              id="framework-in-practice-title"
-              className="
-                max-w-[740px]
-
-                text-[31px]
-                font-black
-                leading-[1.65]
-                tracking-[-0.045em]
-
-                text-ink
-
-                sm:text-[38px]
-
-                lg:text-[44px]
-                lg:leading-[1.55]
-
-                xl:text-[49px]
-              "
+              id="framework-navigation-strategy-heading"
+              className={`mt-5 max-w-[28ch] text-pretty text-start text-[clamp(1.9rem,7vw,2.4rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.25rem,5vw,2.85rem)] lg:text-[clamp(2.5rem,3.05vw,3.15rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.14]"
+              }`}
             >
-              یک تصمیم،
-              <br />
-              از <span className="text-brand-primary">سه پرسش</span> دیده
-              می‌شود.
+              {highlightIndex < 0 ? (
+                content.heading
+              ) : (
+                <>
+                  {content.heading.slice(0, highlightIndex)}
+                  <span className="text-brand-accent">
+                    {content.heading.slice(
+                      highlightIndex,
+                      highlightIndex + highlight.length,
+                    )}
+                  </span>
+                  {content.heading.slice(highlightIndex + highlight.length)}
+                </>
+              )}
             </h2>
           </div>
 
-          <div className="lg:pb-1">
-            <p
-              className="
-                max-w-[680px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-ink-muted
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              فرض کنید یک تصمیم مالی مهم پیش روست. Framework به‌جای شروع از یک
-              پاسخ آماده، ابتدا کمک می‌کند مسئله از سه زاویه متفاوت دیده شود.
-            </p>
-
-            <p
-              className="
-                mt-3
-
-                text-[11px]
-                font-medium
-
-                text-ink-muted/60
-              "
-            >
-              نمونه مفهومی — نه Case Study واقعی
-            </p>
-          </div>
-        </div>
-
-        {/* =======================================================
-            Example
-        ======================================================== */}
-
-        <div
-          className="
-            mt-12
-
-            border-y
-            border-line
-
-            sm:mt-14
-
-            lg:mt-16
-          "
-        >
-          {/* -----------------------------------------------------
-              Situation
-          ------------------------------------------------------ */}
-
           <div
-            className="
-              grid
-              gap-6
-
-              py-7
-
-              lg:grid-cols-[0.34fr_0.66fr]
-              lg:items-center
-              lg:py-8
-            "
+            className={`min-w-0 space-y-3.5 border-s-2 border-brand-primary ps-4 text-start text-[14px] text-ink-muted sm:ps-5 sm:text-[15px] ${
+              isRTL ? "leading-[2]" : "leading-[1.75]"
+            }`}
           >
-            <div
-              className="
-                px-5
-
-                sm:px-7
-
-                lg:px-8
-              "
-            >
-              <p
-                dir="ltr"
-                className="
-                  text-[11px]
-                  font-black
-                  tracking-[0.18em]
-
-                  text-brand-accent
-                "
-              >
-                THE DECISION
-              </p>
-
-              <h3
-                className="
-                  mt-2
-
-                  text-[17px]
-                  font-black
-
-                  text-ink
-
-                  sm:text-[19px]
-                "
-              >
-                یک تصمیم مالی مهم پیش روست.
-              </h3>
-            </div>
-
-            <div
-              className="
-                border-r
-                border-line
-
-                px-5
-
-                sm:px-7
-
-                lg:px-10
-              "
-            >
-              <p
-                className="
-                  max-w-[720px]
-
-                  text-[11px]
-                  font-medium
-                  leading-[2.1]
-
-                  text-ink-muted
-
-                  sm:text-[12px]
-                "
-              >
-                سؤال اولیه ممکن است ساده باشد: «چه تصمیمی بگیرم؟» اما پیش از
-                پاسخ، باید روشن شود چه متغیرهایی مهم‌اند، چه مسیرهایی وجود دارند
-                و این انتخاب در افق بلندمدت چه اثری خواهد داشت.
-              </p>
-            </div>
-          </div>
-
-          {/* -----------------------------------------------------
-              Three questions
-          ------------------------------------------------------ */}
-
-          <div
-            className="
-              border-t
-              border-line
-            "
-          >
-            {QUESTIONS.map((item, index) => (
-              <QuestionRow
-                key={item.key}
-                item={item}
-                last={index === QUESTIONS.length - 1}
-              />
+            {content.paragraphs.map((paragraph) => (
+              <p key={paragraph.id}>{paragraph.text}</p>
             ))}
           </div>
+        </header>
 
-          {/* -----------------------------------------------------
-              Result
-          ------------------------------------------------------ */}
-
+        <div className="relative mt-8 min-w-0 sm:mt-9 lg:mt-10">
           <div
-            className="
-              group/result
+            aria-hidden="true"
+            className="absolute bottom-7 start-[26px] top-7 w-px bg-line sm:start-[31px] lg:start-[34px]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute start-[26px] top-7 h-[32%] w-px bg-brand-accent sm:start-[31px] lg:start-[34px]"
+          />
 
-              relative
+          <ol className="relative min-w-0 border-y border-line">
+            {content.items.map((item, index) => {
+              const Icon = itemIcons[item.id] ?? Map;
+              const number = String(index + 1).padStart(2, "0");
 
-              border-t
-              border-line
-
-              bg-surface-soft/55
-
-              px-5
-              py-7
-
-              sm:px-7
-
-              lg:px-8
-            "
-          >
-            <span
-              aria-hidden="true"
-              className="
-                absolute
-                inset-y-0
-                right-0
-
-                w-[3px]
-
-                bg-brand-accent
-              "
-            />
-
-            <div
-              className="
-                flex
-                flex-col
-                gap-5
-
-                sm:flex-row
-                sm:items-center
-                sm:justify-between
-              "
-            >
-              <div>
-                <p
-                  dir="ltr"
-                  className="
-                    text-[11px]
-                    font-black
-                    tracking-[0.18em]
-
-                    text-brand-primary/50
-                  "
+              return (
+                <li
+                  key={item.id}
+                  data-framework-reveal=""
+                  style={{ transitionDelay: `${index * 45}ms` }}
+                  className="group relative min-w-0 border-b border-line last:border-b-0 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 hover:bg-surface-soft"
                 >
-                  A CLEARER DECISION VIEW
-                </p>
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 start-0 w-[3px] origin-top scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100"
+                  />
 
-                <p
-                  className="
-                    mt-2
+                  <div className="grid min-w-0 grid-cols-[52px_minmax(0,1fr)] gap-x-4 px-2 py-4 sm:grid-cols-[62px_minmax(0,0.78fr)_minmax(0,1.22fr)] sm:gap-x-5 sm:px-3 sm:py-5 lg:grid-cols-[68px_minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-x-7 lg:px-4 lg:py-[22px]">
+                    <div className="relative z-10 flex min-w-0 items-start justify-center sm:justify-start">
+                      <span
+                        aria-hidden="true"
+                        className="flex size-10 shrink-0 items-center justify-center border border-line bg-page text-brand-primary transition-[border-color,background-color,color,transform] duration-300 motion-reduce:transition-none group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-[var(--dnh-text-on-brand)] sm:size-11"
+                      >
+                        <Icon size={19} strokeWidth={1.65} />
+                      </span>
+                    </div>
 
-                    text-[15px]
-                    font-black
-                    leading-[1.9]
+                    <div className="min-w-0 sm:pt-0.5">
+                   
+                      <h3
+                        className={`mt-2 min-w-0 text-start text-[17px] font-extrabold text-ink [overflow-wrap:break-word] sm:text-[18px] lg:text-[19px] ${
+                          isRTL ? "leading-[1.75]" : "leading-[1.36]"
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                    </div>
 
-                    text-ink
-
-                    sm:text-[17px]
-                  "
-                >
-                  از «چه کاری انجام دهم؟»
-                  <br className="sm:hidden" /> به «چه چیزی باید بررسی شود؟»
-                </p>
-              </div>
-
-              <span
-                aria-hidden="true"
-                className="
-                  hidden
-
-                  h-px
-                  w-14
-
-                  bg-brand-primary/20
-
-                  transition-[width,background-color]
-                  duration-400
-
-                  group-hover/result:w-24
-                  group-hover/result:bg-brand-accent
-
-                  sm:block
-                "
-              />
-            </div>
-          </div>
+                    <p
+                      className={`col-start-2 mt-2 min-w-0 text-start text-[13px] text-ink-muted sm:col-start-3 sm:mt-0 sm:pt-0.5 sm:text-[14px] ${
+                        isRTL ? "leading-[1.95]" : "leading-[1.68]"
+                      }`}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         </div>
 
-        {/* =======================================================
-            Bottom
-        ======================================================== */}
-
         <div
-          className="
-            mt-7
-
-            flex
-            flex-col
-            gap-6
-
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
+          data-framework-reveal=""
+          className="mt-7 grid min-w-0 gap-5 border-s-[3px] border-brand-accent bg-surface-soft px-4 py-5 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:px-5 sm:py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:px-6"
         >
-          <div
-            className="
-              flex
-              items-start
-              gap-3
-            "
+          <p
+            className={`max-w-[88ch] text-start text-[13px] font-semibold text-ink sm:text-[14px] ${
+              isRTL ? "leading-[1.95]" : "leading-[1.72]"
+            }`}
           >
-            <CircleDot
-              aria-hidden="true"
-              className="
-                mt-1
-                h-4
-                w-4
-                shrink-0
+            {content.closing}
+          </p>
 
-                text-brand-primary
-              "
-              strokeWidth={1.5}
-            />
-
-            <p
-              className="
-                max-w-[730px]
-
-                text-[11px]
-                font-medium
-                leading-[2]
-
-                text-ink-muted
-
-                sm:text-[10px]
-              "
-            >
-              Framework قرار نیست یک تصمیم را به نسخه‌ای از پیش تعیین‌شده تبدیل
-              کند؛ نقش آن ساختار دادن به مسئله و روشن‌تر کردن مسیرهای قابل بررسی
-              است.
-            </p>
+          <div className="min-w-0">
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                dir={direction}
+                className="min-h-11 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto sm:max-w-full"
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
           </div>
-
-          <ActionButton
-            href="#framework-cta"
-            variant="secondary"
-            size="md"
-            icon={ArrowDownLeft}
-            className="
-              w-full
-
-              border-line-strong
-              bg-white
-
-              text-ink
-
-              shadow-none
-
-              hover:border-brand-primary
-              hover:bg-brand-primary
- 
-              sm:w-auto
-              sm:min-w-[215px]
-            "
-          >
-            قدم بعدی
-          </ActionButton>
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   Question row
-============================================================================= */
-
-function QuestionRow({
-  item,
-  last,
-}: {
-  item: (typeof QUESTIONS)[number];
-  last: boolean;
-}) {
-  return (
-    <article
-      className={`
-        group/question
-
-        grid
-        gap-5
-
-        px-5
-        py-6
-
-        transition-colors
-        duration-300
-
-        hover:bg-surface-soft/50
-
-        sm:px-7
-
-        lg:grid-cols-[100px_0.78fr_1.22fr]
-        lg:items-center
-        lg:px-8
-        lg:py-7
-
-        ${!last ? "border-b border-line" : ""}
-      `}
-    >
-      {/* identity */}
-
-      <div
-        className="
-          flex
-          items-center
-          gap-3
-        "
-      >
-        <span
-          className="
-            flex
-            h-10
-            w-10
-
-            items-center
-            justify-center
-
-            border
-            border-brand-primary/15
-
-            bg-brand-primary/[0.04]
-
-            font-mono
-            text-[14px]
-            font-black
-
-            text-brand-primary
-
-            transition-[background-color,color,border-color,transform]
-            duration-300
-
-            group-hover/question:-translate-y-0.5
-            group-hover/question:border-brand-primary
-            group-hover/question:bg-brand-primary
-            group-hover/question:text-white
-          "
-        >
-          {item.key}
-        </span>
-
-        <span
-          dir="ltr"
-          className="
-            text-[6px]
-            font-black
-            tracking-[0.13em]
-
-            text-brand-primary/35
-
-            lg:hidden
-          "
-        >
-          {item.en}
-        </span>
-      </div>
-
-      {/* question */}
-
-      <div>
-        <p
-          dir="ltr"
-          className="
-            hidden
-
-            text-[6px]
-            font-black
-            tracking-[0.15em]
-
-            text-brand-primary/35
-
-            lg:block
-          "
-        >
-          {item.en}
-        </p>
-
-        <h3
-          className="
-            mt-1
-
-            max-w-[430px]
-
-            text-[12px]
-            font-black
-            leading-[1.9]
-
-            text-ink
-
-            sm:text-[13px]
-          "
-        >
-          {item.title}
-        </h3>
-      </div>
-
-      {/* answer */}
-
-      <div
-        className="
-          border-r
-          border-line
-
-          pr-5
-
-          lg:pr-7
-        "
-      >
-        <p
-          className="
-            max-w-[620px]
-
-            text-[10px]
-            font-medium
-            leading-[2]
-
-            text-ink-muted
-
-            sm:text-[11px]
-          "
-        >
-          {item.text}
-        </p>
-      </div>
-    </article>
-  );
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "linear-gradient(112deg,color-mix(in srgb,var(--dnh-primary) 3%,white) 0%,white 52%,white 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.10]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[18%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
   );
 }

@@ -1,650 +1,266 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
 
-import { ArrowDownLeft, CircleDot } from "lucide-react";
+import { useEffect, useRef } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Database,
+  HeartPulse,
+  Network,
+  RefreshCw,
+  Scale,
+  type LucideIcon,
+} from "lucide-react";
 
-/* =============================================================================
-   Public framework layers
-============================================================================= */
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
+import frameworkEn from "@/config/DNH_Framework_Final_EN.json";
 
-const FRAMEWORK_LAYERS = [
-  {
-    letter: "D",
-    en: "DATA INTELLIGENCE",
-    fa: "هوشمندی داده",
-    question: "چه چیزهایی محیط تصمیم را شکل می‌دهند؟",
-    description:
-      "در این لایه، داده‌ها و متغیرهایی که بر تصمیم اثر می‌گذارند در کنار هم دیده می‌شوند؛ از اقتصاد، تورم و ارز تا نقدینگی، بازارها، ساختار مالی و شرایط مرتبط با خود تصمیم.",
-    keywords: ["اقتصاد", "تورم", "ارز", "نقدینگی", "بازارها", "ساختار مالی"],
-    accent: "orange",
-  },
-  {
-    letter: "N",
-    en: "NAVIGATION STRATEGY",
-    fa: "راهبرد ناوبری",
-    question: "از این تصویر، چه مسیرهایی باید بررسی شوند؟",
-    description:
-      "داده و تحلیل به سناریو، مسیرهای قابل بررسی، اولویت‌های ریسک و گزینه‌های تصمیم تبدیل می‌شوند؛ نه برای ساختن یک پاسخ قطعی، بلکه برای روشن‌تر کردن انتخاب‌های پیش رو.",
-    keywords: ["سناریو", "مسیر تصمیم", "اولویت ریسک", "گزینه‌ها"],
-    accent: "teal",
-  },
-  {
-    letter: "H",
-    en: "HORIZON ARCHITECTURE",
-    fa: "معماری افق",
-    question: "این تصمیم با افق بلندمدت چه نسبتی دارد؟",
-    description:
-      "تصمیم امروز در ارتباط با ساختار بلندمدت ثروت، نقدشوندگی، تاب‌آوری، اهداف و افق زمانی بررسی می‌شود تا تصمیم فقط برای امروز معنا نداشته باشد.",
-    keywords: ["ثروت", "نقدشوندگی", "تاب‌آوری", "اهداف", "افق زمانی"],
-    accent: "deep",
-  },
-] as const;
+type FrameworkProblemItem = {
+  id: string;
+  title: string;
+  description: string;
+};
 
-/* =============================================================================
-   Section
-============================================================================= */
+type FrameworkProblemContent = {
+  order: number;
+  id: "why-decision-framework-matters";
+  type: "problem-recognition";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  intro: string;
+  items: FrameworkProblemItem[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
-export function FrameworkLayersSection() {
+const itemIcons: Record<string, LucideIcon> = {
+  "information-overload": Database,
+  "conflicting-analysis": Scale,
+  "changing-economic-conditions": RefreshCw,
+  "emotion-in-decisions": HeartPulse,
+  "connected-impact": Network,
+};
+
+export function FrameworkWhyDecisionMatters() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const framework = locale === "en" ? frameworkEn : frameworkFa;
+  const content = framework.sections.find(
+    (section: { id?: string; type?: string }) =>
+      section.id === "why-decision-framework-matters" &&
+      section.type === "problem-recognition",
+  ) as FrameworkProblemContent | undefined;
+
+  useEffect(() => {
+    const root = sectionRef.current;
+
+    if (
+      !root ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const waiting = new Set<HTMLElement>();
+    const revealItems = root.querySelectorAll<HTMLElement>(
+      "[data-framework-reveal]",
+    );
+
+    revealItems.forEach((item) => {
+      item.removeAttribute("data-reveal");
+
+      if (item.getBoundingClientRect().top > window.innerHeight - 32) {
+        item.dataset.reveal = "pending";
+        waiting.add(item);
+      }
+    });
+
+    if (waiting.size === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const item = entry.target as HTMLElement;
+          item.dataset.reveal = "shown";
+          waiting.delete(item);
+          observer.unobserve(item);
+        });
+
+        if (waiting.size === 0) observer.disconnect();
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -24px 0px",
+      },
+    );
+
+    waiting.forEach((item) => observer.observe(item));
+
+    return () => observer.disconnect();
+  }, [locale]);
+
+  if (!content) return null;
+
+  const highlight = content.heading_highlight?.trim() ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id="framework-layers"
-      dir="rtl"
-      aria-labelledby="framework-layers-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        border-b
-        border-line
-
-        bg-page
-
-        sm:scroll-mt-28
-      "
+      ref={sectionRef}
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="framework-why-heading"
+      className="relative isolate overflow-x-clip border-b border-line bg-surface-soft py-14 text-ink sm:py-20 lg:py-24"
     >
-      <Background />
-
       <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-accent/70 to-transparent"
+      />
 
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          py-16
-
-          sm:px-8
-          sm:py-20
-
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            Header
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.82fr_1.18fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <div>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-            >
+      <div className="dnh-site-shell relative">
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-14 xl:gap-20">
+          <header className="min-w-0 text-start lg:sticky lg:top-28 lg:self-start">
+            <div className="flex min-w-0 items-center gap-3">
               <span
                 aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
+                className="h-px w-10 shrink-0 bg-brand-accent"
               />
-
-              <p
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-brand-primary
-
-                  sm:text-[11px]
-                "
-              >
-                سه لایه چارچوب DNH
+              <p className="min-w-0 text-[12px] font-bold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
               </p>
             </div>
 
+           
+
             <h2
-              id="framework-layers-title"
-              className="
-                max-w-[760px]
-
-                text-[31px]
-                font-black
-                leading-[1.65]
-                tracking-[-0.045em]
-
-                text-ink
-
-                sm:text-[38px]
-
-                lg:text-[45px]
-                lg:leading-[1.55]
-
-                xl:text-[50px]
-              "
+              id="framework-why-heading"
+              className={`mt-5 max-w-[24ch] text-pretty text-start text-[clamp(1.9rem,7vw,2.35rem)] font-black [overflow-wrap:break-word] sm:mt-6 md:text-[clamp(2.35rem,4.7vw,3rem)] lg:max-w-[21ch] lg:text-[clamp(2.7rem,3.35vw,2.55rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.18]"
+              }`}
             >
-              سه لایه،
-              <br />
-              برای دیدن <span className="text-brand-primary">یک تصمیم</span> از
-              سه زاویه.
+              {highlightIndex < 0 ? (
+                content.heading
+              ) : (
+                <>
+                  {content.heading.slice(0, highlightIndex)}
+                  <span className="text-brand-accent">
+                    {content.heading.slice(
+                      highlightIndex,
+                      highlightIndex + highlight.length,
+                    )}
+                  </span>
+                  {content.heading.slice(highlightIndex + highlight.length)}
+                </>
+              )}
             </h2>
-          </div>
-
-          <div className="lg:pb-1">
-            <p
-              className="
-                max-w-[700px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-ink-muted
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              DNH Framework مسئله مالی را فقط از زاویه بازار یا یک دارایی نگاه
-              نمی‌کند. ابتدا محیط تصمیم روشن‌تر می‌شود، سپس مسیرهای قابل بررسی
-              شکل می‌گیرند و در نهایت تصمیم با افق بلندمدت سنجیده می‌شود.
-            </p>
-          </div>
-        </div>
-
-        {/* =======================================================
-            Layers
-        ======================================================== */}
-
-        <div
-          className="
-            mt-12
-
-            border-y
-            border-line
-
-            sm:mt-14
-
-            lg:mt-16
-          "
-        >
-          {FRAMEWORK_LAYERS.map((layer, index) => (
-            <FrameworkLayer
-              key={layer.letter}
-              layer={layer}
-              index={index}
-              last={index === FRAMEWORK_LAYERS.length - 1}
-            />
-          ))}
-        </div>
-
-        {/* =======================================================
-            Closing
-        ======================================================== */}
-
-        <div
-          className="
-            mt-7
-
-            flex
-            flex-col
-            gap-5
-
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
-        >
-          <div
-            className="
-              flex
-              items-start
-              gap-3
-            "
-          >
-            <CircleDot
-              aria-hidden="true"
-              className="
-                mt-1
-                h-4
-                w-4
-                shrink-0
-
-                text-brand-primary
-              "
-              strokeWidth={1.5}
-            />
 
             <p
-              className="
-                max-w-[760px]
-
-                text-[10px]
-                font-medium
-                leading-[2]
-
-                text-ink-muted
-
-                sm:text-[11px]
-              "
+              className={`mt-5 max-w-[62ch] text-start text-[14px] text-ink-muted sm:mt-6 sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.75]"
+              }`}
             >
-              این سه لایه یک نگاه ساختاری به تصمیم می‌سازند؛ نه یک فرمول عمومی
-              برای تولید پاسخ قطعی.
+              {content.intro}
             </p>
-          </div>
 
-          <Link
-            href="#framework-decision-flow"
-            className="
-              group/link
-
-              inline-flex
-              min-h-11
-              items-center
-              gap-3
-
-              text-[10px]
-              font-black
-
-              text-brand-primary
-
-              outline-none
-
-              transition-colors
-              duration-300
-
-              hover:text-brand-accent
-
-              focus-visible:ring-2
-              focus-visible:ring-focus/40
-            "
-          >
-            این سه لایه چگونه به تصمیم می‌رسند؟
-            <ArrowDownLeft
+            <div
               aria-hidden="true"
-              className="
-                h-4
-                w-4
+              className="mt-7 flex items-center gap-2 sm:mt-8"
+            >
+              <span className="h-[2px] w-12 bg-brand-accent" />
+              <span className="h-px flex-1 bg-line" />
+            </div>
+          </header>
 
-                transition-transform
-                duration-300
+          <div className="min-w-0 border-t border-line">
+            {content.items.map((item) => {
+              const Icon = itemIcons[item.id] ?? Network;
 
-                group-hover/link:translate-y-1
-                group-hover/link:-translate-x-1
-              "
-              strokeWidth={1.6}
-            />
-          </Link>
+              return (
+                <article
+                  key={item.id}
+                  data-framework-reveal=""
+                  className="group relative grid min-w-0 gap-4 border-b border-line py-5 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-3 motion-safe:data-[reveal=pending]:opacity-0 sm:py-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-8 lg:px-4 lg:hover:bg-page/70"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 start-0 w-[2px] origin-top scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100"
+                  />
+
+                  <div className="flex min-w-0 items-start gap-4">
+                    <span
+                      aria-hidden="true"
+                      className="flex size-10 shrink-0 items-center justify-center border border-line bg-page text-brand-primary transition-colors duration-300 group-hover:border-brand-accent group-hover:text-brand-accent motion-reduce:transition-none sm:size-11"
+                    >
+                      <Icon size={20} strokeWidth={1.7} />
+                    </span>
+
+                    <h3
+                      className={`min-w-0 text-start text-[17px] font-extrabold text-ink transition-colors duration-300 group-hover:text-brand-primary motion-reduce:transition-none sm:text-[18px] lg:text-[19px] ${
+                        isRTL ? "leading-[1.8]" : "leading-[1.45]"
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <p
+                    className={`min-w-0 text-start text-[14px] text-ink-muted sm:text-[15px] ${
+                      isRTL ? "leading-[1.95]" : "leading-[1.72]"
+                    }`}
+                  >
+                    {item.description}
+                  </p>
+                </article>
+              );
+            })}
+
+            <div
+              data-framework-reveal=""
+              className="grid min-w-0 gap-5 border-b border-line py-6 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-3 motion-safe:data-[reveal=pending]:opacity-0 sm:py-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:px-4"
+            >
+              <p
+                className={`max-w-[72ch] text-start text-[14px] font-semibold text-brand-primary sm:text-[15px] ${
+                  isRTL ? "leading-[1.95]" : "leading-[1.72]"
+                }`}
+              >
+                {content.closing}
+              </p>
+
+              <div className="min-w-0">
+                {content.ctas.map((cta) => (
+                  <ActionButton
+                    key={cta.id}
+                    href={cta.href}
+                    variant={cta.type}
+                    size="md"
+                    icon={Arrow}
+                    iconPosition="end"
+                    dir={direction}
+                    className="min-h-11 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto"
+                  >
+                    {cta.label}
+                  </ActionButton>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   Layer row
-============================================================================= */
-
-function FrameworkLayer({
-  layer,
-  index,
-  last,
-}: {
-  layer: (typeof FRAMEWORK_LAYERS)[number];
-  index: number;
-  last: boolean;
-}) {
-  const theme = getTheme(layer.accent);
-
-  return (
-    <article
-      className={`
-        group/layer
-
-        relative
-
-        grid
-        gap-6
-
-        py-7
-
-        transition-colors
-        duration-300
-
-        hover:bg-surface-soft/55
-
-        sm:py-8
-
-        lg:grid-cols-[0.22fr_0.78fr]
-        lg:items-stretch
-        lg:gap-0
-        lg:py-0
-
-        ${!last ? "border-b border-line" : ""}
-      `}
-    >
-      {/* =====================================================
-          Letter
-      ====================================================== */}
-
-      <div
-        className="
-          relative
-
-          flex
-          items-center
-          justify-between
-
-          px-5
-
-          sm:px-7
-
-          lg:min-h-[260px]
-          lg:flex-col
-          lg:items-start
-          lg:justify-between
-          lg:border-l
-          lg:border-line
-          lg:px-8
-          lg:py-8
-        "
-      >
-        <span
-          className={`
-            font-mono
-            text-[58px]
-            font-black
-            leading-none
-            tracking-[-0.08em]
-
-            transition-[color,transform]
-            duration-400
-
-            group-hover/layer:-translate-y-1
-
-            sm:text-[70px]
-
-            lg:text-[86px]
-
-            ${theme.letter}
-          `}
-        >
-          {layer.letter}
-        </span>
-
-        <span
-          className="
-            text-[11px]
-            font-black
-
-            text-ink-muted/30
-          "
-        >
-          0{index + 1}
-        </span>
-
-        <span
-          aria-hidden="true"
-          className={`
-            absolute
-            bottom-0
-            right-0
-
-            hidden
-            h-[3px]
-            w-10
-
-            transition-[width]
-            duration-500
-
-            group-hover/layer:w-full
-
-            lg:block
-
-            ${theme.line}
-          `}
-        />
-      </div>
-
-      {/* =====================================================
-          Content
-      ====================================================== */}
-
-      <div
-        className="
-          grid
-          gap-7
-
-          px-5
-
-          sm:px-7
-
-          lg:min-h-[260px]
-          lg:grid-cols-[0.92fr_1.08fr]
-          lg:items-center
-          lg:gap-12
-          lg:px-10
-          lg:py-8
-
-          xl:px-12
-        "
-      >
-        {/* title */}
-
-        <div>
-          <p
-            dir="ltr"
-            className={`
-              text-right
-              text-[11px]
-              font-black
-              tracking-[0.18em]
-
-              ${theme.eyebrow}
-            `}
-          >
-            {layer.en}
-          </p>
-
-          <p
-            className="
-              mt-2
-
-              text-[10px]
-              font-bold
-
-              text-ink-muted
-            "
-          >
-            {layer.fa}
-          </p>
-
-          <h3
-            className="
-              mt-4
-              max-w-[440px]
-
-              text-[18px]
-              font-black
-              leading-[1.85]
-
-              text-ink
-
-              sm:text-[21px]
-            "
-          >
-            {layer.question}
-          </h3>
-        </div>
-
-        {/* description */}
-
-        <div>
-          <p
-            className="
-              max-w-[650px]
-
-              text-[11px]
-              font-medium
-              leading-[2.15]
-
-              text-ink-muted
-
-              sm:text-[12px]
-
-              lg:text-[13px]
-            "
-          >
-            {layer.description}
-          </p>
-
-          <div
-            className="
-              mt-5
-
-              flex
-              flex-wrap
-              gap-x-4
-              gap-y-2
-            "
-          >
-            {layer.keywords.map((keyword) => (
-              <span
-                key={keyword}
-                className="
-                    relative
-
-                    pr-3
-
-                    text-[11px]
-                    font-bold
-
-                    text-ink-muted
-
-                    before:absolute
-                    before:right-0
-                    before:top-1/2
-
-                    before:h-[5px]
-                    before:w-[5px]
-
-                    before:-translate-y-1/2
-
-                    before:bg-brand-primary/30
-                  "
-              >
-                {keyword}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-/* =============================================================================
-   Theme
-============================================================================= */
-
-function getTheme(tone: "orange" | "teal" | "deep") {
-  switch (tone) {
-    case "orange":
-      return {
-        letter: "text-brand-accent",
-        eyebrow: "text-brand-accent",
-        line: "bg-brand-accent",
-      };
-
-    case "teal":
-      return {
-        letter: "text-[#4a9fbd]",
-        eyebrow: "text-[#3187a6]",
-        line: "bg-[#4a9fbd]",
-      };
-
-    default:
-      return {
-        letter: "text-brand-primary",
-        eyebrow: "text-brand-primary",
-        line: "bg-brand-primary",
-      };
-  }
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "linear-gradient(112deg,color-mix(in srgb,var(--dnh-primary) 4%,white) 0%,white 45%,white 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.12]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-   
-    </>
   );
 }

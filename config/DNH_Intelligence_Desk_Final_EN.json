@@ -1,0 +1,641 @@
+{
+  "page": "dnh-intelligence-desk",
+  "brand": "DNH",
+  "locale": "en",
+  "direction": "ltr",
+  "title": "DNH Intelligence Desk",
+  "english_title": "DNH Intelligence Desk",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "dnh-intelligence-desk-hero",
+      "type": "hero",
+      "eyebrow": "DNH Intelligence Desk",
+      "english_label": "DNH Intelligence Desk",
+      "heading": "Seeing the market is not enough; you need to know which changes actually matter for your decisions.",
+      "paragraphs": [
+        {
+          "id": "market-noise",
+          "text": "Markets are flooded every day with data, news, analysis and price movement. But when an important financial decision is at stake, not all of that information carries the same decision value."
+        },
+        {
+          "id": "desk-purpose",
+          "text": "The DNH Intelligence Desk is designed to convert that volume of information into a structured view of risk, liquidity, economic conditions, asset positioning and the variables that matter to a decision."
+        },
+        {
+          "id": "decision-context",
+          "text": "This page is not designed to predict prices or provide trading signals. Its purpose is to make the decision environment clearer, separate meaningful change from market noise, and show what current conditions may imply for your wealth structure and financial decisions."
+        },
+        {
+          "id": "interpretation-thesis",
+          "text": "Here, markets are not merely observed; they are interpreted for decision-making."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "View the current intelligence snapshot",
+          "type": "primary",
+          "id": "snapshot",
+          "href": "#current-intelligence-snapshot"
+        },
+        {
+          "label": "Understand the logic behind the DNH Intelligence Desk",
+          "type": "secondary",
+          "id": "desk-logic",
+          "href": "#what-we-monitor"
+        }
+      ],
+      "heading_highlight": "which changes actually matter for your decisions",
+      "focus_areas": [
+        {
+          "id": "risk",
+          "label": "Risk",
+          "english_label": "Risk"
+        },
+        {
+          "id": "liquidity",
+          "label": "Liquidity",
+          "english_label": "Liquidity"
+        },
+        {
+          "id": "economy",
+          "label": "Economic Conditions",
+          "english_label": "Economic Conditions"
+        },
+        {
+          "id": "assets",
+          "label": "Asset Conditions",
+          "english_label": "Asset Conditions"
+        },
+        {
+          "id": "decision",
+          "label": "Decision Variables",
+          "english_label": "Decision Variables"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "current-intelligence-snapshot",
+      "type": "intelligence-snapshot",
+      "eyebrow": "Current Intelligence Snapshot",
+      "english_label": "Current Intelligence Snapshot",
+      "heading": "A concise view of the variables that matter most to the financial decision environment.",
+      "intro": "The current DNH Intelligence Desk snapshot brings together selected indicators and analytical views that are updated periodically, helping market conditions and risk become easier to interpret and more usable for decision-making.",
+      "indicators": [
+        {
+          "title": "Macro Risk Level",
+          "english_label": "Macro Risk Level",
+          "description": "A high-level view of the pressure and uncertainty present in the economic and financial environment.",
+          "id": "macro-risk-level"
+        },
+        {
+          "title": "Asset Positioning",
+          "english_label": "Asset Positioning",
+          "description": "DNH’s view of the strategic role and relative positioning of major asset classes under current conditions.",
+          "id": "asset-positioning"
+        },
+        {
+          "title": "DNH Risk Temperature",
+          "english_label": "DNH Risk Temperature",
+          "description": "A simple, accessible reading of the intensity of the combined risks observed in the decision environment.",
+          "id": "dnh-risk-temperature"
+        },
+        {
+          "title": "Liquidity Flow",
+          "english_label": "Liquidity Flow",
+          "description": "An assessment of the direction and importance of liquidity and the influence it may have on markets and capital decisions.",
+          "id": "liquidity-flow"
+        },
+        {
+          "title": "Weekly Bias",
+          "english_label": "Weekly Bias",
+          "description": "A concise DNH reading of the current environment, with emphasis on decision discipline and the degree of caution conditions may require.",
+          "id": "weekly-bias"
+        },
+        {
+          "title": "Strategic Signal",
+          "english_label": "Strategic Signal",
+          "description": "A decision-oriented interpretation of current conditions—not a buy or sell signal.",
+          "id": "strategic-signal"
+        }
+      ],
+      "closing": "These indicators are not intended to form the sole basis of a financial decision. They are a starting point for understanding the environment and asking better questions.",
+      "ctas": [
+        {
+          "label": "View the latest Intelligence Desk update",
+          "type": "primary",
+          "id": "latest-update",
+          "href": "#weekly-bias"
+        }
+      ],
+      "heading_highlight": "the variables that matter most to the financial decision environment"
+    },
+    {
+      "order": 3,
+      "id": "what-we-monitor",
+      "type": "monitoring-areas",
+      "eyebrow": "What We Monitor",
+      "english_label": "What We Monitor",
+      "heading": "To understand the decision environment, variables need to be viewed separately—but interpreted in relation to one another.",
+      "intro": "The DNH Intelligence Desk does not follow a single indicator or market. It reviews a set of economic and financial variables to identify the forces reshaping the decision environment and determine which of them are becoming more important.",
+      "items": [
+        {
+          "title": "Inflation & Purchasing Power",
+          "description": "Changes in inflationary pressure and the implications they may have for preserving capital value and making financial decisions.",
+          "id": "inflation-purchasing-power"
+        },
+        {
+          "title": "Currencies",
+          "description": "Currency trends and pressures, and their potential implications for assets, liquidity and financial structure.",
+          "id": "currency"
+        },
+        {
+          "title": "Liquidity",
+          "description": "Changes in the direction of money and capital flows that may influence markets and investment behaviour.",
+          "id": "liquidity"
+        },
+        {
+          "title": "Economic Policy",
+          "description": "Monetary, fiscal and regulatory decisions that can reshape the investment and business environment.",
+          "id": "economic-policy"
+        },
+        {
+          "title": "Macro & Geopolitical Risk",
+          "description": "Factors that may increase uncertainty or financial vulnerability.",
+          "id": "macro-geopolitical-risk"
+        },
+        {
+          "title": "Market Conditions",
+          "description": "Meaningful changes across asset classes and how they relate to the broader economic environment.",
+          "id": "market-conditions"
+        },
+        {
+          "title": "Capital Behaviour & Flows",
+          "description": "Signals that may indicate shifts in preferences, caution or willingness to take risk.",
+          "id": "capital-behaviour"
+        }
+      ],
+      "closing": "The objective is not to follow everything that happens. It is to identify the variables that can change the decision.",
+      "ctas": [
+        {
+          "label": "View the Macro Risk View",
+          "type": "primary",
+          "id": "macro-risk",
+          "href": "#macro-risk-view"
+        }
+      ],
+      "heading_highlight": "interpreted in relation to one another"
+    },
+    {
+      "order": 4,
+      "id": "macro-risk-view",
+      "type": "macro-risk",
+      "eyebrow": "Macro Risk View",
+      "english_label": "Macro Risk View",
+      "heading": "Before assessing an opportunity, we need to understand the level of risk in the environment in which the decision is being made.",
+      "intro": "Macro risk is not simply the risk of a market decline. Inflation, monetary policy, currencies, liquidity, regulatory change, political conditions and international developments can affect assets and financial decisions at the same time.",
+      "questions": [
+        {
+          "id": "uncertainty-direction",
+          "text": "Is uncertainty increasing or easing?"
+        },
+        {
+          "id": "priority-risks",
+          "text": "Which risks are becoming more important right now?"
+        },
+        {
+          "id": "sensitive-exposures",
+          "text": "Which parts of the financial structure are more sensitive to these conditions?"
+        },
+        {
+          "id": "assumptions-review",
+          "text": "Which assumptions may need to be revisited if conditions change?"
+        },
+        {
+          "id": "decision-flexibility",
+          "text": "Do current conditions call for greater flexibility or caution in decision-making?"
+        }
+      ],
+      "closing": "This section is not designed to predict the exact timing of an event or the certain direction of a market. Its purpose is to build an orderly view of the risk environment so that decisions are not made without accounting for macro conditions.",
+      "ctas": [
+        {
+          "label": "View the key risk variables",
+          "type": "primary",
+          "id": "risk-variables",
+          "href": "#what-we-monitor"
+        }
+      ],
+      "heading_highlight": "the level of risk in the environment in which the decision is being made"
+    },
+    {
+      "order": 5,
+      "id": "liquidity-currency-economic-pressure",
+      "type": "economic-pressure",
+      "eyebrow": "Liquidity, Currency & Economic Pressure",
+      "english_label": "Liquidity, Currency & Economic Pressure",
+      "heading": "Some shifts emerge in liquidity, currencies and economic pressures before they are reflected in asset prices.",
+      "intro": "When making decisions about wealth, the current price of an asset is not the only factor that matters. Liquidity conditions, purchasing power and currency pressures can determine how flexible or vulnerable a financial structure is.",
+      "items": [
+        {
+          "title": "Liquidity Flow",
+          "description": "Changes in access to money and the movement of capital can influence market behaviour, asset valuations and future opportunities.",
+          "id": "liquidity-flow"
+        },
+        {
+          "title": "Currency Pressure",
+          "description": "Currency movements can affect purchasing power, costs, assets and investment decisions directly or indirectly.",
+          "id": "currency-pressure"
+        },
+        {
+          "title": "Inflation",
+          "description": "Inflation is more than an economic data point; over time, it can change the real value of cash, income and the wider asset structure.",
+          "id": "inflation"
+        },
+        {
+          "title": "Opportunity Cost of Holding Cash",
+          "description": "Cash provides flexibility, but its cost and strategic value vary across economic environments.",
+          "id": "cash-opportunity-cost"
+        },
+        {
+          "title": "Liquidity Needs",
+          "description": "Market conditions may change, but financial obligations and real-world needs remain. Environmental analysis therefore needs to be considered alongside access to capital.",
+          "id": "liquidity-needs"
+        }
+      ],
+      "closing": "Within the DNH Intelligence Desk, these variables are not viewed in isolation but in relation to risk, assets and the conditions surrounding the decision.",
+      "ctas": [
+        {
+          "label": "View Asset Positioning",
+          "type": "primary",
+          "id": "asset-positioning",
+          "href": "#asset-positioning"
+        }
+      ],
+      "heading_highlight": "before they are reflected in asset prices"
+    },
+    {
+      "order": 6,
+      "id": "asset-positioning",
+      "type": "asset-positioning",
+      "eyebrow": "Asset Positioning",
+      "english_label": "Asset Positioning",
+      "heading": "The key question is not “Which asset is best?” but what role each asset can play under current conditions.",
+      "intro": "Within the DNH Intelligence Desk, major asset classes are assessed through their strategic role, risk, liquidity and the conditions currently shaping them.",
+      "assets": [
+        {
+          "title": "Gold",
+          "description": "Assessing its role in preserving value, diversifying the structure and navigating inflation or uncertainty.",
+          "id": "gold"
+        },
+        {
+          "title": "Currencies",
+          "description": "Assessing their role in managing currency risk, purchasing power and financial flexibility.",
+          "id": "currency"
+        },
+        {
+          "title": "Equities",
+          "description": "Assessing growth conditions, market risk, volatility and their place within an appropriate time horizon.",
+          "id": "equities"
+        },
+        {
+          "title": "Real Estate",
+          "description": "Assessing its long-term role, capital concentration and liquidity constraints.",
+          "id": "real-estate"
+        },
+        {
+          "title": "Fixed Income",
+          "description": "Assessing its role in stability, income generation and managing structural volatility.",
+          "id": "fixed-income"
+        },
+        {
+          "title": "Cash",
+          "description": "Assessing the value of flexibility, preparedness for obligations and the ability to act on future opportunities.",
+          "id": "cash"
+        },
+        {
+          "title": "Commodities",
+          "description": "Assessing their relationship with the economic cycle, inflation and global change.",
+          "id": "commodities"
+        },
+        {
+          "title": "Alternative Assets",
+          "description": "Assessing their potential role in diversification and reducing dependence on major asset classes.",
+          "id": "alternatives"
+        }
+      ],
+      "closing": "This section does not rank assets or provide general buy and sell recommendations. The appropriate role of any asset ultimately depends on an individual’s wealth structure, objectives, risk profile and time horizon.",
+      "ctas": [
+        {
+          "label": "Review my asset structure",
+          "type": "primary",
+          "id": "assessment",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "heading_highlight": "what role each asset can play under current conditions"
+    },
+    {
+      "order": 7,
+      "id": "dnh-risk-temperature",
+      "type": "risk-temperature",
+      "eyebrow": "DNH Risk Temperature",
+      "english_label": "DNH Risk Temperature",
+      "heading": "Not every risk can be reduced to a single number; but the intensity of the risk environment can be communicated more clearly.",
+      "intro": "DNH Risk Temperature is a condensed representation of the risk conditions being monitored. Its purpose is to give the reader an initial sense of how calm or pressured the decision environment is, without requiring a review of dozens of variables.",
+      "levels": [
+        {
+          "title": "Low",
+          "english_label": "Low",
+          "description": "A comparatively stable environment with lower observed pressure.",
+          "id": "low"
+        },
+        {
+          "title": "Moderate",
+          "english_label": "Moderate",
+          "description": "Meaningful risks are present and require attention and monitoring.",
+          "id": "moderate"
+        },
+        {
+          "title": "Elevated",
+          "english_label": "Elevated",
+          "description": "Uncertainty is rising or several risk factors are becoming active at the same time.",
+          "id": "elevated"
+        },
+        {
+          "title": "High",
+          "english_label": "High",
+          "description": "An environment in which risk management, liquidity and decision flexibility become materially more important.",
+          "id": "high"
+        }
+      ],
+      "closing_paragraphs": [
+        {
+          "id": "summary-not-prediction",
+          "text": "Risk Temperature is a way to summarise conditions—not a forecast of market direction and not an instruction to act."
+        },
+        {
+          "id": "context-matters",
+          "text": "A real decision only becomes meaningful when this view is considered alongside the individual’s own circumstances and financial structure."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "View the drivers of Risk Temperature",
+          "type": "primary",
+          "id": "risk-drivers",
+          "href": "#what-we-monitor"
+        }
+      ],
+      "heading_highlight": "the intensity of the risk environment can be communicated more clearly"
+    },
+    {
+      "order": 8,
+      "id": "weekly-bias",
+      "type": "weekly-bias",
+      "eyebrow": "DNH Weekly Bias",
+      "english_label": "Weekly Bias",
+      "heading": "Each week, the key question is not whether markets will rise or fall; it is what perspective and level of caution are better aligned with current conditions.",
+      "intro": "DNH Weekly Bias is a concise reading of the current decision environment, based on macro conditions, risk, liquidity and the significant changes under observation.",
+      "bias_types": [
+        {
+          "title": "Defensive",
+          "description": "When protecting the structure and managing risk deserve greater priority.",
+          "id": "defensive"
+        },
+        {
+          "title": "Cautious",
+          "description": "When uncertainty is elevated and major decisions require deeper review.",
+          "id": "cautious"
+        },
+        {
+          "title": "Balanced",
+          "description": "When risk and opportunity need to be assessed together.",
+          "id": "balanced"
+        },
+        {
+          "title": "Selective & Opportunity-Oriented",
+          "description": "When certain opportunities may merit consideration, but not indiscriminately and never without regard to quality and structure.",
+          "id": "selective-opportunity"
+        }
+      ],
+      "closing_paragraphs": [
+        {
+          "id": "not-a-position",
+          "text": "Weekly Bias is not a public trading position. It simply shows how DNH interprets the current environment from a decision-making perspective."
+        },
+        {
+          "id": "weekly-outlook",
+          "text": "For the full analysis, the factors behind the view and the week’s key topics, you can read the DNH Weekly Outlook."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "Read the latest DNH Weekly Outlook",
+          "type": "primary",
+          "id": "weekly-outlook",
+          "href": "/knowledge/weekly-outlook"
+        }
+      ],
+      "heading_highlight": "what perspective and level of caution are better aligned with current conditions"
+    },
+    {
+      "order": 9,
+      "id": "what-to-watch",
+      "type": "watchlist",
+      "eyebrow": "What to Watch",
+      "english_label": "What to Watch",
+      "heading": "A good decision does not merely react to what happened today; it also tracks the variables that can change tomorrow’s conditions.",
+      "intro": "What to Watch identifies the variables and events that deserve greater attention over the coming days and weeks.",
+      "watch_items": [
+        {
+          "id": "economic-policy-decisions",
+          "text": "Major economic and policy decisions"
+        },
+        {
+          "id": "inflation-path",
+          "text": "Changes in the inflation path"
+        },
+        {
+          "id": "currency-moves",
+          "text": "Significant currency moves"
+        },
+        {
+          "id": "liquidity-flow",
+          "text": "Shifts in liquidity flows"
+        },
+        {
+          "id": "geopolitics",
+          "text": "Geopolitical developments"
+        },
+        {
+          "id": "asset-class-conditions",
+          "text": "Changes in the conditions of major asset classes"
+        },
+        {
+          "id": "risk-signals",
+          "text": "Signals of increasing or decreasing risk"
+        },
+        {
+          "id": "assumption-changing-events",
+          "text": "Events that may challenge current assumptions"
+        }
+      ],
+      "closing": "The purpose of this section is not to create anxiety or encourage rapid reactions. It is to clarify which variables could change the current picture and why they deserve to be monitored.",
+      "ctas": [
+        {
+          "label": "View this week’s key topics",
+          "type": "primary",
+          "id": "weekly-topics",
+          "href": "/knowledge/weekly-outlook"
+        }
+      ],
+      "heading_highlight": "tracks the variables that can change tomorrow’s conditions"
+    },
+    {
+      "order": 10,
+      "id": "strategic-implications",
+      "type": "strategic-implications",
+      "eyebrow": "Strategic Implications",
+      "english_label": "Strategic Implications",
+      "heading": "Data becomes valuable when we can understand what it means for the decision.",
+      "intro": "The final stage of the Intelligence Desk is not simply observing conditions. It is translating them into questions and implications that matter to the decision-maker.",
+      "items": [
+        {
+          "title": "What do these conditions mean for liquidity?",
+          "description": "Has financial flexibility become more important in the current environment?",
+          "id": "liquidity-implication"
+        },
+        {
+          "title": "What do these conditions mean for concentration risk?",
+          "description": "Does heavy dependence on one asset, market or income source deserve greater attention?",
+          "id": "concentration-risk"
+        },
+        {
+          "title": "Which decisions require more caution?",
+          "description": "Is uncertainty high enough that major decisions should be tested across a wider range of scenarios?",
+          "id": "decision-caution"
+        },
+        {
+          "title": "Which assumptions need to be revisited?",
+          "description": "Do the conditions that supported an earlier decision still hold?",
+          "id": "assumptions-review"
+        },
+        {
+          "title": "What should be preserved, and what should be reviewed again?",
+          "description": "Not every change requires action. Sometimes the most important decision is to preserve discipline and avoid an emotional response.",
+          "id": "preserve-vs-review"
+        }
+      ],
+      "closing": "At DNH, a Strategic Signal is not a trading signal. It is a decision-oriented insight designed to make the implications of current conditions for a financial structure clearer.",
+      "ctas": [
+        {
+          "label": "Assess what current conditions may mean for my structure",
+          "type": "primary",
+          "id": "assessment",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "heading_highlight": "what it means for the decision"
+    },
+    {
+      "order": 11,
+      "id": "what-intelligence-desk-is-not",
+      "type": "boundaries",
+      "eyebrow": "What the DNH Intelligence Desk Is Not",
+      "english_label": "What the Intelligence Desk Is Not",
+      "heading": "This page is designed to support decision-making—not to encourage trading.",
+      "intro": "To use the DNH Intelligence Desk properly, its boundary from trading tools needs to remain completely clear.",
+      "items": [
+        {
+          "title": "It is not a Trading Terminal",
+          "description": "This page is not designed for trade execution, order placement or real-time price tracking.",
+          "id": "trading-terminal"
+        },
+        {
+          "title": "It is not a Signal Panel",
+          "description": "Its output is not a general instruction to buy, sell or hold an asset.",
+          "id": "signal-panel"
+        },
+        {
+          "title": "It is not a Crypto Dashboard",
+          "description": "Its purpose is not to chase assets, tokens or short-term price moves.",
+          "id": "crypto-dashboard"
+        },
+        {
+          "title": "It is not a Deterministic Price-Forecasting Model",
+          "description": "No certain market level or direction is promised to the reader.",
+          "id": "deterministic-price-forecast"
+        },
+        {
+          "title": "It is not a News Outlet",
+          "description": "News matters only when it can change the risk environment or the conditions surrounding a decision.",
+          "id": "news-media"
+        },
+        {
+          "title": "It is not a Substitute for Assessing Your Specific Circumstances",
+          "description": "General Intelligence Desk information cannot become a personal decision without understanding your objectives, assets, liquidity and constraints.",
+          "id": "personal-assessment-substitute"
+        }
+      ],
+      "closing": "The DNH Intelligence Desk is a Private Wealth Intelligence Desk designed to support risk awareness, decision discipline and long-term wealth architecture.",
+      "ctas": [
+        {
+          "label": "Explore the DNH Framework",
+          "type": "primary",
+          "id": "framework",
+          "href": "/dnh/framework"
+        }
+      ],
+      "heading_highlight": "not to encourage trading"
+    },
+    {
+      "order": 12,
+      "id": "turn-intelligence-into-better-decisions",
+      "type": "final-cta",
+      "eyebrow": "From Market Intelligence to Structured Decisions",
+      "english_label": "Turn Intelligence Into Better Decisions",
+      "heading": "Understanding market conditions is not the end point; what matters is what those conditions mean for you.",
+      "paragraphs": [
+        {
+          "id": "context-specificity",
+          "text": "Two people may observe the same economic data, risk level or market change, yet because their assets, objectives, liquidity and time horizons differ, the same decision may not be appropriate for both."
+        },
+        {
+          "id": "desk-role",
+          "text": "The DNH Intelligence Desk provides a view of the decision environment. The next step is to interpret that view in the context of your specific circumstances."
+        },
+        {
+          "id": "assessment-entry",
+          "text": "If you are facing an important financial decision, your asset structure needs review, or you want to understand what current conditions may mean for your wealth, the DNH initial assessment can be a useful starting point."
+        },
+        {
+          "id": "assessment-purpose",
+          "text": "The purpose of the initial assessment is not to provide a quick answer or a generic recommendation. It is to define the question, identify the variables that matter and determine what type of specialist review is most appropriate for the next step."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "Start an initial financial decision assessment",
+          "type": "primary",
+          "id": "assessment",
+          "href": "/financial-decision-assessment"
+        },
+        {
+          "label": "Read the DNH Weekly Outlook",
+          "type": "secondary",
+          "id": "weekly-outlook",
+          "href": "/knowledge/weekly-outlook"
+        },
+        {
+          "label": "Request a strategic consultation",
+          "type": "secondary",
+          "id": "consultation",
+          "href": "/request-strategic-consultation"
+        }
+      ],
+      "heading_highlight": "what those conditions mean for you"
+    }
+  ]
+}

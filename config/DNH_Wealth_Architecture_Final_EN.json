@@ -1,0 +1,908 @@
+{
+  "page": "dnh-wealth-architecture",
+  "route": "/dnh/wealth-architecture",
+  "source_route": "/wealth-architecture",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "DNH Wealth Architecture",
+  "english_title": "DNH Wealth Architecture",
+  "section_count": 11,
+  "deleted_sections": [10],
+  "seo": {
+    "title": "DNH Wealth Architecture",
+    "description": "Wealth is not merely a collection of property, gold, currencies, shares, cash or different investments"
+  },
+  "sections": [
+    {
+      "id": "wealth-hero",
+      "render_order": 1,
+      "source_section_number": 1,
+      "layout": "hero",
+      "eyebrow": "DNH Wealth Architecture",
+      "heading": "Owning more assets does not necessarily mean having a better wealth structure.",
+      "heading_highlight": "better wealth structure",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Wealth is not merely a collection of property, gold, currencies, shares, cash or different investments. What matters is how these assets fit together, the role each one plays, and how well they align with your objectives, liquidity needs, risk level and time horizon."
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "If your assets have been accumulated at different times through different decisions, opportunities or circumstances, they may appear diversified while still lacking **an integrated and purposeful structure**."
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "Wealth Architecture at DNH helps you see your overall wealth in one picture before making an important decision. It allows you to examine **assets, risks, liquidity, objectives and the paths ahead** together and better align today's decisions with the long-term structure of your wealth."
+        },
+        {
+          "id": "paragraph-04",
+          "kind": "paragraph",
+          "text": "The goal is not to predict markets or select a particular asset. The goal is to transform your wealth from a collection of disconnected decisions into **a clear, coherent and decision-ready structure**."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Assess my wealth structure",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        },
+        {
+          "id": "cta-2",
+          "label": "Explore the DNH approach to wealth architecture",
+          "href": "/dnh/framework",
+          "type": "secondary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/private-wealth-strategyhero-desktop.png",
+        "mobile_src": "/assets/images/private-wealth-strategyhero-mobile.png",
+        "alt": "Contemporary architecture and a clear horizon introducing DNH wealth architecture",
+        "width": 1920,
+        "height": 1080,
+        "placement": "hero"
+      },
+      "source_markdown": "**DNH Wealth Architecture**\n\n# Owning more assets does not necessarily mean having a better wealth structure.\n\nWealth is not merely a collection of property, gold, currencies, shares, cash or different investments. What matters is how these assets fit together, the role each one plays, and how well they align with your objectives, liquidity needs, risk level and time horizon.\n\nIf your assets have been accumulated at different times through different decisions, opportunities or circumstances, they may appear diversified while still lacking **an integrated and purposeful structure**.\n\nWealth Architecture at DNH helps you see your overall wealth in one picture before making an important decision. It allows you to examine **assets, risks, liquidity, objectives and the paths ahead** together and better align today's decisions with the long-term structure of your wealth.\n\nThe goal is not to predict markets or select a particular asset. The goal is to transform your wealth from a collection of disconnected decisions into **a clear, coherent and decision-ready structure**.\n\n**[ Assess my wealth structure ]**\n\n**[ Explore the DNH approach to wealth architecture ]**"
+    },
+    {
+      "id": "wealth-without-architecture",
+      "render_order": 2,
+      "source_section_number": 2,
+      "layout": "symptoms",
+      "eyebrow": "When You Have Assets but No Architecture",
+      "heading": "The issue is not always a lack of assets; sometimes it is the absence of a clear structure connecting them.",
+      "heading_highlight": "absence of a clear structure",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Over time, many people invest across different markets and assets. Some capital goes into property, some into gold, currencies, equities, a business or liquidity; yet each decision may have been made at a different time and under different conditions."
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "The result may be a collection of valuable assets that have not yet been aligned as **one integrated wealth structure**."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "Much of your wealth is concentrated in one or a few assets",
+              "description": "In this situation, a change in the value or liquidity of one part can significantly affect your overall wealth structure.",
+              "icon": "layers"
+            },
+            {
+              "id": "item-02",
+              "title": "You own diverse assets, but the role of each is unclear",
+              "description": "You may know which assets you hold without knowing what each one is meant to do for growth, preservation of value, income, risk management or liquidity.",
+              "icon": "blocks"
+            },
+            {
+              "id": "item-03",
+              "title": "Asset liquidity is not aligned with your financial needs",
+              "description": "The value of your assets may be high, but timely and suitable access to capital may not be possible when you need it.",
+              "icon": "droplets"
+            },
+            {
+              "id": "item-04",
+              "title": "Investment decisions were made at different times without a common framework",
+              "description": "Market opportunities, economic conditions, advice from others or short-term changes may have shaped your current asset mix without one integrating logic.",
+              "icon": "route"
+            },
+            {
+              "id": "item-05",
+              "title": "Your asset structure has not been aligned with future objectives",
+              "description": "Preserving purchasing power, generating income, growing capital, maintaining liquidity or transferring wealth can each call for a different combination of assets and risk.",
+              "icon": "goal"
+            },
+            {
+              "id": "item-06",
+              "title": "You cannot clearly see how a change in one asset would affect your entire wealth",
+              "description": "Selling, buying or increasing a position may be more than an isolated decision; it can change liquidity, risk concentration and the balance of the entire structure.",
+              "icon": "git-compare"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "Multiple assets become a wealth structure when **each asset's role, its relationship with other assets, and its effect on the objectives, risk and liquidity of your whole wealth** can be considered together."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Review my current wealth structure",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "source_markdown": "**When You Have Assets but No Architecture**\n\n# The issue is not always a lack of assets; sometimes it is the absence of a clear structure connecting them.\n\nOver time, many people invest across different markets and assets. Some capital goes into property, some into gold, currencies, equities, a business or liquidity; yet each decision may have been made at a different time and under different conditions.\n\nThe result may be a collection of valuable assets that have not yet been aligned as **one integrated wealth structure**.\n\n**Much of your wealth is concentrated in one or a few assets**  \nIn this situation, a change in the value or liquidity of one part can significantly affect your overall wealth structure.\n\n**You own diverse assets, but the role of each is unclear**  \nYou may know which assets you hold without knowing what each one is meant to do for growth, preservation of value, income, risk management or liquidity.\n\n**Asset liquidity is not aligned with your financial needs**  \nThe value of your assets may be high, but timely and suitable access to capital may not be possible when you need it.\n\n**Investment decisions were made at different times without a common framework**  \nMarket opportunities, economic conditions, advice from others or short-term changes may have shaped your current asset mix without one integrating logic.\n\n**Your asset structure has not been aligned with future objectives**  \nPreserving purchasing power, generating income, growing capital, maintaining liquidity or transferring wealth can each call for a different combination of assets and risk.\n\n**You cannot clearly see how a change in one asset would affect your entire wealth**  \nSelling, buying or increasing a position may be more than an isolated decision; it can change liquidity, risk concentration and the balance of the entire structure.\n\nMultiple assets become a wealth structure when **each asset's role, its relationship with other assets, and its effect on the objectives, risk and liquidity of your whole wealth** can be considered together.\n\n**[ Review my current wealth structure ]**"
+    },
+    {
+      "id": "what-is-wealth-architecture",
+      "render_order": 3,
+      "source_section_number": 3,
+      "layout": "definition",
+      "eyebrow": "What Is Wealth Architecture?",
+      "heading": "Wealth architecture means seeing all your financial elements as one structure, rather than as separate assets.",
+      "heading_highlight": "one structure",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "In a wealth structure, the question is not only, “What assets do you own?” It should also be clear **why each asset belongs in your structure, what role it plays and how it connects with the other parts of your wealth.**"
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "Wealth architecture seeks to bring several core elements into alignment:"
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "Assets",
+              "description": "What you own and the role each holding plays within your overall wealth structure.",
+              "icon": "landmark"
+            },
+            {
+              "id": "item-02",
+              "title": "Risk",
+              "description": "How much of your wealth is exposed to similar risks, excessive concentration or economic changes.",
+              "icon": "shield"
+            },
+            {
+              "id": "item-03",
+              "title": "Liquidity",
+              "description": "How much capital can be accessed when needed and which holdings require more time to convert into cash.",
+              "icon": "droplets"
+            },
+            {
+              "id": "item-04",
+              "title": "Financial objectives",
+              "description": "Which needs the structure is meant to serve, from preserving purchasing power and providing income to growing or transferring wealth.",
+              "icon": "target"
+            },
+            {
+              "id": "item-05",
+              "title": "Time horizon",
+              "description": "Which parts of your capital are intended for short-, medium- or long-term needs.",
+              "icon": "clock"
+            },
+            {
+              "id": "item-06",
+              "title": "Economic conditions and the decision environment",
+              "description": "How inflation, currencies, liquidity, economic policies and other external risks may affect the current structure.",
+              "icon": "globe"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "Wealth architecture is therefore not simply about choosing an asset allocation. Its purpose is to create **a coherent and resilient financial structure** in which assets, risk, liquidity and objectives are considered in relation to one another, and financial decisions make sense within a long-term framework."
+        },
+        {
+          "id": "paragraph-04",
+          "kind": "paragraph",
+          "text": "In DNH's approach, wealth should be structured to provide **greater clarity, flexibility and coherence in decision-making** across changing economic conditions and different market cycles."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Explore the elements of wealth architecture",
+          "href": "#what-we-review",
+          "type": "primary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/big-financial-decision.png",
+        "mobile_src": "/assets/images/big-financial-decision.png",
+        "alt": "An integrated layered structure illustrating wealth architecture",
+        "width": 1200,
+        "height": 1500,
+        "placement": "side"
+      },
+      "source_markdown": "**What Is Wealth Architecture?**\n\n# Wealth architecture means seeing all your financial elements as one structure, rather than as separate assets.\n\nIn a wealth structure, the question is not only, “What assets do you own?” It should also be clear **why each asset belongs in your structure, what role it plays and how it connects with the other parts of your wealth.**\n\nWealth architecture seeks to bring several core elements into alignment:\n\n**Assets**  \nWhat you own and the role each holding plays within your overall wealth structure.\n\n**Risk**  \nHow much of your wealth is exposed to similar risks, excessive concentration or economic changes.\n\n**Liquidity**  \nHow much capital can be accessed when needed and which holdings require more time to convert into cash.\n\n**Financial objectives**  \nWhich needs the structure is meant to serve, from preserving purchasing power and providing income to growing or transferring wealth.\n\n**Time horizon**  \nWhich parts of your capital are intended for short-, medium- or long-term needs.\n\n**Economic conditions and the decision environment**  \nHow inflation, currencies, liquidity, economic policies and other external risks may affect the current structure.\n\nWealth architecture is therefore not simply about choosing an asset allocation. Its purpose is to create **a coherent and resilient financial structure** in which assets, risk, liquidity and objectives are considered in relation to one another, and financial decisions make sense within a long-term framework.\n\nIn DNH's approach, wealth should be structured to provide **greater clarity, flexibility and coherence in decision-making** across changing economic conditions and different market cycles.\n\n**[ Explore the elements of wealth architecture ]**"
+    },
+    {
+      "id": "what-we-review",
+      "render_order": 4,
+      "source_section_number": 4,
+      "layout": "review",
+      "eyebrow": "What Is Examined in Wealth Architecture?",
+      "heading": "To understand your wealth structure, you must look beyond the value of your assets.",
+      "heading_highlight": "beyond the value of your assets",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Wealth architecture examines more than the amount of capital or a list of assets. It seeks to establish how the different parts of wealth work together and whether that structure fits your objectives, needs and risk level."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "Asset structure",
+              "description": "Which assets you hold, how capital is distributed across them, and how much each part contributes to the overall wealth structure.",
+              "icon": "landmark"
+            },
+            {
+              "id": "item-02",
+              "title": "Role of each asset",
+              "description": "What each holding is meant to achieve: preservation of value, capital growth, income, liquidity, risk reduction or another purpose.",
+              "icon": "blocks"
+            },
+            {
+              "id": "item-03",
+              "title": "Capital concentration and diversification",
+              "description": "Whether a significant share of wealth depends on one asset, market, industry or income source, and what risks that concentration creates.",
+              "icon": "chart"
+            },
+            {
+              "id": "item-04",
+              "title": "Liquidity",
+              "description": "How much capital is accessible when needed and which holdings may require time, cost or specific conditions to convert into cash.",
+              "icon": "droplets"
+            },
+            {
+              "id": "item-05",
+              "title": "Structural risks",
+              "description": "Which parts of wealth are more vulnerable to inflation, currency fluctuations, market declines, reduced liquidity or other economic risks.",
+              "icon": "shield"
+            },
+            {
+              "id": "item-06",
+              "title": "Financial objectives and needs",
+              "description": "How well the current structure supports preserving purchasing power, growing capital, generating income, covering future costs or transferring wealth.",
+              "icon": "goal"
+            },
+            {
+              "id": "item-07",
+              "title": "Time horizons and financial commitments",
+              "description": "What short-, medium- and long-term needs exist and whether your asset structure can respond to them appropriately.",
+              "icon": "clock"
+            },
+            {
+              "id": "item-08",
+              "title": "Economic conditions and future scenarios",
+              "description": "How changing inflation, currencies, liquidity, economic policies and other external factors could affect different parts of the wealth structure.",
+              "icon": "globe"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "The outcome is not intended to be just an inventory of assets. The aim is to show **how your wealth is structured today, where its main risks and constraints lie, and which areas require further examination or redesign.**"
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Start assessing my wealth structure",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "source_markdown": "**What Is Examined in Wealth Architecture?**\n\n# To understand your wealth structure, you must look beyond the value of your assets.\n\nWealth architecture examines more than the amount of capital or a list of assets. It seeks to establish how the different parts of wealth work together and whether that structure fits your objectives, needs and risk level.\n\n**Asset structure**  \nWhich assets you hold, how capital is distributed across them, and how much each part contributes to the overall wealth structure.\n\n**Role of each asset**  \nWhat each holding is meant to achieve: preservation of value, capital growth, income, liquidity, risk reduction or another purpose.\n\n**Capital concentration and diversification**  \nWhether a significant share of wealth depends on one asset, market, industry or income source, and what risks that concentration creates.\n\n**Liquidity**  \nHow much capital is accessible when needed and which holdings may require time, cost or specific conditions to convert into cash.\n\n**Structural risks**  \nWhich parts of wealth are more vulnerable to inflation, currency fluctuations, market declines, reduced liquidity or other economic risks.\n\n**Financial objectives and needs**  \nHow well the current structure supports preserving purchasing power, growing capital, generating income, covering future costs or transferring wealth.\n\n**Time horizons and financial commitments**  \nWhat short-, medium- and long-term needs exist and whether your asset structure can respond to them appropriately.\n\n**Economic conditions and future scenarios**  \nHow changing inflation, currencies, liquidity, economic policies and other external factors could affect different parts of the wealth structure.\n\nThe outcome is not intended to be just an inventory of assets. The aim is to show **how your wealth is structured today, where its main risks and constraints lie, and which areas require further examination or redesign.**\n\n**[ Start assessing my wealth structure ]**"
+    },
+    {
+      "id": "who-needs-architecture",
+      "render_order": 5,
+      "source_section_number": 5,
+      "layout": "audience",
+      "eyebrow": "Who Benefits Most from Wealth Architecture?",
+      "heading": "As wealth becomes more complex, seeing the full picture becomes increasingly important.",
+      "heading_highlight": "seeing the full picture",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Wealth architecture is suited to people whose challenge is no longer simply choosing an investment. They need to think about **their entire asset structure, risks, liquidity and financial decisions** as one connected whole."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "You own diverse assets but lack one overall view of your wealth",
+              "description": "Your capital may be spread across property, gold, currencies, equities, liquidity, businesses or other holdings, yet it is not clear how the parts work together.",
+              "icon": "layers"
+            },
+            {
+              "id": "item-02",
+              "title": "You are approaching a major financial decision",
+              "description": "Buying or selling a major asset, moving capital, changing an asset mix or pursuing a new opportunity can affect several parts of your wealth and requires analysis beyond the immediate transaction.",
+              "icon": "route"
+            },
+            {
+              "id": "item-03",
+              "title": "A significant share of your wealth is concentrated in one asset or market",
+              "description": "High concentration may cause no difficulty under ordinary conditions, but changes in the economy, liquidity or asset values can increase risk across the entire structure.",
+              "icon": "shield"
+            },
+            {
+              "id": "item-04",
+              "title": "You have several financial objectives to manage at once",
+              "description": "Preserving purchasing power, growing capital, generating income, accessing liquidity, providing for your family or transferring wealth can create different needs that must be aligned in one structure.",
+              "icon": "goal"
+            },
+            {
+              "id": "item-05",
+              "title": "Your personal wealth is connected to a business or private investments",
+              "description": "When a substantial portion of wealth is tied to a company, family business or illiquid investment, personal and business decisions can affect one another.",
+              "icon": "briefcase"
+            },
+            {
+              "id": "item-06",
+              "title": "You want financial decisions to become less reactive",
+              "description": "If news, inflation, currencies or market fluctuations continually change your decisions, wealth architecture can establish a longer-term framework for examining those choices.",
+              "icon": "compass"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "Wealth architecture is most valuable when **decisions multiply, assets become more diverse and financial objectives become more interconnected, making it impractical to assess each decision in isolation.**"
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "See whether wealth architecture is right for me",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "source_markdown": "**Who Benefits Most from Wealth Architecture?**\n\n# As wealth becomes more complex, seeing the full picture becomes increasingly important.\n\nWealth architecture is suited to people whose challenge is no longer simply choosing an investment. They need to think about **their entire asset structure, risks, liquidity and financial decisions** as one connected whole.\n\n**You own diverse assets but lack one overall view of your wealth**  \nYour capital may be spread across property, gold, currencies, equities, liquidity, businesses or other holdings, yet it is not clear how the parts work together.\n\n**You are approaching a major financial decision**  \nBuying or selling a major asset, moving capital, changing an asset mix or pursuing a new opportunity can affect several parts of your wealth and requires analysis beyond the immediate transaction.\n\n**A significant share of your wealth is concentrated in one asset or market**  \nHigh concentration may cause no difficulty under ordinary conditions, but changes in the economy, liquidity or asset values can increase risk across the entire structure.\n\n**You have several financial objectives to manage at once**  \nPreserving purchasing power, growing capital, generating income, accessing liquidity, providing for your family or transferring wealth can create different needs that must be aligned in one structure.\n\n**Your personal wealth is connected to a business or private investments**  \nWhen a substantial portion of wealth is tied to a company, family business or illiquid investment, personal and business decisions can affect one another.\n\n**You want financial decisions to become less reactive**  \nIf news, inflation, currencies or market fluctuations continually change your decisions, wealth architecture can establish a longer-term framework for examining those choices.\n\nWealth architecture is most valuable when **decisions multiply, assets become more diverse and financial objectives become more interconnected, making it impractical to assess each decision in isolation.**\n\n**[ See whether wealth architecture is right for me ]**"
+    },
+    {
+      "id": "whole-wealth-structure",
+      "render_order": 6,
+      "source_section_number": 6,
+      "layout": "assets",
+      "eyebrow": "From Separate Assets to an Integrated Structure",
+      "heading": "The true value of each asset becomes clear when you understand its role in your overall wealth structure.",
+      "heading_highlight": "role in your overall wealth structure",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Gold, currencies, equities, property, fixed income, liquidity, businesses and other investments can all be part of your wealth. None of them, however, should be viewed solely as an isolated asset."
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "In wealth architecture, the main question is not “Which asset is best?” It is **what role each asset plays in your overall structure and how it affects your risk, liquidity, objectives and financial flexibility.**"
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "Gold",
+              "description": "Can help preserve value and manage inflation risk, but its weight should be considered in relation to other holdings.",
+              "icon": "coins"
+            },
+            {
+              "id": "item-02",
+              "title": "Currencies",
+              "description": "Can support currency-risk management and financial flexibility, while excessive concentration in them may itself create risk.",
+              "icon": "banknote"
+            },
+            {
+              "id": "item-03",
+              "title": "Equities",
+              "description": "Can contribute to capital growth, but their volatility, concentration and time horizon must align with the wider wealth structure.",
+              "icon": "chart"
+            },
+            {
+              "id": "item-04",
+              "title": "Real estate",
+              "description": "Can form a significant part of long-term wealth, while capital concentration, liquidity and dependence on market conditions need consideration.",
+              "icon": "building"
+            },
+            {
+              "id": "item-05",
+              "title": "Fixed income",
+              "description": "Can support stability, income generation and the balancing of overall structural risk.",
+              "icon": "wallet"
+            },
+            {
+              "id": "item-06",
+              "title": "Liquidity",
+              "description": "Is not merely unused capital; it is part of your ability to meet obligations, manage unexpected circumstances and take advantage of future opportunities.",
+              "icon": "droplets"
+            },
+            {
+              "id": "item-07",
+              "title": "Businesses and private investments",
+              "description": "For many capital owners, a significant share of wealth is tied to a personal business or unlisted assets. Their risk and liquidity must therefore be assessed alongside the rest of the wealth structure.",
+              "icon": "briefcase"
+            },
+            {
+              "id": "item-08",
+              "title": "Alternative assets",
+              "description": "Where suitable for your objectives and circumstances, these may be examined for diversification and reduced dependence on core holdings.",
+              "icon": "blocks"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "In a coherent architecture, five questions should be answerable for each asset:"
+        },
+        {
+          "id": "asset-questions",
+          "kind": "questions",
+          "items": [
+            {
+              "id": "question-1",
+              "text": "What role does it play?"
+            },
+            {
+              "id": "question-2",
+              "text": "What risk does it create?"
+            },
+            {
+              "id": "question-3",
+              "text": "How liquid is it?"
+            },
+            {
+              "id": "question-4",
+              "text": "What time horizon is it intended for?"
+            },
+            {
+              "id": "question-5",
+              "text": "How does it contribute to your overall wealth objectives?"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-04",
+          "kind": "paragraph",
+          "text": "When these answers are considered together, a set of disconnected assets can become **a purposeful, understandable and manageable wealth structure**."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Explore my overall wealth structure",
+          "href": "#clearer-picture",
+          "type": "primary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/strategic-financial-advisory.webp",
+        "mobile_src": "/assets/images/strategic-financial-advisory.webp",
+        "alt": "A connected network of assets and decisions within total wealth",
+        "width": 1200,
+        "height": 1500,
+        "placement": "side"
+      },
+      "source_markdown": "**From Separate Assets to an Integrated Structure**\n\n# The true value of each asset becomes clear when you understand its role in your overall wealth structure.\n\nGold, currencies, equities, property, fixed income, liquidity, businesses and other investments can all be part of your wealth. None of them, however, should be viewed solely as an isolated asset.\n\nIn wealth architecture, the main question is not “Which asset is best?” It is **what role each asset plays in your overall structure and how it affects your risk, liquidity, objectives and financial flexibility.**\n\n**Gold**  \nCan help preserve value and manage inflation risk, but its weight should be considered in relation to other holdings.\n\n**Currencies**  \nCan support currency-risk management and financial flexibility, while excessive concentration in them may itself create risk.\n\n**Equities**  \nCan contribute to capital growth, but their volatility, concentration and time horizon must align with the wider wealth structure.\n\n**Real estate**  \nCan form a significant part of long-term wealth, while capital concentration, liquidity and dependence on market conditions need consideration.\n\n**Fixed income**  \nCan support stability, income generation and the balancing of overall structural risk.\n\n**Liquidity**  \nIs not merely unused capital; it is part of your ability to meet obligations, manage unexpected circumstances and take advantage of future opportunities.\n\n**Businesses and private investments**  \nFor many capital owners, a significant share of wealth is tied to a personal business or unlisted assets. Their risk and liquidity must therefore be assessed alongside the rest of the wealth structure.\n\n**Alternative assets**  \nWhere suitable for your objectives and circumstances, these may be examined for diversification and reduced dependence on core holdings.\n\nIn a coherent architecture, five questions should be answerable for each asset:\n\n**What role does it play?**  \n**What risk does it create?**  \n**How liquid is it?**  \n**What time horizon is it intended for?**  \n**How does it contribute to your overall wealth objectives?**\n\nWhen these answers are considered together, a set of disconnected assets can become **a purposeful, understandable and manageable wealth structure**.\n\n**[ Explore my overall wealth structure ]**"
+    },
+    {
+      "id": "dnh-approach",
+      "render_order": 7,
+      "source_section_number": 7,
+      "layout": "framework",
+      "eyebrow": "The DNH Approach to Wealth Architecture",
+      "heading": "Wealth architecture does not begin with choosing an asset; it begins with understanding the existing structure.",
+      "heading_highlight": "understanding the existing structure",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "At DNH, wealth architecture follows a structured process. The aim is not simply to identify which market or asset seems more attractive. First, we need to understand **how the current wealth structure has formed, which risks it carries, which objectives it must serve, and how each decision will affect the whole structure.**"
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "This approach takes shape through three core layers of the DNH framework:"
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "D — Data Intelligence",
+              "description": "First, we build a picture of actual conditions: assets, capital concentration, liquidity, commitments, financial objectives and relevant economic variables are viewed together so the question is grounded in data and the present reality.",
+              "english_label": "Data Intelligence",
+              "icon": "data"
+            },
+            {
+              "id": "item-02",
+              "title": "N — Navigation Strategy",
+              "description": "Once the circumstances are understood, different paths are examined. The focus is on how each option could affect risk, liquidity, financial flexibility and other parts of wealth, and which scenarios should be considered before a decision.",
+              "english_label": "Navigation Strategy",
+              "icon": "navigation"
+            },
+            {
+              "id": "item-03",
+              "title": "H — Horizon Architecture",
+              "description": "Finally, today's decisions are examined in relation to the future: how the wealth structure can better align with long-term objectives, future needs, an acceptable level of risk and changing economic conditions.",
+              "english_label": "Horizon Architecture",
+              "icon": "horizon"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "Together, these layers help make a financial decision part of **a coherent, long-term wealth structure**, rather than an isolated choice."
+        },
+        {
+          "id": "paragraph-04",
+          "kind": "paragraph",
+          "text": "The DNH framework is not a trading system or a formula for market prediction. Its logic is based on **understanding, analysis, scenario-building and structured decision-making**; the detailed analytical methods and internal models remain part of DNH's proprietary knowledge."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Learn more about the DNH framework",
+          "href": "/dnh/framework",
+          "type": "primary"
+        }
+      ],
+      "source_markdown": "**The DNH Approach to Wealth Architecture**\n\n# Wealth architecture does not begin with choosing an asset; it begins with understanding the existing structure.\n\nAt DNH, wealth architecture follows a structured process. The aim is not simply to identify which market or asset seems more attractive. First, we need to understand **how the current wealth structure has formed, which risks it carries, which objectives it must serve, and how each decision will affect the whole structure.**\n\nThis approach takes shape through three core layers of the DNH framework:\n\n**D — Data Intelligence**  \n<span dir=\"ltr\">Data Intelligence</span>\n\nFirst, we build a picture of actual conditions: assets, capital concentration, liquidity, commitments, financial objectives and relevant economic variables are viewed together so the question is grounded in data and the present reality.\n\n**N — Navigation Strategy**  \n<span dir=\"ltr\">Navigation Strategy</span>\n\nOnce the circumstances are understood, different paths are examined. The focus is on how each option could affect risk, liquidity, financial flexibility and other parts of wealth, and which scenarios should be considered before a decision.\n\n**H — Horizon Architecture**  \n<span dir=\"ltr\">Horizon Architecture</span>\n\nFinally, today's decisions are examined in relation to the future: how the wealth structure can better align with long-term objectives, future needs, an acceptable level of risk and changing economic conditions.\n\nTogether, these layers help make a financial decision part of **a coherent, long-term wealth structure**, rather than an isolated choice.\n\nThe DNH framework is not a trading system or a formula for market prediction. Its logic is based on **understanding, analysis, scenario-building and structured decision-making**; the detailed analytical methods and internal models remain part of DNH's proprietary knowledge.\n\n**[ Learn more about the DNH framework ]**"
+    },
+    {
+      "id": "wealth-architecture-process",
+      "render_order": 8,
+      "source_section_number": 8,
+      "layout": "process",
+      "eyebrow": "The Wealth Architecture Process at DNH",
+      "heading": "Wealth architecture is not a one-off decision; it is a structured journey from understanding the current position to decisions, implementation and review.",
+      "heading_highlight": "a structured journey",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "At DNH, wealth architecture does not begin by examining one asset or offering a ready-made recommendation. We first need to understand your current circumstances, objectives and constraints, and then analyse the question and identify paths worth examining."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "1. Initial assessment",
+              "description": "The main question, current circumstances and reasons for reviewing your wealth structure are identified to establish which topics warrant deeper examination.",
+              "english_label": "Initial Assessment",
+              "icon": "scan"
+            },
+            {
+              "id": "item-02",
+              "title": "2. Understanding the current position and objectives",
+              "description": "Your assets, liquidity, commitments, financial objectives, time horizon and priorities are considered together to establish a clear starting picture.",
+              "english_label": "Current Position & Objectives",
+              "icon": "target"
+            },
+            {
+              "id": "item-03",
+              "title": "3. Wealth structure analysis",
+              "description": "Relationships between assets, capital concentration, structural risks, liquidity needs and areas that may not align with your objectives are examined.",
+              "english_label": "Wealth Structure Analysis",
+              "icon": "chart"
+            },
+            {
+              "id": "item-04",
+              "title": "4. Scenario analysis and decision-making",
+              "description": "Rather than relying on a single forecast, different paths and scenarios are examined so the implications of each choice for risk, liquidity and overall wealth become clearer.",
+              "english_label": "Scenario Analysis & Decision Framework",
+              "icon": "route"
+            },
+            {
+              "id": "item-05",
+              "title": "5. Proposed framework and priorities",
+              "description": "The analysis is turned into an understandable view of the current position, central issues, decision priorities and paths worth exploring.",
+              "english_label": "Strategic Direction",
+              "icon": "list"
+            },
+            {
+              "id": "item-06",
+              "title": "6. Implementation support and follow-up",
+              "description": "Where needed and appropriate to the engagement, agreed decisions are followed through during implementation to narrow the gap between analysis and action.",
+              "english_label": "Implementation Support & Follow-Up",
+              "icon": "briefcase"
+            },
+            {
+              "id": "item-07",
+              "title": "7. Periodic monitoring and review",
+              "description": "A wealth structure is not static. Changing objectives, economic conditions, asset values or liquidity needs can call for a review of earlier decisions and the existing structure.",
+              "english_label": "Monitoring & Review",
+              "icon": "refresh"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "The DNH journey is designed around **initial assessment, understanding the position and objectives, analysis, decision-making, proposed direction, implementation support and follow-up, and periodic monitoring where appropriate**."
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "The purpose is not to reach a quick answer to “What should we buy or sell?” The aim is to view every significant decision in relation to **your entire wealth structure, risks, objectives and financial future**."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Start an initial wealth architecture assessment",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/Translucent Data City in Perspective.png",
+        "mobile_src": "/assets/images/Translucent Data City in Perspective.png",
+        "alt": "A step-by-step path for analysing and designing a wealth structure",
+        "width": 1600,
+        "height": 960,
+        "placement": "strip"
+      },
+      "source_markdown": "**The Wealth Architecture Process at DNH**\n\n# Wealth architecture is not a one-off decision; it is a structured journey from understanding the current position to decisions, implementation and review.\n\nAt DNH, wealth architecture does not begin by examining one asset or offering a ready-made recommendation. We first need to understand your current circumstances, objectives and constraints, and then analyse the question and identify paths worth examining.\n\n**1. Initial assessment**  \n<span dir=\"ltr\">Initial Assessment</span>\n\nThe main question, current circumstances and reasons for reviewing your wealth structure are identified to establish which topics warrant deeper examination.\n\n**2. Understanding the current position and objectives**  \n<span dir=\"ltr\">Current Position & Objectives</span>\n\nYour assets, liquidity, commitments, financial objectives, time horizon and priorities are considered together to establish a clear starting picture.\n\n**3. Wealth structure analysis**  \n<span dir=\"ltr\">Wealth Structure Analysis</span>\n\nRelationships between assets, capital concentration, structural risks, liquidity needs and areas that may not align with your objectives are examined.\n\n**4. Scenario analysis and decision-making**  \n<span dir=\"ltr\">Scenario Analysis & Decision Framework</span>\n\nRather than relying on a single forecast, different paths and scenarios are examined so the implications of each choice for risk, liquidity and overall wealth become clearer.\n\n**5. Proposed framework and priorities**  \n<span dir=\"ltr\">Strategic Direction</span>\n\nThe analysis is turned into an understandable view of the current position, central issues, decision priorities and paths worth exploring.\n\n**6. Implementation support and follow-up**  \n<span dir=\"ltr\">Implementation Support & Follow-Up</span>\n\nWhere needed and appropriate to the engagement, agreed decisions are followed through during implementation to narrow the gap between analysis and action.\n\n**7. Periodic monitoring and review**  \n<span dir=\"ltr\">Monitoring & Review</span>\n\nA wealth structure is not static. Changing objectives, economic conditions, asset values or liquidity needs can call for a review of earlier decisions and the existing structure.\n\nThe DNH journey is designed around **initial assessment, understanding the position and objectives, analysis, decision-making, proposed direction, implementation support and follow-up, and periodic monitoring where appropriate**.\n\nThe purpose is not to reach a quick answer to “What should we buy or sell?” The aim is to view every significant decision in relation to **your entire wealth structure, risks, objectives and financial future**.\n\n**[ Start an initial wealth architecture assessment ]**"
+    },
+    {
+      "id": "clearer-picture",
+      "render_order": 9,
+      "source_section_number": 9,
+      "layout": "outcomes",
+      "eyebrow": "What Picture Do You Gain from Wealth Architecture?",
+      "heading": "It is not enough to identify your assets; you need to see your wealth structure more clearly and make important decisions in relation to that picture.",
+      "heading_highlight": "see your wealth structure more clearly",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "At the end of a wealth architecture process, the aim is to replace fragmented information about holdings with a structured view of **your current position, risks, liquidity, objectives and the paths available for consideration**."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "An integrated picture of your wealth structure",
+              "description": "Understand how the different parts of your wealth fit together, where capital is concentrated and how holdings relate to one another.",
+              "icon": "blocks"
+            },
+            {
+              "id": "item-02",
+              "title": "Understanding risks and vulnerabilities",
+              "description": "Identify areas that may be more vulnerable because of capital concentration, low liquidity, dependence on one market or changing economic circumstances.",
+              "icon": "shield"
+            },
+            {
+              "id": "item-03",
+              "title": "A clearer picture of liquidity",
+              "description": "See how much wealth is accessible when needed and which holdings may require time or particular conditions to turn into cash.",
+              "icon": "droplets"
+            },
+            {
+              "id": "item-04",
+              "title": "Defining the role of different assets",
+              "description": "Consider each asset in relation to overall objectives, whether its main role is preserving value, growing capital, generating income, providing liquidity, diversifying or managing risk.",
+              "icon": "target"
+            },
+            {
+              "id": "item-05",
+              "title": "Scenarios to consider before making a decision",
+              "description": "Rather than depending on a forecast, examine different paths and their possible effects on the wealth structure so decisions can be made within a clearer framework.",
+              "icon": "route"
+            },
+            {
+              "id": "item-06",
+              "title": "Decision-making priorities",
+              "description": "Clarify which issues need earlier attention, which can be addressed later and what sequence of decisions would be more logical.",
+              "icon": "list"
+            },
+            {
+              "id": "item-07",
+              "title": "Areas in need of review",
+              "description": "Identify parts of the structure that may not be sufficiently aligned with objectives, risk level, liquidity requirements or time horizon and require further examination.",
+              "icon": "scan"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "Ultimately, wealth architecture does not make the future certain. Its purpose is **greater clarity in decision-making, a better understanding of risk and a more coherent view of your entire wealth**."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Start assessing my wealth structure",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/detect.webp",
+        "mobile_src": "/assets/images/detect.webp",
+        "alt": "An integrated view of assets, risk, liquidity and decision pathways",
+        "width": 1200,
+        "height": 1500,
+        "placement": "side"
+      },
+      "source_markdown": "**What Picture Do You Gain from Wealth Architecture?**\n\n# It is not enough to identify your assets; you need to see your wealth structure more clearly and make important decisions in relation to that picture.\n\nAt the end of a wealth architecture process, the aim is to replace fragmented information about holdings with a structured view of **your current position, risks, liquidity, objectives and the paths available for consideration**.\n\n**An integrated picture of your wealth structure**  \nUnderstand how the different parts of your wealth fit together, where capital is concentrated and how holdings relate to one another.\n\n**Understanding risks and vulnerabilities**  \nIdentify areas that may be more vulnerable because of capital concentration, low liquidity, dependence on one market or changing economic circumstances.\n\n**A clearer picture of liquidity**  \nSee how much wealth is accessible when needed and which holdings may require time or particular conditions to turn into cash.\n\n**Defining the role of different assets**  \nConsider each asset in relation to overall objectives, whether its main role is preserving value, growing capital, generating income, providing liquidity, diversifying or managing risk.\n\n**Scenarios to consider before making a decision**  \nRather than depending on a forecast, examine different paths and their possible effects on the wealth structure so decisions can be made within a clearer framework.\n\n**Decision-making priorities**  \nClarify which issues need earlier attention, which can be addressed later and what sequence of decisions would be more logical.\n\n**Areas in need of review**  \nIdentify parts of the structure that may not be sufficiently aligned with objectives, risk level, liquidity requirements or time horizon and require further examination.\n\nUltimately, wealth architecture does not make the future certain. Its purpose is **greater clarity in decision-making, a better understanding of risk and a more coherent view of your entire wealth**.\n\n**[ Start assessing my wealth structure ]**"
+    },
+    {
+      "id": "what-wealth-architecture-is-not",
+      "render_order": 10,
+      "source_section_number": 11,
+      "layout": "boundaries",
+      "eyebrow": "What Wealth Architecture Is Not",
+      "heading": "Wealth architecture is not designed to find “today's best asset”; it is designed to create clearer logic for financial decisions.",
+      "heading_highlight": "clearer logic",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "Part of understanding wealth architecture is knowing its boundaries. DNH's approach is not intended to reduce financial decisions to predictions, trading signals or short-term reactions to market movements."
+        },
+        {
+          "id": "items-1",
+          "kind": "items",
+          "items": [
+            {
+              "id": "item-01",
+              "title": "It is not a buy-or-sell signal",
+              "description": "The aim is not to tell you which asset to buy or sell at a particular moment. Every decision must be assessed in relation to the overall wealth structure, your objectives, risk and liquidity.",
+              "icon": "x"
+            },
+            {
+              "id": "item-02",
+              "title": "It is not a certain market forecast",
+              "description": "Inflation, currencies, economic policy and markets all involve uncertainty. Instead of relying on one prediction, wealth architecture examines alternative scenarios and their possible consequences.",
+              "icon": "cloud"
+            },
+            {
+              "id": "item-03",
+              "title": "It is not only portfolio management",
+              "description": "An investment portfolio is only part of the picture. Property, liquidity, businesses, financial commitments, objectives and other parts of wealth can all matter in the wider structure.",
+              "icon": "briefcase"
+            },
+            {
+              "id": "item-04",
+              "title": "It is not merely diversification across several assets",
+              "description": "Owning several types of assets does not in itself create an architecture. What matters is understanding the role, risk, liquidity and relationship of each part to the whole.",
+              "icon": "layers"
+            },
+            {
+              "id": "item-05",
+              "title": "It is not a one-size-fits-all solution",
+              "description": "An appropriate structure depends on an individual's or family's financial circumstances, objectives, time horizon, liquidity needs, constraints and acceptable risk level.",
+              "icon": "users"
+            },
+            {
+              "id": "item-06",
+              "title": "It is not a guarantee of returns or the removal of risk",
+              "description": "No structure can eliminate uncertainty or guarantee a specific financial outcome. The aim is to better understand risk and prepare for decisions under different conditions.",
+              "icon": "shield"
+            }
+          ]
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "At DNH, wealth architecture is **a structured method for understanding, organising and making decisions about total wealth**, so financial choices can fit a coherent, long-term framework rather than remain disconnected reactions."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Explore wealth architecture for my circumstances",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/risk-management-wealth-protection.webp",
+        "mobile_src": "/assets/images/risk-management-wealth-protection.webp",
+        "alt": "A symbol of wealth protection and the boundaries of financial decision-making",
+        "width": 1200,
+        "height": 1500,
+        "placement": "side"
+      },
+      "source_markdown": "**What Wealth Architecture Is Not**\n\n# Wealth architecture is not designed to find “today's best asset”; it is designed to create clearer logic for financial decisions.\n\nPart of understanding wealth architecture is knowing its boundaries. DNH's approach is not intended to reduce financial decisions to predictions, trading signals or short-term reactions to market movements.\n\n**It is not a buy-or-sell signal**  \nThe aim is not to tell you which asset to buy or sell at a particular moment. Every decision must be assessed in relation to the overall wealth structure, your objectives, risk and liquidity.\n\n**It is not a certain market forecast**  \nInflation, currencies, economic policy and markets all involve uncertainty. Instead of relying on one prediction, wealth architecture examines alternative scenarios and their possible consequences.\n\n**It is not only portfolio management**  \nAn investment portfolio is only part of the picture. Property, liquidity, businesses, financial commitments, objectives and other parts of wealth can all matter in the wider structure.\n\n**It is not merely diversification across several assets**  \nOwning several types of assets does not in itself create an architecture. What matters is understanding the role, risk, liquidity and relationship of each part to the whole.\n\n**It is not a one-size-fits-all solution**  \nAn appropriate structure depends on an individual's or family's financial circumstances, objectives, time horizon, liquidity needs, constraints and acceptable risk level.\n\n**It is not a guarantee of returns or the removal of risk**  \nNo structure can eliminate uncertainty or guarantee a specific financial outcome. The aim is to better understand risk and prepare for decisions under different conditions.\n\nAt DNH, wealth architecture is **a structured method for understanding, organising and making decisions about total wealth**, so financial choices can fit a coherent, long-term framework rather than remain disconnected reactions.\n\n**[ Explore wealth architecture for my circumstances ]**"
+    },
+    {
+      "id": "start-wealth-architecture",
+      "render_order": 11,
+      "source_section_number": 12,
+      "layout": "final",
+      "eyebrow": "Begin Your Wealth Architecture",
+      "heading": "Before changing your assets, start by seeing your wealth structure more clearly.",
+      "heading_highlight": "seeing your wealth structure more clearly",
+      "blocks": [
+        {
+          "id": "paragraph-01",
+          "kind": "paragraph",
+          "text": "If you own diverse assets, face a significant financial decision or feel that your current wealth structure needs review, the first step is not necessarily to buy, sell or move capital."
+        },
+        {
+          "id": "paragraph-02",
+          "kind": "paragraph",
+          "text": "The starting point is to understand your current position: **how your assets fit together, where the major risks lie, how much liquidity you have, and how closely the present structure aligns with your objectives and time horizon.**"
+        },
+        {
+          "id": "paragraph-03",
+          "kind": "paragraph",
+          "text": "DNH's initial assessment helps clarify your main question, which areas merit deeper review and whether wealth architecture, portfolio intelligence or another DNH service may be better suited to your circumstances."
+        },
+        {
+          "id": "paragraph-04",
+          "kind": "paragraph",
+          "text": "At this initial stage, you do not need to provide all financial details or sensitive information. The aim is **to understand the question and identify a suitable path for further examination**."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "cta-1",
+          "label": "Start an initial wealth architecture assessment",
+          "href": "/financial-decision-assessment",
+          "type": "primary"
+        },
+        {
+          "id": "cta-2",
+          "label": "Request a strategic consultation",
+          "href": "/request-strategic-consultation",
+          "type": "secondary"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/dnh-services-dark-bg.png",
+        "mobile_src": "/assets/images/dnh-services-dark-bg.png",
+        "alt": "DNH financial architecture for beginning a review of total wealth",
+        "width": 1600,
+        "height": 1000,
+        "placement": "hero"
+      },
+      "source_markdown": "**Begin Your Wealth Architecture**\n\n# Before changing your assets, start by seeing your wealth structure more clearly.\n\nIf you own diverse assets, face a significant financial decision or feel that your current wealth structure needs review, the first step is not necessarily to buy, sell or move capital.\n\nThe starting point is to understand your current position: **how your assets fit together, where the major risks lie, how much liquidity you have, and how closely the present structure aligns with your objectives and time horizon.**\n\nDNH's initial assessment helps clarify your main question, which areas merit deeper review and whether wealth architecture, portfolio intelligence or another DNH service may be better suited to your circumstances.\n\nAt this initial stage, you do not need to provide all financial details or sensitive information. The aim is **to understand the question and identify a suitable path for further examination**.\n\n**[ Start an initial wealth architecture assessment ]**\n\n**[ Request a strategic consultation ]**"
+    }
+  ]
+}

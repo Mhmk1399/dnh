@@ -1,885 +1,276 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
 
-import { ArrowDownLeft, ArrowLeft, CircleDot } from "lucide-react";
+import { useEffect, useRef } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  Database,
+  Route,
+  SearchCheck,
+  Telescope,
+  type LucideIcon,
+} from "lucide-react";
 
-/* =============================================================================
-   Public conceptual flow
-============================================================================= */
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
+import frameworkEn from "@/config/DNH_Framework_Final_EN.json";
 
-const FLOW = [
-  {
-    key: "D",
-    en: "DATA INTELLIGENCE",
-    fa: "محیط تصمیم",
-    title: "ابتدا، آنچه بر تصمیم اثر می‌گذارد دیده می‌شود.",
-    description:
-      "داده‌ها، شرایط مالی، متغیرهای اقتصادی و زمینه خود مسئله کنار هم قرار می‌گیرند تا تصویر اولیه تصمیم روشن‌تر شود.",
-    signal: "What shapes the decision?",
-    tone: "orange",
-  },
-  {
-    key: "N",
-    en: "NAVIGATION STRATEGY",
-    fa: "مسیرهای قابل بررسی",
-    title: "بعد، عدم‌قطعیت به سناریو و گزینه تبدیل می‌شود.",
-    description:
-      "تحلیل به سناریوهای قابل بررسی، اولویت‌های ریسک و مسیرهایی تبدیل می‌شود که می‌توان آن‌ها را در تصمیم سنجید.",
-    signal: "What paths should be considered?",
-    tone: "blue",
-  },
-  {
-    key: "H",
-    en: "HORIZON ARCHITECTURE",
-    fa: "افق تصمیم",
-    title: "در نهایت، تصمیم امروز در نسبت با آینده دیده می‌شود.",
-    description:
-      "اثر تصمیم بر ساختار ثروت، نقدشوندگی، تاب‌آوری، اهداف و افق زمانی در تصویر بزرگ‌تر قرار می‌گیرد.",
-    signal: "What does this mean over time?",
-    tone: "white",
-  },
-] as const;
+type FrameworkProcessStep = {
+  id: string;
+  title: string;
+  english_label?: string;
+  description: string;
+};
 
-/* =============================================================================
-   Section
-============================================================================= */
+type FrameworkProcessContent = {
+  order: number;
+  id: "from-data-to-decision";
+  type: "process-overview";
+  eyebrow: string;
+  english_label?: string;
+  heading: string;
+  heading_highlight?: string;
+  intro: string;
+  steps: FrameworkProcessStep[];
+  closing: string;
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+};
 
-export function FrameworkDecisionFlowSection() {
+const stepIcons: Record<string, LucideIcon> = {
+  "data-context": Database,
+  intelligence: SearchCheck,
+  navigation: Route,
+  horizon: Telescope,
+  "structured-decision": CheckCircle2,
+};
+
+export function FrameworkFromDataToDecision() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const framework = locale === "en" ? frameworkEn : frameworkFa;
+  const content = framework.sections.find(
+    (section: { id?: string; type?: string }) =>
+      section.id === "from-data-to-decision" &&
+      section.type === "process-overview",
+  ) as FrameworkProcessContent | undefined;
+
+  useEffect(() => {
+    const root = sectionRef.current;
+
+    if (
+      !root ||
+      typeof IntersectionObserver === "undefined" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-framework-reveal]"),
+    );
+    const waiting = new Set<HTMLElement>();
+
+    items.forEach((item) => {
+      item.removeAttribute("data-reveal");
+
+      if (item.getBoundingClientRect().top > window.innerHeight - 36) {
+        item.dataset.reveal = "pending";
+        waiting.add(item);
+      }
+    });
+
+    if (waiting.size === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const item = entry.target as HTMLElement;
+          item.dataset.reveal = "shown";
+          waiting.delete(item);
+          observer.unobserve(item);
+        });
+
+        if (waiting.size === 0) observer.disconnect();
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -28px 0px" },
+    );
+
+    waiting.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [locale]);
+
+  if (!content) return null;
+
+  const highlight = content.heading_highlight?.trim() ?? "";
+  const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id="framework-decision-flow"
-      dir="rtl"
-      aria-labelledby="framework-decision-flow-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        bg-[#032f3f]
-        text-white
-
-        sm:scroll-mt-28
-      "
+      ref={sectionRef}
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="framework-data-to-decision-heading"
+      className="relative isolate border-y border-line bg-surface-soft py-14 text-ink sm:py-18 lg:py-20 xl:py-24"
     >
-      <Background />
-
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
-
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          py-16
-
-          sm:px-8
-          sm:py-20
-
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            Header
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.82fr_1.18fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <div>
-            <div
-              className="
-                mb-5
-
-                flex
-                items-center
-                gap-3
-              "
-            >
+      <div className="dnh-site-shell relative">
+        <header className="min-w-0 border-b border-line pb-7 sm:pb-8 lg:grid lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] lg:items-end lg:gap-12 lg:pb-10 xl:gap-16">
+          <div className="min-w-0 text-start">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
               <span
                 aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
+                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
               />
-
-              <p
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-white/68
-
-                  sm:text-[11px]
-                "
-              >
-                از اطلاعات تا تصویر تصمیم
+              <p className="text-[12px] font-bold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
               </p>
+
+            
             </div>
 
             <h2
-              id="framework-decision-flow-title"
-              className="
-                max-w-[800px]
-
-                text-[32px]
-                font-black
-                leading-[1.62]
-                tracking-[-0.045em]
-
-                text-white
-
-                sm:text-[39px]
-
-                lg:text-[46px]
-                lg:leading-[1.52]
-
-                xl:text-[51px]
-              "
+              id="framework-data-to-decision-heading"
+              className={`mt-4 max-w-[30ch] text-pretty text-start text-[clamp(1.9rem,7.4vw,2.35rem)] font-black [overflow-wrap:break-word] sm:mt-5 sm:text-[clamp(2.15rem,5vw,2.7rem)] lg:max-w-[28ch] lg:text-[clamp(2.35rem,3.05vw,3rem)] ${
+                isRTL ? "leading-[1.55]" : "leading-[1.16]"
+              }`}
             >
-              هدف، تولید یک جواب فوری نیست؛
-              <br />
-              هدف، ساختن{" "}
-              <span className="text-brand-accent">
-                تصویر بهتری برای تصمیم
-              </span>{" "}
-              است.
+              {highlightIndex < 0 ? (
+                content.heading
+              ) : (
+                <>
+                  {content.heading.slice(0, highlightIndex)}
+                  <span className="text-brand-accent">
+                    {content.heading.slice(
+                      highlightIndex,
+                      highlightIndex + highlight.length,
+                    )}
+                  </span>
+                  {content.heading.slice(highlightIndex + highlight.length)}
+                </>
+              )}
             </h2>
           </div>
 
-          <div className="lg:pb-1">
+          <div className="mt-5 min-w-0 text-start lg:mt-0 lg:border-s lg:border-line lg:ps-7 xl:ps-9">
             <p
-              className="
-                max-w-[700px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-white/58
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
+              className={`max-w-[50ch] text-start text-[14px] text-ink-muted sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.72]"
+              }`}
             >
-              DNH Framework داده و عدم‌قطعیت را در یک ساختار تصمیم‌محور قرار
-              می‌دهد؛ تا مسئله فقط به یک متغیر، یک بازار یا یک پاسخ کوتاه تقلیل
-              پیدا نکند و مسیرهای قابل بررسی روشن‌تر شوند.
+              {content.intro}
             </p>
           </div>
-        </div>
+        </header>
 
-        {/* =======================================================
-            Decision corridor
-        ======================================================== */}
+        <div className="relative mt-7 min-w-0 sm:mt-8 lg:mt-10">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-6 start-[27px] top-6 z-10 w-px bg-line md:hidden"
+          />
 
-        <div
-          className="
-            mt-12
+          <ol className="min-w-0 border-y border-line bg-page">
+            {content.steps.map((step, index) => {
+              const Icon = stepIcons[step.id] ?? Route;
+              const finalStep = index === content.steps.length - 1;
+              const stepNumber = String(index + 1).padStart(2, "0");
 
-            border
-            border-white/12
+              return (
+                <li
+                  key={step.id}
+                  data-framework-reveal=""
+                  className={`group relative min-w-0 border-b border-line last:border-b-0 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 ${
+                    finalStep
+                      ? "bg-brand-primary text-[var(--dnh-text-on-brand)]"
+                      : "bg-page hover:bg-surface-soft"
+                  }`}
+                >
+                  <div className="grid min-w-0 grid-cols-[56px_minmax(0,1fr)] gap-x-4 px-4 py-5 sm:grid-cols-[64px_minmax(0,0.85fr)_minmax(0,1.15fr)] sm:gap-x-6 sm:px-5 sm:py-6 lg:grid-cols-[72px_minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-x-8 lg:px-7 lg:py-6 xl:px-8">
+                    <div className="relative z-10 flex min-w-0 flex-col items-center gap-2 sm:items-start">
+                      <span
+                        aria-hidden="true"
+                        className={`flex size-11 items-center justify-center border transition-colors duration-300 motion-reduce:transition-none ${
+                          finalStep
+                            ? "border-[color-mix(in_srgb,var(--dnh-text-on-brand)_35%,transparent)] bg-brand-secondary/40 text-[var(--dnh-text-on-brand)]"
+                            : "border-line bg-page text-brand-primary group-hover:border-brand-accent group-hover:text-brand-accent"
+                        }`}
+                      >
+                        <Icon size={20} strokeWidth={1.7} />
+                      </span>
+                    </div>
 
-            bg-white/[0.025]
+                    <div className="min-w-0 self-center text-start sm:pt-0.5">
+                      <h3
+                        className={`text-start text-[18px] font-extrabold [overflow-wrap:break-word] sm:text-[19px] lg:text-[20px] ${
+                          isRTL ? "leading-[1.75]" : "leading-[1.36]"
+                        } ${
+                          finalStep
+                            ? "text-[var(--dnh-text-on-brand)]"
+                            : "text-ink"
+                        }`}
+                      >
+                        {step.title}
+                      </h3>
+                    </div>
 
-            sm:mt-14
-
-            lg:mt-16
-          "
-        >
-          {/* -----------------------------------------------------
-              top label
-          ------------------------------------------------------ */}
-
-          <div
-            className="
-              flex
-              flex-col
-              gap-3
-
-              border-b
-              border-white/10
-
-              px-5
-              py-5
-
-              sm:flex-row
-              sm:items-center
-              sm:justify-between
-              sm:px-7
-
-              lg:px-8
-            "
-          >
-            <div>
-              <p
-                dir="ltr"
-                className="
-                  text-[11px]
-                  font-black
-                  tracking-[0.2em]
-
-                  text-brand-accent
-                "
-              >
-                CONCEPTUAL DECISION FLOW
-              </p>
-
-              <p
-                className="
-                  mt-1.5
-
-                  text-[10px]
-                  font-bold
-
-                  text-white/48
-                "
-              >
-                نمایش عمومی منطق چارچوب
-              </p>
-            </div>
-
-            <p
-              className="
-                max-w-[470px]
-
-                text-[11px]
-                font-medium
-                leading-[1.9]
-
-                text-white/30
-              "
-            >
-              این نمایش، توضیح مفهومی Framework است؛ نه ترتیب پردازش، وزن‌دهی یا
-              منطق داخلی آن.
-            </p>
-          </div>
-
-          {/* -----------------------------------------------------
-              flow
-          ------------------------------------------------------ */}
-
-          <ol>
-            {FLOW.map((item, index) => (
-              <DecisionStage
-                key={item.key}
-                item={item}
-                index={index}
-                last={index === FLOW.length - 1}
-              />
-            ))}
+                    <p
+                      className={`col-start-2 mt-3 min-w-0 self-start text-start text-[13px] sm:col-start-3 sm:mt-0 sm:text-[14px] lg:text-[15px] ${
+                        isRTL ? "leading-[1.95]" : "leading-[1.68]"
+                      } ${
+                        finalStep
+                          ? "text-[color-mix(in_srgb,var(--dnh-text-on-brand)_86%,transparent)]"
+                          : "text-ink-muted"
+                      }`}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
-
-          {/* -----------------------------------------------------
-              Outcome
-          ------------------------------------------------------ */}
-
-          <div
-            className="
-              group/outcome
-
-              relative
-              overflow-hidden
-
-              border-t
-              border-white/12
-
-              bg-brand-primary
-
-              px-5
-              py-7
-
-              sm:px-7
-
-              lg:px-8
-              lg:py-8
-            "
-          >
-            <span
-              aria-hidden="true"
-              className="
-                absolute
-                inset-y-0
-                right-0
-
-                w-[3px]
-
-                bg-brand-accent
-              "
-            />
-
-            <div
-              className="
-                grid
-                gap-6
-
-                lg:grid-cols-[0.68fr_0.32fr]
-                lg:items-center
-              "
-            >
-              <div>
-                <p
-                  dir="ltr"
-                  className="
-                    text-[11px]
-                    font-black
-                    tracking-[0.19em]
-
-                    text-white/38
-                  "
-                >
-                  DECISION VIEW
-                </p>
-
-                <h3
-                  className="
-                    mt-2
-
-                    text-[18px]
-                    font-black
-                    leading-[1.8]
-
-                    text-white
-
-                    sm:text-[21px]
-                  "
-                >
-                  نتیجه، یک «تصویر تصمیم» روشن‌تر است.
-                </h3>
-
-                <p
-                  className="
-                    mt-3
-                    max-w-[760px]
-
-                    text-[10px]
-                    font-medium
-                    leading-[2.05]
-
-                    text-white/52
-
-                    sm:text-[11px]
-                  "
-                >
-                  تصویری که در آن شرایط، ریسک‌ها، سناریوها، گزینه‌های قابل بررسی
-                  و نسبت تصمیم با افق بلندمدت کنار هم دیده می‌شوند.
-                </p>
-              </div>
-
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-4
-
-                  lg:justify-end
-                "
-              >
-                <span
-                  aria-hidden="true"
-                  className="
-                    h-px
-                    flex-1
-
-                    bg-white/15
-
-                    transition-[background-color]
-                    duration-300
-
-                    group-hover/outcome:bg-brand-accent/60
-
-                    lg:max-w-[120px]
-                  "
-                />
-
-                <span
-                  className="
-                    flex
-                    h-11
-                    w-11
-                    shrink-0
-
-                    items-center
-                    justify-center
-
-                    border
-                    border-brand-accent/30
-
-                    bg-brand-accent/[0.10]
-
-                    text-brand-accent
-
-                    transition-[background-color,color,border-color,transform]
-                    duration-300
-
-                    group-hover/outcome:-translate-x-1
-                    group-hover/outcome:border-brand-accent
-                    group-hover/outcome:bg-brand-accent
-                    group-hover/outcome:text-white
-                  "
-                >
-                  <ArrowLeft className="h-4 w-4" strokeWidth={1.6} />
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        {/* =======================================================
-            Boundary + next
-        ======================================================== */}
-
         <div
-          className="
-            mt-7
-
-            flex
-            flex-col
-            gap-6
-
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
+          data-framework-reveal=""
+          className="mt-7 grid min-w-0 gap-5 border-s-2 border-brand-accent ps-4 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:mt-8 sm:ps-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10"
         >
-          <div
-            className="
-              flex
-              items-start
-              gap-3
-            "
+          <p
+            className={`max-w-[82ch] text-start text-[14px] font-semibold text-brand-primary sm:text-[15px] ${
+              isRTL ? "leading-[1.95]" : "leading-[1.72]"
+            }`}
           >
-            <CircleDot
-              aria-hidden="true"
-              className="
-                mt-1
-                h-4
-                w-4
-                shrink-0
+            {content.closing}
+          </p>
 
-                text-[#79c8df]
-              "
-              strokeWidth={1.5}
-            />
-
-            <p
-              className="
-                max-w-[750px]
-
-                text-[11px]
-                font-medium
-                leading-[2]
-
-                text-white/34
-
-                sm:text-[10px]
-              "
-            >
-              آنچه در این صفحه دیده می‌شود، منطق عمومی Framework است. وزن‌دهی
-              متغیرها، روابط داخلی، Decision Tree و روش دقیق ساخت سناریو بخشی از
-              معماری اختصاصی DNH باقی می‌مانند.
-            </p>
+          <div className="min-w-0">
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                dir={direction}
+                className="min-h-11 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto"
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
           </div>
-
-          <Link
-            href="#framework-boundary"
-            className="
-              group/link
-
-              inline-flex
-              min-h-11
-              shrink-0
-
-              items-center
-              gap-3
-
-              text-[10px]
-              font-black
-
-              text-[#83cee4]
-
-              outline-none
-
-              transition-colors
-              duration-300
-
-              hover:text-brand-accent
-
-              focus-visible:ring-2
-              focus-visible:ring-focus/50
-            "
-          >
-            چه چیزی عمومی است و چه چیزی نه؟
-            <ArrowDownLeft
-              aria-hidden="true"
-              className="
-                h-4
-                w-4
-
-                transition-transform
-                duration-300
-
-                group-hover/link:translate-y-1
-                group-hover/link:-translate-x-1
-              "
-              strokeWidth={1.6}
-            />
-          </Link>
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   Stage
-============================================================================= */
-
-function DecisionStage({
-  item,
-  index,
-  last,
-}: {
-  item: (typeof FLOW)[number];
-  index: number;
-  last: boolean;
-}) {
-  const theme = getTheme(item.tone);
-
-  return (
-    <li
-      className={`
-        group/stage
-
-        relative
-
-        grid
-        gap-6
-
-        px-5
-        py-7
-
-        transition-colors
-        duration-300
-
-        hover:bg-white/[0.045]
-
-        sm:px-7
-
-        lg:grid-cols-[120px_0.78fr_1.22fr]
-        lg:items-center
-        lg:px-8
-        lg:py-8
-
-        ${!last ? "border-b border-white/10" : ""}
-      `}
-    >
-      {/* =====================================================
-          Identity
-      ====================================================== */}
-
-      <div
-        className="
-          flex
-          items-center
-          gap-4
-
-          lg:block
-        "
-      >
-        <span
-          className={`
-            flex
-            h-12
-            w-12
-
-            shrink-0
-
-            items-center
-            justify-center
-
-            border
-
-            font-mono
-            text-[17px]
-            font-black
-
-            transition-[background-color,border-color,color,transform]
-            duration-300
-
-            group-hover/stage:-translate-y-0.5
-
-            ${theme.node}
-          `}
-        >
-          {item.key}
-        </span>
-
-        <div className="lg:mt-4">
-          <p
-            dir="ltr"
-            className={`
-              text-right
-              text-[6px]
-              font-black
-              tracking-[0.16em]
-
-              ${theme.eyebrow}
-            `}
-          >
-            {item.en}
-          </p>
-
-          <p
-            className="
-              mt-1
-
-              text-[11px]
-              font-bold
-
-              text-white/46
-            "
-          >
-            {item.fa}
-          </p>
-        </div>
-      </div>
-
-      {/* =====================================================
-          Core question
-      ====================================================== */}
-
-      <div>
-        <p
-          dir="ltr"
-          className="
-            text-[6px]
-            font-bold
-            tracking-[0.14em]
-
-            text-white/22
-          "
-        >
-          {item.signal}
-        </p>
-
-        <h3
-          className="
-            mt-2
-            max-w-[440px]
-
-            text-[14px]
-            font-black
-            leading-[1.9]
-
-            text-white
-
-            sm:text-[15px]
-          "
-        >
-          {item.title}
-        </h3>
-      </div>
-
-      {/* =====================================================
-          Explanation
-      ====================================================== */}
-
-      <div
-        className="
-          flex
-          items-start
-          gap-5
-        "
-      >
-        <span
-          aria-hidden="true"
-          className={`
-            mt-2
-
-            hidden
-            h-px
-            w-10
-            shrink-0
-
-            opacity-45
-
-            transition-[width,opacity]
-            duration-300
-
-            group-hover/stage:w-16
-            group-hover/stage:opacity-100
-
-            sm:block
-
-            ${theme.line}
-          `}
-        />
-
-        <p
-          className="
-            max-w-[620px]
-
-            text-[10px]
-            font-medium
-            leading-[2.05]
-
-            text-white/42
-
-            sm:text-[11px]
-          "
-        >
-          {item.description}
-        </p>
-      </div>
-
-      {/* sequence */}
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-5
-          top-5
-
-          text-[11px]
-          font-black
-
-          text-white/[0.10]
-
-          sm:left-7
-
-          lg:left-8
-        "
-      >
-        0{index + 1}
-      </span>
-    </li>
-  );
-}
-
-/* =============================================================================
-   Tone
-============================================================================= */
-
-function getTheme(tone: "orange" | "blue" | "white") {
-  if (tone === "orange") {
-    return {
-      node: `
-        border-brand-accent/35
-        bg-brand-accent/[0.08]
-        text-brand-accent
-
-        group-hover/stage:border-brand-accent
-        group-hover/stage:bg-brand-accent
-        group-hover/stage:text-white
-      `,
-      eyebrow: "text-brand-accent",
-      line: "bg-brand-accent",
-    };
-  }
-
-  if (tone === "blue") {
-    return {
-      node: `
-        border-[#72c7df]/30
-        bg-[#72c7df]/[0.06]
-        text-[#8ad1e6]
-
-        group-hover/stage:border-[#72c7df]
-        group-hover/stage:bg-[#72c7df]
-        group-hover/stage:text-[#032f3f]
-      `,
-      eyebrow: "text-[#8ad1e6]",
-      line: "bg-[#72c7df]",
-    };
-  }
-
-  return {
-    node: `
-      border-white/18
-      bg-white/[0.04]
-      text-white/72
-
-      group-hover/stage:border-white/50
-      group-hover/stage:bg-white
-      group-hover/stage:text-brand-primary
-    `,
-    eyebrow: "text-white/58",
-    line: "bg-white/55",
-  };
-}
-
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 16% 38%,rgba(22,115,148,.20),transparent 28%),linear-gradient(114deg,#022b39 0%,#033847 52%,#022e3c 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.08]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.09) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[18%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
   );
 }
