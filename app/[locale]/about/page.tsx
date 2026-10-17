@@ -1,22 +1,60 @@
-import { localizePageMetadata } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
-import { AboutClosingSection } from "@/components/static/About/AboutClosingSection";
-import { AboutHero } from "@/components/static/About/AboutHero";
-import { AboutOriginSection } from "@/components/static/About/AboutOriginSection";
+import type { Metadata } from "next";
 
-const page = () => {
-  return (
-    <div>
-      <AboutHero />
-      <AboutOriginSection />
-      <AboutClosingSection />
-    </div>
-  );
+import { AboutPage, type AboutSection } from "@/components/static/About/AboutPage";
+import aboutFa from "@/config/DNH_About_Final_FA.json";
+import aboutEn from "@/config/DNH_About_Final_EN.json";
+import { normalizeSiteLocale } from "@/lib/site-language";
+import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
+
+type AboutDocument = {
+  locale: string;
+  direction: "rtl" | "ltr";
+  title: string;
+  sections: AboutSection[];
 };
 
-export default page;
+export default async function AboutRoute({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const content = (locale === "fa" ? aboutFa : aboutEn) as AboutDocument;
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return localizePageMetadata({}, "/about", normalizeSiteLocale(locale));
+  return <AboutPage content={content} locale={locale} />;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const content = locale === "fa" ? aboutFa : aboutEn;
+  const hero = content.sections[0];
+  const description = hero.paragraphs?.[0] ?? content.title;
+
+  return localizePageMetadata(
+    {
+      title: content.title,
+      description,
+      alternates: getLocalizedAlternates("/about", locale),
+      openGraph: {
+        title: content.title,
+        description,
+        images: [
+          {
+            url: "/assets/images/about-hero-desktop.png",
+            width: 1600,
+            height: 1000,
+            alt: content.title,
+          },
+        ],
+      },
+    },
+    "/about",
+    locale,
+  );
 }

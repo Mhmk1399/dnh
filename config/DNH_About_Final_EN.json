@@ -1,0 +1,265 @@
+{
+  "page": "about-dnh",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "About DNH",
+  "english_title": "About DNH",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "about-dnh-hero",
+      "type": "hero",
+      "eyebrow": "About DNH",
+      "english_label": "About DNH",
+      "heading": "Beyond financial information: a system for structured decision-making",
+      "paragraphs": [
+        "DNH is a professional system at the intersection of Wealth Architecture, Strategic Financial Advisory and Wealth Intelligence.",
+        "It is designed for people facing decisions that cannot be understood by looking at a single asset, market or number in isolation.",
+        "At DNH, every financial decision is considered in relation to capital structure, liquidity, risk, objectives, economic conditions and time horizon.",
+        "For individuals and families, this means viewing wealth as an integrated structure.",
+        "For executives and business owners, it means evaluating financial decisions in the context of capital, liquidity, financing and the future of the business.",
+        "DNH was not created to offer quick, generic answers. Its purpose is to bring greater clarity, structure and discipline to consequential financial decisions.",
+        "The brand is formally positioned across Private Wealth Architecture, Strategic Financial Advisory and Wealth Intelligence."
+      ],
+      "ctas": [
+        { "label": "Explore the DNH Framework", "type": "primary" },
+        { "label": "View DNH Services", "type": "secondary" }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "what-is-dnh",
+      "type": "definition",
+      "eyebrow": "What is DNH?",
+      "english_label": "What Is DNH?",
+      "heading": "A professional system for Wealth Architecture and financial decision-making",
+      "paragraphs": [
+        "DNH helps asset owners, families, investors, executives and business owners see their financial structure, risks, scenarios and available options more clearly.",
+        "Its focus is not simply on what the market is doing today or which asset currently commands attention.",
+        "The central question is:",
+        "What does this information mean for your financial structure and the decision in front of you?",
+        "DNH therefore examines data, economic conditions, asset structure, liquidity and risk in relation to the decision-maker’s actual circumstances.",
+        "The result should be a clearer view of:"
+      ],
+      "items": ["the current position", "risk exposures", "available options", "possible scenarios", "and viable paths forward"],
+      "closing": "In its formal definition, DNH is a professional Wealth Architecture and financial decision-making system.",
+      "ctas": [{ "label": "See How DNH Works", "type": "primary" }]
+    },
+    {
+      "order": 3,
+      "id": "why-dnh-exists",
+      "type": "purpose",
+      "eyebrow": "Why DNH exists",
+      "english_label": "Why DNH Exists",
+      "heading": "More information does not always lead to better decisions.",
+      "paragraphs": [
+        "Decision-makers now have access to an extraordinary volume of data, reports, news, analysis and opinion.",
+        "Yet the central challenge is rarely a lack of information.",
+        "The real questions are:"
+      ],
+      "questions": [
+        "Which information genuinely matters to this decision?",
+        "What risk exposures remain hidden behind the numbers?",
+        "If conditions change, which scenarios become more relevant?",
+        "How will today’s decision affect liquidity and future flexibility?",
+        "Which option is best aligned with the broader structure of the individual, family or business?"
+      ],
+      "closing_paragraphs": [
+        "DNH was designed to turn this complexity into a more coherent process:",
+        "Data and uncertainty → Analysis → Insight → Scenario → Decision",
+        "The brand is formally defined as a professional system for translating data and uncertainty into better-informed decisions about capital, wealth and business."
+      ],
+      "ctas": [{ "label": "Explore DNH Decision Logic", "type": "primary" }]
+    },
+    {
+      "order": 4,
+      "id": "what-dnh-is-not",
+      "type": "positioning-boundaries",
+      "eyebrow": "What DNH is not",
+      "english_label": "What DNH Is Not",
+      "heading": "DNH’s professional boundaries matter as much as its services.",
+      "paragraphs": ["DNH is not designed for short-term trading or reacting to market excitement."],
+      "items": [
+        "DNH is not a buy-and-sell signal channel.",
+        "It is not a trading platform.",
+        "It is not a price-forecasting page.",
+        "It does not promise profits or guaranteed returns.",
+        "It is not an economic news outlet.",
+        "It does not assess an asset without considering the wider financial and wealth context."
+      ],
+      "closing_paragraphs": [
+        "Market, asset and economic analysis are part of DNH, but they serve decision-making and Wealth Architecture rather than defining the brand itself.",
+        "These boundaries are explicitly established in DNH’s internal principles.",
+        "DNH exists to improve the quality of decisions, not to increase the volume of transactions."
+      ]
+    },
+    {
+      "order": 5,
+      "id": "two-core-advisory-domains",
+      "type": "core-domains",
+      "eyebrow": "Two core advisory domains",
+      "english_label": "Two Core Advisory Domains",
+      "heading": "DNH approaches financial and capital questions through two principal advisory domains.",
+      "domains": [
+        {
+          "title": "Wealth Architecture and Strategy",
+          "english_label": "Private Wealth Architecture",
+          "paragraphs": [
+            "For individuals, families, investors and asset owners.",
+            "Assets are considered in relation to objectives, risk, liquidity, time horizon and the overall wealth structure.",
+            "The aim is not to assess each asset in isolation, but to build a coherent view of total wealth."
+          ]
+        },
+        {
+          "title": "Strategic Financial Advisory",
+          "english_label": "Strategic Financial Advisory",
+          "paragraphs": [
+            "For executives, business owners, companies and holding groups.",
+            "This domain focuses on decisions that connect capital, liquidity, financing, capital structure and the future direction of the business."
+          ]
+        }
+      ],
+      "closing_paragraphs": [
+        "Across both domains, economic and market analysis functions as an intelligence and decision-support capability rather than a separate core identity.",
+        "This formal structure positions DNH around Wealth Architecture for individuals and families, and Strategic Financial Advisory for business owners and executives."
+      ],
+      "ctas": [{ "label": "View DNH Services", "type": "primary" }]
+    },
+    {
+      "order": 6,
+      "id": "the-dnh-framework",
+      "type": "framework",
+      "eyebrow": "The DNH Framework",
+      "english_label": "The DNH Framework",
+      "heading": "Three layers for a more structured view of financial decisions",
+      "intro": "The DNH Framework distils the brand’s thinking into three public layers:",
+      "pillars": [
+        { "code": "D", "title": "Data Intelligence", "fa_title": "Data Intelligence", "description": "Identifying the data and variables that shape the decision environment, from economics, inflation and currencies to liquidity, markets, financial structure and the decision-maker’s circumstances." },
+        { "code": "N", "title": "Navigation Strategy", "fa_title": "Navigation Strategy", "description": "Translating data and analysis into scenarios, risk priorities, options and viable paths forward." },
+        { "code": "H", "title": "Horizon Architecture", "fa_title": "Horizon Architecture", "description": "Aligning today’s decisions with long-term wealth structure, liquidity, resilience, objectives and time horizon." }
+      ],
+      "closing": "The DNH Framework communicates the brand’s way of thinking, while its proprietary logic, weightings, models and reproducible internal processes remain part of DNH’s intellectual property.",
+      "ctas": [{ "label": "Explore the Full DNH Framework", "type": "primary" }]
+    },
+    {
+      "order": 7,
+      "id": "how-dnh-thinks",
+      "type": "decision-process",
+      "eyebrow": "How DNH thinks",
+      "english_label": "How DNH Thinks",
+      "heading": "Professional decisions begin with data, but they do not end there.",
+      "steps": [
+        { "order": 1, "title": "Data", "english_label": "Data", "description": "Identify the information and variables relevant to the question." },
+        { "order": 2, "title": "Analysis", "english_label": "Analysis", "description": "Understand the relationships among data, conditions and financial structure." },
+        { "order": 3, "title": "Insight", "english_label": "Insight", "description": "Separate the decision-critical signals from the volume of information." },
+        { "order": 4, "title": "Scenario", "english_label": "Scenario", "description": "Examine the implications of changing conditions." },
+        { "order": 5, "title": "Decision", "english_label": "Decision", "description": "Clarify the options and trade-offs embedded in each path." },
+        { "order": 6, "title": "Action", "english_label": "Action", "description": "Translate the decision into a defined next step." },
+        { "order": 7, "title": "Review", "english_label": "Review", "description": "Revisit the decision as conditions, objectives or information change." }
+      ],
+      "closing": "Data → Analysis → Insight → Scenario → Decision → Action → Review is the overarching decision logic formally defined for DNH.",
+      "ctas": [{ "label": "Explore the DNH Framework", "type": "primary" }]
+    },
+    {
+      "order": 8,
+      "id": "who-dnh-is-built-for",
+      "type": "audience",
+      "eyebrow": "Who DNH is built for",
+      "english_label": "Who DNH Is Built For",
+      "heading": "For people whose financial questions have moved beyond generic answers.",
+      "audiences": [
+        { "title": "Individuals and Asset Owners", "description": "When decisions about assets, liquidity and financial direction require a more structured perspective." },
+        { "title": "Families", "description": "When multiple assets, objectives or family members shape wealth decisions." },
+        { "title": "Investors", "description": "When decisions under economic or market uncertainty require risk and scenario analysis." },
+        { "title": "Executives", "description": "When a decision may affect capital, liquidity, financing or the organisation’s future." },
+        { "title": "Business Owners", "description": "When the boundary between personal wealth, business capital and growth decisions becomes more complex." }
+      ],
+      "closing_paragraphs": [
+        "DNH does not offer the same answer to every client.",
+        "The nature of the question, its complexity, objectives and context determine the most appropriate path.",
+        "DNH formally serves investors, families, executives and business owners."
+      ],
+      "ctas": [{ "label": "Find the Right Path", "type": "primary" }]
+    },
+    {
+      "order": 9,
+      "id": "the-dnh-ecosystem",
+      "type": "ecosystem",
+      "eyebrow": "The DNH Ecosystem",
+      "english_label": "The DNH Ecosystem",
+      "heading": "DNH is not a single service, but a connected system for understanding, analysis and decision-making.",
+      "components": [
+        { "title": "DNH Wealth Architecture", "description": "A structural view of wealth, assets, liquidity, risk and long-term horizon." },
+        { "title": "DNH Framework", "description": "The logic for translating data and uncertainty into analysis, scenarios and decision pathways." },
+        { "title": "DNH Intelligence Desk", "description": "An intelligence environment for monitoring economic variables, markets, risks and strategic implications." },
+        { "title": "DNH Weekly Outlook", "description": "A disciplined periodic view of economic conditions, risks and issues requiring attention." },
+        { "title": "Insights & Research", "description": "Analytical content that deepens understanding of wealth and financial decision questions." },
+        { "title": "Advisory Services", "description": "Specialist services spanning wealth, portfolios, business, markets, risk and executive decisions." },
+        { "title": "Assessment", "description": "The entry point for initial problem recognition and direction toward the appropriate path." }
+      ],
+      "closing": "DNH should be understood as a system, a method, an extensible brand and a decision architecture, not simply a collection of disconnected pages or services.",
+      "ctas": [{ "label": "Explore the DNH Ecosystem", "type": "primary" }]
+    },
+    {
+      "order": 10,
+      "id": "from-problem-recognition-to-decision",
+      "type": "engagement-process",
+      "eyebrow": "From problem recognition to decision",
+      "english_label": "From Problem Recognition to Decision",
+      "heading": "Working with DNH begins by defining the problem, not by selecting an immediate solution.",
+      "steps": [
+        { "number": 1, "title": "Initial Assessment", "description": "Define the question and assess fit." },
+        { "number": 2, "title": "Context and Objectives", "description": "Clarify the decision context, objectives and principal constraints." },
+        { "number": 3, "title": "Analysis", "description": "Evaluate the relevant information and variables." },
+        { "number": 4, "title": "Decision Framework", "description": "Clarify the important options, risks and scenarios." },
+        { "number": 5, "title": "Report or Recommendation", "description": "Translate analysis into a practical output." },
+        { "number": 6, "title": "Implementation Support", "description": "Where appropriate and within the agreed scope." },
+        { "number": 7, "title": "Periodic Review", "description": "Where the nature of the engagement calls for ongoing review." }
+      ],
+      "closing": "DNH’s intended pathway is: Initial Assessment → Context and Objectives → Analysis → Decision Framework → Report or Recommendation → Implementation Support → Periodic Review.",
+      "ctas": [{ "label": "Start an Initial Assessment", "type": "primary" }]
+    },
+    {
+      "order": 11,
+      "id": "dr-nasim-and-dnh",
+      "type": "founder-brand-relationship",
+      "eyebrow": "Dr. Nasim and DNH",
+      "english_label": "Dr. Nasim & DNH",
+      "heading": "Human expertise behind a professional system",
+      "paragraphs": [
+        "DNH is not intended to be merely a personal brand or a page built around one individual’s résumé.",
+        "Within the brand structure, Dr. Nasim Mohammadhassani represents the expertise, authority, credibility and professional judgement behind decision-making; DNH is the professional system and brand through which that expertise is delivered and developed.",
+        "The Framework, Intelligence Desk, Services, Assessment and Knowledge Hub enable that experience and professional judgement to be delivered through a coherent, scalable system.",
+        "The distinction is stated clearly in DNH’s foundational document:"
+      ],
+      "statements": ["Dr. Nasim = Authority & Expertise", "DNH = System & Brand"],
+      "closing": "This structure brings human trust and professional method together.",
+      "ctas": [{ "label": "About Dr. Nasim Mohammadhassani", "type": "primary" }]
+    },
+    {
+      "order": 12,
+      "id": "bring-structure-to-the-decision",
+      "type": "final-cta",
+      "eyebrow": "Bring structure to the question",
+      "english_label": "Bring Structure to the Decision",
+      "heading": "A better decision does not always begin with more answers. Sometimes it begins with a clearer question.",
+      "paragraphs": ["If you are considering a question involving:"],
+      "topics": ["wealth structure", "portfolio and assets", "risk and liquidity", "capital and financing", "economics and markets", "or a consequential financial or executive decision"],
+      "closing_paragraphs": [
+        "You do not need to know in advance which DNH service is right for you.",
+        "An initial assessment can help clarify:",
+        "the real question;",
+        "the level of analysis it requires;",
+        "the information that matters to the decision;",
+        "and the most appropriate path forward.",
+        "DNH’s purpose is to create a clearer decision picture from complexity, data and uncertainty."
+      ],
+      "ctas": [
+        { "label": "Start an Initial Assessment", "type": "primary" },
+        { "label": "View DNH Services", "type": "secondary" }
+      ]
+    }
+  ]
+}

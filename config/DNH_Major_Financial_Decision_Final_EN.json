@@ -1,0 +1,248 @@
+{
+  "page": "major-financial-decision",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Facing a Major Financial Decision",
+  "english_title": "Facing a Major Financial Decision?",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "major-financial-decision-hero",
+      "type": "hero",
+      "eyebrow": "Facing a major financial decision?",
+      "english_label": "Facing a Major Financial Decision?",
+      "heading": "Complete the decision picture before you commit capital.",
+      "paragraphs": [
+        "Some financial decisions are not simply a choice between two alternatives. They can place a meaningful share of capital at risk, reshape future liquidity, create new commitments, or influence the structure of your wealth and business for years to come.",
+        "In these circumstances, the question is not simply, “Which option is better?”",
+        "The following must be made clear:",
+        "What problem is the decision actually intended to solve?",
+        "How much capital and liquidity will be committed?",
+        "What risks accompany the decision?",
+        "What is the relevant time horizon?",
+        "What happens if conditions do not develop as expected?",
+        "At DNH, a major decision does not begin with selecting an asset or presenting a ready-made solution. It begins by structuring the decision itself.",
+        "The objective is to bring the problem, constraints, options, and scenarios into a clearer decision picture before action is taken."
+      ],
+      "ctas": [
+        { "label": "Start the Financial Decision Assessment", "type": "primary" },
+        { "label": "Submit Your Decision for an Initial Review", "type": "secondary" }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "when-does-a-financial-decision-become-significant",
+      "type": "problem-recognition",
+      "eyebrow": "When does a financial decision become significant?",
+      "english_label": "When Does a Financial Decision Become Significant?",
+      "heading": "A decision is significant not only because of its size, but because of the choices it leaves open—or closes off—in the future.",
+      "intro": "You may be facing one of the following situations:",
+      "items": [
+        { "title": "Buying or selling a major asset", "description": "A decision that reallocates a meaningful share of your capital." },
+        { "title": "Entering a new investment", "description": "An attractive opportunity that will commit resources for a defined period." },
+        { "title": "Restructuring a portfolio", "description": "A material change in the weighting and role of several assets." },
+        { "title": "Allocating substantial liquidity", "description": "Capital is available, but must be allocated across competing uses." },
+        { "title": "Buying or selling property", "description": "A decision with direct implications for liquidity and the overall asset structure." },
+        { "title": "Committing capital to a business or project", "description": "Personal or corporate capital is being placed behind a new opportunity." },
+        { "title": "Expanding a business", "description": "A decision that changes capital, liquidity, and financing requirements." },
+        { "title": "Taking on debt or external financing", "description": "New resources become available while future obligations also change." },
+        { "title": "Exiting an investment", "description": "The issue is not only the sale, but also timing, capital redeployment, and the consequences of exit." },
+        { "title": "Making a major family wealth decision", "description": "Several goals, assets, or stakeholders are involved in one decision." }
+      ],
+      "closing": "A decision becomes major when a poorly designed structure could restrict your future freedom to act.",
+      "ctas": [{ "label": "Review the Decision in Front of Me", "type": "primary" }]
+    },
+    {
+      "order": 3,
+      "id": "why-major-financial-decisions-become-complex",
+      "type": "decision-complexity",
+      "eyebrow": "Why do major decisions become complex?",
+      "english_label": "Why Major Financial Decisions Become Complex",
+      "heading": "A decision may look attractive from one perspective while creating new risk from another.",
+      "intro": "Complexity emerges when several material variables are connected to a single commitment.",
+      "items": [
+        { "title": "Capital", "description": "How much capital must be allocated to the decision?" },
+        { "title": "Liquidity", "description": "How much capital will remain genuinely accessible after execution?" },
+        { "title": "Risk", "description": "What could cause the outcome to depart from the original expectation?" },
+        { "title": "Future obligations", "description": "Will today’s decision create new payments, debt, or funding needs?" },
+        { "title": "Objectives", "description": "Does the decision advance the underlying objective, or does it merely look like an appealing opportunity?" },
+        { "title": "Economic conditions", "description": "Inflation, currency movements, liquidity, and the cost of capital can alter key assumptions." },
+        { "title": "Time horizon", "description": "How long will capital remain committed, and when might it be needed again?" },
+        { "title": "Future flexibility", "description": "How much scope to change course will remain after the decision is implemented?" }
+      ],
+      "closing": "A decision assessed against only one criterion can conceal costs and constraints that become more important later.",
+      "ctas": [{ "label": "Structure the Decision Problem", "type": "primary" }]
+    },
+    {
+      "order": 4,
+      "id": "who-is-this-assessment-for",
+      "type": "audience",
+      "eyebrow": "Who is this assessment designed for?",
+      "english_label": "Who Is This Assessment For?",
+      "heading": "This pathway is for people who know an important decision lies ahead, even if they do not yet know which specialist service they need.",
+      "items": [
+        { "title": "Individuals", "description": "When one choice may materially change their personal financial position." },
+        { "title": "Families", "description": "When a decision connects several goals, assets, or family needs." },
+        { "title": "Capital owners", "description": "When capital must be allocated, preserved, or moved among competing paths." },
+        { "title": "Investors", "description": "When an opportunity or major change requires analysis beyond prospective return." },
+        { "title": "Business owners", "description": "When personal capital, business resources, and expansion decisions are interconnected." },
+        { "title": "Executives and decision-makers", "description": "When a material financial commitment must be examined from several perspectives." },
+        { "title": "People choosing among several options", "description": "When each alternative carries different benefits, costs, and risks." },
+        { "title": "Anyone seeking a more structured view", "description": "Even when it is not yet clear whether the central issue concerns wealth, portfolio, business, risk, or the economy." }
+      ],
+      "ctas": [{ "label": "Start the Initial Decision Assessment", "type": "primary" }]
+    },
+    {
+      "order": 5,
+      "id": "five-questions-before-a-major-decision",
+      "type": "decision-dimensions",
+      "eyebrow": "Five dimensions to clarify before deciding",
+      "english_label": "Five Questions Before a Major Decision",
+      "heading": "Before any major choice, five dimensions must be clear enough to support a defensible decision.",
+      "items": [
+        { "number": 1, "title": "The decision", "english_label": "The Decision", "description": "What is actually being decided? Is this an asset selection, a financing issue, a liquidity need, a structural change, or a deeper problem behind the initial choice?" },
+        { "number": 2, "title": "Risk", "english_label": "Risk", "description": "If conditions do not develop as expected, which parts of capital, income, liquidity, or future plans come under pressure?" },
+        { "number": 3, "title": "Liquidity", "english_label": "Liquidity", "description": "How much capital remains accessible after the decision, and how much becomes committed for a period?" },
+        { "number": 4, "title": "Time horizon", "english_label": "Time Horizon", "description": "How long must the decision work, and when will capital or financial flexibility be needed again?" },
+        { "number": 5, "title": "Scenarios", "english_label": "Scenarios", "description": "How will the decision behave if economic conditions, income, costs, timing, or other assumptions change?" }
+      ],
+      "closing": "These five dimensions form the core of DNH’s formal decision architecture: the decision, risk, liquidity, time horizon, and scenarios.",
+      "ctas": [{ "label": "Assess These Five Dimensions", "type": "primary" }]
+    },
+    {
+      "order": 6,
+      "id": "compare-options-beyond-return",
+      "type": "options-tradeoffs",
+      "eyebrow": "Compare options beyond return",
+      "english_label": "Compare Options Beyond Return",
+      "heading": "The strongest option is not necessarily the one showing the highest return on paper.",
+      "paragraphs": ["When several paths are available, comparing them through a single number can obscure what matters most."],
+      "questions": [
+        "What is the risk profile of each path?", "How much liquidity does it absorb?", "How long will capital remain committed?",
+        "What new obligations does it create?", "What constraints would apply if an exit became necessary?", "How much flexibility remains for subsequent decisions?",
+        "What is the downside scenario for each option?", "What is the opportunity cost of choosing it?", "Which assumptions must hold for the option to deliver the intended outcome?"
+      ],
+      "closing_paragraphs": [
+        "In many decisions, one option is not simply good and another bad.",
+        "Every choice involves a trade-off.",
+        "The aim is to understand which cost, risk, or constraint is being accepted in exchange for each benefit."
+      ],
+      "ctas": [{ "label": "Compare My Options Structurally", "type": "primary" }]
+    },
+    {
+      "order": 7,
+      "id": "understand-the-downside-before-you-commit",
+      "type": "downside-risk",
+      "eyebrow": "What is at risk if the decision underperforms?",
+      "english_label": "Understand the Downside Before You Commit",
+      "heading": "Before focusing on the desired outcome, understand what may change in an adverse scenario.",
+      "paragraphs": ["Downside analysis is not limited to asking, “How much could we lose?”", "It also asks:"],
+      "questions": [
+        "How much capital will be committed?", "Will the decision constrain liquidity?", "Does execution depend on future income?", "Will it create new debt or obligations?",
+        "How difficult would an early exit be?", "Could the decision affect other assets or the business?", "What if returns are lower or delivery takes longer?", "If several factors move adversely together, does the structure remain manageable?"
+      ],
+      "closing_paragraphs": [
+        "In a major decision, risk is not only the probability of financial loss.",
+        "It can also mean losing liquidity, reducing flexibility, creating commitments, or narrowing future options.",
+        "Understanding these consequences supports a decision grounded in both upside potential and a clear view of downside exposure."
+      ],
+      "ctas": [{ "label": "Review Decision Risk Before Acting", "type": "primary" }]
+    },
+    {
+      "order": 8,
+      "id": "liquidity-and-timing-matter",
+      "type": "liquidity-timing",
+      "eyebrow": "Liquidity and timing are often underestimated",
+      "english_label": "Liquidity & Timing Matter",
+      "heading": "A decision may be attractive in value terms but poorly timed for your financial structure.",
+      "paragraphs": ["In many major decisions, the question is not simply, “How much capital do we have?”", "The more important question is:", "When will this capital be needed?", "Before committing resources, clarify:"],
+      "questions": [
+        "How much liquidity remains after the decision?", "Which short- and medium-term obligations lie ahead?", "How long will the capital be committed?", "Is an earlier-than-planned exit possible?",
+        "What happens if capital is returned later than expected?", "How would an unforeseen funding need be met?", "If a better opportunity arises, will enough capital remain available to act?"
+      ],
+      "closing_paragraphs": ["Liquidity is not only an emergency reserve.", "It is part of your future freedom to act.", "A major commitment must therefore be judged by its effect on financial flexibility today and in the periods ahead."],
+      "ctas": [{ "label": "Review Liquidity and Timing", "type": "primary" }]
+    },
+    {
+      "order": 9,
+      "id": "think-in-scenarios-not-certainties",
+      "type": "scenario-analysis",
+      "eyebrow": "Do not predict one future—examine several",
+      "english_label": "Think in Scenarios, Not Certainties",
+      "heading": "A major decision should not make sense only when everything develops exactly as expected.",
+      "intro": "The future cannot be forecast with precision, but the decision can be tested across different conditions.",
+      "items": [
+        { "title": "Base case", "description": "What happens if conditions broadly follow current expectations?" },
+        { "title": "Lower-performance case", "description": "What if income, returns, or growth are weaker than expected?" },
+        { "title": "Inflation and currency case", "description": "What changes if price levels or exchange-rate conditions move materially?" },
+        { "title": "Liquidity case", "description": "What happens if access to funding becomes more difficult?" },
+        { "title": "Cost-of-capital case", "description": "Does the decision remain defensible if financing costs rise?" },
+        { "title": "Delay case", "description": "What if delivery, sale, collection, or return of capital occurs later than planned?" },
+        { "title": "New-opportunity case", "description": "If a better opportunity appears after capital is committed, will you still be able to act?" }
+      ],
+      "closing_paragraphs": ["Scenario analysis does not declare one future certain.", "It identifies the assumptions that are critical to success and the conditions under which the decision becomes most vulnerable."],
+      "ctas": [{ "label": "Examine My Decision Scenarios", "type": "primary" }]
+    },
+    {
+      "order": 10,
+      "id": "dnh-financial-decision-assessment",
+      "type": "process",
+      "eyebrow": "How does the DNH assessment work?",
+      "english_label": "The DNH Financial Decision Assessment",
+      "heading": "The initial assessment does not decide for you; it makes the decision clearer and more capable of rigorous review.",
+      "steps": [
+        { "number": 1, "title": "Define the decision", "english_label": "Decision Definition", "description": "Clarify the precise choice or problem in front of you." },
+        { "number": 2, "title": "Understand context and objectives", "english_label": "Context & Objectives", "description": "Establish the objective, current position, and intended outcome." },
+        { "number": 3, "title": "Identify viable options", "english_label": "Options", "description": "Define the paths that are genuinely available for consideration." },
+        { "number": 4, "title": "Assess risk and liquidity", "english_label": "Risk & Liquidity", "description": "Examine committed resources, vulnerabilities, and the effect on access to capital." },
+        { "number": 5, "title": "Map horizon and constraints", "english_label": "Time Horizon & Constraints", "description": "Make timing, obligations, future needs, and decision constraints explicit." },
+        { "number": 6, "title": "Test relevant scenarios", "english_label": "Scenario Review", "description": "Evaluate how changing conditions may alter assumptions and outcomes." },
+        { "number": 7, "title": "Set decision priorities", "english_label": "Decision Priorities", "description": "Separate the issues that must be resolved before action from secondary information." },
+        { "number": 8, "title": "Determine the next path", "english_label": "Next-Step Routing", "description": "Determine whether the assessment is sufficient or specialist analysis is required." }
+      ],
+      "closing": "This reflects the DNH pathway from initial assessment and context-setting to analysis, decision architecture, and an appropriate next step.",
+      "ctas": [{ "label": "Start the Financial Decision Assessment", "type": "primary" }]
+    },
+    {
+      "order": 11,
+      "id": "what-happens-after-the-assessment",
+      "type": "routing",
+      "eyebrow": "What is the right pathway after assessment?",
+      "english_label": "What Happens After the Assessment?",
+      "heading": "The initial assessment does not force every issue into one solution; it directs the decision to the right advisory pathway.",
+      "intro": "Depending on the nature of the decision, the central issue may sit closest to one of these areas:",
+      "routes": [
+        { "title": "Private Wealth Strategy", "english_label": "Private Wealth Strategy", "description": "When the decision must be considered within the full wealth structure, objectives, liquidity, and long-term horizon." },
+        { "title": "Portfolio Intelligence", "english_label": "Portfolio Intelligence", "description": "When the primary issue is asset mix, concentration risk, liquidity, or the role of each portfolio component." },
+        { "title": "Strategic Financial Advisory", "english_label": "Strategic Financial Advisory", "description": "When the decision concerns capital, liquidity, financing, financial structure, or the future of a business." },
+        { "title": "Macro & Market Advisory", "english_label": "Macro & Market Advisory", "description": "When the outcome is highly sensitive to inflation, currency, liquidity, economic policy, or market conditions." },
+        { "title": "Risk Management & Wealth Protection", "english_label": "Risk Management & Wealth Protection", "description": "When the priority is to identify vulnerabilities, concentration risk, and protection priorities." },
+        { "title": "Executive Briefings", "english_label": "Executive Briefings", "description": "When the issue calls for focused, private analysis at executive, capital-owner, or board level." }
+      ],
+      "closing_paragraphs": ["The initial assessment may also show that a broader engagement is not currently necessary.", "That is its core role: diagnose the problem before selecting the service.", "The DNH entry pathway therefore moves from problem recognition to initial assessment and then to the appropriate advisory route."],
+      "ctas": [{ "label": "Find the Right Path for My Decision", "type": "primary" }]
+    },
+    {
+      "order": 12,
+      "id": "clarify-the-decision-before-you-commit-capital",
+      "type": "final-cta",
+      "eyebrow": "Clarify the decision before committing capital",
+      "english_label": "Clarify the Decision Before You Commit Capital",
+      "heading": "You do not need every answer to begin; you only need to know that an important decision lies ahead.",
+      "paragraphs": ["If you are weighing several options, facing too much information, uncertain about downside risk, or seeking a fuller picture before committing resources, an initial financial decision assessment may be the right starting point.", "At the outset, we only need to clarify:"],
+      "checklist": ["the decision in front of you;", "why it must be made now;", "which resources will be committed;", "the primary objective;", "your most important concern;", "and what remains unclear."],
+      "closing_paragraphs": [
+        "This first step indicates what form of review is most appropriate and whether further specialist analysis is warranted.",
+        "The objective is not to provide a ready-made answer or generic recommendation.",
+        "It is to bring greater clarity to the decision, risk, liquidity, time horizon, and relevant scenarios before a material commitment is made.",
+        "DNH supports decision architecture. It does not guarantee outcomes or returns, and it does not provide automatic buy or sell recommendations."
+      ],
+      "ctas": [
+        { "label": "Start the Financial Decision Assessment", "type": "primary" },
+        { "label": "Submit Your Decision for an Initial Review", "type": "secondary" }
+      ]
+    }
+  ]
+}

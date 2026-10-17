@@ -1,34 +1,29 @@
-import { localizePageMetadata } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
 import type { Metadata } from "next";
-import { ContactHero } from "@/components/static/Contact/ContactHero";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { ContactPage, type ContactContent } from "@/components/static/Contact/ContactPage";
+import contactFa from "@/config/DNH_Contact_Final_FA.json";
+import contactEn from "@/config/DNH_Contact_Final_EN.json";
+import { normalizeSiteLocale } from "@/lib/site-language";
+import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
 
-const pageMetadata: Metadata = {
-  title: "تماس با DNH",
-  description: "ثبت درخواست محرمانه برای گفت‌وگو با DNH",
-};
+export default async function ContactRoute({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const content = (locale === "fa" ? contactFa : contactEn) as ContactContent;
+  return <ContactPage content={content} />;
+}
 
-const page = () => {
-  return (
-    <div>
-      <ContactHero
-        phoneDisplay="۰۲۱ XXXX XXXX"
-        phoneHref="+9821XXXXXXXX"
-        whatsappDisplay="۰۹۱۲ XXX XXXX"
-        whatsappHref="https://wa.me/98912XXXXXXX"
-        email="info@your-domain.com"
-        address="آدرس واقعی دفتر DNH را اینجا وارد کنید"
-        googleMapsUrl="https://maps.google.com/?q=YOUR_LOCATION"
-       />
-      <ContactForm />
-    </div>
-  );
-};
-
-export default page;
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return localizePageMetadata(pageMetadata, "/contact", normalizeSiteLocale(locale));
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const content = locale === "fa" ? contactFa : contactEn;
+  return localizePageMetadata({
+    title: content.seo.title,
+    description: content.seo.description,
+    alternates: getLocalizedAlternates("/contact", locale),
+    openGraph: {
+      title: content.seo.title,
+      description: content.seo.description,
+      images: [{ url: "/assets/images/dnh-hero-desktop.png", width: 1600, height: 1000, alt: content.hero.imageAlt }],
+    },
+  }, "/contact", locale);
 }
