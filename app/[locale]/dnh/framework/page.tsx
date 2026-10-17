@@ -15,7 +15,7 @@ import { FrameworkHero } from "@/components/static/DNH/framework/DnhFrameworkHer
 
 const page = () => {
   return (
-    <div>
+    <main>
       <FrameworkHero />
       <FrameworkWhyDecisionMatters />
       <FrameworkFromDataToDecision />
@@ -28,7 +28,7 @@ const page = () => {
       <FrameworkDecisionOutputs />
       <FrameworkBoundaries />
       <FrameworkStructuredAssessmentCTA />
-    </div>
+    </main>
   );
 };
 

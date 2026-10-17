@@ -121,15 +121,6 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-brand-primary/10"
           />
-          <span aria-hidden="true" className="absolute end-6 top-6 size-6 bg-brand-accent" />
-          <div className="absolute inset-x-0 bottom-0 border-t border-white/18 bg-ink/72 p-5">
-            <bdi
-              dir="ltr"
-              className="text-[10px] font-bold tracking-[0.32em] text-white/75"
-            >
-              DNH / WEALTH ARCHITECTURE
-            </bdi>
-          </div>
         </div>
       </div>
     </section>

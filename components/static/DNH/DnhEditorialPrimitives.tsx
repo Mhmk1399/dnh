@@ -65,16 +65,7 @@ export function DnhEditorialEyebrow({
       >
         {eyebrow}
       </p>
-      {locale === "fa" && englishLabel ? (
-        <bdi
-          dir="ltr"
-          className={`w-full text-[10px] font-bold uppercase tracking-[0.1em] sm:text-[11px] ${
-            dark ? "text-white/[0.48]" : "text-ink-muted"
-          }`}
-        >
-          {englishLabel}
-        </bdi>
-      ) : null}
+   
     </div>
   );
 }
@@ -131,20 +122,8 @@ export function DnhEditorialMediaFrame({
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-t from-ink/68 via-transparent to-brand-primary/10"
       />
-      <span
-        aria-hidden="true"
-        className="absolute end-5 top-5 size-5 bg-brand-accent sm:end-6 sm:top-6 sm:size-6"
-      />
-      {label ? (
-        <div className="absolute inset-x-0 bottom-0 border-t border-white/18 bg-ink/72 px-5 py-4 sm:px-6">
-          <bdi
-            dir="ltr"
-            className="block text-start text-[10px] font-bold uppercase tracking-[0.2em] text-white/75"
-          >
-            {label}
-          </bdi>
-        </div>
-      ) : null}
+   
+    
     </div>
   );
 }

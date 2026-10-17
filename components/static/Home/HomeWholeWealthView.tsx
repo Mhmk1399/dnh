@@ -113,7 +113,7 @@ export function HomeWholeWealthView() {
         <div className="relative aspect-[4/5] min-h-[480px] overflow-hidden border border-line bg-surface-soft lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[820px] lg:aspect-auto">
           <Image
             src="/assets/images/home-whole-wealth-heading.webp"
-            alt=""
+            alt="home-whole-wealth"
             fill
             sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
             className="object-cover object-center"
@@ -125,7 +125,7 @@ export function HomeWholeWealthView() {
        
         </div>
 
-        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:col-start-1 lg:row-start-2 lg:mt-7">
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3   lg:col-start-1 lg:row-start-2 lg:mt-7">
           {content.assets.map((asset, index) => {
             const Icon =
               assetIcons[asset.id as keyof typeof assetIcons] ?? Landmark;

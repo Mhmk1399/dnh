@@ -64,8 +64,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/dnh-services-dark-bg.png",
-        "mobile_src": "/assets/images/dnh-services-dark-bg.png",
+        "src": "/assets/images/dnh-framework-hero.webp",
+        "mobile_src": "/assets/images/dnh-framework-hero.webp",
         "alt": "معماری ساختاریافته و مسیرهای روشن در چارچوب تصمیم‌گیری DNH"
       }
     },
@@ -163,8 +163,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/Translucent Data City in Perspective.png",
-        "mobile_src": "/assets/images/Translucent Data City in Perspective.png",
+        "src": "/assets/images/from-data-to-decision.webp",
+        "mobile_src": "/assets/images/from-data-to-decision.webp",
         "alt": "لایه‌های شفاف داده و تحلیل در مسیر رسیدن به تصمیم ساختاریافته"
       }
     },
@@ -338,8 +338,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/Horizon-Architecture.webp",
-        "mobile_src": "/assets/images/Horizon-Architecture.webp",
+        "src": "/assets/images/horizon-architecture.webp",
+        "mobile_src": "/assets/images/horizon-architecture.webp",
         "alt": "ساختار شفاف افق‌های زمانی برای معماری تصمیم‌های بلندمدت"
       }
     },
@@ -510,8 +510,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/strategic-financial-advisory.webp",
-        "mobile_src": "/assets/images/strategic-financial-advisory.webp",
+        "src": "/assets/images/where-framework-is-applied.webp",
+        "mobile_src": "/assets/images/where-framework-is-applied.webp",
         "alt": "نمایی از ساختار مالی و حوزه‌های کاربرد چارچوب DNH"
       }
     },

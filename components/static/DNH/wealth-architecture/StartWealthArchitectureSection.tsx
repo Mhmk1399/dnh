@@ -78,8 +78,7 @@ export function StartWealthArchitectureSection({
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-brand-primary/12"
             />
-            <span aria-hidden="true" className="absolute end-6 top-6 size-6 bg-brand-accent" />
-          </div>
+           </div>
         ) : null}
       </div>
     </section>

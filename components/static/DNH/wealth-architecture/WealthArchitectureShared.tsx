@@ -151,16 +151,7 @@ export function WealthSectionHeader({
       >
         <span aria-hidden="true" className="h-[2px] w-10 shrink-0 bg-brand-accent" />
         <p>{section.eyebrow}</p>
-        {section.english_label && section.english_label !== section.eyebrow ? (
-          <bdi
-            dir="ltr"
-            className={`w-full text-[10px] font-medium tracking-[0.28em] ${
-              dark ? "text-white/48" : "text-ink-muted"
-            }`}
-          >
-            {section.english_label}
-          </bdi>
-        ) : null}
+     
       </div>
 
       <Heading

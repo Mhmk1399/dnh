@@ -82,7 +82,7 @@ export function FrameworkHero() {
             />
             <h1
               id="dnh-framework-hero-heading"
-              className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,8.4vw,2.6rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,5.7vw,3.75rem)] lg:text-[clamp(3.05rem,4vw,4.25rem)] ${
+              className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,8.4vw,2.6rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,5.7vw,2.75rem)] lg:text-[clamp(3.05rem,4vw,3.25rem)] ${
                 isRTL ? "leading-[1.52]" : "leading-[1.1]"
               }`}
             >
@@ -154,14 +154,6 @@ export function FrameworkHero() {
                     <h2 className="text-[17px] font-black leading-[1.65] text-white sm:text-[19px]">
                       {pillar.title}
                     </h2>
-                    {locale === "fa" ? (
-                      <bdi
-                        dir="ltr"
-                        className="mt-1 block text-[10px] font-bold uppercase tracking-[0.08em] text-white/45"
-                      >
-                        {pillar.english_label}
-                      </bdi>
-                    ) : null}
                   </div>
                 </article>
               );

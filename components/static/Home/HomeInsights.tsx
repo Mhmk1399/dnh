@@ -136,23 +136,7 @@ export function HomeInsights() {
                 key={category.id}
                 className="group min-w-0 border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/7] overflow-hidden bg-brand-primary">
-                  <Image
-                    src={categoryImages[index] ?? categoryImages[0]}
-                    alt=""
-                    fill
-                    sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1279px) 48vw, 31vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-e from-transparent to-ink/35"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-4 top-4 size-5 bg-brand-accent"
-                  />
-                </div>
+             
                 <div className="relative p-5 pt-8 sm:p-6 sm:pt-9">
                   <span
                     aria-hidden="true"
@@ -165,15 +149,7 @@ export function HomeInsights() {
                   >
                     {category.title}
                   </h3>
-                  {category.english_label &&
-                  category.english_label !== category.title ? (
-                    <bdi
-                      dir="ltr"
-                      className="mt-1 block text-start text-[10px] tracking-[0.2em] text-brand-primary"
-                    >
-                      {category.english_label}
-                    </bdi>
-                  ) : null}
+               
                   <p
                     className={`mt-3 text-start text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
                   >

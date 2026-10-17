@@ -68,8 +68,7 @@ export function ServiceHeroSection({
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-[#071f27]/48 via-transparent to-black/10"
                 />
-                <span aria-hidden="true" className="absolute inset-y-0 end-0 w-[4px] bg-brand-accent" />
-              </div>
+               </div>
             ) : (
               <div className="min-h-[300px] border border-white/18 bg-white/[0.05] sm:min-h-[380px] lg:min-h-[520px]" />
             )}

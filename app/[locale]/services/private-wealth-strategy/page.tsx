@@ -33,14 +33,14 @@ const page = () => {
         enData={serviceEn}
         media={{
           1: {
-            src: "/assets/images/risk.webp",
-            mobileSrc: "/assets/images/risk.webpp",
+            src: "/assets/images/private-wealth-strategy-hero.webp",
+            mobileSrc: "/assets/images/private-wealth-strategy-hero.webp",
             alt: "Private Wealth Strategy",
           },
 
           6: {
-            src: "/assets/images/risk.webp",
-            mobileSrc: "/assets/images/risk.webp",
+            src: "/assets/images/what-we-assess.webp",
+            mobileSrc: "/assets/images/what-we-assess.webp",
             alt: "Wealth assessment",
           },
         }}

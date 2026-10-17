@@ -65,8 +65,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/dnh-services-dark-bg.png",
-        "mobile_src": "/assets/images/dnh-services-dark-bg.png",
+        "src": "/assets/images/dnh-framework-hero.webp",
+        "mobile_src": "/assets/images/dnh-framework-hero.webp",
         "alt": "Structured architecture and clear decision paths within the DNH Framework"
       }
     },
@@ -164,8 +164,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/Translucent Data City in Perspective.png",
-        "mobile_src": "/assets/images/Translucent Data City in Perspective.png",
+        "src": "/assets/images/from-data-to-decision.webp",
+        "mobile_src": "/assets/images/from-data-to-decision.webp",
         "alt": "Transparent layers of data and analysis leading toward a structured decision"
       }
     },
@@ -339,8 +339,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/Horizon-Architecture.webp",
-        "mobile_src": "/assets/images/Horizon-Architecture.webp",
+        "src": "/assets/images/horizon-architecture.webp",
+        "mobile_src": "/assets/images/horizon-architecture.webp",
         "alt": "Transparent time horizons representing long-term decision architecture"
       }
     },
@@ -511,8 +511,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/strategic-financial-advisory.webp",
-        "mobile_src": "/assets/images/strategic-financial-advisory.webp",
+        "src": "/assets/images/where-framework-is-applied.webp",
+        "mobile_src": "/assets/images/where-framework-is-applied.webp",
         "alt": "A financial structure representing the applications of the DNH Framework"
       }
     },

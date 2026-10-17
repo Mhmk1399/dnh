@@ -169,19 +169,7 @@ export function HomeResearchCaseStudies() {
                 key={item.id}
                 className="group flex min-w-0 flex-col border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/7] overflow-hidden bg-brand-primary">
-                  <Image
-                    src={item.media.src}
-                    alt={item.media.alt}
-                    fill
-                    sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1279px) 48vw, 20vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent"
-                  />
-                </div>
+           
 
                 <div className="relative flex flex-1 flex-col p-5 pt-8">
                   <h3
@@ -204,14 +192,7 @@ export function HomeResearchCaseStudies() {
                   >
                     {item.description}
                   </p>
-
-                  <Link
-                    href={item.href}
-                    aria-label={item.title}
-                    className="mt-auto flex min-h-11 items-center justify-end pt-4 text-brand-accent outline-none transition-colors hover:text-brand-primary focus-visible:ring-2 focus-visible:ring-focus/35"
-                  >
-                    <Arrow size={20} strokeWidth={1.8} aria-hidden="true" />
-                  </Link>
+ 
                 </div>
               </article>
             );

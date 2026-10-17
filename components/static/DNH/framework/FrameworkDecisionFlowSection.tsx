@@ -141,14 +141,7 @@ export function FrameworkFromDataToDecision() {
                   >
                     <Icon aria-hidden="true" size={19} strokeWidth={1.55} />
                   </span>
-                  <bdi
-                    dir="ltr"
-                    className={`text-[11px] font-black ${
-                      finalStep ? "text-white/75" : "text-white/35"
-                    }`}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </bdi>
+              
                 </div>
                 <h3
                   className={`mt-5 text-start text-[16px] font-black sm:text-[17px] ${

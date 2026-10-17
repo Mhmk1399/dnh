@@ -57,8 +57,7 @@ export function WealthArchitectureProcessSection({
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-t from-ink/38 via-transparent to-transparent"
               />
-              <span aria-hidden="true" className="absolute end-5 top-5 size-5 bg-brand-accent" />
-            </div>
+             </div>
           ) : null}
         </div>
 
@@ -79,9 +78,7 @@ export function WealthArchitectureProcessSection({
                   <span className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-primary">
                     <Icon aria-hidden="true" size={20} strokeWidth={1.55} />
                   </span>
-                  <bdi dir="ltr" className="text-[12px] font-black text-brand-accent">
-                    {String(index + 1).padStart(2, "0")}
-                  </bdi>
+               
                 </div>
                 <h3
                   className={`mt-5 text-start text-[17px] font-black text-ink ${
@@ -90,14 +87,7 @@ export function WealthArchitectureProcessSection({
                 >
                   {item.title}
                 </h3>
-                {item.english_label ? (
-                  <bdi
-                    dir="ltr"
-                    className="mt-2 block text-start text-[9px] font-bold tracking-[0.18em] text-brand-primary/60"
-                  >
-                    {item.english_label}
-                  </bdi>
-                ) : null}
+            
                 <p
                   className={`mt-3 text-start text-[13px] text-ink-muted ${
                     direction === "rtl" ? "leading-[1.9]" : "leading-[1.68]"

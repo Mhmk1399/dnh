@@ -75,8 +75,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/home-intelligence-heading.webp",
-        "mobile_src": "/assets/images/home-intelligence-heading.webp",
+        "src": "/assets/images/dnh-intelligence-desk-hero.webp",
+        "mobile_src": "/assets/images/dnh-intelligence-desk-hero.webp",
         "alt": "An integrated intelligence desk monitoring risk, liquidity, economic conditions and assets"
       }
     },
@@ -193,8 +193,8 @@
       ],
       "heading_highlight": "interpreted in relation to one another",
       "media": {
-        "src": "/assets/images/macro-market-advisory.webp",
-        "mobile_src": "/assets/images/macro-market-advisory.webp",
+        "src": "/assets/images/what-we-monitor.webp",
+        "mobile_src": "/assets/images/what-we-monitor.webp",
         "alt": "Global economic, market and macro variables under structured monitoring"
       }
     },
@@ -346,8 +346,8 @@
       ],
       "heading_highlight": "what role each asset can play under current conditions",
       "media": {
-        "src": "/assets/images/portfolio-intelligence.webp",
-        "mobile_src": "/assets/images/portfolio-intelligence.webp",
+        "src": "/assets/images/asset-positioning.webp",
+        "mobile_src": "/assets/images/asset-positioning.webp",
         "alt": "Analytical layers used to assess the role and positioning of assets"
       }
     },
@@ -508,8 +508,8 @@
       ],
       "heading_highlight": "tracks the variables that can change tomorrow’s conditions",
       "media": {
-        "src": "/assets/images/research-and-case-studies.webp",
-        "mobile_src": "/assets/images/research-and-case-studies.webp",
+        "src": "/assets/images/what-to-watch.webp",
+        "mobile_src": "/assets/images/what-to-watch.webp",
         "alt": "An analytical dossier for monitoring variables and events that may shape future conditions"
       }
     },
