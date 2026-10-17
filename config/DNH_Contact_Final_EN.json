@@ -1,0 +1,75 @@
+{
+  "locale": "en",
+  "direction": "ltr",
+  "seo": {
+    "title": "Contact DNH | Request an Advisory Conversation",
+    "description": "Share the financial issue or decision you are facing for an initial, confidential review by the DNH team."
+  },
+  "hero": {
+    "eyebrow": "Contact DNH",
+    "title": "Define the financial question.",
+    "highlight": "The conversation starts here.",
+    "description": "Use this form to outline your situation, decision context, and the support you are seeking. It is not a channel for trading signals or instant investment recommendations.",
+    "qualification": "Each enquiry is reviewed for scope and fit before a member of the team follows up.",
+    "imageAlt": "A professional financial advisory conversation at DNH",
+    "formCta": "Request a conversation"
+  },
+  "information": {
+    "eyebrow": "Contact information",
+    "title": "Clear channels for a considered first conversation",
+    "notice": "The details below are sample data only and must be replaced with verified DNH contact information before launch.",
+    "items": [
+      { "number": "01", "label": "Office phone", "value": "021 9100 0000", "direction": "ltr" },
+      { "number": "02", "label": "Mobile", "value": "0912 000 0000", "direction": "ltr" },
+      { "number": "03", "label": "Email", "value": "contact@example.com", "direction": "ltr" },
+      { "number": "04", "label": "Office", "value": "Tehran — sample DNH office address", "direction": "auto" }
+    ],
+    "confidentialityTitle": "A confidential initial review",
+    "confidentiality": "Submitted information is used only to assess your enquiry and arrange an appropriate follow-up. Please do not include passwords, banking credentials, or unnecessary sensitive data."
+  },
+  "process": {
+    "eyebrow": "How contact works",
+    "title": "From initial context to an appropriate next step",
+    "stepLabel": "STEP",
+    "steps": [
+      { "number": "01", "title": "Outline the issue", "description": "Briefly describe the decision, its context, and what you expect from an advisory conversation." },
+      { "number": "02", "title": "Initial review", "description": "We assess the enquiry for subject matter, urgency, and fit with DNH's advisory scope." },
+      { "number": "03", "title": "Relevant follow-up", "description": "Where there is a potential fit, we will coordinate the appropriate format and timing for the next conversation." }
+    ]
+  },
+  "form": {
+    "eyebrow": "Contact form",
+    "title": "Start by giving us the decision context.",
+    "description": "A concise initial brief helps us frame the issue correctly before contact and makes the first conversation more focused.",
+    "fieldsetContact": "Contact details",
+    "fieldsetMessage": "Your enquiry",
+    "fields": {
+      "name": { "label": "Full name", "placeholder": "e.g. Alex Morgan" },
+      "phone": { "label": "Mobile number", "placeholder": "09xxxxxxxxx" },
+      "email": { "label": "Email", "placeholder": "name@example.com", "optional": "Optional" },
+      "subject": { "label": "Subject", "placeholder": "Enquiry subject", "optional": "Optional" },
+      "message": { "label": "Brief description", "placeholder": "Describe the issue, decision context, and the support you are seeking…" }
+    },
+    "submit": "Submit confidential enquiry",
+    "submitting": "Submitting…",
+    "review": "Please review your details once before submitting.",
+    "privacy": "This information will be used only for the initial review and response to this enquiry.",
+    "networkError": "We could not connect to the service. Please check your connection and try again.",
+    "formLabel": "Contact DNH form",
+    "referenceLabel": "REF"
+  },
+  "api": {
+    "invalid": "The submitted information is not valid.",
+    "name": "Please enter your full name.",
+    "phone": "Please enter a valid Iranian mobile number.",
+    "email": "Please enter a valid email address.",
+    "message": "Your message must contain at least 10 characters.",
+    "correct": "Please correct the highlighted fields.",
+    "success": "Your enquiry has been submitted successfully.",
+    "unavailable": "We cannot submit your enquiry right now. Please try again shortly."
+  },
+  "closing": {
+    "title": "Not every financial question requires an immediate answer.",
+    "description": "Sometimes the right first step is to define the issue more precisely and clarify the choices ahead."
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "page": "portfolio-intelligence",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Portfolio Intelligence",
+  "english_title": "Portfolio Intelligence",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "portfolio-intelligence-hero",
+      "type": "hero",
+      "eyebrow": "Portfolio Intelligence",
+      "english_label": "Portfolio Intelligence",
+      "heading": "A portfolio is more than a collection of assets. It is a structure in which every holding needs a defined role, risk profile, liquidity function and objective.",
+      "paragraphs": [
+        "Over time, your capital may have been allocated across gold, currencies, equities, property, fixed income, cash, private businesses and other assets. Yet owning several types of assets does not necessarily mean they work together as a coherent structure.",
+        "DNH Portfolio Intelligence takes a whole-portfolio view to clarify the role of each component, reveal concentrations of risk, assess available liquidity and determine how closely the current allocation aligns with your objectives and time horizon.",
+        "This service is not designed to predict the next winning asset or pursue short-term trades.",
+        "The central question is:",
+        "Is your portfolio today genuinely designed for what it will need to accomplish tomorrow?"
+      ],
+      "ctas": [
+        { "label": "Start a Portfolio Assessment", "type": "primary" },
+        { "label": "Request a Specialist Consultation", "type": "secondary" }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "collection-of-assets-is-not-yet-a-portfolio",
+      "type": "problem-recognition",
+      "eyebrow": "A Collection of Assets Is Not Yet a Portfolio",
+      "english_label": "A Collection of Assets Is Not Yet a Portfolio",
+      "heading": "A portfolio can grow over many years without ever being designed as an integrated structure.",
+      "paragraphs": [
+        "Many portfolios are the result of separate decisions: buying property at one point, adding gold later, holding foreign currency, entering equity markets or retaining part of the capital in cash.",
+        "Each decision may have been reasonable at the time, but their combination does not automatically create a balanced portfolio."
+      ],
+      "items": [
+        { "title": "Some asset weights have become excessive", "description": "Market movements and past decisions can gradually create significant concentration in a single asset class." },
+        { "title": "The role of each asset is unclear", "description": "It may be unclear which holdings serve growth, capital preservation, income or liquidity." },
+        { "title": "Several assets share the same underlying risk", "description": "Apparent diversification can conceal the fact that different holdings remain exposed to the same economic driver." },
+        { "title": "Liquidity does not match real-world needs", "description": "A portfolio may carry substantial value while failing to make enough capital accessible when it is needed." },
+        { "title": "Decisions have become overly reactive", "description": "Frequent responses to headlines and market volatility can turn a long-term structure into a series of short-term reactions." }
+      ],
+      "closing": "Portfolio Intelligence begins here: see the whole picture before making a decision about any one part.",
+      "ctas": [{ "label": "Review My Current Portfolio Structure", "type": "primary" }]
+    },
+    {
+      "order": 3,
+      "id": "what-is-portfolio-intelligence",
+      "type": "definition",
+      "eyebrow": "What Is Portfolio Intelligence?",
+      "english_label": "What Is Portfolio Intelligence?",
+      "heading": "Portfolio Intelligence means viewing assets not in isolation, but as interconnected parts of one system.",
+      "paragraphs": [
+        "An asset's standalone merits cannot determine whether it occupies the right place in a portfolio.",
+        "A holding may appear attractive on its own while creating concentration, a liquidity gap or misalignment with objectives when viewed alongside the rest of the portfolio.",
+        "Portfolio Intelligence examines several layers together:"
+      ],
+      "items": [
+        { "title": "Structure", "description": "How is capital allocated across asset classes?" },
+        { "title": "Role", "description": "What is each part of the portfolio expected to contribute to the whole?" },
+        { "title": "Risk", "description": "What risks does each asset introduce, and how do they interact with other exposures?" },
+        { "title": "Liquidity", "description": "How much capital can be accessed, and within what timeframe?" },
+        { "title": "Objectives", "description": "Does the current allocation support capital preservation, growth, income and your other priorities?" },
+        { "title": "Review", "description": "Which areas require attention or deeper analysis?" }
+      ],
+      "framework_logic": "Structure → Role → Risk → Liquidity → Objectives → Review",
+      "closing": "The objective is not to predict which asset rises tomorrow. It is to understand how today's portfolio is constructed and where attention is required.",
+      "ctas": [{ "label": "Map My Portfolio Structure", "type": "primary" }]
+    },
+    {
+      "order": 4,
+      "id": "who-is-it-for",
+      "type": "audience",
+      "eyebrow": "Who Is It For?",
+      "english_label": "Who Is It For?",
+      "heading": "The greater the number of assets and the connections between them, the more important a whole-portfolio perspective becomes.",
+      "items": [
+        { "title": "People holding multiple asset types", "description": "When capital spans several markets and asset classes and requires one integrated view." },
+        { "title": "Owners of substantial capital", "description": "For those whose asset allocation decisions have become a central part of wealth stewardship." },
+        { "title": "Families", "description": "When diverse family assets must be considered against objectives, liquidity needs and multiple time horizons." },
+        { "title": "Executives and business owners", "description": "When wealth is split between an operating business and personal assets, making a consolidated view essential." },
+        { "title": "People whose portfolios evolved over time", "description": "When assets were accumulated through separate decisions over many years but the overall structure has not been reviewed recently." },
+        { "title": "Investors with concentrated wealth", "description": "When one or more asset classes account for a significant share of total capital." },
+        { "title": "Those who want to look beyond returns", "description": "When risk, liquidity, asset purpose and alignment with objectives matter as much as performance." }
+      ],
+      "ctas": [{ "label": "Assess Whether This Service Fits", "type": "primary" }]
+    },
+    {
+      "order": 5,
+      "id": "whole-portfolio-view",
+      "type": "whole-portfolio-view",
+      "eyebrow": "Whole-Portfolio View",
+      "english_label": "Whole-Portfolio View",
+      "heading": "Before judging whether an asset is good or bad, we need to understand its place in the overall structure.",
+      "intro": "A whole-portfolio view creates an integrated picture of your assets rather than assessing each investment separately.",
+      "items": [
+        { "title": "Which assets are in the structure?", "description": "We first map the broad composition of capital and the principal asset classes." },
+        { "title": "What is the weight of each component?", "description": "We establish how much capital sits in each area and which exposures dominate." },
+        { "title": "Where has concentration developed?", "description": "An asset, market, currency, sector or business may represent a disproportionate share of the whole." },
+        { "title": "How much liquidity is available?", "description": "Asset values are considered alongside the time and practical ability required to access capital." },
+        { "title": "Which common factors drive the assets?", "description": "Different holdings may respond similarly to inflation, currencies, recession or a change in economic conditions." },
+        { "title": "What role does each asset serve?", "description": "One component may preserve capital, another pursue growth, another generate income and another provide financial flexibility." }
+      ],
+      "closing": "A Whole-Portfolio View replaces disconnected snapshots with one coherent map of the portfolio structure.",
+      "ctas": [{ "label": "View My Portfolio as One Structure", "type": "primary" }]
+    },
+    {
+      "order": 6,
+      "id": "strategic-role-of-each-asset-class",
+      "type": "asset-class-roles",
+      "eyebrow": "Strategic Role of Each Asset Class",
+      "english_label": "Strategic Role of Each Asset Class",
+      "heading": "No asset class is defined by return alone. Its place must be understood through role, risk and liquidity.",
+      "intro": "Depending on the individual structure, asset classes can serve different purposes:",
+      "assets": [
+        { "title": "Gold", "description": "May be assessed for capital preservation, structural diversification and sensitivity to inflation or uncertainty." },
+        { "title": "Currencies", "description": "May be assessed through currency risk, purchasing power, capital flexibility and exposure across currencies." },
+        { "title": "Equities", "description": "May support long-term growth while requiring close attention to volatility, concentration and market risk." },
+        { "title": "Real Estate", "description": "Can form a structural component of wealth, while its liquidity profile and share of total capital also require scrutiny." },
+        { "title": "Fixed Income", "description": "May be assessed for stability, income generation and its contribution to overall portfolio balance." },
+        { "title": "Cash", "description": "Cash is not merely idle capital; it can support flexibility, obligations and readiness for future opportunities." },
+        { "title": "Commodities", "description": "Depending on context, commodities may be considered for their relationship with economic cycles, inflation and structural diversification." },
+        { "title": "Alternative Assets", "description": "May serve diversification or specific objectives, but their risk, liquidity and complexity require separate assessment." }
+      ],
+      "closing": "This is not a general ranking of asset classes. The question is what role each asset serves in your specific portfolio.",
+      "ctas": [{ "label": "Review the Role of My Assets", "type": "primary" }]
+    },
+    {
+      "order": 7,
+      "id": "concentration-correlation-structural-risk",
+      "type": "structural-risk",
+      "eyebrow": "Concentration, Correlation & Structural Risk",
+      "english_label": "Concentration, Correlation & Structural Risk",
+      "heading": "Owning more assets does not necessarily mean taking less risk.",
+      "intro": "A portfolio may include several asset types while remaining heavily exposed to one common driver.",
+      "items": [
+        { "title": "Concentration in one asset class", "description": "A large share of capital may be held in property, gold, currencies, equities or another single area." },
+        { "title": "Concentration in one market or economy", "description": "Different assets may all depend on conditions in the same economy or market." },
+        { "title": "Exposure to one common driver", "description": "Holdings that appear different can still respond together to inflation, currencies, liquidity or economic policy." },
+        { "title": "Business-linked wealth", "description": "When a large share of wealth is tied to a private business, company performance can materially affect the entire portfolio." },
+        { "title": "Correlation under stress", "description": "Assets may behave differently in normal markets yet come under pressure together in an adverse scenario." }
+      ],
+      "closing": "The aim is not diversification for the sake of a higher asset count. Genuine diversification begins by understanding the portfolio's shared sources of risk.",
+      "ctas": [{ "label": "Review Concentration and Structural Risk", "type": "primary" }]
+    },
+    {
+      "order": 8,
+      "id": "liquidity-time-horizon-alignment",
+      "type": "liquidity-time-horizon",
+      "eyebrow": "Liquidity & Time-Horizon Alignment",
+      "english_label": "Liquidity & Time-Horizon Alignment",
+      "heading": "A suitable allocation depends on more than return and risk. When capital will be needed is also part of portfolio design.",
+      "paragraphs": [
+        "An asset may suit a long-term objective but be inappropriate for an obligation that falls due in a few months.",
+        "Liquidity and time horizon must therefore be assessed alongside the portfolio structure."
+      ],
+      "questions": [
+        "How much capital should remain readily accessible?",
+        "Which assets require more time to convert into usable funds?",
+        "Which resources will fund short-term objectives?",
+        "Where is capital for long-term objectives currently allocated?",
+        "Could selling an asset at the wrong time place the structure under pressure?",
+        "Is there enough flexibility for unexpected obligations or opportunities?",
+        "Does each asset's intended holding period match the objective it serves?"
+      ],
+      "closing_paragraphs": [
+        "A coherent portfolio must balance long-term capital with genuine access to funds.",
+        "The goal is not to make everything liquid. It is to prevent the structure from forcing a poor decision when capital is needed."
+      ],
+      "ctas": [{ "label": "Review Liquidity and Time Horizons", "type": "primary" }]
+    },
+    {
+      "order": 9,
+      "id": "portfolio-under-different-market-scenarios",
+      "type": "scenario-analysis",
+      "eyebrow": "Portfolio Under Different Market Scenarios",
+      "english_label": "Portfolio Under Different Market Scenarios",
+      "heading": "Portfolio quality is not revealed only in normal conditions. We need to understand how the structure may behave across different environments.",
+      "paragraphs": [
+        "No portfolio exists within a single, fixed scenario. Inflation, currencies, liquidity, economic growth and market conditions can all change over time.",
+        "Instead of claiming certainty about the future, we can ask:"
+      ],
+      "questions": [
+        "If inflation rises, which parts of the portfolio are most sensitive?",
+        "If currency pressure increases, how might the structure be affected?",
+        "If market liquidity falls, how much flexibility remains?",
+        "What happens if equities or other volatile assets enter a weaker period?",
+        "If the cost of capital rises, which assets or decisions are most exposed?",
+        "If several risks emerge together, where will the portfolio's true concentration become visible?"
+      ],
+      "closing_paragraphs": [
+        "Scenario Analysis is not intended to predict exact prices or the timing of events.",
+        "Its purpose is to identify the variables that could challenge current portfolio assumptions and the components that may require greater attention under those conditions.",
+        "This is where Portfolio Intelligence connects with DNH's macro intelligence: markets are interpreted not for moment-to-moment trading, but for their potential effect on the portfolio structure."
+      ],
+      "ctas": [{ "label": "Explore Scenarios for My Portfolio", "type": "primary" }]
+    },
+    {
+      "order": 10,
+      "id": "dnh-portfolio-review-process",
+      "type": "process",
+      "eyebrow": "The DNH Portfolio Review Process",
+      "english_label": "The DNH Portfolio Review Process",
+      "heading": "A portfolio review does not begin with “What should we buy?” It begins with understanding the existing structure.",
+      "steps": [
+        { "number": 1, "title": "Initial Assessment", "english_label": "Initial Assessment", "description": "We establish the purpose of the engagement, the central question, the types of assets involved and the need for specialist review." },
+        { "number": 2, "title": "Portfolio Mapping", "english_label": "Portfolio Mapping", "description": "We map the principal holdings and the approximate place of each component within the structure." },
+        { "number": 3, "title": "Structure Review", "english_label": "Structure Review", "description": "We assess how capital is concentrated or distributed across asset classes." },
+        { "number": 4, "title": "Strategic Role Review", "english_label": "Strategic Role Review", "description": "We clarify the role each portfolio component serves in relation to the overall objectives." },
+        { "number": 5, "title": "Risk & Liquidity Review", "english_label": "Risk & Liquidity Review", "description": "We examine dependencies, material risks and practical access to capital." },
+        { "number": 6, "title": "Objective & Horizon Alignment", "english_label": "Objective & Horizon Alignment", "description": "We compare the existing structure with financial needs and the timing of each objective." },
+        { "number": 7, "title": "Scenario Review", "english_label": "Scenario Review", "description": "Where relevant, we consider how changes in key variables could affect different parts of the portfolio." },
+        { "number": 8, "title": "Review Priorities", "english_label": "Review Priorities", "description": "We identify the areas that warrant attention, deeper analysis or a subsequent decision." }
+      ],
+      "closing": "At DNH's current stage, the pathway begins with an initial review of portfolio structure, concentration, liquidity and alignment with objectives. The scope of specialist analysis is then defined around the needs and circumstances of each case.",
+      "ctas": [{ "label": "Start a Portfolio Assessment", "type": "primary" }]
+    },
+    {
+      "order": 11,
+      "id": "what-you-gain",
+      "type": "outcomes",
+      "eyebrow": "What You Gain",
+      "english_label": "What You Gain",
+      "heading": "The purpose of a portfolio review is not to produce more information. It is to create a clearer basis for the decisions that follow.",
+      "intro": "Depending on the question and scope of review, outputs may include:",
+      "items": [
+        { "title": "A structured portfolio picture", "description": "An integrated view of the overall asset mix and how its components fit together." },
+        { "title": "Asset mix and broad weights", "description": "An understanding of where capital is concentrated or distributed." },
+        { "title": "Concentration points", "description": "The components that represent a significant share of the structure." },
+        { "title": "Principal risk areas", "description": "The risks capable of affecting one or more parts of the portfolio." },
+        { "title": "A liquidity profile", "description": "A view of flexibility and access to capital across different timeframes." },
+        { "title": "Alignment with objectives", "description": "An assessment of whether each component's role supports your actual needs." },
+        { "title": "Time-horizon alignment", "description": "Identification of holdings whose investment horizon is less aligned with when capital may be needed." },
+        { "title": "Points requiring attention", "description": "Issues in the current structure that merit closer consideration." },
+        { "title": "Areas requiring review", "description": "Components that may warrant deeper analysis or a subsequent decision." },
+        { "title": "Relevant scenarios", "description": "Conditions that could challenge the portfolio's current assumptions." },
+        { "title": "Decision priorities", "description": "A clearer view of which matters should be addressed before others." }
+      ],
+      "closing": "This service is not discretionary portfolio management, a source of trading signals, a definitive price forecast or a guarantee of portfolio performance.",
+      "ctas": [{ "label": "Define the Right Review Scope", "type": "primary" }]
+    },
+    {
+      "order": 12,
+      "id": "see-the-portfolio-as-a-structure",
+      "type": "final-cta",
+      "eyebrow": "See the Portfolio as a Structure, Not a Series of Trades",
+      "english_label": "See the Portfolio as a Structure, Not a Series of Trades",
+      "heading": "Before adding the next asset, it may be more important to understand what the current structure lacks—and where it is already overexposed.",
+      "paragraphs": [
+        "If your assets have accumulated over time but you are unsure whether their mix, concentration, risk, liquidity and roles remain aligned with your objectives, an initial portfolio assessment can provide a starting point.",
+        "You do not need to disclose every financial detail or confidential record at the initial stage.",
+        "We first establish:"
+      ],
+      "checklist": [
+        "how the overall portfolio is structured;",
+        "the central issue from your perspective;",
+        "which areas are likely to require further review;",
+        "and what level of assessment is appropriate for the next stage."
+      ],
+      "closing": "Where appropriate, the scope of review is then defined around your asset structure and objectives. The aim is not to make the portfolio react more frequently to markets. It is to give you a clearer view of the whole structure before the next decision.",
+      "ctas": [
+        { "label": "Start a Portfolio Assessment", "type": "primary" },
+        { "label": "Request a Specialist Consultation", "type": "secondary" }
+      ]
+    }
+  ]
+}

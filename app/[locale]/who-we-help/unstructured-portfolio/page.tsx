@@ -1,28 +1,28 @@
-import { localizePageMetadata } from "@/lib/site-seo";
+import { PortfolioIntelligencePage, type PortfolioDocument } from "@/components/static/who-we-help/unstructured-portfolio/PortfolioIntelligencePage";
+import contentFa from "@/config/DNH_Portfolio_Intelligence_Final_FA.json";
+import contentEn from "@/config/DNH_Portfolio_Intelligence_Final_EN.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
-import { UnstructuredPortfolioFinalCtaSection } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioFinalCtaSection";
-import { UnstructuredPortfolioHero } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioHero";
-import { UnstructuredPortfolioProblemsSection } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioProblemsSection";
-import { UnstructuredPortfolioReviewSection } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioReviewSection";
-import { UnstructuredPortfolioSignsSection } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioSignsSection";
-import { UnstructuredPortfolioStructureSection } from "@/components/static/who-we-help/unstructured-portfolio/UnstructuredPortfolioStructureSection";
+import { localizePageMetadata } from "@/lib/site-seo";
 
-const page = () => {
-  return (
-    <div>
-      <UnstructuredPortfolioHero />
-      <UnstructuredPortfolioSignsSection />
-      <UnstructuredPortfolioProblemsSection />
-      <UnstructuredPortfolioStructureSection />
-      <UnstructuredPortfolioReviewSection />
-      <UnstructuredPortfolioFinalCtaSection />
-    </div>
-  );
-};
+const path = "/who-we-help/unstructured-portfolio";
 
-export default page;
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = (locale === "fa" ? contentFa : contentEn) as PortfolioDocument;
+  return <PortfolioIntelligencePage content={content} locale={locale} />;
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return localizePageMetadata({}, "/who-we-help/unstructured-portfolio", normalizeSiteLocale(locale));
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = locale === "fa" ? contentFa : contentEn;
+  const description = content.sections[0].paragraphs?.[0] ?? content.title;
+  return localizePageMetadata({
+    title: content.title,
+    description,
+    openGraph: {
+      title: content.title,
+      description,
+      images: [{ url: "/assets/images/unstructured-portfolio.png", alt: content.title }],
+    },
+  }, path, locale);
 }
