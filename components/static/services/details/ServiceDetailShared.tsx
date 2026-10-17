@@ -133,7 +133,7 @@ export function SectionIntro({
   return (
     <div
       dir="ltr"
-      className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start lg:gap-10 xl:gap-14"
+      className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-12 xl:gap-16"
     >
       <header
         dir={direction}
@@ -353,7 +353,6 @@ export function QuestionList({
             light ? "border-white/18" : "border-line"
           }`}
         >
-       
           <div>
             <h3
               className={`text-[15px] font-extrabold sm:text-[16px] ${

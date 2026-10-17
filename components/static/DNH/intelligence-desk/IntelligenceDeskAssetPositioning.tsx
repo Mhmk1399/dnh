@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  ArrowLeft,
-  ArrowRight,
   Banknote,
   Building2,
   CircleDollarSign,
@@ -15,33 +13,24 @@ import {
 } from "lucide-react";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { ActionButton } from "@/components/ui/ActionButton";
-import intelligenceFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
+import {
+  DnhEditorialActions,
+  DnhEditorialEyebrow,
+  DnhEditorialMediaFrame,
+  DnhHighlightedHeading,
+  type DnhEditorialCta,
+  type DnhEditorialMedia,
+} from "@/components/static/DNH/DnhEditorialPrimitives";
 import intelligenceEn from "@/config/DNH_Intelligence_Desk_Final_EN.json";
-
-type SectionLookup = {
-  id: string;
-  type: string;
-};
-
-type AssetId =
-  | "gold"
-  | "currency"
-  | "equities"
-  | "real-estate"
-  | "fixed-income"
-  | "cash"
-  | "commodities"
-  | "alternatives";
+import intelligenceFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
 
 type AssetItem = {
-  id: AssetId;
+  id: string;
   title: string;
   description: string;
 };
 
 type AssetPositioningContent = {
-  order: number;
   id: "asset-positioning";
   type: "asset-positioning";
   eyebrow: string;
@@ -51,15 +40,11 @@ type AssetPositioningContent = {
   intro: string;
   assets: AssetItem[];
   closing: string;
-  ctas: Array<{
-    id: string;
-    label: string;
-    type: "primary" | "secondary";
-    href: string;
-  }>;
+  ctas: DnhEditorialCta[];
+  media?: DnhEditorialMedia;
 };
 
-const assetIcons: Record<AssetId, LucideIcon> = {
+const assetIcons: Record<string, LucideIcon> = {
   gold: Gem,
   currency: Banknote,
   equities: TrendingUp,
@@ -70,107 +55,16 @@ const assetIcons: Record<AssetId, LucideIcon> = {
   alternatives: Layers3,
 };
 
-function HighlightedHeading({
-  heading,
-  highlight,
-}: {
-  heading: string;
-  highlight: string;
-}) {
-  const index = highlight ? heading.indexOf(highlight) : -1;
-
-  if (index < 0) return <>{heading}</>;
-
-  return (
-    <>
-      {heading.slice(0, index)}
-      <span className="text-brand-accent">
-        {heading.slice(index, index + highlight.length)}
-      </span>
-      {heading.slice(index + highlight.length)}
-    </>
-  );
-}
-
-function AssetEntry({
-  item,
-  isRTL,
-  side,
-}: {
-  item: AssetItem;
-  isRTL: boolean;
-  side: "start" | "end";
-}) {
-  const Icon = assetIcons[item.id];
-
-  return (
-    <article
-      className={`group relative min-w-0 border-line py-6 sm:py-7 lg:py-8 ${
-        side === "start" ? "lg:pe-12 xl:pe-16" : "lg:ps-12 xl:ps-16"
-      }`}
-    >
-      <div
-        className={`flex min-w-0 items-start gap-4 ${
-          side === "end" ? "lg:flex-row-reverse" : ""
-        }`}
-      >
-        <span className="flex size-11 shrink-0 items-center justify-center border border-line bg-surface-soft text-brand-primary transition-[border-color,color,background-color] duration-200 group-hover:border-brand-accent group-hover:bg-brand-accent/5 group-hover:text-brand-accent motion-reduce:transition-none sm:size-12">
-          <Icon aria-hidden="true" size={20} strokeWidth={1.6} />
-        </span>
-
-        <div
-          className={`min-w-0 flex-1 ${
-            side === "end" ? "lg:text-end" : "text-start"
-          }`}
-        >
-          <h3
-            className={`text-[16px] font-black text-ink sm:text-[17px] lg:text-[18px] ${
-              isRTL ? "leading-[1.8]" : "leading-[1.38]"
-            }`}
-          >
-            {item.title}
-          </h3>
-          <p
-            className={`mt-2 max-w-[36rem] text-[13.5px] font-medium text-ink-muted sm:text-[14px] ${
-              side === "end" ? "lg:ms-auto" : ""
-            } ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
-          >
-            {item.description}
-          </p>
-        </div>
-      </div>
-
-      <span
-        aria-hidden="true"
-        className={`absolute top-1/2 hidden h-px w-12 -translate-y-1/2 bg-line transition-colors duration-200 group-hover:bg-brand-accent motion-reduce:transition-none lg:block xl:w-16 ${
-          side === "start" ? "end-0" : "start-0"
-        }`}
-      />
-      <span
-        aria-hidden="true"
-        className={`absolute top-1/2 hidden size-2 -translate-y-1/2 border border-brand-primary bg-page transition-[border-color,background-color] duration-200 group-hover:border-brand-accent group-hover:bg-brand-accent motion-reduce:transition-none lg:block ${
-          side === "start" ? "end-[-4px]" : "start-[-4px]"
-        }`}
-      />
-    </article>
-  );
-}
-
 export function IntelligenceDeskAssetPositioning() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
-  const intelligence = locale === "en" ? intelligenceEn : intelligenceFa;
-  const content = intelligence.sections.find(
-    (section: SectionLookup) =>
+  const source = locale === "en" ? intelligenceEn : intelligenceFa;
+  const content = source.sections.find(
+    (section: { id?: string; type?: string }) =>
       section.id === "asset-positioning" &&
       section.type === "asset-positioning",
   ) as AssetPositioningContent | undefined;
 
   if (!content) return null;
-
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
-  const cta = content.ctas[0];
-  const leftAssets = content.assets.filter((_, index) => index % 2 === 0);
-  const rightAssets = content.assets.filter((_, index) => index % 2 === 1);
 
   return (
     <section
@@ -178,119 +72,89 @@ export function IntelligenceDeskAssetPositioning() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="asset-positioning-heading"
-      className="relative isolate scroll-mt-28 overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-16 lg:py-20 xl:py-24"
+      className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
     >
       <div className="dnh-site-shell relative z-10 min-w-0">
-        <header className="grid min-w-0 gap-7 border-b border-line pb-8 sm:pb-10 lg:grid-cols-[minmax(0,0.66fr)_minmax(18rem,0.34fr)] lg:items-end lg:gap-14 xl:gap-20">
-          <div className="min-w-0 text-start">
-            <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
-              <span
-                aria-hidden="true"
-                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
-              />
-              <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
-                {content.eyebrow}
-              </p>
-              
-            </div>
-
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.78fr)] lg:items-stretch lg:gap-12">
+          <header className="min-w-0 text-start">
+            <DnhEditorialEyebrow
+              eyebrow={content.eyebrow}
+              englishLabel={content.english_label}
+              locale={locale}
+            />
             <h2
               id="asset-positioning-heading"
-              className={`mt-4 max-w-[31ch] text-pretty text-[clamp(1.9rem,7vw,2.5rem)] font-black [overflow-wrap:break-word] sm:mt-5 sm:text-[clamp(2.2rem,4.6vw,3.1rem)] lg:max-w-[27ch] lg:text-[clamp(2.6rem,3.25vw,3.5rem)] ${
-                isRTL ? "leading-[1.55]" : "leading-[1.1]"
+              className={`mt-5 max-w-[28ch] text-pretty text-[clamp(1.9rem,7vw,2.55rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.3rem,4.7vw,3.4rem)] ${
+                isRTL ? "leading-[1.52]" : "leading-[1.1]"
               }`}
             >
-              <HighlightedHeading
+              <DnhHighlightedHeading
                 heading={content.heading}
                 highlight={content.heading_highlight}
               />
             </h2>
-          </div>
-
-          <div className="min-w-0 border-s-2 border-brand-primary/20 ps-4 text-start sm:ps-5">
             <p
-              className={`text-[14px] font-medium text-ink-muted sm:text-[15px] ${
-                isRTL ? "leading-[2]" : "leading-[1.78]"
+              className={`mt-6 max-w-[72ch] border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:ps-5 sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.72]"
               }`}
             >
               {content.intro}
             </p>
-          </div>
-        </header>
+          </header>
 
-        <div className="relative mt-9 min-w-0 sm:mt-10 lg:mt-12">
-          <div
-            aria-hidden="true"
-            className="absolute inset-y-0 start-1/2 hidden w-px -translate-x-1/2 bg-line lg:block"
-          />
-
-          <div
-            aria-hidden="true"
-            className="absolute start-1/2 top-0 hidden -translate-x-1/2 -translate-y-1/2 bg-page px-3 lg:block"
-          >
-            <span className="flex size-12 items-center justify-center border border-brand-primary bg-page text-brand-primary">
-              <Layers3 size={20} strokeWidth={1.6} />
-            </span>
-          </div>
-
-          <div className="grid min-w-0 gap-x-0 lg:grid-cols-2">
-            <div className="min-w-0 divide-y divide-line lg:pe-0">
-              {leftAssets.map((item) => (
-                <AssetEntry
-                  key={item.id}
-                  item={item}
-                  isRTL={isRTL}
-                  side="start"
-                />
-              ))}
-            </div>
-
-            <div className="min-w-0 divide-y divide-line border-t border-line lg:border-t-0 lg:ps-0">
-              {rightAssets.map((item) => (
-                <AssetEntry
-                  key={item.id}
-                  item={item}
-                  isRTL={isRTL}
-                  side="end"
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-8 min-w-0 border-y border-line bg-surface-soft px-4 py-5 sm:px-6 sm:py-6 lg:mt-10 lg:px-8">
-            <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10">
-              <div className="min-w-0 text-start">
-                <div className="flex min-w-0 items-start gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="mt-[0.7rem] size-2 shrink-0 bg-brand-accent"
-                  />
-                  <p
-                    className={`max-w-[62rem] text-[14px] font-semibold text-ink-muted sm:text-[15px] ${
-                      isRTL ? "leading-[2]" : "leading-[1.78]"
-                    }`}
-                  >
-                    {content.closing}
-                  </p>
-                </div>
-              </div>
-
-              {cta ? (
-                <ActionButton
-                  href={cta.href}
-                  variant={cta.type}
-                  size="lg"
-                  icon={Arrow}
-                  iconPosition="end"
-                  contentAlignment="between"
-                  className="w-full sm:w-auto"
-                >
-                  {cta.label}
-                </ActionButton>
-              ) : null}
-            </div>
-          </div>
+          {content.media?.src ? (
+            <DnhEditorialMediaFrame
+              media={content.media}
+              label={content.english_label}
+              sizes="(max-width: 1023px) calc(100vw - 24px), 35vw"
+              className="aspect-square min-h-[360px] border-line lg:min-h-[560px] lg:aspect-auto"
+            />
+          ) : null}
         </div>
+
+        <div className="mt-8 grid min-w-0 grid-cols-1 border-s border-t border-line sm:grid-cols-2 lg:grid-cols-4">
+          {content.assets.map((item) => {
+            const Icon = assetIcons[item.id] ?? Layers3;
+            return (
+              <article
+                key={item.id}
+                className="group min-w-0 border-b border-e border-line bg-page p-5 transition-colors duration-200 hover:bg-surface-soft"
+              >
+                <span className="flex size-10 items-center justify-center bg-surface-soft text-brand-primary transition-colors duration-200 group-hover:bg-brand-primary group-hover:text-white">
+                  <Icon aria-hidden="true" size={20} strokeWidth={1.55} />
+                </span>
+                <h3
+                  className={`mt-4 text-start text-[16px] font-black sm:text-[17px] ${
+                    isRTL ? "leading-[1.65]" : "leading-[1.38]"
+                  }`}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  className={`mt-3 text-start text-[13px] text-ink-muted ${
+                    isRTL ? "leading-[1.9]" : "leading-[1.68]"
+                  }`}
+                >
+                  {item.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+
+        <footer className="mt-7 grid min-w-0 gap-5 border border-line bg-surface-soft p-5 sm:p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <p
+            className={`border-s-2 border-brand-accent ps-4 text-start text-[14px] font-semibold text-ink-muted sm:ps-5 sm:text-[15px] ${
+              isRTL ? "leading-[2]" : "leading-[1.75]"
+            }`}
+          >
+            {content.closing}
+          </p>
+          <DnhEditorialActions
+            ctas={content.ctas}
+            direction={direction}
+          />
+        </footer>
       </div>
     </section>
   );

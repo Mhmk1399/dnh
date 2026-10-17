@@ -85,7 +85,6 @@ export function HomeWeeklyOutlook() {
                 aria-hidden="true"
                 className="h-[2px] w-11 bg-brand-accent"
               />
-          
             </div>
             <h2
               id="home-weekly-outlook-heading"
@@ -154,19 +153,6 @@ export function HomeWeeklyOutlook() {
                 key={item.id}
                 className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/7] overflow-hidden bg-surface-soft">
-                  <Image
-                    src={outlookImages[index] ?? outlookImages[0]}
-                    alt=""
-                    fill
-                    sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 1023px) 48vw, 19vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-3 top-3 size-4 bg-brand-accent"
-                  />
-                </div>
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
                   <span
                     aria-hidden="true"
@@ -179,14 +165,7 @@ export function HomeWeeklyOutlook() {
                   >
                     {item.title}
                   </h3>
-                  {item.english_label && item.english_label !== item.title ? (
-                    <bdi
-                      dir="ltr"
-                      className="mt-1 block text-start text-[9px] tracking-[0.18em] text-brand-primary"
-                    >
-                      {item.english_label}
-                    </bdi>
-                  ) : null}
+              
                   <p
                     className={`mt-2 text-start text-[13px] text-ink-muted ${isRTL ? "leading-[1.85]" : "leading-[1.62]"}`}
                   >
