@@ -881,7 +881,7 @@ function Founder({
       <div className="dnh-site-shell grid items-center gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
         <figure className="relative aspect-[4/5] overflow-hidden bg-[#032f3f]">
           <Image
-            src="/assets/images/dr-nasim-home-desktop.png"
+            src="/assets/images/doctor.webp"
             alt={imageAlt[locale].founder}
             fill
             sizes="(max-width: 1024px) 100vw, 44vw"

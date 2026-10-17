@@ -1,6 +1,6 @@
 import { PortfolioIntelligencePage, type PortfolioDocument } from "@/components/static/who-we-help/unstructured-portfolio/PortfolioIntelligencePage";
-import contentFa from "@/config/DNH_Portfolio_Intelligence_Final_FA.json";
-import contentEn from "@/config/DNH_Portfolio_Intelligence_Final_EN.json";
+import contentFa from "@/config/DNH_Fragmented_Portfolio_Without_Architecture_Final_FA.json";
+import contentEn from "@/config/DNH_Fragmented_Portfolio_Without_Architecture_Final_EN.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { localizePageMetadata } from "@/lib/site-seo";
 

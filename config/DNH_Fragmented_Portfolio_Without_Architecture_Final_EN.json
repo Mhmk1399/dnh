@@ -1,0 +1,231 @@
+{
+  "page": "fragmented-portfolio-without-architecture",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Fragmented Portfolio Without Architecture",
+  "english_title": "Fragmented Portfolio Without Architecture",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "multiple-assets-one-portfolio",
+      "type": "hero",
+      "eyebrow": "You own multiple assets—but do they form one coherent portfolio?",
+      "english_label": "Multiple Assets. One Portfolio?",
+      "heading": "Owning multiple assets does not, by itself, create a coherent financial structure.",
+      "paragraphs": [
+        "Over time, your capital may have spread across property, gold, foreign currency, equities, cash, a business, and other holdings.",
+        "Each decision may have made sense when it was made. The more important question is what structure those assets create together today.",
+        "Do you know how much of your wealth is allocated to each area?",
+        "Does every asset have a defined role?",
+        "Is too much capital concentrated in one area?",
+        "Is available liquidity aligned with future needs?",
+        "And does the current structure still support the objectives you have today?",
+        "DNH starts here: viewing your holdings as one structure, rather than a collection of disconnected purchases and investments."
+      ],
+      "ctas": [{ "label": "Start a Portfolio & Wealth Assessment", "type": "primary" }, { "label": "Review My Asset Structure", "type": "secondary" }]
+    },
+    {
+      "order": 2,
+      "id": "assets-accumulate-structure-does-not-always-follow",
+      "type": "problem-recognition",
+      "eyebrow": "Assets accumulate. Structure does not always follow.",
+      "english_label": "Assets Accumulate. Structure Does Not Always Follow.",
+      "heading": "Many portfolios were never designed; they simply took shape over time.",
+      "paragraphs": [
+        "A property may have been acquired during one period.",
+        "Later, part of the capital may have moved into gold or foreign currency.",
+        "As markets changed, equities or funds may have been added.",
+        "Another portion of wealth may sit inside a business.",
+        "And some capital may remain in cash for current needs.",
+        "None of these decisions is necessarily wrong.",
+        "The problem emerges when separate decisions accumulate over years without the overall structure ever being reassessed.",
+        "In that situation, substantial assets may exist while clear answers to these questions do not:"
+      ],
+      "questions": ["Why do I hold each asset?", "What role does each component serve?", "Where am I overly concentrated?", "How much capital is genuinely accessible?", "And is this mix still appropriate for my current objectives?"],
+      "closing": "Before adding the next asset, it may be worth seeing the structure that has already formed.",
+      "ctas": [{ "label": "Review My Current Asset Structure", "type": "primary" }]
+    },
+    {
+      "order": 3,
+      "id": "asset-variety-is-not-true-diversification",
+      "type": "diversification",
+      "eyebrow": "Asset variety is not the same as genuine portfolio diversification",
+      "english_label": "Asset Variety Is Not True Diversification",
+      "heading": "Holding several asset types does not necessarily mean risk is well distributed.",
+      "paragraphs": ["Your portfolio may include property, currency, gold, equities, and even a business—and appear highly diversified.", "True diversification, however, cannot be measured simply by counting assets."],
+      "items": [
+        { "title": "Several assets may depend on the same economic driver.", "description": "Different parts of your wealth may be simultaneously exposed to currency movements, inflation, or the broader economy." },
+        { "title": "Several assets may have limited liquidity.", "description": "Total wealth may be substantial while financial flexibility remains low." },
+        { "title": "Several investments may be tied to one income source.", "description": "This is especially relevant when both wealth and income are heavily dependent on one business." },
+        { "title": "Different assets may come under pressure at the same time.", "description": "" }
+      ],
+      "questions": ["How many different assets do I own?", "How are risk, liquidity, and purpose actually distributed across the structure?"],
+      "ctas": [{ "label": "Assess My Portfolio's Real Diversification", "type": "primary" }]
+    },
+    {
+      "order": 4,
+      "id": "signs-of-a-fragmented-portfolio",
+      "type": "diagnostic-signs",
+      "eyebrow": "How can you tell when a portfolio lacks architecture?",
+      "english_label": "Signs of a Fragmented Portfolio",
+      "heading": "Fragmentation is not always visible in the holdings themselves; sometimes it appears as the absence of a unifying logic.",
+      "intro": "Some of these signs may feel familiar:",
+      "items": [
+        { "title": "You do not know what share of total wealth sits in each area.", "description": "You may know individual asset values without having an integrated view of the whole structure." },
+        { "title": "The role of each asset is unclear.", "description": "Some assets are still held simply because they were acquired in the past." },
+        { "title": "You cannot identify your largest concentration of risk.", "description": "Exposure to one asset, market, or business may have grown significantly over time." },
+        { "title": "Asset values are high, but liquidity is constrained.", "description": "A meaningful share of wealth may be held in assets that cannot readily fund a need." },
+        { "title": "New decisions are driven mainly by news and market conditions.", "description": "Each decision is made without assessing its role in the broader structure." },
+        { "title": "Financial goals are not explicitly connected to the asset mix.", "description": "It is unclear which asset is intended to support which objective." },
+        { "title": "The time horizon for holdings is unclear.", "description": "A long-term asset may be expected to fund a short-term goal." },
+        { "title": "The full structure has not been reviewed for a long time.", "description": "Yet asset prices, objectives, and life circumstances have all changed." }
+      ],
+      "closing": "This is the issue defined in DNH's architecture for this service: multiple assets without an integrated structure.",
+      "ctas": [{ "label": "Assess My Portfolio Fragmentation", "type": "primary" }]
+    },
+    {
+      "order": 5,
+      "id": "who-is-this-assessment-for",
+      "type": "audience",
+      "eyebrow": "Who is this assessment designed for?",
+      "english_label": "Who Is This Assessment For?",
+      "heading": "If your holdings have moved beyond a simple asset structure, it may be time to see the full picture.",
+      "items": [
+        { "title": "People holding several asset classes", "description": "When capital is spread across multiple markets and asset categories." },
+        { "title": "Capital owners", "description": "When wealth structuring has become more important than selecting one asset." },
+        { "title": "Families", "description": "When multiple assets, goals, and financial needs must be considered together." },
+        { "title": "Business owners", "description": "When a significant share of personal wealth is embedded in a company or operating activity." },
+        { "title": "Investors across property, gold, currency, equities, and cash", "description": "When asset variety has increased but the role and relationship of each holding remain unclear." },
+        { "title": "People whose holdings accumulated over many years", "description": "When the current mix reflects a series of past decisions rather than a unified design." },
+        { "title": "People whose objectives have changed", "description": "A structure that made sense several years ago may no longer serve current needs." }
+      ],
+      "closing": "The core audience for this DNH service is people with multiple assets but no integrated structure connecting them.",
+      "ctas": [{ "label": "See Whether This Assessment Fits My Situation", "type": "primary" }]
+    },
+    {
+      "order": 6,
+      "id": "see-the-whole-wealth-picture",
+      "type": "whole-wealth-view",
+      "eyebrow": "Begin by seeing every asset in one picture",
+      "english_label": "See the Whole Wealth Picture",
+      "heading": "Before changing an asset, understand its place within the overall structure.",
+      "intro": "The first step is to build one coherent view of the current position.",
+      "items": [
+        { "title": "What assets are held?", "description": "Property, gold, currency, equities, fixed income, cash, business interests, and other holdings are viewed together." },
+        { "title": "What is the approximate weight of each component?", "description": "This reveals which areas account for the largest share of the structure." },
+        { "title": "How much wealth is tied to the business?", "description": "For business owners, this may be the largest source of concentration and dependency." },
+        { "title": "How much capital is liquid?", "description": "Asset value and practical access to funds are not the same." },
+        { "title": "Which components carry disproportionate weight?", "description": "Concentration may have developed gradually, without a deliberate decision." },
+        { "title": "How are the assets connected?", "description": "Several parts of wealth may be exposed to the same underlying driver." }
+      ],
+      "closing": "A Whole-Wealth View is not intended to trigger an immediate buy or sell decision. Its purpose is to create a clear map of what actually exists.",
+      "ctas": [{ "label": "Build a Whole-Wealth View", "type": "primary" }]
+    },
+    {
+      "order": 7,
+      "id": "every-asset-needs-a-role",
+      "type": "asset-roles",
+      "eyebrow": "What is each asset meant to accomplish?",
+      "english_label": "Every Asset Needs a Role",
+      "heading": "An asset becomes part of an architecture only when its purpose within the structure is understood.",
+      "paragraphs": ["Two people may hold the same asset while it plays an entirely different role in each financial structure.", "An asset may be intended to:"],
+      "items": [
+        { "title": "Preserve value", "description": "Maintain a portion of purchasing power over a defined horizon." },
+        { "title": "Deliver long-term growth", "description": "Participate in capital appreciation over time." },
+        { "title": "Generate income", "description": "Provide cash flow for specified needs." },
+        { "title": "Provide liquidity and flexibility", "description": "Keep resources accessible when required." },
+        { "title": "Reduce dependency", "description": "Create balance against heavy concentration elsewhere in the wealth structure." },
+        { "title": "Fund a future objective", "description": "Such as a financial commitment, purchase, business expansion, or family goal." }
+      ],
+      "closing_paragraphs": ["The problem arises when assets are present but their mandate within the structure is undefined.", "In that situation, deciding whether to hold, increase, or reduce an asset becomes harder because there is no clear standard against which to assess its role.", "Architecture begins with a simple question:", "Why is this asset in my portfolio?"],
+      "ctas": [{ "label": "Review the Role of My Assets", "type": "primary" }]
+    },
+    {
+      "order": 8,
+      "id": "hidden-concentration-dependencies",
+      "type": "concentration-risk",
+      "eyebrow": "Hidden concentrations and dependencies",
+      "english_label": "Hidden Concentration & Dependencies",
+      "heading": "Apparent diversification can conceal genuine concentrations of risk.",
+      "intro": "A central purpose of a structural review is to identify dependencies that are not immediately visible.",
+      "items": [
+        { "title": "Property concentration", "description": "A very large share of wealth may be held in assets with limited liquidity." },
+        { "title": "Concentration in an owner-managed business", "description": "Income, capital, and long-term financial outcomes may all depend on one company." },
+        { "title": "High currency dependency", "description": "Several different holdings may ultimately be exposed to the same currency variable." },
+        { "title": "Concentration in one market or industry", "description": "Different assets may respond to the same underlying conditions." },
+        { "title": "Dependence on one income source", "description": "If the primary income stream stops, several other parts of the structure may come under pressure." },
+        { "title": "Different assets sharing the same risk", "description": "Different asset names do not necessarily mean different sources of risk." }
+      ],
+      "closing_paragraphs": ["DNH's formal Portfolio Intelligence framework also identifies asset fragmentation, concentrated risk, and mismatched liquidity as core issues for this audience.", "The objective is not to eliminate every concentration; it is to make concentrations and their consequences visible and intentional."],
+      "ctas": [{ "label": "Identify Hidden Concentrations in My Structure", "type": "primary" }]
+    },
+    {
+      "order": 9,
+      "id": "liquidity-goals-time-horizon",
+      "type": "liquidity-goals-horizon",
+      "eyebrow": "Liquidity, objectives, and time horizon must work together",
+      "english_label": "Liquidity, Goals & Time Horizon",
+      "heading": "An asset may be sound in isolation yet poorly positioned for your objective and timing.",
+      "intro": "A structural review must consider three issues together:",
+      "items": [
+        { "title": "Liquidity", "english_label": "Liquidity", "description": "If funds are needed today or within the next few months, how much of your wealth is genuinely accessible?" },
+        { "title": "Objectives", "english_label": "Goals", "description": "What is each portion of capital intended to support: purchasing-power preservation, growth, income, a future purchase, business expansion, or financial security?" },
+        { "title": "Time horizon", "english_label": "Time Horizon", "description": "When will each portion of capital be required?" }
+      ],
+      "paragraphs": ["A large share of wealth may sit in long-term assets while a significant short-term need is approaching.", "Conversely, substantial cash may remain idle for a long period without a defined role.", "A coherent structure does not make every asset alike; it connects each asset's role with the timing of the need and the financial objective."],
+      "ctas": [{ "label": "Review Liquidity, Objectives & Timing", "type": "primary" }]
+    },
+    {
+      "order": 10,
+      "id": "dnh-portfolio-wealth-assessment",
+      "type": "process",
+      "eyebrow": "How does the DNH Portfolio & Wealth Assessment work?",
+      "english_label": "The DNH Portfolio / Wealth Assessment",
+      "heading": "The starting point is not changing the portfolio; it is understanding the structure that exists today.",
+      "steps": [
+        { "number": 1, "title": "Map the full asset base", "english_label": "Asset Mapping", "description": "The main asset classes and each component's approximate place in total wealth are identified." },
+        { "number": 2, "title": "Understand objectives and liquidity needs", "english_label": "Goals & Liquidity Needs", "description": "We clarify the needs and objectives the structure must support." },
+        { "number": 3, "title": "Review composition and weights", "english_label": "Structure Review", "description": "The distribution of capital across the different components is examined." },
+        { "number": 4, "title": "Identify concentrations and dependencies", "english_label": "Concentration & Dependencies", "description": "Areas representing a significant share of wealth or risk are assessed." },
+        { "number": 5, "title": "Review the role of each asset", "english_label": "Asset Role Review", "description": "Each component's function in relation to the overall structure is clarified." },
+        { "number": 6, "title": "Assess risk and liquidity", "english_label": "Risk & Liquidity Review", "description": "Structural vulnerabilities and the degree of financial flexibility are reviewed." },
+        { "number": 7, "title": "Define review priorities", "english_label": "Review Priorities", "description": "Areas warranting deeper review are separated from lower-priority matters." },
+        { "number": 8, "title": "Determine the next route", "english_label": "Next-Step Routing", "description": "We identify which specialist DNH pathway is most closely aligned with the central issue." }
+      ],
+      "closing": "DNH currently provides initial asset-structure reviews covering concentration, liquidity, and alignment with objectives. Full Portfolio Intelligence and selected periodic-monitoring capabilities remain in the process of standardisation.",
+      "ctas": [{ "label": "Start a Portfolio / Wealth Assessment", "type": "primary" }]
+    },
+    {
+      "order": 11,
+      "id": "what-does-the-assessment-reveal",
+      "type": "routing",
+      "eyebrow": "What might the assessment reveal as the real issue?",
+      "english_label": "What Does the Assessment Reveal?",
+      "heading": "The assessment is not intended to prescribe a ready-made solution before the issue is understood; it is designed to locate the real problem.",
+      "intro": "The initial assessment may indicate that your principal need is closer to one of these pathways:",
+      "routes": [
+        { "title": "Portfolio Intelligence", "english_label": "Portfolio Intelligence", "description": "When the central issue is asset mix, weights, concentration, liquidity, and the role of each component." },
+        { "title": "Private Wealth Strategy", "english_label": "Private Wealth Strategy", "description": "When assets need to be viewed in relation to total wealth, family objectives, and the long-term horizon." },
+        { "title": "Risk Management & Wealth Protection", "english_label": "Risk Management & Wealth Protection", "description": "When the assessment identifies vulnerabilities, concentrations, or hidden risks as the primary concern." },
+        { "title": "Macro & Market Advisory", "english_label": "Macro & Market Advisory", "description": "When asset-structure decisions are driven primarily by economic variables and market conditions." },
+        { "title": "Financial Decision Assessment", "english_label": "Financial Decision Assessment", "description": "When a specific choice—such as buying, selling, reallocating capital, or entering a new opportunity—is driving the review." }
+      ],
+      "closing_paragraphs": ["In some cases, the review may show that no immediate change is required and only selected areas merit closer attention.", "DNH's intended pathway follows this logic: diagnose the issue → conduct an initial assessment → select the appropriate pathway → analyse and support the decision."],
+      "ctas": [{ "label": "Identify the Right Path for My Structure", "type": "primary" }]
+    },
+    {
+      "order": 12,
+      "id": "review-the-structure-before-adding-another-asset",
+      "type": "final-cta",
+      "eyebrow": "Review the existing structure before adding another asset",
+      "english_label": "Review the Structure Before Adding Another Asset",
+      "heading": "Your next step may not be buying another asset. It may be understanding how your current assets work together.",
+      "paragraphs": ["If you have built holdings across many years but are no longer certain that the overall structure aligns with your needs and objectives, an initial assessment can provide a starting point.", "You do not need to provide every financial detail or sensitive document at the outset.", "Initially, it is enough to establish:"],
+      "checklist": ["Which assets are held within the structure;", "Where the principal concentrations sit;", "How much liquidity is accessible;", "What your most important objectives are;", "Which areas feel unclear or concerning;", "And what has prompted you to review the structure now."],
+      "closing_paragraphs": ["We can then determine whether the issue requires a focused assessment or a more specialist review.", "The objective is not to increase transaction volume or change holdings merely for the appearance of diversification.", "The objective is to develop a clearer view of what you have built before making the next decision."],
+      "ctas": [{ "label": "Start a Portfolio / Wealth Assessment", "type": "primary" }, { "label": "Request an Initial Asset-Structure Review", "type": "secondary" }]
+    }
+  ]
+}

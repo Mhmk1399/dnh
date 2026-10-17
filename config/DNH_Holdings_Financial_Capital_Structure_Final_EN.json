@@ -1,0 +1,326 @@
+{
+  "page": "holdings-financial-capital-structure",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Holding Companies, Financial Structure & Capital",
+  "english_title": "Holdings, Financial Structure & Capital",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "your-group-is-a-capital-structure",
+      "type": "hero",
+      "eyebrow": "Your holding company is not simply a collection of businesses; it is a capital structure",
+      "english_label": "Your Group Is a Capital Structure",
+      "heading": "Every financial decision in a holding company can simultaneously affect liquidity, financing, investment, debt and the future of several businesses across the group.",
+      "paragraphs": [
+        "As a business expands or multiple companies are brought under a common structure, financial decisions no longer belong to a single entity.",
+        "A growth decision in one company can affect the cash resources of another.",
+        "New financing can reshape the debt profile of the entire group.",
+        "A capital project can commit resources that may be needed for working capital or another opportunity in the months ahead.",
+        "A decision about ownership or partnership can directly influence capital flows and decision rights.",
+        "The issue, therefore, is not merely to review each company in isolation.",
+        "Management needs to understand how the group's financial architecture works as a whole: where resources sit, where obligations arise and how capital is allocated across competing priorities.",
+        "Within DNH's formal advisory architecture, this landing page is designed for business owners, holding companies, corporate groups and business families, with an integrated focus on financial structure, liquidity, financing, capital allocation, risk and group objectives."
+      ],
+      "ctas": [
+        { "label": "Start a Financial Structure Assessment", "type": "primary" },
+        { "label": "Request a Strategic Financial Assessment", "type": "secondary" }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "growth-creates-financial-complexity",
+      "type": "problem-recognition",
+      "eyebrow": "As companies grow, financial complexity grows with them",
+      "english_label": "Growth Creates Financial Complexity",
+      "heading": "Operating growth without an integrated financial perspective can make decision-making increasingly complex.",
+      "paragraphs": [
+        "At an early stage, a business may have a relatively straightforward financial model.",
+        "As companies, projects, partners, debt facilities and funding sources multiply, the picture changes.",
+        "You may find several of the following conditions occurring at once:"
+      ],
+      "items": [
+        { "title": "Companies with different cash-flow profiles", "description": "One company holds surplus liquidity while another faces working-capital pressure." },
+        { "title": "Multiple capital projects at the same time", "description": "Each project requires funding, but the order of priority is unclear." },
+        { "title": "Multiple financing channels", "description": "Internal funds, bank facilities, partner capital and other sources are being used in parallel." },
+        { "title": "Overlapping commitments", "description": "Debt maturities, operating payments and development requirements must all be managed concurrently." },
+        { "title": "Capital distributed across the group", "description": "Resources may be tied up in companies, assets or projects with very different liquidity profiles." },
+        { "title": "Different objectives across units or owners", "description": "One company may be pursuing growth while another needs to preserve liquidity or reduce risk." }
+      ],
+      "closing_paragraphs": [
+        "In these conditions, producing more financial reports does not necessarily solve the underlying problem.",
+        "What management needs is a structured view of how capital, liquidity, debt, projects and group objectives interact."
+      ],
+      "ctas": [{ "label": "Review the Group's Financial Complexity", "type": "primary" }]
+    },
+    {
+      "order": 3,
+      "id": "holding-is-more-than-consolidated-numbers",
+      "type": "group-level-view",
+      "eyebrow": "A holding company is more than a set of consolidated figures",
+      "english_label": "A Holding Is More Than Consolidated Numbers",
+      "heading": "Each company may appear sound on a standalone basis while the group's overall structure still requires review.",
+      "paragraphs": [
+        "Reviewing each company separately reveals only part of the picture.",
+        "At group level, a different set of questions must be asked:"
+      ],
+      "questions": [
+        "Which company holds the liquidity, and where is the cash requirement arising?",
+        "Where is debt concentrated?",
+        "Which company or project consumes the largest share of group capital?",
+        "Is capital deployed in a way that supports the group's strategic priorities?",
+        "Are several companies dependent on the same funding source or revenue stream?",
+        "Could a decision by one unit reduce the financial flexibility of the entire group?"
+      ],
+      "closing_paragraphs": [
+        "A company may be profitable but lack sufficient liquidity.",
+        "Another may hold cash while generating an inadequate return on committed capital.",
+        "Several projects may each look reasonable at business-unit level while collectively absorbing more resources than the group can support.",
+        "DNH therefore moves beyond a company-by-company view towards a group-level financial perspective.",
+        "The objective is not to disregard individual-company performance, but to make the group-wide effect of every decision visible."
+      ],
+      "ctas": [{ "label": "See the Group-Level Financial Picture", "type": "primary" }]
+    },
+    {
+      "order": 4,
+      "id": "signs-financial-structure-needs-review",
+      "type": "diagnostic-signs",
+      "eyebrow": "How do you know when the group's financial structure needs review?",
+      "english_label": "Signs Your Financial Structure Needs Review",
+      "heading": "Financial complexity becomes a problem when decision-makers no longer have a clear view of the relationship between resources, obligations and priorities.",
+      "intro": "Your structure may already display some of these signals:",
+      "items": [
+        { "title": "There is no integrated view of group cash flow.", "description": "Each company's information exists, but the amount of liquidity genuinely available at group level is unclear." },
+        { "title": "Liquidity sits in one company while funding is needed in another.", "description": "Moving resources has become a recurring or complex decision." },
+        { "title": "Several projects require capital simultaneously.", "description": "There is no defined framework for prioritising them." },
+        { "title": "The debt structure has become fragmented.", "description": "Financing has been arranged across different entities without a single view of cost, maturity and risk." },
+        { "title": "Profitability coexists with continuing liquidity pressure.", "description": "A positive income statement does not necessarily mean that cash is available." },
+        { "title": "Capital is allocated by urgency rather than strategic priority.", "description": "Resources flow to whichever unit is under immediate pressure, not necessarily to the highest-priority use." },
+        { "title": "Ownership or partnership complicates financial decisions.", "description": "Different shareholder objectives or decision rights influence how resources can be used." },
+        { "title": "Management information arrives late or remains fragmented.", "description": "Decisions consequently become reactive rather than planned." }
+      ],
+      "closing": "One or more of these signs does not necessarily indicate a crisis, but it can show that the group's financial structure deserves a more coherent review.",
+      "ctas": [{ "label": "Request an Initial Group Assessment", "type": "primary" }]
+    },
+    {
+      "order": 5,
+      "id": "who-is-this-assessment-for",
+      "type": "audience",
+      "eyebrow": "Which structures is this assessment designed for?",
+      "english_label": "Who Is This Assessment For?",
+      "heading": "This pathway is intended for organisations in which financial decisions are no longer confined to one company or one project.",
+      "items": [
+        { "title": "Holding companies", "description": "Where several companies operate under a common structure and their decisions affect one another." },
+        { "title": "Corporate groups", "description": "Where resources, obligations and financial projects are distributed across multiple entities." },
+        { "title": "Owners of multiple businesses", "description": "Where capital and liquidity are divided across activities and must be viewed as a whole." },
+        { "title": "Business families", "description": "Where the family participates in ownership, capital and business decisions." },
+        { "title": "Companies with multiple operating units", "description": "Where units have distinct financial needs and performance while resources are managed centrally." },
+        { "title": "Expanding organisations", "description": "Where growth, asset purchases, capacity increases or market entry require substantial capital." },
+        { "title": "Groups with several capital projects", "description": "Where competing uses of funds must be prioritised." },
+        { "title": "Structures with complex financing", "description": "Where debt, internal resources and other capital sources need to be assessed together." }
+      ],
+      "closing": "DNH's advisory framework explicitly defines business owners, holding companies, corporate groups and business families as the audience for this assessment.",
+      "ctas": [{ "label": "Assess Whether This Is Right for Our Group", "type": "primary" }]
+    },
+    {
+      "order": 6,
+      "id": "see-group-level-financial-picture",
+      "type": "whole-group-view",
+      "eyebrow": "Begin with the financial picture of the entire group",
+      "english_label": "See the Group-Level Financial Picture",
+      "heading": "Before changing one part of the structure, understand the role it plays in the whole.",
+      "intro": "A strategic assessment begins by establishing a single view of the group's financial architecture.",
+      "items": [
+        { "title": "Core cash flows", "description": "Which companies or activities generate cash, and where is it consumed?" },
+        { "title": "Liquidity position", "description": "How much cash or short-term funding is genuinely available to the group?" },
+        { "title": "Debt and obligations", "description": "What commitments exist, which entities carry them and when do they mature?" },
+        { "title": "Capital projects", "description": "Which projects require funding now or in the near term?" },
+        { "title": "Working capital", "description": "Which units require additional resources to sustain normal operations?" },
+        { "title": "Intercompany financial relationships", "description": "Do group companies fund each other, share costs or depend on one another in other ways?" },
+        { "title": "Locked-up capital", "description": "How much capital is committed to assets, projects or activities that cannot be accessed quickly?" }
+      ],
+      "closing_paragraphs": [
+        "The objective is not to produce another large table of figures.",
+        "It is to enable management to see the group's financial architecture as one interconnected system."
+      ],
+      "ctas": [{ "label": "Build an Integrated Group Financial View", "type": "primary" }]
+    },
+    {
+      "order": 7,
+      "id": "liquidity-working-capital",
+      "type": "liquidity-working-capital",
+      "eyebrow": "Liquidity and working capital: where profitability is not enough",
+      "english_label": "Liquidity & Working Capital",
+      "heading": "A business can be profitable and still face severe liquidity pressure.",
+      "paragraphs": [
+        "Accounting profit and cash availability are not the same thing.",
+        "Revenue may have been recognised while cash has yet to be collected.",
+        "Inventory, receivables or work in progress may absorb a substantial share of resources.",
+        "A profitable unit may still require continuous cash injections to sustain operations.",
+        "At holding-company level, the issue becomes more complex because these pressures may be distributed across several entities.",
+        "A liquidity assessment should establish:"
+      ],
+      "questions": [
+        "What are the principal sources of cash inflow?",
+        "Where are the main uses of liquidity?",
+        "How much working capital is required to support operations?",
+        "Which companies depend on recurring liquidity injections?",
+        "What short-term obligations are approaching?",
+        "How resilient is the structure if cash collection is delayed?",
+        "Are group liquidity resources aligned with the development plan?"
+      ],
+      "closing": "DNH's professional experience and advisory content cover financial management, liquidity, working capital, capital structure and management reporting.",
+      "ctas": [{ "label": "Review Group Liquidity and Working Capital", "type": "primary" }]
+    },
+    {
+      "order": 8,
+      "id": "capital-structure-financing",
+      "type": "capital-structure-financing",
+      "eyebrow": "Capital structure and financing",
+      "english_label": "Capital Structure & Financing",
+      "heading": "Financing is not merely about raising new funds; every new source of capital reshapes the group's future structure.",
+      "paragraphs": [
+        "When a group requires additional capital, the only question is not:",
+        "‘Where should the money come from?’",
+        "Management must also ask:"
+      ],
+      "questions": [
+        "How much capital is genuinely required?",
+        "What is the appropriate balance between debt and equity?",
+        "What is the true cost of funding?",
+        "When will repayment obligations arise?",
+        "Which company should carry the debt?",
+        "Are cash flows sufficient to service the obligations?",
+        "What happens if financing rates or terms change?",
+        "What opportunity cost results from using internal funds?",
+        "Will the new structure reduce the group's financial flexibility?"
+      ],
+      "closing_paragraphs": [
+        "A financing solution may relieve short-term liquidity pressure while creating greater strain later.",
+        "Equally, excessive reliance on internal funds can restrict the group's ability to pursue other opportunities.",
+        "Financing must therefore be assessed alongside liquidity, cost of capital, risk, timing and the growth plan.",
+        "DNH's specialist advisory experience encompasses capital structure, financing, liquidity, financial modelling and scenario analysis."
+      ],
+      "ctas": [{ "label": "Review Capital Structure and Financing", "type": "primary" }]
+    },
+    {
+      "order": 9,
+      "id": "capital-allocation-across-group",
+      "type": "capital-allocation",
+      "eyebrow": "Capital allocation: where should capital be deployed?",
+      "english_label": "Capital Allocation Across the Group",
+      "heading": "Capital is always finite; the question is which use best supports the group's priorities.",
+      "paragraphs": [
+        "A holding company may have many competing uses for its resources:",
+        "Expanding one company,",
+        "Funding working capital,",
+        "Acquiring equipment or other assets,",
+        "Entering a new project,",
+        "Reducing debt,",
+        "Retaining liquidity,",
+        "Or investing in another opportunity.",
+        "Each option may appear reasonable on its own.",
+        "The central group-level decision, however, is:",
+        "Which use of capital deserves priority?",
+        "Answering that question requires several dimensions to be considered together:"
+      ],
+      "items": [
+        { "title": "Strategic importance", "description": "Does the project directly support the group's core growth trajectory?" },
+        { "title": "Capital requirement", "description": "How much of the group's resources will be committed?" },
+        { "title": "Liquidity", "description": "For how long will the capital remain inaccessible?" },
+        { "title": "Risk", "description": "Which assumptions must hold for the project to remain viable?" },
+        { "title": "Cost of capital", "description": "What direct cost or opportunity cost attaches to the funds deployed?" },
+        { "title": "Future flexibility", "description": "After this allocation, can the group still respond to a new need or opportunity?" }
+      ],
+      "closing_paragraphs": [
+        "Capital allocation is the deliberate choice among competing uses of scarce resources, not simply assigning funds to the first need that appears.",
+        "DNH's relevant experience includes evaluating capital-allocation decisions in light of financing costs, liquidity, economic variables and alternative scenarios."
+      ],
+      "ctas": [{ "label": "Review Group Capital-Allocation Priorities", "type": "primary" }]
+    },
+    {
+      "order": 10,
+      "id": "ownership-partnership-governance",
+      "type": "ownership-governance",
+      "eyebrow": "How do ownership, partnership and governance shape financial decisions?",
+      "english_label": "Ownership, Partnership & Governance",
+      "heading": "Financial structure is not only about numbers; ownership and decision rights can determine how capital moves.",
+      "paragraphs": [
+        "In some groups, the principal financial complexity comes not from the businesses themselves but from the relationships between owners, partners and different companies.",
+        "The following must be clear:"
+      ],
+      "questions": [
+        "How is ownership distributed?",
+        "Who has authority over capital decisions?",
+        "How closely aligned are shareholder objectives?",
+        "How is the dividend policy defined?",
+        "How much profit should remain in the company, and how much may be distributed?",
+        "On what basis are resources transferred between companies?",
+        "When new capital is required, who is responsible for providing it?",
+        "If owners differ on growth, liquidity or risk, how is the decision resolved?"
+      ],
+      "closing_paragraphs": [
+        "These questions are especially important in business families and structures involving several partners or generations.",
+        "DNH's relevant experience includes the architecture of partnership, ownership and business-governance structures.",
+        "This is not intended as specialist legal advice; the objective is to understand how ownership and governance affect financial and capital decisions."
+      ],
+      "ctas": [{ "label": "Review Ownership and Financial Structure", "type": "primary" }]
+    },
+    {
+      "order": 11,
+      "id": "dnh-strategic-financial-assessment",
+      "type": "process",
+      "eyebrow": "How does the DNH Strategic Financial Assessment work?",
+      "english_label": "The DNH Strategic Financial Assessment",
+      "heading": "The starting point is not to prescribe a solution, but to define the group's financial problem correctly.",
+      "steps": [
+        { "number": 1, "title": "Define the group structure", "english_label": "Group Structure", "description": "The companies, principal units, ownership and overall relationships are mapped." },
+        { "number": 2, "title": "Understand objectives and decision context", "english_label": "Objectives & Decision Context", "description": "We establish the issue facing the group and the decisions that lie ahead." },
+        { "number": 3, "title": "Map cash flows and liquidity", "english_label": "Cash & Liquidity Mapping", "description": "Sources, uses, working-capital needs and the main liquidity pressures are assessed." },
+        { "number": 4, "title": "Review capital structure and obligations", "english_label": "Capital Structure Review", "description": "Debt, equity, commitments and their distribution across the structure are examined." },
+        { "number": 5, "title": "Review financing and cost of capital", "english_label": "Financing Review", "description": "Existing and potential funding routes and their implications for the group's future are evaluated." },
+        { "number": 6, "title": "Review capital allocation and projects", "english_label": "Capital Allocation", "description": "We identify where resources are currently committed and which decisions require prioritisation." },
+        { "number": 7, "title": "Analyse key risks and scenarios", "english_label": "Risk & Scenario Review", "description": "We test how changing conditions could affect liquidity, debt, projects and group decisions." },
+        { "number": 8, "title": "Set priorities and the next course of action", "english_label": "Decision Priorities & Next Step", "description": "Material issues are separated from secondary concerns and the next areas for review or action are defined." }
+      ],
+      "closing_paragraphs": [
+        "Depending on scope, DNH's business financial advisory work may include liquidity analysis, capital-structure and financing review, financial scenarios, evaluation of major financial decisions and practical recommendations.",
+        "At the initial stage, the objective is diagnosis and fit—not the immediate collection of every item of confidential information."
+      ],
+      "ctas": [{ "label": "Start a Strategic Financial Assessment", "type": "primary" }]
+    },
+    {
+      "order": 12,
+      "id": "review-structure-before-next-capital-decision",
+      "type": "final-cta",
+      "eyebrow": "See the entire group structure before the next capital decision",
+      "english_label": "Review the Structure Before the Next Capital Decision",
+      "heading": "The issue may not simply be a shortage of capital; it may be how capital is positioned across the structure.",
+      "paragraphs": [
+        "If your group is approaching an important decision involving expansion, financing, investment, debt, liquidity or capital allocation, the right starting point may be a strategic assessment of the existing structure.",
+        "You do not need to provide every financial statement, contract or confidential record at the outset.",
+        "Initially, it is enough to clarify:"
+      ],
+      "checklist": [
+        "How the group is structured;",
+        "The most important financial issue today;",
+        "The decision that lies ahead;",
+        "The resources involved;",
+        "Where the main liquidity pressure sits;",
+        "Which obligations or constraints apply;",
+        "And what remains unclear to management."
+      ],
+      "closing_paragraphs": [
+        "This initial stage establishes whether the issue calls for a focused review, an Executive Briefing or a deeper Strategic Financial Advisory engagement.",
+        "The objective is not to prescribe one generic solution for every holding company.",
+        "It is to consider financial structure, liquidity, financing and capital allocation alongside the group's real risks and objectives—the central logic defined for this landing page within DNH's advisory architecture."
+      ],
+      "ctas": [
+        { "label": "Start a Strategic Financial Assessment", "type": "primary" },
+        { "label": "Share Your Group Structure for an Initial Review", "type": "secondary" }
+      ]
+    }
+  ]
+}
