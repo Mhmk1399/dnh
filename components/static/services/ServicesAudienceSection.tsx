@@ -1,654 +1,183 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
 
-import {
-  ArrowDownLeft,
-  ArrowUpLeft,
-  Building2,
-  CircleDollarSign,
-  PieChart,
-  type LucideIcon,
-} from "lucide-react";
-
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import servicesFa from "@/config/DNH_Services_Overview_Final_FA.json";
+import servicesEn from "@/config/DNH_Services_Overview_Final_EN.json";
 
-/* =============================================================================
-   مسیرهای مخاطب
-============================================================================= */
+type SectionLookup = {
+  id: string;
+  type: string;
+};
 
-const AUDIENCES = [
-  {
-    title: "تصمیم مالی بزرگ",
-    audience: "برای افراد، خانواده‌ها، سرمایه‌گذاران و صاحبان کسب‌وکار",
-    description:
-      "وقتی یک انتخاب مهم مالی پیش روست و مسئله، ریسک، نقدشوندگی، افق زمانی و مسیرهای قابل بررسی باید پیش از تصمیم روشن شوند.",
-    linkLabel: "مسیر تصمیم مالی بزرگ",
-    href: "/who-we-help/big-financial-decision",
-    icon: CircleDollarSign,
-  },
+type PortfolioIntelligenceContent = {
+  order: number;
+  id: "portfolio-intelligence";
+  type: "service-card";
+  service_slug: "portfolio-intelligence";
+  eyebrow: string;
+  english_label: string;
+  heading: string;
+  heading_highlight: string;
+  paragraphs: string[];
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+  icon: string;
+  focus_areas: Array<{
+    id: string;
+    label: string;
+  }>;
+};
 
-  {
-    title: "پرتفوی پراکنده و بدون معماری",
-    audience: "برای افرادی که دارایی‌ها یا سرمایه‌گذاری‌های متنوع دارند",
-    description:
-      "وقتی دارایی‌های متعدد وجود دارند، اما ارتباط میان آن‌ها، تمرکز ریسک، نقدشوندگی و منطق کلی پرتفوی روشن نیست.",
-    linkLabel: "بررسی مسئله پرتفوی",
-    href: "/who-we-help/unstructured-portfolio",
-    icon: PieChart,
-  },
+function HighlightedHeading({
+  heading,
+  highlight,
+}: {
+  heading: string;
+  highlight: string;
+}) {
+  const index = highlight ? heading.indexOf(highlight) : -1;
 
-  {
-    title: "هلدینگ‌ها و ساختار مالی و سرمایه",
-    audience: "برای صاحبان کسب‌وکار، هلدینگ‌ها و گروه‌های شرکتی",
-    description:
-      "وقتی ساختار مالی، نقدینگی، تأمین مالی و تخصیص سرمایه باید در کنار ریسک و اهداف مجموعه بررسی شوند.",
-    linkLabel: "بررسی مسیر کسب‌وکار و سرمایه",
-    href: "/who-we-help/holdings-financial-capital-structure",
-    icon: Building2,
-  },
-] as const;
+  if (index < 0) return <>{heading}</>;
 
-/* =============================================================================
-   سکشن — کاملاً سمت سرور
-============================================================================= */
+  return (
+    <>
+      {heading.slice(0, index)}
+      <span className="text-brand-accent">
+        {heading.slice(index, index + highlight.length)}
+      </span>
+      {heading.slice(index + highlight.length)}
+    </>
+  );
+}
 
-export function ServicesAudienceSection() {
+export function ServicesPortfolioIntelligence() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const source = locale === "en" ? servicesEn : servicesFa;
+
+  const content = source.sections.find(
+    (section: SectionLookup) =>
+      section.id === "portfolio-intelligence" &&
+      section.type === "service-card",
+  ) as PortfolioIntelligenceContent | undefined;
+
+  if (!content) return null;
+
+  const [audienceParagraph, issuesParagraph, closingParagraph] =
+    content.paragraphs;
+  const primaryCta = content.ctas[0];
+
   return (
     <section
-      id="services-audience"
-      dir="rtl"
-      aria-labelledby="services-audience-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        border-b
-        border-line
-
-        bg-white
-
-        sm:scroll-mt-28
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="portfolio-intelligence-heading"
+      className="scroll-mt-28 border-b border-line bg-page"
     >
-      <Background />
+      <div className="dnh-site-shell py-14 sm:py-16 lg:py-20 xl:py-24">
+        <div className="border-t border-line-strong pt-5 sm:pt-6">
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-9 bg-brand-accent"
+              />
+              <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                {content.eyebrow}
+              </p>
+            </div>
 
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
+            {locale === "fa" ? (
+              <bdi
+                dir="ltr"
+                className="text-[10px] font-bold uppercase tracking-[0.1em] text-ink-muted sm:text-[11px]"
+              >
+                {content.english_label}
+              </bdi>
+            ) : null}
+          </div>
+        </div>
 
-          mx-auto
-          w-full
-          max-w-[1536px]
+        <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] lg:items-end lg:gap-14 xl:gap-20">
+          <h2
+            id="portfolio-intelligence-heading"
+            className={`max-w-[19ch] text-pretty font-black tracking-[-0.035em] text-ink ${
+              isRTL ? "leading-[1.45]" : "leading-[1.04]"
+            }`}
+            style={{ fontSize: "clamp(2.35rem, 4.4vw, 4.6rem)" }}
+          >
+            <HighlightedHeading
+              heading={content.heading}
+              highlight={content.heading_highlight}
+            />
+          </h2>
 
-          px-5
-          py-16
+          <p
+            className={`max-w-[40rem] border-s-2 border-brand-accent ps-5 text-[15px] font-semibold text-ink sm:text-[16px] lg:text-[17px] ${
+              isRTL ? "leading-[2.05]" : "leading-[1.75]"
+            }`}
+          >
+            {audienceParagraph}
+          </p>
+        </div>
 
-          sm:px-8
-          sm:py-20
+        <div className="mt-9 border-y border-line py-6 sm:mt-10 sm:py-7 lg:mt-12 lg:py-8">
+          <p
+            className={`max-w-[70rem] text-[16px] font-bold text-ink sm:text-[17px] lg:text-[19px] ${
+              isRTL ? "leading-[2]" : "leading-[1.7]"
+            }`}
+          >
+            {issuesParagraph}
+          </p>
+        </div>
 
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            عنوان
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.86fr_1.14fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <div>
-            <div
-              className="
-                mb-5
-
-                flex
-                items-center
-                gap-3
-              "
+        <ul className="grid grid-cols-2 bg-brand-primary text-white lg:grid-cols-4">
+          {content.focus_areas.map((item, index) => (
+            <li
+              key={item.id}
+              className={`relative flex min-h-[7.5rem] items-end p-4 sm:min-h-[8.5rem] sm:p-5 lg:min-h-[10rem] lg:p-6 ${
+                index % 2 === 1 ? "border-s border-white/20" : ""
+              } ${index >= 2 ? "border-t border-white/20 lg:border-t-0" : ""} ${
+                index > 0 ? "lg:border-s lg:border-white/20" : ""
+              }`}
             >
               <span
                 aria-hidden="true"
-                className="
-                  h-px
-                  w-10
-
-                  bg-brand-accent
-                "
+                className="absolute start-4 top-4 h-[2px] w-7 bg-brand-accent sm:start-5 sm:top-5 lg:start-6 lg:top-6"
               />
-
-              <span
-                className="
-                  text-[10px]
-                  font-black
-
-                  text-brand-primary
-
-                  sm:text-[11px]
-                "
-              >
-                خدمات متناسب با موقعیت شما
+              <span className="text-[13px] font-extrabold leading-[1.9] sm:text-[14px] lg:text-[15px]">
+                {item.label}
               </span>
-            </div>
-
-            <h2
-              id="services-audience-title"
-              className="
-                max-w-[760px]
-
-                text-[31px]
-                font-black
-                leading-[1.65]
-                tracking-[-0.045em]
-
-                text-ink
-
-                sm:text-[38px]
-
-                lg:text-[45px]
-                lg:leading-[1.55]
-
-                xl:text-[50px]
-              "
-            >
-              مسئله‌ها یکسان نیستند؛
-              <br />
-              مسیر بررسی هم{" "}
-              <span className="text-brand-primary">نباید یکسان باشد.</span>
-            </h2>
-          </div>
-
-          <div className="lg:pb-1">
-            <p
-              className="
-                max-w-[640px]
-
-                text-[13px]
-                font-medium
-                leading-[2.2]
-
-                text-ink-muted
-
-                sm:text-[14px]
-
-                lg:text-[15px]
-              "
-            >
-              نوع دارایی، ساختار مالی، سطح تصمیم و شرایط هر پرونده متفاوت است.
-              به همین دلیل، نقطه شروع باید با موقعیت واقعی مخاطب هماهنگ باشد.
-            </p>
-          </div>
-        </div>
-
-        {/* =======================================================
-            مسیرهای مخاطب
-        ======================================================== */}
-
-        <div
-          className="
-            mt-12
-
-            border-y
-            border-line 
-
-            sm:mt-14
-
-            lg:mt-16
-          "
-        >
-          {AUDIENCES.map((item, index) => (
-            <AudienceRow
-              key={item.title}
-              item={item}
-              last={index === AUDIENCES.length - 1}
-            />
+            </li>
           ))}
-        </div>
+        </ul>
 
-        {/* =======================================================
-            پایین سکشن
-        ======================================================== */}
-
-        <div
-          className="
-            mt-8
-
-            flex
-            flex-col
-            gap-6
-
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-          "
-        >
-          <div>
-            <p
-              className="
-                text-[10px]
-                font-bold
-
-                text-ink-muted
-              "
-            >
-              موقعیت شما دقیقاً در یکی از این دسته‌ها قرار نمی‌گیرد؟
-            </p>
-
-            <p
-              className="
-                mt-1.5
-
-                text-[13px]
-                font-black
-                leading-[1.9]
-
-                text-ink
-              "
-            >
-              ارزیابی اولیه می‌تواند نقطه شروع مناسب‌تری باشد.
-            </p>
-          </div>
-
-          <ActionButton
-            href="/financial-decision-assessment"
-            variant="primary"
-            size="md"
-            icon={ArrowUpLeft}
-            className="
-              w-full
-
-              bg-brand-primary
-              text-white
-
-              shadow-[0_14px_36px_rgba(22,115,148,.14)]
-
-              hover:-translate-y-0.5
-
-              sm:w-auto
-              sm:min-w-[245px]
-            "
+        <div className="grid gap-6 border-b border-line py-7 sm:py-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-12 lg:py-10">
+          <p
+            className={`max-w-[54rem] text-[14px] font-medium text-ink-muted sm:text-[15px] lg:text-[16px] ${
+              isRTL ? "leading-[2.05]" : "leading-[1.8]"
+            }`}
           >
-            شروع ارزیابی اولیه
-          </ActionButton>
-        </div>
+            {closingParagraph}
+          </p>
 
-        {/* =======================================================
-            مسیر سکشن بعد
-        ======================================================== */}
-
-        <div
-          className="
-            mt-8
-
-            flex
-            justify-end
-
-            border-t
-            border-line
-
-            pt-5
-          "
-        >
-          <Link
-            href="#services-method"
-            className="
-              group/link
-
-              inline-flex
-              min-h-11
-
-              items-center
-              gap-3
-
-              text-[10px]
-              font-black
-
-              text-brand-primary
-
-              outline-none
-
-              transition-colors
-              duration-300
-
-              hover:text-brand-accent
-
-              focus-visible:ring-2
-              focus-visible:ring-focus/40
-            "
-          >
-            خدمات DNH چگونه به یک روش مشترک متصل می‌شوند؟
-            <ArrowDownLeft
-              aria-hidden="true"
-              className="
-                h-4
-                w-4
-
-                transition-transform
-                duration-300
-
-                group-hover/link:translate-y-1
-                group-hover/link:-translate-x-1
-              "
-              strokeWidth={1.6}
-            />
-          </Link>
+          {primaryCta ? (
+            <ActionButton
+              href={primaryCta.href}
+              variant={primaryCta.type}
+              size="lg"
+              className="w-full shadow-none sm:w-auto lg:min-w-[18rem]"
+            >
+              {primaryCta.label}
+            </ActionButton>
+          ) : null}
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   ردیف مخاطب
-============================================================================= */
-
-function AudienceRow({
-  item,
-  last,
-}: {
-  item: {
-    title: string;
-    audience: string;
-    description: string;
-    linkLabel: string;
-    href: string;
-    icon: LucideIcon;
-  };
-  last: boolean;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <article
-      className={`
-        group/row
-
-        relative
-
-        overflow-hidden
-
-        transition-colors
-        duration-300
-
-        hover:bg-surface-soft/50
-
-        ${!last ? "border-b border-line" : ""}
-      `}
-    >
-      <Link
-        href={item.href}
-        className="
-          grid
-          gap-5
-
-          px-5
-          py-7
-
-          outline-none
-
-          sm:px-7
-
-          lg:grid-cols-[74px_0.82fr_1.18fr_auto]
-          lg:items-center
-          lg:gap-8
-          lg:px-8
-          lg:py-8
-
-          focus-visible:ring-2
-          focus-visible:ring-inset
-          focus-visible:ring-focus/40
-        "
-      >
-        {/* آیکون */}
-
-        <span
-          className="
-            flex
-            h-14
-            w-14
-
-            items-center
-            justify-center
-
-            border
-            border-brand-primary/15
-
-            bg-brand-primary/[0.045]
-
-            text-brand-primary
-
-            transition-[background-color,border-color,color,transform]
-            duration-300
-
-            group-hover/row:-translate-y-0.5
-            group-hover/row:border-brand-primary
-            group-hover/row:bg-brand-primary
-            group-hover/row:text-white
-          "
-        >
-          <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={1.45} />
-        </span>
-
-        {/* عنوان */}
-
-        <div>
-          <h3
-            className="
-              text-[17px]
-              font-black
-              leading-[1.8]
-
-              text-ink
-
-              transition-colors
-              duration-300
-
-              group-hover/row:text-brand-primary
-
-              sm:text-[19px]
-            "
-          >
-            {item.title}
-          </h3>
-
-          <p
-            className="
-              mt-1.5
-
-              text-[10px]
-              font-bold
-              leading-[1.9]
-
-              text-brand-primary/65
-
-              sm:text-[11px]
-            "
-          >
-            {item.audience}
-          </p>
-        </div>
-
-        {/* توضیح */}
-
-        <div
-          className="
-            border-r
-            border-line
-
-            pr-5
-
-            lg:pr-7
-          "
-        >
-          <p
-            className="
-              max-w-[620px]
-
-              text-[11px]
-              font-medium
-              leading-[2.05]
-
-              text-ink-muted
-
-              sm:text-[12px]
-            "
-          >
-            {item.description}
-          </p>
-        </div>
-
-        {/* لینک */}
-
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-
-            lg:justify-end
-          "
-        >
-          <span
-            className="
-              hidden
-
-              text-[11px]
-              font-black
-
-              text-brand-primary
-
-              xl:inline
-            "
-          >
-            {item.linkLabel}
-          </span>
-
-          <span
-            className="
-              flex
-              h-10
-              w-10
-              shrink-0
-
-              items-center
-              justify-center
-
-              border
-              border-line
-
-              bg-white
-
-              text-brand-primary
-
-              transition-[background-color,border-color,color,transform]
-              duration-300
-
-              group-hover/row:-translate-x-1
-              group-hover/row:border-brand-accent
-              group-hover/row:bg-brand-accent
-              group-hover/row:text-white
-            "
-          >
-            <ArrowUpLeft
-              aria-hidden="true"
-              className="h-4 w-4"
-              strokeWidth={1.5}
-            />
-          </span>
-        </div>
-
-        {/* خط نارنجی */}
-
-        <span
-          aria-hidden="true"
-          className="
-            absolute
-            inset-y-0
-            right-0
-
-            w-[3px]
-
-            origin-bottom
-            scale-y-0
-
-            bg-brand-accent
-
-            transition-transform
-            duration-300
-
-            group-hover/row:scale-y-100
-          "
-        />
-      </Link>
-    </article>
-  );
-}
-
-/* =============================================================================
-   پس‌زمینه
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "linear-gradient(112deg,#f7fafb 0%,#ffffff 50%,#ffffff 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.06]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="
-          absolute
-          left-[18%]
-          top-0
-
-          h-[6px]
-          w-[2px]
-
-          bg-brand-accent
-        "
-      />
-    </>
   );
 }

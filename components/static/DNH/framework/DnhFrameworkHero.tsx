@@ -1,54 +1,55 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Database, Route, Telescope, type LucideIcon } from "lucide-react";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { ActionButton } from "@/components/ui/ActionButton";
-import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
+import {
+  DnhEditorialActions,
+  DnhEditorialEyebrow,
+  DnhEditorialMediaFrame,
+  type DnhEditorialCta,
+  type DnhEditorialMedia,
+} from "@/components/static/DNH/DnhEditorialPrimitives";
 import frameworkEn from "@/config/DNH_Framework_Final_EN.json";
-
-type FrameworkSectionLookup = {
-  id: string;
-  type: string;
-};
+import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
 
 type FrameworkHeroContent = {
-  order: number;
   id: "dnh-framework-hero";
   type: "hero";
   eyebrow: string;
   english_label: string;
   heading: string;
-  paragraphs: Array<{
-    id: string;
-    text: string;
-  }>;
+  paragraphs: Array<{ id: string; text: string }>;
   pillars: Array<{
-    id: string;
+    id: "data" | "navigation" | "horizon";
     code: "D" | "N" | "H";
     title: string;
     english_label: string;
   }>;
   closing: string;
-  ctas: Array<{
-    id: string;
-    label: string;
-    type: "primary" | "secondary";
-    href: string;
-  }>;
+  ctas: DnhEditorialCta[];
+  media?: DnhEditorialMedia;
+};
+
+const pillarIcons: Record<
+  FrameworkHeroContent["pillars"][number]["id"],
+  LucideIcon
+> = {
+  data: Database,
+  navigation: Route,
+  horizon: Telescope,
 };
 
 export function FrameworkHero() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
-  const framework = locale === "en" ? frameworkEn : frameworkFa;
-  const content = framework.sections.find(
-    (section: FrameworkSectionLookup) =>
+  const source = locale === "en" ? frameworkEn : frameworkFa;
+  const content = source.sections.find(
+    (section: { id?: string; type?: string }) =>
       section.id === "dnh-framework-hero" && section.type === "hero",
   ) as FrameworkHeroContent | undefined;
 
   if (!content) return null;
 
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
   const prose = content.paragraphs.slice(0, -1);
   const pillarsIntro = content.paragraphs.at(-1);
 
@@ -58,57 +59,71 @@ export function FrameworkHero() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="dnh-framework-hero-heading"
-      className="relative isolate overflow-x-clip border-b border-line bg-brand-secondary text-[var(--dnh-text-on-brand)]"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] text-white"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-70"
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
         style={{
-          backgroundImage: `${
-            isRTL
-              ? "linear-gradient(to left,color-mix(in srgb,var(--dnh-primary) 54%,transparent),transparent 58%)"
-              : "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 54%,transparent),transparent 58%)"
-          },linear-gradient(to bottom,color-mix(in srgb,var(--dnh-bg-page) 6%,transparent) 1px,transparent 1px),linear-gradient(to right,color-mix(in srgb,var(--dnh-bg-page) 5%,transparent) 1px,transparent 1px)`,
-          backgroundSize: "auto,72px 72px,72px 72px",
+          backgroundImage:
+            "linear-gradient(to right,rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.06) 1px,transparent 1px)",
+          backgroundSize: "82px 82px",
         }}
       />
 
-      <div className="dnh-site-shell relative z-10 grid min-w-0 gap-10 pb-14 pt-[calc(7.75rem+env(safe-area-inset-top))] sm:gap-12 sm:pb-16 sm:pt-36 lg:min-h-[min(58rem,100svh)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:gap-x-14 lg:gap-y-8 lg:pb-20 lg:pt-[clamp(9.5rem,14svh,11.5rem)] xl:gap-x-20">
-        <div className="min-w-0">
-          <div className="flex min-w-0 items-center gap-3 text-start text-[12px] font-bold leading-[1.8] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_90%,transparent)] sm:text-[13px]">
-            <span
-              aria-hidden="true"
-              className="h-[2px] w-10 shrink-0 bg-brand-accent sm:w-12"
+      <div className="dnh-site-shell relative z-10 grid min-h-svh min-w-0 gap-8 pb-12 pt-[calc(8.5rem+env(safe-area-inset-top))] sm:pb-16 sm:pt-[calc(9.5rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-center lg:gap-12 lg:pb-20 lg:pt-[calc(9rem+env(safe-area-inset-top))]">
+        <div className="contents lg:block lg:col-start-1 lg:row-start-1">
+          <div className="order-1 min-w-0 text-start">
+            <DnhEditorialEyebrow
+              eyebrow={content.eyebrow}
+              englishLabel={content.english_label}
+              locale={locale}
+              dark
             />
-            <p className="min-w-0">{content.eyebrow}</p>
+            <h1
+              id="dnh-framework-hero-heading"
+              className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,8.4vw,2.6rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,5.7vw,3.75rem)] lg:text-[clamp(3.05rem,4vw,4.25rem)] ${
+                isRTL ? "leading-[1.52]" : "leading-[1.1]"
+              }`}
+            >
+              {content.heading}
+            </h1>
+
+            <div
+              className={`mt-6 max-w-[74ch] space-y-4 border-s-2 border-brand-accent ps-4 text-[14px] text-white/[0.78] sm:mt-7 sm:ps-5 sm:text-[15px] ${
+                isRTL ? "leading-[2]" : "leading-[1.74]"
+              }`}
+            >
+              {prose.map((paragraph) => (
+                <p key={paragraph.id}>{paragraph.text}</p>
+              ))}
+            </div>
           </div>
 
-        
-
-          <h1
-            id="dnh-framework-hero-heading"
-            className={`mt-5 max-w-[29ch] text-pretty text-start text-[clamp(2rem,8.8vw,2.45rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,6vw,3.65rem)] lg:max-w-[24ch] lg:text-[clamp(3.1rem,4vw,3rem)] ${
-              isRTL ? "leading-[1.55]" : "leading-[1.12]"
-            }`}
-          >
-            {content.heading}
-          </h1>
-
-          <div
-            className={`mt-6 max-w-[72ch] space-y-4 border-s-2 border-brand-accent ps-4 text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_78%,transparent)] sm:mt-7 sm:ps-5 sm:text-[15px] lg:text-[16px] ${
-              isRTL ? "leading-[2]" : "leading-[1.75]"
-            }`}
-          >
-            {prose.map((paragraph) => (
-              <p key={paragraph.id}>{paragraph.text}</p>
-            ))}
-          </div>
+          <DnhEditorialActions
+            ctas={content.ctas}
+            direction={direction}
+            dark
+            className="order-3 mt-0 lg:mt-8"
+          />
         </div>
 
-        <div className="min-w-0">
+        {content.media?.src ? (
+          <div className="order-2 lg:col-start-2 lg:row-start-1">
+            <DnhEditorialMediaFrame
+              media={content.media}
+              label={content.english_label}
+              priority
+              sizes="(max-width: 1023px) calc(100vw - 24px), 46vw"
+              className="aspect-[4/5] min-h-[430px] lg:h-[min(760px,76svh)] lg:aspect-auto"
+            />
+          </div>
+        ) : null}
+
+        <div className="order-4 min-w-0 border-y border-white/15 lg:col-span-2">
           {pillarsIntro ? (
             <p
-              className={`mb-4 text-start text-[13px] font-bold text-[color-mix(in_srgb,var(--dnh-text-on-brand)_70%,transparent)] sm:mb-5 sm:text-[14px] ${
+              className={`border-b border-white/15 px-5 py-4 text-start text-[13px] font-bold text-white/70 sm:px-6 sm:text-[14px] ${
                 isRTL ? "leading-[1.9]" : "leading-[1.65]"
               }`}
             >
@@ -116,84 +131,51 @@ export function FrameworkHero() {
             </p>
           ) : null}
 
-          <div className="relative border-y border-[color-mix(in_srgb,var(--dnh-text-on-brand)_18%,transparent)]">
-            <span
-              aria-hidden="true"
-              className="absolute inset-y-0 start-[7px] w-px bg-[color-mix(in_srgb,var(--dnh-accent)_70%,transparent)]"
-            />
-
-            {content.pillars.map((pillar, index) => (
-              <div
-                key={pillar.id}
-                className="group relative grid min-w-0 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-[color-mix(in_srgb,var(--dnh-text-on-brand)_14%,transparent)] py-5 last:border-b-0 sm:grid-cols-[80px_minmax(0,1fr)] sm:gap-5 sm:py-6"
-              >
-                <div className="relative z-10 flex size-16 items-center justify-start ps-5 sm:size-20 sm:ps-6">
-                  <span className="absolute start-[2px] top-1/2 size-3 -translate-y-1/2 border border-brand-accent bg-brand-secondary transition-transform duration-300 motion-reduce:transition-none group-hover:scale-125" />
-                  <bdi
-                    dir="ltr"
-                    className="relative text-[32px] font-black leading-none text-brand-accent sm:text-[40px]"
-                  >
-                    {pillar.code}
-                  </bdi>
-                </div>
-
-                <div className="min-w-0 py-1 text-start">
-                  <p className="text-[18px] font-extrabold leading-[1.7] text-[var(--dnh-text-on-brand)] sm:text-[20px] lg:text-[22px]">
-                    {pillar.title}
-                  </p>
-                  {locale === "fa" ? (
+          <div className="grid min-w-0 sm:grid-cols-3">
+            {content.pillars.map((pillar) => {
+              const Icon = pillarIcons[pillar.id];
+              return (
+                <article
+                  key={pillar.id}
+                  className="group grid min-w-0 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-e border-white/15 bg-white/[0.035] p-5 transition-colors duration-200 hover:bg-white/[0.07] sm:block sm:border-b-0 sm:p-6"
+                >
+                  <div className="flex items-center justify-between gap-3 sm:mb-5">
                     <bdi
                       dir="ltr"
-                      className="mt-1 block w-fit max-w-full text-[11px] font-semibold tracking-[0.035em] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_52%,transparent)] sm:text-[12px]"
+                      className="text-[34px] font-black leading-none text-brand-accent sm:text-[42px]"
                     >
-                      {pillar.english_label}
+                      {pillar.code}
                     </bdi>
-                  ) : null}
-                </div>
-
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-y-0 end-0 w-[3px] origin-bottom scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100"
-                />
-
-              
-              </div>
-            ))}
+                    <span className="hidden size-10 items-center justify-center border border-white/18 text-white/70 sm:flex">
+                      <Icon aria-hidden="true" size={19} strokeWidth={1.55} />
+                    </span>
+                  </div>
+                  <div className="min-w-0 text-start">
+                    <h2 className="text-[17px] font-black leading-[1.65] text-white sm:text-[19px]">
+                      {pillar.title}
+                    </h2>
+                    {locale === "fa" ? (
+                      <bdi
+                        dir="ltr"
+                        className="mt-1 block text-[10px] font-bold uppercase tracking-[0.08em] text-white/45"
+                      >
+                        {pillar.english_label}
+                      </bdi>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
 
-        <div className="min-w-0 lg:col-span-2">
-          <div className="grid min-w-0 gap-5 border-t border-[color-mix(in_srgb,var(--dnh-text-on-brand)_18%,transparent)] pt-6 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-            <p
-              className={`max-w-[80ch] text-start text-[13px] font-medium text-[color-mix(in_srgb,var(--dnh-text-on-brand)_72%,transparent)] sm:text-[14px] ${
-                isRTL ? "leading-[1.95]" : "leading-[1.7]"
-              }`}
-            >
-              {content.closing}
-            </p>
-
-            <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
-              {content.ctas.map((cta) => (
-                <ActionButton
-                  key={cta.id}
-                  href={cta.href}
-                  variant="assessment"
-                  size="lg"
-                  icon={Arrow}
-                  iconPosition="end"
-                  dir={direction}
-                  className={`min-h-12 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto ${
-                    cta.type === "primary"
-                      ? "bg-brand-accent   shadow-none hover:bg-brand-primary hover:shadow-none"
-                      : "border-[color-mix(in_srgb,var(--dnh-text-on-brand)_34%,transparent)] bg-transparent  shadow-none hover:border-brand-accent hover:bg-[color-mix(in_srgb,var(--dnh-bg-page)_8%,transparent)] hover:text-[var(--dnh-text-on-brand)] hover:shadow-none"
-                  }`}
-                >
-                  {cta.label}
-                </ActionButton>
-              ))}
-            </div>
-          </div>
-        </div>
+        <p
+          className={`order-5 border-s-2 border-brand-accent ps-4 text-start text-[13.5px] font-semibold text-white/72 sm:ps-5 sm:text-[14.5px] lg:col-span-2 ${
+            isRTL ? "leading-[1.95]" : "leading-[1.7]"
+          }`}
+        >
+          {content.closing}
+        </p>
       </div>
     </section>
   );

@@ -1,0 +1,529 @@
+{
+  "page": "strategic-financial-advisory",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Strategic Financial Advisory",
+  "english_title": "Strategic Financial Advisory",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "strategic-financial-advisory-hero",
+      "type": "hero",
+      "eyebrow": "Strategic Financial Advisory",
+      "english_label": "Strategic Financial Advisory",
+      "heading": "A major financial decision is not only about today's numbers; it can change the capital structure, liquidity, risk profile and future direction of the business.",
+      "paragraphs": [
+        "Many major business decisions appear, at first, to be purely financial: raising capital, deploying liquidity, taking on debt, investing in a new project or expanding operations. But the consequences of these decisions usually extend beyond one number or one reporting period.",
+        "One choice can simultaneously affect cash flow, capital structure, financing capacity, financial flexibility, the level of risk and the business's future growth potential.",
+        "DNH Strategic Financial Advisory is designed for these complex decisions—situations where the issue must first be defined correctly, relevant data reviewed, alternatives and scenarios considered, and the implications of each path made clearer before action is taken.",
+        "The objective is not to provide a ready-made answer. It is to help a significant financial decision be made with a better understanding of the structure, risks, constraints and future consequences involved."
+      ],
+      "ctas": [
+        {
+          "label": "Start an Assessment of the Business Financial Issue",
+          "type": "primary"
+        },
+        {
+          "label": "Request Strategic Advice",
+          "type": "secondary"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "when-financial-decisions-become-strategic",
+      "type": "problem-recognition",
+      "eyebrow": "When Financial Decisions Become Strategic",
+      "english_label": "When Financial Decisions Become Strategic",
+      "heading": "Some decisions do more than move financial resources; they can change the future path of the business.",
+      "intro": "When a decision affects several parts of the business at the same time, it can no longer be assessed through one isolated financial calculation.",
+      "items": [
+        {
+          "title": "Liquidity is under pressure",
+          "description": "The business may be profitable, yet the timing of cash inflows and outflows, obligations or working-capital needs can still create pressure."
+        },
+        {
+          "title": "Growth requires new financial resources",
+          "description": "Expanding operations, purchasing equipment, entering a new market or increasing capacity may require additional capital."
+        },
+        {
+          "title": "You are choosing between several financing methods",
+          "description": "Each option can create a different cost, commitment, risk profile and impact on the company's future."
+        },
+        {
+          "title": "A major investment decision is ahead",
+          "description": "Before committing resources, it is necessary to understand how the decision may affect liquidity and the financial capacity of other parts of the business."
+        },
+        {
+          "title": "Debt or capital structure needs to be reviewed",
+          "description": "Higher debt, changes in financing costs or shifts in business conditions can alter the balance that previously worked."
+        },
+        {
+          "title": "The owner's decision and the company's decision have become interconnected",
+          "description": "In many businesses, owner capital, personal wealth and company resources are not fully independent of one another."
+        }
+      ],
+      "closing": "When a decision is connected to several important variables, the value of strategic advice lies in viewing that decision from multiple angles before it is implemented.",
+      "ctas": [
+        {
+          "label": "Review the Business's Current Financial Issue",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "id": "what-is-strategic-financial-advisory",
+      "type": "definition",
+      "eyebrow": "What Is Strategic Financial Advisory?",
+      "english_label": "What Is Strategic Financial Advisory?",
+      "heading": "Strategic Financial Advisory means viewing a financial decision in the context of the entire structure and the future of the business.",
+      "intro": "The question is not simply, “Is this decision financially possible?” It is also necessary to understand how implementing it would affect liquidity, capital structure, risk, financial capacity and the company's future path.",
+      "steps": [
+        {
+          "title": "What is the real issue?",
+          "description": "The actual decision—and the problem behind it—must first be defined correctly."
+        },
+        {
+          "title": "Which data matter?",
+          "description": "Relevant financial information, liquidity, obligations, resources, constraints and economic conditions are reviewed."
+        },
+        {
+          "title": "What options exist?",
+          "description": "Rather than moving directly to a single answer, the viable paths are identified."
+        },
+        {
+          "title": "Which scenarios should be considered?",
+          "description": "The effect of changing conditions on the decision and the company's financial capacity is assessed."
+        },
+        {
+          "title": "What are the implications of each path?",
+          "description": "Risk, financial flexibility, cost and the longer-term effects of different options are viewed together."
+        },
+        {
+          "title": "What comes next?",
+          "description": "The analysis should ultimately lead to decision priorities, viable paths and a clear next step."
+        }
+      ],
+      "closing": "At DNH, Strategic Financial Advisory is defined as senior-level advice on capital decisions, financial structure and significant financial issues—not simply as a stand-alone numerical analysis.",
+      "ctas": [
+        {
+          "label": "Start a Structured Review of the Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "id": "who-is-it-for",
+      "type": "audience",
+      "eyebrow": "Who Is It For?",
+      "english_label": "Who Is It For?",
+      "heading": "Wherever a financial decision can materially affect the future of the business, the quality of that decision matters more.",
+      "items": [
+        {
+          "title": "Business owners",
+          "description": "When personal capital, company resources and growth or development decisions are interconnected."
+        },
+        {
+          "title": "CEOs and senior executives",
+          "description": "When they need to choose among financial options with different consequences."
+        },
+        {
+          "title": "CFOs and finance leaders",
+          "description": "When a decision goes beyond day-to-day financial management and requires a strategic, scenario-based view."
+        },
+        {
+          "title": "Growing companies",
+          "description": "When growth changes capital needs, liquidity requirements and financing capacity at the same time."
+        },
+        {
+          "title": "Corporate groups and holding companies",
+          "description": "When capital allocation or financing decisions need to be coordinated across several companies or activities."
+        },
+        {
+          "title": "Family businesses",
+          "description": "When ownership, financial resources, family objectives and the future of the business affect one another."
+        },
+        {
+          "title": "Key capital decision-makers",
+          "description": "When one decision can commit substantial resources for an extended period."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "Assess Whether This Service Fits My Situation",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "id": "strategic-decisions-we-help-structure",
+      "type": "use-cases",
+      "eyebrow": "Strategic Decisions We Help Structure",
+      "english_label": "Strategic Decisions We Help Structure",
+      "heading": "Every major capital decision should be reviewed for structure, risk and scenario exposure before resources are committed.",
+      "intro": "Depending on the nature of the business, Strategic Financial Advisory may be used to review issues such as:",
+      "items": [
+        {
+          "title": "Financing",
+          "description": "Reviewing the funding requirement, available options and the implications of each path for the company."
+        },
+        {
+          "title": "Increasing or reducing debt",
+          "description": "Assessing the effect of a new or reduced obligation on cash flow, risk and financial flexibility."
+        },
+        {
+          "title": "Capital allocation",
+          "description": "Deciding how limited company resources should be evaluated across competing priorities."
+        },
+        {
+          "title": "New investment",
+          "description": "Reviewing a project, opportunity or capital commitment before resources are allocated."
+        },
+        {
+          "title": "Business expansion",
+          "description": "Assessing the effect of growth on capital needs, liquidity and financial capacity."
+        },
+        {
+          "title": "Cash resource management",
+          "description": "Deciding how liquidity should be used when several needs or opportunities exist at the same time."
+        },
+        {
+          "title": "Capital structure review",
+          "description": "Assessing the balance between owner capital, debt and other sources of finance."
+        },
+        {
+          "title": "Comparing financial alternatives",
+          "description": "When one issue has several possible solutions and the consequences of each are different."
+        }
+      ],
+      "closing": "The issue itself may vary, but the common principle is that the decision should be considered in relation to the full financial structure before action is taken.",
+      "ctas": [
+        {
+          "label": "Submit a Financial Decision for Initial Assessment",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "id": "what-we-assess",
+      "type": "assessment-areas",
+      "eyebrow": "What We Assess",
+      "english_label": "What We Assess",
+      "heading": "To evaluate a decision, we need to understand the structure in which that decision will operate.",
+      "intro": "Depending on the issue and the scope of the engagement, the review may include:",
+      "items": [
+        {
+          "title": "Financial structure",
+          "description": "The overall picture of funding sources, obligations and how business activity is financed."
+        },
+        {
+          "title": "Cash flow",
+          "description": "The timing of inflows and outflows and the company's capacity to meet financial needs."
+        },
+        {
+          "title": "Liquidity",
+          "description": "The level of accessible resources and the company's flexibility in responding to obligations or changing conditions."
+        },
+        {
+          "title": "Working capital",
+          "description": "The resources required for day-to-day operations and the pressure that growth or operational change can create."
+        },
+        {
+          "title": "Debt and obligations",
+          "description": "The structure, cost and effect of existing or new obligations on financial capacity."
+        },
+        {
+          "title": "Capital structure",
+          "description": "The relationship between owner capital, debt and other sources of finance."
+        },
+        {
+          "title": "Financing needs",
+          "description": "The amount, timing and purpose of required capital and the options available for consideration."
+        },
+        {
+          "title": "Financial risks",
+          "description": "Points that could affect liquidity, repayment capacity, flexibility or future plans."
+        },
+        {
+          "title": "Business objectives",
+          "description": "Growth, expansion, stability, investment or other strategic priorities."
+        },
+        {
+          "title": "Time horizon and constraints",
+          "description": "When the decision is expected to produce results and which limitations affect it."
+        },
+        {
+          "title": "Relevant economic conditions",
+          "description": "Inflation, exchange rates, the cost of capital and other variables that can change the financial assumptions."
+        }
+      ],
+      "closing": "The purpose of this review is not to produce more information. It is to create a picture in which the decision can be understood in context.",
+      "ctas": [
+        {
+          "label": "Start an Assessment of the Business Financial Structure",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "id": "liquidity-working-capital",
+      "type": "liquidity-working-capital",
+      "eyebrow": "Liquidity & Working Capital",
+      "english_label": "Liquidity & Working Capital",
+      "heading": "Profitability without sufficient liquidity does not necessarily mean the business has the financial capacity to execute the next decision.",
+      "intro": "Many strategic decisions become difficult when the gap between the economic value of the business and the resources actually available at the right time is overlooked.",
+      "questions": [
+        "Where are the company's cash resources today?",
+        "What obligations are expected over the coming months or periods?",
+        "How much liquidity buffer is available?",
+        "How much additional working capital will growth require?",
+        "What pressure would a new investment place on existing resources?",
+        "What happens if receivables or revenues are delayed?",
+        "How much financial flexibility would remain if economic conditions changed?"
+      ],
+      "paragraphs": [
+        "Liquidity is not merely an account balance; it is part of the business's ability to maintain operations, meet obligations and act on future opportunities.",
+        "Before a significant capital commitment is made, it is therefore important to understand how the proposed decision may affect that flexibility."
+      ],
+      "ctas": [
+        {
+          "label": "Review Liquidity and Working-Capital Needs",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "id": "capital-structure-financing",
+      "type": "capital-structure",
+      "eyebrow": "Capital Structure & Financing",
+      "english_label": "Capital Structure & Financing",
+      "heading": "The question is not simply “how can we raise capital?” We also need to understand what commitments each source of finance creates and how it changes the future structure.",
+      "intro": "A business may use different sources of capital to expand, invest or meet financial needs. But the availability of a funding source does not automatically make it appropriate.",
+      "items": [
+        {
+          "title": "The real capital requirement",
+          "description": "How much funding is actually needed and exactly what will it be used for?"
+        },
+        {
+          "title": "Timing of the requirement",
+          "description": "When must the capital be available and for how long will it remain committed?"
+        },
+        {
+          "title": "Cost of financing",
+          "description": "What direct or indirect cost does each option create for the company?"
+        },
+        {
+          "title": "Repayment capacity and future obligations",
+          "description": "Do the business's cash flows have the capacity to support the commitments created?"
+        },
+        {
+          "title": "Effect on financial flexibility",
+          "description": "How much freedom does today's decision leave for future decisions?"
+        },
+        {
+          "title": "Effect on ownership or control",
+          "description": "With some options, the issue may involve more than the cost of capital and may also affect ownership or decision-making control."
+        },
+        {
+          "title": "Risk under adverse scenarios",
+          "description": "If sales, costs, exchange rates or economic conditions do not develop as expected, what pressure could the financing structure create?"
+        }
+      ],
+      "closing": "DNH does not promote one financing method as universally preferable. The objective is to compare alternatives and clarify the implications of each path within the real structure of the business.",
+      "ctas": [
+        {
+          "label": "Review Financing Options",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "id": "financial-scenarios-uncertainty",
+      "type": "scenario-analysis",
+      "eyebrow": "Financial Scenarios & Decision-Making Under Uncertainty",
+      "english_label": "Financial Scenarios & Decision-Making Under Uncertainty",
+      "heading": "A strategic decision should not be evaluated only in the scenario where everything develops as expected.",
+      "intro": "Financial projections are usually built on assumptions about revenue, costs, exchange rates, collection timing, financing costs or the pace of growth. Any of those assumptions can change.",
+      "questions": [
+        "What happens if revenue is lower than expected?",
+        "What happens if costs rise?",
+        "What happens if receivables take longer to collect?",
+        "What happens if exchange rates or economic conditions change?",
+        "What happens if financing costs increase?",
+        "If growth is faster than expected, will there be enough liquidity?",
+        "If the project is delayed, how will obligations be managed?"
+      ],
+      "paragraphs": [
+        "Scenario analysis is not designed to predict the future. Its purpose is to help management understand how a decision may behave under different conditions and where it becomes more vulnerable.",
+        "This helps move the decision away from dependence on one optimistic assumption and toward a view grounded in alternative scenarios, risks and the business's actual capacity."
+      ],
+      "ctas": [
+        {
+          "label": "Review Scenarios Relevant to My Financial Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "id": "dnh-strategic-advisory-process",
+      "type": "process",
+      "eyebrow": "The DNH Strategic Advisory Process",
+      "english_label": "The DNH Strategic Advisory Process",
+      "heading": "From defining the issue correctly to choosing a path and taking action, each stage should give meaning to the next.",
+      "steps": [
+        {
+          "number": 1,
+          "title": "Initial Assessment",
+          "english_label": "Initial Assessment",
+          "description": "The nature of the issue, urgency, scale of the decision and initial fit for collaboration are established."
+        },
+        {
+          "number": 2,
+          "title": "Business Context & Objectives",
+          "english_label": "Business Context & Objectives",
+          "description": "The business's current position, the purpose of the decision and the main constraints are clarified."
+        },
+        {
+          "number": 3,
+          "title": "Financial Structure Analysis",
+          "english_label": "Financial Structure Analysis",
+          "description": "Relevant information on liquidity, cash flow, capital, obligations and other required variables is reviewed."
+        },
+        {
+          "number": 4,
+          "title": "Risk & Scenario Analysis",
+          "english_label": "Risk & Scenario Analysis",
+          "description": "Alternative conditions and the points that could change the outcome of the decision are assessed."
+        },
+        {
+          "number": 5,
+          "title": "Strategic Options",
+          "english_label": "Strategic Options",
+          "description": "Possible paths are compared according to their consequences, constraints and risks."
+        },
+        {
+          "number": 6,
+          "title": "Decision Framework",
+          "english_label": "Decision Framework",
+          "description": "Information and analysis are translated into a clearer framework for decision-making."
+        },
+        {
+          "number": 7,
+          "title": "Action Plan",
+          "english_label": "Action Plan",
+          "description": "The review outcome, priorities, selected direction and next steps are documented."
+        },
+        {
+          "number": 8,
+          "title": "Implementation & Follow-Up",
+          "english_label": "Implementation & Follow-Up",
+          "description": "Where required and within the agreed scope, the decision can also be supported through implementation and subsequent review."
+        }
+      ],
+      "closing": "DNH's intended path runs from initial assessment and understanding the situation through analysis, decision support, reporting and recommendations, implementation support and periodic review. The objective is therefore not simply to hold a meeting, but to reach an output that can be used in the decision.",
+      "ctas": [
+        {
+          "label": "Start an Initial Assessment",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "id": "what-you-gain",
+      "type": "outcomes",
+      "eyebrow": "What You Gain",
+      "english_label": "What You Gain",
+      "heading": "The output of advisory work should remain useful in the decision even after the meeting is over.",
+      "intro": "Depending on the issue and the scope of the project, the engagement may produce:",
+      "items": [
+        {
+          "title": "A clear definition of the financial issue",
+          "description": "Clarifying what the real decision is and which matters need to be resolved within it."
+        },
+        {
+          "title": "A structured picture of the financial position",
+          "description": "A clearer view of resources, obligations and the factors that influence the decision."
+        },
+        {
+          "title": "Liquidity analysis",
+          "description": "Reviewing access to resources and potential pressure created by the decision."
+        },
+        {
+          "title": "Capital structure review",
+          "description": "Understanding how the existing structure or new options affect the company's financial capacity."
+        },
+        {
+          "title": "Financing analysis",
+          "description": "Assessing the need, available alternatives and the implications of possible financing paths."
+        },
+        {
+          "title": "Financial scenarios",
+          "description": "Showing how the decision may produce different outcomes or pressures under different conditions."
+        },
+        {
+          "title": "Key risks",
+          "description": "Identifying the points that need attention before resources are committed."
+        },
+        {
+          "title": "Options for consideration",
+          "description": "Clarifying the available decision paths and the important differences among them."
+        },
+        {
+          "title": "Implications of each path",
+          "description": "Understanding the effect of each option on liquidity, risk, obligations and future flexibility."
+        },
+        {
+          "title": "Decision priorities",
+          "description": "Identifying the matters that should be resolved or clarified before action is taken."
+        },
+        {
+          "title": "Implementation recommendations and next steps",
+          "description": "Translating the analysis into a practical path that can be followed after the review."
+        }
+      ],
+      "closing": "These outputs are designed to support decision-making, not to guarantee an outcome or eliminate uncertainty.",
+      "ctas": [
+        {
+          "label": "Explore the Right Output for My Business Issue",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "id": "structure-decision-before-commit-capital",
+      "type": "final-cta",
+      "eyebrow": "Structure the Decision Before You Commit Capital",
+      "english_label": "Structure the Decision Before You Commit Capital",
+      "heading": "The cost of a major decision is not only the amount paid today; it also includes the consequences that can remain for years.",
+      "paragraphs": [
+        "If you are approaching a major decision involving capital, liquidity, financing, debt, business expansion or a new investment, it is worth developing a fuller picture of the options and their implications before implementation.",
+        "The starting point at DNH is an initial assessment.",
+        "At this stage, you do not need to provide every confidential detail or internal business document. The first step is to establish the nature of the issue, the objective, urgency, scale and level of complexity so it can be determined whether Strategic Financial Advisory is the appropriate service and what kind of review is required.",
+        "If the engagement continues, the detailed information required is collected at the next stage in line with the agreed scope, and the confidentiality of financial and commercial information forms part of the engagement framework.",
+        "The objective is to help you act with a clearer understanding of the options, risks and decision path before resources are committed."
+      ],
+      "ctas": [
+        {
+          "label": "Start an Assessment of the Business Financial Issue",
+          "type": "primary"
+        },
+        {
+          "label": "Request Strategic Advice",
+          "type": "secondary"
+        }
+      ]
+    }
+  ]
+}

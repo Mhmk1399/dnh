@@ -54,11 +54,11 @@ const intelligenceIcons = {
   "strategic-implications": Route,
 } as const;
 const intelligenceImages = [
-  "/assets/images/risk-management-wealth-protection.webp",
-  "/assets/images/private-wealth-strategy.webp",
-  "/assets/images/portfolio-intelligence.webp",
-  "/assets/images/macro-market-advisory.webp",
-  "/assets/images/strategic-financial-advisory.webp",
+  "/assets/images/risk-management-wealth-protection .webp",
+  "/assets/images/private-wealth-strategy .webp",
+  "/assets/images/portfolio-intelligence .webp",
+  "/assets/images/macro-market-advisory .webp",
+  "/assets/images/strategic-financial-advisory .webp",
 ];
 
 export function HomeIntelligenceDesk() {
@@ -75,9 +75,7 @@ export function HomeIntelligenceDesk() {
   const highlight = content.heading_highlight ?? "";
   const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
-  const mainImage =
-    content.media.src.trim() ||
-    "/assets/images/strategic-financial-advisory.webp";
+  const mainImage = "/assets/images/home-intelligence-heading.webp";
 
   return (
     <section
@@ -92,7 +90,6 @@ export function HomeIntelligenceDesk() {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
             <p>{content.eyebrow}</p>
             <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
-          
           </div>
           <h2
             id="home-intelligence-heading"
@@ -138,19 +135,6 @@ export function HomeIntelligenceDesk() {
             aria-hidden="true"
             className="absolute end-6 top-6 size-6 bg-brand-accent"
           />
-          <div
-            aria-hidden="true"
-            className="absolute bottom-8 end-8 start-8 grid grid-cols-3 border border-white/25 bg-ink/55 text-white backdrop-blur-sm"
-          >
-            {[ShieldCheck, Layers, Route].map((Icon, index) => (
-              <span
-                key={index}
-                className="flex min-h-20 items-center justify-center border-s border-white/15 first:border-s-0"
-              >
-                <Icon size={26} strokeWidth={1.5} />
-              </span>
-            ))}
-          </div>
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 lg:col-start-1 lg:row-start-2 lg:mt-7">
@@ -163,19 +147,6 @@ export function HomeIntelligenceDesk() {
                 key={item.id}
                 className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/7] overflow-hidden bg-brand-primary">
-                  <Image
-                    src={intelligenceImages[index] ?? intelligenceImages[0]}
-                    alt=""
-                    fill
-                    sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 1279px) 48vw, 20vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-3 top-3 size-4 bg-brand-accent"
-                  />
-                </div>
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
                   <span
                     aria-hidden="true"

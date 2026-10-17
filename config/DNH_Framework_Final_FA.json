@@ -62,7 +62,12 @@
           "type": "secondary",
           "href": "/financial-decision-assessment"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/dnh-services-dark-bg.png",
+        "mobile_src": "/assets/images/dnh-services-dark-bg.png",
+        "alt": "معماری ساختاریافته و مسیرهای روشن در چارچوب تصمیم‌گیری DNH"
+      }
     },
     {
       "order": 2,
@@ -156,7 +161,12 @@
           "type": "primary",
           "href": "#data-intelligence"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/Translucent Data City in Perspective.png",
+        "mobile_src": "/assets/images/Translucent Data City in Perspective.png",
+        "alt": "لایه‌های شفاف داده و تحلیل در مسیر رسیدن به تصمیم ساختاریافته"
+      }
     },
     {
       "order": 4,
@@ -326,7 +336,12 @@
           "type": "primary",
           "href": "#how-dnh-pillars-work-together"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/Horizon-Architecture.webp",
+        "mobile_src": "/assets/images/Horizon-Architecture.webp",
+        "alt": "ساختار شفاف افق‌های زمانی برای معماری تصمیم‌های بلندمدت"
+      }
     },
     {
       "order": 7,
@@ -493,7 +508,12 @@
           "type": "primary",
           "href": "/services"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/strategic-financial-advisory.webp",
+        "mobile_src": "/assets/images/strategic-financial-advisory.webp",
+        "alt": "نمایی از ساختار مالی و حوزه‌های کاربرد چارچوب DNH"
+      }
     },
     {
       "order": 10,

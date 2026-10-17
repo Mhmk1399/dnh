@@ -73,7 +73,12 @@
           "label": "Decision Variables",
           "english_label": "Decision Variables"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/home-intelligence-heading.webp",
+        "mobile_src": "/assets/images/home-intelligence-heading.webp",
+        "alt": "An integrated intelligence desk monitoring risk, liquidity, economic conditions and assets"
+      }
     },
     {
       "order": 2,
@@ -186,7 +191,12 @@
           "href": "#macro-risk-view"
         }
       ],
-      "heading_highlight": "interpreted in relation to one another"
+      "heading_highlight": "interpreted in relation to one another",
+      "media": {
+        "src": "/assets/images/macro-market-advisory.webp",
+        "mobile_src": "/assets/images/macro-market-advisory.webp",
+        "alt": "Global economic, market and macro variables under structured monitoring"
+      }
     },
     {
       "order": 4,
@@ -334,7 +344,12 @@
           "href": "/financial-decision-assessment"
         }
       ],
-      "heading_highlight": "what role each asset can play under current conditions"
+      "heading_highlight": "what role each asset can play under current conditions",
+      "media": {
+        "src": "/assets/images/portfolio-intelligence.webp",
+        "mobile_src": "/assets/images/portfolio-intelligence.webp",
+        "alt": "Analytical layers used to assess the role and positioning of assets"
+      }
     },
     {
       "order": 7,
@@ -491,7 +506,12 @@
           "href": "/knowledge/weekly-outlook"
         }
       ],
-      "heading_highlight": "tracks the variables that can change tomorrow’s conditions"
+      "heading_highlight": "tracks the variables that can change tomorrow’s conditions",
+      "media": {
+        "src": "/assets/images/research-and-case-studies.webp",
+        "mobile_src": "/assets/images/research-and-case-studies.webp",
+        "alt": "An analytical dossier for monitoring variables and events that may shape future conditions"
+      }
     },
     {
       "order": 10,

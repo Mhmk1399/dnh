@@ -1,0 +1,308 @@
+{
+  "page": "services-overview",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "DNH Advisory Services",
+  "english_title": "DNH Advisory Services",
+  "section_count": 10,
+  "sections": [
+     {
+      "order": 1,
+      "id": "dnh-advisory-services-hero",
+      "type": "hero",
+      "eyebrow": "DNH Services",
+      "english_label": "DNH Advisory Services",
+      "heading": "Specialist advisory services for financial decisions, wealth structure and capital",
+      "heading_highlight": "financial decisions, wealth structure and capital",
+      "paragraphs": [
+        "Not every financial question can be addressed with a generic answer or a pre-packaged solution.",
+        "DNH provides a range of specialist services across wealth architecture, portfolio structure, business financial decisions, economics and markets, risk, and decision-making at the senior executive level.",
+        "Each path is selected according to the nature of the question, the decision-maker's circumstances, and the level of review required.",
+        "The objective is not simply to choose 'a service'; it is to identify the question correctly and determine the appropriate path for reviewing it."
+      ],
+      "ctas": [
+        {
+          "id": "services",
+          "label": "Explore DNH services",
+          "type": "primary",
+          "href": "#private-wealth-strategy"
+        },
+        {
+          "id": "assessment",
+          "label": "Start an initial assessment",
+          "type": "secondary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/risk.webp",
+        "mobile_src": "/assets/images/risk.webp",
+        "alt": "DNH financial advisory in a refined professional setting",
+        "width": 1200,
+        "height": 1500
+      }
+    },
+    {
+      "order": 2,
+      "id": "different-decisions-require-different-advisory-paths",
+      "type": "services-positioning",
+      "eyebrow": "Each Financial Question Requires a Different Type of Review",
+      "english_label": "Different Decisions Require Different Advisory Paths",
+      "heading": "The starting point is not the name of a service; it is the question you need to make a decision about.",
+      "heading_highlight": "the question you need to make a decision about",
+      "paragraphs": [
+        "Your question may concern the overall structure of your wealth.",
+        "You may hold a diverse range of assets but have questions about portfolio structure, concentration or liquidity.",
+        "A decision may involve your business, capital, financing or liquidity.",
+        "Changes in the economy and markets may require scenario analysis and a review of the implications for your decision.",
+        "Or the main issue may be hidden risks or an important decision at senior executive or board level.",
+        "For this reason, DNH structures its services around the nature of the question and the output required, rather than offering one standard package for everyone.",
+        "DNH's formal service structure therefore defines six core advisory paths for different client needs."
+      ],
+      "ctas": [
+        {
+          "id": "find-path",
+          "label": "Find the right path for me",
+          "type": "primary",
+          "href": "#not-sure-where-to-start"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "id": "private-wealth-strategy",
+      "type": "service-card",
+      "service_slug": "private-wealth-strategy",
+      "eyebrow": "Private Wealth Strategy",
+      "english_label": "Private Wealth Strategy",
+      "heading": "For situations where the full wealth picture needs to be considered alongside goals, liquidity and risk.",
+      "heading_highlight": "the full wealth picture",
+      "paragraphs": [
+        "Designed for individuals, families and capital owners whose assets and financial decisions have moved beyond a simple structure.",
+        "This service focuses on creating an integrated view of wealth, goals, liquidity, risks and the paths available for further review.",
+        "If your question is not simply about choosing one asset and you want to understand how different parts of your wealth should be viewed together, this path may be more appropriate."
+      ],
+      "ctas": [
+        {
+          "id": "private-wealth-strategy",
+          "label": "Explore Private Wealth Strategy",
+          "type": "primary",
+          "href": "/services/private-wealth-strategy"
+        }
+      ],
+      "icon": "wealth",
+      "media": {
+        "src": "/assets/images/risk.webp",
+        "mobile_src": "/assets/images/risk.webp",
+        "alt": "A refined professional setting for reviewing wealth structure and financial decisions",
+        "width": 1122,
+        "height": 1402
+      }
+    },
+    {
+      "order": 4,
+      "id": "portfolio-intelligence",
+      "type": "service-card",
+      "service_slug": "portfolio-intelligence",
+      "eyebrow": "Portfolio Intelligence",
+      "english_label": "Portfolio Intelligence",
+      "heading": "For situations where you hold diverse assets but want a clearer view of how they are structured.",
+      "paragraphs": [
+        "Designed for people who hold diverse assets or portfolios and face issues such as:",
+        "asset dispersion, risk concentration, misaligned liquidity or news-driven decisions.",
+        "This path focuses on reviewing portfolio structure, areas requiring attention and elements that may need reassessment."
+      ],
+      "ctas": [
+        {
+          "id": "portfolio-intelligence",
+          "label": "Explore Portfolio Intelligence",
+          "type": "primary",
+          "href": "/services/portfolio-intelligence"
+        }
+      ],
+      "icon": "portfolio",
+      "heading_highlight": "a clearer view of how they are structured",
+      "focus_areas": [
+        {
+          "id": "asset-dispersion",
+          "label": "Asset dispersion"
+        },
+        {
+          "id": "risk-concentration",
+          "label": "Risk concentration"
+        },
+        {
+          "id": "liquidity-mismatch",
+          "label": "Misaligned liquidity"
+        },
+        {
+          "id": "news-driven-decisions",
+          "label": "News-driven decisions"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "id": "strategic-financial-advisory",
+      "type": "service-card",
+      "service_slug": "strategic-financial-advisory",
+      "eyebrow": "Strategic Financial Advisory",
+      "english_label": "Strategic Financial Advisory",
+      "heading": "For decisions that connect capital, liquidity, financing and the future of the business.",
+      "paragraphs": [
+        "Designed for business owners, executives, companies, corporate groups and holding companies.",
+        "This path becomes important when a financial decision is no longer merely an accounting or operational issue and the financial structure, options, risks and decision path need to be considered together.",
+        "Topics may include liquidity, capital structure, financing, capital allocation and major financial decisions."
+      ],
+      "ctas": [
+        {
+          "id": "strategic-financial-advisory",
+          "label": "Explore Strategic Financial Advisory",
+          "type": "primary",
+          "href": "/services/strategic-financial-advisory"
+        }
+      ],
+      "icon": "advisory",
+      "heading_highlight": "capital, liquidity, financing and the future of the business"
+    },
+    {
+      "order": 6,
+      "id": "macro-market-advisory",
+      "type": "service-card",
+      "service_slug": "macro-market-advisory",
+      "eyebrow": "Macro & Market Advisory",
+      "english_label": "Macro & Market Advisory",
+      "heading": "When your decision cannot be complete without understanding the economic and market environment.",
+      "paragraphs": [
+        "Designed for investors and decision-makers affected by changes in the economy and markets.",
+        "This path helps assess economic conditions, relevant scenarios and their implications for the decision.",
+        "The focus may include inflation, currencies, liquidity, economic policy, markets and different scenarios; not definitive price forecasts or buy/sell signals.",
+        "The output should help clarify what current conditions mean for your decision."
+      ],
+      "ctas": [
+        {
+          "id": "macro-market-advisory",
+          "label": "Explore Macro & Market Advisory",
+          "type": "primary",
+          "href": "/services/macro-market-advisory"
+        }
+      ],
+      "icon": "market",
+      "heading_highlight": "without understanding the economic and market environment"
+    },
+    {
+      "order": 7,
+      "id": "risk-management-wealth-protection",
+      "type": "service-card",
+      "service_slug": "risk-management-wealth-protection",
+      "eyebrow": "Risk Management & Wealth Protection",
+      "english_label": "Risk Management & Wealth Protection",
+      "heading": "For situations where the core question is not only growth; understanding structural vulnerabilities also matters.",
+      "paragraphs": [
+        "Designed for individuals, families, capital owners and businesses seeking a clearer view of hidden risks in their wealth or financial structure.",
+        "The focus is on developing a structured view of risks and protection priorities.",
+        "This review can help clarify issues such as concentration, liquidity, dependencies and structural vulnerabilities so that the areas requiring greater attention can be identified."
+      ],
+      "ctas": [
+        {
+          "id": "risk-management-wealth-protection",
+          "label": "Explore Risk Management & Wealth Protection",
+          "type": "primary",
+          "href": "/services/risk-management-wealth-protection"
+        }
+      ],
+      "icon": "risk",
+      "heading_highlight": "understanding structural vulnerabilities"
+    },
+    {
+      "order": 8,
+      "id": "executive-briefings",
+      "type": "service-card",
+      "service_slug": "executive-briefings",
+      "eyebrow": "Executive Briefings",
+      "english_label": "Executive Briefings",
+      "heading": "For situations where an important issue requires focused attention at the senior decision-maker level.",
+      "paragraphs": [
+        "Designed for senior executives, board members, capital owners and key decision-makers.",
+        "An Executive Briefing is a focused path for reviewing a specific issue when, instead of a broad project, there is a need for a professional synthesis of key points, scenarios and paths for consideration.",
+        "These sessions are not designed for general education; their focus is greater clarity around a real decision."
+      ],
+      "ctas": [
+        {
+          "id": "executive-briefings",
+          "label": "Explore Executive Briefings",
+          "type": "primary",
+          "href": "/services/executive-briefings"
+        }
+      ],
+      "icon": "briefing",
+      "heading_highlight": "at the senior decision-maker level"
+    },
+    {
+      "order": 9,
+      "id": "not-sure-where-to-start",
+      "type": "assessment-routing",
+      "eyebrow": "Not sure which service is right for you?",
+      "english_label": "Not Sure Where to Start?",
+      "heading": "You do not need to know which service you need before contacting DNH.",
+      "paragraphs": [
+        "Perhaps all you know is:",
+        "You are approaching a major financial decision.",
+        "You hold multiple assets but their structure is not clear to you.",
+        "The financial structure of a company or holding group has become complex.",
+        "Or you are facing a question that you are not sure how to categorize.",
+        "In this situation, an initial Assessment can be the starting point.",
+        "This assessment is designed to identify the nature of the question, urgency, level of complexity and appropriate path at an early stage; it is not a general contact form, nor is it intended to collect all confidential information from the outset."
+      ],
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start an initial assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "heading_highlight": "which service you need"
+    },
+    {
+      "order": 10,
+      "id": "start-with-the-decision-not-the-service",
+      "type": "final-cta",
+      "eyebrow": "Start with the question, not the service",
+      "english_label": "Start With the Decision, Not the Service",
+      "heading": "If you have an important question about wealth, capital or a financial decision, clarify it first.",
+      "paragraphs": [
+        "At the first stage, it is enough to establish:"
+      ],
+      "checklist": [
+        "What is the core question;",
+        "What decision is in front of you;",
+        "What is the time horizon;",
+        "How urgent is the issue;",
+        "and what level of review it requires."
+      ],
+      "closing_paragraphs": [
+        "Then it can be determined whether the appropriate path is an Assessment, specialist consultation, Executive Briefing or one of DNH's specialist advisory services.",
+        "The formal DNH process is also designed as Assessment -> Scope & Fit -> Consultation / Briefing -> Analysis -> Decision Framework -> Follow-up.",
+        "The objective is simple:",
+        "First define the question correctly; then choose the appropriate service."
+      ],
+      "ctas": [
+        {
+          "id": "assessment",
+          "label": "Start Financial Decision Assessment",
+          "type": "primary",
+          "href": "/financial-decision-assessment"
+        },
+        {
+          "id": "consultation",
+          "label": "Request a consultation",
+          "type": "secondary",
+          "href": "/request-strategic-consultation"
+        }
+      ],
+      "heading_highlight": "clarify it first"
+    }
+  ]
+}

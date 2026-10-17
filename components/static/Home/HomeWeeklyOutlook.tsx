@@ -47,11 +47,11 @@ const outlookIcons = {
   "dnh-note": PenLine,
 } as const;
 const outlookImages = [
-  "/assets/images/strategic-financial-advisory.webp",
-  "/assets/images/risk-management-wealth-protection.webp",
-  "/assets/images/portfolio-intelligence.webp",
-  "/assets/images/macro-market-advisory.webp",
-  "/assets/images/executive-briefings.webp",
+  "/assets/images/strategic-financial-advisory .webp",
+  "/assets/images/risk-management-wealth-protection .webp",
+  "/assets/images/portfolio-intelligence .webp ",
+  "/assets/images/macro-market-advisory .webp ",
+  "/assets/images/executive-briefings .webp ",
 ];
 
 export function HomeWeeklyOutlook() {
@@ -122,7 +122,7 @@ export function HomeWeeklyOutlook() {
 
           <div className="relative aspect-[16/10] min-h-[400px] overflow-hidden border border-line bg-surface-soft lg:min-h-[520px] lg:aspect-auto">
             <Image
-              src="/assets/images/macro-market-advisory.webp"
+              src="/assets/images/home-weekly-outlook-heading.webp"
               alt=""
               fill
               sizes="(max-width: 1023px) calc(100vw - 24px), 54vw"

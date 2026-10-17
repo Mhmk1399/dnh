@@ -1,651 +1,194 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+"use client";
 
-import {
-  ArrowDownLeft,
-  ArrowUpLeft,
-  Landmark,
-  Network,
-  Radar,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-/* =============================================================================
-   منطق مشترک خدمات
-============================================================================= */
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ActionButton } from "@/components/ui/ActionButton";
+import servicesFa from "@/config/DNH_Services_Overview_Final_FA.json";
+import servicesEn from "@/config/DNH_Services_Overview_Final_EN.json";
 
-const FOUNDATIONS = [
-  {
-    title: "معماری ثروت",
-    description:
-      "دیدن دارایی، نقدشوندگی، ریسک، اهداف و افق زمانی در یک تصویر منسجم‌تر.",
-    href: "/dnh/wealth-architecture",
-    linkLabel: "آشنایی با معماری ثروت",
-    icon: Landmark,
-  },
+type SectionLookup = {
+  id: string;
+  type: string;
+};
 
-  {
-    title: "چارچوب DNH",
-    description:
-      "ساختار دادن به مسئله، سناریوها و مسیرهای قابل بررسی پیش از تصمیم.",
-    href: "/dnh/framework",
-    linkLabel: "آشنایی با چارچوب DNH",
-    icon: Network,
-  },
+type StrategicFinancialAdvisoryContent = {
+  order: number;
+  id: "strategic-financial-advisory";
+  type: "service-card";
+  service_slug: "strategic-financial-advisory";
+  eyebrow: string;
+  english_label: string;
+  heading: string;
+  heading_highlight: string;
+  paragraphs: string[];
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
+  icon: string;
+};
 
-  {
-    title: "میز هوشمندی DNH",
-    description:
-      "دیدن اقتصاد، بازار، نقدشوندگی و ریسک به‌عنوان بخشی از محیط تصمیم.",
-    href: "/dnh/intelligence-desk",
-    linkLabel: "آشنایی با میز هوشمندی",
-    icon: Radar,
-  },
-] as const;
+function HighlightedHeading({
+  heading,
+  highlight,
+}: {
+  heading: string;
+  highlight: string;
+}) {
+  const index = highlight ? heading.indexOf(highlight) : -1;
 
-/* =============================================================================
-   سکشن — کاملاً سمت سرور
-============================================================================= */
+  if (index < 0) return <>{heading}</>;
 
-export function ServicesMethodSection() {
+  return (
+    <>
+      {heading.slice(0, index)}
+      <span className="text-brand-accent">
+        {heading.slice(index, index + highlight.length)}
+      </span>
+      {heading.slice(index + highlight.length)}
+    </>
+  );
+}
+
+export function ServicesStrategicFinancialAdvisory() {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const source = locale === "en" ? servicesEn : servicesFa;
+
+  const content = source.sections.find(
+    (section: SectionLookup) =>
+      section.id === "strategic-financial-advisory" &&
+      section.type === "service-card",
+  ) as StrategicFinancialAdvisoryContent | undefined;
+
+  if (!content) return null;
+
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+  const [audienceParagraph, thesisParagraph, scopeParagraph] =
+    content.paragraphs;
+  const primaryCta = content.ctas[0];
+
   return (
     <section
-      id="services-method"
-      dir="rtl"
-      aria-labelledby="services-method-title"
-      className="
-        relative
-        isolate
-
-        scroll-mt-24
-        overflow-hidden
-
-        border-b
-        border-line
-
-        bg-[#f8fbfc]
-
-        sm:scroll-mt-28
-      "
+      id={content.id}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby="strategic-financial-advisory-heading"
+      className="relative isolate scroll-mt-28 overflow-hidden border-b border-line bg-page"
     >
-      <Background />
-
       <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-[3px] bg-brand-primary"
+      />
 
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          py-16
-
-          sm:px-8
-          sm:py-20
-
-          lg:px-12
-          lg:py-24
-
-          xl:px-16
-          xl:py-28
-
-          2xl:px-20
-        "
-      >
-        {/* =======================================================
-            عنوان
-        ======================================================== */}
-
-        <div
-          className="
-            mx-auto
-            max-w-[900px]
-
-            text-center
-          "
-        >
-          <div
-            className="
-              mb-5
-
-              flex
-              items-center
-              justify-center
-              gap-3
-            "
-          >
+      <div className="dnh-site-shell relative py-14 sm:py-16 lg:py-20 xl:py-24">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b border-line pb-5 sm:pb-6">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
             <span
               aria-hidden="true"
-              className="
-                h-px
-                w-9
-
-                bg-brand-accent
-              "
+              className="h-[2px] w-9 shrink-0 bg-brand-accent"
             />
-
-            <span
-              className="
-                text-[10px]
-                font-black
-
-                text-brand-primary
-
-                sm:text-[11px]
-              "
-            >
-              منطق مشترک خدمات DNH
-            </span>
-
-            <span
-              aria-hidden="true"
-              className="
-                h-px
-                w-9
-
-                bg-brand-accent
-              "
-            />
+            <p className="text-[12px] font-extrabold leading-[1.8] text-ink sm:text-[13px]">
+              {content.eyebrow}
+            </p>
+         
           </div>
 
+        
+        </div>
+
+        <header className="pt-8 sm:pt-10 lg:pt-12 xl:pt-14">
           <h2
-            id="services-method-title"
-            className="
-              text-[31px]
-              font-black
-              leading-[1.65]
-              tracking-[-0.045em]
-
-              text-ink
-
-              sm:text-[38px]
-
-              lg:text-[46px]
-              lg:leading-[1.5]
-
-              xl:text-[51px]
-            "
+            id="strategic-financial-advisory-heading"
+            className={`max-w-[61ch] text-pretty text-4xl font-black text-ink sm:max-w-[20ch] lg:max-w-[28ch] ${
+              isRTL ? "leading-[1.42]" : "leading-[1.03]"
+            }`}
           >
-            شش خدمت متفاوت؛
-            <br />
-            یک نگاه <span className="text-brand-primary">منسجم به تصمیم.</span>
+            <HighlightedHeading
+              heading={content.heading}
+              highlight={content.heading_highlight}
+            />
           </h2>
 
-          <p
-            className="
-              mx-auto
-              mt-5
-              max-w-[660px]
-
-              text-[13px]
-              font-medium
-              leading-[2.15]
-
-              text-ink-muted
-
-              sm:text-[14px]
-            "
-          >
-            مسئله‌ها متفاوت‌اند؛ اما در DNH، ساختار ثروت، روش تصمیم‌سازی و محیط
-            تصمیم جدا از یکدیگر دیده نمی‌شوند.
-          </p>
-        </div>
-
-        {/* =======================================================
-            سه نگاه مکمل
-        ======================================================== */}
+         
+        </header>
 
         <div
-          className="
-            relative
-
-            mt-12
-
-            border-y
-            border-line
-
-            sm:mt-14
-
-            lg:mt-16
-          "
+          dir="ltr"
+          className={`mt-10 grid gap-0 border-y border-line sm:mt-12 lg:mt-14 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] ${
+            isRTL ? "" : "lg:grid-cols-[minmax(0,1.22fr)_minmax(0,0.78fr)]"
+          }`}
         >
-          {/* خط مشترک دسکتاپ */}
-
-          <span
-            aria-hidden="true"
-            className="
-              absolute
-              left-[16%]
-              right-[16%]
-              top-[58px]
-
-              hidden
-              h-px
-
-              bg-brand-primary/12
-
-              lg:block
-            "
-          />
-
-          <div
-            className="
-              grid
-
-              lg:grid-cols-3
-            "
+          <article
+            dir={direction}
+            className={`relative min-w-0 py-7 sm:py-8 lg:py-10 xl:py-12 ${
+              isRTL
+                ? "lg:col-start-2 lg:row-start-1 lg:ps-12 xl:ps-16"
+                : "lg:col-start-1 lg:row-start-1 lg:pe-12 xl:pe-16"
+            }`}
           >
-            {FOUNDATIONS.map((item, index) => (
-              <Foundation
-                key={item.href}
-                item={item}
-                last={index === FOUNDATIONS.length - 1}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* =======================================================
-            خروجی مشترک
-        ======================================================== */}
-
-        <div
-          className="
-            mx-auto
-            mt-9
-            max-w-[1040px]
-
-            border-r-[3px]
-            border-brand-accent
-
-            bg-white
-
-            px-5
-            py-6
-
-            shadow-[0_16px_50px_rgba(14,74,94,.055)]
-
-            sm:px-7
-
-            lg:px-8
-            lg:py-7
-          "
-        >
-          <div
-            className="
-              flex
-              flex-col
-              gap-6
-
-              sm:flex-row
-              sm:items-center
-              sm:justify-between
-            "
-          >
-            <div>
-              <p
-                className="
-                  text-[11px]
-                  font-black
-
-                  text-brand-accent
-                "
-              >
-                نتیجه این نگاه
-              </p>
-
-              <p
-                className="
-                  mt-2
-
-                  text-[16px]
-                  font-black
-                  leading-[1.9]
-
-                  text-ink
-
-                  sm:text-[18px]
-                "
-              >
-                خدمت بر اساس مسئله انتخاب می‌شود؛ نه مسئله بر اساس خدمت.
-              </p>
-            </div>
-
-            <div
-              className="
-                flex
-                items-center
-                gap-3
-              "
-            >
-              <span
-                aria-hidden="true"
-                className="
-                  hidden
-                  h-px
-                  w-12
-
-                  bg-brand-primary/18
-
-                  sm:block
-                "
-              />
-
-              <span
-                aria-hidden="true"
-                className="
-                  h-[11px]
-                  w-[11px]
-
-                  bg-brand-accent
-                "
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* =======================================================
-            مسیر بعد
-        ======================================================== */}
-
-        <div
-          className="
-            mt-8
-
-            flex
-            justify-center
-
-            border-t
-            border-line
-
-            pt-6
-          "
-        >
-          <Link
-            href="#services-cta"
-            className="
-              group/link
-
-              inline-flex
-              min-h-11
-
-              items-center
-              gap-3
-
-              text-[10px]
-              font-black
-
-              text-brand-primary
-
-              outline-none
-
-              transition-colors
-              duration-300
-
-              hover:text-brand-accent
-
-              focus-visible:ring-2
-              focus-visible:ring-focus/40
-            "
-          >
-            قدم بعدی برای شروع چیست؟
-            <ArrowDownLeft
+            <span
               aria-hidden="true"
-              className="
-                h-4
-                w-4
-
-                transition-transform
-                duration-300
-
-                group-hover/link:translate-y-1
-                group-hover/link:-translate-x-1
-              "
-              strokeWidth={1.6}
+              className="absolute inset-y-0 start-0 hidden w-[3px] bg-brand-accent lg:block"
             />
-          </Link>
+            <span
+              aria-hidden="true"
+              className="mb-5 block h-[3px] w-10 bg-brand-accent lg:hidden"
+            />
+            <p
+              className={`max-w-[50rem] text-[17px] font-extrabold text-ink sm:text-[18px] lg:text-[21px] xl:text-[22px] ${
+                isRTL ? "leading-[2.02]" : "leading-[1.62]"
+              }`}
+            >
+              {thesisParagraph}
+            </p>
+          </article>
+
+          <article
+            dir={direction}
+            className={`min-w-0 border-t border-line py-7 sm:py-8 lg:row-start-1 lg:border-t-0 lg:py-10 xl:py-12 ${
+              isRTL
+                ? "lg:col-start-1 lg:border-e lg:pe-10 xl:pe-12"
+                : "lg:col-start-2 lg:border-s lg:ps-10 xl:ps-12"
+            }`}
+          >
+            <p
+              className={`max-w-[36rem] text-[14px] font-medium text-ink-muted sm:text-[15px] lg:text-[16px] ${
+                isRTL ? "leading-[2.08]" : "leading-[1.78]"
+              }`}
+            >
+              {scopeParagraph}
+            </p>
+          </article>
+        </div>
+
+        <div className="mt-7 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-between lg:mt-9">
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="h-2.5 w-2.5 bg-brand-accent" />
+            <bdi
+              dir="ltr"
+              className="text-[9.5px] font-black uppercase tracking-[0.13em] text-ink-muted/60"
+            >
+              Strategic Financial Advisory
+            </bdi>
+          </div>
+
+          {primaryCta ? (
+            <ActionButton
+              href={primaryCta.href}
+              variant={primaryCta.type}
+              size="lg"
+              icon={Arrow}
+              iconPosition="end"
+              className="w-full sm:w-auto sm:min-w-[19rem]"
+            >
+              {primaryCta.label}
+            </ActionButton>
+          ) : null}
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   پایه مشترک
-============================================================================= */
-
-function Foundation({
-  item,
-  last,
-}: {
-  item: {
-    title: string;
-    description: string;
-    href: string;
-    linkLabel: string;
-    icon: LucideIcon;
-  };
-  last: boolean;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <article
-      className={`
-        group/foundation
-
-        relative
-
-        px-5
-        py-8
-
-        transition-colors
-        duration-300
-
-        hover:bg-white/75
-
-        sm:px-7
-        sm:py-9
-
-        lg:px-8
-        lg:py-10
-
-        ${!last ? "border-b border-line lg:border-b-0 lg:border-l" : ""}
-      `}
-    >
-      <Link
-        href={item.href}
-        className="
-          block
-
-          outline-none
-
-          focus-visible:ring-2
-          focus-visible:ring-focus/40
-        "
-      >
-        {/* آیکون */}
-
-        <div
-          className="
-            relative
-            z-10
-
-            mb-6
-
-            flex
-            h-14
-            w-14
-
-            items-center
-            justify-center
-
-            border
-            border-brand-primary/15
-
-            bg-white
-
-            text-brand-primary
-
-            shadow-[0_10px_30px_rgba(22,115,148,.05)]
-
-            transition-[background-color,border-color,color,transform,box-shadow]
-            duration-300
-
-            group-hover/foundation:-translate-y-1
-            group-hover/foundation:border-brand-primary
-            group-hover/foundation:bg-brand-primary
-            group-hover/foundation:text-white
-            group-hover/foundation:shadow-[0_16px_38px_rgba(22,115,148,.13)]
-          "
-        >
-          <Icon
-            aria-hidden="true"
-            className="
-              h-6
-              w-6
-            "
-            strokeWidth={1.45}
-          />
-
-          <span
-            aria-hidden="true"
-            className="
-              absolute
-              -bottom-[4px]
-              -left-[4px]
-
-              h-[11px]
-              w-[11px]
-
-              bg-brand-accent
-            "
-          />
-        </div>
-
-        {/* متن */}
-
-        <h3
-          className="
-            text-[18px]
-            font-black
-
-            text-ink
-
-            transition-colors
-            duration-300
-
-            group-hover/foundation:text-brand-primary
-
-            sm:text-[20px]
-          "
-        >
-          {item.title}
-        </h3>
-
-        <p
-          className="
-            mt-3
-            max-w-[340px]
-
-            text-[11px]
-            font-medium
-            leading-[2.05]
-
-            text-ink-muted
-
-            sm:text-[12px]
-          "
-        >
-          {item.description}
-        </p>
-
-        {/* لینک داخلی */}
-
-        <div
-          className="
-            mt-6
-
-            flex
-            items-center
-            gap-3
-          "
-        >
-          <span
-            className="
-              text-[11px]
-              font-black
-
-              text-brand-primary
-
-              transition-colors
-              duration-300
-
-              group-hover/foundation:text-brand-accent
-            "
-          >
-            {item.linkLabel}
-          </span>
-
-          <ArrowUpLeft
-            aria-hidden="true"
-            className="
-              h-3.5
-              w-3.5
-
-              text-brand-accent
-
-              transition-transform
-              duration-300
-
-              group-hover/foundation:-translate-x-1
-              group-hover/foundation:-translate-y-1
-            "
-            strokeWidth={1.5}
-          />
-        </div>
-      </Link>
-    </article>
-  );
-}
-
-/* =============================================================================
-   پس‌زمینه
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "linear-gradient(112deg,#f4f9fa 0%,#ffffff 52%,#f7fbfc 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.065]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-    </>
   );
 }

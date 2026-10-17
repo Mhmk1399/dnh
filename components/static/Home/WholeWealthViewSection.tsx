@@ -39,9 +39,9 @@ type FrameworkContent = {
 };
 
 const pillarImages = [
-  "/assets/images/strategic-financial-advisory.webp",
-  "/assets/images/portfolio-intelligence.webp",
-  "/assets/images/private-wealth-strategy.webp",
+  "/assets/images/Data-Intelligence.webp",
+  "/assets/images/Navigation-Strategy.webp",
+  "/assets/images/Horizon-Architecture.webp",
 ];
 const pillarIcons = [BarChart3, PieChart, Landmark];
 

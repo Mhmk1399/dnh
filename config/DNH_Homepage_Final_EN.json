@@ -9,7 +9,7 @@
       "order": 1,
       "id": "hero",
       "type": "hero",
-      
+
       "eyebrow": "Wealth Architecture & Financial Decision-Making",
       "heading": "Major financial decisions require more than information. They need a clear decision framework.",
       "paragraphs": [
@@ -109,7 +109,7 @@
           "href": "/services/risk-management-wealth-protection",
           "icon": "risk",
           "media": {
-            "src": "/assets/images/risk-management-wealth-protection.webp",
+            "src": "/assets/images/risk.webp",
             "alt": ""
           }
         },
@@ -121,7 +121,7 @@
           "href": "/services/executive-briefings",
           "icon": "briefing",
           "media": {
-            "src": "/assets/images/executive-briefings.webp",
+            "src": "/assets/images/neshast.webp",
             "alt": ""
           }
         }
@@ -142,7 +142,7 @@
           "description": "You have several options, but need clarity on what to assess before choosing a course of action.",
           "icon": "decision",
           "media": {
-            "src": "/assets/images/major-financial-decision.jpg",
+            "src": "/assets/images/major-financial-decision.webp",
             "alt": "Conceptual view of a major financial decision"
           }
         },
@@ -152,7 +152,7 @@
           "description": "It is not yet clear how each holding contributes to your goals, what risks it carries or how readily it can be converted to cash.",
           "icon": "portfolio",
           "media": {
-            "src": "/assets/images/unstructured-portfolio.png",
+            "src": "/assets/images/unstructured-portfolio.webp",
             "alt": "Conceptual view of diverse assets in an unstructured portfolio"
           }
         },
@@ -182,7 +182,7 @@
           "description": "You need to assess how financing and resource allocation choices could affect the business's financial structure and future.",
           "icon": "advisory",
           "media": {
-            "src": "/assets/images/complex-financial-structure.png",
+            "src": "/assets/images/complex-financial-structure.webp",
             "alt": "Conceptual view of business capital and financial structure"
           }
         },
@@ -772,7 +772,7 @@
       "english_label": "Financial Decision Assessment",
       "heading": "Before your next financial decision, clarify what needs to be decided.",
       "media": {
-        "src": "/assets/images/detect.webp",
+        "src": "/assets/images/financial-decision-assessment.webp",
         "alt": "Architectural concept illustrating a path from complexity to clarity in financial decisions",
         "width": 900,
         "height": 1600
