@@ -26,6 +26,8 @@ const problemIcons = {
   briefing: UsersRound,
 } as const;
 
+const PROBLEM_IMAGE_VERSION = "20261017";
+
 type ProblemContent = {
   id: "problem-recognition";
   type: "problem_list";
@@ -108,7 +110,7 @@ export function HomeProblemRecognition() {
 
         <div className="relative aspect-[4/5] min-h-[430px] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:max-h-full lg:aspect-auto">
           <Image
-            src="/assets/images/detect.webp"
+            src="/assets/images/home-problem-recognition-heading.webp"
             alt=""
             fill
             sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
@@ -126,6 +128,9 @@ export function HomeProblemRecognition() {
         >
           {content.items.map((item) => {
             const Icon = problemIcons[item.icon] ?? Compass;
+            const mediaSrc = item.media.src.trim();
+            const versionedMediaSrc = `${mediaSrc}${mediaSrc.includes("?") ? "&" : "?"}v=${PROBLEM_IMAGE_VERSION}`;
+
             return (
               <li
                 key={item.id}
@@ -133,7 +138,7 @@ export function HomeProblemRecognition() {
               >
                 <div className="relative aspect-[16/7] overflow-hidden bg-brand-primary">
                   <Image
-                    src={item.media.src}
+                    src={versionedMediaSrc}
                     alt={item.media.alt}
                     fill
                     sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 1279px) 48vw, 20vw"
@@ -143,10 +148,7 @@ export function HomeProblemRecognition() {
                     aria-hidden="true"
                     className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-brand-primary/10"
                   />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-3 top-3 size-4 bg-brand-accent"
-                  />
+             
                   <span
                     aria-hidden="true"
                     className="absolute inset-x-5 bottom-0 h-px bg-white/35"

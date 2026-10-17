@@ -73,7 +73,12 @@
           "label": "متغیرهای تصمیم",
           "english_label": "Decision Variables"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/home-intelligence-heading.webp",
+        "mobile_src": "/assets/images/home-intelligence-heading.webp",
+        "alt": "میز تحلیل یکپارچه برای رصد ریسک، نقدینگی، اقتصاد و دارایی‌ها"
+      }
     },
     {
       "order": 2,
@@ -186,7 +191,12 @@
           "href": "#macro-risk-view"
         }
       ],
-      "heading_highlight": "در ارتباط با یکدیگر تفسیر کرد"
+      "heading_highlight": "در ارتباط با یکدیگر تفسیر کرد",
+      "media": {
+        "src": "/assets/images/macro-market-advisory.webp",
+        "mobile_src": "/assets/images/macro-market-advisory.webp",
+        "alt": "نمای اقتصاد جهانی، بازارها و متغیرهای کلان تحت رصد"
+      }
     },
     {
       "order": 4,
@@ -334,7 +344,12 @@
           "href": "/financial-decision-assessment"
         }
       ],
-      "heading_highlight": "هر دارایی در شرایط فعلی چه نقشی می‌تواند داشته باشد"
+      "heading_highlight": "هر دارایی در شرایط فعلی چه نقشی می‌تواند داشته باشد",
+      "media": {
+        "src": "/assets/images/portfolio-intelligence.webp",
+        "mobile_src": "/assets/images/portfolio-intelligence.webp",
+        "alt": "لایه‌های تحلیلی برای بررسی جایگاه و نقش دارایی‌ها"
+      }
     },
     {
       "order": 7,
@@ -491,7 +506,12 @@
           "href": "/knowledge/weekly-outlook"
         }
       ],
-      "heading_highlight": "متغیرهایی را نیز دنبال می‌کند که می‌توانند شرایط فردا را تغییر دهند"
+      "heading_highlight": "متغیرهایی را نیز دنبال می‌کند که می‌توانند شرایط فردا را تغییر دهند",
+      "media": {
+        "src": "/assets/images/research-and-case-studies.webp",
+        "mobile_src": "/assets/images/research-and-case-studies.webp",
+        "alt": "پرونده تحلیلی برای رصد متغیرها و رویدادهای اثرگذار آینده"
+      }
     },
     {
       "order": 10,

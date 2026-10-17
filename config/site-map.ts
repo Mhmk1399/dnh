@@ -39,7 +39,7 @@ export const SITE_MAP: SiteMapEntry[] = [
         type: "dnh",
         indexable: true,
     },
-
+  
     {
         path: "/dnh/framework",
         type: "dnh",

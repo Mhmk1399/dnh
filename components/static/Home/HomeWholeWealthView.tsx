@@ -46,13 +46,13 @@ const assetIcons = {
   alternatives: Landmark,
 } as const;
 const assetImages = [
-  "/assets/images/private-wealth-strategy.webp",
-  "/assets/images/macro-market-advisory.webp",
-  "/assets/images/portfolio-intelligence.webp",
-  "/assets/images/complex-financial-structure.png",
-  "/assets/images/strategic-financial-advisory.webp",
-  "/assets/images/risk-management-wealth-protection.webp",
-  "/assets/images/executive-briefings.webp",
+  "/assets/images/private-wealth-strategy .webp",
+  "/assets/images/macro-market-advisory .webp",
+  "/assets/images/portfolio-intelligence .webp",
+  "/assets/images/complex-financial-structure .png",
+  "/assets/images/strategic-financial-advisory .webp",
+  "/assets/images/risk-management-wealth-protection .webp",
+  "/assets/images/executive-briefings .webp",
 ];
 
 export function HomeWholeWealthView() {
@@ -112,7 +112,7 @@ export function HomeWholeWealthView() {
 
         <div className="relative aspect-[4/5] min-h-[480px] overflow-hidden border border-line bg-surface-soft lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[820px] lg:aspect-auto">
           <Image
-            src="/assets/images/Translucent Data City in Perspective.png"
+            src="/assets/images/home-whole-wealth-heading.webp"
             alt=""
             fill
             sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
@@ -122,13 +122,7 @@ export function HomeWholeWealthView() {
             aria-hidden="true"
             className="absolute end-6 top-6 size-6 bg-brand-accent"
           />
-          <div
-            aria-hidden="true"
-            className="absolute bottom-8 end-8 start-8 border border-line bg-page/90 p-5 text-brand-primary backdrop-blur-sm"
-          >
-            <TrendingUp size={36} strokeWidth={1.55} />
-            <span className="mt-5 block h-px w-12 bg-brand-accent" />
-          </div>
+       
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:col-start-1 lg:row-start-2 lg:mt-7">
@@ -140,19 +134,7 @@ export function HomeWholeWealthView() {
                 key={asset.id}
                 className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/8] overflow-hidden bg-surface-soft">
-                  <Image
-                    src={assetImages[index] ?? assetImages[0]}
-                    alt=""
-                    fill
-                    sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 1279px) 48vw, 18vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-3 top-3 size-4 bg-brand-accent"
-                  />
-                </div>
+              
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
                   <span
                     aria-hidden="true"

@@ -1,0 +1,465 @@
+{
+  "page": "macro-market-advisory",
+  "brand": "DNH",
+  "locale": "en-US",
+  "direction": "ltr",
+  "title": "Macro & Market Advisory",
+  "english_title": "Macro & Market Advisory",
+  "section_count": 12,
+  "sections": [
+    {
+      "order": 1,
+      "id": "macro-market-advisory-hero",
+      "type": "hero",
+      "eyebrow": "Macro & Market Advisory",
+      "english_label": "Macro & Market Advisory",
+      "heading": "The objective is not to predict the market; it is to understand what changes in the economy and markets mean for your decision.",
+      "paragraphs": [
+        "Inflation, currencies, liquidity, financial rates, policy decisions and market behavior can all change the conditions in which decisions are made. But observing these variables on their own is not enough for sound decision-making.",
+        "The central issue is to understand which changes matter for your circumstances, through which channels they can affect you, and what implications they may have for your capital, liquidity, assets or business.",
+        "DNH Macro & Market Advisory is designed to turn fragmented economic and market information into a structured picture of the decision environment.",
+        "Rather than searching for one definitive forecast, the current environment is assessed, key variables are identified, relevant scenarios are developed and their possible implications for the decision are analyzed.",
+        "The goal is to ensure that a financial decision is not made in isolation, but with the surrounding economic environment incorporated into the decision-making process."
+      ],
+      "ctas": [
+        {
+          "label": "Start an Initial Assessment of the Issue",
+          "type": "primary"
+        },
+        {
+          "label": "Request Macro & Market Advice",
+          "type": "secondary"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "markets-do-not-move-in-isolation",
+      "type": "problem-recognition",
+      "eyebrow": "Markets Do Not Move in Isolation",
+      "english_label": "Markets Do Not Move in Isolation",
+      "heading": "One market may capture your attention, but your decision is usually influenced by a broader set of variables.",
+      "paragraphs": [
+        "Looking at one price, one chart or one news item can reveal only part of the picture.",
+        "Inflation can change purchasing power and the real value of capital.",
+        "Currency movements can affect costs, assets and market expectations.",
+        "Liquidity conditions can alter access to finance and the behavior of markets.",
+        "Financial rates can change the cost of capital and the relative attractiveness of different options.",
+        "Policy changes can reshape the operating environment for industries and markets.",
+        "Most importantly, these factors do not act independently of one another.",
+        "One economic change may simultaneously affect several markets, several assets and several parts of a financial decision.",
+        "The question is therefore not only “what happened in one market?”",
+        "The more important question is:",
+        "What does this change mean in the context of my overall financial position and the decision I need to make?"
+      ],
+      "ctas": [
+        {
+          "label": "Review How Economic Conditions Affect My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "id": "what-is-macro-market-advisory",
+      "type": "definition",
+      "eyebrow": "What Is Macro & Market Advisory?",
+      "english_label": "What Is Macro & Market Advisory?",
+      "heading": "Macro & Market Advisory means translating economic data and market changes into insight that can be used in a real decision.",
+      "paragraphs": [
+        "Economic data alone is not a decision. Market analysis becomes more valuable when it can be connected to the real question facing the decision-maker.",
+        "DNH's approach can be summarized in a simple sequence:"
+      ],
+      "items": [
+        {
+          "title": "Data",
+          "description": "Which variables are changing?"
+        },
+        {
+          "title": "Analysis",
+          "description": "How are those changes connected to one another?"
+        },
+        {
+          "title": "Insight",
+          "description": "Which parts of the information matter most for the issue at hand?"
+        },
+        {
+          "title": "Scenario",
+          "description": "If conditions move in different directions, what situations could emerge?"
+        },
+        {
+          "title": "Decision",
+          "description": "What would those scenarios mean for capital, liquidity, risk or financial structure?"
+        }
+      ],
+      "closing_paragraphs": [
+        "The output of this service is therefore not simply a report about the economy.",
+        "The objective is to translate economic information into the language of decisions.",
+        "This is consistent with DNH's broader logic: Data → Analysis → Insight → Scenario → Decision. Market analysis should ultimately lead to an understanding of what conditions mean for financial decisions, risk, liquidity and asset structure."
+      ],
+      "ctas": [
+        {
+          "label": "Start Analyzing My Issue in Its Economic Context",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "id": "who-is-it-for",
+      "type": "audience",
+      "eyebrow": "Who Is It For?",
+      "english_label": "Who Is It For?",
+      "heading": "Any decision whose outcome depends on economic or market conditions may require a view that extends beyond a single market.",
+      "items": [
+        {
+          "title": "Investors",
+          "description": "When they want to understand economic conditions alongside their capital structure and decision horizon."
+        },
+        {
+          "title": "Capital owners",
+          "description": "When changes in inflation, currencies, liquidity or market conditions can materially affect a significant part of their assets."
+        },
+        {
+          "title": "Families",
+          "description": "When decisions about preserving purchasing power, maintaining liquidity or structuring wealth depend on the economic environment."
+        },
+        {
+          "title": "Executives and business owners",
+          "description": "When changes in costs, currencies, financing conditions or demand can alter the company's financial decisions."
+        },
+        {
+          "title": "People approaching a major capital decision",
+          "description": "When environmental conditions and alternative scenarios should be considered before resources are committed."
+        },
+        {
+          "title": "Decision-makers facing conflicting market information",
+          "description": "When a large volume of news and analysis creates more confusion rather than greater clarity."
+        }
+      ],
+      "ctas": [
+        {
+          "label": "Assess Whether This Service Fits My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "id": "what-we-analyze",
+      "type": "analysis-areas",
+      "eyebrow": "What We Analyze",
+      "english_label": "What We Analyze",
+      "heading": "Not every economic data point matters equally for every decision.",
+      "intro": "Depending on the nature of the issue, the analysis can focus on a different set of variables.",
+      "items": [
+        {
+          "title": "Inflation and purchasing power",
+          "description": "Assessing how changes in price levels may affect the real value of resources, costs and financial objectives."
+        },
+        {
+          "title": "Currencies",
+          "description": "Reviewing the sensitivity of assets, income, costs or the decision itself to exchange-rate movements."
+        },
+        {
+          "title": "Liquidity conditions",
+          "description": "Understanding monetary conditions and how changes in access to capital may affect markets and financial decisions."
+        },
+        {
+          "title": "Financial rates and the cost of capital",
+          "description": "Assessing how changes in the cost of funding may influence investment, financing decisions or the relative value of different options."
+        },
+        {
+          "title": "Economic policy",
+          "description": "Reviewing policy changes that may reshape the decision environment for industries, businesses or asset classes."
+        },
+        {
+          "title": "Market conditions",
+          "description": "Understanding the state of different asset classes and how they relate to the broader economic environment."
+        },
+        {
+          "title": "Risk and uncertainty",
+          "description": "Identifying the variables that can change the core assumptions behind the decision."
+        }
+      ],
+      "closing_paragraphs": [
+        "The objective is not to create a long list of indicators.",
+        "The objective is to identify which variables are genuinely more important for your specific question."
+      ],
+      "ctas": [
+        {
+          "label": "Identify the Variables That Matter for My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "id": "from-macro-conditions-to-financial-decisions",
+      "type": "macro-to-decision",
+      "eyebrow": "From Macro Conditions to Financial Decisions",
+      "english_label": "From Macro Conditions to Financial Decisions",
+      "heading": "An economic change becomes important when we understand the channel through which it reaches your decision.",
+      "paragraphs": [
+        "For example, a change in one economic variable does not necessarily create only one effect.",
+        "It may first affect purchasing power or costs.",
+        "It may then change liquidity conditions and access to financing.",
+        "That can alter the value or relative attractiveness of different assets.",
+        "Next, the level of risk or financial flexibility may change.",
+        "And ultimately, a decision that previously looked appropriate may need to be reviewed."
+      ],
+      "framework_logic": "Economic environment → Liquidity & cost of capital → Markets & assets → Risk → Decision implications",
+      "closing_paragraphs": [
+        "The value of macro analysis at DNH lies in this translation.",
+        "The issue is not simply to know whether an indicator has moved up or down, but to understand how that change relates to the question you actually need to decide."
+      ],
+      "ctas": [
+        {
+          "label": "Review How the Economy Transmits Into My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "id": "cross-market-cross-asset-perspective",
+      "type": "cross-market-view",
+      "eyebrow": "Cross-Market & Cross-Asset Perspective",
+      "english_label": "Cross-Market & Cross-Asset Perspective",
+      "heading": "When a decision is made by looking at only one market, part of the picture may remain invisible.",
+      "paragraphs": [
+        "Gold, currencies, equities, property, fixed income and cash can each behave differently under different economic conditions.",
+        "But analyzing each one independently is not always sufficient.",
+        "A currency movement can affect several markets at the same time.",
+        "Inflation can change the real value of income and cash while also reshaping market expectations.",
+        "A shift in financial conditions can simultaneously alter financing costs and the relative attractiveness of different assets.",
+        "A new policy may create an opportunity for one industry and a risk for another.",
+        "A cross-market view therefore asks:"
+      ],
+      "questions": [
+        "How are markets connected to one another?",
+        "Which change could affect several areas at the same time?",
+        "And what parts of the picture may be missed when the decision-maker focuses on only one market?"
+      ],
+      "closing": "This perspective directly addresses the issue DNH defines for this service: the limitations of a single-market view in a changing economic environment.",
+      "ctas": [
+        {
+          "label": "Review My Decision From a Cross-Market Perspective",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "id": "scenarios-not-predictions",
+      "type": "scenario-analysis",
+      "eyebrow": "Scenarios, Not Predictions",
+      "english_label": "Scenarios, Not Predictions",
+      "heading": "Professional decision-making does not require certainty about one future; it requires preparation for several possible futures.",
+      "paragraphs": [
+        "Economies and markets are driven by variables that do not always follow one predictable path.",
+        "Instead of asking “what exactly will happen?”, more useful questions can be asked:"
+      ],
+      "questions": [
+        "What if inflation is higher than expected?",
+        "What if currency conditions change?",
+        "What if access to liquidity becomes more restricted?",
+        "What if financing costs rise?",
+        "What if economic policy changes?",
+        "What if several variables change at the same time—which part of the decision becomes more vulnerable?"
+      ],
+      "closing_paragraphs": [
+        "For each scenario, the possible implications for capital, liquidity, risk, assets or the decision itself are considered.",
+        "A scenario is not a definitive forecast.",
+        "The objective is to avoid making the decision dependent on one assumption and to build greater preparedness and flexibility as conditions change."
+      ],
+      "ctas": [
+        {
+          "label": "Review Scenarios Relevant to My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "id": "strategic-implications",
+      "type": "strategic-implications",
+      "eyebrow": "Strategic Implications",
+      "english_label": "Strategic Implications",
+      "heading": "Analysis becomes complete when it can move from “what happened in the economy?” to “what now matters in my decision?”",
+      "paragraphs": [
+        "Two people can face exactly the same economic environment and yet experience very different implications for their decisions.",
+        "For one person, the central issue may be preserving purchasing power.",
+        "For another, access to liquidity over the next six months may matter more.",
+        "For an investor, portfolio structure and asset concentration may be the main concern.",
+        "For a business owner, the same economic conditions may matter through the cost of capital, currencies, cash flow or expansion plans.",
+        "At DNH, macro and market analysis should therefore ultimately lead to strategic implications:"
+      ],
+      "questions": [
+        "What has changed?",
+        "Which previous assumptions need to be reviewed?",
+        "Which risks have become more important?",
+        "What should be reconsidered before the final decision?",
+        "And which variables should continue to be monitored?"
+      ],
+      "closing": "The objective is not to provide one general instruction for everyone; it is to translate conditions into the decision-maker's real question.",
+      "ctas": [
+        {
+          "label": "Review the Strategic Implications for My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "id": "dnh-macro-advisory-process",
+      "type": "process",
+      "eyebrow": "The DNH Macro Advisory Process",
+      "english_label": "The DNH Macro Advisory Process",
+      "heading": "The analysis does not begin with the market; it begins with the decision that needs greater clarity.",
+      "steps": [
+        {
+          "number": 1,
+          "title": "Decision Context",
+          "english_label": "Decision Context",
+          "description": "First, the decision or issue is defined and the reason economic conditions matter to it is established."
+        },
+        {
+          "number": 2,
+          "title": "Key Variables",
+          "english_label": "Key Variables",
+          "description": "From the large volume of economic data, the variables most closely connected to the issue are identified."
+        },
+        {
+          "number": 3,
+          "title": "Data & Environment Review",
+          "english_label": "Data & Environment Review",
+          "description": "The state of the key variables and the changes relevant to the decision are reviewed."
+        },
+        {
+          "number": 4,
+          "title": "Relationship Analysis",
+          "english_label": "Relationship Analysis",
+          "description": "Connections among the economy, markets, liquidity, risk and the issue itself are analyzed."
+        },
+        {
+          "number": 5,
+          "title": "Scenario Development",
+          "english_label": "Scenario Development",
+          "description": "Rather than relying on one forecast, relevant alternative paths are developed."
+        },
+        {
+          "number": 6,
+          "title": "Strategic Implications",
+          "english_label": "Strategic Implications",
+          "description": "The effect of each scenario on the decision, assets, liquidity or the business is considered."
+        },
+        {
+          "number": 7,
+          "title": "Decision Synthesis",
+          "english_label": "Decision Synthesis",
+          "description": "The most important insights, risks, assumptions and areas requiring attention are consolidated into a usable decision picture."
+        },
+        {
+          "number": 8,
+          "title": "Next-Step Planning",
+          "english_label": "Next-Step Planning",
+          "description": "The areas requiring further review and the variables that matter going forward are identified."
+        }
+      ],
+      "closing": "This process is aligned with DNH's broader philosophy: economic and market analysis should serve intelligence and decision-making, rather than becoming an end in itself or the primary identity of the brand.",
+      "ctas": [
+        {
+          "label": "Start Reviewing My Decision in Its Economic Context",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "id": "what-you-gain",
+      "type": "outcomes",
+      "eyebrow": "What You Gain",
+      "english_label": "What You Gain",
+      "heading": "The outcome of Macro & Market Advisory is not simply a set of charts; it should create a clearer picture of the environment in which the decision is being made.",
+      "intro": "Depending on the question and the scope of the review, the output may include:",
+      "items": [
+        {
+          "title": "A structured picture of the relevant economic environment",
+          "description": "A synthesis of the factors most closely connected to your decision."
+        },
+        {
+          "title": "Key variables",
+          "description": "Identifying the factors whose movement could change the assumptions behind the decision."
+        },
+        {
+          "title": "Primary risks",
+          "description": "Issues that have greater importance in current conditions or in alternative scenarios."
+        },
+        {
+          "title": "Relevant scenarios",
+          "description": "Paths that are worth considering in relation to the decision."
+        },
+        {
+          "title": "Connections among markets and variables",
+          "description": "Understanding how a change in one area can affect other relevant areas."
+        },
+        {
+          "title": "Assumptions to monitor",
+          "description": "Factors that should continue to be watched as the decision evolves."
+        },
+        {
+          "title": "Strategic implications",
+          "description": "What current conditions mean for capital, liquidity, asset structure or the decision under review."
+        },
+        {
+          "title": "Decision priorities",
+          "description": "Clarifying the issues that are better understood before final action is taken."
+        }
+      ],
+      "closing_paragraphs": [
+        "This service is not a buy/sell signal, a definitive price forecast, a guarantee of return or a daily market commentary product.",
+        "Its purpose is to create greater clarity for decision-making in a changing environment."
+      ],
+      "ctas": [
+        {
+          "label": "Explore the Right Output for My Decision",
+          "type": "primary"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "id": "understand-the-environment-before-you-decide",
+      "type": "final-cta",
+      "eyebrow": "Understand the Environment Before You Decide",
+      "english_label": "Understand the Environment Before You Decide",
+      "heading": "The decision may be yours, but the economic environment can change the conditions under which it will be executed.",
+      "paragraphs": [
+        "If you are approaching a major decision involving capital, a portfolio, liquidity, financing, business expansion or wealth structure—and the outcome depends on economic or market conditions—the starting point is not necessarily a market forecast.",
+        "The first step is to establish:"
+      ],
+      "checklist": [
+        "What decision needs to be made;",
+        "Which economic variables are genuinely relevant to it;",
+        "Which scenarios are worth considering;",
+        "and what changing conditions could mean for the decision."
+      ],
+      "closing_paragraphs": [
+        "At the initial assessment stage, you do not need to provide every financial detail or confidential document. The first step is to clarify the issue, objective and required depth of analysis; if there is a fit, the specialist scope can then be defined.",
+        "DNH views markets and the economy as tools for intelligence and decision-making—not as a platform for producing definitive forecasts or encouraging moment-to-moment reactions.",
+        "The objective is to see the decision within the environment in which it will actually be implemented before action is taken."
+      ],
+      "ctas": [
+        {
+          "label": "Start an Assessment of the Decision",
+          "type": "primary"
+        },
+        {
+          "label": "Request Macro & Market Advice",
+          "type": "secondary"
+        }
+      ]
+    }
+  ]
+}

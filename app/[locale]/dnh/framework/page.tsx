@@ -1,6 +1,5 @@
 import { localizePageMetadata } from "@/lib/site-seo";
 import { normalizeSiteLocale } from "@/lib/site-language";
-import { FrameworkHero } from "@/components/static/DNH/framework/DnhFrameworkHero";
 import { FrameworkDataIntelligence } from "@/components/static/DNH/framework/FrameworkBoundarySection";
 import { FrameworkHorizonArchitecture } from "@/components/static/DNH/framework/FrameworkCtaSection";
 import { FrameworkFromDataToDecision } from "@/components/static/DNH/framework/FrameworkDecisionFlowSection";
@@ -12,6 +11,7 @@ import { FrameworkApplications } from "@/components/static/DNH/framework/Framewo
 import { FrameworkDecisionOutputs } from "@/components/static/DNH/framework/FrameworkDecisionOutputs";
 import { FrameworkBoundaries } from "@/components/static/DNH/framework/FrameworkBoundaries";
 import { FrameworkStructuredAssessmentCTA } from "@/components/static/DNH/framework/FrameworkStructuredAssessmentCTA";
+import { FrameworkHero } from "@/components/static/DNH/framework/DnhFrameworkHero";
 
 const page = () => {
   return (

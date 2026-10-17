@@ -50,12 +50,12 @@ const categoryIcons = {
   "behavioral-finance": BrainCircuit,
 } as const;
 const categoryImages = [
-  "/assets/images/private-wealth-strategy.webp",
-  "/assets/images/strategic-financial-advisory.webp",
-  "/assets/images/risk-management-wealth-protection.webp",
-  "/assets/images/portfolio-intelligence.webp",
-  "/assets/images/macro-market-advisory.webp",
-  "/assets/images/executive-briefings.webp",
+  "/assets/images/private-wealth-strategy .webp",
+  "/assets/images/strategic-financial-advisory .webp",
+  "/assets/images/risk-management-wealth-protection .webp",
+  "/assets/images/portfolio-intelligence .webp",
+  "/assets/images/macro-market-advisory .webp",
+  "/assets/images/executive-briefings .webp",
 ];
 
 export function HomeInsights() {
