@@ -95,7 +95,7 @@ export function IntelligenceDeskHero() {
             />
             <h1
               id="dnh-intelligence-desk-hero-heading"
-              className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,8.2vw,2.6rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,5.7vw,3.75rem)] lg:text-[clamp(3.05rem,4vw,4.25rem)] ${
+              className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,8.2vw,2.6rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.65rem,5.7vw,2.75rem)] lg:text-[clamp(3.05rem,4vw,3.25rem)] ${
                 isRTL ? "leading-[1.52]" : "leading-[1.1]"
               }`}
             >
@@ -106,7 +106,7 @@ export function IntelligenceDeskHero() {
             </h1>
 
             <div
-              className={`mt-6 max-w-[74ch] space-y-4 border-s-2 border-brand-accent ps-4 text-[14px] text-white/[0.78] sm:mt-7 sm:ps-5 sm:text-[15px] ${
+              className={`mt-6 max-w-[94ch] space-y-4 border-s-2 border-brand-accent ps-4 text-[14px] text-white/[0.78] sm:mt-7 sm:ps-5 sm:text-[15px] ${
                 isRTL ? "leading-[2]" : "leading-[1.74]"
               }`}
             >
@@ -150,14 +150,7 @@ export function IntelligenceDeskHero() {
                 <h2 className="mt-4 text-start text-[15px] font-black leading-[1.7] text-white sm:text-[16px]">
                   {area.label}
                 </h2>
-                {locale === "fa" ? (
-                  <bdi
-                    dir="ltr"
-                    className="mt-1 block text-start text-[10px] font-bold uppercase tracking-[0.08em] text-white/42"
-                  >
-                    {area.english_label}
-                  </bdi>
-                ) : null}
+               
               </article>
             );
           })}

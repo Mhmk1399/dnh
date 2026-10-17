@@ -62,8 +62,8 @@ export function SectionHeading({
       id={id}
       style={{
         fontSize: hero
-          ? "clamp(2.2rem, 4.6vw, 3.65rem)"
-          : "clamp(1.8rem, 3.05vw, 3.15rem)",
+          ? "clamp(2.2rem, 4.6vw, 2.7rem)"
+          : "clamp(1.8rem, 3.05vw, 2.7rem)",
         lineHeight: isRTL ? 1.46 : 1.08,
       }}
       className={`text-pretty font-black ${
@@ -460,11 +460,8 @@ export function ChecklistGrid({
             light ? "border-white/18" : "border-line"
           }`}
         >
-          <span className="text-[10px] font-black text-brand-accent">
-            {String(index + 1).padStart(2, "0")}
-          </span>
           <p
-            className={`mt-2 text-[14px] font-bold sm:text-[15px] ${
+            className={`mt-2 text-[14px] font-bold sm:text-[13px] ${
               light ? "text-white" : "text-ink"
             } ${isRTL ? "leading-[1.9]" : "leading-[1.55]"}`}
           >

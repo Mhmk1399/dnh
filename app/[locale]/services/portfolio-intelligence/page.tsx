@@ -37,13 +37,13 @@ const page = () => {
         enData={portfolioEn}
         media={{
           1: {
-            src: "/assets/images/risk.webp",
-            mobileSrc: "/assets/images/risk.webp",
+            src: "/assets/images/portfolio-intelligence-hero.webp",
+            mobileSrc: "/assets/images/portfolio-intelligence-hero.webp",
             alt: "Portfolio Intelligence advisory and portfolio structure review",
           },
           6: {
-            src: "/assets/images/risk.webp",
-            mobileSrc: "/assets/images/risk.webp",
+            src: "/assets/images/strategic-role-of-each-asset-class.webp",
+            mobileSrc: "/assets/images/strategic-role-of-each-asset-class.webp",
             alt: "Portfolio structure, allocation and liquidity assessment",
           },
         }}

@@ -127,14 +127,7 @@ function RiskBand({
           <Icon aria-hidden="true" size={20} strokeWidth={1.6} />
         </span>
 
-        <bdi
-          dir="ltr"
-          className={`text-[10px] font-extrabold uppercase tracking-[0.09em] sm:text-[11px] ${
-            isHigh ? "text-white/65" : "text-ink-muted"
-          }`}
-        >
-          {level.english_label}
-        </bdi>
+      
       </div>
 
       <div className="mt-auto min-w-0 pt-8 text-start">

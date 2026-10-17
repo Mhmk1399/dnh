@@ -52,15 +52,14 @@ export default function ExecutiveBriefingsPage() {
       enData={briefingsEn}
       media={{
         1: {
-          src: "/assets/images/risk.webp",
-          mobileSrc: "/assets/images/risk.webp",
+          src: "/assets/images/executive-briefings-hero.webp",
+          mobileSrc: "/assets/images/executive-briefings-hero.webp",
           alt: "Private executive briefing for senior decision-makers",
           objectPosition: "center center",
         },
         6: {
-          src: "/assets/images/risk.webp",
-          mobileSrc:
-            "/assets/images/risk.webp",
+          src: "/assets/images/pre-briefing-review.webp",
+          mobileSrc: "/assets/images/pre-briefing-review.webp",
           alt: "Focused pre-briefing review for an executive decision",
           objectPosition: "center center",
         },

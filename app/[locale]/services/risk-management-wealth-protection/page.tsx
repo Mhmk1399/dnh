@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
- import riskEn from "@/config/DNH_Risk_Management_Wealth_Protection_Final_EN.json";
+import riskEn from "@/config/DNH_Risk_Management_Wealth_Protection_Final_EN.json";
 import riskFa from "@/config/DNH_Risk_Management_Wealth_Protection_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
@@ -52,16 +52,15 @@ export default function RiskManagementWealthProtectionPage() {
       enData={riskEn}
       media={{
         1: {
-          src: "/assets/images/risk.webp",
+          src: "/assets/images/risk-management-wealth-protection-hero.webp",
           mobileSrc:
-           "/assets/images/risk.webp",
+            "/assets/images/risk-management-wealth-protection-hero.webp",
           alt: "Risk management and wealth protection advisory",
           objectPosition: "center center",
         },
         6: {
-          src: "/assets/images/risk.webp",
-          mobileSrc:
-           "/assets/images/risk.webp",
+          src: "/assets/images/concentration-dependency-risk.webp",
+          mobileSrc: "/assets/images/concentration-dependency-risk.webp",
           alt: "Assessment of concentration, dependency and structural risk",
           objectPosition: "center center",
         },

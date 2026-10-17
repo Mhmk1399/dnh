@@ -70,8 +70,7 @@ export function WealthDefinitionSection({ section, direction }: WealthSectionPro
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent"
               />
-              <span aria-hidden="true" className="absolute end-5 top-5 size-5 bg-brand-accent" />
-            </div>
+             </div>
           ) : null}
         </div>
 

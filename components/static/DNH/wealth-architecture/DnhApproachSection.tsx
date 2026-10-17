@@ -48,9 +48,9 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
           </div>
         </div>
 
-        <div   className="mt-9 grid min-w-0 grid-cols-1  border-s border-t border-white/15 lg:grid-cols-3">
+        <div className="mt-9 grid min-w-0 grid-cols-1  border-s border-t border-white/15 lg:grid-cols-3">
           {items.map((item, index) => {
-             const letter = frameworkLetters[index] ?? String(index + 1);
+            const letter = frameworkLetters[index] ?? String(index + 1);
 
             return (
               <article
@@ -64,7 +64,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
                 >
                   {letter}
                 </bdi>
-              
+
                 <h3
                   className={`mt-4 text-start text-[20px] font-black text-white sm:text-[22px] ${
                     direction === "rtl" ? "leading-[1.65]" : "leading-[1.3]"
@@ -72,15 +72,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
                 >
                   {item.title}
                 </h3>
-                {item.english_label ? (
-                  <bdi
-                    dir="ltr"
-                    className="mt-2 block text-start text-[10px] font-bold tracking-[0.23em] text-white/45"
-                  >
-                    {item.english_label}
-                  </bdi>
-                ) : null}
-            
+
                 <p
                   className={`mt-5 text-start text-[14px] text-white/62 ${
                     direction === "rtl" ? "leading-[1.95]" : "leading-[1.68]"

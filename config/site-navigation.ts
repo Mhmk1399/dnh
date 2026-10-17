@@ -167,7 +167,7 @@ export const SERVICE_ITEMS: MegaItem[] = [
   {
     title: "مشاوره مالی راهبردی",
     description:
-      "بررسی تصمیم‌هایی که سرمایه، نقدینگی، تأمین مالی و آینده کسب‌وکار را به هم مرتبط می‌کنند.",
+      "بررسی تصمیم‌هایی که سرمایه، نقدینگی، تأمین مالی   را به هم مرتبط می‌کنند.",
     href: "/services/strategic-financial-advisory",
     icon: "advisory",
   },

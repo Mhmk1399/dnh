@@ -75,8 +75,8 @@
         }
       ],
       "media": {
-        "src": "/assets/images/home-intelligence-heading.webp",
-        "mobile_src": "/assets/images/home-intelligence-heading.webp",
+        "src": "/assets/images/dnh-intelligence-desk-hero.webp",
+        "mobile_src": "/assets/images/dnh-intelligence-desk-hero.webp",
         "alt": "میز تحلیل یکپارچه برای رصد ریسک، نقدینگی، اقتصاد و دارایی‌ها"
       }
     },
@@ -193,8 +193,8 @@
       ],
       "heading_highlight": "در ارتباط با یکدیگر تفسیر کرد",
       "media": {
-        "src": "/assets/images/macro-market-advisory.webp",
-        "mobile_src": "/assets/images/macro-market-advisory.webp",
+        "src": "/assets/images/what-we-monitor.webp",
+        "mobile_src": "/assets/images/what-we-monitor.webp",
         "alt": "نمای اقتصاد جهانی، بازارها و متغیرهای کلان تحت رصد"
       }
     },
@@ -346,8 +346,8 @@
       ],
       "heading_highlight": "هر دارایی در شرایط فعلی چه نقشی می‌تواند داشته باشد",
       "media": {
-        "src": "/assets/images/portfolio-intelligence.webp",
-        "mobile_src": "/assets/images/portfolio-intelligence.webp",
+        "src": "/assets/images/asset-positioning.webp",
+        "mobile_src": "/assets/images/asset-positioning.webp",
         "alt": "لایه‌های تحلیلی برای بررسی جایگاه و نقش دارایی‌ها"
       }
     },
@@ -508,8 +508,8 @@
       ],
       "heading_highlight": "متغیرهایی را نیز دنبال می‌کند که می‌توانند شرایط فردا را تغییر دهند",
       "media": {
-        "src": "/assets/images/research-and-case-studies.webp",
-        "mobile_src": "/assets/images/research-and-case-studies.webp",
+        "src": "/assets/images/what-to-watch.webp",
+        "mobile_src": "/assets/images/what-to-watch.webp",
         "alt": "پرونده تحلیلی برای رصد متغیرها و رویدادهای اثرگذار آینده"
       }
     },

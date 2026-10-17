@@ -43,7 +43,7 @@ export async function generateMetadata({
     ROUTE,
     locale,
   );
-}
+} 
 
 export default function StrategicFinancialAdvisoryPage() {
   return (
@@ -52,14 +52,14 @@ export default function StrategicFinancialAdvisoryPage() {
       enData={strategicEn}
       media={{
         1: {
-          src: "/assets/images/risk.webp",
-          mobileSrc: "/assets/images/risk.webp",
+          src: "/assets/images/strategic-financial-advisory-hero.webp",
+          mobileSrc: "/assets/images/strategic-financial-advisory-hero.webp",
           alt: "Strategic financial advisory for business and capital decisions",
           objectPosition: "center center",
         },
         6: {
-          src: "/assets/images/risk.webp",
-          mobileSrc: "/assets/images/risk.webp",
+          src: "/assets/images/what-we-assess-services.webp",
+          mobileSrc: "/assets/images/what-we-assess-services.webp",
           alt: "Review of financial structure, liquidity and financing decisions",
           objectPosition: "center center",
         },

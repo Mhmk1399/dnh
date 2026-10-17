@@ -52,15 +52,15 @@ export default function MacroMarketAdvisoryPage() {
       enData={macroEn}
       media={{
         1: {
-          src:"/assets/images/risk.webp",
-          mobileSrc:"/assets/images/risk.webp",
+          src: "/assets/images/macro-market-advisory-hero.webp",
+          mobileSrc: "/assets/images/macro-market-advisory-hero.webp",
           alt: "Macro and market advisory for financial decision-making",
           objectPosition: "center center",
         },
         6: {
-          src: "/assets/images/risk.webp",
+          src: "/assets/images/from-macro-conditions-to-financial-decisions.webp",
           mobileSrc:
-            "/assets/images/risk.webp",
+            "/assets/images/from-macro-conditions-to-financial-decisions.webp",
           alt: "Economic environment and market implications assessment",
           objectPosition: "center center",
         },

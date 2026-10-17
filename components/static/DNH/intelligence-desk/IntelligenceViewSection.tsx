@@ -148,23 +148,7 @@ export function CurrentIntelligenceSnapshot() {
         </header>
 
         <div className="mt-8 overflow-hidden border border-line bg-page sm:mt-10 lg:mt-12">
-          <div className="flex min-w-0 items-center justify-between gap-4 border-b border-line bg-brand-primary px-4 py-3.5 text-white sm:px-6 sm:py-4">
-            <div className="min-w-0 text-start">
-              <bdi
-                dir="ltr"
-                className="block truncate text-[11px] font-bold uppercase tracking-[0.075em] text-white/65 sm:text-[12px]"
-              >
-                {content.english_label}
-              </bdi>
-            </div>
-            <span className="flex shrink-0 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.08em] text-white/55 sm:text-[11px]">
-              <span
-                aria-hidden="true"
-                className="size-1.5 bg-brand-accent shadow-[0_0_0_4px_rgba(252,133,2,0.12)]"
-              />
-              <span aria-hidden="true">DNH</span>
-            </span>
-          </div>
+         
 
           <div className="grid min-w-0 grid-cols-1 gap-px bg-line md:grid-cols-2 xl:grid-cols-3">
             {content.indicators.map((indicator) => {
@@ -200,14 +184,7 @@ export function CurrentIntelligenceSnapshot() {
                       {indicator.title}
                     </h3>
 
-                    {locale === "fa" ? (
-                      <bdi
-                        dir="ltr"
-                        className="mt-1 block w-fit max-w-full text-[10px] font-bold uppercase tracking-[0.055em] text-brand-primary/70 sm:text-[11px]"
-                      >
-                        {indicator.english_label}
-                      </bdi>
-                    ) : null}
+                
 
                     <p
                       className={`mt-3 text-[13.5px] font-medium text-ink-muted sm:text-[14px] ${
@@ -218,12 +195,12 @@ export function CurrentIntelligenceSnapshot() {
                     </p>
                   </div>
 
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-x-4 bottom-0 h-[2px] overflow-hidden bg-transparent sm:inset-x-6 lg:inset-x-7"
-                  >
-                    <span className="block h-full w-10 bg-brand-accent transition-[width] duration-200 group-hover:w-20 motion-reduce:transition-none" />
-                  </div>
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-4 bottom-0 h-[2px] overflow-hidden bg-transparent sm:inset-x-6 lg:inset-x-7"
+                    >
+                      <span className="block h-full w-10 bg-brand-accent transition-[width] duration-200 group-hover:w-20 motion-reduce:transition-none" />
+                    </div>
                 </article>
               );
             })}
