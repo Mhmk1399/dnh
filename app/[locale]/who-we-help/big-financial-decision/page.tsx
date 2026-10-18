@@ -17,5 +17,5 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = normalizeSiteLocale((await params).locale);
   const content = locale === "fa" ? contentFa : contentEn;
   const description = content.sections[0].paragraphs?.[0] ?? content.title;
-  return localizePageMetadata({ title: content.title, description, openGraph: { title: content.title, description, images: [{ url: "/assets/images/major-financial-decision.jpg", alt: content.title }] } }, path, locale);
+  return localizePageMetadata({ title: content.title, description, openGraph: { title: content.title, description, images: [{ url: "/assets/images/big-financial-decision4.webp", alt: content.title }] } }, path, locale);
 }

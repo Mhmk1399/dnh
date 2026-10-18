@@ -240,13 +240,6 @@ export const KNOWLEDGE_ITEMS: MegaItem[] = [
     icon: "outlook",
   },
 
-  {
-    title: "بینش‌ها",
-    description:
-      "تحلیل‌های تصمیم‌محور درباره معماری ثروت، ریسک، نقدینگی و تصمیم‌گیری مالی.",
-    href: "/knowledge/insights",
-    icon: "insight",
-  },
 
   {
     title: "پژوهش",
