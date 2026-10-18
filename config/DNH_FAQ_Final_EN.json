@@ -1,0 +1,263 @@
+{
+  "page": "faq",
+  "locale": "en",
+  "direction": "ltr",
+  "seo": {
+    "title": "Frequently Asked Questions | DNH",
+    "description": "Clear answers about DNH advisory services, process, information requirements and professional boundaries."
+  },
+  "hero": {
+    "eyebrow": "Knowledge / FAQ",
+    "title": "Questions worth clarifying before an advisory conversation",
+    "description": "A practical reference to DNH, its advisory paths, working process and professional boundaries—so you can approach a consequential financial decision with a clearer starting point.",
+    "indexLabel": "Knowledge index",
+    "indexNote": "Choose a topic or read the reference in sequence.",
+    "questionCountLabel": "questions"
+  },
+  "categories": [
+    {
+      "id": "dnh-and-fit",
+      "label": "DNH and fit",
+      "title": "Understanding DNH and when it may be relevant",
+      "intro": "DNH is designed for financial questions that require structure, context and judgement rather than a generic answer.",
+      "items": [
+        {
+          "id": "what-is-dnh",
+          "question": "What is DNH?",
+          "answer": [
+            "DNH is a professional system at the intersection of Wealth Architecture, Strategic Financial Advisory and Wealth Intelligence. It helps decision-makers understand capital, assets, liquidity, risk, objectives, economic conditions and time horizon as connected parts of one financial structure.",
+            "Its purpose is not to increase the volume of transactions. It is to improve the clarity, structure and discipline behind consequential financial decisions."
+          ],
+          "link": { "label": "About DNH", "href": "/about" }
+        },
+        {
+          "id": "who-is-dnh-for",
+          "question": "Who is DNH designed for?",
+          "answer": [
+            "DNH is designed for individuals, families, asset owners and investors whose wealth has become more complex, as well as executives, business owners, companies and holding groups facing decisions about capital, liquidity, financing or financial structure.",
+            "It is particularly relevant when several assets, objectives, obligations or decision horizons need to be considered together."
+          ]
+        },
+        {
+          "id": "when-is-dnh-useful",
+          "question": "When can an advisory conversation be useful?",
+          "answer": [
+            "It may be useful when assets have become fragmented, risk concentration is difficult to see, liquidity needs are changing, or a major decision could materially alter personal wealth or a business's capital structure.",
+            "A conversation may also be appropriate when the issue is clear but the available options, trade-offs and scenarios are not."
+          ],
+          "link": { "label": "Explore who DNH helps", "href": "/who-we-help" }
+        }
+      ]
+    },
+    {
+      "id": "advisory-path",
+      "label": "Choosing an advisory path",
+      "title": "Finding the right route through the question",
+      "intro": "You do not need to diagnose your own requirement before contacting DNH. The starting point is the decision context, not a service label.",
+      "items": [
+        {
+          "id": "choose-service-first",
+          "question": "Do I need to choose a service before contacting DNH?",
+          "answer": [
+            "No. Describe the decision, the context around it and the support you are seeking. The initial review is used to understand the subject matter and determine which advisory path, if any, is appropriate.",
+            "Some questions span more than one service. Starting with the real issue avoids forcing a complex situation into the wrong category."
+          ],
+          "link": { "label": "Start a conversation", "href": "/contact" }
+        },
+        {
+          "id": "wealth-strategy-vs-portfolio-intelligence",
+          "question": "How do Private Wealth Strategy and Portfolio Intelligence differ?",
+          "answer": [
+            "Private Wealth Strategy considers the wider wealth structure: assets, objectives, family or business connections, liquidity, risk, major decisions and long-term direction.",
+            "Portfolio Intelligence focuses more specifically on the asset mix—its structure, the role of each holding, concentration risk, liquidity and alignment with objectives. It is an analytical and decision-support service, not portfolio management."
+          ],
+          "link": { "label": "View DNH services", "href": "/services" }
+        },
+        {
+          "id": "strategic-financial-advisory-use",
+          "question": "What kinds of questions belong to Strategic Financial Advisory?",
+          "answer": [
+            "Strategic Financial Advisory is intended for decisions that connect business direction with capital, liquidity, financing and financial structure. Examples include comparing financing routes, prioritising capital projects, reviewing overlapping commitments, or considering how a major transaction may affect future flexibility.",
+            "The work frames options and trade-offs; it does not replace the judgement or authority of the executive, owner or board making the decision."
+          ]
+        },
+        {
+          "id": "macro-market-role",
+          "question": "What is the role of Macro & Market Advisory?",
+          "answer": [
+            "Macro & Market Advisory translates inflation, currencies, interest rates, policy shifts, market conditions and other external variables into implications for a particular decision or financial structure.",
+            "It is not a stand-alone news feed or a prediction service. Market intelligence is used to improve context, scenario awareness and decision quality."
+          ]
+        },
+        {
+          "id": "executive-briefing-definition",
+          "question": "What is an Executive Briefing?",
+          "answer": [
+            "A DNH Executive Briefing is a private, structured session focused on one clearly defined financial, capital, economic or strategic decision. Relevant information, variables, options, risks and scenarios are brought together so the decision-maker can examine the issue in one focused setting.",
+            "It is not a public presentation, training session or substitute for a deep analytical project. If the issue requires broader data, modelling or investigation, the initial assessment may identify another specialist engagement as the more appropriate route."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "process-and-outputs",
+      "label": "Process and outputs",
+      "title": "What happens after the question is defined",
+      "intro": "The process follows the DNH decision logic: relevant data is translated into analysis, insight, scenarios and a clearer decision path.",
+      "items": [
+        {
+          "id": "initial-assessment",
+          "question": "What happens during the initial assessment?",
+          "answer": [
+            "The initial assessment clarifies the decision, the surrounding financial context, the parties involved, relevant constraints and the outcome the decision-maker is trying to achieve.",
+            "It also helps determine whether the issue fits DNH's scope and what additional information would be proportionate for the next stage."
+          ]
+        },
+        {
+          "id": "collaboration-process",
+          "question": "How does the advisory process work?",
+          "answer": [
+            "The exact process depends on the question and agreed scope. In general, DNH identifies decision-relevant information, analyses the relationships among variables, surfaces risks and trade-offs, and develops scenarios or options that make the decision easier to evaluate.",
+            "The work is collaborative: assumptions, objectives and constraints need to be clarified with the decision-maker rather than inferred from numbers alone."
+          ],
+          "link": { "label": "Explore the DNH Framework", "href": "/dnh/framework" }
+        },
+        {
+          "id": "expected-outputs",
+          "question": "What kind of output should I expect?",
+          "answer": [
+            "Outputs are shaped by the agreed scope. They may include a structured view of the current position, risk and liquidity observations, option comparisons, scenario implications, decision criteria, or a defined set of priorities and next questions.",
+            "DNH does not present every engagement as the same standard package. The output should serve the decision, not force the decision into a predetermined format."
+          ]
+        },
+        {
+          "id": "who-makes-decision",
+          "question": "Who remains responsible for the final decision?",
+          "answer": [
+            "The individual, family, executive, owner, board or other authorised decision-maker retains responsibility for the decision and any action taken.",
+            "DNH supports the quality of the decision by clarifying evidence, assumptions, scenarios, risks and trade-offs; it does not transfer decision authority away from the person or body responsible."
+          ]
+        },
+        {
+          "id": "follow-up-and-review",
+          "question": "Does every engagement include ongoing follow-up?",
+          "answer": [
+            "No. Review and follow-up are used when they are relevant to the question and included within the agreed scope.",
+            "A decision may need to be revisited when objectives, information, market conditions or constraints change, but no fixed review cadence should be assumed unless it has been specifically agreed."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "information-and-confidentiality",
+      "label": "Information and confidentiality",
+      "title": "Sharing enough context without oversharing",
+      "intro": "A concise first brief is usually more useful than an unstructured archive of documents.",
+      "items": [
+        {
+          "id": "records-at-first-contact",
+          "question": "Do I need to send full financial records at first contact?",
+          "answer": [
+            "No. Full financial records are not required for the first enquiry. Begin with a concise description of the decision, why it matters now, the main parties or assets involved and what you would like the advisory process to clarify.",
+            "If further information is needed, it can be identified after the scope and relevance of the issue are understood."
+          ]
+        },
+        {
+          "id": "first-request-content",
+          "question": "What should I include in my first request?",
+          "answer": [
+            "Explain the decision or financial question, the broader context, any important deadline or constraint, and the type of uncertainty you are trying to resolve. Approximate figures may be enough to establish context where exact records are not yet necessary.",
+            "Avoid including irrelevant personal data. A focused description helps the initial review more than volume alone."
+          ]
+        },
+        {
+          "id": "information-handling",
+          "question": "How is the information in an enquiry used?",
+          "answer": [
+            "Information submitted through the contact process is used to assess the enquiry, understand its fit with DNH's advisory scope and arrange an appropriate follow-up where relevant.",
+            "Only information necessary for that initial purpose should be included."
+          ]
+        },
+        {
+          "id": "sensitive-information-warning",
+          "question": "What information should I never send through the enquiry form?",
+          "answer": [
+            "Do not send passwords, one-time codes, banking credentials, card details, access keys or unnecessary identity documents. Do not provide sensitive data that is not required to explain the financial question.",
+            "If a later stage requires supporting documents, the appropriate scope and method should first be established."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professional-boundaries",
+      "label": "Professional boundaries",
+      "title": "What DNH analysis does—and does not—promise",
+      "intro": "Clear boundaries protect the quality of the advisory process and prevent analysis from being mistaken for certainty.",
+      "items": [
+        {
+          "id": "buy-sell-signals",
+          "question": "Does DNH provide buy or sell signals?",
+          "answer": [
+            "No. DNH is not a trading signal channel and is not designed around short-term entries and exits.",
+            "Assets and markets may be analysed, but the analysis is used to understand their role, risk and implications within a wider financial structure and decision context."
+          ]
+        },
+        {
+          "id": "predictions-and-guarantees",
+          "question": "Does DNH predict prices or guarantee returns?",
+          "answer": [
+            "No. DNH does not promise exact price predictions, profits or guaranteed returns. Financial decisions take place under uncertainty, and outcomes can be affected by variables that cannot be controlled or known in advance.",
+            "The aim is to improve the reasoning, evidence and resilience behind a decision—not to present uncertainty as certainty."
+          ]
+        },
+        {
+          "id": "portfolio-management-boundary",
+          "question": "Is Portfolio Intelligence a portfolio-management service?",
+          "answer": [
+            "No. Portfolio Intelligence examines the structure, roles, concentration, liquidity, risk and objective alignment of a portfolio. It supports the decision-maker's understanding of the asset mix.",
+            "It should not be interpreted as discretionary portfolio management or an instruction to transact in a particular asset."
+          ]
+        },
+        {
+          "id": "risk-cannot-be-eliminated",
+          "question": "Can risk management eliminate risk or guarantee against loss?",
+          "answer": [
+            "No. Risk management cannot remove all uncertainty or guarantee that losses will not occur. Its role is to identify material exposures, assess their possible effects and improve preparedness, protection priorities and decision resilience.",
+            "Every response to risk also involves constraints and trade-offs that must be evaluated in context."
+          ]
+        },
+        {
+          "id": "why-scenarios",
+          "question": "Why does DNH use scenarios instead of one definitive forecast?",
+          "answer": [
+            "A single forecast can conceal how sensitive a decision is to changing assumptions. Scenario analysis considers several plausible conditions and asks how each could affect liquidity, risk, objectives and available options.",
+            "Scenarios are not promises about what will happen. They help decision-makers recognise dependencies, prepare for more than one path and avoid building a strategy around false certainty."
+          ],
+          "link": { "label": "Read the DNH Framework", "href": "/dnh/framework" }
+        }
+      ]
+    }
+  ],
+  "boundaryFeature": {
+    "eyebrow": "A useful distinction",
+    "title": "Better decisions do not require false certainty.",
+    "description": "DNH separates structured decision support from signals, promises and predictions. The objective is a clearer view of the position, risks, scenarios and trade-offs—while responsibility remains with the decision-maker.",
+    "statements": [
+      "Context before isolated recommendations",
+      "Scenarios before a single-point forecast",
+      "Decision quality before transaction volume"
+    ]
+  },
+  "closing": {
+    "eyebrow": "Still defining the question?",
+    "title": "You do not need to choose the service before you start.",
+    "description": "Share the decision context and the uncertainty you are trying to resolve. The initial review can help identify whether there is an appropriate advisory path.",
+    "primaryCta": { "label": "Contact DNH", "href": "/contact" },
+    "secondaryCta": { "label": "Explore services", "href": "/services" }
+  },
+  "ui": {
+    "openAnswer": "Open answer",
+    "closeAnswer": "Close answer",
+    "backToIndex": "Back to knowledge index"
+  }
+}
