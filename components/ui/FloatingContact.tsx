@@ -1,9 +1,29 @@
 "use client";
 
 import { ArrowUpLeft, Mail, MessageCircleMore, Phone, X } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 
 const SESSION_KEY = "dnh-floating-contact-intro-seen";
+const REVEAL_SCROLL_OFFSET = 100;
+
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener("scroll", callback, { passive: true });
+  return () => window.removeEventListener("scroll", callback);
+}
+
+function getScrollSnapshot() {
+  return window.scrollY >= REVEAL_SCROLL_OFFSET;
+}
+
+function getServerScrollSnapshot() {
+  return false;
+}
 
 type FloatingContactProps = {
   phone: string;
@@ -20,6 +40,11 @@ export function FloatingContact({
 }: FloatingContactProps) {
   const [open, setOpen] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const isVisible = useSyncExternalStore(
+    subscribeToScroll,
+    getScrollSnapshot,
+    getServerScrollSnapshot,
+  );
 
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +55,8 @@ export function FloatingContact({
   ------------------------------------------------------------------ */
 
   useEffect(() => {
+    if (!isVisible) return;
+
     let revealTimer: number | undefined;
     let hideTimer: number | undefined;
 
@@ -62,7 +89,13 @@ export function FloatingContact({
       if (revealTimer !== undefined) window.clearTimeout(revealTimer);
       if (hideTimer !== undefined) window.clearTimeout(hideTimer);
     };
-  }, []);
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (isVisible) return;
+    setOpen(false);
+    setShowIntro(false);
+  }, [isVisible]);
 
   /* ------------------------------------------------------------------
      Escape + click outside
@@ -108,13 +141,25 @@ export function FloatingContact({
     <div
       ref={rootRef}
       dir="rtl"
-      className="
+      aria-hidden={!isVisible}
+      className={`
         fixed
         z-[70]
         flex
         flex-col
         items-end
-      "
+
+        transition-[opacity,transform,visibility]
+        duration-300
+        ease-[cubic-bezier(.22,1,.36,1)]
+        motion-reduce:transition-none
+
+        ${
+          isVisible
+            ? "visible translate-y-0 opacity-100"
+            : "invisible translate-y-3 opacity-0 pointer-events-none"
+        }
+      `}
       style={{
         right: "max(16px, env(safe-area-inset-right))",
         bottom: "max(18px, env(safe-area-inset-bottom))",
@@ -559,6 +604,7 @@ export function FloatingContact({
 
       <button
         type="button"
+        tabIndex={isVisible ? 0 : -1}
         onClick={toggleContacts}
         aria-expanded={open}
         aria-controls="dnh-floating-contact-panel"

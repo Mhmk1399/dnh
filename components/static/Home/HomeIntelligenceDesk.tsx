@@ -88,12 +88,12 @@ export function HomeIntelligenceDesk() {
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,1.12fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
           </div>
           <h2
             id="home-intelligence-heading"
-            className={`mt-5 max-w-[23ch] text-pretty text-[clamp(2rem,7.5vw,3rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.55rem,4.3vw,3.65rem)] lg:max-w-none ${isRTL ? "leading-[1.46]" : "leading-[1.14]"}`}
+            className={`mt-5 max-w-[23ch] text-pretty text-[clamp(2rem,7.5vw,3rem)] font-black tracking-[-0.03em] sm:text-3xl lg:max-w-none ${isRTL ? "leading-[1.46]" : "leading-[1.14]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading
@@ -111,7 +111,7 @@ export function HomeIntelligenceDesk() {
             )}
           </h2>
           <div
-            className={`mt-5 max-w-[78ch] space-y-3 border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
+            className={`mt-5 max-w-[108ch] space-y-3 border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
           >
             {content.paragraphs.map((paragraph) => (
               <p key={paragraph.id}>{paragraph.text}</p>
@@ -131,10 +131,7 @@ export function HomeIntelligenceDesk() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-brand-primary/5"
           />
-          <span
-            aria-hidden="true"
-            className="absolute end-6 top-6 size-6 bg-brand-accent"
-          />
+        
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mt-7">
@@ -159,14 +156,7 @@ export function HomeIntelligenceDesk() {
                   >
                     {item.title}
                   </h3>
-                  {item.english_label && item.english_label !== item.title ? (
-                    <bdi
-                      dir="ltr"
-                      className="mt-1 block text-start text-[10px] tracking-[0.18em] text-brand-primary"
-                    >
-                      {item.english_label}
-                    </bdi>
-                  ) : null}
+               
                   <p
                     className={`mt-2 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.85]" : "leading-[1.65]"}`}
                   >

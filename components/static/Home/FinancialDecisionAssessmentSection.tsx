@@ -103,14 +103,14 @@ export function FinancialDecisionAssessmentSection() {
       <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.82fr)_minmax(0,1.32fr)] lg:grid-rows-[auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
-            <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
          
           </div>
 
           <h2
             id="home-assessment-heading"
-            className={`mt-5 max-w-[86ch] text-pretty text-[clamp(2rem,7.4vw,3.15rem)] font-black tracking-[-0.035em] sm:text-[clamp(2.65rem,4.7vw,2.5rem)] ${
+            className={`mt-5 max-w-[86ch] text-pretty text-[clamp(2rem,7.4vw,3.15rem)] font-black tracking-[-0.035em] sm:text-3xl ${
               isRTL ? "leading-[1.48]" : "leading-[1.13]"
             }`}
           >
@@ -170,10 +170,7 @@ export function FinancialDecisionAssessmentSection() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-brand-primary/5"
           />
-          <span
-            aria-hidden="true"
-            className="absolute end-6 top-6 size-6 bg-brand-accent"
-          />
+        
         </div>
 
         <div className="border border-line bg-page lg:col-start-2 lg:row-start-3 lg:mt-2">

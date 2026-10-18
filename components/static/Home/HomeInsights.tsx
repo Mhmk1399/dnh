@@ -94,13 +94,13 @@ export function HomeInsights() {
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1180px] text-center">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
           
           </div>
           <h2
             id="home-insights-heading"
-            className={`mx-auto mt-5 max-w-[36ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
+            className={`mx-auto mt-5 max-w-[36ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-3xl ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading

@@ -80,13 +80,13 @@ export function HomeWholeWealthView() {
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.82fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
           
           </div>
           <h2
             id="home-whole-wealth-heading"
-            className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,7.7vw,3rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.65rem,4.7vw,3.8rem)] lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
+            className={`mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,7.7vw,3rem)] font-black tracking-[-0.03em] sm:text-3xl lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading
@@ -104,7 +104,7 @@ export function HomeWholeWealthView() {
             )}
           </h2>
           <p
-            className={`mt-4 max-w-[80ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            className={`mt-4 max-w-[109ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
@@ -118,10 +118,7 @@ export function HomeWholeWealthView() {
             sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
             className="object-cover object-center"
           />
-          <span
-            aria-hidden="true"
-            className="absolute end-6 top-6 size-6 bg-brand-accent"
-          />
+        
        
         </div>
 
@@ -132,7 +129,7 @@ export function HomeWholeWealthView() {
             return (
               <article
                 key={asset.id}
-                className="group min-w-0 border border-line bg-page transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
+                className="group min-w-0 border border-line  transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
               
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">

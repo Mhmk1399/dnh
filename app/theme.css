@@ -1,19 +1,21 @@
 :root {
   /* Brand palette */
-  --dnh-primary: #167394;
-  --dnh-secondary: #157293;
-  --dnh-accent: #fc8502;
+  --dnh-primary: #c6a66b;
+  --dnh-secondary: #14181b;
+  --dnh-accent: #167394;
+
+  /* C6A66B gold  167394 black 14181B blue */
 
   /* Backgrounds */
-  --dnh-bg-page: #ffffff;
+  --dnh-bg-page: #f7f4ef;
   --dnh-bg-soft: color-mix(in srgb, var(--dnh-primary) 5%, white);
   --dnh-bg-brand: var(--dnh-primary);
 
   /* Text */
   --dnh-text: color-mix(in srgb, var(--dnh-secondary) 35%, #101820);
-  --dnh-text-muted: color-mix(in srgb, var(--dnh-primary) 55%, #6b7280);
+  --dnh-text-muted: color-mix(in srgb, var(--dnh-secondary) 55%, #6b7280);
   --dnh-text-brand: var(--dnh-primary);
-  --dnh-text-on-brand: #ffffff;
+  --dnh-text-on-brand: #f7f4ef;
 
   /* Borders and states */
   --dnh-border: color-mix(in srgb, var(--dnh-primary) 18%, transparent);

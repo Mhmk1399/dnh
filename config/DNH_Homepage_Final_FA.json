@@ -26,13 +26,13 @@
       "ctas": [
         {
           "id": "assessment",
-          "label": "شروع ارزیابی اولیه تصمیم مالی",
+          "label": " ارزیابی اولیه تصمیم مالی",
           "type": "primary",
           "href": "/financial-decision-assessment"
         },
         {
           "id": "services",
-          "label": "مشاهده خدمات DNH",
+          "label": "مشاهده خدمات ",
           "type": "secondary",
           "href": "/services"
         }
@@ -659,7 +659,7 @@
         },
         {
           "id": "asset-allocation-studies",
-          "title": "مطالعات تخصیص دارایی و حفاظت از ثروت",
+          "title": "مطالعات تخصیص دارایی   ",
           "description": "بررسی نقش دارایی‌های مختلف، ساختار ریسک و عواملی که می‌توانند بر تاب‌آوری و حفظ ثروت در شرایط مختلف اثر بگذارند.",
           "href": "/knowledge/research",
           "icon": "allocation",

@@ -48,6 +48,7 @@ export function SectionHeading({
   isRTL,
   light = false,
   hero = false,
+  compact = false,
   className = "",
 }: {
   id?: string;
@@ -55,6 +56,7 @@ export function SectionHeading({
   isRTL: boolean;
   light?: boolean;
   hero?: boolean;
+  compact?: boolean;
   className?: string;
 }) {
   return (
@@ -63,6 +65,8 @@ export function SectionHeading({
       style={{
         fontSize: hero
           ? "clamp(2.2rem, 4.6vw, 2.7rem)"
+          : compact
+            ? "clamp(1.65rem, 2.45vw, 2.25rem)"
           : "clamp(1.8rem, 3.05vw, 2.7rem)",
         lineHeight: isRTL ? 1.46 : 1.08,
       }}
@@ -105,12 +109,14 @@ export function SectionIntro({
   isRTL,
   light = false,
   leadCount = 2,
+  compact = false,
 }: {
   section: NormalizedServiceSection;
   direction: "rtl" | "ltr";
   isRTL: boolean;
   light?: boolean;
   leadCount?: number;
+  compact?: boolean;
 }) {
   const copy = sectionCopy(section).slice(0, leadCount);
 
@@ -122,7 +128,8 @@ export function SectionIntro({
           id={`${section.id}-heading`}
           isRTL={isRTL}
           light={light}
-          className="mt-4 max-w-[22ch]"
+          compact={compact}
+          className={`${compact ? "mt-3" : "mt-4"} max-w-[22ch]`}
         >
           {section.heading}
         </SectionHeading>
@@ -133,7 +140,11 @@ export function SectionIntro({
   return (
     <div
       dir="ltr"
-      className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-12 xl:gap-16"
+      className={`grid gap-6 lg:grid-cols-2 ${
+        compact
+          ? "lg:items-start lg:gap-10 xl:gap-12"
+          : "lg:items-center lg:gap-12 xl:gap-16"
+      }`}
     >
       <header
         dir={direction}
@@ -146,7 +157,8 @@ export function SectionIntro({
           id={`${section.id}-heading`}
           isRTL={isRTL}
           light={light}
-          className="mt-4 max-w-[19ch]"
+          compact={compact}
+          className={`${compact ? "mt-3 max-w-[23ch]" : "mt-4 max-w-[19ch]"}`}
         >
           {section.heading}
         </SectionHeading>
@@ -266,12 +278,14 @@ export function EntryGrid({
   light = false,
   columns = 3,
   numbered = true,
+  compact = false,
 }: {
   entries: NormalizedEntry[];
   isRTL: boolean;
   light?: boolean;
   columns?: 2 | 3 | 4;
   numbered?: boolean;
+  compact?: boolean;
 }) {
   if (!entries.length) return null;
 
@@ -291,16 +305,18 @@ export function EntryGrid({
       {entries.map((entry, index) => (
         <article
           key={`${entry.title}-${index}`}
-          className={`min-w-0 border-e border-b p-5 sm:p-6 ${
+          className={`min-w-0 border-e border-b ${
+            compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
+          } ${
             light ? "border-white/18" : "border-line"
           }`}
         >
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <h3
-                className={`mt-2 text-[15px] font-extrabold sm:text-[16px] lg:text-[17px] ${
+                className={`${compact ? "text-[14px] sm:text-[15px]" : "mt-2 text-[15px] sm:text-[16px] lg:text-[17px]"} font-extrabold ${
                   light ? "text-white" : "text-ink"
-                } ${isRTL ? "leading-[1.85]" : "leading-[1.42]"}`}
+                } ${isRTL ? (compact ? "leading-[1.75]" : "leading-[1.85]") : "leading-[1.42]"}`}
               >
                 {entry.title}
               </h3>
@@ -320,9 +336,9 @@ export function EntryGrid({
 
           {entry.description ? (
             <p
-              className={`mt-3 text-[13px] font-medium sm:text-[14px] ${
+              className={`${compact ? "mt-2 text-[12.5px] sm:text-[13px]" : "mt-3 text-[13px] sm:text-[14px]"} font-medium ${
                 light ? "text-white/68" : "text-ink-muted"
-              } ${isRTL ? "leading-[1.95]" : "leading-[1.68]"}`}
+              } ${isRTL ? (compact ? "leading-[1.85]" : "leading-[1.95]") : "leading-[1.68]"}`}
             >
               {entry.description}
             </p>

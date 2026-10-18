@@ -143,10 +143,7 @@ export function AboutDrNasimSection() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/22 via-transparent to-transparent"
           />
-          <span
-            aria-hidden="true"
-            className="absolute end-6 top-6 size-6 bg-brand-accent"
-          />
+          
         </div>
 
         {/* <dl className="grid min-w-0 grid-cols-1 border border-line bg-surface-soft sm:grid-cols-2 xl:grid-cols-4 lg:col-start-2 lg:row-start-3">

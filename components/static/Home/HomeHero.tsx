@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { getImageProps } from "next/image";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -33,23 +34,47 @@ type HeroContent = {
 
 export function HomeHero() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
+
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+  const [descriptionHeight, setDescriptionHeight] = useState(0);
+
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
   const homepage = locale === "en" ? homeEn : homeFa;
+
   const hero = homepage.sections.find(
     (section) => section.id === "hero" && section.type === "hero",
   ) as HeroContent | undefined;
+
+  // Measure the full description height for smooth expansion.
+  useEffect(() => {
+    const element = descriptionRef.current;
+
+    if (!element) return;
+
+    const updateHeight = () => {
+      setDescriptionHeight(element.scrollHeight);
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver === "undefined") return;
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [locale]);
 
   if (!hero) return null;
 
   const highlight = hero.heading_highlight ?? "";
   const highlightIndex = highlight ? hero.heading.indexOf(highlight) : -1;
 
-  // The supplied photograph is the current hero backdrop. A non-empty JSON
-  // media.src takes precedence when the brand image is updated in the future.
   const imageSource = hero.media.src.trim();
   const mobileSource = hero.media.mobile_src?.trim() ?? "";
 
-  // One responsive <picture> fills the entire section, including behind the
-  // fixed navbar. Only the matching source is requested by the browser.
   const desktopImage = getImageProps({
     src: imageSource,
     alt: hero.media.alt,
@@ -58,7 +83,7 @@ export function HomeHero() {
     loading: "eager",
     fetchPriority: "high",
     className:
-      "absolute inset-0 h-full w-full object-cover object-[34%_center] sm:object-[43%_center] lg:object-center",
+      "absolute inset-0 h-full w-full object-cover object-[center_30%] sm:object-center lg:object-center",
   }).props;
 
   const mobileImage = mobileSource
@@ -70,13 +95,15 @@ export function HomeHero() {
       }).props
     : null;
 
-  // The image must not be mirrored. Only the scrim switches direction:
-  // Persian text sits over the darkened right, English over the darkened left.
   const desktopScrim = isRTL
     ? "linear-gradient(to left, color-mix(in srgb, var(--dnh-text) 98%, transparent) 0%, color-mix(in srgb, var(--dnh-text) 94%, transparent) 24%, color-mix(in srgb, var(--dnh-text) 82%, transparent) 48%, color-mix(in srgb, var(--dnh-text) 35%, transparent) 76%, color-mix(in srgb, var(--dnh-text) 12%, transparent) 100%)"
     : "linear-gradient(to right, color-mix(in srgb, var(--dnh-text) 98%, transparent) 0%, color-mix(in srgb, var(--dnh-text) 94%, transparent) 24%, color-mix(in srgb, var(--dnh-text) 82%, transparent) 48%, color-mix(in srgb, var(--dnh-text) 35%, transparent) 76%, color-mix(in srgb, var(--dnh-text) 12%, transparent) 100%)";
 
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+  const hasDescription = hero.paragraphs.some(
+    (paragraph) => paragraph.text.trim().length > 0,
+  );
+
+  const collapsedHeight = isRTL ? "3.9em" : "3.4em";
 
   return (
     <section
@@ -84,9 +111,9 @@ export function HomeHero() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="home-hero-heading"
-      className="relative isolate overflow-hidden border-b border-line bg-brand-primary text-[var(--dnh-text-on-brand)]"
+      className="relative isolate overflow-hidden h-screen border-b border-line   text-[var(--dnh-text-on-brand)]"
     >
-      {/* Only the matching source is preloaded for the hero LCP. */}
+      {/* Image preload */}
       {mobileImage ? (
         <>
           <link
@@ -113,75 +140,230 @@ export function HomeHero() {
         />
       )}
 
-      {/* Full-bleed image behind the text and fixed navbar. */}
-      <picture className="pointer-events-none absolute inset-0 z-0 block h-full w-full">
-        {mobileImage ? (
-          <source
-            media="(max-width: 767px)"
-            srcSet={mobileImage.srcSet}
-            sizes={mobileImage.sizes}
-          />
-        ) : null}
-        {/* eslint-disable-next-line @next/next/no-img-element -- Next getImageProps supplies optimized srcSet for art direction. */}
-        <img {...desktopImage} />
-      </picture>
-
-      {/* Stronger full-width scrim on phones; direction-aware scrim on desktop. */}
+      {/* Mobile image area / Full desktop background */}
       <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 lg:hidden"
-        style={{
-          backgroundImage:
-            "linear-gradient(to bottom, color-mix(in srgb, var(--dnh-text) 92%, transparent) 0%, color-mix(in srgb, var(--dnh-text) 79%, transparent) 45%, color-mix(in srgb, var(--dnh-text) 91%, transparent) 100%)",
-        }}
-      />
+        className="
+          pointer-events-none absolute inset-x-0 top-0 z-0
+          h-screen
+          overflow-hidden
+          lg:inset-0 lg:h-full
+        "
+      >
+        <picture className="absolute inset-0 block h-full w-full">
+          {mobileImage && (
+            <source
+              media="(max-width: 767px)"
+              srcSet={mobileImage.srcSet}
+              sizes={mobileImage.sizes}
+            />
+          )}
+
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img {...desktopImage} />
+        </picture>
+
+        {/* Mobile: dark top, visible center, smooth bottom */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 lg:hidden"
+          style={{
+            backgroundImage: `
+              linear-gradient(
+                to bottom,
+                rgba(8,20,38,0.82) 0%,
+                rgba(8,20,38,0.66) 26%,
+                rgba(8,20,38,0.14) 53%,
+                rgba(8,20,38,0.12) 70%,
+                var(--dnh-brand-primary, #102b46) 100%
+              )
+            `,
+          }}
+        />
+      </div>
+
+      {/* Desktop directional overlay */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
         style={{ backgroundImage: desktopScrim }}
       />
 
-      <div className="dnh-site-shell relative z-10 flex min-h-svh min-w-0 flex-col justify-center pb-12 pt-[calc(8.5rem+env(safe-area-inset-top))] sm:pb-16 sm:pt-[calc(9.5rem+env(safe-area-inset-top))] lg:pb-[clamp(3.5rem,8svh,6rem)] lg:pt-[clamp(10rem,17svh,13rem)]">
-        <div className="me-auto w-full min-w-0 lg:w-[62%] lg:max-w-[52rem]">
-          <header className="min-w-0 text-start">
-            <div className="flex min-w-0 items-center gap-3 text-[12px] font-semibold leading-[1.8] text-white/90 sm:text-[13px]">
+      {/* Content */}
+      <div
+        className="
+          dnh-site-shell relative z-10 flex min-w-0 flex-col
+          pb-10
+          sm:pb-14
+          lg:min-h-svh lg:justify-center
+          lg:pb-[clamp(3.5rem,8svh,6rem)]
+          lg:pt-[clamp(10rem,17svh,13rem)]
+        "
+      >
+        <div
+          className="
+            me-auto w-full min-w-0
+            lg:w-[70%] lg:max-w-[62rem]
+          "
+        >
+          {/* Heading area */}
+          <header
+            className="
+              relative flex min-w-0 flex-col
+              min-h-[clamp(27rem,65svh,38rem)]
+              pt-[calc(7.5rem+env(safe-area-inset-top))]
+              sm:pt-[calc(9rem+env(safe-area-inset-top))]
+              lg:block lg:min-h-0 lg:pt-0
+            "
+          >
+            {/* Eyebrow */}
+            <div
+              className="
+                flex min-w-0 items-center gap-3
+                text-[11px] font-semibold leading-[1.8]
+                text-white/90
+                sm:text-[13px]
+              "
+            >
               <span
                 aria-hidden="true"
-                className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-11"
+                className="h-[2px] w-6 shrink-0 bg-brand-accent "
               />
+
               <p className="min-w-0">{hero.eyebrow}</p>
             </div>
 
+            {/* Heading */}
             <h1
               id="home-hero-heading"
-              className={`mt-5 max-w-[30ch] text-pretty text-start text-[clamp(1.9rem,7.7vw,2.25rem)] font-extrabold [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.25rem,5.1vw,2.875rem)] lg:text-[clamp(2.625rem,3.4vw,3rem)] ${isRTL ? "leading-[1.52]" : "leading-[1.28]"}`}
+              className={`
+                mt-4 max-w-[28ch]
+                line-clamp-3
+                text-justify text-[clamp(1.125rem,4.7vw,1.5rem)]
+                font-extrabold
+                [overflow-wrap:break-word]
+                sm:mt-6 sm:text-[1.875rem]
+                lg:line-clamp-2
+                lg:max-w-2xl
+                lg:text-3xl
+                ${
+                  isRTL
+                    ? "leading-[1.65] lg:leading-[1.65]"
+                    : "leading-[1.4] lg:leading-[1.35]"
+                }
+              `}
             >
               {highlightIndex < 0 ? (
                 hero.heading
               ) : (
                 <>
                   {hero.heading.slice(0, highlightIndex)}
+
                   <span className="text-brand-accent">
                     {hero.heading.slice(
                       highlightIndex,
                       highlightIndex + highlight.length,
                     )}
                   </span>
+
                   {hero.heading.slice(highlightIndex + highlight.length)}
                 </>
               )}
             </h1>
-
-            <div
-              className={`mt-5 max-w-[99ch] space-y-3 border-s-2 border-white/40 ps-4 text-start text-[14px] font-normal text-white/90 sm:mt-6 sm:space-y-4 sm:ps-5 sm:text-[15px] xl:text-[16px] ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}`}
-            >
-              {hero.paragraphs.map((paragraph) => (
-                <p key={paragraph.id}>{paragraph.text}</p>
-              ))}
-            </div>
           </header>
 
-          <div className="mt-7 flex min-w-0 flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
+          {/* Description - below image on mobile */}
+          {hasDescription && (
+            <div
+              className={`
+                relative mt-1 min-w-0 hidden lg:block
+                border-s-2 border-white/40 ps-4
+                text-[14px] font-normal text-white/90
+                sm:ps-5 sm:text-[15px]
+                lg:mt-5 lg:max-w-[80ch]
+                xl:text-[16px]
+                ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}
+              `}
+            >
+              {/* Smooth expandable text */}
+              <div
+                id="hero-description"
+                className="
+                  min-w-0 overflow-hidden
+                  transition-[max-height]
+                  duration-500
+                  ease-[cubic-bezier(0.22,1,0.36,1)]
+                  motion-reduce:transition-none
+                "
+                style={{
+                  maxHeight: isDescriptionExpanded
+                    ? `${descriptionHeight}px`
+                    : collapsedHeight,
+                }}
+              >
+                <div
+                  ref={descriptionRef}
+                  className="space-y-3 text-justify sm:space-y-4"
+                >
+                  {hero.paragraphs.map((paragraph) => (
+                    <p key={paragraph.id}>{paragraph.text}</p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Expand / Collapse */}
+              <button
+                type="button"
+                aria-expanded={isDescriptionExpanded}
+                aria-controls="hero-description"
+                onClick={() => setIsDescriptionExpanded((prev) => !prev)}
+                className="
+                  group mt-2 inline-flex min-h-10
+                  items-center gap-2
+                  rounded-sm
+                  text-[13px] font-semibold
+                  text-brand-accent
+                  transition-colors duration-200
+                  hover:text-white
+                  focus-visible:outline
+                  focus-visible:outline-2
+                  focus-visible:outline-offset-4
+                  focus-visible:outline-brand-accent
+                  sm:mt-3
+                "
+              >
+                <span>
+                  {isDescriptionExpanded
+                    ? isRTL
+                      ? "نمایش کمتر"
+                      : "Show less"
+                    : isRTL
+                      ? "مشاهده بیشتر"
+                      : "Read more"}
+                </span>
+
+                <ChevronDown
+                  size={16}
+                  aria-hidden="true"
+                  className={`
+                    shrink-0
+                    transition-transform duration-500
+                    ease-[cubic-bezier(0.22,1,0.36,1)]
+                    motion-reduce:transition-none
+                    ${isDescriptionExpanded ? "rotate-180" : "rotate-0"}
+                  `}
+                />
+              </button>
+            </div>
+          )}
+
+          {/* CTA buttons */}
+          <div
+            className="
+              mt-26 grid min-w-0 grid-cols-2 gap-2
+              sm:mt-8 sm:gap-3
+              lg:flex lg:flex-row lg:flex-wrap lg:gap-4
+            "
+          >
             {hero.ctas.map((cta) => (
               <ActionButton
                 key={cta.id}
@@ -189,21 +371,23 @@ export function HomeHero() {
                 variant={cta.type}
                 shape="square"
                 size="lg"
-                icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="min-h-12 w-full min-w-0 max-w-full whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto"
+                className="
+                  min-h-12 w-full min-w-0 max-w-full
+                  whitespace-normal
+                  px-2 py-3
+                  text-center text-[12px]
+                  leading-[1.6]
+                  [overflow-wrap:anywhere]
+                  sm:px-4 sm:text-[14px]
+                  lg:w-auto
+                "
               >
                 {cta.label}
               </ActionButton>
             ))}
           </div>
-
-          <p
-            className={`mt-7 max-w-[65ch] border-s-2 border-brand-accent ps-4 text-start text-[13px] font-medium text-white/90 sm:mt-8 sm:ps-5 sm:text-[14px] ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}`}
-          >
-            {hero.trust_line}
-          </p>
         </div>
       </div>
     </section>

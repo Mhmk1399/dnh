@@ -64,19 +64,15 @@ export function HomeWhoWeHelp() {
       aria-labelledby="home-who-we-help-heading"
       className="relative isolate overflow-hidden border-b border-line bg-page py-14 text-ink sm:py-18 lg:py-24"
     >
-      <div
-        aria-hidden="true"
-        className="absolute end-0 top-0 size-40 border-s border-b border-line bg-[linear-gradient(135deg,color-mix(in_srgb,var(--dnh-primary)_10%,white)_25%,transparent_25%,transparent_50%,color-mix(in_srgb,var(--dnh-primary)_7%,white)_50%,color-mix(in_srgb,var(--dnh-primary)_7%,white)_75%,transparent_75%)] bg-[length:80px_80px]"
-      />
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1040px] text-center">
           <div className="flex items-center justify-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-12 bg-brand-accent" />
           </div>
           <h2
             id="home-who-we-help-heading"
-            className={`mt-5 text-pretty text-[clamp(2rem,7.7vw,3.2rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
+            className={`mt-5 text-pretty text-[clamp(2rem,7.7vw,2.8rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading
@@ -94,7 +90,7 @@ export function HomeWhoWeHelp() {
             )}
           </h2>
           <p
-            className={`mx-auto mt-4 max-w-[80ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            className={`mx-auto mt-4 max-w-[90ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
@@ -108,7 +104,7 @@ export function HomeWhoWeHelp() {
             return (
               <article
                 key={audience.id}
-                className="group flex min-w-0 flex-col border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
+                className="group flex min-w-0 flex-col      bg-page transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-surface-soft">
                   {image ? (
@@ -124,25 +120,15 @@ export function HomeWhoWeHelp() {
                     aria-hidden="true"
                     className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent"
                   />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-4 top-4 size-5 bg-brand-accent"
-                  />
                 </div>
                 <div className="relative flex min-w-0 flex-1 flex-col p-5 pt-8 sm:p-6 sm:pt-9">
-                  <span
-                    aria-hidden="true"
-                    className="absolute start-5 top-0 flex size-12 -translate-y-1/2 items-center justify-center border border-line bg-surface-soft text-brand-primary sm:start-6"
-                  >
-                    <Icon size={23} strokeWidth={1.6} />
-                  </span>
                   <h3
-                    className={`text-start text-[20px] font-black sm:text-[22px] ${isRTL ? "leading-[1.65]" : "leading-[1.35]"}`}
+                    className={`text-start border-b border-brand-accent! pb-3 text-[20px] font-black sm:text-[16px] ${isRTL ? "leading-[1.65]" : "leading-[1.35]"}`}
                   >
                     {audience.title}
                   </h3>
                   <p
-                    className={`mt-4 text-start text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
+                    className={`mt-4 text-justify text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
                   >
                     {audience.description}
                   </p>
@@ -152,10 +138,9 @@ export function HomeWhoWeHelp() {
                       variant="secondary"
                       shape="square"
                       size="sm"
-                      icon={Arrow}
                       iconPosition="end"
                       dir={direction}
-                      className="min-h-11 w-full justify-between border-line bg-page text-start text-[13px] shadow-none hover:shadow-none"
+                      className="min-h-11 w-full hover:text-black! border-brand-accent! justify-between bg-page text-start text-[13px] shadow-none hover:shadow-none"
                     >
                       {audience.cta}
                     </ActionButton>

@@ -80,13 +80,12 @@ export function HomeFramework() {
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1120px] text-center">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
-           
           </div>
           <h2
             id="home-framework-heading"
-            className={`mx-auto mt-5 max-w-[24ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,4.2rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
+            className={`mx-auto mt-5 max-w-[94ch] text-pretty text-xl font-black tracking-[-0.03em] sm:text-[clamp(2.75rem,5vw,3rem)] ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading
@@ -104,7 +103,7 @@ export function HomeFramework() {
             )}
           </h2>
           <p
-            className={`mx-auto mt-4 max-w-[90ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            className={`mx-auto hidden lg:block mt-4 max-w-[130ch]  text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
@@ -115,66 +114,97 @@ export function HomeFramework() {
           className="mt-9 grid min-w-0 grid-cols-1 gap-5 sm:mt-12 lg:grid-cols-3 lg:gap-7"
         >
           {content.pillars.map((pillar, index) => {
-            const Icon = pillarIcons[index] ?? BarChart3;
             return (
               <li
                 dir={direction}
                 key={pillar.id}
-                className="group min-w-0 border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
+                className="
+          group min-w-0
+          border border-line bg-page
+          transition-[transform,border-color]
+          duration-300
+          hover:-translate-y-1
+          hover:border-brand-primary
+          motion-reduce:transform-none
+          motion-reduce:transition-none
+        "
               >
-                <div className="relative aspect-[16/9] overflow-hidden bg-brand-primary">
-                  <Image
-                    src={pillarImages[index] ?? pillarImages[0]}
-                    alt=""
-                    fill
-                    sizes="(max-width: 1023px) calc(100vw - 24px), 32vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-e from-transparent to-ink/45"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute end-4 top-4 size-5 bg-brand-accent"
-                  />
-                </div>
-                <div
-                  dir="ltr"
-                  className="grid min-w-0 grid-cols-[4.75rem_minmax(0,1fr)] border-b border-line bg-page"
-                >
+                {/* Image + overlapping number */}
+                <div className="relative aspect-[16/9] bg-brand-primary">
+                  {/* Image clipping only */}
+                  <div className="absolute inset-0 overflow-hidden">
+                    <Image
+                      src={pillarImages[index] ?? pillarImages[0]}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1023px) calc(100vw - 24px), 32vw"
+                      className="
+                object-cover object-center
+                transition-transform duration-500
+                group-hover:scale-[1.025]
+                motion-reduce:transition-none
+              "
+                    />
+
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent to-ink/45"
+                    />
+                  </div>
+
+                  {/* Number - 50% inside / 50% outside image */}
                   <bdi
                     dir="ltr"
-                    className="flex min-h-24 items-center justify-center bg-brand-primary text-[3.6rem] font-black leading-none text-white"
+                    className="
+              absolute bottom-0 left-4 z-20
+              flex size-[5.5rem]
+              translate-y-1/2
+              items-center justify-center
+              bg-brand-secondary
+              text-[3.2rem] font-black
+              leading-none text-brand-primary
+              shadow-lg
+              sm:size-[6rem]
+              sm:text-[3.6rem]
+            "
                   >
                     {pillar.code}
                   </bdi>
-                  <div dir={direction} className="min-w-0 self-center p-4">
-                    <h3
-                      className={`text-start text-[20px] font-black sm:text-[22px] ${isRTL ? "leading-[1.6]" : "leading-[1.3]"}`}
-                    >
-                      {pillar.title}
-                    </h3>
-                    {pillar.english_label &&
-                    pillar.english_label !== pillar.title ? (
-                      <bdi
-                        dir="ltr"
-                        className="mt-1 block text-start text-[10px] tracking-[0.24em] text-brand-primary"
-                      >
-                        {pillar.english_label}
-                      </bdi>
-                    ) : null}
-                  </div>
                 </div>
-                <div className="p-5 sm:p-6">
-                  <span
-                    aria-hidden="true"
-                    className="mb-4 flex size-11 items-center justify-center bg-surface-soft text-brand-primary"
+
+                {/* Title - opposite side of number */}
+                <div
+                  dir="ltr"
+                  className="
+            flex min-h-[110px]
+            items-center justify-end
+             bg-page
+            px-5 py-6
+            sm:min-h-[125px] sm:px-6
+          "
+                >
+                  <h3
+                    dir={direction}
+                    className={`
+              max-w-[calc(100%-6rem)]
+              text-right text-[20px]
+              font-black
+              sm:text-[22px]
+              ${isRTL ? "leading-[1.6]" : "leading-[1.3]"}
+            `}
                   >
-                    <Icon size={22} strokeWidth={1.6} />
-                  </span>
+                    {pillar.title}
+                  </h3>
+                </div>
+
+                {/* Description */}
+                <div className="p-5">
                   <p
-                    className={`text-start text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
+                    className={`
+              text-start text-[14px]
+              text-ink-muted sm:text-[15px]
+              ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}
+            `}
                   >
                     {pillar.description}
                   </p>
@@ -185,11 +215,7 @@ export function HomeFramework() {
         </ol>
 
         <footer className="mx-auto mt-8 grid max-w-[1100px] gap-5 text-center sm:mt-10">
-          <p
-            className={`border-y border-line py-4 text-[14px] font-semibold text-ink-muted sm:text-[16px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
-          >
-            {content.closing}
-          </p>
+       
           <div className="flex justify-center">
             {content.ctas.map((cta) => (
               <ActionButton

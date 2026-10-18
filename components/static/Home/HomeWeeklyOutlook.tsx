@@ -46,13 +46,6 @@ const outlookIcons = {
   "what-to-watch": ScanEye,
   "dnh-note": PenLine,
 } as const;
-const outlookImages = [
-  "/assets/images/strategic-financial-advisory .webp",
-  "/assets/images/risk-management-wealth-protection .webp",
-  "/assets/images/portfolio-intelligence .webp ",
-  "/assets/images/macro-market-advisory .webp ",
-  "/assets/images/executive-briefings .webp ",
-];
 
 export function HomeWeeklyOutlook() {
   const { locale, direction, isRTL, languageTag } = useLanguage();
@@ -80,15 +73,15 @@ export function HomeWeeklyOutlook() {
         <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:items-stretch lg:gap-10 xl:gap-14">
           <header className="min-w-0 self-center text-start">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
-              <p>{content.eyebrow}</p>
               <span
                 aria-hidden="true"
-                className="h-[2px] w-11 bg-brand-accent"
-              />
+                className="h-[2px] w-9 bg-brand-accent"
+              />{" "}
+              <p>{content.eyebrow}</p>
             </div>
             <h2
               id="home-weekly-outlook-heading"
-              className={`mt-5 max-w-[22ch] text-pretty text-[clamp(2rem,7.6vw,3rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.6rem,4.5vw,3.8rem)] lg:max-w-none ${isRTL ? "leading-[1.46]" : "leading-[1.14]"}`}
+              className={`mt-5 max-w-[22ch] text-pretty text-[clamp(2rem,7.6vw,3rem)] font-black tracking-[-0.03em] sm:text-3xl lg:max-w-none ${isRTL ? "leading-[1.46]" : "leading-[1.14]"}`}
             >
               {highlightIndex < 0 ? (
                 content.heading
@@ -106,7 +99,7 @@ export function HomeWeeklyOutlook() {
               )}
             </h2>
             <div
-              className={`mt-5 max-w-[76ch] space-y-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
+              className={`mt-5 max-w-[106ch] space-y-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
             >
               {content.paragraphs.map((paragraph) => (
                 <p
@@ -131,16 +124,6 @@ export function HomeWeeklyOutlook() {
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent"
             />
-            <span
-              aria-hidden="true"
-              className="absolute end-6 top-6 size-6 bg-brand-accent"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute bottom-6 end-6 border border-white/30 bg-ink/60 p-5 text-white backdrop-blur-sm"
-            >
-              <FileText size={34} strokeWidth={1.5} />
-            </div>
           </div>
         </div>
 
@@ -165,7 +148,7 @@ export function HomeWeeklyOutlook() {
                   >
                     {item.title}
                   </h3>
-              
+
                   <p
                     className={`mt-2 text-start text-[13px] text-ink-muted ${isRTL ? "leading-[1.85]" : "leading-[1.62]"}`}
                   >

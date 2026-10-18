@@ -102,17 +102,16 @@ export function HomeResearchCaseStudies() {
         <div className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,1.35fr)_minmax(360px,0.9fr)] lg:items-stretch lg:gap-0">
           <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1 lg:border-y lg:border-e lg:border-line lg:bg-page lg:p-9 xl:p-12">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
-              <p>{content.eyebrow}</p>
               <span
                 aria-hidden="true"
-                className="h-[2px] w-11 bg-brand-accent"
-              />
-             
+                className="h-[2px] w-9 bg-brand-accent"
+              />{" "}
+              <p>{content.eyebrow}</p>
             </div>
 
             <h2
               id="home-research-heading"
-              className={`mt-5 max-w-[23ch] text-pretty text-[clamp(2rem,7.4vw,3.1rem)] font-black tracking-[-0.035em] sm:text-[clamp(2.6rem,4.6vw,3.25rem)] ${
+              className={`mt-5 max-w-[23ch] text-pretty text-[clamp(2rem,7.4vw,3.1rem)] font-black tracking-[-0.035em] sm:text-3xl ${
                 isRTL ? "leading-[1.48]" : "leading-[1.14]"
               }`}
             >
@@ -169,8 +168,6 @@ export function HomeResearchCaseStudies() {
                 key={item.id}
                 className="group flex min-w-0 flex-col border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
-           
-
                 <div className="relative flex flex-1 flex-col p-5 pt-8">
                   <h3
                     className={`text-start text-[17px] font-black sm:text-[18px] ${
@@ -192,7 +189,6 @@ export function HomeResearchCaseStudies() {
                   >
                     {item.description}
                   </p>
- 
                 </div>
               </article>
             );

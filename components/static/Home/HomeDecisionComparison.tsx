@@ -73,12 +73,12 @@ export function HomeDecisionComparison() {
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
           <div className="flex items-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
           </div>
           <h2
             id="home-decision-comparison-heading"
-            className={`mt-5 max-w-[22ch] text-pretty text-[clamp(2rem,7.8vw,3.1rem)] font-black tracking-[-0.03em] sm:text-[clamp(2.7rem,4.8vw,4rem)] lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
+            className={`mt-5 max-w-[42ch] text-pretty text-[clamp(2rem,7.8vw,1.9rem)] font-black tracking-[-0.03em] sm:text-3xl lg:max-w-none ${isRTL ? "leading-[1.45]" : "leading-[1.13]"}`}
           >
             {highlightIndex < 0 ? (
               content.heading
@@ -96,7 +96,7 @@ export function HomeDecisionComparison() {
             )}
           </h2>
           <p
-            className={`mt-4 max-w-[74ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            className={`mt-4 max-w-[99ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
@@ -114,10 +114,7 @@ export function HomeDecisionComparison() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/45 via-brand-primary/5 to-transparent"
           />
-          <span
-            aria-hidden="true"
-            className="absolute end-6 top-6 size-6 bg-brand-accent"
-          />
+       
         
         </div>
 
