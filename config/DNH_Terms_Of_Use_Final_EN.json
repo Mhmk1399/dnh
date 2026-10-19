@@ -1,0 +1,272 @@
+{
+  "page": "terms-of-use",
+  "locale": "en",
+  "direction": "ltr",
+  "seo": {
+    "title": "Terms of Use | DNH",
+    "description": "Terms governing use of the DNH website, public content, accounts, enquiries and published service forms."
+  },
+  "hero": {
+    "eyebrow": "Legal / Terms of Use",
+    "title": "A clear framework for using this website",
+    "lead": "These terms explain the boundaries of DNH's public information, accounts and submission routes. They govern website use; they do not replace the separate terms of an advisory engagement.",
+    "lastUpdatedLabel": "Last updated",
+    "lastUpdated": "October 19, 2026",
+    "statusLabel": "Applies to",
+    "status": "The public DNH website, voluntary accounts and website submissions",
+    "indexLabel": "Terms contents"
+  },
+  "publicationNote": {
+    "label": "Publication review",
+    "text": "Operator and local-counsel approval is required before these terms are treated as the formally published version."
+  },
+  "summary": {
+    "eyebrow": "Agreement at a glance",
+    "title": "Use the site as a source of context—not as a substitute for judgement or an agreed engagement",
+    "intro": "The website supports orientation, enquiry and structured decision thinking. The following principles remain central throughout these terms.",
+    "items": [
+      {
+        "id": "website-layer",
+        "label": "Website layer",
+        "description": "Public pages, reports, accounts and forms operate as website features and information channels."
+      },
+      {
+        "id": "engagement-layer",
+        "label": "Engagement layer",
+        "description": "Scope, deliverables, fees, confidentiality and other engagement terms must be agreed separately if work proceeds."
+      },
+      {
+        "id": "decision-layer",
+        "label": "Decision layer",
+        "description": "The authorised decision-maker remains responsible for decisions, actions and the assessment of relevant risks."
+      }
+    ]
+  },
+  "useMap": {
+    "eyebrow": "The use covenant",
+    "title": "Three rules for a useful and responsible experience",
+    "intro": "A short operating standard for reading, submitting and acting on information through the DNH website.",
+    "items": [
+      {
+        "id": "use",
+        "label": "Use",
+        "title": "Use the site to orient, compare and start a relevant conversation",
+        "description": "Read the analytical context, review published material and provide a concise, authorised description of the question you want assessed."
+      },
+      {
+        "id": "do-not-use",
+        "label": "Do not use",
+        "title": "Do not use the site for credentials, unlawful content or unauthorised access",
+        "description": "Never submit passwords, OTPs, banking or card credentials, access keys, malicious material or third-party confidential content you are not authorised to provide."
+      },
+      {
+        "id": "remember",
+        "label": "Remember",
+        "title": "Public information and scenarios are not instructions or guarantees",
+        "description": "They support reasoning under uncertainty and should not be the sole basis for a financial, capital or investment decision."
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "scope-and-acceptance",
+      "label": "Scope and acceptance",
+      "title": "What these terms cover",
+      "lead": "These terms apply when you access the public website, create or use a voluntary account, read published material or submit information through a website form.",
+      "paragraphs": [
+        "Using a website feature means using it within the boundaries described here and in the Privacy Policy. If you do not wish to use a feature on this basis, you may stop using that feature.",
+        "Accessing the website or submitting a form does not by itself confirm that DNH has accepted an advisory engagement. If an engagement proceeds, its scope, deliverables, fees, confidentiality and other terms must be agreed separately."
+      ],
+      "bullets": [],
+      "note": {
+        "label": "Website terms, not engagement terms",
+        "text": "These terms govern the website layer. They do not create or replace a separately agreed advisory scope."
+      },
+      "links": []
+    },
+    {
+      "id": "information-not-advice",
+      "label": "Information and decision responsibility",
+      "title": "Public content provides context, not a decision instruction",
+      "lead": "DNH publishes general information, analytical context and decision-support material for situations involving uncertainty.",
+      "paragraphs": [
+        "Public pages and Weekly Outlook reports may be revised as information, conditions or editorial judgement change. Material can become incomplete or outdated and should be considered in its date and context.",
+        "Website content should not be the sole basis for a financial, capital or investment decision. The individual, family, executive, owner, board or other authorised body making a decision remains responsible for evaluating it and for any action taken."
+      ],
+      "bullets": [
+        "Consider the date, assumptions and scope of published material.",
+        "Test information against the decision's specific facts and constraints.",
+        "Seek separately agreed specialist input where the decision requires it."
+      ],
+      "note": null,
+      "links": [
+        {
+          "id": "faq-context",
+          "label": "Read the knowledge FAQ",
+          "href": "/knowledge/faq",
+          "description": "Review the DNH process, outputs and decision-responsibility boundaries."
+        }
+      ]
+    },
+    {
+      "id": "professional-boundaries",
+      "label": "Professional boundaries",
+      "title": "What the website does not promise or perform",
+      "lead": "DNH separates structured analysis and decision support from signals, execution, promises and definitive forecasts.",
+      "paragraphs": [
+        "Scenarios are tools for examining possible conditions and implications. They are not definitive forecasts, and no scenario removes the uncertainty surrounding a real decision.",
+        "Risk work can identify exposures and improve preparedness, but risk cannot be eliminated and loss avoidance cannot be guaranteed."
+      ],
+      "bullets": [
+        "No buy or sell signals.",
+        "No exact price prediction.",
+        "No promised or guaranteed profit or return.",
+        "No discretionary portfolio management through website content.",
+        "No guarantee that risk or loss can be eliminated."
+      ],
+      "note": {
+        "label": "Decision boundary",
+        "text": "Public content may clarify evidence, assumptions, scenarios, risks and trade-offs. It does not transfer decision authority to the website."
+      },
+      "links": []
+    },
+    {
+      "id": "accounts-and-access",
+      "label": "Accounts and access",
+      "title": "Protect access and use the role provided to you",
+      "lead": "Creating an account is optional for general browsing. Account holders should provide accurate details and take reasonable care of their credentials and sessions.",
+      "paragraphs": [
+        "Do not share account access. Log out when using a shared device and contact DNH through the available contact route if you reasonably suspect unauthorised use.",
+        "Ordinary accounts do not grant administrator access. DNH may proportionately restrict or suspend access where reasonably necessary to protect security, address misuse or meet applicable requirements."
+      ],
+      "bullets": [
+        "Use accurate account information.",
+        "Keep passwords and session access private.",
+        "Do not attempt to obtain a role or permission not assigned to you."
+      ],
+      "note": {
+        "label": "Current dashboard",
+        "text": "Private dashboard services are under preparation. An account does not promise access to a particular advisory feature."
+      },
+      "links": []
+    },
+    {
+      "id": "forms-and-submissions",
+      "label": "Forms and submissions",
+      "title": "Submit only what is relevant, accurate and yours to provide",
+      "lead": "Contact, lead and published service forms are routes for assessment, routing, response and administration. Public forms generally do not require sign-in and may be associated with a signed-in user when available.",
+      "paragraphs": [
+        "You should provide information that is reasonably accurate, relevant to the request and that you are authorised to provide. Do not use free-text fields to send unnecessary sensitive data, documents or third-party confidential information without authority.",
+        "A submission does not guarantee a response, service acceptance or an advisory engagement. Published forms may be revised, unpublished or removed as website needs change."
+      ],
+      "bullets": [
+        "Do not submit passwords, one-time codes or access keys.",
+        "Do not submit banking or card credentials.",
+        "Do not submit unlawful, malicious or rights-infringing material.",
+        "Keep the first description concise and decision-relevant."
+      ],
+      "note": null,
+      "links": [
+        {
+          "id": "privacy-submissions",
+          "label": "How submitted information is handled",
+          "href": "/legal/privacy-policy",
+          "description": "Read the Privacy Policy for collection, operational use, access and retention details."
+        }
+      ]
+    },
+    {
+      "id": "acceptable-use",
+      "label": "Acceptable use",
+      "title": "Use the website without harming people, rights or service operation",
+      "lead": "Reasonable personal use, accessibility tools and ordinary search-engine indexing are not restricted by this section. Misuse that creates harm, deception or operational interference is not acceptable.",
+      "paragraphs": [],
+      "bullets": [
+        "Do not use the site or its forms for unlawful activity or rights-infringing content.",
+        "Do not impersonate another person or present a misleading identity.",
+        "Do not probe, bypass or interfere with security or attempt unauthorised access.",
+        "Do not disrupt site operation or introduce malicious code.",
+        "Do not use abusive automated scraping or repeated submissions in a way that impairs the service.",
+        "Do not attempt to enter administrator or restricted areas without authorisation."
+      ],
+      "note": {
+        "label": "Proportionate response",
+        "text": "Access controls may be applied where reasonably necessary to protect the site, users, submitted records or lawful operation."
+      },
+      "links": []
+    },
+    {
+      "id": "content-and-intellectual-property",
+      "label": "Content and intellectual property",
+      "title": "Respect the rights attached to site material",
+      "lead": "Website text, branding, layout and other materials may be protected by intellectual-property or related rights.",
+      "paragraphs": [
+        "You may access the site for lawful personal and informational use. Broader copying, republication, adaptation or commercial reuse may require permission from the relevant rights holder, subject to applicable law.",
+        "These terms do not claim that DNH owns every photograph, font, logo or third-party asset appearing on or supporting the site. Rights and permissions may belong to different holders."
+      ],
+      "bullets": [],
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "availability-changes-and-links",
+      "label": "Availability, changes and links",
+      "title": "Digital features and published material can change",
+      "lead": "The website, reports, forms and account features are not guaranteed to be continuously available, uninterrupted, error-free or current.",
+      "paragraphs": [
+        "DNH may update, correct, unpublish or remove content and features, including Weekly Outlook reports and dynamic service forms. Where these terms change, the displayed version applies to the displayed site version from its stated update date; this does not claim retroactive consent.",
+        "Telephone, email, WhatsApp and external web links are user-initiated. The destination service operates under its own terms and privacy practices, which users should consider before continuing."
+      ],
+      "bullets": [],
+      "note": null,
+      "links": []
+    },
+    {
+      "id": "privacy-enforcement-and-contact",
+      "label": "Privacy, enforcement and contact",
+      "title": "Connected policies and questions about these terms",
+      "lead": "The Privacy Policy explains how website information is handled. These terms explain the conduct and boundaries associated with using the site.",
+      "paragraphs": [
+        "If a use of the site appears inconsistent with these terms, DNH may take a proportionate step to protect security, records, other users or lawful operation. The appropriate response depends on the circumstances.",
+        "Questions about these terms, an access concern or a website submission can be raised through the contact page. Do not include passwords, OTPs or unnecessary sensitive information in that message."
+      ],
+      "bullets": [],
+      "note": null,
+      "links": [
+        {
+          "id": "privacy-policy",
+          "label": "Privacy Policy",
+          "href": "/legal/privacy-policy",
+          "description": "Understand the website's information-handling practices."
+        },
+        {
+          "id": "contact-route",
+          "label": "Contact DNH",
+          "href": "/contact",
+          "description": "Raise a question about these terms or website access."
+        }
+      ]
+    }
+  ],
+  "closing": {
+    "eyebrow": "Before you continue",
+    "title": "Use the website with the same discipline expected of a consequential decision",
+    "description": "Keep submissions relevant, protect access credentials and treat public analysis as context rather than an instruction or guarantee.",
+    "primaryCta": {
+      "id": "closing-contact",
+      "label": "Contact DNH",
+      "href": "/contact"
+    },
+    "secondaryCta": {
+      "id": "closing-privacy",
+      "label": "Read the Privacy Policy",
+      "href": "/legal/privacy-policy"
+    },
+    "reviewLabel": "Related policy",
+    "reviewText": "The Privacy Policy explains how information submitted through this website is handled."
+  },
+  "ui": {
+    "backToContents": "Back to contents",
+    "chapterLabel": "Terms chapter"
+  }
+}
