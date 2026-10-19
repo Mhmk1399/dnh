@@ -150,7 +150,7 @@ export function IntelligenceDeskWeeklyBias() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="dnh-weekly-bias-heading"
-      className="relative isolate scroll-mt-28 overflow-hidden border-b border-line bg-brand-primary py-14 text-[var(--dnh-text-on-brand)] sm:py-16 lg:py-20 xl:py-24"
+      className="relative isolate scroll-mt-28 overflow-hidden border-b border-line bg-brand-secondary py-14 text-[var(--dnh-text-on-brand)] sm:py-16 lg:py-20 xl:py-24"
     >
       <div
         aria-hidden="true"
@@ -204,18 +204,7 @@ export function IntelligenceDeskWeeklyBias() {
 
         <div className="mt-10 min-w-0 sm:mt-12 lg:mt-14">
           <div className="relative min-w-0 border border-white/18 bg-white/[0.035] p-2 sm:p-3">
-            <div className="flex min-w-0 items-center justify-between gap-4 border-b border-white/15 px-3 py-3 sm:px-4">
-              <div className="flex min-w-0 items-center gap-3">
-                <span className="size-2 shrink-0 bg-brand-accent" aria-hidden="true" />
-                <bdi
-                  dir="ltr"
-                  className="truncate text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/58 sm:text-[11px]"
-                >
-                  DNH / WEEKLY BIAS
-                </bdi>
-              </div>
-              <span className="hidden h-px w-24 bg-white/15 sm:block" aria-hidden="true" />
-            </div>
+             
 
             <div className="relative min-w-0 overflow-hidden border-x border-b border-white/10 bg-page">
               <span

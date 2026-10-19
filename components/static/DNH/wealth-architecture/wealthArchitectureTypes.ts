@@ -57,6 +57,10 @@ export type WealthArchitectureSection = {
   heading: string;
   heading_highlight?: string;
   blocks: WealthBlock[];
+  description_toggle?: {
+    expand_label: string;
+    collapse_label: string;
+  };
   ctas: WealthCta[];
   media?: WealthMedia;
   source_markdown?: string;

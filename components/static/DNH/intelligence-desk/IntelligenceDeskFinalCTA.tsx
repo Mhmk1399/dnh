@@ -146,7 +146,7 @@ export function IntelligenceDeskFinalCTA() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="dnh-intelligence-final-heading"
-      className="relative isolate scroll-mt-28 overflow-x-clip bg-brand-primary py-14 text-[var(--dnh-text-on-brand)] sm:py-16 lg:py-20 xl:py-24"
+      className="relative isolate scroll-mt-28 overflow-x-clip bg-brand-secondary py-14 text-[var(--dnh-text-on-brand)] sm:py-16 lg:py-20 xl:py-24"
     >
       <div className="dnh-site-shell min-w-0">
         <div className="relative min-w-0 overflow-hidden border border-white/15">

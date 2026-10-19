@@ -44,6 +44,10 @@
           "text": "The goal is not to predict markets or select a particular asset. The goal is to transform your wealth from a collection of disconnected decisions into **a clear, coherent and decision-ready structure**."
         }
       ],
+      "description_toggle": {
+        "expand_label": "Read the full introduction",
+        "collapse_label": "Show less"
+      },
       "ctas": [
         {
           "id": "cta-1",

@@ -164,7 +164,7 @@ export function IntelligenceDeskBoundaries() {
     >
       <div className="dnh-site-shell min-w-0">
         <div className="grid min-w-0 overflow-hidden border border-line bg-page lg:grid-cols-[minmax(20rem,0.38fr)_minmax(0,0.62fr)]">
-          <header className="relative flex min-w-0 flex-col justify-between overflow-hidden bg-brand-primary p-6 text-[var(--dnh-text-on-brand)] sm:p-8 lg:p-9 xl:p-11">
+          <header className="relative flex min-w-0 flex-col justify-between overflow-hidden bg-brand-secondary p-6 text-[var(--dnh-text-on-brand)] sm:p-8 lg:p-9 xl:p-11">
             <div className="relative z-10 min-w-0 text-start">
               <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
                 <span

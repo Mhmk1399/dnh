@@ -1,17 +1,22 @@
+"use client";
+
+import { useState } from "react";
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { getImageProps } from "next/image";
 
-import {
-  WealthActions,
-  WealthParagraph,
-  WealthRichText,
-  WealthSectionHeader,
-  getParagraphs,
-} from "./WealthArchitectureShared";
+import { ActionButton } from "@/components/ui/ActionButton";
+import { WealthRichText, getParagraphs } from "./WealthArchitectureShared";
 import type { WealthSectionProps } from "./wealthArchitectureTypes";
 
 export function WealthPageHero({ section, direction }: WealthSectionProps) {
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const paragraphs = getParagraphs(section);
   const media = section.media;
+  const isRTL = direction === "rtl";
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+  const highlight = section.heading_highlight?.trim() ?? "";
+  const highlightIndex = highlight ? section.heading.indexOf(highlight) : -1;
+  const descriptionToggle = section.description_toggle;
 
   if (!media?.src) return null;
 
@@ -19,7 +24,7 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
     src: media.src,
     alt: media.alt,
     fill: true,
-    sizes: "(max-width: 1023px) calc(100vw - 24px), 46vw",
+    sizes: "(max-width: 1023px) calc(100vw - 24px), 47vw",
     loading: "eager",
     fetchPriority: "high",
     className: "h-full w-full object-cover object-center",
@@ -41,7 +46,7 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-page-hero-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-brand-accent text-white"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-brand-secondary text-white"
     >
       {mobileImage ? (
         <>
@@ -60,53 +65,133 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
             imageSizes={desktopImage.sizes}
           />
         </>
-      ) : null}
+      ) : (
+        <link
+          rel="preload"
+          as="image"
+          imageSrcSet={desktopImage.srcSet}
+          imageSizes={desktopImage.sizes}
+        />
+      )}
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.13]"
+        className="pointer-events-none absolute inset-0 opacity-[0.055]"
         style={{
           backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.07) 1px,transparent 1px)",
-          backgroundSize: "82px 82px",
+            "linear-gradient(to right,rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.45) 1px,transparent 1px)",
+          backgroundSize: "88px 88px",
+          maskImage:
+            "linear-gradient(to bottom,black,transparent 82%),linear-gradient(to right,transparent,black 40%,black 70%,transparent)",
         }}
       />
 
-      <div className="dnh-site-shell relative z-10 grid min-h-svh min-w-0 gap-8 pb-12 pt-[calc(8.5rem+env(safe-area-inset-top))] sm:pb-16 sm:pt-[calc(9.5rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-center lg:gap-12 lg:pb-20 lg:pt-[calc(9rem+env(safe-area-inset-top))]">
-        <div className="contents lg:block lg:col-start-1 lg:row-start-1">
-          <div className="order-1">
-            <WealthSectionHeader
-              section={section}
-              direction={direction}
-              headingId="wealth-page-hero-heading"
-              as="h1"
-              dark
-              className="max-w-[760px]"
-            />
+      <div className="dnh-site-shell relative z-10 grid min-h-svh min-w-0 gap-8 pb-10 pt-[calc(7.5rem+env(safe-area-inset-top))] sm:gap-10 sm:pb-14 sm:pt-[calc(8.75rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.06fr)_minmax(400px,0.94fr)] lg:items-center lg:gap-[clamp(2.5rem,5vw,6rem)] lg:pb-[clamp(4rem,8svh,7rem)] lg:pt-[calc(8.75rem+env(safe-area-inset-top))]">
+        <div className="contents min-w-0 lg:col-start-1 lg:row-start-1 lg:block">
+          <div className="order-1 min-w-0">
+            <header className="max-w-[58rem] text-start">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold leading-7 text-white sm:text-[13px]">
+                <span
+                  aria-hidden="true"
+                  className="h-[2px] w-9 shrink-0 bg-brand-primary sm:w-9"
+                />
+                <span>{section.eyebrow}</span>
+               
+              </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:max-w-[780px]">
-              {paragraphs.map((paragraph) => (
-                <WealthParagraph
-                  key={paragraph.id}
-                  direction={direction}
-                  dark
-                  className="border-s border-white/20 ps-4 text-[13px] sm:text-[14px]"
+              <h1
+                id="wealth-page-hero-heading"
+                className={`mt-4 max-w-[20ch] text-pretty text-[clamp(2rem,8.4vw,3.1rem)] font-black sm:mt-6 sm:text-[clamp(2.65rem,6vw,3.75rem)] lg:text-[clamp(2.8rem,4vw,4rem)]  ${
+                  isRTL
+                    ? "leading-[1.5]"
+                    : "leading-[1.08] tracking-[-0.035em]"
+                }`}
+              >
+                {highlightIndex < 0 ? (
+                  section.heading
+                ) : (
+                  <>
+                    {section.heading.slice(0, highlightIndex)}
+                    <span className="text-brand-primary">
+                      {section.heading.slice(
+                        highlightIndex,
+                        highlightIndex + highlight.length,
+                      )}
+                    </span>
+                    {section.heading.slice(highlightIndex + highlight.length)}
+                  </>
+                )}
+              </h1>
+            </header>
+
+            {paragraphs.length > 0 ? (
+              <div className="mt-5 max-w-[109ch] border-s border-brand-primary/65 ps-4 sm:mt-7 sm:ps-5 lg:mt-8">
+                <div
+                  id="wealth-hero-description"
+                  className={`space-y-3 text-start text-[13px] font-normal text-white/76 sm:text-[15px] lg:text-[16px] ${
+                    isRTL ? "leading-[2]" : "leading-[1.72]"
+                  } ${isDescriptionExpanded ? "" : "line-clamp-4 lg:line-clamp-5"}`}
                 >
-                  <WealthRichText text={paragraph.text} />
-                </WealthParagraph>
-              ))}
-            </div>
+                  {paragraphs.map((paragraph) => (
+                    <p key={paragraph.id}>
+                      <WealthRichText text={paragraph.text} />
+                    </p>
+                  ))}
+                </div>
+
+                {descriptionToggle ? (
+                  <button
+                    type="button"
+                    aria-expanded={isDescriptionExpanded}
+                    aria-controls="wealth-hero-description"
+                    onClick={() =>
+                      setIsDescriptionExpanded((isExpanded) => !isExpanded)
+                    }
+                    className="mt-2 inline-flex min-h-11 cursor-pointer items-center gap-2 text-[12px] font-bold text-brand-primary transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary motion-reduce:transition-none sm:mt-3 sm:text-[13px]"
+                  >
+                    <span>
+                      {isDescriptionExpanded
+                        ? descriptionToggle.collapse_label
+                        : descriptionToggle.expand_label}
+                    </span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`size-4 shrink-0 transition-transform duration-300 motion-reduce:transition-none ${
+                        isDescriptionExpanded ? "rotate-180" : "rotate-0"
+                      }`}
+                      strokeWidth={1.8}
+                    />
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
-          <WealthActions
-            ctas={section.ctas}
-            direction={direction}
-            dark
-            className="order-3 mt-0 lg:mt-8"
-          />
+          <div className="order-3 grid min-w-0 gap-3 sm:grid-cols-2 lg:mt-9 lg:flex lg:flex-wrap">
+            {section.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                shape="square"
+                size="lg"
+                icon={Arrow}
+                iconPosition="end"
+                contentAlignment="between"
+                dir={direction}
+                className={`w-full min-w-0 shadow-none hover:shadow-none sm:min-w-[250px] lg:w-auto ${
+                  cta.type === "primary"
+                    ? "!bg-brand-primary !text-brand-secondary hover:!bg-white"
+                    : "!border-white/35 !bg-transparent !text-white hover:!border-brand-primary hover:!bg-transparent hover:!text-brand-primary"
+                }`}
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
+          </div>
         </div>
 
-        <div className="relative order-2 aspect-[4/5] min-h-[430px] overflow-hidden border border-white/16 bg-brand-primary lg:col-start-2 lg:row-start-1 lg:h-[min(760px,76svh)] lg:aspect-auto">
+        <figure className="relative order-2 aspect-[4/3] min-h-[300px] overflow-hidden border border-white/15 bg-brand-secondary sm:min-h-[420px] lg:col-start-2 lg:row-start-1 lg:h-[min(760px,76svh)] lg:min-h-[560px] lg:aspect-auto">
           <picture className="absolute inset-0 block h-full w-full">
             {mobileImage ? (
               <source
@@ -119,9 +204,31 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
           </picture>
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-brand-primary/10"
+            className="absolute inset-0 lg:hidden"
+            style={{
+              backgroundImage:
+                "linear-gradient(to top,var(--dnh-secondary),transparent 58%)",
+              opacity: 0.7,
+            }}
           />
-        </div>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 hidden lg:block"
+            style={{
+              backgroundImage: isRTL
+                ? "linear-gradient(to left,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)"
+                : "linear-gradient(to right,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)",
+            }}
+          />
+          <span
+            aria-hidden="true"
+            className="absolute end-0 top-0 h-20 w-[3px] bg-brand-primary sm:h-28"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute end-0 top-0 h-[3px] w-20 bg-brand-primary sm:w-28"
+          />
+        </figure>
       </div>
     </section>
   );
