@@ -29,12 +29,6 @@ export function MajorDecisionEyebrow({
         />
         {section.eyebrow}
       </p>
-      <bdi
-        dir="ltr"
-        className="mt-1 block text-start text-[9px] font-semibold uppercase tracking-[.18em] opacity-65"
-      >
-        {section.english_label}
-      </bdi>
     </div>
   );
 }
