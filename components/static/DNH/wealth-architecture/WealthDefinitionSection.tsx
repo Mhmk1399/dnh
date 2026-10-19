@@ -24,7 +24,7 @@ export function WealthDefinitionSection({
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-definition-heading"
-      className="relative isolate overflow-hidden border-b border-white/10  bg-brand-accent py-14 text-white sm:py-18 lg:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10  bg-brand-secondary py-14 text-white sm:py-18 lg:py-24"
     >
       <div
         aria-hidden="true"

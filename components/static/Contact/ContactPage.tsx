@@ -19,7 +19,11 @@ export function ContactPage({ content }: { content: ContactContent }) {
   const isRTL = content.direction === "rtl";
   return (
     <div dir={content.direction}>
-      <ContactHero content={content.hero} />
+      <ContactHero
+        content={content.hero}
+        direction={content.direction}
+        locale={content.locale}
+      />
       <section aria-labelledby="contact-information-title" className="bg-white py-16 sm:py-20 lg:py-28">
         <div className="dnh-site-shell mx-auto w-full max-w-[1536px] px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">

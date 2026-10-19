@@ -218,7 +218,7 @@ export function SectionExtraCopy({
   );
 }
 
-function resolveCtaHref(cta: ServiceCta, targets?: ServiceCtaTargets) {
+export function resolveCtaHref(cta: ServiceCta, targets?: ServiceCtaTargets) {
   if (cta.href) return cta.href;
   if (targets?.byLabel?.[cta.label]) return targets.byLabel[cta.label];
   if (cta.type === "secondary") {
