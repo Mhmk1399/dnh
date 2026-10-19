@@ -249,7 +249,7 @@ function FocusLayout({
 }) {
   return (
     <div>
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)] lg:items-end lg:gap-14">
+      <div className="grid gap-8  lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)] lg:items-end lg:gap-14">
         <ServiceHeader content={content} dark={dark} isRTL={isRTL} />
         <p
           className={`text-[15px] font-semibold sm:text-[16px] lg:text-[17px] ${
@@ -260,9 +260,9 @@ function FocusLayout({
         </p>
       </div>
 
-      <div className="mt-8 border-y border-line-strong bg-brand-primary text-white lg:mt-10">
+      <div className="mt-8 border-y border-line-strong  text-white lg:mt-10">
         <p
-          className={`border-b border-white/15 px-5 py-5 text-[15px] font-bold sm:px-6 sm:text-[16px] lg:px-8 lg:py-6 ${
+          className={`border-b border-white/15 px-5 text-black py-5 text-[15px] font-bold sm:px-6 sm:text-[16px] lg:px-8 lg:py-6 ${
             isRTL ? "leading-[2]" : "leading-[1.75]"
           }`}
         >
@@ -278,7 +278,7 @@ function FocusLayout({
               >
                 <span className="block h-[2px] w-7 bg-brand-accent" />
                 <p
-                  className={`mt-3 text-[13px] font-extrabold text-white sm:text-[14px] ${
+                  className={`mt-3 text-[13px] font-extrabold text-black/60 sm:text-[14px] ${
                     isRTL ? "leading-[1.9]" : "leading-[1.5]"
                   }`}
                 >
@@ -316,7 +316,7 @@ function StatementLayout({
   return (
     <div>
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:items-start lg:gap-16">
-        <ServiceHeader content={content} dark={dark} isRTL={isRTL} />
+        <ServiceHeader content={content}  dark={dark}  isRTL={isRTL} />
         <p
           className={`border-s-2 border-brand-accent ps-5 text-[15px] font-bold sm:text-[16px] lg:mt-12 lg:text-[17px] ${
             dark ? "text-white/80" : "text-ink"

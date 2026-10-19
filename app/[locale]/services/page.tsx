@@ -39,7 +39,7 @@ export async function generateMetadata({
 
 const page = () => {
   return (
-    <div>
+    <div >
       <ServicesHero />
       <ServicesPositioning />
 
@@ -52,14 +52,14 @@ const page = () => {
 
       <ServicesServiceSection
         serviceId="portfolio-intelligence"
-        layout="focus"
-        tone="soft"
+        layout="focus" 
+        tone="soft" 
       />
 
       <ServicesServiceSection
         serviceId="strategic-financial-advisory"
         layout="statement"
-        tone="primary"
+        tone="page"
       />
 
       <ServicesServiceSection

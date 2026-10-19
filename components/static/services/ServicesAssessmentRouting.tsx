@@ -81,7 +81,7 @@ export function ServicesAssessmentRouting() {
     >
       <div className="dnh-site-shell py-14 sm:py-16 lg:py-20 xl:py-24">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+          <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
           <p
             className={`text-[12px] font-extrabold text-brand-primary sm:text-[13px] ${
               isRTL ? "leading-[1.9]" : "leading-[1.5]"
