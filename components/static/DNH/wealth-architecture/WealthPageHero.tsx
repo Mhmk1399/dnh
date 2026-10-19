@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { getImageProps } from "next/image";
 
@@ -17,7 +17,39 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
   const highlight = section.heading_highlight?.trim() ?? "";
   const highlightIndex = highlight ? section.heading.indexOf(highlight) : -1;
   const descriptionToggle = section.description_toggle;
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  const [expandedHeight, setExpandedHeight] = useState(0);
+  const [collapsedHeight, setCollapsedHeight] = useState(0);
 
+  useEffect(() => {
+    const element = descriptionRef.current;
+    if (!element) return;
+
+    const updateHeights = () => {
+      const styles = window.getComputedStyle(element);
+      const lineHeight = parseFloat(styles.lineHeight);
+      const lines = window.innerWidth >= 1024 ? 5 : 4;
+
+      setCollapsedHeight(
+        lineHeight * lines +
+          parseFloat(styles.paddingTop) +
+          parseFloat(styles.paddingBottom),
+      );
+      setExpandedHeight(element.scrollHeight);
+    };
+
+    updateHeights();
+
+    const observer = new ResizeObserver(updateHeights);
+    observer.observe(element);
+
+    window.addEventListener("resize", updateHeights);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateHeights);
+    };
+  }, [paragraphs]);
   if (!media?.src) return null;
 
   const desktopImage = getImageProps({
@@ -27,17 +59,19 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
     sizes: "(max-width: 1023px) calc(100vw - 24px), 47vw",
     loading: "eager",
     fetchPriority: "high",
-    className: "h-full w-full object-cover object-center",
+    className:
+      "absolute inset-0 block h-full w-full object-cover object-center",
   }).props;
   const mobileImage = media.mobile_src
     ? getImageProps({
         src: media.mobile_src,
         alt: media.alt,
         fill: true,
-        sizes: "calc(100vw - 24px)",
+        sizes: "(max-width: 767px) 100vw, 50vw",
         loading: "eager",
         fetchPriority: "high",
-        className: "h-full w-full object-cover object-center",
+        className:
+          "absolute inset-0 block h-full w-full object-cover object-center",
       }).props
     : null;
 
@@ -86,7 +120,27 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
         }}
       />
 
-      <div className="dnh-site-shell relative z-10 grid min-h-svh min-w-0 gap-8 pb-10 pt-[calc(7.5rem+env(safe-area-inset-top))] sm:gap-10 sm:pb-14 sm:pt-[calc(8.75rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.06fr)_minmax(400px,0.94fr)] lg:items-center lg:gap-[clamp(2.5rem,5vw,6rem)] lg:pb-[clamp(4rem,8svh,7rem)] lg:pt-[calc(8.75rem+env(safe-area-inset-top))]">
+      <div
+        className="
+  dnh-site-shell relative z-10
+  grid w-full min-w-0
+  grid-cols-[minmax(0,1fr)]
+  gap-8
+  min-h-svh
+  pb-10
+  pt-[calc(7.5rem+env(safe-area-inset-top))]
+
+  sm:gap-10
+  sm:pb-14
+  sm:pt-[calc(8.75rem+env(safe-area-inset-top))]
+
+  lg:grid-cols-[minmax(0,1.06fr)_minmax(400px,0.94fr)]
+  lg:items-center
+  lg:gap-[clamp(2.5rem,5vw,6rem)]
+  lg:pb-[clamp(4rem,8svh,7rem)]
+  lg:pt-[calc(8.75rem+env(safe-area-inset-top))]
+"
+      >
         <div className="contents min-w-0 lg:col-start-1 lg:row-start-1 lg:block">
           <div className="order-1 min-w-0">
             <header className="max-w-[58rem] text-start">
@@ -96,15 +150,12 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
                   className="h-[2px] w-9 shrink-0 bg-brand-primary sm:w-9"
                 />
                 <span>{section.eyebrow}</span>
-               
               </div>
 
               <h1
                 id="wealth-page-hero-heading"
-                className={`mt-4 max-w-[20ch] text-pretty text-[clamp(2rem,8.4vw,3.1rem)] font-black sm:mt-6 sm:text-[clamp(2.65rem,6vw,3.75rem)] lg:text-[clamp(2.8rem,4vw,4rem)]  ${
-                  isRTL
-                    ? "leading-[1.5]"
-                    : "leading-[1.08] tracking-[-0.035em]"
+                className={`mt-4 max-w-[60ch]  text-[clamp(1.75rem,7vw,1.5rem)] font-black sm:mt-6   lg:text-[clamp(2.8rem,4vw,2.7rem)] ${
+                  isRTL ? "leading-[1.5]" : "leading-[1.08] tracking-[-0.035em]"
                 }`}
               >
                 {highlightIndex < 0 ? (
@@ -128,9 +179,27 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
               <div className="mt-5 max-w-[109ch] border-s border-brand-primary/65 ps-4 sm:mt-7 sm:ps-5 lg:mt-8">
                 <div
                   id="wealth-hero-description"
-                  className={`space-y-3 text-start text-[13px] font-normal text-white/76 sm:text-[15px] lg:text-[16px] ${
-                    isRTL ? "leading-[2]" : "leading-[1.72]"
-                  } ${isDescriptionExpanded ? "" : "line-clamp-4 lg:line-clamp-5"}`}
+                  ref={descriptionRef}
+                  className={`
+    space-y-3
+    overflow-hidden
+    text-start text-[13px]
+    font-normal text-white/76
+    sm:text-[15px]
+    lg:text-[16px]
+
+    transition-[max-height,opacity]
+    duration-500
+    ease-in-out
+    motion-reduce:transition-none
+
+    ${isRTL ? "leading-[2]" : "leading-[1.72]"}
+  `}
+                  style={{
+                    maxHeight: isDescriptionExpanded
+                      ? `${expandedHeight}px`
+                      : `${collapsedHeight}px`,
+                  }}
                 >
                   {paragraphs.map((paragraph) => (
                     <p key={paragraph.id}>
@@ -156,7 +225,7 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
                     </span>
                     <ChevronDown
                       aria-hidden="true"
-                      className={`size-4 shrink-0 transition-transform duration-300 motion-reduce:transition-none ${
+                      className={`size-4 shrink-0 transition-transform duration-500 ease-in-outmotion-reduce:transition-none ${
                         isDescriptionExpanded ? "rotate-180" : "rotate-0"
                       }`}
                       strokeWidth={1.8}
@@ -167,17 +236,14 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
             ) : null}
           </div>
 
-          <div className="order-3 grid min-w-0 gap-3 sm:grid-cols-2 lg:mt-9 lg:flex lg:flex-wrap">
+          <div className="order-3 grid min-w-0 gap-1 grid-cols-2 lg:mt-9 lg:flex lg:flex-wrap">
             {section.ctas.map((cta) => (
               <ActionButton
                 key={cta.id}
                 href={cta.href}
                 variant={cta.type}
                 shape="square"
-                size="lg"
-                icon={Arrow}
-                iconPosition="end"
-                contentAlignment="between"
+                size="md"
                 dir={direction}
                 className={`w-full min-w-0 shadow-none hover:shadow-none sm:min-w-[250px] lg:w-auto ${
                   cta.type === "primary"
@@ -191,7 +257,26 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
           </div>
         </div>
 
-        <figure className="relative order-2 aspect-[4/3] min-h-[300px] overflow-hidden border border-white/15 bg-brand-secondary sm:min-h-[420px] lg:col-start-2 lg:row-start-1 lg:h-[min(760px,76svh)] lg:min-h-[560px] lg:aspect-auto">
+        <figure
+          className="
+    relative order-2
+    block w-full min-w-0 max-w-full
+    aspect-[4/3]
+    min-h-0
+    overflow-hidden
+    border border-white/15
+    bg-brand-secondary
+
+    sm:aspect-[16/10]
+    sm:min-h-[420px]
+
+    lg:col-start-2
+    lg:row-start-1
+    lg:aspect-auto
+    lg:h-[min(760px,76svh)]
+    lg:min-h-[560px]
+  "
+        >
           <picture className="absolute inset-0 block h-full w-full">
             {mobileImage ? (
               <source
@@ -219,14 +304,6 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
                 ? "linear-gradient(to left,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)"
                 : "linear-gradient(to right,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)",
             }}
-          />
-          <span
-            aria-hidden="true"
-            className="absolute end-0 top-0 h-20 w-[3px] bg-brand-primary sm:h-28"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute end-0 top-0 h-[3px] w-20 bg-brand-primary sm:w-28"
           />
         </figure>
       </div>
