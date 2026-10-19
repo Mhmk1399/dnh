@@ -155,15 +155,9 @@ function Eyebrow({
       <div
         className={`flex items-center gap-3 text-[13px] font-bold leading-7 ${dark ? "text-[#b4dae3]" : "text-brand-primary"}`}
       >
+        <span aria-hidden="true" className="h-0.5 w-9 bg-brand-accent" />
         <span>{section.eyebrow}</span>
-        <span aria-hidden="true" className="h-0.5 w-11 bg-brand-accent" />
       </div>
-      <bdi
-        dir="ltr"
-        className={`mt-1 block text-start text-[10px] font-semibold tracking-[0.2em] ${dark ? "text-[#82a9b2]" : "text-[#799198]"}`}
-      >
-        {section.english_label.toUpperCase()}
-      </bdi>
     </div>
   );
 }
@@ -292,12 +286,6 @@ function Hero({
             <SectionActions section={section} dark isRTL={isRTL} />
           </div>
         </div>
-        <bdi
-          dir="ltr"
-          className="absolute bottom-5 end-6 hidden text-[10px] tracking-[.24em] text-[#98b9c1] sm:block"
-        >
-          01 / ABOUT DNH
-        </bdi>
       </div>
       <div className="border-t border-white/15 bg-[#022936]">
         <div className="dnh-site-shell grid gap-4 py-10 sm:grid-cols-2 sm:gap-x-10 sm:py-12 lg:grid-cols-3">
@@ -363,33 +351,7 @@ function Definition({
               sizes="(max-width: 1024px) 100vw, 44vw"
               className="object-cover"
             />
-            <span
-              aria-hidden="true"
-              className="absolute start-5 top-5 size-5 bg-brand-accent"
-            />
           </figure>
-          {section.paragraphs?.[5] ? (
-            <Copy className="mt-6">{section.paragraphs[5]}</Copy>
-          ) : null}
-          <ul className="mt-4 grid grid-cols-2 border-s border-t border-line sm:grid-cols-5">
-            {section.items?.map((item, index) => (
-              <li
-                key={item}
-                className="border-b border-e border-line p-4 text-[12px] font-bold sm:p-3"
-              >
-                <bdi
-                  dir="ltr"
-                  className="mb-2 block text-[10px] text-brand-accent"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </bdi>
-                {item}
-              </li>
-            ))}
-          </ul>
-          {section.closing ? (
-            <Copy className="mt-4">{section.closing}</Copy>
-          ) : null}
         </div>
       </div>
     </section>
@@ -562,12 +524,7 @@ function Domains({
                 <h3 className="text-[24px] font-black leading-[1.7]">
                   {domain.title}
                 </h3>
-                <bdi
-                  dir="ltr"
-                  className="mt-1 block text-start text-[10px] tracking-[.18em] text-[#799198]"
-                >
-                  {domain.english_label}
-                </bdi>
+
                 <div className="mt-4 space-y-3">
                   {domain.paragraphs?.map((p) => (
                     <Copy key={p}>{p}</Copy>
@@ -622,12 +579,7 @@ function Framework({
               <h3 className="mt-5 text-[22px] font-black leading-8">
                 {pillar.fa_title}
               </h3>
-              <bdi
-                dir="ltr"
-                className="mt-1 block text-start text-[10px] tracking-[.16em] text-[#799198]"
-              >
-                {pillar.title}
-              </bdi>
+
               <Copy className="mt-4">{pillar.description}</Copy>
             </article>
           ))}
@@ -666,28 +618,14 @@ function Thinking({
           <Heading id={`${section.id}-title`} dark>
             <HeadingAccent section={section} />
           </Heading>
-          <ol className="mt-7 border-t border-white/15">
+          <ol className="mt-7 border-t grid grid-cols-2 border-white/15">
             {section.steps?.map((step, index) => (
               <li
                 key={step.title}
-                className="grid grid-cols-[42px_1fr] gap-3 border-b border-white/15 py-4"
+                className="grid grid-cols-2 gap-3 border-b border-white/15 py-4"
               >
-                <bdi
-                  dir="ltr"
-                  className="text-[10px] tracking-[.12em] text-brand-accent"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </bdi>
                 <div>
-                  <h3 className="text-[16px] font-bold">
-                    {step.title}{" "}
-                    <bdi
-                      dir="ltr"
-                      className="ms-2 text-[9px] font-normal tracking-[.12em] text-[#82a9b2]"
-                    >
-                      {step.english_label}
-                    </bdi>
-                  </h3>
+                  <h3 className="text-[16px] font-bold">{step.title} </h3>
                   <Copy dark className="mt-1 text-[12px]">
                     {step.description}
                   </Copy>
@@ -695,11 +633,7 @@ function Thinking({
               </li>
             ))}
           </ol>
-          {section.closing ? (
-            <Copy dark className="mt-5">
-              {section.closing}
-            </Copy>
-          ) : null}
+
           <SectionActions section={section} dark isRTL={isRTL} />
         </div>
       </div>
@@ -738,12 +672,6 @@ function Audience({
                 key={audience.title}
                 className="relative min-h-[210px] bg-page p-6 transition-colors hover:bg-surface-soft"
               >
-                <bdi
-                  dir="ltr"
-                  className="absolute end-5 top-5 text-[10px] text-[#9db2b7]"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </bdi>
                 <span className="mb-5 flex size-11 items-center justify-center bg-surface-soft text-brand-primary">
                   <Icon size={21} strokeWidth={1.6} />
                 </span>
@@ -785,7 +713,7 @@ function Ecosystem({
           {section.closing ? (
             <Copy className="mt-5">{section.closing}</Copy>
           ) : null}
-         
+
           <SectionActions section={section} isRTL={isRTL} />
         </div>
         <div className="grid border-s border-t border-line sm:grid-cols-2">
@@ -837,12 +765,6 @@ function Engagement({
               className="min-h-[190px] border-b border-e border-white/15 p-5 text-start"
               dir={isRTL ? "rtl" : "ltr"}
             >
-              <bdi
-                dir="ltr"
-                className="block text-[26px] font-black text-brand-accent"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </bdi>
               <h3 className="mt-5 text-[14px] font-black leading-7">
                 {step.title}
               </h3>
@@ -852,11 +774,7 @@ function Engagement({
             </li>
           ))}
         </ol>
-        {section.closing ? (
-          <Copy dark className="mt-6">
-            {section.closing}
-          </Copy>
-        ) : null}
+
         <SectionActions section={section} dark isRTL={isRTL} />
       </div>
     </section>

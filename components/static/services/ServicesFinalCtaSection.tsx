@@ -86,7 +86,7 @@ export function ServicesFinalCtaSection() {
     >
       <div className="dnh-site-shell py-14 sm:py-16 lg:py-20 xl:py-24">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
+          <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
           <p
             className={`text-[12px] font-extrabold text-brand-primary sm:text-[13px] ${
               isRTL ? "leading-[1.9]" : "leading-[1.5]"
@@ -123,14 +123,9 @@ export function ServicesFinalCtaSection() {
             {content.checklist.map((item, index) => (
               <div
                 key={item}
-                className="grid grid-cols-[42px_minmax(0,1fr)] items-start gap-4 border-b border-line py-4 sm:py-5"
+                className="grid grid-cols-2 items-start gap-4 border-b border-line py-4 sm:py-5"
               >
-                <span
-                  aria-hidden="true"
-                  className="pt-[2px] text-[12px] font-black text-brand-accent sm:text-[13px]"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+              
                 <p
                   className={`text-[14px] font-semibold text-ink sm:text-[15px] lg:text-[16px] ${
                     isRTL ? "leading-[1.95]" : "leading-[1.72]"
@@ -144,9 +139,9 @@ export function ServicesFinalCtaSection() {
         </div>
       </div>
 
-      <div className="bg-brand-primary text-white">
+      <div className="bg-brand-accent text-white ">
         <div className="dnh-site-shell py-10 sm:py-12 lg:py-14">
-          <div className="grid gap-10 items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16 xl:gap-20">
+          <div className="  gap-10 items-center flex  flex-row-reverse lg:gap-16 ">
             <div className="min-w-0">
               <p
                 className={`text-[15px] font-semibold text-white/78 sm:text-[16px] ${
@@ -158,7 +153,7 @@ export function ServicesFinalCtaSection() {
             </div>
 
             <div className="min-w-0 lg:border-s lg:border-white/18 lg:ps-10 xl:ps-14">
-              <p className="text-[12px] font-extrabold text-brand-accent sm:text-[13px]">
+              <p className="text-[12px] font-extrabold text-brand-primary sm:text-[13px]">
                 {objectiveLabel}
               </p>
 
@@ -186,20 +181,7 @@ export function ServicesFinalCtaSection() {
                   </Link>
                 ) : null}
 
-                {secondaryCta ? (
-                  <Link
-                    href={secondaryCta.href}
-                    className="group inline-flex min-h-[54px] items-center justify-between gap-5 border border-white/45 bg-transparent px-5 py-3 text-[13px] font-extrabold text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/30 sm:min-w-[13.5rem] sm:text-[14px] motion-reduce:transition-none"
-                  >
-                    <span>{secondaryCta.label}</span>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-8 w-8 items-center justify-center border border-current/30"
-                    >
-                      <Arrow className="h-4 w-4" strokeWidth={1.8} />
-                    </span>
-                  </Link>
-                ) : null}
+             
               </div>
             </div>
           </div>

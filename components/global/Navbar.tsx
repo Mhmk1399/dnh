@@ -335,7 +335,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
               </ActionButton>
             </div>
             <div className={styles.mobileActions}>
-              <LanguageSwitch onSwitch={closeDesktop} />
+              {/* <LanguageSwitch onSwitch={closeDesktop} /> */}
               <Link
                 className={styles.mobileConsult}
                 href={href(CONSULTATION_PATH)}

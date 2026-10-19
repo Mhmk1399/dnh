@@ -39,8 +39,8 @@
       ],
       "trust_line": "دکتر نسیم محمدحسنی معمار ثروت خصوصی، مشاور مالی راهبردی و بنیان‌گذار چارچوب DNH",
       "media": {
-        "src": "/assets/images/dnh-hero-desktop.png",
-        "mobile_src": "/assets/images/dnh-hero-mobile.png",
+        "src": "/assets/images/doctorHero.png",
+        "mobile_src": "/assets/images/doctor.webp",
         "alt": "تصویر زمینه هدر صفحه اصلی DNH",
         "width": 1920,
         "height": 1080
@@ -73,10 +73,10 @@
           "cta": "بررسی ساختار پرتفوی",
           "href": "/services/portfolio-intelligence",
           "icon": "portfolio",
-      "media": {
-        "src": "/assets/images/portfolio-intelligence.webp",
-        "alt": ""
-      }
+          "media": {
+            "src": "/assets/images/portfolio-intelligence.webp",
+            "alt": ""
+          }
         },
         {
           "id": "strategic-financial-advisory",
@@ -85,10 +85,10 @@
           "cta": "بررسی مسئله مالی کسب‌وکار",
           "href": "/services/strategic-financial-advisory",
           "icon": "advisory",
-      "media": {
-        "src": "/assets/images/strategic-financial-advisory.webp",
-        "alt": ""
-      }
+          "media": {
+            "src": "/assets/images/strategic-financial-advisory.webp",
+            "alt": ""
+          }
         },
         {
           "id": "macro-market-advisory",
@@ -97,10 +97,10 @@
           "cta": "مشاهده مشاوره اقتصاد و بازار",
           "href": "/services/macro-market-advisory",
           "icon": "market",
-      "media": {
-        "src": "/assets/images/macro-market-advisory.webp",
-        "alt": ""
-      }
+          "media": {
+            "src": "/assets/images/macro-market-advisory.webp",
+            "alt": ""
+          }
         },
         {
           "id": "risk-management-wealth-protection",
@@ -109,10 +109,10 @@
           "cta": "بررسی ریسک‌های مالی",
           "href": "/services/risk-management-wealth-protection",
           "icon": "risk",
-      "media": {
-        "src": "/assets/images/risk.webp",
-        "alt": ""
-      }
+          "media": {
+            "src": "/assets/images/risk.webp",
+            "alt": ""
+          }
         },
         {
           "id": "executive-briefings",
@@ -121,10 +121,10 @@
           "cta": "درخواست نشست تخصصی",
           "href": "/services/executive-briefings",
           "icon": "briefing",
-      "media": {
-        "src": "/assets/images/neshast.webp",
-        "alt": ""
-      }
+          "media": {
+            "src": "/assets/images/neshast.webp",
+            "alt": ""
+          }
         }
       ]
     },

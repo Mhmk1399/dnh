@@ -323,16 +323,7 @@ export function EntryGrid({
             </div>
           </div>
 
-          {entry.englishLabel ? (
-            <p
-              dir="ltr"
-              className={`mt-1 text-[9px] font-bold uppercase tracking-[0.1em] ${
-                light ? "text-white/42" : "text-ink-muted/55"
-              }`}
-            >
-              {entry.englishLabel}
-            </p>
-          ) : null}
+        
 
           {entry.description ? (
             <p

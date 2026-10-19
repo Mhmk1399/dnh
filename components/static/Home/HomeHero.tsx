@@ -95,10 +95,16 @@ export function HomeHero() {
       }).props
     : null;
 
-  const desktopScrim = isRTL
-    ? "linear-gradient(to left, color-mix(in srgb, var(--dnh-text) 98%, transparent) 0%, color-mix(in srgb, var(--dnh-text) 94%, transparent) 24%, color-mix(in srgb, var(--dnh-text) 82%, transparent) 48%, color-mix(in srgb, var(--dnh-text) 35%, transparent) 76%, color-mix(in srgb, var(--dnh-text) 12%, transparent) 100%)"
-    : "linear-gradient(to right, color-mix(in srgb, var(--dnh-text) 98%, transparent) 0%, color-mix(in srgb, var(--dnh-text) 94%, transparent) 24%, color-mix(in srgb, var(--dnh-text) 82%, transparent) 48%, color-mix(in srgb, var(--dnh-text) 35%, transparent) 76%, color-mix(in srgb, var(--dnh-text) 12%, transparent) 100%)";
-
+  const desktopScrim = `
+  linear-gradient(
+    ${isRTL ? "to left" : "to right"},
+    color-mix(in srgb, var(--dnh-text) 98%, transparent) 0%,
+    color-mix(in srgb, var(--dnh-text) 94%, transparent) 24%,
+    color-mix(in srgb, var(--dnh-text) 82%, transparent) 48%,
+    color-mix(in srgb, var(--dnh-text) 5%, transparent) 60%,
+    color-mix(in srgb, var(--dnh-text) 12%, transparent) 100%
+  )
+`;
   const hasDescription = hero.paragraphs.some(
     (paragraph) => paragraph.text.trim().length > 0,
   );
@@ -144,12 +150,12 @@ export function HomeHero() {
       <div
         className="
           pointer-events-none absolute inset-x-0 top-0 z-0
-          h-screen
+          h-screen   md:mt-0
           overflow-hidden
           lg:inset-0 lg:h-full
         "
       >
-        <picture className="absolute inset-0 block h-full w-full">
+        <picture className="absolute  inset-0 block h-full w-full">
           {mobileImage && (
             <source
               media="(max-width: 767px)"
@@ -169,11 +175,11 @@ export function HomeHero() {
           style={{
             backgroundImage: `
               linear-gradient(
-                to bottom,
-                rgba(8,20,38,0.82) 0%,
-                rgba(8,20,38,0.66) 26%,
-                rgba(8,20,38,0.14) 53%,
-                rgba(8,20,38,0.12) 70%,
+                to top,
+                rgba(8,20,38,0.82) 20%,
+                rgba(8,20,38,0.66) 36%,
+                rgba(8,20,38,0.14) 63%,
+                rgba(8,20,38,0.12) 80%,
                 var(--dnh-brand-primary, #102b46) 100%
               )
             `,
@@ -208,17 +214,21 @@ export function HomeHero() {
           {/* Heading area */}
           <header
             className="
-              relative flex min-w-0 flex-col
-              min-h-[clamp(27rem,65svh,38rem)]
-              pt-[calc(7.5rem+env(safe-area-inset-top))]
-              sm:pt-[calc(9rem+env(safe-area-inset-top))]
-              lg:block lg:min-h-0 lg:pt-0
-            "
+    relative flex min-w-0 flex-col
+    min-h-[clamp(27rem,65svh,38rem)]
+
+    pt-[clamp(29rem,57svh,32rem)]
+    sm:pt-[calc(9rem+env(safe-area-inset-top))]
+
+    lg:block
+    lg:min-h-0
+    lg:pt-0
+  "
           >
             {/* Eyebrow */}
             <div
               className="
-                flex min-w-0 items-center gap-3
+                flex min-w-0 justify-center lg:justify-start items-center gap-3
                 text-[11px] font-semibold leading-[1.8]
                 text-white/90
                 sm:text-[13px]
@@ -236,21 +246,29 @@ export function HomeHero() {
             <h1
               id="home-hero-heading"
               className={`
-                mt-4 max-w-[28ch]
-                line-clamp-3
-                text-justify text-[clamp(1.125rem,4.7vw,1.5rem)]
-                font-extrabold
-                [overflow-wrap:break-word]
-                sm:mt-6 sm:text-[1.875rem]
-                lg:line-clamp-2
-                lg:max-w-2xl
-                lg:text-3xl
-                ${
-                  isRTL
-                    ? "leading-[1.65] lg:leading-[1.65]"
-                    : "leading-[1.4] lg:leading-[1.35]"
-                }
-              `}
+    mx-auto w-full max-w-[28ch]
+    mt-4
+    text-center
+    text-[clamp(1.125rem,4.7vw,1.5rem)]
+    font-extrabold
+    [overflow-wrap:break-word]
+    line-clamp-3
+
+    sm:mt-6
+    sm:text-[1.875rem]
+
+    lg:mx-0
+    lg:max-w-3xl
+    lg:text-start
+    lg:text-3xl
+    lg:line-clamp-3
+
+    ${
+      isRTL
+        ? "leading-[1.65] lg:leading-[1.65]"
+        : "leading-[1.4] lg:leading-[1.35]"
+    }
+  `}
             >
               {highlightIndex < 0 ? (
                 hero.heading
@@ -258,7 +276,7 @@ export function HomeHero() {
                 <>
                   {hero.heading.slice(0, highlightIndex)}
 
-                  <span className="text-brand-accent">
+                  <span className="text-brand-primary">
                     {hero.heading.slice(
                       highlightIndex,
                       highlightIndex + highlight.length,
@@ -280,7 +298,7 @@ export function HomeHero() {
                 text-[14px] font-normal text-white/90
                 sm:ps-5 sm:text-[15px]
                 lg:mt-5 lg:max-w-[80ch]
-                xl:text-[16px]
+                
                 ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}
               `}
             >
@@ -359,7 +377,7 @@ export function HomeHero() {
           {/* CTA buttons */}
           <div
             className="
-              mt-26 grid min-w-0 grid-cols-2 gap-2
+              mt-10 grid min-w-0 grid-cols-2 gap-2
               sm:mt-8 sm:gap-3
               lg:flex lg:flex-row lg:flex-wrap lg:gap-4
             "

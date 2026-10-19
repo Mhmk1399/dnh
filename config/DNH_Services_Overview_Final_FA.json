@@ -288,7 +288,7 @@
       ],
       "ctas": [
         {
-          "label": "شروع Financial Decision Assessment",
+          "label": "ارزیابی تصمیم مالی",
           "type": "primary",
           "id": "assessment",
           "href": "/financial-decision-assessment"
