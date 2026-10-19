@@ -117,7 +117,6 @@ export function IntelligenceDeskMacroRiskView() {
               <p className="text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
                 {content.eyebrow}
               </p>
-         
             </div>
 
             <h2
@@ -144,30 +143,12 @@ export function IntelligenceDeskMacroRiskView() {
           </div>
         </header>
 
-        <div className="mt-9 grid min-w-0 gap-7 lg:mt-12 lg:grid-cols-[minmax(13rem,0.27fr)_minmax(0,0.73fr)] lg:gap-10 xl:grid-cols-[minmax(15rem,0.25fr)_minmax(0,0.75fr)] xl:gap-14">
-          <aside className="min-w-0 text-start lg:pt-3">
-            
-
-            <div className="mt-6   pt-5 sm:mt-7">
-              <div
-                className="grid grid-cols-[auto_1fr] items-center gap-3"
-                aria-hidden="true"
-              >
-                <span className="size-2 bg-brand-accent" />
-                <span className="h-px bg-line" />
-              </div>
-              <p
-                className={`mt-4 max-w-[24rem] text-[13px] font-semibold text-ink-muted sm:text-[14px] ${
-                  isRTL ? "leading-[1.95]" : "leading-[1.7]"
-                }`}
-              >
-                {content.closing}
-              </p>
-            </div>
-          </aside>
-
+        <div className="mt-9 grid min-w-0 gap-7 lg:mt-12 lg:grid-cols-[minmax(13rem,0.27fr)_minmax(0,0.73fr)] lg:gap-10 xl:grid-cols-1 xl:gap-14">
           <div className="min-w-0 border-y  border-line bg-surface-soft">
-            <ul className="min-w-0 grid-cols-2 grid" aria-label={content.eyebrow}>
+            <ul
+              className="min-w-0 grid-cols-2 grid"
+              aria-label={content.eyebrow}
+            >
               {content.questions.map((question) => {
                 const Icon = questionIcons[question.id];
 
@@ -181,7 +162,7 @@ export function IntelligenceDeskMacroRiskView() {
                     </span>
 
                     <p
-                      className={`min-w-0 text-start text-[15px] font-extrabold text-ink transition-colors duration-200 group-hover:text-brand-primary motion-reduce:transition-none sm:text-[16px] lg:text-[17px] ${
+                      className={`min-w-0 text-start text-[15px] font-extrabold text-ink transition-colors duration-200 group-hover:text-brand-primary motion-reduce:transition-none   lg:text-[15px] ${
                         isRTL ? "leading-[1.85]" : "leading-[1.48]"
                       }`}
                     >
@@ -201,22 +182,6 @@ export function IntelligenceDeskMacroRiskView() {
             </ul>
           </div>
         </div>
-
-        {cta ? (
-          <div className="mt-8 flex min-w-0 justify-start border-t border-line pt-7 sm:mt-10 sm:pt-8 lg:justify-end">
-            <ActionButton
-              href={cta.href}
-              variant={cta.type}
-              size="lg"
-              icon={Arrow}
-              iconPosition="end"
-              contentAlignment="between"
-              className="w-full sm:w-auto"
-            >
-              {cta.label}
-            </ActionButton>
-          </div>
-        ) : null}
       </div>
     </section>
   );

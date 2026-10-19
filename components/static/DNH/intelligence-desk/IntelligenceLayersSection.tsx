@@ -103,7 +103,7 @@ export function IntelligenceDeskWhatWeMonitor() {
               />
             </h2>
             <p
-              className={`mt-6 max-w-[70ch] border-s-2 border-brand-accent ps-4 text-[14px] text-white/72 sm:ps-5 sm:text-[15px] ${
+              className={`mt-6 max-w-[109ch] border-s-2 border-brand-accent ps-4 text-[14px] text-white/72 sm:ps-5 sm:text-[15px] ${
                 isRTL ? "leading-[2]" : "leading-[1.72]"
               }`}
             >

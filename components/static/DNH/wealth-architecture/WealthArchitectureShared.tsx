@@ -109,7 +109,10 @@ export function WealthRichText({ text }: { text: string }) {
     <>
       {parts.map((part, index) =>
         part.startsWith("**") && part.endsWith("**") ? (
-          <strong key={`${index}-${part.slice(2, 14)}`} className="font-black text-current">
+          <strong
+            key={`${index}-${part.slice(2, 14)}`}
+            className="font-black text-current"
+          >
             {part.slice(2, -2)}
           </strong>
         ) : (
@@ -143,29 +146,33 @@ export function WealthSectionHeader({
   const isRTL = direction === "rtl";
 
   return (
-    <header className={`${centered ? "mx-auto text-center" : "text-start"} ${className}`}>
+    <header
+      className={`${centered ? "mx-auto text-center" : "text-start"} ${className}`}
+    >
       <div
         className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold sm:text-[13px] ${
           centered ? "justify-center" : "justify-start"
         } ${dark ? "text-white/78" : "text-brand-primary"}`}
       >
-        <span aria-hidden="true" className="h-[2px] w-10 shrink-0 bg-brand-accent" />
+        <span
+          aria-hidden="true"
+          className="h-[2px] w-10 shrink-0 bg-brand-accent"
+        />
         <p>{section.eyebrow}</p>
-     
       </div>
 
       <Heading
         id={headingId}
         className={`mt-5 text-pretty text-[clamp(2rem,7.5vw,3.05rem)] font-black tracking-[-0.035em] sm:text-[clamp(2.6rem,4.7vw,3.35rem)] ${
           isRTL ? "leading-[1.48]" : "leading-[1.14]"
-        } ${dark ? "text-white" : "text-ink"}`}
+        } ${dark ? "text-white" : "text-brand-primary"}`}
       >
         {highlightIndex < 0 ? (
           section.heading
         ) : (
           <>
             {section.heading.slice(0, highlightIndex)}
-            <span className="text-brand-accent">
+            <span className="text-brand-primary">
               {section.heading.slice(
                 highlightIndex,
                 highlightIndex + highlight.length,
@@ -201,9 +208,6 @@ export function WealthActions({
           variant={cta.type}
           shape="square"
           size="md"
-          icon={Arrow}
-          iconPosition="end"
-          contentAlignment="between"
           dir={direction}
           className={`w-full shadow-none hover:shadow-none sm:w-auto sm:min-w-[230px] ${
             cta.type === "primary"

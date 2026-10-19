@@ -13,7 +13,7 @@ import { IntelligenceDeskStrategicImplications } from "@/components/static/DNH/i
 import { IntelligenceDeskBoundaries } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskBoundaries";
 import { IntelligenceDeskFinalCTA } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskFinalCTA";
 
-const page = () => {
+const page = () => {  
   return (
     <div>
       <IntelligenceDeskHero />

@@ -108,12 +108,7 @@ export function WholeWealthStructureSection({ section, direction }: WealthSectio
                 key={question.id}
                 className="min-w-0 border-b border-e border-line bg-page p-4 text-start"
               >
-                <bdi
-                  dir="ltr"
-                  className="text-[12px] font-black text-brand-accent"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </bdi>
+              
                 <p
                   className={`mt-3 text-[13px] font-bold text-ink ${
                     direction === "rtl" ? "leading-[1.75]" : "leading-[1.45]"

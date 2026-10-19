@@ -121,20 +121,8 @@ export function FrameworkPillarsIntegration() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="framework-pillars-integration-heading"
-      className="relative isolate scroll-mt-28 overflow-x-clip border-b border-line bg-[color-mix(in_srgb,var(--dnh-primary)_34%,var(--dnh-text))] py-14 text-[var(--dnh-text-on-brand)] sm:py-16 lg:py-20 xl:py-24"
+      className="relative isolate scroll-mt-28 overflow-x-clip border-b border-line bg-page py-14   sm:py-16 lg:py-20 xl:py-24"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-bg-page) 7%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in srgb,var(--dnh-bg-page) 5%,transparent) 1px,transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage:
-            "linear-gradient(to bottom,black 0%,black 58%,transparent 100%)",
-        }}
-      />
-
       <div className="dnh-site-shell relative z-10">
         <header className="grid min-w-0 gap-7 border-b border-[color-mix(in_srgb,var(--dnh-bg-page)_16%,transparent)] pb-8 sm:pb-9 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-end lg:gap-12 lg:pb-10 xl:gap-16">
           <div
@@ -147,11 +135,9 @@ export function FrameworkPillarsIntegration() {
                 className="h-[2px] w-10 shrink-0 bg-brand-accent sm:w-12"
               />
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-[var(--dnh-text-on-brand)] sm:text-[13px]">
+                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-accent sm:text-[13px]">
                   {content.eyebrow}
                 </p>
-
-              
               </div>
             </div>
 
@@ -185,7 +171,7 @@ export function FrameworkPillarsIntegration() {
             {content.paragraphs.map((paragraph) => (
               <p
                 key={paragraph.id}
-                className={`max-w-[68ch] text-[14px] text-[color-mix(in_srgb,var(--dnh-bg-page)_80%,transparent)] sm:text-[15px] ${
+                className={`max-w-[68ch] text-[14px] text-black/70 sm:text-[15px] ${
                   isRTL ? "leading-[2]" : "leading-[1.72]"
                 }`}
               >
@@ -198,8 +184,7 @@ export function FrameworkPillarsIntegration() {
         <div className="mt-9 sm:mt-10 lg:mt-12">
           <ol className="min-w-0 border-y border-[color-mix(in_srgb,var(--dnh-bg-page)_16%,transparent)]">
             {content.steps.map((step, index) => {
-              const Icon = stepIcons[step.code];
-              const isLast = index === content.steps.length - 1;
+               const isLast = index === content.steps.length - 1;
 
               return (
                 <li
@@ -212,25 +197,19 @@ export function FrameworkPillarsIntegration() {
                       : "border-b border-[color-mix(in_srgb,var(--dnh-bg-page)_14%,transparent)]"
                   }`}
                 >
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 start-0 w-[3px] origin-top scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100"
-                  />
-
+              
                   <article className="grid min-w-0 gap-4 py-5 sm:py-6 md:grid-cols-[88px_minmax(0,0.8fr)_minmax(0,1.55fr)] md:items-center md:gap-6 lg:grid-cols-[104px_minmax(0,0.76fr)_minmax(0,1.6fr)] lg:gap-8 lg:py-7">
                     <div className="flex items-center gap-3 md:gap-0">
-                  
-
                       <bdi
                         dir="ltr"
-                        className="text-[36px] font-black leading-none px-1 text-[color-mix(in_srgb,var(--dnh-bg-page)_24%,transparent)] transition-colors duration-300 group-hover:text-brand-accent md:ms-[-5px] md:text-[48px] lg:text-[56px]"
+                        className="text-[36px] font-black leading-none px-1 text-brand-primary transition-colors duration-300 group-hover:text-brand-accent md:ms-[-5px] md:text-[48px] lg:text-[56px]"
                       >
                         {step.code}
                       </bdi>
                     </div>
 
                     <h3
-                      className={`max-w-[28ch] text-start text-[18px] font-extrabold text-[var(--dnh-text-on-brand)] [overflow-wrap:break-word] sm:text-[19px] lg:text-[21px] ${
+                      className={`max-w-[28ch] text-start text-[18px] font-extrabold text-black [overflow-wrap:break-word] sm:text-[19px] lg:text-[21px] ${
                         isRTL ? "leading-[1.75]" : "leading-[1.35]"
                       }`}
                     >
@@ -238,7 +217,7 @@ export function FrameworkPillarsIntegration() {
                     </h3>
 
                     <p
-                      className={`max-w-[76ch] text-start text-[13px] text-[color-mix(in_srgb,var(--dnh-bg-page)_76%,transparent)] sm:text-[14px] lg:text-[14.5px] ${
+                      className={`max-w-[76ch] text-start text-[13px] text-black/70 sm:text-[14px] lg:text-[14.5px] ${
                         isRTL ? "leading-[1.95]" : "leading-[1.7]"
                       }`}
                     >
@@ -255,23 +234,7 @@ export function FrameworkPillarsIntegration() {
           data-framework-reveal=""
           className="mt-8 grid min-w-0 gap-5 border border-[color-mix(in_srgb,var(--dnh-bg-page)_18%,transparent)] bg-[color-mix(in_srgb,var(--dnh-bg-page)_6%,transparent)] p-5 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:p-6 lg:mt-10 lg:grid-cols-[minmax(0,1.28fr)_minmax(0,0.72fr)] lg:items-center lg:gap-10 lg:p-7"
         >
-          <div className="min-w-0 text-start">
-            <p
-              className={`text-[17px] font-black text-brand-accent sm:text-[19px] lg:text-[21px] ${
-                isRTL ? "leading-[1.8]" : "leading-[1.4]"
-              }`}
-            >
-              {content.framework_logic}
-            </p>
-
-            <p
-              className={`mt-3 max-w-[82ch] text-[13px] font-medium text-[color-mix(in_srgb,var(--dnh-bg-page)_78%,transparent)] sm:text-[14px] ${
-                isRTL ? "leading-[1.95]" : "leading-[1.7]"
-              }`}
-            >
-              {content.closing}
-            </p>
-          </div>
+        
 
           <div className="min-w-0 lg:justify-self-end">
             {content.ctas.map((cta) => (

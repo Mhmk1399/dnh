@@ -94,7 +94,7 @@ export function IntelligenceDeskAssetPositioning() {
               />
             </h2>
             <p
-              className={`mt-6 max-w-[72ch] border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:ps-5 sm:text-[15px] ${
+              className={`mt-6 max-w-[109ch] border-s-2 border-brand-primary ps-4 text-[14px] text-ink-muted sm:ps-5 sm:text-[15px] ${
                 isRTL ? "leading-[2]" : "leading-[1.72]"
               }`}
             >

@@ -41,7 +41,7 @@ export function WealthPageHero({ section, direction }: WealthSectionProps) {
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-page-hero-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] text-white"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-brand-accent text-white"
     >
       {mobileImage ? (
         <>

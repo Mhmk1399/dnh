@@ -53,8 +53,7 @@ export function IntelligenceDeskHero() {
   const source = locale === "en" ? intelligenceEn : intelligenceFa;
   const content = source.sections.find(
     (section: { id?: string; type?: string }) =>
-      section.id === "dnh-intelligence-desk-hero" &&
-      section.type === "hero",
+      section.id === "dnh-intelligence-desk-hero" && section.type === "hero",
   ) as IntelligenceDeskHeroContent | undefined;
 
   if (!content) return null;
@@ -134,36 +133,6 @@ export function IntelligenceDeskHero() {
               className="aspect-[4/5] min-h-[430px] lg:h-[min(760px,76svh)] lg:aspect-auto"
             />
           </div>
-        ) : null}
-
-        <div className="order-4 grid min-w-0 grid-cols-1 border-s border-t border-white/15 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-5">
-          {content.focus_areas.map((area) => {
-            const Icon = focusIcons[area.id];
-            return (
-              <article
-                key={area.id}
-                className="group min-w-0 border-b border-e border-white/15 bg-white/[0.035] p-5 transition-colors duration-200 hover:bg-white/[0.07]"
-              >
-                <span className="flex size-10 items-center justify-center border border-white/18 text-brand-accent">
-                  <Icon aria-hidden="true" size={19} strokeWidth={1.55} />
-                </span>
-                <h2 className="mt-4 text-start text-[15px] font-black leading-[1.7] text-white sm:text-[16px]">
-                  {area.label}
-                </h2>
-               
-              </article>
-            );
-          })}
-        </div>
-
-        {thesis ? (
-          <p
-            className={`order-5 border-s-2 border-brand-accent ps-4 text-start text-[14px] font-bold text-white/82 sm:ps-5 sm:text-[15px] lg:col-span-2 ${
-              isRTL ? "leading-[1.95]" : "leading-[1.7]"
-            }`}
-          >
-            {thesis.text}
-          </p>
         ) : null}
       </div>
     </section>

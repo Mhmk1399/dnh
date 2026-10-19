@@ -125,7 +125,7 @@ export function FrameworkWhyDecisionMatters() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="framework-why-heading"
-      className="relative isolate overflow-x-clip border-b border-line bg-surface-soft py-14 text-ink sm:py-20 lg:py-24"
+      className="relative isolate overflow-x-clip border-b border-line bg-page py-14 text-ink sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -138,14 +138,12 @@ export function FrameworkWhyDecisionMatters() {
             <div className="flex min-w-0 items-center gap-3">
               <span
                 aria-hidden="true"
-                className="h-px w-10 shrink-0 bg-brand-accent"
+                className="h-px w-9 shrink-0 bg-brand-accent"
               />
               <p className="min-w-0 text-[12px] font-bold leading-[1.8] text-brand-primary sm:text-[13px]">
                 {content.eyebrow}
               </p>
             </div>
-
-           
 
             <h2
               id="framework-why-heading"
@@ -170,20 +168,12 @@ export function FrameworkWhyDecisionMatters() {
             </h2>
 
             <p
-              className={`mt-5 max-w-[62ch] text-start text-[14px] text-ink-muted sm:mt-6 sm:text-[15px] ${
+              className={`mt-5 max-w-[102ch] text-start text-[14px] text-ink-muted sm:mt-6 sm:text-[15px] ${
                 isRTL ? "leading-[2]" : "leading-[1.75]"
               }`}
             >
               {content.intro}
             </p>
-
-            <div
-              aria-hidden="true"
-              className="mt-7 flex items-center gap-2 sm:mt-8"
-            >
-              <span className="h-[2px] w-12 bg-brand-accent" />
-              <span className="h-px flex-1 bg-line" />
-            </div>
           </header>
 
           <div className="min-w-0 border-t border-line">
@@ -210,7 +200,7 @@ export function FrameworkWhyDecisionMatters() {
                     </span>
 
                     <h3
-                      className={`min-w-0 text-start text-[17px] font-extrabold text-ink transition-colors duration-300 group-hover:text-brand-primary motion-reduce:transition-none sm:text-[18px] lg:text-[19px] ${
+                      className={`min-w-0 text-start text-[12px] font-extrabold text-ink transition-colors duration-300 group-hover:text-brand-primary motion-reduce:transition-none   lg:text-[16px] ${
                         isRTL ? "leading-[1.8]" : "leading-[1.45]"
                       }`}
                     >

@@ -20,7 +20,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
       id={section.id}
       dir={direction}
       aria-labelledby="dnh-approach-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] py-14 text-white sm:py-18 lg:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-page py-14   sm:py-18 lg:py-24"
     >
       <WealthGridPattern dark />
 
@@ -30,7 +30,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
             section={section}
             direction={direction}
             headingId="dnh-approach-heading"
-            dark
+             
             centered
           />
 
@@ -39,7 +39,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
               <WealthParagraph
                 key={paragraph.id}
                 direction={direction}
-                dark
+                 
                 className="border-s border-white/20 ps-4"
               >
                 <WealthRichText text={paragraph.text} />
@@ -60,13 +60,13 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
                 <bdi
                   dir="ltr"
                   aria-hidden="true"
-                  className="block font-serif text-[72px] leading-none text-white/13 transition-colors duration-200 group-hover:text-brand-accent/65 sm:text-[92px]"
+                  className="block font-serif text-[72px] leading-none text-black/13 transition-colors duration-200 group-hover:text-brand-accent/65 sm:text-[92px]"
                 >
                   {letter}
                 </bdi>
 
                 <h3
-                  className={`mt-4 text-start text-[20px] font-black text-white sm:text-[22px] ${
+                  className={`mt-4 text-start text-[20px] font-black text-black sm:text-[22px] ${
                     direction === "rtl" ? "leading-[1.65]" : "leading-[1.3]"
                   }`}
                 >
@@ -74,7 +74,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
                 </h3>
 
                 <p
-                  className={`mt-5 text-start text-[14px] text-white/62 ${
+                  className={`mt-5 text-start text-[14px] text-black/62 ${
                     direction === "rtl" ? "leading-[1.95]" : "leading-[1.68]"
                   }`}
                 >
@@ -85,14 +85,14 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
           })}
         </div>
 
-        <footer className="mt-8 grid gap-6 border-t border-white/15 pt-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+        <footer className="mt-8 grid gap-6 border-t border-white/15  pt-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div className="grid gap-4 md:grid-cols-2">
             {paragraphs.slice(2).map((paragraph) => (
               <WealthParagraph
                 key={paragraph.id}
                 direction={direction}
                 dark
-                className="border-s-2 border-brand-accent ps-4"
+                className="border-s-2 border-brand-accent text-black/50! ps-4"
               >
                 <WealthRichText text={paragraph.text} />
               </WealthParagraph>

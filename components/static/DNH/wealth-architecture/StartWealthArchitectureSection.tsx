@@ -21,7 +21,7 @@ export function StartWealthArchitectureSection({
       id={section.id}
       dir={direction}
       aria-labelledby="start-wealth-architecture-heading"
-      className="relative isolate overflow-hidden bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] text-white"
+      className="relative isolate overflow-hidden bg-page text-white"
     >
       <div
         aria-hidden="true"
@@ -40,7 +40,6 @@ export function StartWealthArchitectureSection({
               section={section}
               direction={direction}
               headingId="start-wealth-architecture-heading"
-              dark
             />
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -49,7 +48,7 @@ export function StartWealthArchitectureSection({
                   key={paragraph.id}
                   direction={direction}
                   dark
-                  className="border-s border-white/20 ps-4 text-[13px] sm:text-[14px]"
+                  className="border-s border-white/20 ps-4 text-black/50! text-[13px] sm:text-[14px]"
                 >
                   <WealthRichText text={paragraph.text} />
                 </WealthParagraph>
@@ -60,7 +59,6 @@ export function StartWealthArchitectureSection({
           <WealthActions
             ctas={section.ctas}
             direction={direction}
-            dark
             className="order-3 mt-0 lg:mt-8"
           />
         </div>
@@ -78,7 +76,7 @@ export function StartWealthArchitectureSection({
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-brand-primary/12"
             />
-           </div>
+          </div>
         ) : null}
       </div>
     </section>

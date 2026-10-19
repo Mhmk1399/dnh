@@ -10,7 +10,10 @@ import {
 } from "./WealthArchitectureShared";
 import type { WealthSectionProps } from "./wealthArchitectureTypes";
 
-export function WealthAudienceSection({ section, direction }: WealthSectionProps) {
+export function WealthAudienceSection({
+  section,
+  direction,
+}: WealthSectionProps) {
   const paragraphs = getParagraphs(section);
   const items = getItems(section);
 
@@ -19,9 +22,8 @@ export function WealthAudienceSection({ section, direction }: WealthSectionProps
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-audience-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-brand-primary py-14 text-white sm:py-18 lg:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-page py-14 text-white sm:py-18 lg:py-24"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(120deg,color-mix(in_srgb,var(--dnh-secondary)_55%,#101820),var(--dnh-primary))]" />
       <WealthGridPattern dark />
 
       <div className="dnh-site-shell relative z-10">
@@ -29,17 +31,17 @@ export function WealthAudienceSection({ section, direction }: WealthSectionProps
           section={section}
           direction={direction}
           headingId="wealth-audience-heading"
-          dark
+          as="h2"
           centered
           className="max-w-[1120px]"
         />
 
         {paragraphs[0] ? (
-          <div className="mx-auto mt-6 max-w-[960px]">
+          <div className="mx-auto mt-3 max-w-[960px]">
             <WealthParagraph
               direction={direction}
               dark
-              className="border-y border-white/15 py-5 text-center"
+              className="border-y border-white/15 text-black/70! py-5 text-center!"
             >
               <WealthRichText text={paragraphs[0].text} />
             </WealthParagraph>
@@ -62,17 +64,20 @@ export function WealthAudienceSection({ section, direction }: WealthSectionProps
                     strokeWidth={1.5}
                     className="text-brand-accent"
                   />
-                  <span aria-hidden="true" className="h-px flex-1 bg-white/12" />
+                  <span
+                    aria-hidden="true"
+                    className="h-px flex-1 bg-white/12"
+                  />
                 </div>
                 <h3
-                  className={`mt-5 text-start text-[17px] font-black text-white sm:text-[19px] ${
-                    direction === "rtl" ? "leading-[1.7]" : "leading-[1.4]"
+                  className={`mt-5 text-start text-[17px] font-black text-black/80 sm:text-[14px] ${
+                    direction === "rtl" ? "leading-[1.3]" : "leading-[1.4]"
                   }`}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className={`mt-3 text-start text-[13px] text-white/60 sm:text-[14px] ${
+                  className={`mt-3 text-start text-[13px] text-black/50 sm:text-[14px] ${
                     direction === "rtl" ? "leading-[1.9]" : "leading-[1.68]"
                   }`}
                 >
@@ -88,7 +93,7 @@ export function WealthAudienceSection({ section, direction }: WealthSectionProps
             <WealthParagraph
               direction={direction}
               dark
-              className="border-s-2 border-brand-accent ps-4"
+              className="border-s-2 text-black/60! border-brand-accent ps-4"
             >
               <WealthRichText text={paragraphs[1].text} />
             </WealthParagraph>

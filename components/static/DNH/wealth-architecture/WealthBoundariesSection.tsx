@@ -12,7 +12,10 @@ import {
 } from "./WealthArchitectureShared";
 import type { WealthSectionProps } from "./wealthArchitectureTypes";
 
-export function WealthBoundariesSection({ section, direction }: WealthSectionProps) {
+export function WealthBoundariesSection({
+  section,
+  direction,
+}: WealthSectionProps) {
   const paragraphs = getParagraphs(section);
   const items = getItems(section);
   const media = section.media;
@@ -22,7 +25,7 @@ export function WealthBoundariesSection({ section, direction }: WealthSectionPro
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-boundaries-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] py-14 text-white sm:py-18 lg:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-page py-14 text-white sm:py-18 lg:py-24"
     >
       <WealthGridPattern dark />
 
@@ -33,13 +36,12 @@ export function WealthBoundariesSection({ section, direction }: WealthSectionPro
               section={section}
               direction={direction}
               headingId="wealth-boundaries-heading"
-              dark
             />
             {paragraphs[0] ? (
               <WealthParagraph
                 direction={direction}
                 dark
-                className="mt-6 border-s-2 border-brand-accent ps-4"
+                className="mt-6 border-s-2 text-black/70! border-brand-accent ps-4"
               >
                 <WealthRichText text={paragraphs[0].text} />
               </WealthParagraph>
@@ -59,15 +61,19 @@ export function WealthBoundariesSection({ section, direction }: WealthSectionPro
                       </span>
                       <div className="min-w-0">
                         <h3
-                          className={`text-start text-[16px] font-black text-white ${
-                            direction === "rtl" ? "leading-[1.7]" : "leading-[1.4]"
+                          className={`text-start text-[16px] font-black text-black ${
+                            direction === "rtl"
+                              ? "leading-[1.7]"
+                              : "leading-[1.4]"
                           }`}
                         >
                           {item.title}
                         </h3>
                         <p
-                          className={`mt-2 text-start text-[13px] text-white/58 ${
-                            direction === "rtl" ? "leading-[1.9]" : "leading-[1.68]"
+                          className={`mt-2 text-start text-[13px] text-black/58 ${
+                            direction === "rtl"
+                              ? "leading-[1.9]"
+                              : "leading-[1.68]"
                           }`}
                         >
                           {item.description}
@@ -93,7 +99,7 @@ export function WealthBoundariesSection({ section, direction }: WealthSectionPro
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-brand-primary/12"
               />
-             </div>
+            </div>
           ) : null}
         </div>
 
@@ -102,7 +108,7 @@ export function WealthBoundariesSection({ section, direction }: WealthSectionPro
             <WealthParagraph
               direction={direction}
               dark
-              className="border-s-2 border-brand-accent ps-4"
+              className="border-s-2 border-brand-accent text-black/50! ps-4"
             >
               <WealthRichText text={paragraphs[1].text} />
             </WealthParagraph>

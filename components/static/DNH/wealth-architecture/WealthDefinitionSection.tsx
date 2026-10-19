@@ -11,7 +11,10 @@ import {
 } from "./WealthArchitectureShared";
 import type { WealthSectionProps } from "./wealthArchitectureTypes";
 
-export function WealthDefinitionSection({ section, direction }: WealthSectionProps) {
+export function WealthDefinitionSection({
+  section,
+  direction,
+}: WealthSectionProps) {
   const paragraphs = getParagraphs(section);
   const items = getItems(section);
   const media = section.media;
@@ -21,7 +24,7 @@ export function WealthDefinitionSection({ section, direction }: WealthSectionPro
       id={section.id}
       dir={direction}
       aria-labelledby="wealth-definition-heading"
-      className="relative isolate overflow-hidden border-b border-white/10 bg-[color-mix(in_srgb,var(--dnh-secondary)_38%,#101820)] py-14 text-white sm:py-18 lg:py-24"
+      className="relative isolate overflow-hidden border-b border-white/10  bg-brand-accent py-14 text-white sm:py-18 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -40,7 +43,7 @@ export function WealthDefinitionSection({ section, direction }: WealthSectionPro
               section={section}
               direction={direction}
               headingId="wealth-definition-heading"
-              dark
+              className="text-black!"
             />
 
             <div className="mt-6 space-y-4">
@@ -70,7 +73,7 @@ export function WealthDefinitionSection({ section, direction }: WealthSectionPro
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent"
               />
-             </div>
+            </div>
           ) : null}
         </div>
 
@@ -86,7 +89,7 @@ export function WealthDefinitionSection({ section, direction }: WealthSectionPro
                   aria-hidden="true"
                   size={24}
                   strokeWidth={1.55}
-                  className="text-brand-accent"
+                  className="text-white"
                 />
                 <h3
                   className={`mt-4 text-start text-[17px] font-black text-white sm:text-[18px] ${

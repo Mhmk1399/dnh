@@ -73,49 +73,7 @@ export default function Footer() {
   return (
     <footer dir={direction} aria-label={copy.label} className={styles.footer}>
       <div className={styles.shell}>
-        <section
-          aria-labelledby="footer-closing-title"
-          className={styles.invitation}
-        >
-          <div className={styles.invitationCopy}>
-            <p className={styles.eyebrow}>
-              <span aria-hidden="true" />
-              {copy.eyebrow}
-            </p>
-            <h2 id="footer-closing-title">
-              {copy.heading}
-              <br />
-              <span>{copy.headingHighlight}</span>
-            </h2>
-            <p className={styles.invitationDescription}>
-              {copy.description}
-            </p>
-          </div>
-
-          <div className={styles.invitationActions}>
-            <ActionButton
-              href={siteHref(CONSULTATION_PATH)}
-              variant="assessment"
-              size="md"
-              icon={DirectionArrow}
-              fullWidth
-              className={styles.consultationButton}
-            >
-              {copy.consultation}
-            </ActionButton>
-            <ActionButton
-              href={siteHref(ASSESSMENT_PATH)}
-              variant="secondary"
-              size="md"
-              icon={CircleDollarSign}
-              iconPosition="start"
-              fullWidth
-              className={styles.assessmentButton}
-            >
-              {copy.assessment}
-            </ActionButton>
-          </div>
-        </section>
+      
 
         <div className={styles.content}>
           <div className={styles.brand}>

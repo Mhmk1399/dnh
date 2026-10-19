@@ -71,7 +71,7 @@ export default async function WealthArchitecturePage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale: routeLocale } = await params;
+  const { locale: routeLocale } = await params;    
   const locale = normalizeSiteLocale(routeLocale);
   const page = getPageContent(locale);
   const direction = SITE_LANGUAGES[locale].direction;

@@ -606,49 +606,49 @@
           "items": [
             {
               "id": "item-01",
-              "title": "1. Initial assessment",
+              "title": "Initial assessment",
               "description": "The main question, current circumstances and reasons for reviewing your wealth structure are identified to establish which topics warrant deeper examination.",
               "english_label": "Initial Assessment",
               "icon": "scan"
             },
             {
               "id": "item-02",
-              "title": "2. Understanding the current position and objectives",
+              "title": "Understanding the current position and objectives",
               "description": "Your assets, liquidity, commitments, financial objectives, time horizon and priorities are considered together to establish a clear starting picture.",
               "english_label": "Current Position & Objectives",
               "icon": "target"
             },
             {
               "id": "item-03",
-              "title": "3. Wealth structure analysis",
+              "title": " Wealth structure analysis",
               "description": "Relationships between assets, capital concentration, structural risks, liquidity needs and areas that may not align with your objectives are examined.",
               "english_label": "Wealth Structure Analysis",
               "icon": "chart"
             },
             {
               "id": "item-04",
-              "title": "4. Scenario analysis and decision-making",
+              "title": "Scenario analysis and decision-making",
               "description": "Rather than relying on a single forecast, different paths and scenarios are examined so the implications of each choice for risk, liquidity and overall wealth become clearer.",
               "english_label": "Scenario Analysis & Decision Framework",
               "icon": "route"
             },
             {
               "id": "item-05",
-              "title": "5. Proposed framework and priorities",
+              "title": "Proposed framework and priorities",
               "description": "The analysis is turned into an understandable view of the current position, central issues, decision priorities and paths worth exploring.",
               "english_label": "Strategic Direction",
               "icon": "list"
             },
             {
               "id": "item-06",
-              "title": "6. Implementation support and follow-up",
+              "title": "Implementation support and follow-up",
               "description": "Where needed and appropriate to the engagement, agreed decisions are followed through during implementation to narrow the gap between analysis and action.",
               "english_label": "Implementation Support & Follow-Up",
               "icon": "briefcase"
             },
             {
               "id": "item-07",
-              "title": "7. Periodic monitoring and review",
+              "title": "Periodic monitoring and review",
               "description": "A wealth structure is not static. Changing objectives, economic conditions, asset values or liquidity needs can call for a review of earlier decisions and the existing structure.",
               "english_label": "Monitoring & Review",
               "icon": "refresh"

@@ -63,8 +63,7 @@ export function FrameworkDataIntelligence() {
   const framework = locale === "en" ? frameworkEn : frameworkFa;
   const content = framework.sections.find(
     (section: { id?: string; type?: string }) =>
-      section.id === "data-intelligence" &&
-      section.type === "framework-pillar",
+      section.id === "data-intelligence" && section.type === "framework-pillar",
   ) as DataIntelligenceContent | undefined;
 
   useEffect(() => {
@@ -129,17 +128,8 @@ export function FrameworkDataIntelligence() {
       dir={direction}
       lang={languageTag}
       aria-labelledby="framework-data-intelligence-heading"
-      className="relative isolate overflow-x-clip border-y border-line py-14 text-[var(--dnh-text-on-brand)] sm:py-18 lg:py-20 xl:py-24"
-      style={{
-        background:
-          "linear-gradient(135deg,color-mix(in srgb,var(--dnh-text) 88%,var(--dnh-secondary)),color-mix(in srgb,var(--dnh-secondary) 82%,var(--dnh-text)))",
-      }}
+      className="relative isolate overflow-x-clip bg-page border-y border-line py-14 text-[var(--dnh-text-on-brand)] sm:py-18 lg:py-20 xl:py-24"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-accent to-transparent opacity-75"
-      />
-
       <div className="dnh-site-shell relative">
         <div className="grid min-w-0 gap-9 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-12 xl:gap-16">
           <header className="min-w-0 text-start lg:sticky lg:top-28 lg:self-start">
@@ -157,17 +147,15 @@ export function FrameworkDataIntelligence() {
               </span>
 
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-bold leading-[1.8] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_88%,transparent)] sm:text-[13px]">
+                <p className="text-start text-[12px] font-bold leading-[1.8] text-black sm:text-[13px]">
                   {content.eyebrow}
                 </p>
-
-              
               </div>
             </div>
 
             <h2
               id="framework-data-intelligence-heading"
-              className={`mt-5 max-w-[25ch] text-pretty text-start text-[clamp(1.95rem,7vw,2.4rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.25rem,5vw,2.9rem)] lg:text-[clamp(2.5rem,3.1vw,3.2rem)] ${
+              className={`mt-5 max-w-[25ch] text-black text-start text-[clamp(1.95rem,7vw,2.4rem)] font-black [overflow-wrap:break-word] sm:mt-6 sm:text-[clamp(2.25rem,5vw,2.9rem)] lg:text-[clamp(2.5rem,3.1vw,3.2rem)] ${
                 isRTL ? "leading-[1.55]" : "leading-[1.15]"
               }`}
             >
@@ -188,7 +176,7 @@ export function FrameworkDataIntelligence() {
             </h2>
 
             <div
-              className={`mt-5 max-w-[62ch] space-y-3.5 border-s border-[color-mix(in_srgb,var(--dnh-accent)_72%,transparent)] ps-4 text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_72%,transparent)] sm:mt-6 sm:ps-5 sm:text-[15px] ${
+              className={`mt-5 max-w-[102ch] text-black/70 space-y-3.5 border-s border-[color-mix(in_srgb,var(--dnh-accent)_72%,transparent)] ps-4 text-start text-[14px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_72%,transparent)] sm:mt-6 sm:ps-5 sm:text-[15px] ${
                 isRTL ? "leading-[2]" : "leading-[1.75]"
               }`}
             >
@@ -203,10 +191,10 @@ export function FrameworkDataIntelligence() {
               <div className="mb-4 flex min-w-0 items-center gap-3 sm:mb-5">
                 <span
                   aria-hidden="true"
-                  className="h-[2px] w-8 shrink-0 bg-brand-accent"
+                  className="h-[2px] w-9 shrink-0 bg-brand-accent"
                 />
                 <p
-                  className={`min-w-0 text-start text-[13px] font-bold text-[color-mix(in_srgb,var(--dnh-text-on-brand)_86%,transparent)] sm:text-[14px] ${
+                  className={`min-w-0 text-start text-[13px] font-bold text-black  sm:text-[14px] ${
                     isRTL ? "leading-[1.9]" : "leading-[1.6]"
                   }`}
                 >
@@ -224,7 +212,7 @@ export function FrameworkDataIntelligence() {
                   <li
                     key={item.id}
                     data-framework-reveal=""
-                    className="group relative min-w-0 border-b border-[color-mix(in_srgb,var(--dnh-text-on-brand)_14%,transparent)] last:border-b-0 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 hover:bg-[color-mix(in_srgb,var(--dnh-bg-page)_5%,transparent)]"
+                    className="group relative min-w-0 border-b border-black/20 last:border-b-0 motion-safe:transition-[opacity,transform,background-color] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 hover:bg-[color-mix(in_srgb,var(--dnh-bg-page)_5%,transparent)]"
                   >
                     <span
                       aria-hidden="true"
@@ -239,11 +227,10 @@ export function FrameworkDataIntelligence() {
                         >
                           <Icon size={19} strokeWidth={1.65} />
                         </span>
-                    
                       </div>
 
                       <h3
-                        className={`min-w-0 self-start text-start text-[17px] font-extrabold [overflow-wrap:break-word] sm:pt-1 sm:text-[18px] lg:text-[19px] ${
+                        className={`min-w-0 self-start text-black/80 text-start text-[17px] font-extrabold [overflow-wrap:break-word] sm:pt-1 sm:text-[18px] lg:text-[19px] ${
                           isRTL ? "leading-[1.75]" : "leading-[1.35]"
                         }`}
                       >
@@ -251,7 +238,7 @@ export function FrameworkDataIntelligence() {
                       </h3>
 
                       <p
-                        className={`col-start-2 mt-2 min-w-0 text-start text-[13px] text-[color-mix(in_srgb,var(--dnh-text-on-brand)_66%,transparent)] sm:col-start-3 sm:mt-0 sm:pt-1 sm:text-[14px] ${
+                        className={`col-start-2 mt-2 min-w-0 text-start text-[13px] text-black/70 sm:col-start-3 sm:mt-0 sm:pt-1 sm:text-[14px] ${
                           isRTL ? "leading-[1.95]" : "leading-[1.68]"
                         }`}
                       >
@@ -270,7 +257,7 @@ export function FrameworkDataIntelligence() {
           className="mt-8 grid min-w-0 gap-5 border-t border-[color-mix(in_srgb,var(--dnh-text-on-brand)_18%,transparent)] pt-6 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:mt-9 sm:pt-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
         >
           <p
-            className={`max-w-[84ch] text-start text-[13px] font-semibold text-[color-mix(in_srgb,var(--dnh-text-on-brand)_82%,transparent)] sm:text-[14px] ${
+            className={`max-w-[94ch] text-start text-[13px] font-semibold text-black/70 sm:text-[14px] ${
               isRTL ? "leading-[1.95]" : "leading-[1.72]"
             }`}
           >

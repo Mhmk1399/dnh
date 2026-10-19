@@ -56,7 +56,7 @@ export function DnhEditorialEyebrow({
     <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5 text-start">
       <span
         aria-hidden="true"
-        className="h-[2px] w-10 shrink-0 bg-brand-accent sm:w-12"
+        className="h-[2px] w-9 shrink-0 bg-brand-accent sm:w-9"
       />
       <p
         className={`text-[12px] font-extrabold leading-[1.8] sm:text-[13px] ${
@@ -154,9 +154,7 @@ export function DnhEditorialActions({
           variant={cta.type}
           shape="square"
           size="lg"
-          icon={Arrow}
-          iconPosition="end"
-          dir={direction}
+           dir={direction}
           className={`min-h-12 w-full min-w-0 whitespace-normal text-center [overflow-wrap:anywhere] sm:w-auto ${
             dark && cta.type === "primary"
               ? "bg-brand-accent text-white shadow-none hover:bg-brand-primary hover:shadow-none"
