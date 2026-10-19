@@ -364,22 +364,7 @@ export const LEGAL_LINKS: SiteLink[] = [
   {
     title: "شرایط استفاده",
     href: "/legal/terms-of-use",
-  },
-
-  {
-    title: "سلب مسئولیت مالی",
-    href: "/legal/financial-disclaimer",
-  },
-
-  {
-    title: "حفاظت داده و محدودیت مشاوره",
-    href: "/legal/data-protection-advisory-limitation",
-  },
-
-  {
-    title: "عدم تضمین و عدم ارائه سیگنال",
-    href: "/legal/no-investment-guarantee-no-trading-signal",
-  },
+  }
 ];
 
 /* =============================================================================
