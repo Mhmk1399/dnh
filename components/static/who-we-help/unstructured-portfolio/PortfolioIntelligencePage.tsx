@@ -3,6 +3,11 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
 import { DnhPageHero } from "@/components/ui/DnhPageHero";
 import type { SiteLocale } from "@/lib/site-language";
+import { PortfolioHero } from "./PortfolioHero";
+import { PortfolioFoundations } from "./PortfolioFoundations";
+import { PortfolioArchitecture } from "./PortfolioArchitecture";
+import { PortfolioDecisionPath } from "./PortfolioDecisionPath";
+import type { PortfolioDocument } from "./portfolioTypes";
 
 type CTA = { label: string; type: string };
 type Item = { number?: number; title: string; description: string; english_label?: string };
@@ -149,16 +154,13 @@ function FinalSection({ section, rtl }: { section: PortfolioSection; rtl: boolea
 
 export function PortfolioIntelligencePage({ content, locale }: { content: PortfolioDocument; locale: SiteLocale }) {
   const rtl = content.direction === "rtl";
-  return <div dir={content.direction}>{content.sections.map((section) => {
-    if (section.type === "hero") return <Hero key={section.id} section={section} locale={locale} rtl={rtl} />;
-    if (section.type === "diversification") return <DiversificationField key={section.id} section={section} rtl={rtl}/>;
-    if (section.type === "asset-roles") return <RoleTaxonomy key={section.id} section={section} rtl={rtl}/>;
-    if (section.type === "concentration-risk") return <DependencyNetwork key={section.id} section={section} rtl={rtl}/>;
-    if (section.type === "whole-wealth-view") return <WholePortfolio key={section.id} section={section} locale={locale} rtl={rtl} />;
-    if (section.type === "liquidity-goals-horizon") return <HorizonAxes key={section.id} section={section} rtl={rtl}/>;
-    if (section.type === "process") return <Process key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "routing") return <RoutingPanel key={section.id} section={section} rtl={rtl}/>;
-    if (section.type === "final-cta") return <FinalSection key={section.id} section={section} rtl={rtl} />;
-    return <CardSection key={section.id} section={section} rtl={rtl} dark={section.type === "diagnostic-signs"} />;
-  })}</div>;
+  const sections = Object.fromEntries(content.sections.map((section) => [section.type, section]));
+  return (
+    <main dir={content.direction} className={rtl ? "[&_p]:text-justify" : ""}>
+      <PortfolioHero section={sections.hero} locale={locale} rtl={rtl} />
+      <PortfolioFoundations problem={sections["problem-recognition"]} diversification={sections.diversification} signs={sections["diagnostic-signs"]} audience={sections.audience} rtl={rtl} />
+      <PortfolioArchitecture whole={sections["whole-wealth-view"]} roles={sections["asset-roles"]} risk={sections["concentration-risk"]} horizon={sections["liquidity-goals-horizon"]} locale={locale} rtl={rtl} />
+      <PortfolioDecisionPath process={sections.process} routing={sections.routing} finalSection={sections["final-cta"]} rtl={rtl} />
+    </main>
+  );
 }

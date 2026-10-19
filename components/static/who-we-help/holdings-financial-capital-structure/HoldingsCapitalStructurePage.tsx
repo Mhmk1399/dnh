@@ -141,21 +141,6 @@ function FinalSection({ section, rtl }: { section: HoldingsCapitalSection; rtl: 
 }
 
 export function HoldingsCapitalStructurePage({ content, locale }: { content: HoldingsCapitalDocument; locale: SiteLocale }) {
-  const rtl = content.direction === "rtl";
-  return <div dir={content.direction}>{content.sections.map((section) => {
-    if (section.type === "hero") return <Hero key={section.id} section={section} locale={locale} rtl={rtl} />;
-    if (section.type === "problem-recognition") return <GrowthLedger key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "group-level-view") return <BoardDocket key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "diagnostic-signs") return <SignalMatrix key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "audience") return <AudienceIndex key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "whole-group-view") return <GroupView key={section.id} section={section} locale={locale} rtl={rtl} />;
-    if (section.type === "liquidity-working-capital") return <CashCycle key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "capital-structure-financing") return <CapitalBalance key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "capital-allocation") return <AllocationTable key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "ownership-governance") return <GovernanceMap key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "process") return <Process key={section.id} section={section} rtl={rtl} />;
-    if (section.type === "final-cta") return <FinalSection key={section.id} section={section} rtl={rtl} />;
-    const dark = section.type === "capital-structure-financing" || section.type === "ownership-governance";
-    return <StandardSection key={section.id} section={section} rtl={rtl} dark={dark} />;
-  })}</div>;
+  const rtl = content.direction === "rtl"; const s = Object.fromEntries(content.sections.map((section) => [section.type, section]));
+  return <main dir={content.direction} className={rtl ? "[&_p]:text-justify" : ""}><HoldingHero section={s.hero} locale={locale} rtl={rtl} /><HoldingComplexity growth={s["problem-recognition"]} group={s["group-level-view"]} signs={s["diagnostic-signs"]} audience={s.audience} rtl={rtl} /><HoldingFinanceArchitecture whole={s["whole-group-view"]} liquidity={s["liquidity-working-capital"]} financing={s["capital-structure-financing"]} allocation={s["capital-allocation"]} governance={s["ownership-governance"]} locale={locale} rtl={rtl} /><HoldingDecisionPath process={s.process} finalSection={s["final-cta"]} rtl={rtl} /></main>;
 }

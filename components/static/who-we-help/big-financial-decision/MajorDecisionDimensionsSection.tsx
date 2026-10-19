@@ -57,14 +57,14 @@ export function MajorDecisionDimensionsSection({
             <MajorDecisionEyebrow section={section} />
             <h2
               id={`${section.id}-title`}
-              className="mt-5 max-w-[21ch] text-pretty text-[clamp(2rem,7.5vw,2.75rem)] font-black leading-[1.48] tracking-[-0.03em] sm:text-[clamp(2.5rem,5vw,3.25rem)] lg:leading-[1.42]"
+              className="mt-5 max-w-[31ch] text-pretty text-[clamp(2rem,7.5vw,2.2rem)] font-black leading-[1.48] tracking-[-0.03em] sm:text-[clamp(2.5rem,5vw,3.25rem)] lg:leading-[1.42]"
             >
               {section.heading}
             </h2>
           </div>
 
           {section.closing ? (
-            <p className="max-w-[68ch] border-s-2 border-brand-accent ps-5 text-[16px] leading-[1.9] text-ink-muted sm:text-[17px] sm:leading-[1.95]">
+            <p className="max-w-[88ch] border-s-2 border-brand-accent ps-5 text-[16px] leading-[1.9] text-ink-muted sm:text-[17px] sm:leading-[1.95]">
               {section.closing}
             </p>
           ) : null}
@@ -148,12 +148,6 @@ export function MajorDecisionDimensionsSection({
                 <span className="mt-1 text-[clamp(1rem,3.5vw,1.55rem)] font-black leading-[1.5] text-page">
                   {activeItem?.title}
                 </span>
-                <bdi
-                  dir="ltr"
-                  className="mt-1 text-[9px] uppercase tracking-[.13em] text-brand-primary sm:text-[10px]"
-                >
-                  {activeItem?.english_label}
-                </bdi>
               </div>
 
               {items.map((item, index) => {
@@ -224,14 +218,6 @@ export function MajorDecisionDimensionsSection({
                             <h3 className="text-[21px] font-black leading-[1.6] text-ink sm:text-[23px] lg:text-[25px]">
                               {item.title}
                             </h3>
-                            {item.english_label ? (
-                              <bdi
-                                dir="ltr"
-                                className="mt-1 block text-start text-[11px] font-semibold uppercase tracking-[.12em] text-brand-accent"
-                              >
-                                {item.english_label}
-                              </bdi>
-                            ) : null}
                           </div>
                           <bdi
                             dir="ltr"

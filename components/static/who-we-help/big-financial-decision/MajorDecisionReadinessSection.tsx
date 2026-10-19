@@ -1,28 +1,119 @@
-import { MajorDecisionActions, MajorDecisionCopy, MajorDecisionEyebrow, MajorDecisionHeading } from "./MajorDecisionShared";
+import {
+  MajorDecisionActions,
+  MajorDecisionCopy,
+  MajorDecisionEyebrow,
+  MajorDecisionHeading,
+} from "./MajorDecisionShared";
 import type { MajorDecisionSection } from "./majorDecisionTypes";
 
-export function MajorDecisionReadinessSection({ section, rtl }: { section: MajorDecisionSection; rtl: boolean }) {
-  const dark = section.type === "downside-risk" || section.type === "scenario-analysis";
-  const horizon = section.type === "liquidity-timing";
+export function MajorDecisionReadinessSection({
+  section,
+  rtl,
+}: {
+  section: MajorDecisionSection;
+  rtl: boolean;
+}) {
+  const dark =
+    section.type === "downside-risk" || section.type === "scenario-analysis";
   const entries = section.items ?? [];
   const questions = section.questions ?? [];
+  const rows = entries.length
+    ? entries.map((item) => ({
+        title: item.title,
+        description: item.description,
+      }))
+    : questions.map((question) => ({ title: question, description: "" }));
 
-  return <section id={section.id} aria-labelledby={`${section.id}-title`} className={`${dark ? "bg-brand-secondary text-page" : section.type === "options-tradeoffs" ? "bg-surface-soft text-ink" : "bg-page text-ink"} relative isolate scroll-mt-24 overflow-hidden border-b border-line py-14 sm:py-18 lg:py-24`}>
-    <div className="dnh-site-shell grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,.76fr)_minmax(0,1.24fr)] lg:gap-16">
-      <header className={`min-w-0 ${dark ? "lg:sticky lg:top-28" : ""}`}>
-        <MajorDecisionEyebrow section={section} dark={dark} />
-        <MajorDecisionHeading section={section} dark={dark} />
-        <div className="mt-5 max-w-[62ch] space-y-3">{section.paragraphs?.map((paragraph, index) => <MajorDecisionCopy key={`${section.id}-p-${index}`} dark={dark}>{paragraph}</MajorDecisionCopy>)}{section.intro ? <MajorDecisionCopy dark={dark}>{section.intro}</MajorDecisionCopy> : null}</div>
-      </header>
+  return (
+    <section
+      id={section.id}
+      aria-labelledby={`${section.id}-title`}
+      className={`${dark ? "bg-brand-secondary text-page" : section.type === "options-tradeoffs" ? "bg-surface-soft text-ink" : "bg-page text-ink"} relative isolate scroll-mt-24 overflow-hidden border-b border-line py-14 sm:py-18 lg:py-24`}
+    >
+      <div className="dnh-site-shell">
+        <header className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16">
+          <div className="min-w-0">
+            <MajorDecisionEyebrow section={section} dark={dark} />
+            <MajorDecisionHeading section={section} dark={dark} />
+          </div>
 
-      <div className="min-w-0">
-        {entries.length ? <ol className={`grid gap-1 ${dark ? "bg-page/15" : "bg-line"} sm:grid-cols-2`}>{entries.map((item, index) => <li key={`${section.id}-item-${index}`} className={`${dark ? "bg-brand-secondary" : "bg-page"} min-h-48 p-5 sm:p-6`}><bdi dir="ltr" className="text-[10px] font-bold tracking-[.18em] text-brand-primary">{String(item.number ?? index + 1).padStart(2, "0")}</bdi><h3 className={`mt-3 text-[19px] font-black leading-[1.65] ${dark ? "text-page" : "text-ink"}`}>{item.title}</h3>{item.english_label ? <bdi dir="ltr" className={`mt-1 block text-start text-[9px] uppercase tracking-[.13em] ${dark ? "text-page/50" : "text-brand-primary"}`}>{item.english_label}</bdi> : null}<p className={`mt-3 text-[14px] leading-[1.95] ${dark ? "text-page/72" : "text-ink-muted"}`}>{item.description}</p></li>)}</ol> : null}
+          <div
+            className={`max-w-[68ch] space-y-3 border-s-2 ps-5 ${dark ? "border-brand-primary/70" : "border-brand-primary"}`}
+          >
+            {section.paragraphs?.map((paragraph, index) => (
+              <MajorDecisionCopy key={`${section.id}-p-${index}`} dark={dark}>
+                {paragraph}
+              </MajorDecisionCopy>
+            ))}
+            {section.intro ? (
+              <MajorDecisionCopy dark={dark}>{section.intro}</MajorDecisionCopy>
+            ) : null}
+          </div>
+        </header>
 
-        {questions.length ? <ol className={horizon ? "relative border-s border-brand-accent/55 ps-7" : `grid gap-1 ${dark ? "bg-page/15" : "bg-line"} sm:grid-cols-2`}>{questions.map((question, index) => <li key={`${section.id}-q-${index}`} className={horizon ? "relative border-b border-line bg-page py-5 text-[14px] font-semibold leading-[1.95] text-ink" : `${dark ? "bg-brand-secondary text-page/88" : "bg-page text-ink"} min-h-32 p-5 text-[14px] font-semibold leading-[1.95] sm:p-6`}>{horizon ? <span aria-hidden="true" className="absolute -start-[35px] top-7 size-3 bg-brand-accent" /> : <bdi dir="ltr" className="mb-3 block text-[10px] font-bold tracking-[.18em] text-brand-primary">{String(index + 1).padStart(2, "0")}</bdi>}{question}</li>)}</ol> : null}
+        <ol
+          className={`mx-auto mt-10 max-w-[1120px] border-t sm:mt-12 ${dark ? "border-page/20" : "border-line"}`}
+        >
+          {rows.map((row, index) => (
+            <li
+              key={`${section.id}-row-${index}`}
+              className={`group relative grid min-w-0 gap-4 border-b py-6 transition-colors duration-200 sm:grid-cols-[72px_minmax(0,.7fr)_minmax(0,1.3fr)] sm:items-start sm:gap-6 sm:px-4 sm:py-7 motion-reduce:transition-none ${dark ? "border-page/15 hover:bg-page/[.035]" : "border-line hover:bg-brand-primary/[.055]"}`}
+            >
+              <bdi
+                dir="ltr"
+                className="text-start text-[28px] font-black leading-none text-brand-primary sm:text-[34px]"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </bdi>
 
-        {section.closing_paragraphs?.length ? <div className={`mt-6 space-y-3 border-s-2 ps-5 ${dark ? "border-brand-primary" : "border-brand-accent"}`}>{section.closing_paragraphs.map((paragraph, index) => <MajorDecisionCopy key={`${section.id}-closing-${index}`} dark={dark}>{paragraph}</MajorDecisionCopy>)}</div> : null}
-        <MajorDecisionActions section={section} rtl={rtl} dark={dark} />
+              <h3
+                className={`text-[17px] font-black leading-[1.8] sm:text-[18px] ${dark ? "text-page" : "text-ink"}`}
+              >
+                {row.title}
+              </h3>
+
+              {row.description ? (
+                <p
+                  className={`text-[15px] leading-[1.95] sm:text-[16px] ${dark ? "text-page/70" : "text-ink-muted"}`}
+                >
+                  {row.description}
+                </p>
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className={`hidden h-px self-center sm:block ${dark ? "bg-page/10" : "bg-line"}`}
+                />
+              )}
+
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 start-0 w-1 origin-center scale-y-0 bg-brand-primary transition-transform duration-200 group-hover:scale-y-100 motion-reduce:transition-none"
+              />
+            </li>
+          ))}
+        </ol>
+
+        {section.closing_paragraphs?.length ? (
+          <div
+            className={`mx-auto mt-8 max-w-[1120px] border-s-[3px] p-5 ps-6 sm:p-6 sm:ps-7 ${dark ? "border-brand-primary bg-page/[.035]" : "border-brand-primary bg-page"}`}
+          >
+            <div className="space-y-3">
+              {section.closing_paragraphs.map((paragraph, index) => (
+                <MajorDecisionCopy
+                  key={`${section.id}-closing-${index}`}
+                  dark={dark}
+                >
+                  {paragraph}
+                </MajorDecisionCopy>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="flex justify-center">
+          <MajorDecisionActions section={section} rtl={rtl} dark={dark} />
+        </div>
       </div>
-    </div>
-  </section>;
+    </section>
+  );
 }

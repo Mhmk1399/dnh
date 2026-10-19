@@ -1,0 +1,3 @@
+export type HoldingEntry = { number?: number; title: string; description: string; english_label?: string };
+export type HoldingSection = { order: number; id: string; type: string; eyebrow: string; english_label?: string; heading: string; paragraphs?: string[]; intro?: string; items?: HoldingEntry[]; questions?: string[]; steps?: HoldingEntry[]; checklist?: string[]; closing?: string; closing_paragraphs?: string[]; ctas?: { label: string; type: string }[] };
+export type HoldingsCapitalDocument = { page: string; brand: string; locale: string; direction: "rtl" | "ltr"; title: string; english_title?: string; section_count: number; sections: HoldingSection[] };
