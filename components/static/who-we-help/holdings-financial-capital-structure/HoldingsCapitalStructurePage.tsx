@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
+import { DnhPageHero } from "@/components/ui/DnhPageHero";
 import type { SiteLocale } from "@/lib/site-language";
 
 type CTA = { label: string; type: string };
@@ -38,9 +39,41 @@ function Actions({ section, rtl, dark = false }: { section: HoldingsCapitalSecti
   return <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{section.ctas.map((cta, index) => <ActionButton key={`${section.id}-cta-${index}`} href={actionRoutes[section.id]?.[index] ?? "/request-strategic-consultation"} variant={index === 0 ? "primary" : "secondary"} shape="square" size="lg" icon={Arrow} className={dark && index > 0 ? "border-white/25 bg-transparent text-white hover:bg-white hover:text-ink" : ""}>{cta.label}</ActionButton>)}</div>;
 }
 
-function Hero({ section, locale, rtl }: { section: HoldingsCapitalSection; locale: SiteLocale; rtl: boolean }) {
+function LegacyHero({ section, locale, rtl }: { section: HoldingsCapitalSection; locale: SiteLocale; rtl: boolean }) {
   const scrim = rtl ? "lg:bg-[linear-gradient(90deg,rgba(3,47,63,.10),rgba(3,47,63,.98)_72%)]" : "lg:bg-[linear-gradient(270deg,rgba(3,47,63,.10),rgba(3,47,63,.98)_72%)]";
   return <section id={section.id} aria-labelledby={`${section.id}-title`} className="relative isolate overflow-hidden bg-[#032f3f] text-white"><div className="relative"><Image src="/assets/images/complex-financial-structure.png" alt={locale === "fa" ? "نمای معماری ساختار مالی و سرمایه یک گروه شرکتی" : "Capital and financial architecture of a corporate group"} fill priority sizes="100vw" className="object-cover object-center" /><div className={`absolute inset-0 bg-[linear-gradient(180deg,rgba(3,47,63,.42),rgba(3,47,63,.99)_84%)] ${scrim}`} /><div className="dnh-site-shell relative z-10 py-11 pt-32 sm:py-14 sm:pt-36 lg:min-h-[720px] lg:py-28 lg:pt-36"><div className="w-full lg:w-[76%]"><SectionLabel section={section} dark /><h1 id={`${section.id}-title`} className="mt-4 max-w-[32ch] text-pretty text-[clamp(1.75rem,3.15vw,2.9rem)] font-black leading-[1.38]">{section.heading}</h1><div className="mt-5 grid max-w-[980px] gap-x-9 gap-y-2 border-s-2 border-brand-accent ps-5 md:grid-cols-2">{section.paragraphs?.map((text, index) => <p key={`${section.id}-paragraph-${index}`} className="text-[13px] leading-[1.85] text-white/76 sm:text-[14px]">{text}</p>)}</div><Actions section={section} rtl={rtl} dark /></div></div></div></section>;
+}
+
+function Hero({ section, locale, rtl }: { section: HoldingsCapitalSection; locale: SiteLocale; rtl: boolean }) {
+  const words = section.heading.trim().split(/\s+/);
+
+  return (
+    <DnhPageHero
+      id={section.id}
+      direction={rtl ? "rtl" : "ltr"}
+      lang={locale === "fa" ? "fa-IR" : "en"}
+      eyebrow={section.eyebrow}
+      heading={section.heading}
+      headingHighlight={words.slice(-Math.min(rtl ? 5 : 4, words.length)).join(" ")}
+      paragraphs={(section.paragraphs ?? []).map((text, index) => ({
+        id: `${section.id}-paragraph-${index + 1}`,
+        text,
+      }))}
+      ctas={(section.ctas ?? []).map((cta, index) => ({
+        id: `${section.id}-cta-${index + 1}`,
+        label: cta.label,
+        type: index === 0 ? "primary" : "secondary",
+        href: actionRoutes[section.id]?.[index] ?? "/request-strategic-consultation",
+      }))}
+      media={{
+        src: "/assets/images/complex-financial-structure.png",
+        alt: locale === "fa"
+          ? "نمای معماری ساختار مالی و سرمایه یک گروه شرکتی"
+          : "Capital and financial architecture of a corporate group",
+      }}
+      mediaMode="background"
+    />
+  );
 }
 
 function EntryGrid({ section, dark = false }: { section: HoldingsCapitalSection; dark?: boolean }) {

@@ -241,21 +241,21 @@ export const KNOWLEDGE_ITEMS: MegaItem[] = [
   },
 
 
-  {
-    title: "پژوهش",
-    description:
-      "یادداشت‌های پژوهشی، گزارش‌های کلان، نمودارها و مطالعات قابل انتشار DNH.",
-    href: "/knowledge/research",
-    icon: "research",
-  },
+  // {
+  //   title: "پژوهش",
+  //   description:
+  //     "یادداشت‌های پژوهشی، گزارش‌های کلان، نمودارها و مطالعات قابل انتشار DNH.",
+  //   href: "/knowledge/research",
+  //   icon: "research",
+  // },
 
-  {
-    title: "مطالعات موردی",
-    description:
-      "پرونده‌های ناشناس برای نمایش منطق بررسی مسئله، سناریو و تصمیم.",
-    href: "/knowledge/case-studies",
-    icon: "case-study",
-  },
+  // {
+  //   title: "مطالعات موردی",
+  //   description:
+  //     "پرونده‌های ناشناس برای نمایش منطق بررسی مسئله، سناریو و تصمیم.",
+  //   href: "/knowledge/case-studies",
+  //   icon: "case-study",
+  // },
 
   {
     title: "پرسش‌های متداول",

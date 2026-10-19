@@ -60,6 +60,7 @@ export type NormalizedServiceSection = {
   eyebrow: string;
   englishLabel?: string;
   heading: string;
+  headingHighlight?: string;
   intro?: string;
   body: string[];
   entries: NormalizedEntry[];

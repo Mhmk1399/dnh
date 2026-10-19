@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import {
   useCallback,
@@ -24,18 +24,24 @@ import {
   CircleDollarSign,
   Gem,
   Landmark,
+  LogIn,
   Menu,
   Network,
   PieChart,
   Presentation,
   ShieldCheck,
+  Sparkles,
   TrendingUp,
+  UserRound,
+  UserRoundPlus,
   X,
   type LucideIcon,
 } from "lucide-react";
 
-import { ActionButton } from "@/components/ui/ActionButton";
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import {
+  LocalizedLink as Link,
+  useLanguage,
+} from "@/components/providers/LanguageProvider";
 import shellContent from "@/config/site-shell.json";
 import { getLocaleFromPathname, stripLocalePrefix } from "@/lib/site-language";
 import {
@@ -68,24 +74,27 @@ const ICONS: Record<NavigationIcon, LucideIcon> = {
   insight: BrainCircuit,
   research: PieChart,
   faq: CircleDollarSign,
-  
 };
+
 const MENU_KEYS = Object.keys(MEGA_MENUS) as MegaMenuKey[];
 const LOGIN_PATH = "/login";
 const SIGNUP_PATH = "/register";
-const PRIMARY_LOGO_SRC = "/assets/images/LOGO.svg";
-const WHITE_LOGO_SRC = "/assets/images/LOGOWHITE.svg";
+const PRIMARY_LOGO = "/assets/images/LOGO.svg";
+const WHITE_LOGO = "/assets/images/LOGOWHITE.svg";
 
-function subscribeToScroll(callback: () => void) {
-  window.addEventListener("scroll", callback, { passive: true });
-  return () => window.removeEventListener("scroll", callback);
+type OpenPanel = MegaMenuKey | "auth" | null;
+
+function subscribeToScroll(listener: () => void) {
+  window.addEventListener("scroll", listener, { passive: true });
+  return () => window.removeEventListener("scroll", listener);
 }
+
 const getScrollSnapshot = () => window.scrollY > 24;
 const getServerScrollSnapshot = () => false;
 
+/** Re-create interactive state on route transitions, including back/forward. */
 export function Navbar() {
   const pathname = usePathname();
-  // Route changes reset menus, including browser back/forward navigation.
   return <NavigationShell key={pathname} pathname={pathname} />;
 }
 
@@ -100,25 +109,31 @@ function NavigationShell({ pathname }: { pathname: string }) {
     getScrollSnapshot,
     getServerScrollSnapshot,
   );
-  const [openMenu, setOpenMenu] = useState<MegaMenuKey | null>(null);
+
+  const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const shellRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
-  const triggerRefs = useRef<
+  const authTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuTriggerRefs = useRef<
     Partial<Record<MegaMenuKey, HTMLButtonElement | null>>
   >({});
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const openedByHover = useRef<MegaMenuKey | null>(null);
-  const id = useId();
+  const uid = useId();
+
   const href = (path: string) => getSiteHref(path, pathname);
-  const elevated = scrolled || openMenu !== null;
   const publicPath = stripLocalePrefix(pathname);
   const forceSolid =
     publicPath === "/admin/forms" ||
     publicPath.startsWith("/admin/forms/") ||
     publicPath.startsWith("/forms/") ||
     publicPath === "/test-form";
+
+  // No scroll: transparent, colorless frosted glass on both desktop and mobile.
+  // Open menus deliberately elevate the navigation for legibility.
+  const elevated = forceSolid || scrolled || openPanel !== null;
 
   const clearTimers = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -130,12 +145,12 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const closeDesktop = useCallback(() => {
     clearTimers();
     openedByHover.current = null;
-    setOpenMenu(null);
+    setOpenPanel(null);
   }, [clearTimers]);
 
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
-    // Restore focus after the modal leaves the top layer and releases inertness.
+    // Focus is restored after the native modal releases the rest of the page.
     requestAnimationFrame(() =>
       mobileTriggerRef.current?.focus({ preventScroll: true }),
     );
@@ -144,75 +159,84 @@ function NavigationShell({ pathname }: { pathname: string }) {
   useEffect(() => clearTimers, [clearTimers]);
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const onBreakpoint = () => {
+    const breakpoint = window.matchMedia("(min-width: 1280px)");
+    const reset = () => {
       closeDesktop();
       setMobileOpen(false);
     };
-    desktop.addEventListener("change", onBreakpoint);
-    return () => desktop.removeEventListener("change", onBreakpoint);
+    breakpoint.addEventListener("change", reset);
+    return () => breakpoint.removeEventListener("change", reset);
   }, [closeDesktop]);
 
   useEffect(() => {
-    if (!openMenu) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeDesktop();
-        triggerRefs.current[openMenu]?.focus();
-      }
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      if (!shellRef.current?.contains(event.target as Node)) closeDesktop();
-    };
+    if (!openPanel) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      const current = openPanel;
+      closeDesktop();
+      if (current === "auth") authTriggerRef.current?.focus();
+      else if (current) menuTriggerRefs.current[current]?.focus();
+    }
+
+    function onPointerDown(event: PointerEvent) {
+      if (!headerRef.current?.contains(event.target as Node)) closeDesktop();
+    }
+
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onPointerDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [openMenu, closeDesktop]);
+  }, [openPanel, closeDesktop]);
 
-  function openOnHover(menu: MegaMenuKey) {
+  const openOnHover = (key: MegaMenuKey) => {
     clearTimers();
     hoverTimer.current = setTimeout(() => {
-      openedByHover.current = menu;
-      setOpenMenu(menu);
-    }, 130);
-  }
+      openedByHover.current = key;
+      setOpenPanel(key);
+    }, 110);
+  };
 
-  function scheduleClose() {
+  const scheduleClose = () => {
     clearTimers();
     closeTimer.current = setTimeout(() => {
-      const focusedPanel = document.activeElement?.closest(
-        `.${styles.megaPanel}`,
-      );
-      if (!focusedPanel) closeDesktop();
+      if (!headerRef.current?.contains(document.activeElement)) closeDesktop();
     }, 180);
-  }
+  };
 
-  function openFromKeyboard(menu: MegaMenuKey) {
+  const openWithKeyboard = (key: MegaMenuKey) => {
     clearTimers();
     openedByHover.current = null;
-    setOpenMenu(menu);
+    setOpenPanel(key);
     requestAnimationFrame(() => {
       document
-        .getElementById(`${id}-${menu}`)
+        .getElementById(`${uid}-mega-${key}`)
         ?.querySelector<HTMLAnchorElement>("a")
         ?.focus();
     });
-  }
+  };
+
+  const authLabel = `${copy.login} / ${copy.signup}`;
+  const closeAny = () => closeDesktop();
 
   return (
     <>
-      {openMenu && <div className={styles.desktopScrim} aria-hidden="true" />}
+      {openPanel && openPanel !== "auth" ? (
+        <div className={styles.desktopScrim} aria-hidden="true" />
+      ) : null}
+
       <header
-        ref={shellRef}
-        className={styles.header}
-         data-scrolled={forceSolid || elevated || scrolled || openMenu !== null}
+        ref={headerRef}
         dir={direction}
+        lang={languageTag}
+        className={styles.header}
+        data-scrolled={elevated}
         onPointerEnter={clearTimers}
         onPointerLeave={(event) => {
-          if (event.pointerType === "mouse") scheduleClose();
+          if (event.pointerType === "mouse" && openPanel !== "auth")
+            scheduleClose();
         }}
         onBlurCapture={(event) => {
           if (
@@ -228,10 +252,10 @@ function NavigationShell({ pathname }: { pathname: string }) {
               href="/"
               className={styles.brand}
               aria-label={copy.home}
-              onClick={closeDesktop}
+              onClick={closeAny}
             >
               <Image
-                src={forceSolid || elevated ? PRIMARY_LOGO_SRC : WHITE_LOGO_SRC}
+                src={elevated ? PRIMARY_LOGO : WHITE_LOGO}
                 alt="DNH"
                 width={140}
                 height={44}
@@ -239,109 +263,166 @@ function NavigationShell({ pathname }: { pathname: string }) {
                 loading="eager"
                 unoptimized
               />
+              <span className={styles.brandGlow} aria-hidden="true" />
             </Link>
-            <nav className={styles.desktopNavigation} aria-label={copy.navigation}>
+
+            <nav
+              className={styles.desktopNavigation}
+              aria-label={copy.navigation}
+            >
               {navigation.map((item) => {
-                const menu = item.menu;
-                const active = menu
-                  ? megaMenus[menu].items.some((link) =>
+                const key = item.menu;
+                const active = key
+                  ? megaMenus[key].items.some((link) =>
                       isSitePathActive(link.href, pathname),
                     ) ||
                     (item.href ? isSitePathActive(item.href, pathname) : false)
                   : isSitePathActive(item.href!, pathname);
-                return menu ? (
+
+                if (!key) {
+                  return (
+                    <Link
+                      key={item.href}
+                      href={href(item.href!)}
+                      className={styles.navItem}
+                      data-active={active}
+                      aria-current={active ? "page" : undefined}
+                      onPointerEnter={closeDesktop}
+                      onFocus={closeDesktop}
+                    >
+                      <span>{item.title}</span>
+                    </Link>
+                  );
+                }
+
+                return (
                   <button
-                    key={menu}
+                    key={key}
                     ref={(element) => {
-                      triggerRefs.current[menu] = element;
+                      menuTriggerRefs.current[key] = element;
                     }}
                     type="button"
                     className={styles.navItem}
                     data-active={active}
-                    aria-expanded={openMenu === menu}
-                    aria-controls={`${id}-${menu}`}
+                    aria-expanded={openPanel === key}
+                    aria-controls={`${uid}-mega-${key}`}
                     onPointerEnter={(event) => {
-                      if (event.pointerType === "mouse") openOnHover(menu);
+                      if (event.pointerType === "mouse") openOnHover(key);
                     }}
                     onClick={() => {
                       clearTimers();
-                      if (openedByHover.current === menu) {
+                      if (openedByHover.current === key) {
                         openedByHover.current = null;
                         return;
                       }
-                      setOpenMenu((current) =>
-                        current === menu ? null : menu,
-                      );
+                      setOpenPanel((current) => (current === key ? null : key));
                     }}
                     onKeyDown={(event) => {
                       if (event.key === "ArrowDown") {
                         event.preventDefault();
-                        openFromKeyboard(menu);
+                        openWithKeyboard(key);
                       }
                     }}
                   >
-                    {item.title}
+                    <span>{item.title}</span>
                     <ChevronDown
-                      size={13}
-                      aria-hidden="true"
                       className={styles.chevron}
+                      size={14}
+                      aria-hidden="true"
                     />
                   </button>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={href(item.href!)}
-                    className={styles.navItem}
-                    data-active={active}
-                    aria-current={active ? "page" : undefined}
-                    onPointerEnter={closeDesktop}
-                    onFocus={closeDesktop}
-                  >
-                    {item.title}
-                  </Link>
                 );
               })}
             </nav>
-            <div className={styles.desktopAction}>
+
+            <div className={styles.desktopActions}>
               <LanguageSwitch onSwitch={closeDesktop} />
-              <div className={styles.authActions} aria-label={copy.auth}>
-                <ActionButton
-                  href={LOGIN_PATH}
-                  variant="secondary"
-                  size="sm"
-                  className={styles.authButton}
-                  onClick={closeDesktop}
+
+              <div className={styles.authArea}>
+                <button
+                  ref={authTriggerRef}
+                  type="button"
+                  className={styles.authTrigger}
+                  aria-label={authLabel}
+                  aria-haspopup="true"
+                  aria-expanded={openPanel === "auth"}
+                  aria-controls={`${uid}-auth`}
+                  onClick={() => {
+                    clearTimers();
+                    openedByHover.current = null;
+                    setOpenPanel((current) =>
+                      current === "auth" ? null : "auth",
+                    );
+                  }}
+                  onPointerEnter={() => {
+                    if (openPanel !== "auth") closeDesktop();
+                  }}
                 >
-                  {copy.login}
-                </ActionButton>
-                <ActionButton
-                  href={SIGNUP_PATH}
-                  variant="secondary"
-                  size="sm"
-                  className={styles.authButton}
-                  onClick={closeDesktop}
+                  <UserRound size={16} strokeWidth={1.8} aria-hidden="true" />
+                  <span>{authLabel}</span>
+                  <ChevronDown
+                    className={styles.chevron}
+                    size={13}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <div
+                  id={`${uid}-auth`}
+                  className={styles.authPopover}
+                  data-open={openPanel === "auth"}
+                  inert={openPanel !== "auth"}
+                  aria-hidden={openPanel !== "auth"}
                 >
-                  {copy.signup}
-                </ActionButton>
+                  <span className={styles.authPopoverCaption}>{copy.auth}</span>
+                  <NextLink
+                    href={LOGIN_PATH}
+                    onClick={closeDesktop}
+                    className={styles.authOption}
+                  >
+                    <span className={styles.authOptionIcon}>
+                      <LogIn size={17} aria-hidden="true" />
+                    </span>
+                    <span>{copy.login}</span>
+                    <DirectionArrow size={15} aria-hidden="true" />
+                  </NextLink>
+                  <NextLink
+                    href={SIGNUP_PATH}
+                    onClick={closeDesktop}
+                    className={styles.authOption}
+                  >
+                    <span className={styles.authOptionIcon}>
+                      <UserRoundPlus size={17} aria-hidden="true" />
+                    </span>
+                    <span>{copy.signup}</span>
+                    <DirectionArrow size={15} aria-hidden="true" />
+                  </NextLink>
+                </div>
               </div>
-              <ActionButton
+
+              <Link
                 href={href(CONSULTATION_PATH)}
-                icon={DiagonalArrow}
-                size="sm"
                 className={styles.consultButton}
                 onClick={closeDesktop}
               >
-                {copy.consultation}
-              </ActionButton>
+                <span>{copy.consultation}</span>
+                <span className={styles.consultIcon}>
+                  <DiagonalArrow size={17} aria-hidden="true" />
+                </span>
+              </Link>
             </div>
+
             <div className={styles.mobileActions}>
-              {/* <LanguageSwitch onSwitch={closeDesktop} /> */}
               <Link
-                className={styles.mobileConsult}
                 href={href(CONSULTATION_PATH)}
+                className={styles.mobileConsult}
+                onClick={closeDesktop}
+                aria-label={copy.mobileConsultation}
               >
-                {copy.mobileConsultation}
-                <DiagonalArrow size={15} aria-hidden="true" />
+                <span className={styles.mobileConsultLabel}>
+                  {copy.mobileConsultation}
+                </span>
+                <DiagonalArrow size={18} aria-hidden="true" />
               </Link>
               <button
                 ref={mobileTriggerRef}
@@ -350,25 +431,25 @@ function NavigationShell({ pathname }: { pathname: string }) {
                 aria-label={copy.openMenu}
                 aria-haspopup="dialog"
                 aria-expanded={mobileOpen}
-                aria-controls={`${id}-mobile`}
+                aria-controls={`${uid}-mobile`}
                 onClick={() => {
                   closeDesktop();
                   setMobileOpen(true);
                 }}
               >
-                <Menu size={22} strokeWidth={1.7} aria-hidden="true" />
+                <Menu size={21} strokeWidth={1.8} aria-hidden="true" />
                 <span className={styles.menuLabel}>{copy.menu}</span>
               </button>
             </div>
           </div>
 
-          {MENU_KEYS.map((menuKey) => {
-            const menu = megaMenus[menuKey];
-            const opened = openMenu === menuKey;
+          {MENU_KEYS.map((key) => {
+            const menu = megaMenus[key];
+            const opened = openPanel === key;
             return (
               <div
-                key={menuKey}
-                id={`${id}-${menuKey}`}
+                key={key}
+                id={`${uid}-mega-${key}`}
                 className={styles.megaPositioner}
                 data-open={opened}
                 aria-hidden={!opened}
@@ -376,7 +457,10 @@ function NavigationShell({ pathname }: { pathname: string }) {
               >
                 <div className={styles.megaPanel} data-lenis-prevent>
                   <aside className={styles.megaIntro}>
-                    <span className={styles.eyebrow}>{menu.eyebrow}</span>
+                    <div className={styles.megaIntroTop}>
+                      <span className={styles.eyebrow}>{menu.eyebrow}</span>
+                      <Sparkles size={19} aria-hidden="true" />
+                    </div>
                     <p className={styles.megaHeadline}>{menu.headline}</p>
                     <p className={styles.megaDescription}>{menu.description}</p>
                     <div
@@ -392,22 +476,25 @@ function NavigationShell({ pathname }: { pathname: string }) {
                       href={href(menu.overview.href)}
                       onClick={closeDesktop}
                     >
-                      {menu.overview.title}
-                      <DirectionArrow size={17} aria-hidden="true" />
+                      <span>{menu.overview.title}</span>
+                      <DirectionArrow size={18} aria-hidden="true" />
                     </Link>
                   </aside>
+
                   <div className={styles.megaContent}>
                     <div className={styles.megaHeading}>
-                      <h2>{menu.title}</h2>
+                      <p>{menu.title}</p>
                       <span>
-                        {new Intl.NumberFormat(languageTag).format(menu.items.length)}{" "}
+                        {new Intl.NumberFormat(languageTag).format(
+                          menu.items.length,
+                        )}{" "}
                         {copy.paths}
                       </span>
                     </div>
                     <nav
                       aria-label={menu.title}
                       className={styles.megaLinks}
-                      data-columns={menuKey === "services" ? "two" : "one"}
+                      data-columns={key === "services" ? "two" : "one"}
                     >
                       {menu.items.map((item) => (
                         <NavigationCard
@@ -422,7 +509,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
                       <span>{copy.help}</span>
                       <Link href={href(ASSESSMENT_PATH)} onClick={closeDesktop}>
                         {copy.assessment}
-                        <DirectionArrow size={14} aria-hidden="true" />
+                        <DirectionArrow size={15} aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -432,13 +519,14 @@ function NavigationShell({ pathname }: { pathname: string }) {
           })}
         </div>
       </header>
-      {mobileOpen && (
+
+      {mobileOpen ? (
         <MobileNavigation
-          id={`${id}-mobile`}
+          id={`${uid}-mobile`}
           pathname={pathname}
           onDismiss={closeMobile}
         />
-      )}
+      ) : null}
     </>
   );
 }
@@ -458,6 +546,7 @@ function NavigationCard({
   const DiagonalArrow = isRTL ? ArrowUpLeft : ArrowUpRight;
   const Icon = ICONS[item.icon];
   const active = isSitePathActive(item.href, pathname);
+
   return (
     <Link
       href={getSiteHref(item.href, pathname)}
@@ -468,13 +557,17 @@ function NavigationCard({
       onClick={onNavigate}
     >
       <span className={styles.cardIcon}>
-        <Icon size={21} strokeWidth={1.5} aria-hidden="true" />
+        <Icon size={20} strokeWidth={1.55} aria-hidden="true" />
       </span>
       <span className={styles.cardCopy}>
         <span className={styles.cardTitle}>{item.title}</span>
         <span className={styles.cardDescription}>{item.description}</span>
       </span>
-      <DiagonalArrow size={16} aria-hidden="true" className={styles.cardArrow} />
+      <DiagonalArrow
+        className={styles.cardArrow}
+        size={16}
+        aria-hidden="true"
+      />
     </Link>
   );
 }
@@ -501,38 +594,42 @@ function MobileNavigation({
         megaMenus[key].items.some((item) =>
           isSitePathActive(item.href, pathname),
         ),
-      ) ?? "services",
+      ) ?? null,
   );
+
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
+
     const root = document.documentElement;
     const body = document.body;
-    const rootOverflow = root.style.overflow;
-    const bodyOverflow = body.style.overflow;
-    const padding = body.style.paddingRight;
-    const scrollbar = window.innerWidth - root.clientWidth;
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousPadding = body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
+
     root.style.overflow = "hidden";
     body.style.overflow = "hidden";
-    if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
     dialog.showModal();
     closeRef.current?.focus();
+
     return () => {
-      dialog.close();
-      root.style.overflow = rootOverflow;
-      body.style.overflow = bodyOverflow;
-      body.style.paddingRight = padding;
+      if (dialog.open) dialog.close();
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+      body.style.paddingRight = previousPadding;
     };
   }, []);
 
   function dismissOnBackdrop(event: MouseEvent<HTMLDialogElement>) {
-    if (event.target !== event.currentTarget) return;
-    const rect = event.currentTarget.getBoundingClientRect();
+    if (event.currentTarget !== event.target) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
     if (
-      event.clientX < rect.left ||
-      event.clientX > rect.right ||
-      event.clientY < rect.top ||
-      event.clientY > rect.bottom
+      event.clientX < bounds.left ||
+      event.clientX > bounds.right ||
+      event.clientY < bounds.top ||
+      event.clientY > bounds.bottom
     )
       onDismiss();
   }
@@ -551,66 +648,96 @@ function MobileNavigation({
       onClick={dismissOnBackdrop}
     >
       <div className={styles.drawerHeader}>
-        <Link href="/" onClick={onDismiss} aria-label={copy.home}>
+        <Link
+          href="/"
+          onClick={onDismiss}
+          aria-label={copy.home}
+          className={styles.drawerBrand}
+        >
           <Image
-            src={PRIMARY_LOGO_SRC}
+            src={PRIMARY_LOGO}
             alt="DNH"
-            width={127}
-            height={40}
+            width={136}
+            height={42}
             unoptimized
           />
         </Link>
-        <LanguageSwitch onSwitch={onDismiss} />
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onDismiss}
-          className={styles.closeButton}
-          aria-label={copy.closeMenu}
-        >
-          <X size={22} aria-hidden="true" />
-        </button>
+        <div className={styles.drawerHeaderActions}>
+          <LanguageSwitch onSwitch={onDismiss} />
+          <button
+            ref={closeRef}
+            type="button"
+            className={styles.closeButton}
+            onClick={onDismiss}
+            aria-label={copy.closeMenu}
+          >
+            <X size={21} aria-hidden="true" />
+          </button>
+        </div>
       </div>
+
       <div className={styles.drawerBody} data-lenis-prevent>
         <div className={styles.drawerIntro}>
           <span className={styles.drawerEyebrow}>{copy.quickAccess}</span>
-          <h2 id={`${id}-title`}>{copy.choosePath}</h2>
-        </div>
-        <div className={styles.mobileAuthActions} aria-label={copy.auth}>
-          <ActionButton
-            href={LOGIN_PATH}
-            variant="secondary"
-            size="sm"
-            fullWidth
-            onClick={onDismiss}
+          <p
+            id={`${id}-title`}
+            className={styles.drawerTitle}
+            role="heading"
+            aria-level={2}
           >
-            {copy.login}
-          </ActionButton>
-          <ActionButton
-            href={SIGNUP_PATH}
-            variant="secondary"
-            size="sm"
-            fullWidth
-            onClick={onDismiss}
-          >
-            {copy.signup}
-          </ActionButton>
+            {copy.choosePath}
+          </p>
         </div>
+
+        {/* One visible auth trigger; both existing destinations remain accessible. */}
+        <details className={styles.mobileAuthDisclosure}>
+          <summary className={styles.mobileAuthTrigger}>
+            <span className={styles.mobileAuthIcon}>
+              <UserRound size={19} aria-hidden="true" />
+            </span>
+            <span>
+              {copy.login} / {copy.signup}
+            </span>
+            <ChevronDown
+              className={styles.mobileAuthChevron}
+              size={17}
+              aria-hidden="true"
+            />
+          </summary>
+          <div className={styles.mobileAuthOptions}>
+            <NextLink href={LOGIN_PATH} onClick={onDismiss}>
+              <LogIn size={17} aria-hidden="true" />
+              {copy.login}
+              <DirectionArrow size={15} aria-hidden="true" />
+            </NextLink>
+            <NextLink href={SIGNUP_PATH} onClick={onDismiss}>
+              <UserRoundPlus size={17} aria-hidden="true" />
+              {copy.signup}
+              <DirectionArrow size={15} aria-hidden="true" />
+            </NextLink>
+          </div>
+        </details>
+
         <nav aria-label={copy.mobileLinks} className={styles.quickLinks}>
-          {navigation.filter((item) => !item.menu).map((item) => (
-            <Link
-              key={item.href}
-              href={getSiteHref(item.href!, pathname)}
-              onClick={onDismiss}
-              aria-current={
-                isSitePathActive(item.href!, pathname) ? "page" : undefined
-              }
-            >
-              {item.title}
-              <DiagonalArrow size={15} aria-hidden="true" />
-            </Link>
-          ))}
+          {navigation
+            .filter((item) => !item.menu)
+            .map((item) => {
+              const active = isSitePathActive(item.href!, pathname);
+              return (
+                <Link
+                  key={item.href}
+                  href={getSiteHref(item.href!, pathname)}
+                  onClick={onDismiss}
+                  data-active={active}
+                  aria-current={active ? "page" : undefined}
+                >
+                  <span>{item.title}</span>
+                  <DiagonalArrow size={16} aria-hidden="true" />
+                </Link>
+              );
+            })}
         </nav>
+
         <nav aria-label={copy.specialistLinks} className={styles.mobileGroups}>
           {MENU_KEYS.map((key) => {
             const menu = megaMenus[key];
@@ -618,30 +745,32 @@ function MobileNavigation({
             return (
               <div key={key} className={styles.mobileGroup} data-open={opened}>
                 <button
-                  className={styles.accordionTrigger}
                   type="button"
+                  className={styles.accordionTrigger}
                   aria-expanded={opened}
-                  aria-controls={`${id}-${key}`}
+                  aria-controls={`${id}-group-${key}`}
                   onClick={() => setExpanded(opened ? null : key)}
                 >
-                  <span>
+                  <span className={styles.accordionTitle}>
                     {menu.title}
                     <span className={styles.groupCount}>
-                      {new Intl.NumberFormat(languageTag).format(menu.items.length)}
+                      {new Intl.NumberFormat(languageTag).format(
+                        menu.items.length,
+                      )}
                     </span>
                   </span>
                   <ChevronDown
+                    className={styles.chevron}
                     size={18}
                     aria-hidden="true"
-                    className={styles.chevron}
                   />
                 </button>
                 <div
+                  id={`${id}-group-${key}`}
                   className={styles.accordionBody}
                   data-open={opened}
                   inert={!opened}
                   aria-hidden={!opened}
-                  id={`${id}-${key}`}
                 >
                   <div className={styles.accordionClip}>
                     <div className={styles.accordionLinks}>
@@ -659,7 +788,7 @@ function MobileNavigation({
                         href={getSiteHref(menu.overview.href, pathname)}
                         onClick={onDismiss}
                       >
-                        {menu.overview.title}
+                        <span>{menu.overview.title}</span>
                         <DirectionArrow size={16} aria-hidden="true" />
                       </Link>
                     </div>
@@ -670,23 +799,26 @@ function MobileNavigation({
           })}
         </nav>
       </div>
+
       <div className={styles.drawerFooter}>
         <p>{copy.conversation}</p>
-        <ActionButton
+        <Link
           href={getSiteHref(CONSULTATION_PATH, pathname)}
-          icon={DirectionArrow}
-          fullWidth
+          className={styles.drawerConsult}
           onClick={onDismiss}
         >
-          {copy.strategicConsultation}
-        </ActionButton>
+          <span>{copy.strategicConsultation}</span>
+          <span>
+            <DirectionArrow size={18} aria-hidden="true" />
+          </span>
+        </Link>
         <Link
           href={getSiteHref(ASSESSMENT_PATH, pathname)}
           className={styles.assessmentLink}
           onClick={onDismiss}
         >
           {copy.myAssessment}
-          <DirectionArrow size={14} aria-hidden="true" />
+          <DirectionArrow size={15} aria-hidden="true" />
         </Link>
       </div>
     </dialog>
@@ -703,15 +835,17 @@ function LanguageSwitch({ onSwitch }: { onSwitch: () => void }) {
     <button
       type="button"
       className={styles.languageSwitch}
+      data-language-switch
       aria-label={copy.switchLabel}
       title={copy.switchLabel}
-      data-language-switch
       onClick={() => {
         onSwitch();
         toggleLocale();
       }}
     >
-      <bdi lang="en" dir="ltr">{copy.switchCode}</bdi>
+      <bdi lang="en" dir="ltr">
+        {copy.switchCode}
+      </bdi>
     </button>
   );
 }

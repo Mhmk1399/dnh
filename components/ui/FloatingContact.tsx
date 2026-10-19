@@ -1,6 +1,13 @@
 "use client";
 
-import { ArrowUpLeft, Mail, MessageCircleMore, Phone, X } from "lucide-react";
+import {
+  ArrowUpLeft,
+  ArrowUpRight,
+  Mail,
+  MessageCircleMore,
+  Phone,
+  X,
+} from "lucide-react";
 import {
   useEffect,
   useRef,
@@ -9,8 +16,35 @@ import {
   type ReactNode,
 } from "react";
 
+import { useLanguage } from "@/components/providers/LanguageProvider";
+
 const SESSION_KEY = "dnh-floating-contact-intro-seen";
 const REVEAL_SCROLL_OFFSET = 100;
+
+const COPY = {
+  fa: {
+    quickTitle: "راه‌های ارتباط سریع",
+    quickDescription: "برای تماس، واتساپ یا ایمیل از این بخش استفاده کنید.",
+    panelTitle: "راه‌های ارتباط با DNH",
+    call: "تماس تلفنی",
+    whatsapp: "واتساپ",
+    whatsappDescription: "شروع گفت‌وگو در واتساپ",
+    email: "ایمیل",
+    open: "نمایش راه‌های ارتباط با DNH",
+    close: "بستن راه‌های ارتباط",
+  },
+  en: {
+    quickTitle: "Quick ways to connect",
+    quickDescription: "Reach us by phone, WhatsApp, or email.",
+    panelTitle: "Contact DNH",
+    call: "Phone call",
+    whatsapp: "WhatsApp",
+    whatsappDescription: "Start a WhatsApp conversation",
+    email: "Email",
+    open: "Show DNH contact options",
+    close: "Close contact options",
+  },
+} as const;
 
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -23,6 +57,19 @@ function getScrollSnapshot() {
 
 function getServerScrollSnapshot() {
   return false;
+}
+
+/** Always use ASCII digits in phone and WhatsApp URLs. */
+function toEnglishDigits(value: string) {
+  return value
+    .replace(/[۰-۹]/g, (digit) => String(digit.charCodeAt(0) - 0x06f0))
+    .replace(/[٠-٩]/g, (digit) => String(digit.charCodeAt(0) - 0x0660));
+}
+
+function toPersianDigits(value: string) {
+  return toEnglishDigits(value).replace(/[0-9]/g, (digit) =>
+    String.fromCharCode(digit.charCodeAt(0) - 48 + 0x06f0),
+  );
 }
 
 type FloatingContactProps = {
@@ -38,6 +85,10 @@ export function FloatingContact({
   whatsappNumber,
   email,
 }: FloatingContactProps) {
+  const { locale, direction, isRTL, languageTag } = useLanguage();
+  const copy = locale === "en" ? COPY.en : COPY.fa;
+  const DirectionArrow = isRTL ? ArrowUpLeft : ArrowUpRight;
+
   const [open, setOpen] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const isVisible = useSyncExternalStore(
@@ -45,15 +96,16 @@ export function FloatingContact({
     getScrollSnapshot,
     getServerScrollSnapshot,
   );
-
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const whatsappDigits = whatsappNumber.replace(/\D/g, "");
+  const phoneHref = toEnglishDigits(phone).replace(/[^\d+]/g, "");
+  const whatsappDigits = toEnglishDigits(whatsappNumber).replace(/\D/g, "");
+  const displayedPhone =
+    locale === "en"
+      ? toEnglishDigits(phoneDisplay)
+      : toPersianDigits(phoneDisplay);
 
-  /* ------------------------------------------------------------------
-     First-session introduction
-  ------------------------------------------------------------------ */
-
+  // Show the short introduction once per tab/session after scrolling.
   useEffect(() => {
     if (!isVisible) return;
 
@@ -61,28 +113,16 @@ export function FloatingContact({
     let hideTimer: number | undefined;
 
     try {
-      const hasSeenIntro = window.sessionStorage.getItem(SESSION_KEY) === "1";
+      if (window.sessionStorage.getItem(SESSION_KEY) === "1") return;
 
-      if (!hasSeenIntro) {
-        /*
-         * همان لحظه ثبت می‌کنیم تا اگر کاربر Route عوض کرد،
-         * پیام دوباره نشان داده نشود.
-         */
+      revealTimer = window.setTimeout(() => {
+        // Mark as seen only when the intro actually appears (also safe in Strict Mode).
         window.sessionStorage.setItem(SESSION_KEY, "1");
-
-        revealTimer = window.setTimeout(() => {
-          setShowIntro(true);
-
-          hideTimer = window.setTimeout(() => {
-            setShowIntro(false);
-          }, 7000);
-        }, 0);
-      }
+        setShowIntro(true);
+        hideTimer = window.setTimeout(() => setShowIntro(false), 7000);
+      }, 180);
     } catch {
-      /*
-       * اگر storage در مرورگر غیرفعال بود،
-       * کامپوننت همچنان بدون مشکل کار می‌کند.
-       */
+      // Browsers may disable sessionStorage. Contact actions remain available.
     }
 
     return () => {
@@ -97,786 +137,246 @@ export function FloatingContact({
     setShowIntro(false);
   }, [isVisible]);
 
-  /* ------------------------------------------------------------------
-     Escape + click outside
-  ------------------------------------------------------------------ */
-
   useEffect(() => {
     if (!open) return;
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
+      if (event.key === "Escape") setOpen(false);
     }
 
     function handlePointerDown(event: PointerEvent) {
-      const target = event.target as Node;
-
-      if (!rootRef.current?.contains(target)) {
-        setOpen(false);
-      }
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
     }
 
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("pointerdown", handlePointerDown);
-
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("pointerdown", handlePointerDown);
     };
   }, [open]);
 
-  function openContacts() {
-    setShowIntro(false);
-    setOpen(true);
-  }
-
-  function toggleContacts() {
-    setShowIntro(false);
-    setOpen((current) => !current);
-  }
+  const introVisible = isVisible && showIntro && !open;
 
   return (
     <div
       ref={rootRef}
-      dir="rtl"
+      dir={direction}
+      lang={languageTag}
       aria-hidden={!isVisible}
-      className={`
-        fixed
-        z-[70]
-        flex
-        flex-col
-        items-end
-
-        transition-[opacity,transform,visibility]
-        duration-300
-        ease-[cubic-bezier(.22,1,.36,1)]
-        motion-reduce:transition-none
-
-        ${
-          isVisible
-            ? "visible translate-y-0 opacity-100"
-            : "invisible translate-y-3 opacity-0 pointer-events-none"
-        }
-      `}
+      className={`fixed z-[70] flex flex-col items-end transition-[opacity,transform,visibility] duration-300 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${
+        isVisible
+          ? "visible translate-y-0 opacity-100"
+          : "pointer-events-none invisible translate-y-3 opacity-0"
+      }`}
       style={{
         right: "max(16px, env(safe-area-inset-right))",
         bottom: "max(18px, env(safe-area-inset-bottom))",
       }}
     >
-      {/* ============================================================
-          First session hint
-      ============================================================ */}
-
+      {/* One-time introduction bubble */}
       <div
-        aria-hidden={!showIntro}
-        className={`
-          absolute
-          bottom-[72px]
-          right-0
-
-          w-[260px]
-
-          transition-[opacity,transform,visibility]
-          duration-500
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          motion-reduce:transition-none
-
-          ${
-            showIntro && !open
-              ? `
-                visible
-                translate-y-0
-                opacity-100
-              `
-              : `
-                invisible
-                translate-y-2
-                opacity-0
-                pointer-events-none
-              `
-          }
-        `}
+        aria-hidden={!introVisible}
+        className={`absolute bottom-[72px] right-0 w-[min(290px,calc(100vw-32px))] transition-[opacity,transform,visibility] duration-500 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${
+          introVisible
+            ? "visible translate-y-0 opacity-100"
+            : "pointer-events-none invisible translate-y-2 opacity-0"
+        }`}
       >
         <button
           type="button"
-          onClick={openContacts}
-          className="
-            group/intro
-
-            relative
-            w-full
-
-            overflow-hidden
-
-            border
-            border-[color-mix(in_srgb,var(--dnh-primary)_20%,transparent)]
-
-            bg-[color-mix(in_srgb,var(--dnh-bg-page)_94%,transparent)]
-
-            px-4
-            py-3.5
-
-            text-right
-
-            shadow-[0_16px_40px_color-mix(in_srgb,var(--dnh-text)_12%,transparent)]
-
-            backdrop-blur-[18px]
-
-            outline-none
-
-            transition-[transform,border-color,box-shadow]
-            duration-300
-
-            hover:-translate-y-px
-            hover:border-brand-primary/35
-
-            focus-visible:ring-4
-            focus-visible:ring-focus/25
-
-            sm:w-[290px]
-          "
+          tabIndex={introVisible ? 0 : -1}
+          onClick={() => {
+            setShowIntro(false);
+            setOpen(true);
+          }}
+          className="group/intro relative w-full border border-[color-mix(in_srgb,var(--dnh-primary)_20%,transparent)] bg-[color-mix(in_srgb,var(--dnh-bg-page)_94%,transparent)] px-4 py-3.5 text-start shadow-[0_16px_40px_color-mix(in_srgb,var(--dnh-text)_12%,transparent)] backdrop-blur-[18px] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-brand-primary/35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary motion-reduce:transition-none"
         >
-          {/* accent */}
           <span
             aria-hidden="true"
-            className="
-              absolute
-              inset-y-0
-              right-0
-              w-[3px]
-              bg-brand-accent
-            "
+            className="absolute inset-y-0 start-0 w-[3px] bg-brand-accent"
           />
-
-          <span
-            className="
-              flex
-              items-start
-              gap-3
-            "
-          >
+          <span className="flex items-start gap-3">
             <span
               aria-hidden="true"
-              className="
-                mt-0.5
-                flex
-                h-9
-                w-9
-                shrink-0
-                items-center
-                justify-center
-
-                bg-surface-soft
-
-                text-brand-primary
-              "
+              className="mt-0.5 flex size-9 shrink-0 items-center justify-center bg-surface-soft text-brand-primary"
             >
-              <MessageCircleMore
-                className="h-[18px] w-[18px]"
-                strokeWidth={1.7}
-              />
+              <MessageCircleMore size={18} strokeWidth={1.7} />
             </span>
-
             <span className="min-w-0 flex-1">
-              <span
-                className="
-                  block
-                  text-[12px]
-                  font-black
-                  leading-6
-                  text-ink
-                "
-              >
-                راه‌های ارتباط سریع
+              <span className="block text-[12px] font-black leading-6 text-ink">
+                {copy.quickTitle}
               </span>
-
-              <span
-                className="
-                  mt-0.5
-                  block
-                  text-[10px]
-                  font-medium
-                  leading-[1.9]
-                  text-ink-muted
-                "
-              >
-                برای تماس، واتساپ یا ایمیل از این بخش استفاده کنید.
+              <span className="mt-0.5 block text-[11px] font-medium leading-[1.8] text-ink-muted">
+                {copy.quickDescription}
               </span>
             </span>
-
-            <ArrowUpLeft
+            <DirectionArrow
               aria-hidden="true"
-              className="
-                mt-1
-                h-4
-                w-4
-                shrink-0
-                text-brand-primary
-
-                transition-transform
-                duration-300
-
-                group-hover/intro:-translate-x-0.5
-                group-hover/intro:-translate-y-0.5
-              "
+              size={16}
+              className="mt-1 shrink-0 text-brand-primary transition-transform duration-300 group-hover/intro:-translate-y-0.5"
             />
           </span>
-
-          {/* little connector */}
           <span
             aria-hidden="true"
-            className="
-              absolute
-              -bottom-[11px]
-              right-[25px]
-
-              h-[14px]
-              w-[14px]
-
-              rotate-45
-
-              border-b
-              border-r
-              border-[color-mix(in_srgb,var(--dnh-primary)_18%,transparent)]
-
-              bg-[var(--dnh-bg-page)]
-            "
+            className="absolute -bottom-[8px] right-[26px] size-[14px] rotate-45 border-b border-r border-line bg-page"
           />
         </button>
       </div>
 
-      {/* ============================================================
-          Contact panel
-      ============================================================ */}
-
+      {/* Expanded contact panel */}
       <div
         id="dnh-floating-contact-panel"
+        role="region"
+        aria-label={copy.panelTitle}
         aria-hidden={!open}
-        className={`
-          absolute
-          bottom-[72px]
-          right-0
-
-          w-[min(330px,calc(100vw-32px))]
-
-          origin-bottom-right
-
-          overflow-hidden
-
-          border
-          border-[color-mix(in_srgb,var(--dnh-primary)_18%,transparent)]
-
-          bg-[color-mix(in_srgb,var(--dnh-bg-page)_95%,transparent)]
-
-          shadow-[0_24px_70px_color-mix(in_srgb,var(--dnh-text)_17%,transparent)]
-
-          backdrop-blur-[22px]
-
-          transition-[opacity,transform,visibility]
-          duration-[420ms]
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          motion-reduce:transition-none
-
-          ${
-            open
-              ? `
-                visible
-                translate-y-0
-                scale-100
-                opacity-100
-              `
-              : `
-                invisible
-                translate-y-3
-                scale-[0.97]
-                opacity-0
-                pointer-events-none
-              `
-          }
-        `}
+        className={`absolute bottom-[72px] right-0 w-[min(330px,calc(100vw-32px))] origin-bottom-right overflow-hidden border border-[color-mix(in_srgb,var(--dnh-primary)_18%,transparent)] bg-[color-mix(in_srgb,var(--dnh-bg-page)_95%,transparent)] shadow-[0_24px_70px_color-mix(in_srgb,var(--dnh-text)_17%,transparent)] backdrop-blur-[22px] transition-[opacity,transform,visibility] duration-[420ms] ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${
+          open
+            ? "visible translate-y-0 scale-100 opacity-100"
+            : "pointer-events-none invisible translate-y-3 scale-[0.97] opacity-0"
+        }`}
       >
-        {/* header */}
-        <div
-          className="
-            relative
-            overflow-hidden
-
-            border-b
-            border-line
-
-            px-5
-            pb-4
-            pt-5
-          "
-        >
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              opacity-[0.55]
-            "
-            style={{
-              background: `
-                linear-gradient(
-                  135deg,
-                  color-mix(in srgb, var(--dnh-primary) 8%, white) 0%,
-                  transparent 60%
-                )
-              `,
-            }}
-          />
-
-          <div
-            className="
-              relative
-              z-10
-              flex
-              items-start
-              justify-between
-              gap-4
-            "
+        <div className="relative flex items-center justify-between gap-4 border-b border-line bg-surface-soft px-4 py-3.5">
+          <p className="text-start text-[13px] font-black text-ink">
+            {copy.panelTitle}
+          </p>
+          <button
+            type="button"
+            tabIndex={open ? 0 : -1}
+            onClick={() => setOpen(false)}
+            aria-label={copy.close}
+            className="flex size-9 shrink-0 items-center justify-center border border-line bg-page text-ink-muted transition-colors duration-200 hover:bg-brand-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
           >
-            <div>
-              <div
-                className="
-                  mb-2
-                  flex
-                  items-center
-                  gap-2
-                "
-              >
-                <span className="h-px w-6 bg-brand-accent" />
-
-                <span
-                  className="
-                    text-[11px]
-                    font-black
-                    tracking-[0.06em]
-                    text-brand-primary
-                  "
-                >
-                  ارتباط با DNH
-                </span>
-              </div>
-
-              <h2
-                className="
-                  text-[17px]
-                  font-black
-                  leading-7
-                  text-ink
-                "
-              >
-                چطور می‌توانیم در ارتباط باشیم؟
-              </h2>
-
-              <p
-                className="
-                  mt-1
-                  text-[10px]
-                  font-medium
-                  leading-[1.9]
-                  text-ink-muted
-                "
-              >
-                یکی از مسیرهای ارتباطی زیر را انتخاب کنید.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              tabIndex={open ? 0 : -1}
-              onClick={() => setOpen(false)}
-              aria-label="بستن راه‌های ارتباط"
-              className="
-                flex
-                h-9
-                w-9
-                shrink-0
-                items-center
-                justify-center
-
-                border
-                border-line
-
-                bg-page
-
-                text-ink-muted
-
-                outline-none
-
-                transition-[background-color,border-color,color]
-                duration-200
-
-                hover:border-line-strong
-                hover:bg-surface-soft
-                hover:text-brand-primary
-
-                focus-visible:ring-4
-                focus-visible:ring-focus/25
-              "
-            >
-              <X aria-hidden="true" className="h-4 w-4" strokeWidth={1.8} />
-            </button>
-          </div>
+            <X size={17} strokeWidth={1.8} aria-hidden="true" />
+          </button>
         </div>
 
-        {/* contacts */}
         <div className="p-2">
           <ContactItem
-            href={`tel:${phone}`}
-            label="تماس تلفنی"
-            value={phoneDisplay}
-            icon={<Phone className="h-[18px] w-[18px]" strokeWidth={1.65} />}
+            href={`tel:${phoneHref}`}
+            label={copy.call}
+            value={displayedPhone}
+            icon={<Phone size={18} strokeWidth={1.65} />}
+            arrow={DirectionArrow}
             open={open}
+            valueDirection="ltr"
           />
-
           <ContactItem
             href={`https://wa.me/${whatsappDigits}`}
-            label="واتساپ"
-            value="شروع گفت‌وگو در واتساپ"
-            icon={
-              <MessageCircleMore
-                className="h-[18px] w-[18px]"
-                strokeWidth={1.65}
-              />
-            }
+            label={copy.whatsapp}
+            value={copy.whatsappDescription}
+            icon={<MessageCircleMore size={18} strokeWidth={1.65} />}
+            arrow={DirectionArrow}
             target="_blank"
             rel="noopener noreferrer"
             open={open}
           />
-
           <ContactItem
             href={`mailto:${email}`}
-            label="ایمیل"
+            label={copy.email}
             value={email}
-            icon={<Mail className="h-[18px] w-[18px]" strokeWidth={1.65} />}
+            icon={<Mail size={18} strokeWidth={1.65} />}
+            arrow={DirectionArrow}
             open={open}
+            valueDirection="ltr"
           />
-        </div>
-
-        {/* footer */}
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-
-            border-t
-            border-line
-
-            px-5
-            py-3
-          "
-        >
-          <span
-            aria-hidden="true"
-            className="
-              h-1.5
-              w-1.5
-              shrink-0
-              bg-brand-accent
-            "
-          />
-
-          <p
-            className="
-              text-[11px]
-              font-medium
-              leading-[1.8]
-              text-ink-muted
-            "
-          >
-            مسیر مناسب ارتباط را بر اساس نیازتان انتخاب کنید.
-          </p>
         </div>
       </div>
 
-      {/* ============================================================
-          Main floating trigger
-      ============================================================ */}
-
+      {/* Floating contact button */}
       <button
         type="button"
         tabIndex={isVisible ? 0 : -1}
-        onClick={toggleContacts}
+        onClick={() => {
+          setShowIntro(false);
+          setOpen((current) => !current);
+        }}
         aria-expanded={open}
         aria-controls="dnh-floating-contact-panel"
-        aria-label={
-          open ? "بستن راه‌های ارتباط" : "نمایش راه‌های ارتباط با DNH"
-        }
-        className="
-          group/contact-trigger
-
-          relative
-
-          flex
-          h-[58px]
-          w-[58px]
-          items-center
-          justify-center
-
-          overflow-hidden
-
-          border
-          border-[color-mix(in_srgb,var(--dnh-text-on-brand)_18%,transparent)]
-
-          bg-brand-primary
-
-          text-[var(--dnh-text-on-brand)]
-
-          shadow-[0_16px_38px_color-mix(in_srgb,var(--dnh-primary)_30%,transparent)]
-
-          outline-none
-
-          transition-[transform,background-color,border-color,box-shadow]
-          duration-300
-          ease-[cubic-bezier(.22,1,.36,1)]
-
-          hover:-translate-y-1
-          hover:bg-brand-secondary
-          hover:shadow-[0_20px_44px_color-mix(in_srgb,var(--dnh-primary)_36%,transparent)]
-
-          active:translate-y-0
-          active:scale-[0.96]
-
-          focus-visible:ring-4
-          focus-visible:ring-focus/30
-
-          motion-reduce:transform-none
-          motion-reduce:transition-none
-
-          sm:h-[62px]
-          sm:w-[62px]
-        "
+        aria-label={open ? copy.close : copy.open}
+        className="group/contact-trigger relative flex size-[58px] items-center justify-center overflow-hidden border border-white/20 bg-brand-primary text-[var(--dnh-text-on-brand)] shadow-[0_16px_38px_color-mix(in_srgb,var(--dnh-primary)_30%,transparent)] transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 hover:bg-brand-secondary hover:shadow-[0_20px_44px_color-mix(in_srgb,var(--dnh-primary)_36%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent motion-reduce:transform-none motion-reduce:transition-none sm:size-[62px]"
       >
-        {/* subtle grid */}
         <span
           aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-[0.12]
-          "
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
           style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(255,255,255,.5) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,.5) 1px,
-                transparent 1px
-              )
-            `,
+            backgroundImage:
+              "linear-gradient(to right,rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.5) 1px,transparent 1px)",
             backgroundSize: "14px 14px",
           }}
         />
-
-        {/* orange marker */}
         <span
           aria-hidden="true"
-          className="
-            absolute
-            right-0
-            top-0
-
-            h-[3px]
-            w-5
-
-            bg-brand-accent
-          "
+          className="absolute start-0 top-0 h-[3px] w-5 bg-brand-accent"
         />
-
-        <span
-          className="
-            relative
-            z-10
-
-            transition-transform
-            duration-300
-
-            group-hover/contact-trigger:scale-[1.04]
-          "
-        >
+        <span className="relative z-10 transition-transform duration-300 group-hover/contact-trigger:scale-[1.04]">
           {open ? (
-            <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+            <X size={20} strokeWidth={1.8} aria-hidden="true" />
           ) : (
-            <MessageCircleMore
-              className="h-[22px] w-[22px]"
-              strokeWidth={1.7}
-              aria-hidden="true"
-            />
+            <MessageCircleMore size={22} strokeWidth={1.7} aria-hidden="true" />
           )}
         </span>
-
-        {/* notification marker */}
-        {!open ? (
+        {!open && (
           <span
             aria-hidden="true"
-            className="
-              absolute
-              left-[11px]
-              top-[11px]
-
-              h-2
-              w-2
-
-              bg-brand-accent
-
-              shadow-[0_0_0_3px_color-mix(in_srgb,var(--dnh-primary)_85%,transparent)]
-            "
+            className="absolute end-[11px] top-[11px] size-2 bg-brand-accent shadow-[0_0_0_3px_color-mix(in_srgb,var(--dnh-primary)_85%,transparent)]"
           />
-        ) : null}
+        )}
       </button>
     </div>
   );
 }
 
-/* =============================================================================
-   Contact item
-============================================================================= */
+type ContactItemProps = {
+  href: string;
+  label: string;
+  value: string;
+  icon: ReactNode;
+  arrow: typeof ArrowUpLeft;
+  target?: "_blank";
+  rel?: string;
+  valueDirection?: "ltr";
+  open: boolean;
+};
 
 function ContactItem({
   href,
   label,
   value,
   icon,
+  arrow: DirectionArrow,
   target,
   rel,
+  valueDirection,
   open,
-}: {
-  href: string;
-  label: string;
-  value: string;
-  icon: ReactNode;
-  target?: "_blank";
-  rel?: string;
-  open: boolean;
-}) {
+}: ContactItemProps) {
   return (
     <a
       href={href}
       target={target}
       rel={rel}
       tabIndex={open ? 0 : -1}
-      className="
-        group/contact-item
-
-        relative
-
-        flex
-        min-h-[68px]
-        items-center
-        gap-3
-
-        border
-        border-transparent
-
-        px-3
-        py-2.5
-
-        outline-none
-
-        transition-[background-color,border-color,transform]
-        duration-250
-
-        hover:border-line
-        hover:bg-surface-soft
-
-        focus-visible:border-line-strong
-        focus-visible:bg-surface-soft
-        focus-visible:ring-4
-        focus-visible:ring-focus/20
-      "
+      className="group/contact-item relative flex min-h-[68px] items-center gap-3 border border-transparent px-3 py-2.5 transition-[background-color,border-color,transform] duration-200 hover:border-line hover:bg-surface-soft focus-visible:border-line-strong focus-visible:bg-surface-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
     >
       <span
         aria-hidden="true"
-        className="
-          flex
-          h-11
-          w-11
-          shrink-0
-          items-center
-          justify-center
-
-          border
-          border-line
-
-          bg-page
-
-          text-brand-primary
-
-          transition-[background-color,border-color,color]
-          duration-250
-
-          group-hover/contact-item:border-brand-primary
-          group-hover/contact-item:bg-brand-primary
-          group-hover/contact-item:text-[var(--dnh-text-on-brand)]
-        "
+        className="flex size-11 shrink-0 items-center justify-center border border-line bg-page text-brand-primary transition-[background-color,border-color,color] duration-200 group-hover/contact-item:border-brand-primary group-hover/contact-item:bg-brand-primary group-hover/contact-item:text-white"
       >
         {icon}
       </span>
-
-      <span className="min-w-0 flex-1">
-        <span
-          className="
-            block
-            text-[12px]
-            font-black
-            leading-6
-            text-ink
-          "
-        >
+      <span className="min-w-0 flex-1 text-start">
+        <span className="block text-[12px] font-black leading-6 text-ink">
           {label}
         </span>
-
-        <span
-          dir={label === "ایمیل" ? "ltr" : undefined}
-          className={`
-            mt-0.5
-            block
-            truncate
-
-            text-[10px]
-            font-medium
-            leading-5
-
-            text-ink-muted
-
-            ${label === "ایمیل" ? "text-right" : ""}
-          `}
-        >
-          {value}
+        <span className="mt-0.5 block truncate text-[11px] font-medium leading-5 text-ink-muted">
+          {valueDirection === "ltr" ? <bdi dir="ltr">{value}</bdi> : value}
         </span>
       </span>
-
-      <ArrowUpLeft
+      <DirectionArrow
         aria-hidden="true"
-        className="
-          h-4
-          w-4
-          shrink-0
-
-          text-ink-muted
-
-          transition-[color,transform]
-          duration-250
-
-          group-hover/contact-item:-translate-x-0.5
-          group-hover/contact-item:-translate-y-0.5
-          group-hover/contact-item:text-brand-accent
-        "
+        size={16}
         strokeWidth={1.7}
+        className="shrink-0 text-ink-muted transition-[color,transform] duration-200 group-hover/contact-item:-translate-y-0.5 group-hover/contact-item:text-brand-accent"
       />
     </a>
   );

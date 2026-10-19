@@ -118,6 +118,7 @@ export function normalizeServiceSection(raw: unknown): NormalizedServiceSection 
     eyebrow,
     englishLabel: asString(raw.english_label),
     heading,
+    headingHighlight: asString(raw.heading_highlight),
     intro: asString(raw.intro),
     body: asStringArray(raw.paragraphs),
     entries: normalizeEntries(raw),

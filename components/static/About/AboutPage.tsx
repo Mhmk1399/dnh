@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
+import { DnhPageHero } from "@/components/ui/DnhPageHero";
 import type { SiteLocale } from "@/lib/site-language";
 
 type CTA = { label: string; type: string };
@@ -242,64 +243,35 @@ function Hero({
   locale: SiteLocale;
   isRTL: boolean;
 }) {
+  const words = section.heading.trim().split(/\s+/);
+
   return (
-    <section
+    <DnhPageHero
       id={section.id}
-      aria-labelledby={`${section.id}-title`}
-      className="isolate overflow-hidden bg-[#032f3f] text-white"
-    >
-      <div className="relative min-h-[940px] sm:min-h-[1020px] lg:min-h-[890px]">
-        <picture className="absolute inset-x-0 top-0 h-[540px] sm:h-[610px] lg:inset-0 lg:h-auto">
-          <source
-            media="(max-width: 1023px)"
-            srcSet="/assets/images/about-hero-mobile.png"
-          />
-          <Image
-            src="/assets/images/about-hero-desktop.png"
-            alt={imageAlt[locale].hero}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-top lg:object-center"
-          />
-        </picture>
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[540px] bg-gradient-to-b from-transparent via-transparent to-[#032f3f] sm:h-[610px] lg:inset-0 lg:h-auto lg:bg-[linear-gradient(90deg,rgba(3,47,63,.03),rgba(3,47,63,.5)_44%,rgba(3,47,63,.98)_100%)]"
-        />
-        <div className="dnh-site-shell relative z-10 flex min-h-[940px] items-end pt-[540px] sm:min-h-[1020px] sm:pt-[610px] lg:min-h-[890px] lg:items-center lg:pt-36">
-          <div className="w-full pb-14 text-start lg:ml-auto lg:mr-0 lg:w-[56%] lg:pb-16">
-            <Eyebrow section={section} dark />
-            <h1
-              id={`${section.id}-title`}
-              className="mt-5 max-w-[16ch] text-pretty text-[clamp(2.4rem,6vw,5.1rem)] font-black leading-[1.45] tracking-normal lg:text-[clamp(3rem,5vw,4.65rem)]"
-            >
-              <HeadingAccent section={section} />
-            </h1>
-            <div className="mt-6 max-w-[720px] space-y-3">
-              {section.paragraphs?.slice(0, 2).map((paragraph) => (
-                <Copy key={paragraph} dark>
-                  {paragraph}
-                </Copy>
-              ))}
-            </div>
-            <SectionActions section={section} dark isRTL={isRTL} />
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-white/15 bg-[#022936]">
-        <div className="dnh-site-shell grid gap-4 py-10 sm:grid-cols-2 sm:gap-x-10 sm:py-12 lg:grid-cols-3">
-          {section.paragraphs?.slice(2).map((paragraph, index) => (
-            <p
-              key={paragraph}
-              className={`${index === 3 ? "border-s-2 border-brand-accent ps-5" : "border-t border-white/15 pt-4"} text-[13px] leading-[2.05] text-white/72`}
-            >
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </div>
-    </section>
+      direction={isRTL ? "rtl" : "ltr"}
+      lang={locale === "fa" ? "fa-IR" : "en"}
+      eyebrow={section.eyebrow}
+      heading={section.heading}
+      headingHighlight={words.slice(-Math.min(2, words.length)).join(" ")}
+      paragraphs={(section.paragraphs ?? []).map((text, index) => ({
+        id: `${section.id}-paragraph-${index + 1}`,
+        text,
+      }))}
+      ctas={(section.ctas ?? []).map((cta, index) => ({
+        id: `${section.id}-cta-${index + 1}`,
+        label: cta.label,
+        type: index === 0 ? "primary" : "secondary",
+        href: sectionRoutes[section.id]?.[index] ?? "/contact",
+      }))}
+      media={{
+        src: "/assets/images/about-hero-desktop.png",
+        mobileSrc: "/assets/images/about-hero-mobile.png",
+        alt: imageAlt[locale].hero,
+        objectPosition: "center",
+        mobileObjectPosition: "top",
+      }}
+      mediaMode="background"
+    />
   );
 }
 

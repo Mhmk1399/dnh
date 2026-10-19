@@ -77,9 +77,9 @@ const page = () => {
       <ServicesServiceSection
         serviceId="executive-briefings"
         layout="briefing"
-        tone="soft"
+        tone="page"
       />
-      <ServicesAssessmentRouting />
+      <ServicesAssessmentRouting  />
       <ServicesFinalCtaSection />
     </div>
   );

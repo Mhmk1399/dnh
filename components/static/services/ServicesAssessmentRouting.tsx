@@ -137,7 +137,7 @@ export function ServicesAssessmentRouting() {
         </div>
       </div>
 
-      <div className="border-t border-white/15 bg-brand-primary text-white">
+      <div className="border-t border-white/15 bg-brand-secondary text-white">
         <div className="dnh-site-shell py-8 sm:py-10 lg:py-12">
           <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12">
             <div className="max-w-[58rem]">

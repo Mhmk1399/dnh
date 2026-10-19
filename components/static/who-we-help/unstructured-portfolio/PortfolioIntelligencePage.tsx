@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
+import { DnhPageHero } from "@/components/ui/DnhPageHero";
 import type { SiteLocale } from "@/lib/site-language";
 
 type CTA = { label: string; type: string };
@@ -59,9 +60,41 @@ function Actions({ section, rtl, dark = false }: { section: PortfolioSection; rt
   return <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{section.ctas.map((cta, index) => <ActionButton key={`${section.id}-${index}`} href={ctaRoutes[section.id]?.[index] ?? "/services/portfolio-intelligence"} variant={index ? "secondary" : "primary"} shape="square" size="lg" icon={Arrow} className={dark && index ? "border-white/25 bg-transparent text-white hover:bg-white hover:text-ink" : ""}>{cta.label}</ActionButton>)}</div>;
 }
 
-function Hero({ section, locale, rtl }: { section: PortfolioSection; locale: SiteLocale; rtl: boolean }) {
+function LegacyHero({ section, locale, rtl }: { section: PortfolioSection; locale: SiteLocale; rtl: boolean }) {
   const sideScrim = rtl ? "lg:bg-[linear-gradient(90deg,rgba(3,47,63,.08),rgba(3,47,63,.98)_70%)]" : "lg:bg-[linear-gradient(270deg,rgba(3,47,63,.08),rgba(3,47,63,.98)_70%)]";
   return <section id={section.id} aria-labelledby={`${section.id}-title`} className="relative isolate overflow-hidden bg-[#032f3f] text-white"><Image src="/assets/images/unstructured-portfolio.png" alt={locale === "fa" ? "نمای تحلیلی ساختار یک پرتفوی چنددارایی" : "Analytical view of a multi-asset portfolio structure"} fill priority sizes="100vw" className="object-cover object-center" /><div className={`absolute inset-0 bg-[linear-gradient(180deg,rgba(3,47,63,.62),rgba(3,47,63,.98)_88%)] ${sideScrim}`}/><div className="dnh-site-shell relative z-10 pb-10 pt-32 sm:pt-36"><div className="grid items-end gap-7 lg:grid-cols-[.82fr_1.18fr] lg:gap-12"><header><Eyebrow section={section} dark/><h1 id={`${section.id}-title`} className="mt-4 max-w-[22ch] text-pretty text-[clamp(1.8rem,3.4vw,3rem)] font-black leading-[1.42]">{section.heading}</h1></header><div className="grid gap-x-7 gap-y-2 border-s-2 border-brand-accent ps-5 sm:grid-cols-2">{section.paragraphs?.map((paragraph) => <p key={paragraph} className="text-[12px] font-medium leading-6 text-white/78 sm:text-[13px]">{paragraph}</p>)}</div></div><Actions section={section} rtl={rtl} dark/></div></section>;
+}
+
+function Hero({ section, locale, rtl }: { section: PortfolioSection; locale: SiteLocale; rtl: boolean }) {
+  const words = section.heading.trim().split(/\s+/);
+
+  return (
+    <DnhPageHero
+      id={section.id}
+      direction={rtl ? "rtl" : "ltr"}
+      lang={locale === "fa" ? "fa-IR" : "en"}
+      eyebrow={section.eyebrow}
+      heading={section.heading}
+      headingHighlight={words.slice(-Math.min(rtl ? 4 : 3, words.length)).join(" ")}
+      paragraphs={(section.paragraphs ?? []).map((text, index) => ({
+        id: `${section.id}-paragraph-${index + 1}`,
+        text,
+      }))}
+      ctas={(section.ctas ?? []).map((cta, index) => ({
+        id: `${section.id}-cta-${index + 1}`,
+        label: cta.label,
+        type: index === 0 ? "primary" : "secondary",
+        href: ctaRoutes[section.id]?.[index] ?? "/services/portfolio-intelligence",
+      }))}
+      media={{
+        src: "/assets/images/unstructured-portfolio.png",
+        alt: locale === "fa"
+          ? "نمای تحلیلی ساختار یک پرتفوی چنددارایی"
+          : "Analytical view of a multi-asset portfolio structure",
+      }}
+      mediaMode="background"
+    />
+  );
 }
 
 function CardSection({ section, rtl, dark = false }: { section: PortfolioSection; rtl: boolean; dark?: boolean }) {
