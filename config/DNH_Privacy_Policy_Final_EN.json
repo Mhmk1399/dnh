@@ -1,0 +1,278 @@
+{
+  "page": "privacy-policy",
+  "locale": "en",
+  "direction": "ltr",
+  "seo": {
+    "title": "Privacy Policy | DNH",
+    "description": "How DNH collects, uses, stores and provides access to information across accounts, enquiries, lead requests and dynamic forms."
+  },
+  "hero": {
+    "eyebrow": "Legal / Privacy",
+    "title": "Privacy, explained in operational terms",
+    "lead": "This policy describes the information the DNH website handles, why it is used and which choices are available when using accounts, enquiries and published forms.",
+    "lastUpdatedLabel": "Last updated",
+    "lastUpdated": "October 19, 2026",
+    "statusLabel": "Document status",
+    "status": "Current application scope",
+    "indexLabel": "Document contents"
+  },
+  "publicationNote": {
+    "label": "Publication review",
+    "text": "This policy reflects the current application code and should be reviewed and approved by the site operator and qualified local counsel before formal publication."
+  },
+  "summary": {
+    "eyebrow": "At a glance",
+    "title": "A concise view of what the site handles",
+    "intro": "The website handles information supplied for accounts, enquiries and configured service forms, together with the browser preferences and public-page caching described below.",
+    "items": [
+      {
+        "id": "summary-collected",
+        "label": "What is collected",
+        "description": "Account identity and mobile number, enquiry details, lead requests, answers submitted through published forms, and limited browser preferences."
+      },
+      {
+        "id": "summary-purpose",
+        "label": "Why it is used",
+        "description": "To authenticate users, review and respond to requests, route advisory enquiries, operate forms and maintain language or interface preferences."
+      },
+      {
+        "id": "summary-caution",
+        "label": "What not to send",
+        "description": "Do not submit passwords, banking credentials, identity documents, highly sensitive personal records or confidential files through public text fields."
+      }
+    ]
+  },
+  "dataMap": {
+    "eyebrow": "Information map",
+    "title": "Data categories and their current purpose",
+    "intro": "The table reflects fields and storage behavior present in the application at the date above.",
+    "caption": "Information processed by the current DNH application",
+    "columns": {
+      "category": "Context",
+      "data": "Information",
+      "purpose": "Purpose",
+      "detail": "Operational detail"
+    },
+    "rows": [
+      {
+        "id": "account-authentication",
+        "category": "Account and authentication",
+        "data": "First name, last name, normalized Iranian mobile number, password hash, role, timestamps and session data.",
+        "purpose": "Account creation, login, session management and role-based access.",
+        "detail": "Passwords are stored as salted scrypt hashes, not plain text. The database stores a SHA-256 hash of the session token; the browser receives an opaque authentication cookie."
+      },
+      {
+        "id": "contact-enquiry",
+        "category": "Contact enquiry",
+        "data": "Name, phone, email, optional subject, message, optional linked user and timestamps.",
+        "purpose": "Initial review of the enquiry and response through the available contact process.",
+        "detail": "Submissions are visible to authorised administrators."
+      },
+      {
+        "id": "homepage-lead",
+        "category": "Homepage lead",
+        "data": "Name, phone, decision topic or message, optional linked user and timestamps.",
+        "purpose": "Initial review and follow-up contact about the stated topic.",
+        "detail": "Lead records are visible to authorised administrators."
+      },
+      {
+        "id": "dynamic-form",
+        "category": "Dynamic service forms",
+        "data": "Answers to configured text, long-text, email, phone, number, select, radio or checkbox fields; field ids, labels and types; form and service metadata; reference, status, optional user link and timestamps.",
+        "purpose": "Receive and organise a request associated with a published form or service route.",
+        "detail": "The exact fields vary by form. Authorised administrators can view submissions."
+      },
+      {
+        "id": "local-device",
+        "category": "Browser and offline operation",
+        "data": "Language preference, session authentication cookie, per-tab floating-contact state, admin sidebar preference, and cached public GET pages or static assets.",
+        "purpose": "Language selection, authenticated access, interface continuity, offline availability and performance.",
+        "detail": "The production service worker excludes API, admin, dashboard, login and register routes and does not cache personal form POST requests."
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "collection-and-purpose",
+      "label": "Collection",
+      "title": "What is collected—and what is not",
+      "lead": "Information enters the system when a person creates an account, signs in, sends an enquiry, submits a homepage lead or completes a published dynamic form.",
+      "paragraphs": [
+        "Public forms apply trimming, normalization, validation and field-length limits before records are accepted. Contact and dynamic forms also include a hidden honeypot field intended to reject automated submissions.",
+        "Answers entered in the Financial Decision Assessment stay in the interface. They are not sent to the server or saved by the current website.",
+        "The public site does not provide a file-upload field. DNH public forms should therefore not be used to send documents or file attachments."
+      ],
+      "note": {
+        "label": "Data minimisation cue",
+        "text": "Provide only information relevant to the request. Avoid including passwords, payment credentials or unrelated sensitive records in free-text fields."
+      }
+    },
+    {
+      "id": "how-information-is-used",
+      "label": "How information is used",
+      "title": "How submitted information is used",
+      "lead": "The website uses submitted information for the account, enquiry, form and interface operations described below.",
+      "bullets": [
+        "Create accounts, authenticate users and maintain active sessions.",
+        "Review contact messages, lead requests and dynamic-form submissions.",
+        "Associate a submission with a signed-in user when one is available.",
+        "Route enquiries using the form and service context supplied with a submission.",
+        "Allow authorised administrators to manage users, forms and submitted records.",
+        "Maintain language, interface and offline-performance preferences on the device."
+      ],
+      "paragraphs": [
+        "In the reviewed application version, no analytics, advertising-pixel, telemetry, CAPTCHA, payment, cloud-upload or email/SMS delivery integrations are configured. This policy should be updated if those site tools change."
+      ]
+    },
+    {
+      "id": "cookies-and-device-storage",
+      "label": "Device storage",
+      "title": "Cookies, local preferences and public-page caching",
+      "lead": "The current site uses two cookies and two limited browser-storage entries. In production it may also cache public same-origin pages and assets through a service worker.",
+      "cookieTable": {
+        "caption": "Current cookies and device storage",
+        "columns": {
+          "name": "Name",
+          "kind": "Type",
+          "purpose": "Purpose",
+          "duration": "Duration"
+        },
+        "rows": [
+          {
+            "id": "dnh-session",
+            "name": "dnh_session",
+            "kind": "HTTP cookie",
+            "purpose": "Opaque authentication token. It is httpOnly, SameSite=Lax, available on path / and Secure in production.",
+            "duration": "Maximum age 30 days; the linked session also has an expiry record."
+          },
+          {
+            "id": "dnh-language",
+            "name": "dnh-language",
+            "kind": "Cookie",
+            "purpose": "Remembers the selected Persian or English language. It uses path /, SameSite=Lax and Secure when the site is served over HTTPS.",
+            "duration": "One year."
+          },
+          {
+            "id": "floating-intro",
+            "name": "dnh-floating-contact-intro-seen",
+            "kind": "sessionStorage",
+            "purpose": "Prevents the floating contact introduction from repeating during the same browser-tab session.",
+            "duration": "For the current tab/session."
+          },
+          {
+            "id": "admin-sidebar",
+            "name": "dnh-admin-sidebar-collapsed",
+            "kind": "localStorage",
+            "purpose": "Remembers the collapsed state of the administrator sidebar.",
+            "duration": "Until removed from browser storage or changed by the user."
+          },
+          {
+            "id": "service-worker-cache",
+            "name": "DNH public cache",
+            "kind": "Cache Storage",
+            "purpose": "Stores public same-origin GET navigations and static assets for offline access and performance. API and private routes are excluded.",
+            "duration": "No fixed user-facing duration is defined; application cache versions may be replaced during service-worker updates."
+          }
+        ]
+      }
+    },
+    {
+      "id": "access-and-disclosure",
+      "label": "Access and disclosure",
+      "title": "Who can access information and when it leaves this site",
+      "lead": "Submitted records are available through role-checked administrator routes and are stored in the database configured for the site. The database provider and hosting location are not identified in this policy.",
+      "paragraphs": [
+        "Infrastructure or service providers configured to operate the website may process information where necessary to provide the service. This policy therefore does not make an absolute promise that information is never disclosed.",
+        "Telephone, email and WhatsApp links are optional external actions. When you choose one, information is transferred to the relevant communications provider under that provider's own terms and privacy practices.",
+        "Administrators can view contact enquiries, leads, users and dynamic-form submissions according to their role. Public visitors cannot access those administration routes through the normal application interface."
+      ],
+      "note": {
+        "label": "Service-provider scope",
+        "text": "Specific providers and processing locations are not specified in this policy."
+      }
+    },
+    {
+      "id": "security-controls",
+      "label": "Security controls",
+      "title": "Controls present in the current application",
+      "lead": "The site includes practical application-level controls, but no online system can be described as absolutely secure or confidential.",
+      "bullets": [
+        "Input trimming, normalization, format validation and length limits.",
+        "Honeypot checks on contact and dynamic-form submissions.",
+        "Salted scrypt password hashing and timing-safe password verification.",
+        "SHA-256 hashing of session tokens before database storage.",
+        "An httpOnly, SameSite=Lax session cookie, marked Secure in production.",
+        "Role checks protecting administrator pages and APIs."
+      ],
+      "paragraphs": [
+        "These controls reduce specific application risks but cannot guarantee absolute security or confidentiality. Browser traffic is protected when the website is correctly served over HTTPS."
+      ]
+    },
+    {
+      "id": "retention-and-deletion",
+      "label": "Retention and deletion",
+      "title": "Retention periods and current deletion behavior",
+      "lead": "Only two exact durations are defined by the application: authentication sessions have a 30-day maximum age and the language preference lasts one year.",
+      "facts": [
+        {
+          "id": "retention-known",
+          "label": "Defined durations",
+          "value": "30 days / 1 year",
+          "description": "Authentication session and language-preference cookie respectively. Expired session records use database expiry behavior."
+        },
+        {
+          "id": "retention-operational",
+          "label": "Operational records",
+          "value": "No fixed schedule",
+          "description": "Accounts, contacts, leads and form submissions are retained as operationally necessary until deleted or until an operator-approved schedule applies."
+        }
+      ],
+      "paragraphs": [
+        "An authorised administrator can delete a user and that user's session records. This does not currently guarantee cascade deletion of contact enquiries, leads or dynamic-form submissions linked to that user.",
+        "Administrators can delete individual dynamic-form submissions. Deleting a dynamic form also deletes its associated submissions. The current website does not offer an administrator deletion control for contact enquiries or leads.",
+        "The website does not provide a public self-service tool for access, export or deletion, and this policy does not promise automatic or complete erasure. Requests sent through the contact route will be reviewed through the available process."
+      ]
+    },
+    {
+      "id": "choices-and-requests",
+      "label": "Choices and requests",
+      "title": "Choices available to site visitors",
+      "lead": "You can limit what you provide, avoid creating an account, choose whether to use external contact links and clear browser cookies or storage through your browser settings.",
+      "paragraphs": [
+        "You may submit a question about information associated with you through the contact page. This is a request channel, not a self-service privacy portal, and each request is reviewed using the information available for that request.",
+        "Removing the authentication cookie from your browser does not itself delete the related account or submitted records. Logging out removes the browser cookie and attempts to remove the active session record."
+      ],
+      "action": {
+        "label": "Send a privacy request",
+        "href": "/contact"
+      }
+    },
+    {
+      "id": "changes-and-related-information",
+      "label": "Changes and related information",
+      "title": "Changes to this policy and related information",
+      "lead": "This page may be revised when application features or data practices change. The date at the top will identify the latest published revision.",
+      "paragraphs": [
+        "Review this page periodically if you continue to use the website. A revised policy applies to the site version on which it appears; this page does not create guarantees about future functionality."
+      ],
+      "relatedLinks": [
+        { "id": "related-contact", "label": "Contact DNH", "description": "Use the available contact channel for a question about this policy.", "href": "/contact" },
+        { "id": "related-terms", "label": "Terms of use", "description": "Read the terms that govern use of the website.", "href": "/legal/terms-of-use" },
+        { "id": "related-faq", "label": "Knowledge FAQ", "description": "Review practical information about DNH, its process and boundaries.", "href": "/knowledge/faq" }
+      ]
+    }
+  ],
+  "closing": {
+    "eyebrow": "Contact and review",
+    "title": "A privacy question should begin with a clear, relevant request.",
+    "description": "Use the contact page to describe the information or activity your question concerns. Do not include passwords, financial credentials or unrelated sensitive material.",
+    "primaryCta": { "label": "Go to contact page", "href": "/contact" },
+    "secondaryCta": { "label": "Read terms of use", "href": "/legal/terms-of-use" },
+    "reviewLabel": "Contact scope",
+    "reviewText": "The contact page is a request channel and not an automated privacy portal."
+  },
+  "ui": {
+    "backToContents": "Back to contents",
+    "tableMobileLabel": "Information detail"
+  }
+}
