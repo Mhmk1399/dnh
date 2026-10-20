@@ -202,8 +202,7 @@ export function ContactForm({
                 variant="primary"
                 size="md"
                 shape="square"
-                icon={Arrow}
-                loading={pending}
+                 loading={pending}
                 disabled={pending}
                 className="w-full !bg-[#fc8502] !text-[#10242c] hover:!bg-[#d96f00] hover:!text-white focus-visible:!ring-[#fc8502]/35 sm:w-auto sm:min-w-[220px]"
               >

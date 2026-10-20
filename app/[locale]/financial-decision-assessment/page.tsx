@@ -16,18 +16,36 @@ type PageProps = { params: Promise<{ locale: string }> };
 const page = async ({ params }: PageProps) => {
   const { locale: localeParam } = await params;
   const locale = normalizeSiteLocale(localeParam);
-  const pageContent = (locale === "en" ? assessmentEn : assessmentFa) as FinancialDecisionAssessmentPageContent;
+  const pageContent = (
+    locale === "en" ? assessmentEn : assessmentFa
+  ) as FinancialDecisionAssessmentPageContent;
   const { direction, lang, sections } = pageContent;
 
   return (
     <main lang={lang} dir={direction}>
-      <FinancialDecisionAssessmentHero content={sections.hero} direction={direction} lang={lang} />
+      <FinancialDecisionAssessmentHero
+        content={sections.hero}
+        direction={direction}
+        lang={lang}
+      />
       <WhyAssessmentSection content={sections.why} direction={direction} />
-      <AssessmentProcessSection content={sections.process} direction={direction} />
-      <AssessmentFormSection content={sections.form} direction={direction} />
-      <PrivacyConfidentialitySection content={sections.privacy} direction={direction} />
-      <AfterSubmissionSection content={sections.after_submission} direction={direction} />
-      <AssessmentContactSection content={sections.contact} direction={direction} />
+      <AssessmentProcessSection
+        content={sections.process}
+        direction={direction}
+      />
+      {/* <AssessmentFormSection content={sections.form} direction={direction} /> */}
+      <PrivacyConfidentialitySection
+        content={sections.privacy}
+        direction={direction}
+      />
+      <AfterSubmissionSection
+        content={sections.after_submission}
+        direction={direction}
+      />
+      <AssessmentContactSection
+        content={sections.contact}
+        direction={direction}
+      />
     </main>
   );
 };
@@ -36,5 +54,9 @@ export default page;
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = await params;
-  return localizePageMetadata({}, "/financial-decision-assessment", normalizeSiteLocale(locale));
+  return localizePageMetadata(
+    {},
+    "/financial-decision-assessment",
+    normalizeSiteLocale(locale),
+  );
 }

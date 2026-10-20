@@ -220,7 +220,6 @@ function SectionActions({
           variant={index === 0 ? "primary" : "secondary"}
           size="lg"
           shape="square"
-          icon={Arrow}
           className={
             dark && index > 0
               ? "border-white/25 bg-transparent text-white hover:bg-white hover:text-ink"
