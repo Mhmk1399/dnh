@@ -485,7 +485,12 @@ function FitRow({
         lg:px-7
       "
     >
- 
+      <bdi
+        dir="ltr"
+        className="text-[9px] font-black tracking-[0.16em] text-[#167394]/45"
+      >
+        {number}
+      </bdi>
 
       {/* TITLE */}
 

@@ -157,6 +157,7 @@
       "heading": "To begin, describe the issue at the level needed for an initial review.",
       "heading_highlight": "describe the issue at the level needed for an initial review.",
       "intro": "This information is used to understand the matter and assess whether the request is a suitable fit—not to conduct a full case analysis.",
+      "notes_label": "Before submitting your request",
       "notes": [
         { "id": "enough-information", "icon": "document", "title": "Initial information is enough", "description": "You do not need to submit a complete financial file at this stage." },
         { "id": "review-before-meeting", "icon": "review", "title": "Review precedes any meeting", "description": "The request's scope and suitability are considered before the process continues." },
@@ -165,6 +166,7 @@
       "form": {
         "eyebrow": "Request details",
         "title": "Core information for the initial review",
+        "caption": "A few details to review your request",
         "code": "REQUEST / 05",
         "aria_label": "Strategic consultation request form",
         "groups": [

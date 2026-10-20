@@ -406,15 +406,9 @@ function Purpose({
         {flow.map(([en, label]) => (
           <div
             key={en}
-            className="relative border-b border-white/15 p-4 text-center text-[13px] font-black last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0"
+            className="relative border border-white/15 p-4 text-center text-[13px] font-black last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0"
             dir={locale === "fa" ? "rtl" : "ltr"}
           >
-            <bdi
-              dir="ltr"
-              className="block text-[9px] tracking-[.1em] text-[#7fb1bc]"
-            >
-              {en}
-            </bdi>
             {label}
           </div>
         ))}
@@ -522,7 +516,7 @@ function Framework({
     <section
       id={section.id}
       aria-labelledby={`${section.id}-title`}
-      className="border-b border-line bg-surface-soft py-16 [background-image:linear-gradient(rgba(22,115,148,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(22,115,148,.06)_1px,transparent_1px)] [background-size:72px_72px] sm:py-20 lg:py-28"
+      className="border-b border-line py-16  bg-page sm:py-20 lg:py-28"
     >
       <div className="dnh-site-shell">
         <header className="mx-auto max-w-[1000px] text-center">
@@ -555,11 +549,7 @@ function Framework({
             </article>
           ))}
         </div>
-        {section.closing ? (
-          <p className="mt-7 border border-line bg-surface-soft p-5 text-[12px] leading-7 text-ink-muted">
-            {section.closing}
-          </p>
-        ) : null}
+
         <div className="flex justify-center">
           <SectionActions section={section} isRTL={isRTL} />
         </div>
@@ -921,11 +911,7 @@ export function AboutPage({
         isRTL={isRTL}
       />
       <Audience section={sections["who-dnh-is-built-for"]} isRTL={isRTL} />
-      <Ecosystem
-        section={sections["the-dnh-ecosystem"]}
-        locale={locale}
-        isRTL={isRTL}
-      />
+
       <Engagement
         section={sections["from-problem-recognition-to-decision"]}
         isRTL={isRTL}

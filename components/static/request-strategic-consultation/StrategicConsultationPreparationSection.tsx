@@ -537,7 +537,12 @@ function InformationRow({
         lg:px-7
       "
     >
-   
+      <bdi
+        dir="ltr"
+        className="text-[9px] font-black tracking-[0.14em] text-white/28"
+      >
+        {String(index).padStart(2, "0")}
+      </bdi>
 
       <span
         aria-hidden="true"

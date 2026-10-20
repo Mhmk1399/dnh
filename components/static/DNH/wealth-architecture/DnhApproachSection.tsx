@@ -30,22 +30,10 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
             section={section}
             direction={direction}
             headingId="dnh-approach-heading"
-             
             centered
           />
 
-          <div className="mx-auto mt-6 grid max-w-[900px] gap-4 md:grid-cols-2">
-            {paragraphs.slice(0, 2).map((paragraph) => (
-              <WealthParagraph
-                key={paragraph.id}
-                direction={direction}
-                 
-                className="border-s border-white/20 ps-4"
-              >
-                <WealthRichText text={paragraph.text} />
-              </WealthParagraph>
-            ))}
-          </div>
+          <div className="mx-auto mt-6 grid max-w-[900px] gap-4 md:grid-cols-2"></div>
         </div>
 
         <div className="mt-9 grid min-w-0 grid-cols-1  border-s border-t border-white/15 lg:grid-cols-3">
@@ -85,19 +73,7 @@ export function DnhApproachSection({ section, direction }: WealthSectionProps) {
           })}
         </div>
 
-        <footer className="mt-8 grid gap-6 border-t border-white/15  pt-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-          <div className="grid gap-4 md:grid-cols-2">
-            {paragraphs.slice(2).map((paragraph) => (
-              <WealthParagraph
-                key={paragraph.id}
-                direction={direction}
-                dark
-                className="border-s-2 border-brand-accent text-black/50! ps-4"
-              >
-                <WealthRichText text={paragraph.text} />
-              </WealthParagraph>
-            ))}
-          </div>
+        <footer className="mt-8 grid gap-6 border-t border-white/15  pt-7 justify-center grid-cols-12 lg:items-center">
           <WealthActions ctas={section.ctas} direction={direction} dark />
         </footer>
       </div>

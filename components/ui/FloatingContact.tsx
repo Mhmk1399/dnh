@@ -286,12 +286,8 @@ export function FloatingContact({
         aria-expanded={open}
         aria-controls="dnh-floating-contact-panel"
         aria-label={open ? copy.close : copy.open}
-        className="group/contact-trigger relative flex size-[58px] items-center justify-center overflow-hidden border border-white/20 bg-brand-primary text-[var(--dnh-text-on-brand)] shadow-[0_16px_38px_color-mix(in_srgb,var(--dnh-primary)_30%,transparent)] transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 hover:bg-brand-secondary hover:shadow-[0_20px_44px_color-mix(in_srgb,var(--dnh-primary)_36%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent motion-reduce:transform-none motion-reduce:transition-none sm:size-[62px]"
+        className="group/contact-trigger relative flex size-[40px] items-center justify-center overflow-hidden border border-white/20 bg-brand-primary text-[var(--dnh-text-on-brand)] shadow-[0_16px_38px_color-mix(in_srgb,var(--dnh-primary)_30%,transparent)] transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 hover:bg-brand-secondary hover:shadow-[0_20px_44px_color-mix(in_srgb,var(--dnh-primary)_36%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent motion-reduce:transform-none motion-reduce:transition-none sm:size-[52px]"
       >
-        <span
-          aria-hidden="true"
-          className="absolute start-0 top-0 h-[3px] w-5 bg-brand-accent"
-        />
         <span className="relative z-10 transition-transform duration-300 group-hover/contact-trigger:scale-[1.04]">
           {open ? (
             <X size={20} strokeWidth={1.8} aria-hidden="true" />

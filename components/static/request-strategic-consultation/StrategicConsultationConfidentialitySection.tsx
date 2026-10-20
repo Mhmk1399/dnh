@@ -365,6 +365,7 @@ export function StrategicConsultationConfidentialitySection({
                 href={cta.href}
                 variant={cta.type === "primary" ? "assessment" : "secondary"}
                 size="lg"
+                icon={Arrow}
                 className={
                   cta.type === "primary"
                     ? `
@@ -457,6 +458,12 @@ function NextStep({
         >
           <Icon strokeWidth={1.6} className="size-[17px]" />
         </span>
+        <bdi
+          dir="ltr"
+          className="text-[9px] font-black tracking-[0.16em] text-[#167394]/45"
+        >
+          {number}
+        </bdi>
       </div>
 
       <h3

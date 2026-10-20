@@ -52,6 +52,9 @@
         "linkedin": "لینکدین",
         "telegram": "تلگرام"
       }
+    },
+    "navigation": {
+      "/contact": "تماس با ما"
     }
   },
   "en": {
@@ -114,7 +117,8 @@
       "services": "Services",
       "who-we-help": "Who We Help",
       "knowledge": "Knowledge & Research",
-      "/about": "About DNH"
+      "/about": "About DNH",
+      "/contact": "Contact"
     },
     "menus": {
       "dnh": {

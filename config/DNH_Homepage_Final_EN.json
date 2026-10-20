@@ -25,7 +25,7 @@
       "ctas": [
         {
           "id": "assessment",
-          "label": "Start your initial assessment",
+          "label": "Start initial assessment",
           "type": "primary",
           "href": "/financial-decision-assessment"
         },
@@ -39,7 +39,7 @@
       "trust_line": "Dr. Nasim Mohammadhasani — Private Wealth Architect, Strategic Financial Advisor and Founder of the DNH Framework",
       "media": {
         "src": "/assets/images/doctorHeroEN.png",
-        "mobile_src": "/assets/images/dnh-hero-mobile.png",
+        "mobile_src": "/assets/images/doctor.webp",
         "alt": "Hero Image for DNH Homepage",
         "width": 1920,
         "height": 1080

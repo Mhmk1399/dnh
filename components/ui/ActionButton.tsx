@@ -48,9 +48,7 @@ type ActionButtonNativeProps = SharedActionButtonProps &
     href?: never;
   };
 
-export type ActionButtonProps =
-  | ActionButtonLinkProps
-  | ActionButtonNativeProps;
+export type ActionButtonProps = ActionButtonLinkProps | ActionButtonNativeProps;
 
 const variantClasses: Record<ActionButtonVariant, string> = {
   primary: `
@@ -346,7 +344,7 @@ function ActionIcon({
     <span
       aria-hidden="true"
       className={`
-        relative
+        relative  
         z-10
         flex
         h-8

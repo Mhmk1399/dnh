@@ -90,9 +90,8 @@ export function AboutDrNasimSection() {
       <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.78fr)_minmax(0,1.35fr)] lg:grid-rows-[auto_auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+            <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-            <span aria-hidden="true" className="h-[2px] w-11 bg-brand-accent" />
-           
           </div>
 
           <h2
@@ -143,7 +142,6 @@ export function AboutDrNasimSection() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/22 via-transparent to-transparent"
           />
-          
         </div>
 
         {/* <dl className="grid min-w-0 grid-cols-1 border border-line bg-surface-soft sm:grid-cols-2 xl:grid-cols-4 lg:col-start-2 lg:row-start-3">
@@ -181,13 +179,6 @@ export function AboutDrNasimSection() {
         </dl> */}
 
         <blockquote className="relative isolate min-h-[170px] overflow-hidden border border-line p-5 sm:p-7 lg:col-start-2 lg:row-start-4">
-          <Image
-            src={content.philosophy_media.src}
-            alt={content.philosophy_media.alt}
-            fill
-            sizes="(max-width: 1023px) calc(100vw - 24px), 58vw"
-            className="-z-20 object-cover object-center"
-          />
           <div
             aria-hidden="true"
             className="absolute inset-0 -z-10 bg-page/88"

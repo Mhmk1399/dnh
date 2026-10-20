@@ -115,6 +115,7 @@ export type ConsultationFormField = {
 export type ConsultationRequestContent = ConsultationHeading & {
   id: string;
   index: { number: string; label: string };
+  notes_label: string;
   notes: Array<{
     id: string;
     icon: "document" | "review" | "privacy";
@@ -125,6 +126,7 @@ export type ConsultationRequestContent = ConsultationHeading & {
   form: {
     eyebrow: string;
     title: string;
+    caption: string;
     code: string;
     aria_label: string;
     groups: Array<{

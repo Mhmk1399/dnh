@@ -406,7 +406,12 @@ function ProcessRow({
           gap-3
         "
       >
-       
+        <bdi
+          dir="ltr"
+          className="text-[9px] font-black tracking-[0.14em] text-[#167394]/45"
+        >
+          {number}
+        </bdi>
 
         <span
           aria-hidden="true"

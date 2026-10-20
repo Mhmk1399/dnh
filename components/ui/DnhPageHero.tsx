@@ -277,7 +277,7 @@ export function DnhPageHero({
         </p>
         <h1
           id={headingId}
-          className={`mt-5 max-w-[22ch] text-pretty font-black [overflow-wrap:break-word] ${
+          className={`mt-5 max-w-[26ch] text-pretty font-black [overflow-wrap:break-word] ${
             compact
               ? "text-[clamp(1.85rem,4.5vw,3.25rem)]"
               : "text-[clamp(1.85rem,5vw,3.4rem)]"
@@ -362,16 +362,6 @@ export function DnhPageHero({
           )}
         </>
       )}
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.28) 1px,transparent 1px)",
-          backgroundSize: "88px 88px",
-        }}
-      />
 
       {resolvedMode === "background" ? (
         <div

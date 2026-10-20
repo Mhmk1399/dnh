@@ -11,8 +11,6 @@ import {
   type ReactNode,
 } from "react";
 import {
-  ArrowLeft,
-  ArrowRight,
   Check,
   ChevronDown,
   ChevronUp,
@@ -69,12 +67,8 @@ export function StrategicConsultationRequestSection({
   result = null,
 }: StrategicConsultationRequestSectionProps) {
   const isRTL = direction === "rtl";
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
   const formRef = useRef<HTMLFormElement>(null);
   const locale = isRTL ? "fa" : "en";
-  const mobileNotesLabel = isRTL
-    ? "نکاتی پیش از ارسال درخواست"
-    : "Before submitting your request";
   const mobileNotesCount = new Intl.NumberFormat(
     isRTL ? "fa-IR" : "en-US",
   ).format(content.notes.length);
@@ -184,7 +178,7 @@ export function StrategicConsultationRequestSection({
                       aria-hidden="true"
                       className="size-[17px] shrink-0 text-brand-accent"
                     />
-                    <span>{mobileNotesLabel}</span>
+                    <span>{content.notes_label}</span>
                     <bdi dir="ltr" className="text-[11px] text-white/40">
                       {mobileNotesCount}
                     </bdi>
@@ -270,9 +264,7 @@ export function StrategicConsultationRequestSection({
                   {content.form.code}
                 </bdi>
                 <span className="text-[11px] font-medium text-[#748491]">
-                  {isRTL
-                    ? "اطلاعات اولیه برای بررسی درخواست"
-                    : "A few details to review your request"}
+                  {content.form.caption}
                 </span>
               </div>
             </div>
@@ -300,7 +292,6 @@ export function StrategicConsultationRequestSection({
                       >
                         <RequestField
                           field={field}
-                          direction={direction}
                           error={result?.errors?.[field.name]}
                         />
                       </div>
@@ -362,11 +353,9 @@ export function StrategicConsultationRequestSection({
 
 function RequestField({
   field,
-  direction,
   error,
 }: {
   field: ConsultationFormField;
-  direction: SiteDirection;
   error?: string;
 }) {
   if (field.kind === "select") {
@@ -375,7 +364,6 @@ function RequestField({
         label={field.label}
         name={field.name}
         options={field.options ?? []}
-        direction={direction}
         required={field.required}
         error={error}
         hint={field.hint}
@@ -429,7 +417,6 @@ function DesignSelect({
   label,
   name,
   options,
-  direction,
   required = false,
   error,
   hint,
@@ -437,7 +424,6 @@ function DesignSelect({
   label: string;
   name: string;
   options: SelectOption[];
-  direction: SiteDirection;
   required?: boolean;
   error?: string;
   hint?: string;
@@ -458,9 +444,7 @@ function DesignSelect({
   const [selected, setSelected] = useState("");
   const [focused, setFocused] = useState(0);
 
-  const placeholder =
-    options.find((option) => option.value === "")?.label ??
-    (direction === "rtl" ? "انتخاب کنید" : "Select an option");
+  const placeholder = options.find((option) => option.value === "")?.label ?? "";
   const choices = options.filter((option) => option.value !== "");
   const selectedLabel = choices.find(
     (option) => option.value === selected,
@@ -604,6 +588,7 @@ function DesignSelect({
         ref={triggerRef}
         id={triggerId}
         type="button"
+        role="combobox"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls={isOpen ? listId : undefined}
@@ -714,6 +699,12 @@ function FieldGroup({
     >
       <legend className="w-full min-w-0 pb-5 sm:pb-6">
         <span className="flex min-w-0 items-start gap-3 sm:items-center">
+          <bdi
+            dir="ltr"
+            className="mt-1 shrink-0 text-[9px] font-black tracking-[0.14em] text-[var(--dnh-primary,#167394)]/45"
+          >
+            {number}
+          </bdi>
           <span className="min-w-0 flex-1">
             <span className="block text-[14px] font-black leading-7 text-[#153448] sm:text-[15px]">
               {title}

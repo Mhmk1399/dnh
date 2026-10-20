@@ -156,7 +156,7 @@ export function WealthSectionHeader({
       >
         <span
           aria-hidden="true"
-          className="h-[2px] w-10 shrink-0 bg-brand-accent"
+          className="h-[2px] w-9 shrink-0 bg-brand-accent"
         />
         <p>{section.eyebrow}</p>
       </div>
