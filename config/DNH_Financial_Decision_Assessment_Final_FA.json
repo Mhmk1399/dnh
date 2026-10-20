@@ -1,0 +1,286 @@
+{
+  "locale": "fa",
+  "lang": "fa-IR",
+  "direction": "rtl",
+  "sections": {
+    "hero": {
+      "id": "assessment-intro",
+      "eyebrow": "شروع مسیر تصمیم‌گیری",
+      "heading": "قبل از تصمیم بعدی، مسئله را درست تعریف کنید.",
+      "heading_highlight": "مسئله را درست تعریف کنید.",
+      "paragraphs": [
+        {
+          "id": "assessment-introduction",
+          "text": "بسیاری از تصمیم‌های مالی زمانی پیچیده می‌شوند که مسئله اصلی، محدودیت‌ها، ریسک‌ها و گزینه‌های موجود هنوز به‌درستی و به‌طور کامل تعریف نشده باشند. ارزیابی اولیه DNH کمک می‌کند پیش از ورود به مشاوره تخصصی، نوع مسئله، میزان فوریت و سطح پیچیدگی آن روشن‌تر شود."
+        }
+      ],
+      "ctas": [
+        { "id": "start-assessment", "label": "شروع ارزیابی اولیه", "type": "primary", "href": "#assessment-form" },
+        { "id": "view-process", "label": "مشاهده فرایند ارزیابی", "type": "secondary", "href": "#assessment-process" }
+      ],
+      "media": {
+        "src": "/assets/images/financial-decision-assessment.webp",
+        "mobile_src": "/assets/images/financial-decision-assessment.webp",
+        "alt": "تصویری مفهومی از ارزیابی ساختاریافته یک تصمیم مالی",
+        "object_position": "center"
+      }
+    },
+    "why": {
+      "id": "why-assessment",
+      "eyebrow": "چرا Assessment؟",
+      "heading": "پیش از انتخاب راه‌حل، باید بدانیم مسئله دقیقاً چیست.",
+      "heading_highlight": "مسئله دقیقاً چیست.",
+      "intro": "یک درخواست مشاوره ممکن است در ظاهر ساده باشد، اما مسئله واقعی می‌تواند به نقدینگی، ریسک، ساختار ثروت، کسب‌وکار یا یک تصمیم مالی مهم مربوط باشد. Assessment کمک می‌کند قبل از ورود به تحلیل، مسئله درست صورت‌بندی شود.",
+      "statement": {
+        "eyebrow": "BEFORE ADVICE",
+        "heading": "پاسخ خوب، از پرسش درست آغاز می‌شود.",
+        "heading_highlight": "پرسش درست",
+        "description": "DNH قبل از پیشنهاد خدمت، تلاش می‌کند بفهمد چه چیزی باید بررسی شود و آیا این مسئله در دامنه مناسب همکاری قرار دارد یا نه.",
+        "comparison_before": "Assessment ≠ فرم تماس",
+        "comparison_after": "Assessment = شناخت اولیه مسئله و مسیر"
+      },
+      "reasons": [
+        { "id": "question", "icon": "question", "eyebrow": "THE QUESTION", "title": "مسئله چیست؟", "description": "قبل از انتخاب خدمت، باید روشن شود چه تصمیم یا مسئله‌ای واقعاً نیاز به بررسی دارد." },
+        { "id": "complexity", "icon": "urgency", "eyebrow": "COMPLEXITY & URGENCY", "title": "چقدر پیچیده و فوری است؟", "description": "افق زمانی، فوریت و تعداد متغیرهای مؤثر می‌توانند مسیر مناسب را تغییر دهند." },
+        { "id": "right-path", "icon": "route", "eyebrow": "THE RIGHT PATH", "title": "مسیر بعدی چیست؟", "description": "ارزیابی اولیه کمک می‌کند مشخص شود ادامه مسیر باید Assessment، Consultation یا Briefing باشد." }
+      ],
+      "outcome": {
+        "eyebrow": "ASSESSMENT OUTCOME",
+        "title": "نتیجه مرحله اول: شناخت بهتر مسیر بعدی",
+        "description": "پس از Assessment مشخص می‌شود آیا ادامه مسیر به بررسی بیشتر، مشاوره راهبردی، Executive Briefing یا مسیر دیگری نیاز دارد.",
+        "cta": { "label": "مشاهده مسیر ارزیابی", "href": "#assessment-process" }
+      },
+      "privacy_note": "در این مرحله فقط اطلاعات لازم برای شناخت هدف، مسئله، پیچیدگی و تناسب اولیه دریافت می‌شود؛ نه اسناد محرمانه، جزئیات کامل دارایی‌ها یا اطلاعات بانکی."
+    },
+    "process": {
+      "id": "assessment-process",
+      "eyebrow": "مسیر ارزیابی و همکاری",
+      "heading": "ارزیابی فقط یک فرم نیست؛ نقطه آغاز یک مسیر روشن‌تر است.",
+      "heading_highlight": "نقطه آغاز یک مسیر روشن‌تر است.",
+      "intro": "هدف مرحله اول این نیست که بلافاصله وارد تحلیل کامل یا پیشنهاد راه‌حل شویم. ابتدا باید تناسب، دامنه و پیچیدگی مسئله روشن شود و سپس، در صورت نیاز، مسیر حرفه‌ای مناسب شکل بگیرد.",
+      "start_cta": { "label": "شروع ارزیابی", "href": "#assessment-form" },
+      "start_note": "مسیر نهایی هر پرونده بر اساس تناسب و نیاز واقعی آن مشخص می‌شود.",
+      "panel": {
+        "eyebrow": "DECISION PATH",
+        "heading": "از شناخت مسئله، تا ساختن یک مسیر تصمیم.",
+        "heading_highlight": "مسیر تصمیم.",
+        "intro": "همه پرونده‌ها الزاماً به یک شکل یا با یک دامنه ادامه پیدا نمی‌کنند. Assessment کمک می‌کند مرحله بعد بر اساس خود مسئله تعیین شود.",
+        "phases": [
+          { "id": "qualify", "label": "شناخت و تناسب", "code": "QUALIFY", "tone": "gold" },
+          { "id": "review", "label": "گفت‌وگو و بررسی", "code": "REVIEW", "tone": "blue" },
+          { "id": "decide", "label": "مسیر تصمیم و بازبینی", "code": "DECIDE", "tone": "gold" }
+        ],
+        "note": "شروع Assessment به معنی تعهد به ادامه همکاری نیست؛ ابتدا تناسب مسیر بررسی می‌شود."
+      },
+      "steps": [
+        { "id": "understand", "number": "01", "phase": "QUALIFY", "title": "شناخت اولیه مسئله", "description": "موضوع تصمیم، شرایط فعلی و دلیل مراجعه در سطح اولیه روشن می‌شود تا مشخص شود مسئله واقعاً چیست.", "outcome": "شناخت اولیه", "tone": "qualification" },
+        { "id": "scope", "number": "02", "phase": "QUALIFY", "title": "بررسی تناسب و دامنه", "description": "فوریت، افق زمانی، سطح پیچیدگی و تناسب پرونده با دامنه خدمات DNH بررسی می‌شود.", "outcome": "تناسب و دامنه", "tone": "qualification" },
+        { "id": "conversation", "number": "03", "phase": "REVIEW", "title": "جلسه تخصصی یا Briefing", "description": "در صورت تناسب، مسیر می‌تواند به جلسه تخصصی، مشاوره راهبردی یا Executive Briefing هدایت شود.", "outcome": "گفت‌وگوی تخصصی", "tone": "review" },
+        { "id": "professional-review", "number": "04", "phase": "REVIEW", "title": "بررسی حرفه‌ای پرونده", "description": "مسئله با توجه به دامنه توافق‌شده، اطلاعات مرتبط و متغیرهای مؤثر به‌صورت حرفه‌ای بررسی می‌شود.", "outcome": "تحلیل مسئله", "tone": "review" },
+        { "id": "decision-picture", "number": "05", "phase": "DECIDE", "title": "ساخت تصویر تصمیم", "description": "گزینه‌ها، سناریوها و مسیرهای قابل بررسی در یک تصویر ساختاریافته‌تر کنار هم قرار می‌گیرند.", "outcome": "سناریو و مسیر", "tone": "decision" },
+        { "id": "follow-up", "number": "06", "phase": "DECIDE", "title": "پیگیری و بازبینی", "description": "در صورت توافق و نیاز پرونده، مسیر تصمیم می‌تواند در ادامه بازبینی یا پیگیری شود.", "outcome": "بازبینی", "tone": "decision" }
+      ],
+      "outcome_label": "خروجی مرحله",
+      "footer": "قدم بعدی، پاسخ به چند سؤال اولیه درباره موقعیت شماست.",
+      "cta": { "label": "رفتن به فرم ارزیابی", "href": "#assessment-form" }
+    },
+    "form": {
+      "id": "assessment-form",
+      "eyebrow": "شروع ارزیابی",
+      "heading": "چند سؤال کوتاه، برای شناخت بهتر موقعیت شما.",
+      "heading_highlight": "شناخت بهتر موقعیت شما.",
+      "intro": "لازم نیست در این مرحله همه اطلاعات مالی خود را آماده کنید. هدف فقط این است که مسئله، شرایط و مسیر مناسب اولیه را بهتر بشناسیم.",
+      "progress_label": "ASSESSMENT PROGRESS",
+      "progress_title": "ارزیابی اولیه",
+      "progress_description": "اطلاعات این مرحله فقط برای شناخت اولیه مسئله استفاده می‌شوند.",
+      "privacy_title": "بدون اطلاعات حساس",
+      "privacy_description": "اطلاعات بانکی، اسناد هویتی یا جزئیات کامل دارایی‌ها در این مرحله نیاز نیست.",
+      "more_label": "اطلاعات بیشتر",
+      "privacy_link": { "label": "محرمانگی", "href": "#privacy-confidentiality" },
+      "after_link": { "label": "بعد از ارسال", "href": "#after-submission" },
+      "steps": [
+        { "id": "profile", "title": "موقعیت شما", "eyebrow": "PROFILE" },
+        { "id": "decision", "title": "موضوع تصمیم", "eyebrow": "DECISION" },
+        { "id": "timing", "title": "زمان و فوریت", "eyebrow": "HORIZON" },
+        { "id": "contact", "title": "اطلاعات ارتباطی", "eyebrow": "CONTACT" }
+      ],
+      "step_counter": "مرحله {current} از {total}",
+      "previous_label": "مرحله قبل",
+      "next_label": "ادامه",
+      "submit_label": "ثبت ارزیابی اولیه",
+      "profile": {
+        "title": "این ارزیابی را برای چه موقعیتی شروع می‌کنید؟",
+        "description": "نزدیک‌ترین گزینه را انتخاب کنید. این انتخاب فقط برای تشخیص بهتر مسیر اولیه است.",
+        "options": [
+          { "id": "individual", "value": "individual", "icon": "individual", "title": "فرد / سرمایه‌گذار", "description": "برای تصمیم‌های مالی یا ساختار دارایی شخصی" },
+          { "id": "family", "value": "family", "icon": "family", "title": "خانواده / صاحبان سرمایه", "description": "برای مسائل مربوط به ساختار ثروت و تصمیم‌های خانوادگی" },
+          { "id": "business-owner", "value": "business-owner", "icon": "business", "title": "صاحب کسب‌وکار", "description": "برای تصمیم‌های مرتبط با سرمایه، نقدینگی یا کسب‌وکار" },
+          { "id": "company", "value": "company", "icon": "company", "title": "شرکت / هلدینگ", "description": "برای ساختار مالی، سرمایه و تصمیم‌های سازمانی" }
+        ]
+      },
+      "decision": {
+        "title": "موضوع اصلی تصمیم شما چیست؟",
+        "description": "نزدیک‌ترین موضوع را انتخاب کنید و در چند جمله وضعیت فعلی را توضیح دهید.",
+        "topics": [
+          { "id": "wealth-structure", "value": "wealth-structure", "label": "ساختار ثروت و دارایی‌ها" },
+          { "id": "portfolio", "value": "portfolio", "label": "پرتفوی و تخصیص دارایی" },
+          { "id": "major-decision", "value": "major-decision", "label": "تصمیم مالی مهم" },
+          { "id": "liquidity", "value": "liquidity", "label": "نقدینگی و ساختار سرمایه" },
+          { "id": "risk", "value": "risk", "label": "ریسک و حفاظت از ثروت" },
+          { "id": "business-finance", "value": "business-finance", "label": "تصمیم مالی کسب‌وکار" },
+          { "id": "macro", "value": "macro", "label": "اقتصاد و محیط تصمیم" },
+          { "id": "other", "value": "other", "label": "موضوع دیگر" }
+        ],
+        "situation_label": "وضعیت فعلی",
+        "situation_helper": "در چند جمله توضیح دهید الان در چه موقعیتی هستید.",
+        "situation_placeholder": "برای مثال: مجموعه‌ای از دارایی‌ها دارم اما نسبت نقدینگی، ریسک و تخصیص آن‌ها برایم روشن نیست...",
+        "size_label": "اندازه تقریبی سرمایه یا تصمیم",
+        "size_helper": "اختیاری — فقط در صورتی که برای موضوع شما مرتبط باشد.",
+        "size_placeholder": "انتخاب کنید",
+        "sizes": [
+          { "id": "not-relevant", "value": "not-relevant", "label": "در این مسئله مرتبط نیست" },
+          { "id": "prefer-not", "value": "prefer-not", "label": "ترجیح می‌دهم در این مرحله اعلام نکنم" },
+          { "id": "under-5", "value": "under-5", "label": "کمتر از ۵ میلیارد تومان" },
+          { "id": "5-20", "value": "5-20", "label": "۵ تا ۲۰ میلیارد تومان" },
+          { "id": "20-100", "value": "20-100", "label": "۲۰ تا ۱۰۰ میلیارد تومان" },
+          { "id": "over-100", "value": "over-100", "label": "بیش از ۱۰۰ میلیارد تومان" }
+        ]
+      },
+      "timing": {
+        "title": "این تصمیم چه افق زمانی و چه سطح فوریتی دارد؟",
+        "description": "زمان تصمیم می‌تواند روی نوع بررسی و مسیر پیشنهادی اثر بگذارد.",
+        "horizon_label": "افق زمانی",
+        "horizon_helper": "چه زمانی احتمالاً نیاز دارید درباره این مسئله تصمیم بگیرید؟",
+        "horizons": [
+          { "id": "now", "value": "now", "label": "در حال حاضر / فوری" },
+          { "id": "1-3-months", "value": "1-3-months", "label": "۱ تا ۳ ماه آینده" },
+          { "id": "3-12-months", "value": "3-12-months", "label": "۳ تا ۱۲ ماه آینده" },
+          { "id": "over-year", "value": "over-year", "label": "بیش از یک سال" },
+          { "id": "unclear", "value": "unclear", "label": "هنوز مشخص نیست" }
+        ],
+        "urgency_label": "فوریت",
+        "urgency_helper": "نزدیک‌ترین وضعیت را انتخاب کنید.",
+        "urgencies": [
+          { "id": "normal", "value": "normal", "title": "عادی", "description": "موضوع مهم است اما محدودیت زمانی فوری ندارم." },
+          { "id": "important", "value": "important", "title": "مهم", "description": "در ماه‌های آینده باید درباره آن تصمیم بگیرم." },
+          { "id": "urgent", "value": "urgent", "title": "فوری", "description": "تصمیم یا رویداد مهمی در زمان نزدیک پیش رو دارم." }
+        ]
+      },
+      "contact": {
+        "title": "برای ادامه مسیر، چطور با شما در ارتباط باشیم؟",
+        "description": "فقط اطلاعات لازم برای بررسی اولیه درخواست شما دریافت می‌شود.",
+        "name_label": "نام و نام خانوادگی",
+        "email_label": "ایمیل",
+        "method_label": "روش ترجیحی ارتباط",
+        "methods": [
+          { "id": "email", "value": "email", "label": "ایمیل" },
+          { "id": "phone", "value": "phone", "label": "تماس تلفنی" },
+          { "id": "messenger", "value": "messenger", "label": "پیام‌رسان" }
+        ],
+        "summary_label": "توضیح کوتاه مسئله",
+        "summary_helper": "مهم‌ترین نکته‌ای که فکر می‌کنید باید پیش از بررسی بدانیم چیست؟",
+        "summary_placeholder": "موضوع یا تصمیمی که در حال حاضر بیشترین ابهام یا اهمیت را برای شما دارد...",
+        "privacy_note": "لطفاً در این فرم اطلاعات بانکی، رمز، اسناد هویتی، قراردادهای محرمانه یا جزئیات حساس طرف‌های دیگر را ارسال نکنید."
+      },
+      "success": {
+        "eyebrow": "ASSESSMENT RECEIVED",
+        "title": "اطلاعات اولیه ثبت شد.",
+        "description": "مرحله بعد، بررسی اولیه موضوع، دامنه و تناسب درخواست است. جزئیات این مسیر در بخش بعدی توضیح داده شده است.",
+        "after_cta": { "label": "بعد از ارسال چه می‌شود؟", "href": "#after-submission" },
+        "privacy_cta": { "label": "محرمانگی اطلاعات", "href": "#privacy-confidentiality" }
+      }
+    },
+    "privacy": {
+      "id": "privacy-confidentiality",
+      "eyebrow": "حریم اطلاعات و محرمانگی",
+      "heading": "برای شناخت مسئله، لازم نیست همه‌چیز را به اشتراک بگذارید.",
+      "heading_highlight": "همه‌چیز را به اشتراک بگذارید.",
+      "intro": "مرحله اول Assessment فقط برای شناخت موقعیت، مسئله و تناسب اولیه طراحی شده است. اطلاعات دقیق‌تر زمانی مطرح می‌شوند که دامنه همکاری روشن شده باشد و واقعاً برای بررسی پرونده ضرورت داشته باشند.",
+      "principle": "محرمانگی اطلاعات مالی و تجاری از اصول همکاری است و اطلاعات در چارچوب توافق و نیاز حرفه‌ای پرونده مدیریت می‌شوند.",
+      "needed": {
+        "eyebrow": "MINIMUM REQUIRED",
+        "title": "برای شروع مفید است",
+        "items": [
+          { "id": "identity", "icon": "user", "title": "اطلاعات پایه", "description": "نام، نوع مخاطب و روش ترجیحی ارتباط برای شناخت اولیه درخواست." },
+          { "id": "topic", "icon": "file", "title": "موضوع تصمیم", "description": "مسئله اصلی، وضعیت فعلی و توضیح کوتاهی از موقعیتی که با آن روبه‌رو هستید." },
+          { "id": "timing", "icon": "clock", "title": "زمان و فوریت", "description": "افق زمانی تصمیم و میزان فوریتی که در حال حاضر برای شما وجود دارد." },
+          { "id": "scope", "icon": "scale", "title": "دامنه تقریبی", "description": "در صورت مرتبط بودن، یک تصویر کلی از اندازه تصمیم یا سرمایه؛ بدون ورود به جزئیات کامل." }
+        ]
+      },
+      "not_needed": {
+        "eyebrow": "NOT REQUIRED YET",
+        "title": "در این مرحله ارسال نکنید",
+        "items": [
+          { "id": "bank", "icon": "bank", "title": "اطلاعات کامل بانکی", "description": "شماره حساب، اطلاعات ورود، رمز یا سایر اطلاعات حساس بانکی." },
+          { "id": "documents", "icon": "identity", "title": "اسناد هویتی غیرضروری", "description": "تصویر مدارک هویتی یا مستنداتی که برای شناخت اولیه مسئله لازم نیستند." },
+          { "id": "contracts", "icon": "lock", "title": "قراردادهای محرمانه", "description": "قراردادها و اسناد محرمانه کسب‌وکار در مرحله اولیه Assessment نیاز نیستند." },
+          { "id": "assets", "icon": "wallet", "title": "جزئیات کامل دارایی‌ها", "description": "لیست کامل دارایی‌ها، حساب‌ها و اطلاعات جزئی مالی در این مرحله ضروری نیست." },
+          { "id": "partners", "icon": "users", "title": "اطلاعات حساس شرکا", "description": "اطلاعات خصوصی یا محرمانه شرکا، سهام‌داران یا سایر اشخاص." },
+          { "id": "files", "icon": "folder", "title": "فایل‌های مالی گسترده", "description": "صورت‌های مالی گسترده و مجموعه فایل‌های تحلیلی در مرحله آغازین درخواست نمی‌شوند." }
+        ]
+      },
+      "boundary": "اصل ساده است: در هر مرحله فقط اطلاعاتی درخواست شود که برای همان مرحله واقعاً لازم است.",
+      "trust_points": [
+        { "id": "minimum", "title": "حداقل اطلاعات لازم", "text": "فرم اولیه برای شناخت مسئله است، نه جمع‌آوری پرونده کامل." },
+        { "id": "later", "title": "اطلاعات حساس بعداً", "text": "فقط در صورت ضرورت حرفه‌ای و روشن‌شدن دامنه بررسی." },
+        { "id": "confidentiality", "title": "محرمانگی به‌عنوان اصل", "text": "مدیریت اطلاعات در چارچوب همکاری و نیاز پرونده." }
+      ],
+      "final": {
+        "title": "هنوز Assessment را تکمیل نکرده‌اید؟",
+        "cta": { "label": "بازگشت به فرم ارزیابی", "href": "#assessment-form" },
+        "next": { "label": "بعد از ارسال چه می‌شود؟", "href": "#after-submission" }
+      }
+    },
+    "after_submission": {
+      "id": "after-submission",
+      "eyebrow": "بعد از ارسال Assessment",
+      "heading": "درخواست ارسال شد؛ حالا مسیر مناسب بررسی می‌شود.",
+      "heading_highlight": "مسیر مناسب",
+      "intro": "ارسال Assessment به‌معنی ورود مستقیم به یک خدمت مشخص نیست. ابتدا درخواست از نظر موضوع، دامنه، فوریت و پیچیدگی بررسی می‌شود تا ادامه مسیر با خود مسئله متناسب باشد.",
+      "board": {
+        "eyebrow": "REQUEST ROUTING",
+        "title": "مسیر بررسی درخواست",
+        "note": "بررسی اولیه، قبل از تعیین خدمت",
+        "steps": [
+          { "id": "received", "number": "01", "code": "RECEIVED", "icon": "received", "title": "درخواست ثبت می‌شود", "description": "اطلاعات اولیه‌ای که در Assessment وارد کرده‌اید، مبنای شناخت اولیه موضوع قرار می‌گیرد." },
+          { "id": "fit", "number": "02", "code": "FIT & SCOPE", "icon": "review", "title": "تناسب و دامنه بررسی می‌شود", "description": "موضوع تصمیم، فوریت، افق زمانی و سطح پیچیدگی در سطح اولیه بررسی می‌شوند." },
+          { "id": "path", "number": "03", "code": "NEXT PATH", "icon": "route", "title": "مسیر بعدی مشخص می‌شود", "description": "در صورت تناسب، شکل مناسب ادامه گفت‌وگو یا بررسی حرفه‌ای پیشنهاد می‌شود." }
+        ],
+        "paths_eyebrow": "POSSIBLE NEXT STEP",
+        "paths_title": "در صورت تناسب، ادامه مسیر می‌تواند شکل متفاوتی داشته باشد.",
+        "paths": [
+          { "id": "consultation", "code": "STRATEGIC CONSULTATION", "icon": "consultation", "tone": "teal", "title": "جلسه تخصصی", "description": "برای مسئله‌ای که نیازمند گفت‌وگوی عمیق‌تر، روشن‌شدن دامنه و بررسی حرفه‌ای است." },
+          { "id": "briefing", "code": "EXECUTIVE BRIEFING", "icon": "briefing", "tone": "orange", "title": "Executive Briefing", "description": "برای موضوعی متمرکز که نیازمند جمع‌بندی در سطح مدیر، صاحب سرمایه یا تصمیم‌گیرنده کلیدی است." }
+        ],
+        "caveat": "اگر مسئله در دامنه مناسب همکاری قرار نگیرد، Assessment الزاماً به جلسه یا پروژه مشاوره منتهی نمی‌شود.",
+        "principle_eyebrow": "THE PRINCIPLE",
+        "principle": "اول مسئله و تناسب روشن می‌شود؛ بعد نوع همکاری."
+      },
+      "reassurance": [
+        { "id": "received", "icon": "received", "title": "ثبت درخواست", "text": "Assessment نقطه شروع شناخت مسئله است." },
+        { "id": "review", "icon": "review", "title": "بررسی تناسب", "text": "دامنه، پیچیدگی و مسیر مناسب اولیه بررسی می‌شود." },
+        { "id": "promise", "icon": "privacy", "title": "بدون وعده از پیش", "text": "نوع ادامه همکاری قبل از بررسی اولیه فرض نمی‌شود." }
+      ],
+      "return_prompt": "هنوز فرم را ارسال نکرده‌اید؟",
+      "return_link": { "label": "بازگشت به Assessment", "href": "#assessment-form" },
+      "question_cta": { "label": "سؤال دیگری درباره مسیر دارید؟", "href": "#assessment-contact" }
+    },
+    "contact": {
+      "id": "assessment-contact",
+      "eyebrow": "یک قدم بعدی",
+      "heading": "هنوز دقیقاً نمی‌دانید از کجا باید شروع کنید؟ از خودِ مسئله شروع کنید.",
+      "heading_highlight": "از خودِ مسئله شروع کنید.",
+      "intro": "لازم نیست از قبل بدانید کدام خدمت، جلسه یا مسیر برای موقعیت شما مناسب‌تر است. اگر یک تصمیم مالی مهم به تصویر روشن‌تری نیاز دارد، Assessment نقطه شروع برای شناخت همان مسئله است.",
+      "code": "START WITH THE QUESTION",
+      "action_eyebrow": "YOUR NEXT MOVE",
+      "action_title": "اگر آماده‌اید، از ارزیابی اولیه شروع کنید.",
+      "ctas": [
+        { "id": "assessment", "label": "شروع ارزیابی اولیه", "href": "#assessment-form", "type": "primary" },
+        { "id": "consultation", "label": "درخواست گفت‌وگوی راهبردی", "href": "/request-strategic-consultation", "type": "secondary" }
+      ],
+      "contact_link": { "label": "فقط یک سؤال عمومی دارید؟ تماس با DNH", "href": "/contact" },
+      "closing": "مسیر مناسب پس از شناخت اولیه مسئله و بررسی تناسب مشخص می‌شود؛ نه پیش از آن.",
+      "signature": "DNH / FINANCIAL DECISION ASSESSMENT"
+    }
+  }
+}

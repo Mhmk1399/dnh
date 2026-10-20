@@ -1,825 +1,96 @@
-"use client";
-
-import { useEffect, useRef, useState, type ReactNode } from "react";
-
-import { ArrowLeft, CircleHelp, Gauge, Route, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, CircleHelp, Gauge, Route, ShieldCheck, type LucideIcon } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
+import type { SiteDirection } from "@/lib/site-language";
+import type { WhyAssessmentContent } from "./assessmentTypes";
 
-const REASONS = [
-  {
-    title: "مسئله چیست؟",
-    en: "THE QUESTION",
-    description:
-      "قبل از انتخاب خدمت، باید روشن شود چه تصمیم یا مسئله‌ای واقعاً نیاز به بررسی دارد.",
-    icon: CircleHelp,
-  },
-  {
-    title: "چقدر پیچیده و فوری است؟",
-    en: "COMPLEXITY & URGENCY",
-    description:
-      "افق زمانی، فوریت و تعداد متغیرهای مؤثر می‌توانند مسیر مناسب را تغییر دهند.",
-    icon: Gauge,
-  },
-  {
-    title: "مسیر بعدی چیست؟",
-    en: "THE RIGHT PATH",
-    description:
-      "ارزیابی اولیه کمک می‌کند مشخص شود ادامه مسیر باید Assessment، Consultation یا Briefing باشد.",
-    icon: Route,
-  },
-] as const;
+const ICONS: Record<WhyAssessmentContent["reasons"][number]["icon"], LucideIcon> = {
+  question: CircleHelp,
+  urgency: Gauge,
+  route: Route,
+};
 
-/* =============================================================================
-   Section
-============================================================================= */
-
-export function WhyAssessmentSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = sectionRef.current;
-
-    if (!node) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        setVisible(true);
-        observer.disconnect();
-      },
-      {
-        threshold: 0.16,
-        rootMargin: "0px 0px -8% 0px",
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
+export function WhyAssessmentSection({ content, direction }: { content: WhyAssessmentContent; direction: SiteDirection }) {
+  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
 
   return (
-    <section
-      ref={sectionRef}
-      id="why-assessment"
-      dir="rtl"
-      aria-labelledby="why-assessment-title"
-      className="
-        relative
-        isolate
-        overflow-hidden
+    <section id={content.id} dir={direction} aria-labelledby="why-assessment-title" className="relative isolate overflow-hidden border-b border-line bg-page py-16 sm:py-20 lg:py-24 xl:py-28">
+      <GridBackground />
+      <div className="dnh-site-shell relative z-10">
+        <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-end lg:gap-16">
+          <div>
+            <Eyebrow>{content.eyebrow}</Eyebrow>
+            <h2 id="why-assessment-title" className="max-w-[720px] text-[31px] font-black leading-[1.62] tracking-[-0.045em] text-ink sm:text-[38px] lg:text-[45px] lg:leading-[1.52] xl:text-[50px]">
+              <HighlightedText text={content.heading} highlight={content.heading_highlight} />
+            </h2>
+          </div>
+          <p className="max-w-[680px] text-[13px] font-medium leading-[2.2] text-ink-muted sm:text-[14px] lg:text-[15px]">{content.intro}</p>
+        </div>
 
-        border-b
-        border-line
-
-        bg-page
-      "
-    >
-      <Background />
-
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
-
-          mx-auto
-          w-full
-
-          py-16
-
-          sm:py-20
-
-          lg:py-24
-
-          xl:py-28
-
-        "
-      >
-        {/* =======================================================
-            Header
-        ======================================================== */}
-
-        <div
-          className="
-            grid
-            gap-8
-
-            lg:grid-cols-[0.88fr_1.12fr]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          <Reveal visible={visible} delay={40}>
+        <div className="mt-12 grid gap-5 sm:mt-14 lg:mt-16 lg:grid-cols-[0.72fr_1.28fr] lg:gap-6">
+          <article className="flex min-h-[390px] flex-col justify-between border border-line bg-brand-secondary px-5 py-6 text-white shadow-[0_24px_60px_rgba(15,92,120,.12)] sm:px-7 sm:py-7 lg:px-8 lg:py-8">
             <div>
-              <div
-                className="
-                  mb-5
-                  flex
-                  items-center
-                  gap-3
-                "
-              >
-                <span
-                  aria-hidden="true"
-                  className="
-                    h-px
-                    w-10
-
-                    bg-brand-accent
-                  "
-                />
-
-                <span
-                  className="
-                    text-[10px]
-                    font-black
-
-                    text-brand-primary
-
-                    sm:text-[11px]
-                  "
-                >
-                  چرا Assessment؟
-                </span>
-              </div>
-
-              <h2
-                id="why-assessment-title"
-                className="
-                  max-w-[720px]
-
-                  text-[31px]
-                  font-black
-                  leading-[1.62]
-                  tracking-[-0.045em]
-
-                  text-ink
-
-                  sm:text-[38px]
-
-                  lg:text-[45px]
-                  lg:leading-[1.52]
-
-                  xl:text-[50px]
-                "
-              >
-                پیش از انتخاب راه‌حل،
-                <br />
-                باید بدانیم{" "}
-                <span className="text-brand-primary">مسئله دقیقاً چیست.</span>
-              </h2>
+              <bdi dir="ltr" className="text-[11px] font-black tracking-[0.19em] text-white/45">{content.statement.eyebrow}</bdi>
+              <h3 className="mt-7 text-[22px] font-black leading-[1.9] sm:text-[25px]">
+                <HighlightedText text={content.statement.heading} highlight={content.statement.heading_highlight} accent />
+              </h3>
+              <p className="mt-6 max-w-[440px] text-[11px] font-medium leading-[2.1] text-white/58 sm:text-[12px]">{content.statement.description}</p>
             </div>
-          </Reveal>
-
-          <Reveal visible={visible} delay={110}>
-            <div className="lg:pb-1">
-              <p
-                className="
-                  max-w-[680px]
-
-                  text-[13px]
-                  font-medium
-                  leading-[2.2]
-
-                  text-ink-muted
-
-                  sm:text-[14px]
-
-                  lg:text-[15px]
-                "
-              >
-                یک درخواست مشاوره ممکن است در ظاهر ساده باشد، اما مسئله واقعی
-                می‌تواند به نقدینگی، ریسک، ساختار ثروت، کسب‌وکار یا یک تصمیم
-                مالی مهم مربوط باشد. Assessment کمک می‌کند قبل از ورود به تحلیل،
-                مسئله درست صورت‌بندی شود.
-              </p>
+            <div className="mt-10 border-t border-white/15 pt-5">
+              <p className="text-[10px] font-medium leading-[2] text-white/42">{content.statement.comparison_before}</p>
+              <p className="mt-1 text-[11px] font-black text-white">{content.statement.comparison_after}</p>
             </div>
-          </Reveal>
-        </div>
+          </article>
 
-        {/* =======================================================
-            Main composition
-        ======================================================== */}
+          <div className="border-x border-t border-line bg-white">
+            {content.reasons.map((reason, index) => {
+              const Icon = ICONS[reason.icon];
+              return (
+                <article key={reason.id} className="group grid gap-4 border-b border-line px-5 py-6 sm:grid-cols-[3rem_0.8fr_1.2fr] sm:items-center sm:px-7 lg:px-8">
+                  <span className="grid size-10 place-items-center border border-line bg-surface-soft text-brand-primary transition-colors group-hover:bg-brand-secondary group-hover:text-brand-primary"><Icon size={18} strokeWidth={1.5} /></span>
+                  <div>
+                    <bdi dir="ltr" className="text-[9px] font-black tracking-[0.16em] text-brand-primary/50">{reason.eyebrow}</bdi>
+                    <h3 className="mt-1 text-[14px] font-black leading-7 text-ink">{reason.title}</h3>
+                  </div>
+                  <p className="border-s border-line ps-5 text-[12px] font-medium leading-[2] text-ink-muted">{reason.description}</p>
+                  <span className="sr-only">{index + 1}</span>
+                </article>
+              );
+            })}
 
-        <div
-          className="
-            mt-12
-
-            grid
-            gap-5
-
-            sm:mt-14
-
-            lg:mt-16
-            lg:grid-cols-[0.72fr_1.28fr]
-            lg:gap-6
-          "
-        >
-          {/* =====================================================
-              Left statement
-          ====================================================== */}
-
-          <Reveal visible={visible} delay={170}>
-            <div
-              className="
-                group/statement
-
-                flex
-                h-full
-                min-h-[390px]
-                flex-col
-                justify-between
-
-                border
-                border-line
-
-                bg-brand-primary
-
-                px-5
-                py-6
-
-                text-white
-
-                transition-[transform,box-shadow]
-                duration-300
-
-                hover:-translate-y-1
-                hover:shadow-[0_24px_60px_rgba(15,92,120,.18)]
-
-                sm:px-7
-                sm:py-7
-
-                lg:px-8
-                lg:py-8
-              "
-            >
-              <div>
-                <p
-                  dir="ltr"
-                  className="
-                    text-[11px]
-                    font-black
-                    tracking-[0.19em]
-
-                    text-white/45
-                  "
-                >
-                  BEFORE ADVICE
-                </p>
-
-                <p
-                  className="
-                    mt-7
-
-                    text-[22px]
-                    font-black
-                    leading-[1.9]
-
-                    sm:text-[25px]
-                  "
-                >
-                  پاسخ خوب،
-                  <br />
-                  از <span className="text-brand-accent">پرسش درست</span>
-                  <br />
-                  آغاز می‌شود.
-                </p>
-
-                <p
-                  className="
-                    mt-6
-                    max-w-[440px]
-
-                    text-[11px]
-                    font-medium
-                    leading-[2.1]
-
-                    text-white/58
-
-                    sm:text-[12px]
-                  "
-                >
-                  DNH قبل از پیشنهاد خدمت، تلاش می‌کند بفهمد چه چیزی باید بررسی
-                  شود و آیا این مسئله در دامنه مناسب همکاری قرار دارد یا نه.
-                </p>
-              </div>
-
-              <div
-                className="
-                  mt-10
-
-                  border-t
-                  border-white/15
-
-                  pt-5
-                "
-              >
-                <p
-                  className="
-                    text-[10px]
-                    font-medium
-                    leading-[2]
-
-                    text-white/42
-                  "
-                >
-                  Assessment ≠ فرم تماس
-                </p>
-
-                <p
-                  className="
-                    mt-1
-
-                    text-[11px]
-                    font-black
-
-                    text-white
-                  "
-                >
-                  Assessment = شناخت اولیه مسئله و مسیر
-                </p>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* =====================================================
-              Reason field
-          ====================================================== */}
-
-          <div
-            className="
-              border-x
-              border-t
-              border-line
-
-              bg-white
-            "
-          >
-            {REASONS.map((item, index) => (
-              <ReasonRow
-                key={item.en}
-                item={item}
-                index={index}
-                visible={visible}
-              />
-            ))}
-
-            {/* ===================================================
-                result
-            ==================================================== */}
-
-            <div
-              className={`
-                group/result
-
-                relative
-                overflow-hidden
-
-                border-b
-                border-line
-
-                bg-surface-soft/65
-
-                px-5
-                py-6
-
-                transition-[opacity,transform,background-color]
-                duration-700
-                ease-[cubic-bezier(.22,1,.36,1)]
-
-                hover:bg-surface-soft
-
-                sm:px-7
-
-                lg:px-8
-
-                ${
-                  visible
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-3 opacity-0"
-                }
-              `}
-              style={{
-                transitionDelay: "470ms",
-              }}
-            >
-              <span
-                aria-hidden="true"
-                className="
-                  absolute
-                  inset-y-0
-                  right-0
-
-                  w-[3px]
-
-                  bg-brand-accent
-                "
-              />
-
-              <div
-                className="
-                  flex
-                  flex-col
-                  gap-5
-
-                  sm:flex-row
-                  sm:items-center
-                  sm:justify-between
-                "
-              >
+            <div className="relative border-b border-line bg-surface-soft/65 px-5 py-6 sm:px-7 lg:px-8">
+              <span aria-hidden="true" className="absolute inset-y-0 start-0 w-[3px] bg-brand-accent" />
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p
-                    dir="ltr"
-                    className="
-                      text-[11px]
-                      font-black
-                      tracking-[0.18em]
-
-                      text-brand-primary/55
-                    "
-                  >
-                    ASSESSMENT OUTCOME
-                  </p>
-
-                  <h3
-                    className="
-                      mt-2
-
-                      text-[15px]
-                      font-black
-
-                      text-ink
-
-                      sm:text-[17px]
-                    "
-                  >
-                    نتیجه مرحله اول: شناخت بهتر مسیر بعدی
-                  </h3>
-
-                  <p
-                    className="
-                      mt-2
-                      max-w-[600px]
-
-                      text-[10px]
-                      font-medium
-                      leading-[2]
-
-                      text-ink-muted
-
-                      sm:text-[11px]
-                    "
-                  >
-                    پس از Assessment مشخص می‌شود آیا ادامه مسیر به بررسی بیشتر،
-                    مشاوره راهبردی، Executive Briefing یا مسیر دیگری نیاز دارد.
-                  </p>
+                  <bdi dir="ltr" className="text-[11px] font-black tracking-[0.18em] text-brand-primary/55">{content.outcome.eyebrow}</bdi>
+                  <h3 className="mt-2 text-[15px] font-black text-ink sm:text-[17px]">{content.outcome.title}</h3>
+                  <p className="mt-2 max-w-[600px] text-[10px] font-medium leading-[2] text-ink-muted sm:text-[11px]">{content.outcome.description}</p>
                 </div>
-
-                <ActionButton
-                  href="#assessment-process"
-                  variant="secondary"
-                  size="md"
-                  icon={ArrowLeft}
-                  className="
-                    w-full
-                    shrink-0
-
-                    border-line-strong
-                    bg-white
-
-                    text-ink
-
-                    shadow-none
-
-                    hover:bg-brand-primary
-                   
-
-                    sm:w-auto
-                    sm:min-w-[205px]
-                  "
-                >
-                  مشاهده مسیر ارزیابی
-                </ActionButton>
+                <ActionButton href={content.outcome.cta.href} variant="secondary" size="md" icon={Arrow} shape="square" className="w-full shrink-0 border-line-strong bg-white text-ink shadow-none hover:bg-brand-secondary hover:text-white sm:w-auto sm:min-w-[205px]">{content.outcome.cta.label}</ActionButton>
               </div>
             </div>
           </div>
         </div>
 
-        {/* =======================================================
-            Boundary
-        ======================================================== */}
-
-        <Reveal visible={visible} delay={540}>
-          <div
-            className="
-              mt-6
-
-              flex
-              items-start
-              gap-3
-
-              border-t
-              border-line
-
-              pt-5
-            "
-          >
-            <ShieldCheck
-              aria-hidden="true"
-              className="
-                mt-1
-                h-4
-                w-4
-                shrink-0
-
-                text-brand-primary
-              "
-              strokeWidth={1.5}
-            />
-
-            <p
-              className="
-                max-w-[820px]
-
-                text-[10px]
-                font-medium
-                leading-[2]
-
-                text-ink-muted
-              "
-            >
-              در این مرحله فقط اطلاعات لازم برای شناخت هدف، مسئله، پیچیدگی و
-              تناسب اولیه دریافت می‌شود؛ نه اسناد محرمانه، جزئیات کامل دارایی‌ها
-              یا اطلاعات بانکی.
-            </p>
-          </div>
-        </Reveal>
+        <div className="mt-6 flex items-start gap-3 border-t border-line pt-5">
+          <ShieldCheck aria-hidden="true" className="mt-1 size-4 shrink-0 text-brand-primary" strokeWidth={1.5} />
+          <p className="max-w-[820px] text-[10px] font-medium leading-[2] text-ink-muted">{content.privacy_note}</p>
+        </div>
       </div>
     </section>
   );
 }
 
-/* =============================================================================
-   Reason row
-============================================================================= */
-
-function ReasonRow({
-  item,
-  index,
-  visible,
-}: {
-  item: (typeof REASONS)[number];
-  index: number;
-  visible: boolean;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <article
-      className={`
-        group/reason
-
-        relative
-
-        grid
-        gap-5
-
-        border-b
-        border-line
-
-        px-5
-        py-6
-
-        transition-[opacity,transform,background-color]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        hover:bg-surface-soft/55
-
-        sm:grid-cols-[52px_1fr_auto]
-        sm:items-center
-        sm:px-7
-
-        lg:px-8
-        lg:py-7
-
-        ${visible ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}
-
-        motion-reduce:translate-x-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: `${220 + index * 80}ms`,
-      }}
-    >
-      <span
-        className="
-          flex
-          h-11
-          w-11
-
-          items-center
-          justify-center
-
-          border
-          border-line
-
-          bg-surface-soft/50
-
-          text-brand-primary
-
-          transition-[background-color,border-color,color,transform]
-          duration-300
-
-          group-hover/reason:-translate-y-0.5
-          group-hover/reason:border-brand-primary
-          group-hover/reason:bg-brand-primary
-          group-hover/reason:text-white
-        "
-      >
-        <Icon className="h-4 w-4" strokeWidth={1.5} />
-      </span>
-
-      <div>
-        <div
-          className="
-            flex
-            flex-wrap
-            items-baseline
-            gap-x-3
-            gap-y-1
-          "
-        >
-          <h3
-            className="
-              text-[13px]
-              font-black
-
-              text-ink
-
-              sm:text-[14px]
-            "
-          >
-            {item.title}
-          </h3>
-
-          <span
-            dir="ltr"
-            className="
-              text-[11px]
-              font-bold
-              tracking-[0.15em]
-
-              text-brand-primary/45
-            "
-          >
-            {item.en}
-          </span>
-        </div>
-
-        <p
-          className="
-            mt-2
-            max-w-[620px]
-
-            text-[10px]
-            font-medium
-            leading-[2]
-
-            text-ink-muted
-
-            sm:text-[11px]
-          "
-        >
-          {item.description}
-        </p>
-      </div>
-
-      <div
-        aria-hidden="true"
-        className="
-          hidden
-          items-center
-          gap-3
-
-          sm:flex
-        "
-      >
-        <span
-          className="
-            h-px
-            w-8
-
-            bg-brand-primary/15
-
-            transition-[width,background-color]
-            duration-300
-
-            group-hover/reason:w-14
-            group-hover/reason:bg-brand-accent/70
-          "
-        />
-
-        <span
-          className="
-            h-[6px]
-            w-[6px]
-
-            bg-brand-primary/25
-
-            transition-colors
-            duration-300
-
-            group-hover/reason:bg-brand-accent
-          "
-        />
-      </div>
-    </article>
-  );
+function Eyebrow({ children }: { children: string }) {
+  return <div className="mb-5 flex items-center gap-3"><span aria-hidden="true" className="h-px w-10 bg-brand-accent" /><span className="text-[10px] font-black text-brand-primary sm:text-[11px]">{children}</span></div>;
 }
 
-/* =============================================================================
-   Reveal
-============================================================================= */
-
-function Reveal({
-  children,
-  visible,
-  delay,
-}: {
-  children: ReactNode;
-  visible: boolean;
-  delay: number;
-}) {
-  return (
-    <div
-      className={`
-        transition-[opacity,transform]
-        duration-700
-        ease-[cubic-bezier(.22,1,.36,1)]
-
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}
-
-        motion-reduce:translate-y-0
-        motion-reduce:opacity-100
-        motion-reduce:transition-none
-      `}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
+function HighlightedText({ text, highlight, accent = false }: { text: string; highlight: string; accent?: boolean }) {
+  const index = text.indexOf(highlight);
+  if (index < 0) return text;
+  return <>{text.slice(0, index)}<span className={accent ? "text-brand-primary" : "text-brand-primary"}>{highlight}</span>{text.slice(index + highlight.length)}</>;
 }
 
-/* =============================================================================
-   Background
-============================================================================= */
-
-function Background() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "linear-gradient(115deg,color-mix(in srgb,var(--dnh-primary) 5%,white) 0%,white 48%,white 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.15]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,color-mix(in srgb,var(--dnh-primary) 4%,transparent) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-
- 
-    </>
-  );
+function GridBackground() {
+  return <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "linear-gradient(to right,var(--dnh-primary) 1px,transparent 1px)", backgroundSize: "118px 100%" }} />;
 }

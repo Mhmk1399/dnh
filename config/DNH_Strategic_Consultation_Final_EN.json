@@ -1,0 +1,264 @@
+{
+  "locale": "en",
+  "lang": "en",
+  "direction": "ltr",
+  "sections": {
+    "hero": {
+      "id": "consultation-intro",
+      "eyebrow": "Begin a focused conversation",
+      "heading": "When a financial issue cannot be reduced to a simple answer.",
+      "heading_highlight": "cannot be reduced to a simple answer.",
+      "paragraphs": [
+        {
+          "id": "consultation-introduction",
+          "text": "Strategic consultation is intended for financial matters that require a clearer understanding of the issue, its risks, constraints and viable paths before a decision is made."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "submit-consultation-request",
+          "label": "Submit a consultation request",
+          "type": "primary",
+          "href": "#consultation-request"
+        },
+        {
+          "id": "start-initial-assessment",
+          "label": "Start with an initial assessment",
+          "type": "secondary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/doctorHeroEN.png",
+        "mobile_src": "/assets/images/doctorHeroEN.png",
+        "alt": "Dr Nasim Mohammadhassani in DNH's professional financial advisory setting",
+        "object_position": "center top"
+      }
+    },
+    "fit": {
+      "id": "consultation-fit",
+      "eyebrow": "Before submitting a request",
+      "heading": "Is strategic consultation the right path for your issue?",
+      "heading_highlight": "the right path for your issue?",
+      "intro": "This route is most relevant when an issue needs its scope and complexity examined more carefully before a decision is made.",
+      "alternative": {
+        "title": "Still defining the issue itself?",
+        "description": "An initial financial decision assessment may be the more appropriate starting point.",
+        "cta": {
+          "label": "Start the initial assessment",
+          "href": "/financial-decision-assessment"
+        }
+      },
+      "register": {
+        "eyebrow": "Early indicators of fit",
+        "title": "This route may be relevant if these conditions reflect your situation",
+        "items": [
+          {
+            "id": "clear-subject",
+            "number": "01",
+            "icon": "focus",
+            "title": "You have a defined issue to examine",
+            "description": "A financial decision, question or situation requires more rigorous review."
+          },
+          {
+            "id": "multiple-factors",
+            "number": "02",
+            "icon": "branch",
+            "title": "The issue involves several factors",
+            "description": "Its scope, urgency or complexity means that a simple answer would be insufficient."
+          },
+          {
+            "id": "specialist-conversation",
+            "number": "03",
+            "icon": "conversation",
+            "title": "You need a specialist conversation",
+            "description": "The objective is not just information; the issue needs to be considered within a professional framework."
+          }
+        ],
+        "note": "Final suitability is determined after the request has received an initial review."
+      },
+      "next": {
+        "label": "Next: what information should the request include?",
+        "href": "#consultation-preparation"
+      }
+    },
+    "preparation": {
+      "id": "consultation-preparation",
+      "eyebrow": "Before submitting your request",
+      "heading": "To begin, an initial view of the issue is enough.",
+      "heading_highlight": "an initial view of the issue",
+      "intro": "A complete financial file is not required at this stage. We only need enough information to understand the issue and its preliminary scope.",
+      "register": {
+        "eyebrow": "Initial information boundary",
+        "title": "What is useful now—and what should wait?",
+        "required": {
+          "title": "Enough to begin",
+          "description": "Information needed for an initial understanding",
+          "items": [
+            { "id": "contact", "label": "Your name and preferred contact method" },
+            { "id": "audience", "label": "The type of client or organisation" },
+            { "id": "topic", "label": "The decision or financial issue" },
+            { "id": "horizon", "label": "The relevant time horizon" },
+            { "id": "situation", "label": "The current situation" },
+            { "id": "size", "label": "An approximate decision size, where relevant" },
+            { "id": "urgency", "label": "The level of urgency" },
+            { "id": "summary", "label": "A concise description of the issue" }
+          ]
+        },
+        "not_required": {
+          "title": "Please do not send yet",
+          "description": "Sensitive details or a complete financial file",
+          "items": [
+            { "id": "bank", "label": "Full bank account information" },
+            { "id": "identity", "label": "Unnecessary identity documents" },
+            { "id": "contracts", "label": "Confidential contracts" },
+            { "id": "all-assets", "label": "Complete details of every asset" },
+            { "id": "partners", "label": "Sensitive information about partners" },
+            { "id": "financial-files", "label": "Extensive financial files" }
+          ]
+        },
+        "note": "The purpose of this stage is to understand the issue at a high level—not to collect every document and financial detail at the outset."
+      },
+      "next": {
+        "label": "Next: how is a request reviewed?",
+        "href": "#consultation-process"
+      }
+    },
+    "process": {
+      "id": "consultation-process",
+      "eyebrow": "From request to decision",
+      "heading": "Consultation is not a one-off meeting; it is part of a structured review process.",
+      "heading_highlight": "part of a structured review process.",
+      "intro": "Each stage is designed to clarify the issue and identify the appropriate next step, without jumping from a complex question to a ready-made answer.",
+      "columns": {
+        "number": "Stage",
+        "status": "Case status",
+        "purpose": "Purpose"
+      },
+      "stages": [
+        { "id": "initial-assessment", "number": "01", "label": "Initial assessment", "description": "Understand the issue and make an initial assessment of fit." },
+        { "id": "scope-and-fit", "number": "02", "label": "Scope and fit", "description": "Consider the urgency, complexity and boundaries of the issue." },
+        { "id": "specialist-conversation", "number": "03", "label": "Specialist conversation", "description": "Move into a focused session once the issue's scope is sufficiently clear.", "active": true },
+        { "id": "professional-review", "number": "04", "label": "Professional review", "description": "Examine the issue and the factors that may influence the decision in greater depth." },
+        { "id": "decision-framework", "number": "05", "label": "Decision framework", "description": "Frame the situation, available options and paths that merit consideration." },
+        { "id": "follow-up", "number": "06", "label": "Follow-up and review", "description": "Continue the work where agreed and revisit the issue as circumstances evolve." }
+      ],
+      "active_label": "Current page stage",
+      "note": "A consultation enters the process once the issue, its scope and its initial suitability are sufficiently clear.",
+      "next": {
+        "label": "Next: submit a consultation request",
+        "href": "#consultation-request"
+      }
+    },
+    "request": {
+      "id": "consultation-request",
+      "index": { "number": "05", "label": "Submit a request" },
+      "eyebrow": "Strategic consultation request",
+      "heading": "To begin, describe the issue at the level needed for an initial review.",
+      "heading_highlight": "describe the issue at the level needed for an initial review.",
+      "intro": "This information is used to understand the matter and assess whether the request is a suitable fit—not to conduct a full case analysis.",
+      "notes": [
+        { "id": "enough-information", "icon": "document", "title": "Initial information is enough", "description": "You do not need to submit a complete financial file at this stage." },
+        { "id": "review-before-meeting", "icon": "review", "title": "Review precedes any meeting", "description": "The request's scope and suitability are considered before the process continues." },
+        { "id": "avoid-sensitive-data", "icon": "privacy", "title": "Do not submit sensitive information", "description": "Please do not send passwords, bank details or unnecessary confidential documents.", "accent": true }
+      ],
+      "form": {
+        "eyebrow": "Request details",
+        "title": "Core information for the initial review",
+        "code": "REQUEST / 05",
+        "aria_label": "Strategic consultation request form",
+        "groups": [
+          {
+            "id": "contact-information",
+            "number": "01",
+            "title": "Contact information",
+            "description": "So we can follow up on the request",
+            "fields": [
+              { "id": "name", "kind": "input", "name": "name", "label": "Full name", "auto_complete": "name", "required": true, "placeholder": "Your full name" },
+              { "id": "phone", "kind": "input", "name": "phone", "label": "Phone number", "type": "tel", "input_mode": "tel", "dir": "ltr", "auto_complete": "tel", "required": true, "placeholder": "+98 ..." },
+              { "id": "email", "kind": "input", "name": "email", "label": "Email address", "type": "email", "input_mode": "email", "dir": "ltr", "auto_complete": "email", "hint": "Optional", "placeholder": "name@example.com" },
+              { "id": "communication-method", "kind": "select", "name": "communicationMethod", "label": "Preferred contact method", "required": true, "options": [
+                { "value": "", "label": "Select an option" },
+                { "value": "phone", "label": "Phone call" },
+                { "value": "whatsapp", "label": "WhatsApp" },
+                { "value": "email", "label": "Email" }
+              ] }
+            ]
+          },
+          {
+            "id": "request-context",
+            "number": "02",
+            "title": "Request context",
+            "description": "To understand the issue's initial scope",
+            "fields": [
+              { "id": "audience-type", "kind": "select", "name": "audienceType", "label": "Client type", "required": true, "options": [
+                { "value": "", "label": "Select an option" },
+                { "value": "individual", "label": "Individual / investor" },
+                { "value": "family", "label": "Family" },
+                { "value": "executive", "label": "Executive or senior decision-maker" },
+                { "value": "business-owner", "label": "Business owner" },
+                { "value": "company", "label": "Company / holding group" },
+                { "value": "other", "label": "Other" }
+              ] },
+              { "id": "decision-topic", "kind": "input", "name": "decisionTopic", "label": "Decision or issue", "auto_complete": "off", "required": true, "placeholder": "For example, capital structure or an investment decision" },
+              { "id": "time-horizon", "kind": "select", "name": "timeHorizon", "label": "Time horizon", "required": true, "options": [
+                { "value": "", "label": "Select an option" },
+                { "value": "immediate", "label": "Short term" },
+                { "value": "medium", "label": "Medium term" },
+                { "value": "long", "label": "Long term" },
+                { "value": "unclear", "label": "Not yet clear" }
+              ] },
+              { "id": "urgency", "kind": "select", "name": "urgency", "label": "Level of urgency", "required": true, "options": [
+                { "value": "", "label": "Select an option" },
+                { "value": "normal", "label": "Standard" },
+                { "value": "near-term", "label": "Requires review in the near term" },
+                { "value": "time-sensitive", "label": "Time-sensitive" }
+              ] }
+            ]
+          },
+          {
+            "id": "initial-picture",
+            "number": "03",
+            "title": "Initial picture of the issue",
+            "description": "Without disclosing confidential detail",
+            "fields": [
+              { "id": "current-situation", "kind": "textarea", "name": "currentSituation", "label": "Current situation", "required": true, "min_length": 10, "max_length": 1500, "placeholder": "Briefly describe the situation as it stands today…" },
+              { "id": "approximate-size", "kind": "input", "name": "approximateSize", "label": "Approximate size of the decision or related capital", "hint": "Where relevant", "auto_complete": "off", "placeholder": "You may provide an estimate or range" },
+              { "id": "message", "kind": "textarea", "name": "message", "label": "Brief request summary", "required": true, "min_length": 10, "max_length": 2500, "placeholder": "What should the specialist conversation help clarify?" }
+            ]
+          }
+        ],
+        "pending_label": "Submitting…",
+        "submit_label": "Submit consultation request",
+        "submit_note": "Submitting a request does not automatically confirm a meeting.",
+        "privacy_note": "Please do not submit bank information, passwords, confidential contracts, unnecessary identity documents or extensive financial files at this stage.",
+        "reference_label": "Reference"
+      }
+    },
+    "confidentiality": {
+      "id": "consultation-confidentiality",
+      "eyebrow": "What happens next",
+      "heading": "Submitting a request begins the review; it does not automatically confirm a meeting.",
+      "heading_highlight": "begins the review; it does not automatically confirm a meeting.",
+      "intro": "After a request is submitted successfully, its subject and scope are reviewed to determine the most appropriate framework for any next step.",
+      "steps": [
+        { "id": "review-request", "number": "01", "icon": "review", "title": "Review the request", "description": "The subject and initial information are reviewed to understand the request's scope." },
+        { "id": "assess-fit", "number": "02", "icon": "fit", "title": "Assess suitability", "description": "Urgency, complexity and the suitability of the consultation route are considered." },
+        { "id": "define-next-path", "number": "03", "icon": "route", "title": "Define the next path", "description": "Where there is a suitable fit, the appropriate route for a specialist conversation is identified." }
+      ],
+      "privacy": {
+        "title": "At the initial stage, only the minimum necessary information is required.",
+        "description": "Please avoid sending bank information, unnecessary identity documents, confidential contracts or extensive financial files unless they are specifically requested later.",
+        "label": "Minimum data / initial review"
+      },
+      "final": {
+        "title": "Ready to submit the issue for an initial review?",
+        "description": "Provide only the information needed to understand the issue at a preliminary level.",
+        "ctas": [
+          { "id": "submit-consultation", "label": "Submit a consultation request", "type": "primary", "href": "#consultation-request" },
+          { "id": "initial-assessment", "label": "Start with an initial assessment", "type": "secondary", "href": "/financial-decision-assessment" }
+        ]
+      }
+    }
+  }
+}

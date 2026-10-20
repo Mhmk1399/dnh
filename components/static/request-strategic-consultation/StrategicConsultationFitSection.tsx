@@ -2,41 +2,36 @@ import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 
 import {
   ArrowLeft,
+  ArrowRight,
   ClipboardCheck,
   Focus,
   GitBranch,
   MessageSquareText,
+  type LucideIcon,
 } from "lucide-react";
+import type { SiteDirection } from "@/lib/site-language";
+import type { ConsultationFitContent } from "./strategicConsultationTypes";
 
-const FIT_SIGNALS = [
-  {
-    number: "01",
-    icon: Focus,
-    title: "موضوع مشخصی برای بررسی دارید",
-    description:
-      "یک تصمیم، مسئله یا موقعیت مالی وجود دارد که نیازمند بررسی دقیق‌تر است.",
-  },
-  {
-    number: "02",
-    icon: GitBranch,
-    title: "مسئله بیش از یک عامل دارد",
-    description:
-      "دامنه، فوریت یا پیچیدگی موضوع باعث می‌شود یک پاسخ ساده کافی نباشد.",
-  },
-  {
-    number: "03",
-    icon: MessageSquareText,
-    title: "به گفت‌وگوی تخصصی نیاز دارید",
-    description:
-      "هدف فقط دریافت اطلاعات نیست؛ موضوع باید در یک چارچوب حرفه‌ای بررسی شود.",
-  },
-] as const;
+const FIT_ICONS: Record<ConsultationFitContent["register"]["items"][number]["icon"], LucideIcon> = {
+  focus: Focus,
+  branch: GitBranch,
+  conversation: MessageSquareText,
+};
 
-export function StrategicConsultationFitSection() {
+export function StrategicConsultationFitSection({
+  content,
+  direction,
+}: {
+  content: ConsultationFitContent;
+  direction: SiteDirection;
+}) {
+  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
+  const arrowMotion = direction === "rtl" ? "group-hover:-translate-x-1" : "group-hover:translate-x-1";
+
   return (
     <section
-      id="consultation-fit"
-      dir="rtl"
+      id={content.id}
+      dir={direction}
       aria-labelledby="consultation-fit-title"
       className="
         relative
@@ -123,7 +118,7 @@ export function StrategicConsultationFitSection() {
                   text-[#167394]
                 "
               >
-                قبل از ثبت درخواست
+                {content.eyebrow}
               </p>
             </div>
 
@@ -145,8 +140,7 @@ export function StrategicConsultationFitSection() {
                 lg:leading-[1.62]
               "
             >
-              آیا مشاوره راهبردی،{" "}
-              <span className="text-[#167394]">مسیر مناسب موضوع شماست؟</span>
+              <HighlightedHeading text={content.heading} highlight={content.heading_highlight} />
             </h2>
 
             <p
@@ -161,8 +155,7 @@ export function StrategicConsultationFitSection() {
                 text-[#687a80]
               "
             >
-              این مسیر زمانی معنا پیدا می‌کند که موضوع، پیش از تصمیم به بررسی
-              دقیق‌تر دامنه و پیچیدگی نیاز داشته باشد.
+              {content.intro}
             </p>
 
             {/* -------------------------------------------------------
@@ -173,10 +166,10 @@ export function StrategicConsultationFitSection() {
               className="
                 mt-8
 
-                border-r-2
+                border-s-2
                 border-[#fc8502]
 
-                pr-5
+                ps-5
               "
             >
               <div
@@ -208,7 +201,7 @@ export function StrategicConsultationFitSection() {
                       text-[#31545e]
                     "
                   >
-                    هنوز خود مسئله کاملاً روشن نیست؟
+                    {content.alternative.title}
                   </p>
 
                   <p
@@ -222,11 +215,11 @@ export function StrategicConsultationFitSection() {
                       text-[#718187]
                     "
                   >
-                    ارزیابی اولیه تصمیم مالی می‌تواند نقطه شروع مناسب‌تری باشد.
+                    {content.alternative.description}
                   </p>
 
                   <Link
-                    href="/financial-decision-assessment"
+                    href={content.alternative.cta.href}
                     className="
                       group/link
 
@@ -251,18 +244,18 @@ export function StrategicConsultationFitSection() {
                       focus-visible:outline-[#fc8502]
                     "
                   >
-                    شروع ارزیابی اولیه
-                    <ArrowLeft
+                    {content.alternative.cta.label}
+                    <Arrow
                       aria-hidden="true"
                       strokeWidth={1.7}
-                      className="
+                      className={`
                         size-[14px]
 
                         transition-transform
                         duration-200
 
-                        group-hover/link:-translate-x-1
-                      "
+                        ${direction === "rtl" ? "group-hover/link:-translate-x-1" : "group-hover/link:translate-x-1"}
+                      `}
                     />
                   </Link>
                 </div>
@@ -311,7 +304,7 @@ export function StrategicConsultationFitSection() {
                     text-[#167394]/45
                   "
                 >
-                  نشانه‌های اولیه تناسب
+                  {content.register.eyebrow}
                 </p>
 
                 <p
@@ -325,7 +318,7 @@ export function StrategicConsultationFitSection() {
                     text-[#173b45]
                   "
                 >
-                  اگر این شرایط به موضوع شما نزدیک است
+                  {content.register.title}
                 </p>
               </div>
 
@@ -342,8 +335,8 @@ export function StrategicConsultationFitSection() {
             {/* ROWS */}
 
             <div>
-              {FIT_SIGNALS.map((item) => (
-                <FitRow key={item.number} {...item} />
+              {content.register.items.map((item) => (
+                <FitRow key={item.id} {...item} icon={FIT_ICONS[item.icon]} />
               ))}
             </div>
 
@@ -370,7 +363,7 @@ export function StrategicConsultationFitSection() {
                 className="
                   absolute
                   inset-y-0
-                  right-0
+                  start-0
 
                   w-[3px]
 
@@ -387,7 +380,7 @@ export function StrategicConsultationFitSection() {
                   text-[#65777d]
                 "
               >
-                تناسب نهایی پس از بررسی اولیه درخواست مشخص می‌شود.
+                {content.register.note}
               </p>
             </div>
           </div>
@@ -411,7 +404,7 @@ export function StrategicConsultationFitSection() {
           "
         >
           <Link
-            href="#consultation-preparation"
+            href={content.next.href}
             className="
               group/next
 
@@ -430,11 +423,11 @@ export function StrategicConsultationFitSection() {
               hover:text-[#167394]
             "
           >
-            بعدی: چه اطلاعاتی برای درخواست لازم است؟
-            <ArrowLeft
+            {content.next.label}
+            <Arrow
               aria-hidden="true"
               strokeWidth={1.7}
-              className="
+              className={`
                 size-[15px]
 
                 text-[#fc8502]
@@ -442,8 +435,8 @@ export function StrategicConsultationFitSection() {
                 transition-transform
                 duration-200
 
-                group-hover/next:-translate-x-1
-              "
+                ${arrowMotion}
+              `}
             />
           </Link>
         </div>
@@ -461,7 +454,7 @@ function FitRow({
   icon: Icon,
   title,
   description,
-}: (typeof FIT_SIGNALS)[number]) {
+}: Omit<ConsultationFitContent["register"]["items"][number], "icon"> & { icon: LucideIcon }) {
   return (
     <article
       className="
@@ -486,25 +479,13 @@ function FitRow({
 
         sm:px-6
 
-        lg:grid-cols-[58px_190px_1fr]
+        lg:grid-cols-2
         lg:items-center
         lg:gap-6
         lg:px-7
       "
     >
-      {/* NUMBER */}
-
-      <span
-        className="
-          text-[13px]
-          font-black
-          tabular-nums
-
-          text-[#167394]/28
-        "
-      >
-        {number}
-      </span>
+ 
 
       {/* TITLE */}
 
@@ -561,9 +542,9 @@ function FitRow({
 
           text-[#718187]
 
-          lg:border-r
+          lg:border-s
           lg:border-[#167394]/[0.08]
-          lg:pr-6
+          lg:ps-6
         "
       >
         {description}
@@ -576,7 +557,7 @@ function FitRow({
         className="
           absolute
           inset-y-0
-          right-0
+          start-0
 
           w-[2px]
 
@@ -592,6 +573,18 @@ function FitRow({
         "
       />
     </article>
+  );
+}
+
+function HighlightedHeading({ text, highlight }: { text: string; highlight: string }) {
+  const index = text.indexOf(highlight);
+  if (index < 0) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="text-[#167394]">{highlight}</span>
+      {text.slice(index + highlight.length)}
+    </>
   );
 }
 

@@ -1,0 +1,264 @@
+{
+  "locale": "fa",
+  "lang": "fa-IR",
+  "direction": "rtl",
+  "sections": {
+    "hero": {
+      "id": "consultation-intro",
+      "eyebrow": "شروع یک گفت‌وگوی تخصصی",
+      "heading": "وقتی مسئله مالی به یک پاسخ ساده محدود نمی‌شود.",
+      "heading_highlight": "محدود نمی‌شود.",
+      "paragraphs": [
+        {
+          "id": "consultation-introduction",
+          "text": "درخواست مشاوره راهبردی برای موضوعاتی است که پیش از تصمیم، به شناخت دقیق‌تر مسئله، ریسک‌ها، محدودیت‌ها و مسیرهای قابل بررسی نیاز دارند."
+        }
+      ],
+      "ctas": [
+        {
+          "id": "submit-consultation-request",
+          "label": "ثبت درخواست مشاوره",
+          "type": "primary",
+          "href": "#consultation-request"
+        },
+        {
+          "id": "start-initial-assessment",
+          "label": "شروع از ارزیابی اولیه",
+          "type": "secondary",
+          "href": "/financial-decision-assessment"
+        }
+      ],
+      "media": {
+        "src": "/assets/images/doctorHero.png",
+        "mobile_src": "/assets/images/doctorHero.png",
+        "alt": "دکتر نسیم محمدحسنی در فضای حرفه‌ای مشاوره مالی DNH",
+        "object_position": "center top"
+      }
+    },
+    "fit": {
+      "id": "consultation-fit",
+      "eyebrow": "قبل از ثبت درخواست",
+      "heading": "آیا مشاوره راهبردی، مسیر مناسب موضوع شماست؟",
+      "heading_highlight": "مسیر مناسب موضوع شماست؟",
+      "intro": "این مسیر زمانی معنا پیدا می‌کند که موضوع، پیش از تصمیم به بررسی دقیق‌تر دامنه و پیچیدگی نیاز داشته باشد.",
+      "alternative": {
+        "title": "هنوز خود مسئله کاملاً روشن نیست؟",
+        "description": "ارزیابی اولیه تصمیم مالی می‌تواند نقطه شروع مناسب‌تری باشد.",
+        "cta": {
+          "label": "شروع ارزیابی اولیه",
+          "href": "/financial-decision-assessment"
+        }
+      },
+      "register": {
+        "eyebrow": "نشانه‌های اولیه تناسب",
+        "title": "اگر این شرایط به موضوع شما نزدیک است",
+        "items": [
+          {
+            "id": "clear-subject",
+            "number": "01",
+            "icon": "focus",
+            "title": "موضوع مشخصی برای بررسی دارید",
+            "description": "یک تصمیم، مسئله یا موقعیت مالی وجود دارد که نیازمند بررسی دقیق‌تر است."
+          },
+          {
+            "id": "multiple-factors",
+            "number": "02",
+            "icon": "branch",
+            "title": "مسئله بیش از یک عامل دارد",
+            "description": "دامنه، فوریت یا پیچیدگی موضوع باعث می‌شود یک پاسخ ساده کافی نباشد."
+          },
+          {
+            "id": "specialist-conversation",
+            "number": "03",
+            "icon": "conversation",
+            "title": "به گفت‌وگوی تخصصی نیاز دارید",
+            "description": "هدف فقط دریافت اطلاعات نیست؛ موضوع باید در یک چارچوب حرفه‌ای بررسی شود."
+          }
+        ],
+        "note": "تناسب نهایی پس از بررسی اولیه درخواست مشخص می‌شود."
+      },
+      "next": {
+        "label": "بعدی: چه اطلاعاتی برای درخواست لازم است؟",
+        "href": "#consultation-preparation"
+      }
+    },
+    "preparation": {
+      "id": "consultation-preparation",
+      "eyebrow": "پیش از ثبت درخواست",
+      "heading": "برای شروع، فقط تصویر اولیه مسئله کافی است.",
+      "heading_highlight": "تصویر اولیه مسئله",
+      "intro": "در این مرحله نیازی به ارسال پرونده کامل مالی نیست؛ فقط اطلاعاتی لازم است که به شناخت موضوع و دامنه اولیه آن کمک کند.",
+      "register": {
+        "eyebrow": "مرز اطلاعات اولیه",
+        "title": "چه چیزی لازم است و چه چیزی فعلاً لازم نیست؟",
+        "required": {
+          "title": "برای شروع کافی است",
+          "description": "اطلاعات موردنیاز برای شناخت اولیه",
+          "items": [
+            { "id": "contact", "label": "نام و روش ارتباط" },
+            { "id": "audience", "label": "نوع مخاطب" },
+            { "id": "topic", "label": "موضوع تصمیم یا مسئله" },
+            { "id": "horizon", "label": "افق زمانی" },
+            { "id": "situation", "label": "وضعیت فعلی" },
+            { "id": "size", "label": "اندازه تقریبی تصمیم، در صورت مرتبط بودن" },
+            { "id": "urgency", "label": "میزان فوریت" },
+            { "id": "summary", "label": "توضیح کوتاه مسئله" }
+          ]
+        },
+        "not_required": {
+          "title": "فعلاً ارسال نکنید",
+          "description": "جزئیات حساس یا پرونده کامل مالی",
+          "items": [
+            { "id": "bank", "label": "اطلاعات کامل حساب بانکی" },
+            { "id": "identity", "label": "اسناد هویتی غیرضروری" },
+            { "id": "contracts", "label": "قراردادهای محرمانه" },
+            { "id": "all-assets", "label": "جزئیات کامل همه دارایی‌ها" },
+            { "id": "partners", "label": "اطلاعات حساس شرکا" },
+            { "id": "financial-files", "label": "فایل‌های مالی گسترده" }
+          ]
+        },
+        "note": "هدف این مرحله، شناخت اولیه موضوع است؛ نه دریافت همه اسناد و جزئیات مالی از همان ابتدا."
+      },
+      "next": {
+        "label": "بعدی: درخواست چگونه بررسی می‌شود؟",
+        "href": "#consultation-process"
+      }
+    },
+    "process": {
+      "id": "consultation-process",
+      "eyebrow": "از درخواست تا تصمیم",
+      "heading": "مشاوره، یک جلسه منفرد نیست؛ بخشی از یک مسیر بررسی است.",
+      "heading_highlight": "بخشی از یک مسیر بررسی است.",
+      "intro": "هر مرحله برای روشن‌تر شدن مسئله و مشخص شدن مسیر بعدی طراحی شده است؛ بدون پرش مستقیم از مسئله به یک پاسخ آماده.",
+      "columns": {
+        "number": "مرحله",
+        "status": "وضعیت پرونده",
+        "purpose": "هدف مرحله"
+      },
+      "stages": [
+        { "id": "initial-assessment", "number": "01", "label": "ارزیابی اولیه", "description": "شناخت مسئله و بررسی اولیه تناسب درخواست." },
+        { "id": "scope-and-fit", "number": "02", "label": "دامنه و تناسب", "description": "بررسی فوریت، پیچیدگی و محدوده موضوع." },
+        { "id": "specialist-conversation", "number": "03", "label": "گفت‌وگوی تخصصی", "description": "ورود به جلسه تخصصی پس از روشن شدن دامنه مسئله.", "active": true },
+        { "id": "professional-review", "number": "04", "label": "بررسی حرفه‌ای", "description": "تحلیل دقیق‌تر موضوع و عوامل اثرگذار بر تصمیم." },
+        { "id": "decision-framework", "number": "05", "label": "چارچوب تصمیم", "description": "ارائه تصویر، گزینه‌ها و مسیرهای قابل بررسی." },
+        { "id": "follow-up", "number": "06", "label": "پیگیری و بازبینی", "description": "ادامه مسیر در صورت توافق و نیاز به بازبینی." }
+      ],
+      "active_label": "مرحله این صفحه",
+      "note": "مرحله مشاوره زمانی وارد مسیر می‌شود که موضوع، دامنه و تناسب اولیه آن به‌اندازه کافی روشن شده باشد.",
+      "next": {
+        "label": "بعدی: ثبت درخواست مشاوره",
+        "href": "#consultation-request"
+      }
+    },
+    "request": {
+      "id": "consultation-request",
+      "index": { "number": "05", "label": "ثبت درخواست" },
+      "eyebrow": "درخواست مشاوره راهبردی",
+      "heading": "برای شروع، مسئله را در حد لازم روشن کنید.",
+      "heading_highlight": "مسئله را در حد لازم روشن کنید.",
+      "intro": "این اطلاعات برای شناخت اولیه موضوع و بررسی تناسب درخواست استفاده می‌شوند؛ نه برای تحلیل کامل پرونده.",
+      "notes": [
+        { "id": "enough-information", "icon": "document", "title": "اطلاعات اولیه کافی است", "description": "در این مرحله نیازی به ارسال پرونده کامل مالی نیست." },
+        { "id": "review-before-meeting", "icon": "review", "title": "بررسی پیش از جلسه", "description": "دامنه و تناسب درخواست پیش از ادامه مسیر بررسی می‌شود." },
+        { "id": "avoid-sensitive-data", "icon": "privacy", "title": "اطلاعات حساس ارسال نکنید", "description": "از ارسال رمز، اطلاعات بانکی یا اسناد محرمانه غیرضروری خودداری کنید.", "accent": true }
+      ],
+      "form": {
+        "eyebrow": "اطلاعات درخواست",
+        "title": "اطلاعات پایه برای بررسی اولیه",
+        "code": "REQUEST / 05",
+        "aria_label": "فرم درخواست مشاوره راهبردی",
+        "groups": [
+          {
+            "id": "contact-information",
+            "number": "01",
+            "title": "اطلاعات ارتباط",
+            "description": "برای پیگیری درخواست",
+            "fields": [
+              { "id": "name", "kind": "input", "name": "name", "label": "نام و نام خانوادگی", "auto_complete": "name", "required": true, "placeholder": "نام و نام خانوادگی" },
+              { "id": "phone", "kind": "input", "name": "phone", "label": "شماره تماس", "type": "tel", "input_mode": "tel", "dir": "ltr", "auto_complete": "tel", "required": true, "placeholder": "09xxxxxxxxx" },
+              { "id": "email", "kind": "input", "name": "email", "label": "ایمیل", "type": "email", "input_mode": "email", "dir": "ltr", "auto_complete": "email", "hint": "اختیاری", "placeholder": "name@example.com" },
+              { "id": "communication-method", "kind": "select", "name": "communicationMethod", "label": "روش ارتباط ترجیحی", "required": true, "options": [
+                { "value": "", "label": "انتخاب کنید" },
+                { "value": "phone", "label": "تماس تلفنی" },
+                { "value": "whatsapp", "label": "واتساپ" },
+                { "value": "email", "label": "ایمیل" }
+              ] }
+            ]
+          },
+          {
+            "id": "request-context",
+            "number": "02",
+            "title": "زمینه درخواست",
+            "description": "برای شناخت دامنه اولیه موضوع",
+            "fields": [
+              { "id": "audience-type", "kind": "select", "name": "audienceType", "label": "نوع مخاطب", "required": true, "options": [
+                { "value": "", "label": "انتخاب کنید" },
+                { "value": "individual", "label": "فرد / سرمایه‌گذار" },
+                { "value": "family", "label": "خانواده" },
+                { "value": "executive", "label": "مدیر یا تصمیم‌گیر ارشد" },
+                { "value": "business-owner", "label": "صاحب کسب‌وکار" },
+                { "value": "company", "label": "شرکت / هلدینگ" },
+                { "value": "other", "label": "سایر" }
+              ] },
+              { "id": "decision-topic", "kind": "input", "name": "decisionTopic", "label": "موضوع تصمیم یا مسئله", "auto_complete": "off", "required": true, "placeholder": "مثلاً ساختار سرمایه یا تصمیم سرمایه‌گذاری" },
+              { "id": "time-horizon", "kind": "select", "name": "timeHorizon", "label": "افق زمانی", "required": true, "options": [
+                { "value": "", "label": "انتخاب کنید" },
+                { "value": "immediate", "label": "کوتاه‌مدت" },
+                { "value": "medium", "label": "میان‌مدت" },
+                { "value": "long", "label": "بلندمدت" },
+                { "value": "unclear", "label": "هنوز مشخص نیست" }
+              ] },
+              { "id": "urgency", "kind": "select", "name": "urgency", "label": "فوریت موضوع", "required": true, "options": [
+                { "value": "", "label": "انتخاب کنید" },
+                { "value": "normal", "label": "عادی" },
+                { "value": "near-term", "label": "نیازمند بررسی در آینده نزدیک" },
+                { "value": "time-sensitive", "label": "وابسته به زمان" }
+              ] }
+            ]
+          },
+          {
+            "id": "initial-picture",
+            "number": "03",
+            "title": "تصویر اولیه مسئله",
+            "description": "بدون ورود به جزئیات محرمانه",
+            "fields": [
+              { "id": "current-situation", "kind": "textarea", "name": "currentSituation", "label": "وضعیت فعلی", "required": true, "min_length": 10, "max_length": 1500, "placeholder": "به‌اختصار توضیح دهید اکنون در چه شرایطی هستید…" },
+              { "id": "approximate-size", "kind": "input", "name": "approximateSize", "label": "اندازه تقریبی تصمیم یا سرمایه مرتبط", "hint": "در صورت مرتبط بودن", "auto_complete": "off", "placeholder": "می‌توانید به‌صورت حدودی یا بازه‌ای بنویسید" },
+              { "id": "message", "kind": "textarea", "name": "message", "label": "توضیح کوتاه درخواست", "required": true, "min_length": 10, "max_length": 2500, "placeholder": "چه چیزی باید در گفت‌وگوی تخصصی روشن‌تر شود؟" }
+            ]
+          }
+        ],
+        "pending_label": "در حال ثبت…",
+        "submit_label": "ثبت درخواست مشاوره",
+        "submit_note": "ثبت درخواست به‌معنای تأیید خودکار جلسه نیست.",
+        "privacy_note": "از ارسال اطلاعات بانکی، رمز، قرارداد محرمانه، اسناد هویتی غیرضروری یا فایل‌های مالی گسترده در این مرحله خودداری کنید.",
+        "reference_label": "شناسه پیگیری"
+      }
+    },
+    "confidentiality": {
+      "id": "consultation-confidentiality",
+      "eyebrow": "مرحله بعد",
+      "heading": "ثبت درخواست، آغاز بررسی است؛ نه تأیید خودکار جلسه.",
+      "heading_highlight": "آغاز بررسی است؛ نه تأیید خودکار جلسه.",
+      "intro": "پس از ثبت موفق درخواست، ابتدا موضوع و دامنه آن بررسی می‌شود تا مشخص شود ادامه مسیر باید در چه چارچوبی انجام شود.",
+      "steps": [
+        { "id": "review-request", "number": "01", "icon": "review", "title": "بررسی درخواست", "description": "موضوع و اطلاعات اولیه برای شناخت دامنه درخواست بررسی می‌شوند." },
+        { "id": "assess-fit", "number": "02", "icon": "fit", "title": "سنجش تناسب", "description": "فوریت، پیچیدگی و مناسب بودن مسیر مشاوره مشخص می‌شود." },
+        { "id": "define-next-path", "number": "03", "icon": "route", "title": "تعیین مسیر بعدی", "description": "در صورت تناسب، مسیر مناسب برای ادامه گفت‌وگوی تخصصی مشخص می‌شود." }
+      ],
+      "privacy": {
+        "title": "در مرحله اولیه، حداقل اطلاعات لازم کافی است.",
+        "description": "از ارسال اطلاعات بانکی، اسناد هویتی غیرضروری، قراردادهای محرمانه یا فایل‌های گسترده مالی تا زمانی که واقعاً لازم نشده خودداری کنید.",
+        "label": "حداقل داده / بررسی اولیه"
+      },
+      "final": {
+        "title": "آماده‌اید موضوع را برای بررسی اولیه ثبت کنید؟",
+        "description": "فقط اطلاعات لازم برای شناخت اولیه مسئله را وارد کنید.",
+        "ctas": [
+          { "id": "submit-consultation", "label": "ثبت درخواست مشاوره", "type": "primary", "href": "#consultation-request" },
+          { "id": "initial-assessment", "label": "شروع از ارزیابی اولیه", "type": "secondary", "href": "/financial-decision-assessment" }
+        ]
+      }
+    }
+  }
+}

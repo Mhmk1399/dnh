@@ -38,8 +38,7 @@ export default function Faq({ question, answer, icon }: FaqProps) {
         group/faq
         relative
         overflow-hidden
-        rounded-[18px]
-        border
+          border
         bg-page/[0.72]
         shadow-[0_8px_25px_color-mix(in_srgb,var(--dnh-primary)_5%,transparent)]
         transition-[border-color,background-color,transform]

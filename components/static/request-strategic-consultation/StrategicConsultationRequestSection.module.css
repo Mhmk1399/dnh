@@ -1,0 +1,319 @@
+/* DNH Strategic Consultation — editorial glass + accessible custom listbox.
+   These styles are scoped to the consultation section, not global forms. */
+
+.formCard {
+  isolation: isolate;
+  /* Keep overflow visible so select popovers are never clipped. */
+  overflow: visible;
+}
+
+.stickyCopy {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+/* Existing shared FormField remains responsible for labels, hints,
+   validation and input props; its appearance is themed locally here. */
+.formSkin :global(input:not([type="hidden"])),
+.formSkin :global(textarea) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 54px;
+  padding: 13px 15px;
+  border: 1px solid #ccdce4;
+  background: #f5f9fb;
+  color: #163448;
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.6;
+  box-shadow: inset 0 1px 2px rgba(7, 32, 45, 0.025);
+  transition:
+    background-color 190ms ease,
+    border-color 190ms ease,
+    box-shadow 190ms ease;
+}
+
+.formSkin :global(textarea) {
+  min-height: 132px;
+  resize: vertical;
+  line-height: 1.9;
+}
+
+.formSkin :global(input:not([type="hidden"]):hover),
+.formSkin :global(textarea:hover) {
+  border-color: #93b5c7;
+}
+
+.formSkin :global(input:not([type="hidden"]):focus),
+.formSkin :global(textarea:focus) {
+  outline: none;
+  border-color: var(--dnh-primary, #167394);
+  background: #fff;
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--dnh-primary, #167394) 13%, transparent);
+}
+
+.formSkin :global(input:not([type="hidden"]):focus-visible),
+.formSkin :global(textarea:focus-visible) {
+  outline: none;
+}
+
+.formSkin :global(input:not([type="hidden"])::placeholder),
+.formSkin :global(textarea::placeholder) {
+  color: #8a9da9;
+  opacity: 1;
+}
+
+.formSkin :global(input[aria-invalid="true"]),
+.formSkin :global(textarea[aria-invalid="true"]) {
+  border-color: #ce6464;
+  box-shadow: 0 0 0 3px rgba(206, 100, 100, 0.11);
+}
+
+.formSkin :global(input:not([type="hidden"]):disabled),
+.formSkin :global(textarea:disabled) {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.formSkin :global(label) {
+  color: #284558;
+}
+
+/* Stronger selector ensures shared FormField's text class remains readable
+   even when it was originally designed for a dark background. */
+.formSkin :global(label) {
+  font-size: 13px;
+  font-weight: 750;
+}
+
+/* Customized select: real listbox, not a browser-native dropdown skin. */
+.selectRoot {
+  position: relative;
+  min-width: 0;
+}
+
+.selectLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 9px;
+  color: #284558;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.7;
+}
+
+.required {
+  color: var(--dnh-accent, #fc8502);
+  font-size: 14px;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  padding: 10px 12px 10px 15px;
+  padding-inline-start: 15px;
+  padding-inline-end: 12px;
+  border: 1px solid #ccdce4;
+  background: #f5f9fb;
+  color: #163448;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+  cursor: pointer;
+  text-align: start;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.selectTrigger[data-empty="true"] {
+  color: #8497a4;
+  font-weight: 500;
+}
+
+.selectTrigger:hover,
+.selectTrigger[data-open="true"] {
+  border-color: var(--dnh-primary, #167394);
+  background: #fff;
+}
+
+.selectTrigger:focus-visible,
+.selectTrigger[data-open="true"] {
+  outline: none;
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--dnh-primary, #167394) 13%, transparent);
+}
+
+.selectTrigger[data-invalid="true"] {
+  border-color: #ce6464;
+}
+
+.selectTrigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.selectChevron {
+  display: grid;
+  flex: 0 0 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #d3e1e8;
+  background: #eaf2f6;
+  color: var(--dnh-primary, #167394);
+}
+
+.selectMenu {
+  position: absolute;
+  z-index: 50;
+  inset-inline: 0;
+  max-height: min(320px, 45dvh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  border: 1px solid #bbced8;
+  background: rgba(255, 255, 255, 0.985);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 20px 50px rgba(7, 39, 55, 0.19),
+    0 3px 12px rgba(7, 39, 55, 0.06);
+  scrollbar-width: thin;
+  scrollbar-color: #b7cbd5 #f0f5f8;
+}
+
+.selectMenuBelow {
+  top: calc(100% + 8px);
+  transform-origin: top center;
+  animation: select-in 190ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.selectMenuAbove {
+  bottom: calc(100% + 8px);
+  transform-origin: bottom center;
+  animation: select-in-up 190ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #284558;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1.7;
+  cursor: pointer;
+  text-align: start;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.selectOption:hover,
+.selectOption[data-focused="true"],
+.selectOption:focus-visible {
+  outline: none;
+  background: #eaf3f8;
+  color: #0d4868;
+}
+
+.selectOption[aria-selected="true"] {
+  background: #e5f0f5;
+  color: var(--dnh-primary, #167394);
+  border-inline-start: 3px solid var(--dnh-accent, #fc8502);
+  font-weight: 800;
+}
+
+.optionCheck {
+  display: grid;
+  flex: 0 0 20px;
+  height: 20px;
+  place-items: center;
+  color: var(--dnh-primary, #167394);
+}
+
+.fieldHint,
+.fieldError {
+  margin-top: 7px;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.fieldHint {
+  color: #748997;
+}
+.fieldError {
+  color: #b43939;
+  font-weight: 700;
+}
+
+.mobileGuidance[open] summary svg:last-child {
+  transform: rotate(180deg);
+}
+
+@keyframes select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes select-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .formSkin :global(input:not([type="hidden"])),
+  .formSkin :global(textarea),
+  .selectTrigger {
+    font-size: 16px;
+  } /* Prevent iOS input zoom. */
+  .selectMenu {
+    max-height: min(300px, 46dvh);
+  }
+  .selectOption {
+    min-height: 50px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selectMenu,
+  .selectMenuAbove,
+  .selectMenuBelow,
+  .selectOption,
+  .selectTrigger,
+  .selectChevron,
+  .formSkin :global(input:not([type="hidden"])),
+  .formSkin :global(textarea) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
