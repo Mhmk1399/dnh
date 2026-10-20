@@ -24,7 +24,7 @@ export function ContactHero({
   return (
     <DnhPageHero
       id="contact-hero"
-      direction={direction}
+      direction={direction}  
       lang={locale === "fa" ? "fa-IR" : "en"}
       eyebrow={content.eyebrow}
       heading={heading}
@@ -42,8 +42,8 @@ export function ContactHero({
         },
       ]}
       media={{
-        src: "/assets/images/dnh-hero-desktop.png",
-        mobileSrc: "/assets/images/dnh-hero-mobile.png",
+        src: "/assets/images/research-and-case-studies.webp",
+        mobileSrc: "/assets/images/research-and-case-studies.webp",
         alt: content.imageAlt,
         objectPosition: "29% center",
         mobileObjectPosition: "center",
