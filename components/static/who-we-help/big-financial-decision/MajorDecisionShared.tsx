@@ -43,7 +43,7 @@ export function MajorDecisionHeading({
   return (
     <h2
       id={`${section.id}-title`}
-      className={`mt-5 max-w-[38ch] text-pretty text-[clamp(2rem,7.7vw,2.8rem)] font-black leading-[1.45] tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,2.8rem)] ${dark ? "text-page" : "text-ink"}`}
+      className={`mt-5 max-w-[38ch]  text-pretty text-[clamp(2rem,7.7vw,2.8rem)] font-black leading-[1.45] tracking-[-0.03em] sm:text-[clamp(2.8rem,5.2vw,2.8rem)] ${dark ? "text-page" : "text-ink"}`}
     >
       {section.heading}
     </h2>
@@ -59,7 +59,7 @@ export function MajorDecisionCopy({
 }) {
   return (
     <p
-      className={`text-[14px] leading-[2] sm:text-[16px] ${dark ? "text-page/80" : "text-ink-muted"}`}
+      className={`text-[14px]  leading-[2] sm:text-[16px] ${dark ? "text-page/80" : "text-ink-muted"}`}
     >
       {children}
     </p>
