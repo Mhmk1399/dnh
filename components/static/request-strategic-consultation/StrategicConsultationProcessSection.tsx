@@ -1,46 +1,23 @@
 import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 
-import { ArrowLeft, CornerDownLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, CornerDownLeft, CornerDownRight } from "lucide-react";
+import type { SiteDirection } from "@/lib/site-language";
+import type { ConsultationProcessContent } from "./strategicConsultationTypes";
 
-const PROCESS_STAGES = [
-  {
-    number: "01",
-    label: "ارزیابی اولیه",
-    description: "شناخت مسئله و بررسی اولیه تناسب درخواست.",
-  },
-  {
-    number: "02",
-    label: "دامنه و تناسب",
-    description: "بررسی فوریت، پیچیدگی و محدوده موضوع.",
-  },
-  {
-    number: "03",
-    label: "گفت‌وگوی تخصصی",
-    description: "ورود به جلسه تخصصی پس از روشن شدن دامنه مسئله.",
-    active: true,
-  },
-  {
-    number: "04",
-    label: "بررسی حرفه‌ای",
-    description: "تحلیل دقیق‌تر موضوع و عوامل اثرگذار بر تصمیم.",
-  },
-  {
-    number: "05",
-    label: "چارچوب تصمیم",
-    description: "ارائه تصویر، گزینه‌ها و مسیرهای قابل بررسی.",
-  },
-  {
-    number: "06",
-    label: "پیگیری و بازبینی",
-    description: "ادامه مسیر در صورت توافق و نیاز به بازبینی.",
-  },
-] as const;
+export function StrategicConsultationProcessSection({
+  content,
+  direction,
+}: {
+  content: ConsultationProcessContent;
+  direction: SiteDirection;
+}) {
+  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
+  const TurnIcon = direction === "rtl" ? CornerDownLeft : CornerDownRight;
 
-export function StrategicConsultationProcessSection() {
   return (
     <section
-      id="consultation-process"
-      dir="rtl"
+      id={content.id}
+      dir={direction}
       aria-labelledby="consultation-process-title"
       className="
         relative
@@ -121,7 +98,7 @@ export function StrategicConsultationProcessSection() {
                   text-[#167394]
                 "
               >
-                از درخواست تا تصمیم
+                {content.eyebrow}
               </p>
             </div>
 
@@ -143,8 +120,7 @@ export function StrategicConsultationProcessSection() {
                 lg:leading-[1.62]
               "
             >
-              مشاوره، یک جلسه منفرد نیست؛{" "}
-              <span className="text-[#167394]">بخشی از یک مسیر بررسی است.</span>
+              <HighlightedHeading text={content.heading} highlight={content.heading_highlight} />
             </h2>
           </div>
 
@@ -161,8 +137,7 @@ export function StrategicConsultationProcessSection() {
               sm:text-[16px]
             "
           >
-            هر مرحله برای روشن‌تر شدن مسئله و مشخص شدن مسیر بعدی طراحی شده است؛
-            بدون پرش مستقیم از مسئله به یک پاسخ آماده.
+            {content.intro}
           </p>
         </div>
 
@@ -215,7 +190,7 @@ export function StrategicConsultationProcessSection() {
                 text-[#167394]/40
               "
             >
-              مرحله
+              {content.columns.number}
             </p>
 
             <p
@@ -225,7 +200,7 @@ export function StrategicConsultationProcessSection() {
                 text-[#167394]/40
               "
             >
-              وضعیت پرونده
+              {content.columns.status}
             </p>
 
             <p
@@ -234,12 +209,12 @@ export function StrategicConsultationProcessSection() {
                 font-black
                 text-[#167394]/40
 
-                lg:border-r
+                lg:border-s
                 lg:border-[#167394]/10
-                lg:pr-7
+                lg:ps-7
               "
             >
-              هدف مرحله
+              {content.columns.purpose}
             </p>
           </div>
 
@@ -248,8 +223,8 @@ export function StrategicConsultationProcessSection() {
           ---------------------------------------------------------- */}
 
           <div>
-            {PROCESS_STAGES.map((stage) => (
-              <ProcessRow key={stage.number} {...stage} />
+            {content.stages.map((stage) => (
+              <ProcessRow key={stage.id} {...stage} activeLabel={content.active_label} />
             ))}
           </div>
 
@@ -278,7 +253,7 @@ export function StrategicConsultationProcessSection() {
               className="
                 absolute
                 inset-y-0
-                right-0
+                start-0
 
                 w-[3px]
 
@@ -293,7 +268,7 @@ export function StrategicConsultationProcessSection() {
                 gap-3
               "
             >
-              <CornerDownLeft
+              <TurnIcon
                 aria-hidden="true"
                 strokeWidth={1.6}
                 className="
@@ -315,8 +290,7 @@ export function StrategicConsultationProcessSection() {
                   text-[#65777d]
                 "
               >
-                مرحله مشاوره زمانی وارد مسیر می‌شود که موضوع، دامنه و تناسب
-                اولیه آن به‌اندازه کافی روشن شده باشد.
+                {content.note}
               </p>
             </div>
           </div>
@@ -335,7 +309,7 @@ export function StrategicConsultationProcessSection() {
           "
         >
           <Link
-            href="#consultation-request"
+            href={content.next.href}
             className="
               group/next
 
@@ -359,19 +333,19 @@ export function StrategicConsultationProcessSection() {
               focus-visible:outline-[#fc8502]
             "
           >
-            بعدی: ثبت درخواست مشاوره
-            <ArrowLeft
+            {content.next.label}
+            <Arrow
               aria-hidden="true"
               strokeWidth={1.7}
-              className="
+              className={`
                 size-[15px]
                 text-[#fc8502]
 
                 transition-transform
                 duration-200
 
-                group-hover/next:-translate-x-1
-              "
+                ${direction === "rtl" ? "group-hover/next:-translate-x-1" : "group-hover/next:translate-x-1"}
+              `}
             />
           </Link>
         </div>
@@ -389,9 +363,8 @@ function ProcessRow({
   label,
   description,
   active = false,
-}: (typeof PROCESS_STAGES)[number] & {
-  active?: boolean;
-}) {
+  activeLabel,
+}: ConsultationProcessContent["stages"][number] & { activeLabel: string }) {
   return (
     <article
       className={`
@@ -433,17 +406,7 @@ function ProcessRow({
           gap-3
         "
       >
-        <span
-          className={`
-            text-[13px]
-            font-black
-            tabular-nums
-
-            ${active ? "text-[#fc8502]" : "text-[#167394]/30"}
-          `}
-        >
-          {number}
-        </span>
+       
 
         <span
           aria-hidden="true"
@@ -497,7 +460,7 @@ function ProcessRow({
               text-[#d96f00]
             "
           >
-            مرحله این صفحه
+            {activeLabel}
           </span>
         ) : null}
       </div>
@@ -514,9 +477,9 @@ function ProcessRow({
 
           text-[#718187]
 
-          lg:border-r
+          lg:border-s
           lg:border-[#167394]/[0.08]
-          lg:pr-7
+          lg:ps-7
         "
       >
         {description}
@@ -531,7 +494,7 @@ function ProcessRow({
         className={`
           absolute
           inset-y-0
-          right-0
+          start-0
 
           w-[3px]
 
@@ -546,6 +509,18 @@ function ProcessRow({
         `}
       />
     </article>
+  );
+}
+
+function HighlightedHeading({ text, highlight }: { text: string; highlight: string }) {
+  const index = text.indexOf(highlight);
+  if (index < 0) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="text-[#167394]">{highlight}</span>
+      {text.slice(index + highlight.length)}
+    </>
   );
 }
 

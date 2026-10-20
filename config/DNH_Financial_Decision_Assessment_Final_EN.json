@@ -1,0 +1,286 @@
+{
+  "locale": "en",
+  "lang": "en",
+  "direction": "ltr",
+  "sections": {
+    "hero": {
+      "id": "assessment-intro",
+      "eyebrow": "Begin with a clearer decision",
+      "heading": "Before your next decision, define the issue properly.",
+      "heading_highlight": "define the issue properly.",
+      "paragraphs": [
+        {
+          "id": "assessment-introduction",
+          "text": "Financial decisions become difficult when the underlying issue, constraints, risks and available options have not yet been defined clearly. DNH's initial assessment helps clarify the type of issue, its urgency and its level of complexity before any specialist advisory work begins."
+        }
+      ],
+      "ctas": [
+        { "id": "start-assessment", "label": "Start the initial assessment", "type": "primary", "href": "#assessment-form" },
+        { "id": "view-process", "label": "View the assessment process", "type": "secondary", "href": "#assessment-process" }
+      ],
+      "media": {
+        "src": "/assets/images/financial-decision-assessment.webp",
+        "mobile_src": "/assets/images/financial-decision-assessment.webp",
+        "alt": "A structured assessment of an important financial decision",
+        "object_position": "center"
+      }
+    },
+    "why": {
+      "id": "why-assessment",
+      "eyebrow": "Why an assessment?",
+      "heading": "Before choosing a solution, we need to understand the real issue.",
+      "heading_highlight": "the real issue.",
+      "intro": "A consultation request may appear straightforward, while the underlying issue may involve liquidity, risk, wealth structure, a business or a major financial decision. The assessment frames the issue before analysis begins.",
+      "statement": {
+        "eyebrow": "BEFORE ADVICE",
+        "heading": "A good answer begins with the right question.",
+        "heading_highlight": "the right question.",
+        "description": "Before recommending a service, DNH seeks to understand what should be examined and whether the issue falls within an appropriate scope of work.",
+        "comparison_before": "Assessment ≠ contact form",
+        "comparison_after": "Assessment = initial understanding of the issue and path"
+      },
+      "reasons": [
+        { "id": "question", "icon": "question", "eyebrow": "THE QUESTION", "title": "What is the real issue?", "description": "Before selecting a service, the decision or financial question that genuinely needs review must be made clear." },
+        { "id": "complexity", "icon": "urgency", "eyebrow": "COMPLEXITY & URGENCY", "title": "How complex and time-sensitive is it?", "description": "The time horizon, urgency and number of relevant variables can change the appropriate route." },
+        { "id": "right-path", "icon": "route", "eyebrow": "THE RIGHT PATH", "title": "What should happen next?", "description": "The initial assessment helps determine whether the next step should be an assessment, strategic consultation, executive briefing or another route." }
+      ],
+      "outcome": {
+        "eyebrow": "ASSESSMENT OUTCOME",
+        "title": "The first outcome: a clearer view of the next step",
+        "description": "The assessment indicates whether the matter calls for further review, strategic consultation, an executive briefing or a different path.",
+        "cta": { "label": "View the assessment path", "href": "#assessment-process" }
+      },
+      "privacy_note": "At this stage, DNH requests only what is needed to understand the objective, issue, complexity and initial fit—not confidential documents, full asset details or bank information."
+    },
+    "process": {
+      "id": "assessment-process",
+      "eyebrow": "Assessment and engagement path",
+      "heading": "An assessment is more than a form; it is the beginning of a clearer decision process.",
+      "heading_highlight": "the beginning of a clearer decision process.",
+      "intro": "The first stage is not intended to produce an immediate recommendation. It clarifies fit, scope and complexity so that an appropriate professional route can be defined where needed.",
+      "start_cta": { "label": "Start the assessment", "href": "#assessment-form" },
+      "start_note": "The route for each matter is determined by its actual needs and suitability.",
+      "panel": {
+        "eyebrow": "DECISION PATH",
+        "heading": "From understanding the issue to shaping a decision path.",
+        "heading_highlight": "shaping a decision path.",
+        "intro": "Not every matter proceeds in the same way or at the same depth. The assessment allows the next step to follow the issue itself.",
+        "phases": [
+          { "id": "qualify", "label": "Understand and qualify", "code": "QUALIFY", "tone": "gold" },
+          { "id": "review", "label": "Discuss and review", "code": "REVIEW", "tone": "blue" },
+          { "id": "decide", "label": "Decision path and review", "code": "DECIDE", "tone": "gold" }
+        ],
+        "note": "Starting an assessment does not create a commitment to proceed; suitability is considered first."
+      },
+      "steps": [
+        { "id": "understand", "number": "01", "phase": "QUALIFY", "title": "Initial understanding", "description": "The decision, current situation and reason for the request are clarified at a preliminary level.", "outcome": "Initial understanding", "tone": "qualification" },
+        { "id": "scope", "number": "02", "phase": "QUALIFY", "title": "Fit and scope", "description": "Urgency, time horizon, complexity and alignment with DNH's scope are considered.", "outcome": "Fit and scope", "tone": "qualification" },
+        { "id": "conversation", "number": "03", "phase": "REVIEW", "title": "Specialist session or briefing", "description": "Where suitable, the matter may proceed to a specialist session, strategic consultation or executive briefing.", "outcome": "Specialist discussion", "tone": "review" },
+        { "id": "professional-review", "number": "04", "phase": "REVIEW", "title": "Professional case review", "description": "The issue is examined against the agreed scope, relevant information and decision variables.", "outcome": "Issue analysis", "tone": "review" },
+        { "id": "decision-picture", "number": "05", "phase": "DECIDE", "title": "Structured decision view", "description": "Options, scenarios and viable paths are brought together in a more structured view.", "outcome": "Scenarios and paths", "tone": "decision" },
+        { "id": "follow-up", "number": "06", "phase": "DECIDE", "title": "Follow-up and review", "description": "Where agreed and appropriate, the decision path may be revisited as circumstances evolve.", "outcome": "Review", "tone": "decision" }
+      ],
+      "outcome_label": "Stage outcome",
+      "footer": "The next step is to answer a short set of questions about your situation.",
+      "cta": { "label": "Go to the assessment form", "href": "#assessment-form" }
+    },
+    "form": {
+      "id": "assessment-form",
+      "eyebrow": "Start the assessment",
+      "heading": "A few focused questions to understand your situation.",
+      "heading_highlight": "understand your situation.",
+      "intro": "You do not need to prepare your complete financial information at this stage. The purpose is to understand the issue, your circumstances and the most appropriate initial route.",
+      "progress_label": "ASSESSMENT PROGRESS",
+      "progress_title": "Initial assessment",
+      "progress_description": "The information in this form is used only for an initial understanding of the issue.",
+      "privacy_title": "No sensitive information",
+      "privacy_description": "Bank details, identity documents and complete asset information are not required at this stage.",
+      "more_label": "More information",
+      "privacy_link": { "label": "Confidentiality", "href": "#privacy-confidentiality" },
+      "after_link": { "label": "What happens next", "href": "#after-submission" },
+      "steps": [
+        { "id": "profile", "title": "Your situation", "eyebrow": "PROFILE" },
+        { "id": "decision", "title": "The decision", "eyebrow": "DECISION" },
+        { "id": "timing", "title": "Timing and urgency", "eyebrow": "HORIZON" },
+        { "id": "contact", "title": "Contact details", "eyebrow": "CONTACT" }
+      ],
+      "step_counter": "Step {current} of {total}",
+      "previous_label": "Previous step",
+      "next_label": "Continue",
+      "submit_label": "Submit initial assessment",
+      "profile": {
+        "title": "Which situation best describes this assessment?",
+        "description": "Choose the closest option. It is used only to identify the most relevant initial route.",
+        "options": [
+          { "id": "individual", "value": "individual", "icon": "individual", "title": "Individual / investor", "description": "For a personal financial decision or personal asset structure" },
+          { "id": "family", "value": "family", "icon": "family", "title": "Family / capital owners", "description": "For family wealth structure and shared financial decisions" },
+          { "id": "business-owner", "value": "business-owner", "icon": "business", "title": "Business owner", "description": "For decisions involving capital, liquidity or the business" },
+          { "id": "company", "value": "company", "icon": "company", "title": "Company / holding group", "description": "For financial structure, capital and organisational decisions" }
+        ]
+      },
+      "decision": {
+        "title": "What is the main subject of the decision?",
+        "description": "Choose the closest subject and briefly describe the current situation.",
+        "topics": [
+          { "id": "wealth-structure", "value": "wealth-structure", "label": "Wealth and asset structure" },
+          { "id": "portfolio", "value": "portfolio", "label": "Portfolio and asset allocation" },
+          { "id": "major-decision", "value": "major-decision", "label": "Major financial decision" },
+          { "id": "liquidity", "value": "liquidity", "label": "Liquidity and capital structure" },
+          { "id": "risk", "value": "risk", "label": "Risk and wealth protection" },
+          { "id": "business-finance", "value": "business-finance", "label": "Business financial decision" },
+          { "id": "macro", "value": "macro", "label": "Economy and decision environment" },
+          { "id": "other", "value": "other", "label": "Another subject" }
+        ],
+        "situation_label": "Current situation",
+        "situation_helper": "In a few sentences, describe the situation as it stands today.",
+        "situation_placeholder": "For example: I hold several assets, but the balance between liquidity, risk and allocation is not clear...",
+        "size_label": "Approximate size of the capital or decision",
+        "size_helper": "Optional—only where relevant to the issue.",
+        "size_placeholder": "Select an option",
+        "sizes": [
+          { "id": "not-relevant", "value": "not-relevant", "label": "Not relevant to this issue" },
+          { "id": "prefer-not", "value": "prefer-not", "label": "I prefer not to disclose this at this stage" },
+          { "id": "under-5", "value": "under-5", "label": "Below IRR 50 billion" },
+          { "id": "5-20", "value": "5-20", "label": "IRR 50–200 billion" },
+          { "id": "20-100", "value": "20-100", "label": "IRR 200 billion–1 trillion" },
+          { "id": "over-100", "value": "over-100", "label": "Above IRR 1 trillion" }
+        ]
+      },
+      "timing": {
+        "title": "What is the time horizon and level of urgency?",
+        "description": "Timing can affect the type of review and the route that is most appropriate.",
+        "horizon_label": "Time horizon",
+        "horizon_helper": "When are you likely to need a decision on this issue?",
+        "horizons": [
+          { "id": "now", "value": "now", "label": "Now / immediate" },
+          { "id": "1-3-months", "value": "1-3-months", "label": "Within 1–3 months" },
+          { "id": "3-12-months", "value": "3-12-months", "label": "Within 3–12 months" },
+          { "id": "over-year", "value": "over-year", "label": "More than one year" },
+          { "id": "unclear", "value": "unclear", "label": "Not yet clear" }
+        ],
+        "urgency_label": "Urgency",
+        "urgency_helper": "Choose the closest description.",
+        "urgencies": [
+          { "id": "normal", "value": "normal", "title": "Standard", "description": "The issue matters, but there is no immediate time constraint." },
+          { "id": "important", "value": "important", "title": "Important", "description": "A decision is likely to be required within the coming months." },
+          { "id": "urgent", "value": "urgent", "title": "Urgent", "description": "A significant decision or event is approaching in the near term." }
+        ]
+      },
+      "contact": {
+        "title": "How should we contact you about the next step?",
+        "description": "Only the details needed for the initial review are collected.",
+        "name_label": "Full name",
+        "email_label": "Email address",
+        "method_label": "Preferred contact method",
+        "methods": [
+          { "id": "email", "value": "email", "label": "Email" },
+          { "id": "phone", "value": "phone", "label": "Phone call" },
+          { "id": "messenger", "value": "messenger", "label": "Messaging app" }
+        ],
+        "summary_label": "Brief description of the issue",
+        "summary_helper": "What is the most important point we should understand before reviewing the request?",
+        "summary_placeholder": "Describe the decision or issue that currently carries the greatest uncertainty or importance...",
+        "privacy_note": "Please do not include bank details, passwords, identity documents, confidential contracts or sensitive information about other parties in this form."
+      },
+      "success": {
+        "eyebrow": "ASSESSMENT RECEIVED",
+        "title": "Your initial information has been recorded.",
+        "description": "The next stage is an initial review of the issue, its scope and the request's suitability. The process is explained in the next section.",
+        "after_cta": { "label": "What happens after submission?", "href": "#after-submission" },
+        "privacy_cta": { "label": "Information confidentiality", "href": "#privacy-confidentiality" }
+      }
+    },
+    "privacy": {
+      "id": "privacy-confidentiality",
+      "eyebrow": "Information boundaries and confidentiality",
+      "heading": "Understanding the issue does not require you to share everything.",
+      "heading_highlight": "does not require you to share everything.",
+      "intro": "The initial assessment is designed only to understand your situation, the issue and its preliminary suitability. More detailed information is considered only after the scope is clear and the information is genuinely necessary.",
+      "principle": "The confidentiality of financial and commercial information is a core principle. Information is handled according to the agreed scope and the professional needs of the matter.",
+      "needed": {
+        "eyebrow": "MINIMUM REQUIRED",
+        "title": "Useful at the outset",
+        "items": [
+          { "id": "identity", "icon": "user", "title": "Basic details", "description": "Your name, client type and preferred contact method for the initial review." },
+          { "id": "topic", "icon": "file", "title": "Decision subject", "description": "The main issue, current situation and a concise description of what you are facing." },
+          { "id": "timing", "icon": "clock", "title": "Timing and urgency", "description": "The decision horizon and the level of urgency that currently applies." },
+          { "id": "scope", "icon": "scale", "title": "Approximate scope", "description": "Where relevant, a high-level indication of the size of the decision or capital involved." }
+        ]
+      },
+      "not_needed": {
+        "eyebrow": "NOT REQUIRED YET",
+        "title": "Please do not send at this stage",
+        "items": [
+          { "id": "bank", "icon": "bank", "title": "Complete bank information", "description": "Account numbers, login details, passwords or other sensitive banking information." },
+          { "id": "documents", "icon": "identity", "title": "Unnecessary identity documents", "description": "Copies of identity documents that are not needed to understand the issue." },
+          { "id": "contracts", "icon": "lock", "title": "Confidential contracts", "description": "Business contracts and confidential documents are not required for the initial assessment." },
+          { "id": "assets", "icon": "wallet", "title": "Complete asset details", "description": "A complete list of assets, accounts and detailed financial information is not necessary yet." },
+          { "id": "partners", "icon": "users", "title": "Sensitive partner information", "description": "Private or confidential information about partners, shareholders or other people." },
+          { "id": "files", "icon": "folder", "title": "Extensive financial files", "description": "Full financial statements and large analytical files are not requested at the outset." }
+        ]
+      },
+      "boundary": "The principle is simple: request only the information genuinely needed for each stage.",
+      "trust_points": [
+        { "id": "minimum", "title": "Minimum necessary information", "text": "The initial form is for understanding the issue, not collecting a complete case file." },
+        { "id": "later", "title": "Sensitive information comes later", "text": "Only where professionally necessary and after the scope has been defined." },
+        { "id": "confidentiality", "title": "Confidentiality as a principle", "text": "Information is handled according to the engagement and the needs of the matter." }
+      ],
+      "final": {
+        "title": "Have you completed the assessment?",
+        "cta": { "label": "Return to the assessment form", "href": "#assessment-form" },
+        "next": { "label": "What happens after submission?", "href": "#after-submission" }
+      }
+    },
+    "after_submission": {
+      "id": "after-submission",
+      "eyebrow": "After submitting the assessment",
+      "heading": "Your request has been submitted; the appropriate path is now reviewed.",
+      "heading_highlight": "the appropriate path",
+      "intro": "Submitting an assessment does not place the matter into a predetermined service. The issue, scope, urgency and complexity are reviewed first so that any next step reflects the matter itself.",
+      "board": {
+        "eyebrow": "REQUEST ROUTING",
+        "title": "How the request is reviewed",
+        "note": "Initial review before a service is identified",
+        "steps": [
+          { "id": "received", "number": "01", "code": "RECEIVED", "icon": "received", "title": "The request is recorded", "description": "The information entered in the assessment provides the initial basis for understanding the issue." },
+          { "id": "fit", "number": "02", "code": "FIT & SCOPE", "icon": "review", "title": "Fit and scope are reviewed", "description": "The decision subject, urgency, time horizon and initial level of complexity are considered." },
+          { "id": "path", "number": "03", "code": "NEXT PATH", "icon": "route", "title": "The next path is identified", "description": "Where there is a suitable fit, an appropriate form of professional conversation or review is proposed." }
+        ],
+        "paths_eyebrow": "POSSIBLE NEXT STEP",
+        "paths_title": "Where appropriate, the next stage may take different forms.",
+        "paths": [
+          { "id": "consultation", "code": "STRATEGIC CONSULTATION", "icon": "consultation", "tone": "teal", "title": "Specialist consultation", "description": "For an issue that requires deeper discussion, clearer scope and professional review." },
+          { "id": "briefing", "code": "EXECUTIVE BRIEFING", "icon": "briefing", "tone": "orange", "title": "Executive briefing", "description": "For a focused matter requiring synthesis at executive, owner or key decision-maker level." }
+        ],
+        "caveat": "If the matter does not fall within an appropriate scope of work, the assessment will not necessarily lead to a meeting or advisory engagement.",
+        "principle_eyebrow": "THE PRINCIPLE",
+        "principle": "Clarify the issue and fit first; determine the form of engagement second."
+      },
+      "reassurance": [
+        { "id": "received", "icon": "received", "title": "Request recorded", "text": "The assessment is the starting point for understanding the issue." },
+        { "id": "review", "icon": "review", "title": "Suitability reviewed", "text": "Scope, complexity and the most appropriate initial path are considered." },
+        { "id": "promise", "icon": "privacy", "title": "No predetermined promise", "text": "The form of any engagement is not assumed before the initial review." }
+      ],
+      "return_prompt": "Have not submitted the form yet?",
+      "return_link": { "label": "Return to the assessment", "href": "#assessment-form" },
+      "question_cta": { "label": "Have another question about the process?", "href": "#assessment-contact" }
+    },
+    "contact": {
+      "id": "assessment-contact",
+      "eyebrow": "A practical next step",
+      "heading": "Still unsure where to begin? Start with the issue itself.",
+      "heading_highlight": "Start with the issue itself.",
+      "intro": "You do not need to know in advance which service, meeting or route is right for your situation. If an important financial decision needs a clearer view, the assessment is the place to begin.",
+      "code": "START WITH THE QUESTION",
+      "action_eyebrow": "YOUR NEXT MOVE",
+      "action_title": "When you are ready, begin with the initial assessment.",
+      "ctas": [
+        { "id": "assessment", "label": "Start the initial assessment", "href": "#assessment-form", "type": "primary" },
+        { "id": "consultation", "label": "Request a strategic conversation", "href": "/request-strategic-consultation", "type": "secondary" }
+      ],
+      "contact_link": { "label": "Have a general question? Contact DNH", "href": "/contact" },
+      "closing": "The appropriate route is identified after the issue and its initial fit are understood—not before.",
+      "signature": "DNH / FINANCIAL DECISION ASSESSMENT"
+    }
+  }
+}

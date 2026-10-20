@@ -401,7 +401,7 @@ function WealthTransitionVisual({ visible }: { visible: boolean }) {
                 justify-end
                 gap-2
 
-                rounded-sm
+                
                 bg-page/[0.8]
                 px-2.5
                 py-1.5
@@ -960,7 +960,7 @@ function VisualStep({
         group/step
         max-w-[180px]
 
-        rounded-sm
+        
         bg-page/[0.82]
 
         px-3

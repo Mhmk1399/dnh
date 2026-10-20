@@ -2,36 +2,27 @@ import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 
 import {
   ArrowLeft,
+  ArrowRight,
   ClipboardList,
   LockKeyhole,
   ShieldCheck,
 } from "lucide-react";
+import type { SiteDirection } from "@/lib/site-language";
+import type { ConsultationPreparationContent } from "./strategicConsultationTypes";
 
-const REQUIRED_INFORMATION = [
-  "نام و روش ارتباط",
-  "نوع مخاطب",
-  "موضوع تصمیم یا مسئله",
-  "افق زمانی",
-  "وضعیت فعلی",
-  "اندازه تقریبی تصمیم، در صورت مرتبط بودن",
-  "میزان فوریت",
-  "توضیح کوتاه مسئله",
-] as const;
+export function StrategicConsultationPreparationSection({
+  content,
+  direction,
+}: {
+  content: ConsultationPreparationContent;
+  direction: SiteDirection;
+}) {
+  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
 
-const NOT_REQUIRED_INFORMATION = [
-  "اطلاعات کامل حساب بانکی",
-  "اسناد هویتی غیرضروری",
-  "قراردادهای محرمانه",
-  "جزئیات کامل همه دارایی‌ها",
-  "اطلاعات حساس شرکا",
-  "فایل‌های مالی گسترده",
-] as const;
-
-export function StrategicConsultationPreparationSection() {
   return (
     <section
-      id="consultation-preparation"
-      dir="rtl"
+      id={content.id}
+      dir={direction}
       aria-labelledby="consultation-preparation-title"
       className="
         relative
@@ -106,7 +97,7 @@ export function StrategicConsultationPreparationSection() {
                   text-[#82cee4]
                 "
               >
-                پیش از ثبت درخواست
+                {content.eyebrow}
               </p>
             </div>
 
@@ -128,9 +119,7 @@ export function StrategicConsultationPreparationSection() {
                 lg:leading-[1.62]
               "
             >
-              برای شروع، فقط{" "}
-              <span className="text-[#fc8502]">تصویر اولیه مسئله</span> کافی
-              است.
+              <HighlightedHeading text={content.heading} highlight={content.heading_highlight} />
             </h2>
           </div>
 
@@ -147,8 +136,7 @@ export function StrategicConsultationPreparationSection() {
               sm:text-[16px]
             "
           >
-            در این مرحله نیازی به ارسال پرونده کامل مالی نیست؛ فقط اطلاعاتی لازم
-            است که به شناخت موضوع و دامنه اولیه آن کمک کند.
+            {content.intro}
           </p>
         </div>
 
@@ -213,7 +201,7 @@ export function StrategicConsultationPreparationSection() {
                   text-[#82cee4]/65
                 "
               >
-                مرز اطلاعات اولیه
+                {content.register.eyebrow}
               </p>
 
               <p
@@ -227,7 +215,7 @@ export function StrategicConsultationPreparationSection() {
                   text-white
                 "
               >
-                چه چیزی لازم است و چه چیزی فعلاً لازم نیست؟
+                {content.register.title}
               </p>
             </div>
 
@@ -263,7 +251,7 @@ export function StrategicConsultationPreparationSection() {
                 border-white/[0.09]
 
                 lg:border-b-0
-                lg:border-l
+                lg:border-e
                 lg:border-white/[0.09]
               "
             >
@@ -307,7 +295,7 @@ export function StrategicConsultationPreparationSection() {
                       text-[#fc8502]
                     "
                   >
-                    برای شروع کافی است
+                    {content.register.required.title}
                   </p>
 
                   <p
@@ -318,17 +306,17 @@ export function StrategicConsultationPreparationSection() {
                       text-white/38
                     "
                   >
-                    اطلاعات موردنیاز برای شناخت اولیه
+                    {content.register.required.description}
                   </p>
                 </div>
               </div>
 
               <div>
-                {REQUIRED_INFORMATION.map((item, index) => (
+                {content.register.required.items.map((item, index) => (
                   <InformationRow
-                    key={item}
+                    key={item.id}
                     index={index + 1}
-                    label={item}
+                    label={item.label}
                     active
                   />
                 ))}
@@ -380,7 +368,7 @@ export function StrategicConsultationPreparationSection() {
                       text-white/74
                     "
                   >
-                    فعلاً ارسال نکنید
+                    {content.register.not_required.title}
                   </p>
 
                   <p
@@ -391,14 +379,14 @@ export function StrategicConsultationPreparationSection() {
                       text-white/36
                     "
                   >
-                    جزئیات حساس یا پرونده کامل مالی
+                    {content.register.not_required.description}
                   </p>
                 </div>
               </div>
 
               <div>
-                {NOT_REQUIRED_INFORMATION.map((item, index) => (
-                  <InformationRow key={item} index={index + 1} label={item} />
+                {content.register.not_required.items.map((item, index) => (
+                  <InformationRow key={item.id} index={index + 1} label={item.label} />
                 ))}
               </div>
             </div>
@@ -429,7 +417,7 @@ export function StrategicConsultationPreparationSection() {
               className="
                 absolute
                 inset-y-0
-                right-0
+                start-0
                 w-[3px]
                 bg-[#fc8502]
               "
@@ -446,8 +434,7 @@ export function StrategicConsultationPreparationSection() {
                 text-white/46
               "
             >
-              هدف این مرحله، شناخت اولیه موضوع است؛ نه دریافت همه اسناد و جزئیات
-              مالی از همان ابتدا.
+              {content.register.note}
             </p>
           </div>
         </div>
@@ -464,7 +451,7 @@ export function StrategicConsultationPreparationSection() {
           "
         >
           <Link
-            href="#consultation-process"
+            href={content.next.href}
             className="
               group/next
 
@@ -488,19 +475,19 @@ export function StrategicConsultationPreparationSection() {
               focus-visible:outline-[#fc8502]
             "
           >
-            بعدی: درخواست چگونه بررسی می‌شود؟
-            <ArrowLeft
+            {content.next.label}
+            <Arrow
               aria-hidden="true"
               strokeWidth={1.7}
-              className="
+              className={`
                 size-[15px]
                 text-[#fc8502]
 
                 transition-transform
                 duration-200
 
-                group-hover/next:-translate-x-1
-              "
+                ${direction === "rtl" ? "group-hover/next:-translate-x-1" : "group-hover/next:translate-x-1"}
+              `}
             />
           </Link>
         </div>
@@ -550,20 +537,7 @@ function InformationRow({
         lg:px-7
       "
     >
-      <span
-        className="
-          w-7
-          shrink-0
-
-          text-[12px]
-          font-black
-          tabular-nums
-
-          text-white/22
-        "
-      >
-        {String(index).padStart(2, "0")}
-      </span>
+   
 
       <span
         aria-hidden="true"
@@ -593,7 +567,7 @@ function InformationRow({
         className="
           absolute
           inset-y-0
-          right-0
+          start-0
 
           w-[2px]
 
@@ -609,6 +583,18 @@ function InformationRow({
         "
       />
     </div>
+  );
+}
+
+function HighlightedHeading({ text, highlight }: { text: string; highlight: string }) {
+  const index = text.indexOf(highlight);
+  if (index < 0) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="text-[#fc8502]">{highlight}</span>
+      {text.slice(index + highlight.length)}
+    </>
   );
 }
 

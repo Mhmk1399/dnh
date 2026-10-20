@@ -1,35 +1,39 @@
-import { ArrowLeft, Check, FileSearch, LockKeyhole, Route } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  FileSearch,
+  LockKeyhole,
+  Route,
+  type LucideIcon,
+} from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
+import type { SiteDirection } from "@/lib/site-language";
+import type { ConsultationConfidentialityContent } from "./strategicConsultationTypes";
 
-const NEXT_STEPS = [
-  {
-    number: "01",
-    icon: FileSearch,
-    title: "بررسی درخواست",
-    description:
-      "موضوع و اطلاعات اولیه برای شناخت دامنه درخواست بررسی می‌شوند.",
-  },
-  {
-    number: "02",
-    icon: Check,
-    title: "سنجش تناسب",
-    description: "فوریت، پیچیدگی و مناسب بودن مسیر مشاوره مشخص می‌شود.",
-  },
-  {
-    number: "03",
-    icon: Route,
-    title: "تعیین مسیر بعدی",
-    description:
-      "در صورت تناسب، مسیر مناسب برای ادامه گفت‌وگوی تخصصی مشخص می‌شود.",
-  },
-] as const;
+const STEP_ICONS: Record<
+  ConsultationConfidentialityContent["steps"][number]["icon"],
+  LucideIcon
+> = {
+  review: FileSearch,
+  fit: Check,
+  route: Route,
+};
 
-export function StrategicConsultationConfidentialitySection() {
+export function StrategicConsultationConfidentialitySection({
+  content,
+  direction,
+}: {
+  content: ConsultationConfidentialityContent;
+  direction: SiteDirection;
+}) {
+  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
+
   return (
     <section
-      id="consultation-confidentiality"
-      dir="rtl"
+      id={content.id}
+      dir={direction}
       aria-labelledby="consultation-confidentiality-title"
       className="
         relative
@@ -108,7 +112,7 @@ export function StrategicConsultationConfidentialitySection() {
                   text-[#167394]
                 "
               >
-                مرحله بعد
+                {content.eyebrow}
               </p>
             </div>
 
@@ -130,11 +134,10 @@ export function StrategicConsultationConfidentialitySection() {
                 lg:leading-[1.62]
               "
             >
-              ثبت درخواست،
-              <br />
-              <span className="text-[#167394]">
-                آغاز بررسی است؛ نه تأیید خودکار جلسه.
-              </span>
+              <HighlightedHeading
+                text={content.heading}
+                highlight={content.heading_highlight}
+              />
             </h2>
           </div>
 
@@ -151,8 +154,7 @@ export function StrategicConsultationConfidentialitySection() {
               sm:text-[16px]
             "
           >
-            پس از ثبت موفق درخواست، ابتدا موضوع و دامنه آن بررسی می‌شود تا مشخص
-            شود ادامه مسیر باید در چه چارچوبی انجام شود.
+            {content.intro}
           </p>
         </div>
 
@@ -181,11 +183,12 @@ export function StrategicConsultationConfidentialitySection() {
               lg:grid-cols-3
             "
           >
-            {NEXT_STEPS.map((step, index) => (
+            {content.steps.map((step, index) => (
               <NextStep
-                key={step.number}
+                key={step.id}
                 {...step}
-                last={index === NEXT_STEPS.length - 1}
+                icon={STEP_ICONS[step.icon]}
+                last={index === content.steps.length - 1}
               />
             ))}
           </div>
@@ -220,7 +223,7 @@ export function StrategicConsultationConfidentialitySection() {
               className="
                 absolute
                 inset-y-0
-                right-0
+                start-0
 
                 w-[3px]
 
@@ -254,7 +257,7 @@ export function StrategicConsultationConfidentialitySection() {
                   text-[#31545e]
                 "
               >
-                در مرحله اولیه، حداقل اطلاعات لازم کافی است.
+                {content.privacy.title}
               </p>
 
               <p
@@ -269,9 +272,7 @@ export function StrategicConsultationConfidentialitySection() {
                   text-[#718187]
                 "
               >
-                از ارسال اطلاعات بانکی، اسناد هویتی غیرضروری، قراردادهای محرمانه
-                یا فایل‌های گسترده مالی تا زمانی که واقعاً لازم نشده خودداری
-                کنید.
+                {content.privacy.description}
               </p>
             </div>
 
@@ -294,7 +295,7 @@ export function StrategicConsultationConfidentialitySection() {
                 lg:mt-0
               "
             >
-              حداقل داده / بررسی اولیه
+              {content.privacy.label}
             </span>
           </div>
         </div>
@@ -328,7 +329,7 @@ export function StrategicConsultationConfidentialitySection() {
                 text-[#173b45]
               "
             >
-              آماده‌اید موضوع را برای بررسی اولیه ثبت کنید؟
+              {content.final.title}
             </p>
 
             <p
@@ -344,7 +345,7 @@ export function StrategicConsultationConfidentialitySection() {
                 text-[#718187]
               "
             >
-              فقط اطلاعات لازم برای شناخت اولیه مسئله را وارد کنید.
+              {content.final.description}
             </p>
           </div>
 
@@ -358,48 +359,28 @@ export function StrategicConsultationConfidentialitySection() {
               sm:flex-wrap
             "
           >
-            <ActionButton
-              href="#consultation-request"
-              variant="assessment"
-              size="lg"
-              icon={ArrowLeft}
-              className="
-                w-full
-
-                bg-[#fc8502]
-                text-white
-
-                hover:-translate-y-0.5
-                hover:bg-[#ec7d01]
-
-                sm:w-auto
-                sm:min-w-[235px]
-              "
-            >
-              ثبت درخواست مشاوره
-            </ActionButton>
-
-            <ActionButton
-              href="/financial-decision-assessment"
-              variant="secondary"
-              size="lg"
-              className="
-                w-full
-
-                border-[#167394]/15
-                bg-transparent
-                text-[#167394]
-                shadow-none
-
-                hover:-translate-y-0.5
-                hover:border-[#167394]/30
-                hover:bg-[#167394]/[0.035]
-
-                sm:w-auto
-              "
-            >
-              شروع از ارزیابی اولیه
-            </ActionButton>
+            {content.final.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type === "primary" ? "assessment" : "secondary"}
+                size="lg"
+                className={
+                  cta.type === "primary"
+                    ? `
+                  w-full bg-[#fc8502] text-white hover:-translate-y-0.5 hover:bg-[#ec7d01]
+                  sm:w-auto sm:min-w-[235px]
+                `
+                    : `
+                  w-full border-[#167394]/15 bg-transparent text-[#167394] shadow-none
+                  hover:-translate-y-0.5 hover:border-[#167394]/30 hover:bg-[#167394]/[0.035]
+                  sm:w-auto
+                `
+                }
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
           </div>
         </div>
       </div>
@@ -417,7 +398,8 @@ function NextStep({
   title,
   description,
   last,
-}: (typeof NEXT_STEPS)[number] & {
+}: Omit<ConsultationConfidentialityContent["steps"][number], "icon"> & {
+  icon: LucideIcon;
   last: boolean;
 }) {
   return (
@@ -442,7 +424,7 @@ function NextStep({
         ${
           last
             ? ""
-            : "border-b border-[#167394]/[0.08] lg:border-b-0 lg:border-l lg:border-[#167394]/[0.08]"
+            : "border-b border-[#167394]/[0.08] lg:border-b-0 lg:border-e lg:border-[#167394]/[0.08]"
         }
       `}
     >
@@ -474,18 +456,6 @@ function NextStep({
           "
         >
           <Icon strokeWidth={1.6} className="size-[17px]" />
-        </span>
-
-        <span
-          className="
-            text-[12px]
-            font-black
-            tabular-nums
-
-            text-[#167394]/28
-          "
-        >
-          {number}
         </span>
       </div>
 
@@ -538,6 +508,24 @@ function NextStep({
         "
       />
     </article>
+  );
+}
+
+function HighlightedHeading({
+  text,
+  highlight,
+}: {
+  text: string;
+  highlight: string;
+}) {
+  const index = text.indexOf(highlight);
+  if (index < 0) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="text-[#167394]">{highlight}</span>
+      {text.slice(index + highlight.length)}
+    </>
   );
 }
 

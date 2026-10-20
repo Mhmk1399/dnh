@@ -337,7 +337,7 @@ export function HomeHero() {
                 className="
                   group mt-2 inline-flex min-h-10
                   items-center gap-2
-                  rounded-sm
+                 
                   text-[13px] font-semibold
                   text-brand-accent
                   transition-colors duration-200

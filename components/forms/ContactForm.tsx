@@ -77,7 +77,7 @@ export function ContactForm({
     <section
       id="contact-form"
       aria-labelledby="contact-form-title"
-      className="scroll-mt-24 bg-[#f4f8f8] py-16 sm:py-20 lg:py-28"
+      className="scroll-mt-24 bg-page py-16 sm:py-20 lg:py-28"
     >
       <div className="dnh-site-shell mx-auto grid w-full max-w-[1536px] gap-10 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16 lg:px-12 xl:px-16 2xl:px-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
@@ -202,8 +202,7 @@ export function ContactForm({
                 variant="primary"
                 size="md"
                 shape="square"
-                icon={Arrow}
-                loading={pending}
+                 loading={pending}
                 disabled={pending}
                 className="w-full !bg-[#fc8502] !text-[#10242c] hover:!bg-[#d96f00] hover:!text-white focus-visible:!ring-[#fc8502]/35 sm:w-auto sm:min-w-[220px]"
               >

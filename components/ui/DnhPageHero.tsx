@@ -35,11 +35,14 @@ type DnhPageHeroProps = {
   headingHighlight?: string;
   paragraphs: DnhPageHeroParagraph[];
   ctas: DnhPageHeroCta[];
-  media: DnhPageHeroMedia;
+  /** Optional for editorial pages without a dedicated hero image. */
+  media?: DnhPageHeroMedia;
   mediaMode?: "side" | "background";
   expandLabel?: string;
   collapseLabel?: string;
   headingId?: string;
+  /** Compact mode works well for FAQ and other interior landing pages. */
+  compact?: boolean;
 };
 
 function HighlightedHeading({
@@ -49,23 +52,17 @@ function HighlightedHeading({
   heading: string;
   highlight?: string;
 }) {
-  const normalizedHighlight = highlight?.trim() ?? "";
-  const highlightIndex = normalizedHighlight
-    ? heading.indexOf(normalizedHighlight)
-    : -1;
-
-  if (highlightIndex < 0) return <>{heading}</>;
+  const trimmed = highlight?.trim() ?? "";
+  const index = trimmed ? heading.indexOf(trimmed) : -1;
+  if (index < 0) return <>{heading}</>;
 
   return (
     <>
-      {heading.slice(0, highlightIndex)}
+      {heading.slice(0, index)}
       <span className="text-brand-primary">
-        {heading.slice(
-          highlightIndex,
-          highlightIndex + normalizedHighlight.length,
-        )}
+        {heading.slice(index, index + trimmed.length)}
       </span>
-      {heading.slice(highlightIndex + normalizedHighlight.length)}
+      {heading.slice(index + trimmed.length)}
     </>
   );
 }
@@ -83,87 +80,81 @@ function HeroDescription({
   expandLabel: string;
   collapseLabel: string;
 }) {
-  const descriptionRef = useRef<HTMLDivElement>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedHeight, setExpandedHeight] = useState<number>();
-  const [collapsedHeight, setCollapsedHeight] = useState<number>();
-  const [hasOverflow, setHasOverflow] = useState(false);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [fullHeight, setFullHeight] = useState<number>();
+  const [shortHeight, setShortHeight] = useState<number>();
+  const [isOverflowing, setIsOverflowing] = useState(false);
 
   useEffect(() => {
-    const element = descriptionRef.current;
+    const element = innerRef.current;
     if (!element) return;
 
-    const updateHeights = () => {
-      const styles = window.getComputedStyle(element);
-      const lineHeight = Number.parseFloat(styles.lineHeight);
-      const lines = window.innerWidth >= 1024 ? 5 : 4;
-      const nextCollapsedHeight =
-        lineHeight * lines +
-        Number.parseFloat(styles.paddingTop) +
-        Number.parseFloat(styles.paddingBottom);
-
-      setCollapsedHeight(nextCollapsedHeight);
-      setExpandedHeight(element.scrollHeight);
-      setHasOverflow(element.scrollHeight > nextCollapsedHeight + 2);
+    const measure = () => {
+      const style = window.getComputedStyle(element);
+      const lineHeight = Number.parseFloat(style.lineHeight);
+      const fallback = direction === "rtl" ? 28 : 26;
+      const collapsed =
+        (Number.isFinite(lineHeight) ? lineHeight : fallback) *
+        (window.innerWidth >= 1024 ? 5 : 4);
+      const full = element.scrollHeight;
+      setShortHeight(collapsed);
+      setFullHeight(full);
+      setIsOverflowing(full > collapsed + 3);
     };
 
-    updateHeights();
-    const observer = new ResizeObserver(updateHeights);
-    observer.observe(element);
-    window.addEventListener("resize", updateHeights);
-
+    measure();
+    const observer =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(measure)
+        : null;
+    observer?.observe(element);
+    window.addEventListener("resize", measure);
     return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateHeights);
+      observer?.disconnect();
+      window.removeEventListener("resize", measure);
     };
-  }, [paragraphs]);
+  }, [paragraphs, direction]);
 
-  if (!paragraphs.length) return null;
+  if (paragraphs.length === 0) return null;
 
   const descriptionId = `${id}-description`;
+  const height = expanded || !isOverflowing ? fullHeight : shortHeight;
 
   return (
-    <div className="mt-5 max-w-[109ch] border-s border-brand-primary/65 ps-4 sm:mt-7 sm:ps-5 lg:mt-8">
+    <div className="mt-5 max-w-[78ch] border-s-2 border-brand-accent/70 ps-4 sm:mt-7 sm:ps-5 lg:mt-8">
       <div
         id={descriptionId}
-        ref={descriptionRef}
-        className={`space-y-3 overflow-hidden text-start text-[13px] font-normal text-white/76 transition-[max-height,opacity] duration-500 ease-in-out motion-reduce:transition-none sm:text-[15px] lg:text-[16px] ${
-          direction === "rtl" ? "leading-[2]" : "leading-[1.72]"
-        }`}
-        style={{
-          maxHeight:
-            isExpanded || !hasOverflow
-              ? expandedHeight
-                ? `${expandedHeight}px`
-                : undefined
-              : collapsedHeight
-                ? `${collapsedHeight}px`
-                : undefined,
-        }}
+        className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none"
+        style={{ maxHeight: height === undefined ? undefined : `${height}px` }}
       >
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph.id}>{paragraph.text}</p>
-        ))}
+        <div
+          ref={innerRef}
+          className={`space-y-3 text-start text-[13px] font-normal text-white/80 sm:text-[15px] lg:text-[16px] ${
+            direction === "rtl" ? "leading-[2]" : "leading-[1.75]"
+          }`}
+        >
+          {paragraphs.map((paragraph) => (
+            <p key={paragraph.id}>{paragraph.text}</p>
+          ))}
+        </div>
       </div>
-
-      {hasOverflow ? (
+      {isOverflowing && (
         <button
           type="button"
-          aria-expanded={isExpanded}
+          aria-expanded={expanded}
           aria-controls={descriptionId}
-          onClick={() => setIsExpanded((current) => !current)}
-          className="mt-2 inline-flex min-h-11 cursor-pointer items-center gap-2 text-[12px] font-bold text-brand-primary transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary motion-reduce:transition-none sm:mt-3 sm:text-[13px]"
+          onClick={() => setExpanded((current) => !current)}
+          className="mt-2 inline-flex min-h-11 items-center gap-2 text-[12px] font-bold text-brand-accent transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent sm:text-[13px]"
         >
-          <span>{isExpanded ? collapseLabel : expandLabel}</span>
+          {expanded ? collapseLabel : expandLabel}
           <ChevronDown
             aria-hidden="true"
-            className={`size-4 shrink-0 transition-transform duration-500 ease-in-out motion-reduce:transition-none ${
-              isExpanded ? "rotate-180" : "rotate-0"
-            }`}
-            strokeWidth={1.8}
+            size={16}
+            className={`transition-transform duration-300 motion-reduce:transition-none ${expanded ? "rotate-180" : ""}`}
           />
         </button>
-      ) : null}
+      )}
     </div>
   );
 }
@@ -177,11 +168,10 @@ function HeroActions({
   direction: "rtl" | "ltr";
   className?: string;
 }) {
-  if (!ctas.length) return null;
-
+  if (ctas.length === 0) return null;
   return (
     <div
-      className={`grid min-w-0 grid-cols-2 gap-1 lg:flex lg:flex-wrap ${className}`}
+      className={`grid min-w-0 grid-cols-1 gap-2 sm:flex sm:flex-wrap ${className}`}
     >
       {ctas.map((cta) => (
         <ActionButton
@@ -191,10 +181,10 @@ function HeroActions({
           shape="square"
           size="md"
           dir={direction}
-          className={`w-full min-w-0 shadow-none hover:shadow-none sm:min-w-[250px] lg:w-auto ${
+          className={`min-h-12 w-full min-w-0 shadow-none hover:shadow-none sm:w-auto ${
             cta.type === "primary"
-              ? "!bg-brand-primary !text-brand-secondary hover:!bg-white"
-              : "!border-white/35 !bg-transparent !text-white hover:!border-brand-primary hover:!bg-transparent hover:!text-brand-primary"
+              ? "!bg-brand-primary !text-white hover:!bg-brand-accent hover:!text-ink"
+              : "!border-white/30 !bg-white/5 !text-white hover:!border-white/60 hover:!bg-white/10"
           }`}
         >
           {cta.label}
@@ -218,33 +208,38 @@ export function DnhPageHero({
   expandLabel,
   collapseLabel,
   headingId = `${id}-heading`,
+  compact = false,
 }: DnhPageHeroProps) {
-  const isRTL = direction === "rtl";
+  const rtl = direction === "rtl";
+  const resolvedMode = media?.src ? mediaMode : "background";
   const resolvedExpandLabel =
-    expandLabel ??
-    (isRTL ? "مشاهده توضیحات کامل" : "Read the full introduction");
+    expandLabel ?? (rtl ? "مشاهده توضیحات کامل" : "Read more");
   const resolvedCollapseLabel =
-    collapseLabel ?? (isRTL ? "نمایش خلاصه" : "Show less");
+    collapseLabel ?? (rtl ? "نمایش خلاصه" : "Show less");
 
-  const desktopImage = getImageProps({
-    src: media.src,
-    alt: media.alt,
-    fill: true,
-    sizes:
-      mediaMode === "background"
-        ? "100vw"
-        : "(max-width: 1023px) calc(100vw - 24px), 47vw",
-    loading: "eager",
-    fetchPriority: "high",
-    className: "absolute inset-0 block h-full w-full object-cover",
-    style: { objectPosition: media.objectPosition ?? "center" },
-  }).props;
-  const mobileImage = media.mobileSrc
+  const desktopImage = media?.src
+    ? getImageProps({
+        src: media.src,
+        alt: media.alt,
+        fill: true,
+        sizes:
+          resolvedMode === "background"
+            ? "100vw"
+            : "(max-width: 1023px) calc(100vw - 24px), 47vw",
+        loading: "eager",
+        fetchPriority: "high",
+        className: "absolute inset-0 block h-full w-full object-cover",
+        style: { objectPosition: media.objectPosition ?? "center" },
+      }).props
+    : null;
+
+  const mobileImage = media?.mobileSrc
     ? getImageProps({
         src: media.mobileSrc,
         alt: media.alt,
         fill: true,
-        sizes: mediaMode === "background" ? "100vw" : "(max-width: 767px) 100vw",
+        sizes:
+          resolvedMode === "background" ? "100vw" : "(max-width: 767px) 100vw",
         loading: "eager",
         fetchPriority: "high",
         className: "absolute inset-0 block h-full w-full object-cover",
@@ -255,56 +250,42 @@ export function DnhPageHero({
       }).props
     : null;
 
-  const preload = mobileImage ? (
-    <>
-      <link
-        rel="preload"
-        as="image"
-        media="(max-width: 767px)"
-        imageSrcSet={mobileImage.srcSet}
-        imageSizes={mobileImage.sizes}
-      />
-      <link
-        rel="preload"
-        as="image"
-        media="(min-width: 768px)"
-        imageSrcSet={desktopImage.srcSet}
-        imageSizes={desktopImage.sizes}
-      />
-    </>
-  ) : (
-    <link
-      rel="preload"
-      as="image"
-      imageSrcSet={desktopImage.srcSet}
-      imageSizes={desktopImage.sizes}
-    />
-  );
+  const renderImage = () =>
+    desktopImage && (
+      <picture className="absolute inset-0 block h-full w-full">
+        {mobileImage && (
+          <source
+            media="(max-width: 767px)"
+            srcSet={mobileImage.srcSet}
+            sizes={mobileImage.sizes}
+          />
+        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img {...desktopImage} alt={media?.alt ?? ""} />
+      </picture>
+    );
 
-  const copy = (
+  const content = (
     <div className="min-w-0">
-      <header className="max-w-[58rem] text-start">
-        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold leading-7 text-white sm:text-[13px]">
+      <header className="max-w-[60rem] text-start">
+        <p className="flex items-center gap-3 text-[12px] font-bold leading-7 text-white/85 sm:text-[13px]">
           <span
             aria-hidden="true"
-            className="h-[2px] w-9 shrink-0 bg-brand-primary"
+            className="h-[2px] w-8 shrink-0 bg-brand-accent"
           />
-          <span>{eyebrow}</span>
-        </div>
-
+          {eyebrow}
+        </p>
         <h1
           id={headingId}
-          className={`mt-4 max-w-[60ch] text-[clamp(1.75rem,7vw,1.5rem)] font-black sm:mt-6 lg:text-[clamp(2.8rem,4vw,2.7rem)] ${
-            isRTL ? "leading-[1.5]" : "leading-[1.08] tracking-[-0.035em]"
-          }`}
+          className={`mt-5 max-w-[22ch] text-pretty font-black [overflow-wrap:break-word] ${
+            compact
+              ? "text-[clamp(1.85rem,4.5vw,3.25rem)]"
+              : "text-[clamp(1.85rem,5vw,3.4rem)]"
+          } ${rtl ? "leading-[1.5]" : "leading-[1.17] tracking-[-.025em]"}`}
         >
-          <HighlightedHeading
-            heading={heading}
-            highlight={headingHighlight}
-          />
+          <HighlightedHeading heading={heading} highlight={headingHighlight} />
         </h1>
       </header>
-
       <HeroDescription
         id={id}
         paragraphs={paragraphs}
@@ -323,55 +304,85 @@ export function DnhPageHero({
       aria-labelledby={headingId}
       className="relative isolate overflow-hidden border-b border-white/10 bg-brand-secondary text-white"
     >
-      {preload}
-
-      {mediaMode === "background" ? (
-        <picture className="absolute inset-0 block h-full w-full">
-          {mobileImage ? (
-            <source
+      {desktopImage &&
+        (mobileImage ? (
+          <>
+            <link
+              rel="preload"
+              as="image"
               media="(max-width: 767px)"
-              srcSet={mobileImage.srcSet}
-              sizes={mobileImage.sizes}
+              imageSrcSet={mobileImage.srcSet}
+              imageSizes={mobileImage.sizes}
             />
-          ) : null}
-          <img {...desktopImage} alt={media.alt} />
-        </picture>
-      ) : null}
+            <link
+              rel="preload"
+              as="image"
+              media="(min-width: 768px)"
+              imageSrcSet={desktopImage.srcSet}
+              imageSizes={desktopImage.sizes}
+            />
+          </>
+        ) : (
+          <link
+            rel="preload"
+            as="image"
+            imageSrcSet={desktopImage.srcSet}
+            imageSizes={desktopImage.sizes}
+          />
+        ))}
 
-      {mediaMode === "background" ? (
+      {resolvedMode === "background" && (
         <>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,24,27,.72),rgba(20,24,27,.96)_82%)] lg:hidden"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 hidden lg:block"
-            style={{
-              backgroundImage: isRTL
-                ? "linear-gradient(to left,rgba(20,24,27,.98) 4%,rgba(20,24,27,.91) 42%,rgba(20,24,27,.2) 78%,rgba(20,24,27,.08))"
-                : "linear-gradient(to right,rgba(20,24,27,.98) 4%,rgba(20,24,27,.91) 42%,rgba(20,24,27,.2) 78%,rgba(20,24,27,.08))",
-            }}
-          />
+          {desktopImage ? (
+            renderImage()
+          ) : (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 77% 29%,rgba(34,129,160,.28),transparent 36%),radial-gradient(circle at 16% 86%,rgba(209,141,67,.14),transparent 40%),linear-gradient(115deg,#061723 0%,#10374b 60%,#081e2d 100%)",
+              }}
+            />
+          )}
+          {desktopImage && (
+            <>
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(9,22,36,.63),rgba(9,22,36,.89))] lg:hidden"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 hidden lg:block"
+                style={{
+                  backgroundImage: `linear-gradient(${rtl ? "to left" : "to right"},rgba(9,22,36,.94),rgba(9,22,36,.77) 48%,rgba(9,22,36,.16))`,
+                }}
+              />
+            </>
+          )}
         </>
-      ) : null}
+      )}
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.055]"
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
         style={{
           backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.45) 1px,transparent 1px)",
+            "linear-gradient(to right,rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.28) 1px,transparent 1px)",
           backgroundSize: "88px 88px",
-          maskImage:
-            "linear-gradient(to bottom,black,transparent 82%),linear-gradient(to right,transparent,black 40%,black 70%,transparent)",
         }}
       />
 
-      {mediaMode === "background" ? (
-        <div className="dnh-site-shell relative z-10 flex min-h-svh items-center pb-10 pt-[calc(7.5rem+env(safe-area-inset-top))] sm:pb-14 sm:pt-[calc(8.75rem+env(safe-area-inset-top))] lg:pb-[clamp(4rem,8svh,7rem)] lg:pt-[calc(8.75rem+env(safe-area-inset-top))]">
-          <div className="w-full lg:max-w-[66%]">
-            {copy}
+      {resolvedMode === "background" ? (
+        <div
+          className={`dnh-site-shell relative z-10 flex min-w-0 items-center py-12 pt-[calc(8rem+env(safe-area-inset-top))] sm:pt-[calc(9rem+env(safe-area-inset-top))] ${
+            compact
+              ? "min-h-[470px] sm:min-h-[500px] lg:min-h-[530px] lg:pb-16"
+              : "min-h-svh lg:pb-[clamp(4rem,8svh,7rem)]"
+          }`}
+        >
+          <div className="w-full min-w-0 lg:max-w-[68%]">
+            {content}
             <HeroActions
               ctas={ctas}
               direction={direction}
@@ -380,39 +391,22 @@ export function DnhPageHero({
           </div>
         </div>
       ) : (
-        <div className="dnh-site-shell relative z-10 grid min-h-svh w-full min-w-0 grid-cols-[minmax(0,1fr)] gap-8 pb-10 pt-[calc(7.5rem+env(safe-area-inset-top))] sm:gap-10 sm:pb-14 sm:pt-[calc(8.75rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.06fr)_minmax(400px,0.94fr)] lg:items-center lg:gap-[clamp(2.5rem,5vw,6rem)] lg:pb-[clamp(4rem,8svh,7rem)] lg:pt-[calc(8.75rem+env(safe-area-inset-top))]">
+        <div
+          className={`dnh-site-shell relative z-10 grid w-full min-w-0 grid-cols-[minmax(0,1fr)] gap-8 pb-10 pt-[calc(8rem+env(safe-area-inset-top))] sm:gap-10 sm:pb-14 sm:pt-[calc(9rem+env(safe-area-inset-top))] lg:grid-cols-[minmax(0,1.06fr)_minmax(400px,0.94fr)] lg:items-center lg:gap-[clamp(2.5rem,5vw,6rem)] ${compact ? "lg:min-h-[520px]" : "min-h-svh"}`}
+        >
           <div className="contents min-w-0 lg:col-start-1 lg:row-start-1 lg:block">
-            <div className="order-1">{copy}</div>
+            <div className="order-1 min-w-0">{content}</div>
             <HeroActions
               ctas={ctas}
               direction={direction}
-              className="order-3 mt-0 lg:mt-9"
+              className="order-3 lg:mt-8"
             />
           </div>
-
-          <figure className="relative order-2 block aspect-[4/3] w-full min-w-0 max-w-full overflow-hidden border border-white/15 bg-brand-secondary sm:aspect-[16/10] sm:min-h-[420px] lg:col-start-2 lg:row-start-1 lg:h-[min(760px,76svh)] lg:min-h-[560px] lg:aspect-auto">
-            <picture className="absolute inset-0 block h-full w-full">
-              {mobileImage ? (
-                <source
-                  media="(max-width: 767px)"
-                  srcSet={mobileImage.srcSet}
-                  sizes={mobileImage.sizes}
-                />
-              ) : null}
-              <img {...desktopImage} alt={media.alt} />
-            </picture>
+          <figure className="relative order-2 block aspect-[4/3] w-full min-w-0 overflow-hidden border border-white/15 sm:aspect-[16/10] lg:col-start-2 lg:row-start-1 lg:h-[min(720px,74svh)] lg:min-h-[500px] lg:aspect-auto">
+            {renderImage()}
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(to_top,var(--dnh-secondary),transparent_58%)] opacity-70 lg:hidden"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 hidden lg:block"
-              style={{
-                backgroundImage: isRTL
-                  ? "linear-gradient(to left,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)"
-                  : "linear-gradient(to right,color-mix(in srgb,var(--dnh-secondary) 42%,transparent),transparent 42%)",
-              }}
+              className="absolute inset-0 bg-[linear-gradient(to_top,rgba(9,22,36,.35),transparent_55%)]"
             />
           </figure>
         </div>
