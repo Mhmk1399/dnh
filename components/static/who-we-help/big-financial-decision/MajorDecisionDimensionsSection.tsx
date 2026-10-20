@@ -179,12 +179,6 @@ export function MajorDecisionDimensionsSection({
                 <span className="text-[9px] font-semibold uppercase tracking-[.18em] text-page/40 sm:text-[10px]">
                   {locale === "fa" ? "ساختار تصمیم" : "Decision structure"}
                 </span>
-                <bdi
-                  dir="ltr"
-                  className="text-[28px] font-black leading-none text-brand-primary sm:text-[36px]"
-                >
-                  {String(activeIndex + 1).padStart(2, "0")}/05
-                </bdi>
               </div>
             </div>
           </div>
@@ -219,12 +213,6 @@ export function MajorDecisionDimensionsSection({
                               {item.title}
                             </h3>
                           </div>
-                          <bdi
-                            dir="ltr"
-                            className="text-[30px] font-black leading-none text-brand-primary sm:text-[36px]"
-                          >
-                            {String(item.number ?? index + 1).padStart(2, "0")}
-                          </bdi>
                         </div>
 
                         <p className="mt-4 max-w-[65ch] text-[16px] leading-[1.9] text-ink-muted sm:text-[17px]">

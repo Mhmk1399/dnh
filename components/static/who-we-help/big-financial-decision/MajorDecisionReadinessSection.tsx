@@ -57,15 +57,8 @@ export function MajorDecisionReadinessSection({
           {rows.map((row, index) => (
             <li
               key={`${section.id}-row-${index}`}
-              className={`group relative grid min-w-0 gap-4 border-b py-6 transition-colors duration-200 sm:grid-cols-[72px_minmax(0,.7fr)_minmax(0,1.3fr)] sm:items-start sm:gap-6 sm:px-4 sm:py-7 motion-reduce:transition-none ${dark ? "border-page/15 hover:bg-page/[.035]" : "border-line hover:bg-brand-primary/[.055]"}`}
+              className={`group relative grid min-w-0 gap-4 border-b py-6 transition-colors duration-200 sm:grid-cols-2 sm:items-start sm:gap-6 sm:px-4 sm:py-7 motion-reduce:transition-none ${dark ? "border-page/15 hover:bg-page/[.035]" : "border-line hover:bg-brand-primary/[.055]"}`}
             >
-              <bdi
-                dir="ltr"
-                className="text-start text-[28px] font-black leading-none text-brand-primary sm:text-[34px]"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </bdi>
-
               <h3
                 className={`text-[17px] font-black leading-[1.8] sm:text-[18px] ${dark ? "text-page" : "text-ink"}`}
               >

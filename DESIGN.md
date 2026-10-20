@@ -3,10 +3,10 @@ version: alpha
 name: DNH
 description: Persian wealth advisory with a clear architectural approach to navigation.
 colors:
-  primary: "#167394"
-  secondary: "#157293"
-  accent: "#fc8502"
-  page: "#ffffff"
+  primary: "#c6a66b"
+  secondary: "#14181b"
+  accent: "#167394"
+  page: "#f7f4ef"
 typography:
   sans:
     fontFamily: "Estedad, sans-serif"
@@ -78,6 +78,14 @@ Icons follow the installed Lucide stroke style (1.5–1.8), normally 18–22px. 
 PWA and favicon assets use a purpose-built square DNH mark: primary/secondary teal background, white architectural bars, and a small orange accent. Regenerate them with `npm run icons:pwa` instead of manually exporting separate sizes.
 
 Global scrollbars are styled in `app/globals.css`: the track uses the dark petroleum teal shell, while the thumb uses a glass-like light teal highlight with subtle orange active feedback. Keep the standards-based `scrollbar-color` fallback and forced-colors reset whenever adjusting the WebKit treatment.
+
+## Public page heroes
+
+`components/static/DNH/wealth-architecture/WealthPageHero.tsx` is the approved visual reference for every public page hero except Home. `components/ui/DnhPageHero.tsx` carries that system to the remaining routes. Keep the secondary near-black surface, white copy, gold eyebrow rule and highlighted heading phrase, square ActionButtons, shared shell alignment, and the same responsive type and spacing rhythm.
+
+The hero system has two intentional media modes. Use `side` when the image is a distinct editorial panel; on phones the reading order is heading and description, image, then actions. Use `background` when the route already depends on a full-bleed identity image; preserve the full image and add a direction-aware scrim so RTL copy remains readable from the right and LTR copy from the left. Both modes use the same description width (up to 109ch), measured mobile/desktop collapse with an accessible read-more control, reduced-motion behavior, and a single eager LCP image.
+
+Do not rebuild bespoke dashboards, metric panels or decorative diagrams inside page heroes. Keep route-specific meaning in the actual image and content, while the hierarchy and interaction stay shared.
 
 ## Do's and Don'ts
 

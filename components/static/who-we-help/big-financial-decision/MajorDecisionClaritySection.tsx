@@ -119,7 +119,7 @@ export function MajorDecisionClaritySection({
       />
 
       <div className="dnh-site-shell relative z-10">
-        <header className="mx-auto max-w-[1120px] text-center">
+        <header className="mx-auto max-w-[1120px] flex flex-col text-center">
           <div className="flex justify-center">
             <MajorDecisionEyebrow section={section} />
           </div>
@@ -127,7 +127,7 @@ export function MajorDecisionClaritySection({
             <MajorDecisionHeading section={section} />
           </div>
           {section.intro ? (
-            <p className="mx-auto mt-5 max-w-[92ch] text-[16px] leading-[1.95] text-ink-muted sm:text-[17px]">
+            <p className="mx-auto mt-5 text-center text-[16px] leading-[1.95] text-ink-muted sm:text-[17px]">
               {section.intro}
             </p>
           ) : null}
@@ -136,16 +136,7 @@ export function MajorDecisionClaritySection({
         <div
           className={`relative mt-10 sm:mt-12 ${complexity ? "bg-brand-secondary p-3 sm:p-5 lg:p-7" : ""}`}
         >
-          {complexity ? (
-            <div
-              aria-hidden="true"
-              className="mb-5 flex items-center gap-4 border-b border-page/15 pb-5 text-page"
-            >
-              <span className="flex size-12 items-center justify-center border border-brand-primary/60 text-brand-primary">
-                <Waypoints size={24} strokeWidth={1.6} />
-              </span>
-            </div>
-          ) : null}
+   
 
           <ol
             className={`grid min-w-0 gap-4 ${gridClass} ${complexity ? "gap-px bg-page/15" : ""}`}
@@ -173,22 +164,16 @@ export function MajorDecisionClaritySection({
                     >
                       <Icon size={23} strokeWidth={1.6} />
                     </span>
-                    <bdi
-                      dir="ltr"
-                      className={`text-[28px] font-black leading-none ${complexity ? "text-page/12" : "text-brand-primary/55"}`}
-                    >
-                      {String(item.number ?? index + 1).padStart(2, "0")}
-                    </bdi>
                   </div>
 
                   <div className="mt-8">
                     <h3
-                      className={`text-[19px] font-black leading-[1.65] sm:text-[20px] ${complexity ? "text-page" : "text-ink"}`}
+                      className={`text-[19px] font-black leading-[1.65] sm:text-[16px] ${complexity ? "text-page" : "text-ink"}`}
                     >
                       {item.title}
                     </h3>
                     <p
-                      className={`mt-4 text-[15px] leading-[1.9] sm:text-[16px] ${complexity ? "text-page/70" : "text-ink-muted"}`}
+                      className={`mt-4 text-[15px] leading-[1.9] sm:text-[14px] ${complexity ? "text-page/70" : "text-ink-muted"}`}
                     >
                       {item.description}
                     </p>

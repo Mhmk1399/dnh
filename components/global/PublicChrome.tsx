@@ -19,7 +19,7 @@ export function PublicChrome({ children }: { children: React.ReactNode }) {
       <Navbar />
       <FloatingContact
         phone="+98XXXXXXXXXX"
-        phoneDisplay="Û°Û²Û± XXXX XXXX"
+        phoneDisplay="09120000000"
         whatsappNumber="+989XXXXXXXXX"
         email="info@your-domain.com"
       />

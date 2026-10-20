@@ -151,7 +151,7 @@ export const SERVICE_ITEMS: MegaItem[] = [
   {
     title: "استراتژی ثروت خصوصی",
     description:
-      "ساختن تصویری منسجم‌تر از ثروت، اهداف، نقدشوندگی، ریسک و مسیرهای قابل بررسی.",
+      "ساختن تصویری منسجم‌تر از ثروت، اهداف، ریسک و مسیرهای قابل بررسی.",
     href: "/services/private-wealth-strategy",
     icon: "wealth",
   },
@@ -183,7 +183,7 @@ export const SERVICE_ITEMS: MegaItem[] = [
   {
     title: "مدیریت ریسک و حفاظت از ثروت",
     description:
-      "شناخت ریسک‌های مهم و ایجاد تصویری ساختاریافته از اولویت‌های حفاظتی.",
+      "شناخت رGیسک‌های مهم و ایجاد تصویری ساختاریافته از اولویت‌های حفاظتی.",
     href: "/services/risk-management-wealth-protection",
     icon: "risk",
   },
@@ -191,7 +191,7 @@ export const SERVICE_ITEMS: MegaItem[] = [
   {
     title: "نشست‌های مدیران",
     description:
-      "بررسی متمرکز موضوعات مهم برای مدیران ارشد، هیئت‌مدیره و تصمیم‌گیرندگان کلیدی.",
+      "بررسی متمرکز موضوعات مهم برای مدیران ارشد، هیئت‌مدیره و تصمیم‌گیرندگان  .",
     href: "/services/executive-briefings",
     icon: "briefing",
   },
@@ -280,7 +280,7 @@ export const MEGA_MENUS: Record<
     eyebrow: "سیستم تصمیم‌سازی",
 
     headline:
-      "ثروت را فقط به‌صورت دارایی نبینید؛\nساختار پشت آن را ببینید.",
+      "ثروت را فقط به‌صورت دارایی نبینید؛ساختار پشت آن را ببینید.",
 
     description:
       "معماری ثروت، چارچوب DNH و میز هوشمندی، سه بخش اصلی سیستم فکری و تحلیلی DNH هستند.",

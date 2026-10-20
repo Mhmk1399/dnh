@@ -192,10 +192,6 @@ export function FloatingContact({
           }}
           className="group/intro relative w-full border border-[color-mix(in_srgb,var(--dnh-primary)_20%,transparent)] bg-[color-mix(in_srgb,var(--dnh-bg-page)_94%,transparent)] px-4 py-3.5 text-start shadow-[0_16px_40px_color-mix(in_srgb,var(--dnh-text)_12%,transparent)] backdrop-blur-[18px] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-brand-primary/35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary motion-reduce:transition-none"
         >
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-0 start-0 w-[3px] bg-brand-accent"
-          />
           <span className="flex items-start gap-3">
             <span
               aria-hidden="true"
@@ -217,10 +213,6 @@ export function FloatingContact({
               className="mt-1 shrink-0 text-brand-primary transition-transform duration-300 group-hover/intro:-translate-y-0.5"
             />
           </span>
-          <span
-            aria-hidden="true"
-            className="absolute -bottom-[8px] right-[26px] size-[14px] rotate-45 border-b border-r border-line bg-page"
-          />
         </button>
       </div>
 
@@ -298,15 +290,6 @@ export function FloatingContact({
       >
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right,rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.5) 1px,transparent 1px)",
-            backgroundSize: "14px 14px",
-          }}
-        />
-        <span
-          aria-hidden="true"
           className="absolute start-0 top-0 h-[3px] w-5 bg-brand-accent"
         />
         <span className="relative z-10 transition-transform duration-300 group-hover/contact-trigger:scale-[1.04]">
@@ -316,12 +299,6 @@ export function FloatingContact({
             <MessageCircleMore size={22} strokeWidth={1.7} aria-hidden="true" />
           )}
         </span>
-        {!open && (
-          <span
-            aria-hidden="true"
-            className="absolute end-[11px] top-[11px] size-2 bg-brand-accent shadow-[0_0_0_3px_color-mix(in_srgb,var(--dnh-primary)_85%,transparent)]"
-          />
-        )}
       </button>
     </div>
   );

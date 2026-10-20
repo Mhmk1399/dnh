@@ -1,6 +1,50 @@
-import Image from "next/image";
-import { Building2 } from "lucide-react";
+import { DnhPageHero } from "@/components/ui/DnhPageHero";
 import type { SiteLocale } from "@/lib/site-language";
-import { HoldingActions } from "./HoldingShared";
+
 import type { HoldingSection } from "./holdingTypes";
-export function HoldingHero({ section, locale, rtl }: { section: HoldingSection; locale: SiteLocale; rtl: boolean }) { const p = section.paragraphs ?? []; return <section id={section.id} aria-labelledby={`${section.id}-title`} className="relative isolate overflow-hidden bg-brand-secondary text-page"><Image src="/assets/images/complex-financial-structure.png" alt={locale === "fa" ? "معماری مالی و سرمایه یک گروه شرکتی" : "Financial and capital architecture of a corporate group"} fill priority sizes="100vw" className="object-cover opacity-40" /><div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--dnh-secondary)_35%,transparent),var(--dnh-secondary)_96%)]" /><div className="dnh-site-shell relative z-10 pb-16 pt-32 sm:pt-40 lg:pb-20"><div className="grid items-end gap-10 lg:grid-cols-[1.12fr_.88fr] lg:gap-16"><div><p className="flex items-center gap-3 text-sm font-black text-brand-primary"><span className="h-px w-10 bg-current" />{section.eyebrow}</p><h1 id={`${section.id}-title`} className="mt-5 max-w-[25ch] text-pretty text-[clamp(2.25rem,5vw,4.4rem)] font-black leading-[1.25]">{section.heading}</h1><div className="mt-6 space-y-3 text-base leading-[1.95] text-page/78 sm:text-lg">{p.slice(0, 2).map((t) => <p key={t}>{t}</p>)}</div><HoldingActions section={section} rtl={rtl} dark /></div><div className="border border-page/15 bg-brand-secondary/75 p-6 backdrop-blur-sm"><div className="mb-5 flex size-12 items-center justify-center bg-brand-primary text-brand-secondary"><Building2 aria-hidden="true" size={24} /></div><div className="divide-y divide-page/12">{p.slice(2).map((t, i) => <p key={t} className="py-3 text-[15px] font-semibold leading-7 text-page/80"><span className="me-3 text-brand-primary">{String(i + 1).padStart(2, "0")}</span>{t}</p>)}</div></div></div></div></section>; }
+
+const heroRoutes = [
+  "/financial-decision-assessment",
+  "/request-strategic-consultation",
+] as const;
+
+export function HoldingHero({
+  section,
+  locale,
+  rtl,
+}: {
+  section: HoldingSection;
+  locale: SiteLocale;
+  rtl: boolean;
+}) {
+  const words = section.heading.trim().split(/\s+/);
+
+  return (
+    <DnhPageHero
+      id={section.id}
+      direction={rtl ? "rtl" : "ltr"}
+      lang={locale === "fa" ? "fa-IR" : "en"}
+      eyebrow={section.eyebrow}
+      heading={section.heading}
+      headingHighlight={words.slice(-Math.min(rtl ? 5 : 4, words.length)).join(" ")}
+      paragraphs={(section.paragraphs ?? []).map((text, index) => ({
+        id: `${section.id}-paragraph-${index + 1}`,
+        text,
+      }))}
+      ctas={(section.ctas ?? []).map((cta, index) => ({
+        id: `${section.id}-cta-${index + 1}`,
+        label: cta.label,
+        type: index === 0 ? "primary" : "secondary",
+        href: heroRoutes[index] ?? "/request-strategic-consultation",
+      }))}
+      media={{
+        src: "/assets/images/complex-financial-structure.png",
+        alt:
+          locale === "fa"
+            ? "معماری مالی و سرمایه یک گروه شرکتی"
+            : "Financial and capital architecture of a corporate group",
+      }}
+      mediaMode="background"
+    />
+  );
+}
