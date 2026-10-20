@@ -3,7 +3,10 @@ import { MajorDecisionClaritySection } from "./MajorDecisionClaritySection";
 import { MajorDecisionDimensionsSection } from "./MajorDecisionDimensionsSection";
 import { MajorDecisionDnhSection } from "./MajorDecisionDnhSection";
 import { MajorDecisionFinalCtaSection } from "./MajorDecisionFinalCtaSection";
-import { MajorDecisionReadinessSection } from "./MajorDecisionReadinessSection";
+import { MajorDecisionOptionsLedgerSection } from "./MajorDecisionOptionsLedgerSection";
+import { MajorDecisionDownsideBoundarySection } from "./MajorDecisionDownsideBoundarySection";
+import { MajorDecisionLiquidityRunwaySection } from "./MajorDecisionLiquidityRunwaySection";
+import { MajorDecisionScenarioFieldSection } from "./MajorDecisionScenarioFieldSection";
 import { MajorFinancialDecisionHero } from "./MajorFinancialDecisionHero";
 import type {
   MajorDecisionDocument,
@@ -37,11 +40,32 @@ function renderSection(
         />
       );
     case "options-tradeoffs":
+      return (
+        <MajorDecisionOptionsLedgerSection
+          key={section.id}
+          section={section}
+          rtl={rtl}
+        />
+      );
     case "downside-risk":
+      return (
+        <MajorDecisionDownsideBoundarySection
+          key={section.id}
+          section={section}
+          rtl={rtl}
+        />
+      );
     case "liquidity-timing":
+      return (
+        <MajorDecisionLiquidityRunwaySection
+          key={section.id}
+          section={section}
+          rtl={rtl}
+        />
+      );
     case "scenario-analysis":
       return (
-        <MajorDecisionReadinessSection
+        <MajorDecisionScenarioFieldSection
           key={section.id}
           section={section}
           rtl={rtl}

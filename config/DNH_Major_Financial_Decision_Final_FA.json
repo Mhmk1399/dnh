@@ -311,7 +311,7 @@
       "id": "liquidity-and-timing-matter",
       "type": "liquidity-timing",
       "eyebrow": "نقدینگی و زمان؛ دو متغیری که اغلب دست‌کم گرفته می‌شوند",
-      "english_label": "Liquidity & Timing Matter",
+      "english_label": "اهمیت نقدینگی و زمان‌بندی",
       "heading": "یک تصمیم می‌تواند از نظر ارزش جذاب باشد اما از نظر زمان‌بندی برای ساختار شما مناسب نباشد.",
       "paragraphs": [
         "در بسیاری از تصمیم‌های بزرگ، مسئله فقط «چقدر سرمایه داریم؟» نیست.",
@@ -345,7 +345,7 @@
       "id": "think-in-scenarios-not-certainties",
       "type": "scenario-analysis",
       "eyebrow": "آینده را پیش‌بینی نکنید؛ چند آینده ممکن را بررسی کنید",
-      "english_label": "Think in Scenarios, Not Certainties",
+      "english_label": "به‌جای قطعیت، سناریوهای مختلف را بررسی کنید",
       "heading": "تصمیم بزرگ نباید فقط زمانی منطقی باشد که همه چیز طبق انتظار پیش برود.",
       "intro": "پیش‌بینی دقیق آینده ممکن نیست؛ اما می‌توان بررسی کرد که یک تصمیم در شرایط متفاوت چگونه رفتار خواهد کرد.",
       "items": [
