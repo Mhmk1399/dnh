@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,6 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
 import type { SiteDirection } from "@/lib/site-language";
 import type { AssessmentFormContent } from "./assessmentTypes";
@@ -172,18 +173,18 @@ export function AssessmentFormSection({
                 {content.more_label}
               </p>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-                <a
+                <Link
                   href={content.privacy_link.href}
                   className="text-[11px] font-bold text-brand-primary hover:text-brand-accent"
                 >
                   {content.privacy_link.label}
-                </a>
-                <a
+                </Link>
+                <Link
                   href={content.after_link.href}
                   className="text-[11px] font-bold text-brand-primary hover:text-brand-accent"
                 >
                   {content.after_link.label}
-                </a>
+                </Link>
               </div>
             </div>
           </aside>
@@ -199,7 +200,12 @@ export function AssessmentFormSection({
               <form onSubmit={handleSubmit} noValidate>
                 <div className="flex flex-col gap-4 border-b border-line px-5 pb-5 pt-7 sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
                   <div>
-                 
+                    <bdi
+                      dir="ltr"
+                      className="text-[9px] font-black tracking-[0.14em] text-brand-primary/55"
+                    >
+                      {counter}
+                    </bdi>
                     <h3 className="mt-2 text-[17px] font-black text-ink sm:text-[19px]">
                       {content.steps[step]?.title}
                     </h3>
@@ -568,6 +574,20 @@ function ProgressStep({
     <div
       className={`relative flex items-center gap-4 border-b border-line px-5 py-4 sm:px-6 ${active ? "bg-brand-primary/[0.045]" : ""}`}
     >
+      <div className="shrink-0">
+        <span
+          aria-hidden="true"
+          className={`grid size-7 place-items-center border text-[9px] font-black ${
+            completed
+              ? "border-brand-primary bg-brand-primary text-white"
+              : active
+                ? "border-brand-accent bg-brand-accent text-white"
+                : "border-line bg-surface-soft text-ink-muted"
+          }`}
+        >
+          {completed ? <Check size={13} strokeWidth={2.2} /> : index + 1}
+        </span>
+      </div>
       <div>
         <p
           className={`mt-1 text-[11px] font-black ${active ? "text-brand-primary" : "text-ink"}`}

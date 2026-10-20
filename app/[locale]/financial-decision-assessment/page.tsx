@@ -33,7 +33,7 @@ const page = async ({ params }: PageProps) => {
         content={sections.process}
         direction={direction}
       />
-      {/* <AssessmentFormSection content={sections.form} direction={direction} /> */}
+      <AssessmentFormSection content={sections.form} direction={direction} />
       <PrivacyConfidentialitySection
         content={sections.privacy}
         direction={direction}

@@ -134,7 +134,17 @@ export function WhyAssessmentSection({
             </div>
           </div>
         </div>
- 
+
+        <div className="mt-6 flex items-start gap-3 border border-line bg-white px-5 py-4 sm:px-6">
+          <ShieldCheck
+            aria-hidden="true"
+            className="mt-0.5 size-4 shrink-0 text-brand-primary"
+            strokeWidth={1.5}
+          />
+          <p className="text-[11px] font-medium leading-[2] text-ink-muted">
+            {content.privacy_note}
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -154,7 +164,6 @@ function Eyebrow({ children }: { children: string }) {
 function HighlightedText({
   text,
   highlight,
-  accent = false,
 }: {
   text: string;
   highlight: string;
@@ -165,9 +174,7 @@ function HighlightedText({
   return (
     <>
       {text.slice(0, index)}
-      <span className={accent ? "text-brand-primary" : "text-brand-primary"}>
-        {highlight}
-      </span>
+      <span className="text-brand-primary">{highlight}</span>
       {text.slice(index + highlight.length)}
     </>
   );

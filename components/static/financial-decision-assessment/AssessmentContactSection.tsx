@@ -3,7 +3,6 @@ import {
   ArrowRight,
   ArrowUpLeft,
   ArrowUpRight,
-  ShieldCheck,
 } from "lucide-react";
 
 import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
@@ -71,6 +70,7 @@ export function AssessmentContactSection({
                   variant={cta.type === "primary" ? "assessment" : "secondary"}
                   size="lg"
                   shape="square"
+                  icon={Arrow}
                   className={
                     cta.type === "primary"
                       ? "w-full bg-brand-primary text-white shadow-none hover:bg-brand-accent sm:min-w-[280px]"

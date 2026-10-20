@@ -1,6 +1,4 @@
 import {
-  ArrowLeft,
-  ArrowRight,
   ClipboardCheck,
   FileSearch,
   MessageSquare,
@@ -10,7 +8,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { ActionButton } from "@/components/ui/ActionButton";
 import type { SiteDirection } from "@/lib/site-language";
 import type { AfterSubmissionContent } from "./assessmentTypes";
 
@@ -34,8 +31,6 @@ export function AfterSubmissionSection({
   content: AfterSubmissionContent;
   direction: SiteDirection;
 }) {
-  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
-
   return (
     <section
       id={content.id}
@@ -73,12 +68,6 @@ export function AfterSubmissionSection({
           </div>
           <div className="flex flex-col gap-4 border-b border-line px-5 pb-5 pt-7 sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
             <div>
-              <bdi
-                dir="ltr"
-                className="text-[11px] font-black tracking-[0.19em] text-brand-primary/55"
-              >
-                {content.board.eyebrow}
-              </bdi>
               <h3 className="mt-2 text-[16px] font-black text-ink sm:text-[18px]">
                 {content.board.title}
               </h3>
@@ -101,16 +90,8 @@ export function AfterSubmissionSection({
                 return (
                   <li
                     key={step.id}
-                    className="grid gap-4 border-b border-line p-5 last:border-b-0 sm:grid-cols-[4rem_0.75fr_1.25fr] sm:items-center sm:p-6 lg:px-8"
+                    className="grid gap-4 border-b border-line p-5 last:border-b-0 sm:grid-cols-2 sm:items-center sm:p-6 lg:px-8"
                   >
-                    <div>
-                      <bdi
-                        dir="ltr"
-                        className="mt-1 block text-[8px] font-black tracking-[0.15em] text-brand-primary/40"
-                      >
-                        {step.code}
-                      </bdi>
-                    </div>
                     <div className="flex items-center gap-3">
                       <span className="grid size-9 place-items-center border border-line bg-surface-soft text-brand-primary">
                         <Icon size={16} />
@@ -128,12 +109,6 @@ export function AfterSubmissionSection({
             </ol>
 
             <div className="bg-surface-soft/45 px-5 py-6 sm:px-7 lg:px-8">
-              <bdi
-                dir="ltr"
-                className="text-[11px] font-black tracking-[0.18em] text-brand-primary/55"
-              >
-                {content.board.paths_eyebrow}
-              </bdi>
               <h3 className="mt-2 text-[15px] font-black leading-[1.9] text-ink">
                 {content.board.paths_title}
               </h3>
@@ -155,12 +130,6 @@ export function AfterSubmissionSection({
                           }
                         />
                         <div>
-                          <bdi
-                            dir="ltr"
-                            className="text-[8px] font-black tracking-[0.14em] text-ink-muted/55"
-                          >
-                            {path.code}
-                          </bdi>
                           <h4 className="mt-1 text-[12px] font-black text-ink">
                             {path.title}
                           </h4>
@@ -177,29 +146,6 @@ export function AfterSubmissionSection({
                 {content.board.caveat}
               </p>
             </div>
-          </div>
-
-          <div className="flex flex-col gap-5 border-t border-line bg-brand-secondary px-5 py-6 text-white sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
-            <div className="flex items-start gap-4">
-              <span className="grid size-11 shrink-0 place-items-center border border-white/15 bg-white/[0.07] text-brand-primary">
-                <Route size={17} />
-              </span>
-              <div>
-                <bdi
-                  dir="ltr"
-                  className="text-[11px] font-black tracking-[0.18em] text-white/40"
-                >
-                  {content.board.principle_eyebrow}
-                </bdi>
-                <p className="mt-2 text-[11px] font-black leading-[2] sm:text-[12px]">
-                  {content.board.principle}
-                </p>
-              </div>
-            </div>
-            <span
-              aria-hidden="true"
-              className="hidden h-px w-24 bg-brand-primary/65 sm:block"
-            />
           </div>
         </div>
 
@@ -218,31 +164,6 @@ export function AfterSubmissionSection({
               </article>
             );
           })}
-        </div>
-
-        <div className="mt-8 flex flex-col gap-5 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[11px] font-medium text-ink-muted">
-              {content.return_prompt}
-            </p>
-            <a
-              href={content.return_link.href}
-              className="mt-2 inline-flex items-center gap-2 text-[10px] font-black text-brand-primary hover:text-brand-accent"
-            >
-              {content.return_link.label}
-              <Arrow size={14} />
-            </a>
-          </div>
-          <ActionButton
-            href={content.question_cta.href}
-            variant="secondary"
-            size="md"
-            shape="square"
-            icon={Arrow}
-            className="w-full border-line-strong bg-white text-ink shadow-none hover:bg-brand-secondary hover:text-white sm:w-auto sm:min-w-[235px]"
-          >
-            {content.question_cta.label}
-          </ActionButton>
         </div>
       </div>
     </section>
