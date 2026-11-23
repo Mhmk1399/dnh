@@ -303,8 +303,7 @@ export function FrameworkHorizonArchitecture() {
             {content.closing_question}
           </p>
 
-          <DnhEditorialActions ctas={content.ctas} direction={direction} />
-        </footer>
+         </footer>
       </div>
     </section>
   );
