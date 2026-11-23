@@ -38,7 +38,7 @@ export default async function NotFound() {
   ];
 
   return (
-    <main aria-labelledby="not-found-title" className="grid min-h-svh grid-rows-[auto_1fr] bg-page text-ink min-[560px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] min-[560px]:grid-rows-1">
+    <main aria-labelledby="not-found-title" className="grid min-h-svh grid-rows-[auto_1fr] bg-page text-ink min-[560px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] min-[560px]:grid-rows-1 landscape:[@media(max-height:440px)]:grid-cols-[1fr_2fr] landscape:[@media(max-height:440px)]:grid-rows-1">
       <div className="relative isolate flex min-h-26 items-end overflow-hidden bg-brand-secondary px-6 py-4 text-white max-[559px]:h-[clamp(7rem,26svh,14rem)] min-[560px]:px-[8%] min-[560px]:py-[9%]">
         <Image src="/assets/images/financial-decision-assessment.webp" alt="" fill loading="eager" sizes="(min-width: 560px) 46vw, 100vw" className="-z-20 object-cover object-center" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-brand-secondary/90 via-brand-secondary/10 to-transparent" />
@@ -48,7 +48,7 @@ export default async function NotFound() {
       </div>
       <div className="flex min-w-0 flex-col justify-center px-[clamp(1.25rem,6vw,7rem)] py-[clamp(.75rem,3vh,3rem)] text-start">
         <div className="mx-auto w-full max-w-[34rem]">
-          <Image src="/assets/images/LOGO.svg" width={150} height={50} alt="DNH" className="mb-[clamp(1rem,4vh,3rem)] w-28 sm:w-36" />
+          <Image src="/assets/images/LOGO.svg" width={150} height={50} alt="DNH" className="mb-[clamp(1rem,4vh,3rem)] w-28 sm:w-36 landscape:[@media(max-height:440px)]:hidden" />
           <h1 id="not-found-title" className="text-balance text-[clamp(1.8rem,3.8vw,3.75rem)] leading-tight font-black">
             {title}
           </h1>

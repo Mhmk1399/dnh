@@ -160,6 +160,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
   );
 
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
+  const [desktopNavEngaged, setDesktopNavEngaged] = useState(false);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountDialog, setAccountDialog] = useState<"account" | "logout" | null>(null);
@@ -425,6 +426,8 @@ function NavigationShell({ pathname }: { pathname: string }) {
             <nav
               className={styles.desktopNavigation}
               aria-label={copy.navigation}
+              onPointerEnter={() => setDesktopNavEngaged(true)}
+              onFocusCapture={() => setDesktopNavEngaged(true)}
             >
               {navigation.map((item) => {
                 const key = item.menu;
@@ -462,7 +465,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
                     className={styles.navItem}
                     data-active={active}
                     aria-expanded={openPanel === key}
-                    aria-controls={`${uid}-mega-${key}`}
+                    aria-controls={desktopNavEngaged || openPanel === key ? `${uid}-mega-${key}` : undefined}
                     onPointerEnter={(event) => {
                       if (event.pointerType === "mouse") openOnHover(key);
                     }}
@@ -648,6 +651,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
             const menu = megaMenus[key];
 
             const opened = openPanel === key;
+            if (!desktopNavEngaged && !opened) return null;
 
             return (
               <div
