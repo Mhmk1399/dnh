@@ -21,14 +21,14 @@ export default async function RequestStrategicConsultationPage({ params }: PageP
   const { direction, lang, sections } = pageContent;
 
   return (
-    <main lang={lang} dir={direction}>
+    <div lang={lang} dir={direction}>
       <StrategicConsultationHero content={sections.hero} direction={direction} lang={lang} />
       <StrategicConsultationFitSection content={sections.fit} direction={direction} />
       <StrategicConsultationPreparationSection content={sections.preparation} direction={direction} />
       <StrategicConsultationProcessSection content={sections.process} direction={direction} />
       <StrategicConsultationRequestSection content={sections.request} direction={direction} />
       <StrategicConsultationConfidentialitySection content={sections.confidentiality} direction={direction} />
-    </main>
+    </div>
   );
 }
 

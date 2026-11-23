@@ -1,20 +1,19 @@
-"use client";
-
 import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
   Eye,
+  Globe2,
   Layers,
   Route,
+  ShieldAlert,
   ShieldCheck,
+  TrendingUp,
   Wallet,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type IntelligenceContent = {
   id: "dnh-intelligence-desk";
@@ -52,18 +51,13 @@ const intelligenceIcons = {
   "liquidity-view": Wallet,
   "what-to-watch": Eye,
   "strategic-implications": Route,
+  "macro-economy": Globe2,
+  "market-developments": TrendingUp,
+  "trackable-risks": ShieldAlert,
 } as const;
-const intelligenceImages = [
-  "/assets/images/risk-management-wealth-protection .webp",
-  "/assets/images/private-wealth-strategy .webp",
-  "/assets/images/portfolio-intelligence .webp",
-  "/assets/images/macro-market-advisory .webp",
-  "/assets/images/strategic-financial-advisory .webp",
-];
-
-export function HomeIntelligenceDesk() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeIntelligenceDesk({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "dnh-intelligence-desk" &&
@@ -87,7 +81,7 @@ export function HomeIntelligenceDesk() {
     >
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,1.12fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -119,7 +113,7 @@ export function HomeIntelligenceDesk() {
           </div>
         </header>
 
-        <div className="relative aspect-[4/5] min-h-[500px] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[850px] lg:aspect-auto">
+        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[850px] lg:aspect-auto">
           <Image
             src={mainImage}
             alt={content.media.alt}
@@ -131,11 +125,10 @@ export function HomeIntelligenceDesk() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-brand-primary/5"
           />
-        
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mt-7">
-          {content.items.map((item, index) => {
+          {content.items.map((item) => {
             const Icon =
               intelligenceIcons[item.id as keyof typeof intelligenceIcons] ??
               Eye;
@@ -147,7 +140,7 @@ export function HomeIntelligenceDesk() {
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
                   <span
                     aria-hidden="true"
-                    className="absolute start-4 top-0 flex size-10 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-primary sm:start-5"
+                    className="absolute start-4 top-0 flex size-10 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-accent sm:start-5"
                   >
                     <Icon size={20} strokeWidth={1.6} />
                   </span>
@@ -156,7 +149,7 @@ export function HomeIntelligenceDesk() {
                   >
                     {item.title}
                   </h3>
-               
+
                   <p
                     className={`mt-2 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.85]" : "leading-[1.65]"}`}
                   >
@@ -169,11 +162,15 @@ export function HomeIntelligenceDesk() {
         </div>
 
         <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
-          <p
-            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
-          >
-            {content.closing}
-          </p>
+          {content.closing ? (
+            <p
+              className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
+            >
+              {content.closing}
+            </p>
+          ) : (
+            <span aria-hidden="true" />
+          )}
           {content.ctas.map((cta) => (
             <ActionButton
               key={cta.id}
@@ -184,7 +181,7 @@ export function HomeIntelligenceDesk() {
               icon={Arrow}
               iconPosition="end"
               dir={direction}
-              className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto"
+              className="w-full shadow-none hover:shadow-none sm:w-auto"
             >
               {cta.label}
             </ActionButton>

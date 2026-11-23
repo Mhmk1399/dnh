@@ -45,4 +45,5 @@ export const iranSans = localFont({
   ],
   variable: "--font-iran-sans",
   display: "swap",
+  preload: false,
 });

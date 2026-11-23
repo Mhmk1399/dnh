@@ -148,7 +148,7 @@ export function FrameworkNavigationStrategy() {
               </span>
 
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                <p className="text-start text-xs font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
                   {content.eyebrow}
                 </p>
 
@@ -203,7 +203,6 @@ export function FrameworkNavigationStrategy() {
           <ol className="relative min-w-0 border-y border-line">
             {content.items.map((item, index) => {
               const Icon = itemIcons[item.id] ?? Map;
-              const number = String(index + 1).padStart(2, "0");
 
               return (
                 <li

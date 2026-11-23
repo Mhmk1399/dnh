@@ -1,4 +1,4 @@
-import { FileText } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export type AdminRecordViewItem = {
   label: string;
@@ -25,13 +25,13 @@ export function AdminRecordView({
       className="group overflow-hidden rounded-[24px] border border-line bg-white"
       open={defaultOpen}
     >
-      <summary className="cursor-pointer list-none p-5 focus:outline-none focus:ring-4 focus:ring-brand-accent/10">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
+      <summary className="cursor-pointer list-none p-4 hover:bg-surface-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus sm:p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0 [overflow-wrap:anywhere]">
             {code ? (
               <p
-                dir="ltr"
-                className="text-[10px] font-black tracking-[0.16em] text-brand-primary"
+                dir="auto"
+                className="text-xs font-semibold text-ink-muted"
               >
                 {code}
               </p>
@@ -46,8 +46,8 @@ export function AdminRecordView({
             ) : null}
           </div>
 
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-surface-soft text-brand-primary transition group-open:bg-brand-primary group-open:text-white">
-            <FileText size={17} aria-hidden="true" />
+          <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-surface-soft text-brand-accent">
+            <ChevronDown size={18} aria-hidden="true" className="group-open:rotate-180 motion-safe:transition-transform" />
           </span>
         </div>
       </summary>
@@ -56,9 +56,9 @@ export function AdminRecordView({
         {items.map((item) => (
           <div
             key={`${item.label}-${item.code ?? ""}`}
-            className={`bg-[#fbfdfd] p-5 ${item.wide ? "sm:col-span-2" : ""}`}
+            className={`min-w-0 bg-[#fbfdfd] p-4 [overflow-wrap:anywhere] sm:p-5 ${item.wide ? "sm:col-span-2" : ""}`}
           >
-            <p className="text-[10px] font-bold text-ink-muted">{item.label}</p>
+            <p className="text-xs font-bold text-ink-muted">{item.label}</p>
             <div className="mt-2 whitespace-pre-wrap text-sm font-bold leading-7 text-ink">
               {item.value || "—"}
             </div>

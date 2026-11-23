@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import {
   ArrowLeft,
@@ -18,10 +16,8 @@ import {
   Waves,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type ComparisonContent = {
   id: "market-noise-vs-structured-decision";
@@ -47,9 +43,9 @@ type ComparisonContent = {
 const reactiveIcons = [Newspaper, LineChart, Users, RefreshCcw, Box];
 const structuredIcons = [Target, PieChart, BarChart3, Clock3, Network];
 
-export function HomeDecisionComparison() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeDecisionComparison({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "market-noise-vs-structured-decision" &&
@@ -72,7 +68,7 @@ export function HomeDecisionComparison() {
     >
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
-          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -102,7 +98,7 @@ export function HomeDecisionComparison() {
           </p>
         </header>
 
-        <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[780px] lg:aspect-auto">
+        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-brand-primary lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[780px] lg:aspect-auto">
           <Image
             src="/assets/images/market-noise-vs-structured-decision.webp"
             alt=""
@@ -114,8 +110,6 @@ export function HomeDecisionComparison() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/45 via-brand-primary/5 to-transparent"
           />
-       
-        
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mt-7">
@@ -148,7 +142,7 @@ export function HomeDecisionComparison() {
                       >
                         <span
                           aria-hidden="true"
-                          className={`flex size-8 shrink-0 items-center justify-center ${structured ? "bg-surface-soft text-brand-primary" : "bg-[color-mix(in_srgb,var(--dnh-accent)_8%,white)] text-brand-accent"}`}
+                          className={`flex size-8 shrink-0 items-center justify-center ${structured ? "bg-surface-soft text-brand-accent" : "bg-[color-mix(in_srgb,var(--dnh-accent)_8%,white)] text-brand-accent"}`}
                         >
                           <Icon size={20} strokeWidth={1.65} />
                         </span>
@@ -166,28 +160,32 @@ export function HomeDecisionComparison() {
           })}
         </div>
 
-        <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
-          <p
-            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
-          >
-            {content.closing}
-          </p>
-          {content.ctas.map((cta) => (
-            <ActionButton
-              key={cta.id}
-              href={cta.href}
-              variant={cta.type}
-              shape="square"
-              size="md"
-              icon={Arrow}
-              iconPosition="end"
-              dir={direction}
-              className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto"
-            >
-              {cta.label}
-            </ActionButton>
-          ))}
-        </footer>
+        {content.closing || content.ctas.length > 0 ? (
+          <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
+            {content.closing ? (
+              <p
+                className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
+              >
+                {content.closing}
+              </p>
+            ) : null}
+            {content.ctas.map((cta) => (
+              <ActionButton
+                key={cta.id}
+                href={cta.href}
+                variant={cta.type}
+                shape="square"
+                size="md"
+                icon={Arrow}
+                iconPosition="end"
+                dir={direction}
+                className="w-full shadow-none hover:shadow-none sm:w-auto"
+              >
+                {cta.label}
+              </ActionButton>
+            ))}
+          </footer>
+        ) : null}
       </div>
     </section>
   );

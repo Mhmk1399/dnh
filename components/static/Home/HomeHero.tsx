@@ -1,13 +1,9 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { getImageProps } from "next/image";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
+import { getHomepageContent } from "@/lib/homepage-content";
+import { SITE_LANGUAGES, type SiteLocale } from "@/lib/site-language";
+import { HomeHeroDescription } from "./HomeHeroDescription";
 
 type HeroContent = {
   id: "hero";
@@ -32,68 +28,32 @@ type HeroContent = {
   };
 };
 
-export function HomeHero() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-
-  const [descriptionHeight, setDescriptionHeight] = useState(0);
-
-  const descriptionRef = useRef<HTMLDivElement>(null);
-
-  const homepage = locale === "en" ? homeEn : homeFa;
-
-  const hero = homepage.sections.find(
+export function HomeHero({ locale }: { locale: SiteLocale }) {
+  const { direction, languageTag } = SITE_LANGUAGES[locale];
+  const isRTL = direction === "rtl";
+  const hero = getHomepageContent(locale).sections.find(
     (section) => section.id === "hero" && section.type === "hero",
   ) as HeroContent | undefined;
-
-  // Measure the full description height for smooth expansion.
-  useEffect(() => {
-    const element = descriptionRef.current;
-
-    if (!element) return;
-
-    const updateHeight = () => {
-      setDescriptionHeight(element.scrollHeight);
-    };
-
-    updateHeight();
-
-    if (typeof ResizeObserver === "undefined") return;
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [locale]);
 
   if (!hero) return null;
 
   const highlight = hero.heading_highlight ?? "";
   const highlightIndex = highlight ? hero.heading.indexOf(highlight) : -1;
 
-  const imageSource = hero.media.src.trim();
-  const mobileSource = hero.media.mobile_src?.trim() ?? "";
-
-  const desktopImage = getImageProps({
-    src: imageSource,
+  const mobileSource = hero.media.mobile_src?.trim();
+  const desktopSource = hero.media.src.trim() || mobileSource;
+  const hasMobileCrop = Boolean(mobileSource && mobileSource !== desktopSource);
+  const desktopImage = desktopSource && getImageProps({
+    src: desktopSource,
     alt: hero.media.alt,
     fill: true,
-    sizes: "100vw",
+    unoptimized: true,
     loading: "eager",
     fetchPriority: "high",
-    className:
-      "absolute inset-0 h-full w-full object-cover object-[center_30%] sm:object-center lg:object-center",
+    className: `absolute inset-0 h-full w-full object-cover object-[center_30%] sm:object-center lg:object-center ${
+      isRTL ? "" : "md:[transform:scaleX(-1)]"
+    }`,
   }).props;
-
-  const mobileImage = mobileSource
-    ? getImageProps({
-        src: mobileSource,
-        alt: hero.media.alt,
-        fill: true,
-        sizes: "100vw",
-      }).props
-    : null;
 
   const desktopScrim = `
   linear-gradient(
@@ -109,8 +69,6 @@ export function HomeHero() {
     (paragraph) => paragraph.text.trim().length > 0,
   );
 
-  const collapsedHeight = isRTL ? "3.9em" : "3.4em";
-
   return (
     <section
       id={hero.id}
@@ -119,30 +77,22 @@ export function HomeHero() {
       aria-labelledby="home-hero-heading"
       className="relative isolate overflow-hidden h-screen border-b border-line   text-[var(--dnh-text-on-brand)]"
     >
-      {/* Image preload */}
-      {mobileImage ? (
-        <>
-          <link
-            rel="preload"
-            as="image"
-            media="(max-width: 767px)"
-            imageSrcSet={mobileImage.srcSet}
-            imageSizes={mobileImage.sizes}
-          />
-          <link
-            rel="preload"
-            as="image"
-            media="(min-width: 768px)"
-            imageSrcSet={desktopImage.srcSet}
-            imageSizes={desktopImage.sizes}
-          />
-        </>
-      ) : (
+      {hasMobileCrop && (
         <link
           rel="preload"
           as="image"
-          imageSrcSet={desktopImage.srcSet}
-          imageSizes={desktopImage.sizes}
+          href={mobileSource}
+          media="(width < 768px)"
+          fetchPriority="high"
+        />
+      )}
+      {desktopSource && (
+        <link
+          rel="preload"
+          as="image"
+          href={desktopSource}
+          media={hasMobileCrop ? "(min-width: 768px)" : undefined}
+          fetchPriority="high"
         />
       )}
 
@@ -155,18 +105,12 @@ export function HomeHero() {
           lg:inset-0 lg:h-full
         "
       >
-        <picture className="absolute  inset-0 block h-full w-full">
-          {mobileImage && (
-            <source
-              media="(max-width: 767px)"
-              srcSet={mobileImage.srcSet}
-              sizes={mobileImage.sizes}
-            />
-          )}
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img {...desktopImage} />
-        </picture>
+        {desktopImage && (
+          <picture className="absolute inset-0 block h-full w-full">
+            {hasMobileCrop && <source media="(width < 768px)" srcSet={mobileSource} />}
+            <img {...desktopImage} alt={hero.media.alt} />
+          </picture>
+        )}
 
         {/* Mobile: dark top, visible center, smooth bottom */}
         <div
@@ -289,96 +233,15 @@ export function HomeHero() {
             </h1>
           </header>
 
-          {/* Description - below image on mobile */}
           {hasDescription && (
-            <div
-              className={`
-                relative mt-1 min-w-0 hidden lg:block
-                border-s-2 border-white/40 ps-4
-                text-[14px] font-normal text-white/90
-                sm:ps-5 sm:text-[15px]
-                lg:mt-5 lg:max-w-[80ch]
-                
-                ${isRTL ? "leading-[1.95]" : "leading-[1.7]"}
-              `}
-            >
-              {/* Smooth expandable text */}
-              <div
-                id="hero-description"
-                className="
-                  min-w-0 overflow-hidden
-                  transition-[max-height]
-                  duration-500
-                  ease-[cubic-bezier(0.22,1,0.36,1)]
-                  motion-reduce:transition-none
-                "
-                style={{
-                  maxHeight: isDescriptionExpanded
-                    ? `${descriptionHeight}px`
-                    : collapsedHeight,
-                }}
-              >
-                <div
-                  ref={descriptionRef}
-                  className="space-y-3 text-justify sm:space-y-4"
-                >
-                  {hero.paragraphs.map((paragraph) => (
-                    <p key={paragraph.id}>{paragraph.text}</p>
-                  ))}
-                </div>
-              </div>
-
-              {/* Expand / Collapse */}
-              <button
-                type="button"
-                aria-expanded={isDescriptionExpanded}
-                aria-controls="hero-description"
-                onClick={() => setIsDescriptionExpanded((prev) => !prev)}
-                className="
-                  group mt-2 inline-flex min-h-10
-                  items-center gap-2
-                 
-                  text-[13px] font-semibold
-                  text-brand-accent
-                  transition-colors duration-200
-                  hover:text-white
-                  focus-visible:outline
-                  focus-visible:outline-2
-                  focus-visible:outline-offset-4
-                  focus-visible:outline-brand-accent
-                  sm:mt-3
-                "
-              >
-                <span>
-                  {isDescriptionExpanded
-                    ? isRTL
-                      ? "نمایش کمتر"
-                      : "Show less"
-                    : isRTL
-                      ? "مشاهده بیشتر"
-                      : "Read more"}
-                </span>
-
-                <ChevronDown
-                  size={16}
-                  aria-hidden="true"
-                  className={`
-                    shrink-0
-                    transition-transform duration-500
-                    ease-[cubic-bezier(0.22,1,0.36,1)]
-                    motion-reduce:transition-none
-                    ${isDescriptionExpanded ? "rotate-180" : "rotate-0"}
-                  `}
-                />
-              </button>
-            </div>
+            <HomeHeroDescription paragraphs={hero.paragraphs} isRTL={isRTL} />
           )}
 
           {/* CTA buttons */}
           <div
             className="
-              mt-10 grid min-w-0 grid-cols-2 gap-2
-              sm:mt-8 sm:gap-3
+              mt-10 grid min-w-0 grid-cols-1 gap-2
+              sm:mt-8 sm:grid-cols-2 sm:gap-3
               lg:flex lg:flex-row lg:flex-wrap lg:gap-4
             "
           >

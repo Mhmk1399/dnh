@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import {
   Activity,
@@ -12,10 +10,8 @@ import {
   UsersRound,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 const problemIcons = {
   decision: Compass,
@@ -54,9 +50,9 @@ type ProblemContent = {
   }>;
 };
 
-export function HomeProblemRecognition() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeProblemRecognition({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "problem-recognition" && section.type === "problem_list",
@@ -78,7 +74,7 @@ export function HomeProblemRecognition() {
     >
       <div className="dnh-site-shell relative z-10 grid min-w-0 gap-8 lg:grid-cols-1 lg:grid-rows-[auto_auto_auto] lg:gap-x-4 ">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
-          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex items-center gap-3 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-6 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -102,7 +98,7 @@ export function HomeProblemRecognition() {
             )}
           </h2>
           <p
-            className={`mt-4 max-w-none mx-3 text-justify lg:max-w-[70ch] lg:text-nowrap text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            className={`mt-4 max-w-prose text-start text-[15px] text-ink-muted sm:text-base ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
           >
             {content.intro}
           </p>
@@ -128,6 +124,7 @@ export function HomeProblemRecognition() {
                     alt={item.media.alt}
                     width={4000}
                     height={4000}
+                    sizes="(max-width: 639px) calc(100vw - 26px), (max-width: 1279px) calc(50vw - 26px), calc(33vw - 30px)"
                     className="object-cover h-full object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
                   />
                   <div
@@ -149,7 +146,7 @@ export function HomeProblemRecognition() {
                   </span>
                   <h3
                     title={item.title}
-                    className={`text-start line-clamp-1 group-hover:line-clamp-4 transition-all duration-300 text-[16px] font-black sm:text-[17px] ${isRTL ? "leading-[1.75]" : "leading-[1.42]"}`}
+                    className={`text-start text-[16px] font-black sm:text-[17px] ${isRTL ? "leading-[1.75]" : "leading-[1.42]"}`}
                   >
                     {item.title}
                   </h3>
@@ -165,11 +162,15 @@ export function HomeProblemRecognition() {
         </ul>
 
         <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
-          <p
-            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[13px] ${isRTL ? "leading-[1.9]" : "leading-[1.7]"}`}
-          >
-            {content.closing}
-          </p>
+          {content.closing ? (
+            <p
+              className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[13px] ${isRTL ? "leading-[1.9]" : "leading-[1.7]"}`}
+            >
+              {content.closing}
+            </p>
+          ) : (
+            <span aria-hidden="true" />
+          )}
           <div className="flex flex-wrap gap-3">
             {content.ctas.map((cta) => (
               <ActionButton
@@ -181,7 +182,7 @@ export function HomeProblemRecognition() {
                 icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto"
+                className="w-full shadow-none hover:shadow-none sm:w-auto"
               >
                 {cta.label}
               </ActionButton>

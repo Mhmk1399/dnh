@@ -1,5 +1,4 @@
 import { getImageProps } from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { ActionButton } from "@/components/ui/ActionButton";
 
@@ -43,8 +42,6 @@ export function DnhHighlightedHeading({
 
 export function DnhEditorialEyebrow({
   eyebrow,
-  englishLabel,
-  locale,
   dark = false,
 }: {
   eyebrow: string;
@@ -72,7 +69,6 @@ export function DnhEditorialEyebrow({
 
 export function DnhEditorialMediaFrame({
   media,
-  label,
   priority = false,
   sizes,
   className = "aspect-[4/5] min-h-[430px] lg:min-h-[600px] lg:aspect-auto",
@@ -139,8 +135,6 @@ export function DnhEditorialActions({
   dark?: boolean;
   className?: string;
 }) {
-  const Arrow = direction === "rtl" ? ArrowLeft : ArrowRight;
-
   if (ctas.length === 0) return null;
 
   return (

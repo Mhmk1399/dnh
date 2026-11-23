@@ -1,10 +1,12 @@
-import { localizePageMetadata } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
-export default function KnowledgePage() {
-  return null;
-}
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return localizePageMetadata({}, "/knowledge", normalizeSiteLocale(locale));
+import { getLocalizedSiteHref, normalizeSiteLocale } from "@/lib/site-language";
+
+export default async function KnowledgePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
+  redirect(getLocalizedSiteHref("/knowledge/weekly-outlook", locale));
 }

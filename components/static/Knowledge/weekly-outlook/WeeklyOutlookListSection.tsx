@@ -1,152 +1,58 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
-import { ArrowLeft, CalendarDays, FileText, Layers3 } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
+import { getLocalizedSiteHref, SITE_LANGUAGES, type SiteLocale } from "@/lib/site-language";
 import type { WeeklyOutlookListItem } from "@/lib/weekly-outlook";
 import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";
 
-type WeeklyOutlookListSectionProps = {
-  reports: WeeklyOutlookListItem[];
+const archiveLabels = {
+  fa: { archive: "آرشیو چشم‌انداز هفتگی", latest: "آخرین گزارش", read: "خواندن گزارش", empty: "هنوز گزارشی به فارسی منتشر نشده است." },
+  en: { archive: "Weekly Outlook archive", latest: "Latest report", read: "Read report", empty: "No reports have been published in English yet." },
 };
 
-export function WeeklyOutlookListSection({
-  reports,
-}: WeeklyOutlookListSectionProps) {
+export function WeeklyOutlookListSection({ reports, locale }: { reports: WeeklyOutlookListItem[]; locale: SiteLocale }) {
+  const language = SITE_LANGUAGES[locale];
+  const labels = archiveLabels[locale];
+  const ReadArrow = locale === "fa" ? ArrowLeft : ArrowRight;
   return (
-    <section
-      id="weekly-outlook-reports"
-      dir="rtl"
-      aria-labelledby="weekly-outlook-reports-title"
-      className="relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.028]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(22,115,148,.22) 1px,transparent 1px),linear-gradient(to bottom,rgba(22,115,148,.12) 1px,transparent 1px)",
-          backgroundSize: "118px 118px",
-        }}
-      />
-
-      <div className="dnh-site-shell relative z-10 mx-auto w-full max-w-[1536px] px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-        <div className="grid gap-8 border-b border-line pb-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:gap-14">
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
-
-              <p className="text-[13px] font-black text-brand-primary">
-                آرشیو چشم‌انداز هفتگی
-              </p>
-            </div>
-
-            <h2
-              id="weekly-outlook-reports-title"
-              className="max-w-[720px] text-[30px] font-black leading-[1.65] tracking-[-0.04em] text-ink sm:text-[38px] lg:text-[44px]"
-            >
-              گزارش‌ها را بر اساس تاریخ و موضوع دنبال کنید.
-            </h2>
-          </div>
-
-          <p className="max-w-[680px] text-[15px] font-medium leading-[2] text-ink-muted sm:text-[16px]">
-            هر گزارش یک پرونده مستقل دارد و می‌تواند ساختار، تصویر، سکشن و
-            بلوک‌های محتوایی متفاوت خودش را داشته باشد.
-          </p>
+    <section id="weekly-outlook-reports" lang={language.languageTag} dir={language.direction} aria-labelledby="weekly-outlook-reports-title" className="scroll-mt-28 bg-page py-10 text-start sm:py-14">
+      <div className="dnh-site-shell">
+        <div className="mx-auto max-w-6xl">
+          <h2 id="weekly-outlook-reports-title" className="border-b-2 border-brand-secondary pb-4 font-black text-ink">{labels.archive}</h2>
+          {reports.length === 0 ? (
+            <p className="mt-4 flex items-center gap-3 border border-line bg-white p-6 text-ink-muted"><FileText aria-hidden="true" size={22} className="shrink-0 text-brand-accent" />{labels.empty}</p>
+          ) : (
+            <ol className="divide-y divide-line border-b border-line bg-white">
+              {reports.map((report, index) => (
+                <li key={report.id} className="min-w-0">
+                  <article className={`group/report relative grid items-start gap-3 px-4 py-6 [overflow-wrap:anywhere] hover:bg-surface-soft focus-within:outline-2 focus-within:outline-focus sm:grid-cols-[minmax(9rem,0.32fr)_minmax(0,1fr)] sm:gap-7 sm:px-7 lg:px-9 ${index === 0 ? "border-s-4 border-brand-accent" : ""}`}>
+                    <header className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:flex-col sm:items-start sm:gap-2">
+                      {index === 0 && <p className="font-bold text-brand-accent">{labels.latest}</p>}
+                      <time dateTime={report.reportDate} className="font-bold text-ink">{formatWeeklyOutlookDate(report.reportDate, report.dateCalendar, "long", locale)}</time>
+                      <span className="text-xs text-ink-muted">{report.sectionCount.toLocaleString(language.languageTag)} {locale === "fa" ? "بخش" : report.sectionCount === 1 ? "section" : "sections"}</span>
+                    </header>
+                    <div className={`grid min-w-0 items-start gap-4 ${report.coverImage ? "md:grid-cols-[minmax(0,1fr)_9rem]" : ""}`}>
+                      <div>
+                        {report.edition && <p className="mb-1 text-sm text-ink-muted"><bdi>{report.edition}</bdi></p>}
+                        <h3 className="text-xl font-bold leading-relaxed text-ink sm:text-2xl">
+                          <Link href={getLocalizedSiteHref(`/knowledge/weekly-outlook/${report.slug}`, locale)} className="after:absolute after:inset-0 group-hover/report:text-brand-accent focus-visible:outline-none">{report.title}</Link>
+                        </h3>
+                        <p className="mt-2 max-w-[78ch] text-sm leading-7 text-ink-muted sm:text-base sm:leading-8">{report.excerpt}</p>
+                      </div>
+                      {report.coverImage && (
+                        <div className="bg-surface-soft">
+                          {/* eslint-disable-next-line @next/next/no-img-element -- Report covers can come from editor-supplied external sources. */}
+                          <img loading="lazy" decoding="async" src={report.coverImage} alt={report.coverImageAlt ?? ""} className="aspect-[2/1] w-full object-contain md:aspect-[4/3]" />
+                        </div>
+                      )}
+                      <span aria-hidden="true" className="inline-flex items-center gap-2 text-sm font-bold text-brand-accent md:col-span-full">{labels.read}<ReadArrow size={16} /></span>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
-
-        {reports.length === 0 ? (
-          <div className="mt-8 border border-dashed border-line bg-[#fbfdfd] px-6 py-20 text-center">
-            <FileText className="mx-auto h-10 w-10 text-brand-primary/30" />
-
-            <h3 className="mt-5 text-lg font-black text-ink">
-              هنوز گزارشی منتشر نشده است
-            </h3>
-
-            <p className="mt-2 text-sm text-ink-muted">
-              بعد از انتشار گزارش از پنل ادمین، اینجا نمایش داده می‌شود.
-            </p>
-          </div>
-        ) : (
-          <div className="mt-8 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-2">
-            {reports.map((report, index) => (
-              <ReportCard key={report.id} report={report} index={index} />
-            ))}
-          </div>
-        )}
       </div>
     </section>
-  );
-}
-
-function ReportCard({
-  report,
-  index,
-}: {
-  report: WeeklyOutlookListItem;
-  index: number;
-}) {
-  return (
-    <article className="group/report relative bg-white p-5 transition-colors hover:bg-[#fbfdfd] sm:p-6 lg:p-7">
-      <div className="flex items-start justify-between gap-5">
-        <div className="grid size-11 shrink-0 place-items-center border border-brand-primary/12 bg-[#f4fafb] text-brand-primary transition-colors group-hover/report:border-brand-accent group-hover/report:text-brand-accent">
-          <FileText aria-hidden="true" strokeWidth={1.6} className="size-5" />
-        </div>
-
-        <span
-          dir="ltr"
-          className="text-[11px] font-black tracking-[.18em] text-brand-primary/35"
-        >
-          REPORT / {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
-
-      <p className="mt-5 text-[12px] font-black text-brand-primary/65">
-        {report.edition}
-      </p>
-
-      <h3 className="mt-2 max-w-[720px] text-[22px] font-black leading-[1.75] tracking-[-0.035em] text-ink sm:text-[24px]">
-        <Link
-          href={`/knowledge/weekly-outlook/${report.slug}`}
-          className="outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
-        >
-          <span className="absolute inset-0" aria-hidden="true" />
-          {report.title}
-        </Link>
-      </h3>
-
-      <p className="mt-4 max-w-[720px] text-[14px] font-medium leading-8 text-ink-muted">
-        {report.excerpt}
-      </p>
-
-      <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-line pt-4 text-[12px] font-bold text-ink-muted">
-        <span className="inline-flex items-center gap-2">
-          <CalendarDays aria-hidden="true" size={15} />
-          {formatWeeklyOutlookDate(
-            report.reportDate,
-            report.dateCalendar,
-            "long",
-          )}
-        </span>
-
-        <span className="h-1 w-1 bg-brand-accent" aria-hidden="true" />
-
-        <span className="inline-flex items-center gap-2">
-          <Layers3 aria-hidden="true" size={15} />
-          {report.sectionCount.toLocaleString("fa-IR")} سکشن
-        </span>
-
-        <span className="mr-auto inline-flex items-center gap-2 text-brand-primary transition-colors group-hover/report:text-brand-accent">
-          خواندن گزارش
-          <ArrowLeft
-            aria-hidden="true"
-            size={15}
-            className="transition-transform group-hover/report:-translate-x-1"
-          />
-        </span>
-      </div>
-
-      <span
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-[2px] origin-bottom scale-y-0 bg-brand-accent transition-transform duration-200 group-hover/report:scale-y-100"
-      />
-    </article>
   );
 }

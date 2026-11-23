@@ -1,18 +1,8 @@
-"use client";
-
 import Image from "next/image";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BarChart3,
-  Landmark,
-  PieChart,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type FrameworkContent = {
   id: "dnh-framework";
@@ -43,11 +33,9 @@ const pillarImages = [
   "/assets/images/Navigation-Strategy.webp",
   "/assets/images/Horizon-Architecture.webp",
 ];
-const pillarIcons = [BarChart3, PieChart, Landmark];
-
-export function HomeFramework() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeFramework({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) => section.id === "dnh-framework" && section.type === "framework",
   ) as FrameworkContent | undefined;
@@ -79,7 +67,7 @@ export function HomeFramework() {
       />
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1120px] text-center">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -215,7 +203,6 @@ export function HomeFramework() {
         </ol>
 
         <footer className="mx-auto mt-8 grid max-w-[1100px] gap-5 text-center sm:mt-10">
-       
           <div className="flex justify-center">
             {content.ctas.map((cta) => (
               <ActionButton
@@ -227,7 +214,7 @@ export function HomeFramework() {
                 icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto sm:min-w-[280px]"
+                className="w-full shadow-none hover:shadow-none sm:w-auto sm:min-w-[280px]"
               >
                 {cta.label}
               </ActionButton>

@@ -12,11 +12,17 @@ import { FrameworkDecisionOutputs } from "@/components/static/DNH/framework/Fram
 import { FrameworkBoundaries } from "@/components/static/DNH/framework/FrameworkBoundaries";
 import { FrameworkStructuredAssessmentCTA } from "@/components/static/DNH/framework/FrameworkStructuredAssessmentCTA";
 import { FrameworkHero } from "@/components/static/DNH/framework/DnhFrameworkHero";
+import { PageSectionIndex } from "@/components/static/reviewed-pages/PageSectionIndex";
+import frameworkFa from "@/config/DNH_Framework_Final_FA.json";
+import frameworkEn from "@/config/DNH_Framework_Final_EN.json";
 
-const page = () => {
+const page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const locale = normalizeSiteLocale((await params).locale);
+  const sections = (locale === "fa" ? frameworkFa : frameworkEn).sections;
   return (
-    <main>
+    <div className="[&>section[id]]:scroll-mt-24 lg:[&>section[id]]:scroll-mt-28">
       <FrameworkHero />
+      <PageSectionIndex sections={sections.filter((section) => section.type !== "hero")} locale={locale} />
       <FrameworkWhyDecisionMatters />
       <FrameworkFromDataToDecision />
       <FrameworkDataIntelligence />
@@ -28,7 +34,7 @@ const page = () => {
       <FrameworkDecisionOutputs />
       <FrameworkBoundaries />
       <FrameworkStructuredAssessmentCTA />
-    </main>
+    </div>
   );
 };
 

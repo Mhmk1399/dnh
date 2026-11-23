@@ -7,6 +7,9 @@ import { ServicesPositioning } from "@/components/static/services/ServiceFitSect
 import { ServicesServiceSection } from "@/components/static/services/ServicesServiceSection";
 import { ServicesAssessmentRouting } from "@/components/static/services/ServicesAssessmentRouting";
 import { ServicesFinalCtaSection } from "@/components/static/services/ServicesFinalCtaSection";
+import { PageSectionIndex } from "@/components/static/reviewed-pages/PageSectionIndex";
+import servicesFa from "@/config/DNH_Services_Overview_Final_FA.json";
+import servicesEn from "@/config/DNH_Services_Overview_Final_EN.json";
 
 export async function generateMetadata({
   params,
@@ -37,10 +40,13 @@ export async function generateMetadata({
   );
 }
 
-const page = () => {
+const page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const locale = normalizeSiteLocale((await params).locale);
+  const sections = (locale === "fa" ? servicesFa : servicesEn).sections;
   return (
     <div >
       <ServicesHero />
+      <PageSectionIndex sections={sections.filter((section) => section.type === "service-card")} locale={locale} />
       <ServicesPositioning />
 
       <ServicesServiceSection

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { PublicChrome } from "@/components/global/PublicChrome";
 import { isSiteLocale } from "@/lib/site-language";
 import homepageFa from "@/config/DNH_Homepage_Final_FA.json";
 import homepageEn from "@/config/DNH_Homepage_Final_EN.json";
@@ -27,5 +28,5 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!isSiteLocale(locale)) notFound();
-  return children;
+  return <PublicChrome>{children}</PublicChrome>;
 }

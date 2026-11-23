@@ -9,6 +9,7 @@ import {
 
 import {
   AdminDataTable,
+  AdminTableCellPair,
   type AdminTableColumn,
 } from "@/components/admin/AdminDataTable";
 import { AdminDynamicForm } from "@/components/admin/AdminDynamicForm";
@@ -54,6 +55,7 @@ type ReportRow = {
   status: WeeklyOutlookStatus;
   revision: number;
   sections: unknown[];
+  english?: { ready: boolean };
   updatedAt: Date;
 };
 
@@ -91,12 +93,14 @@ export default async function WeeklyOutlooksAdminPage({
         { title: { $regex: search, $options: "i" } },
         { slug: { $regex: search, $options: "i" } },
         { edition: { $regex: search, $options: "i" } },
+        { "english.title": { $regex: search, $options: "i" } },
+        { "english.edition": { $regex: search, $options: "i" } },
       ];
     }
 
     const rows = await WeeklyOutlookReport.find(filter)
       .select(
-        "title slug edition reportDate dateCalendar status revision sections updatedAt",
+        "title slug edition reportDate dateCalendar status revision sections.id english.ready updatedAt",
       )
       .sort({ reportDate: -1, updatedAt: -1 })
       .limit(150)
@@ -196,8 +200,8 @@ export default async function WeeklyOutlooksAdminPage({
             },
             {
               type: "link",
-              label: "مشاهده عمومی",
-              href: (report) => `/knowledge/weekly-outlook/${report.slug}`,
+              label: "مشاهده نسخه فارسی",
+              href: (report) => `/fa/knowledge/weekly-outlook/${report.slug}`,
               icon: Eye,
               hidden: (report) => report.status !== "published",
             },
@@ -222,14 +226,14 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
       key: "report",
       header: "گزارش / مسیر عمومی",
       cell: (report) => (
-        <div>
-          <h2 className="text-sm font-black leading-7 text-ink">
+        <AdminTableCellPair>
+          <span className="text-sm font-bold leading-6 text-ink">
             {report.title}
-          </h2>
-          <p dir="ltr" className="mt-2 text-left text-[10px] text-ink-muted">
+          </span>
+          <bdi dir="ltr" title={`/knowledge/weekly-outlook/${report.slug}`} className="max-w-full text-[11px] text-ink-muted lg:max-w-56 lg:truncate">
             /knowledge/weekly-outlook/{report.slug}
-          </p>
-        </div>
+          </bdi>
+        </AdminTableCellPair>
       ),
     },
     {
@@ -242,24 +246,39 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
       ),
     },
     {
+      key: "english",
+      header: "ترجمه انگلیسی",
+      cell: (report) => (
+        report.status === "published" && report.english?.ready ? (
+          <Link href={`/en/knowledge/weekly-outlook/${report.slug}`} className="inline-flex min-h-11 items-center text-xs font-bold text-brand-accent underline underline-offset-4">
+            مشاهده نسخه انگلیسی
+          </Link>
+        ) : (
+          <span className="text-xs text-ink-muted">
+            {report.english?.ready ? "آماده انتشار" : report.english ? "پیش‌نویس" : "شروع نشده"}
+          </span>
+        )
+      ),
+    },
+    {
       key: "date",
       header: "تاریخ",
       cell: (report) => (
-        <span className="block text-xs leading-6 text-ink-muted">
-          {formatWeeklyOutlookDate(
+        <AdminTableCellPair>
+          <span className="text-xs leading-6 text-ink-muted">{formatWeeklyOutlookDate(
             report.reportDate,
             normalizeWeeklyOutlookDateCalendar(report.dateCalendar),
             "medium",
-          )}
+          )}</span>
 
-          <span className="mt-1 block text-[10px] font-bold text-brand-primary/60">
+          <span className="text-[11px] text-ink-muted">
             {
               weeklyOutlookDateCalendarLabels[
                 normalizeWeeklyOutlookDateCalendar(report.dateCalendar)
               ]
             }
           </span>
-        </span>
+        </AdminTableCellPair>
       ),
     },
     {
@@ -275,14 +294,14 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
       key: "structure",
       header: "ساختار",
       cell: (report) => (
-        <div className="text-xs">
-          <p dir="ltr" className="font-black text-ink">
+        <AdminTableCellPair>
+          <span className="text-xs font-bold text-ink">
             نسخه {String(report.revision).padStart(2, "0")}
-          </p>
-          <p className="mt-2 text-ink-muted">
+          </span>
+          <span className="text-xs text-ink-muted">
             {report.sections.length.toLocaleString("fa-IR")} سکشن
-          </p>
-        </div>
+          </span>
+        </AdminTableCellPair>
       ),
     },
   ];

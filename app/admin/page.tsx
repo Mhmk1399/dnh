@@ -27,10 +27,9 @@ import {
 import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
-import Contact from "@/models/Contact";
+import { intakeSources, intakeTypes, type IntakeType } from "@/lib/admin-intake";
 import DynamicForm from "@/models/DynamicForm";
 import FormSubmission from "@/models/FormSubmission";
-import Lead from "@/models/Lead";
 import User from "@/models/User";
 import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
 import type { WeeklyOutlookDateCalendar } from "@/lib/weekly-outlook";
@@ -56,24 +55,7 @@ type AdminUserRow = {
   createdAt: Date;
 };
 
-type AdminContactRow = {
-  _id: unknown;
-  name: string;
-  phone: string;
-  email?: string;
-  subject?: string;
-  message: string;
-  createdAt: Date;
-};
-
-type AdminLeadRow = {
-  _id: unknown;
-  name: string;
-  phone: string;
-  text: string;
-  createdAt: Date;
-};
-
+type AdminIntakeSummary = Awaited<ReturnType<typeof intakeSources.contacts.recent>>[number] & { type: IntakeType };
 type AdminFormRow = {
   _id: unknown;
   title: string;
@@ -97,16 +79,14 @@ type AdminReportRow = {
 type DashboardData = {
   counts: {
     users: number;
-    contacts: number;
-    leads: number;
+    intakes: number;
     forms: number;
     submissions: number;
     reports: number;
     publishedReports: number;
   };
   users: Array<Omit<AdminUserRow, "_id"> & { id: string }>;
-  contacts: Array<Omit<AdminContactRow, "_id"> & { id: string }>;
-  leads: Array<Omit<AdminLeadRow, "_id"> & { id: string }>;
+  intakes: AdminIntakeSummary[];
   forms: Array<Omit<AdminFormRow, "_id"> & { id: string }>;
   reports: Array<Omit<AdminReportRow, "_id"> & { id: string }>;
 };
@@ -120,16 +100,14 @@ const statusLabel = {
 const emptyData: DashboardData = {
   counts: {
     users: 0,
-    contacts: 0,
-    leads: 0,
+    intakes: 0,
     forms: 0,
     submissions: 0,
     reports: 0,
     publishedReports: 0,
   },
   users: [],
-  contacts: [],
-  leads: [],
+  intakes: [],
   forms: [],
   reports: [],
 };
@@ -143,27 +121,23 @@ export default async function AdminPage() {
   let loadError = false;
   let data = emptyData;
 
-  // Database queries, counts, sort order, limits and action endpoints are unchanged.
   try {
     await connect();
 
     const [
       users,
-      contacts,
-      leads,
+      intakeCounts,
       forms,
       submissions,
       reports,
       publishedReports,
       userRows,
-      contactRows,
-      leadRows,
+      recentIntakes,
       formRows,
       reportRows,
     ] = await Promise.all([
       User.countDocuments(),
-      Contact.countDocuments(),
-      Lead.countDocuments(),
+      Promise.all(intakeTypes.map(type => intakeSources[type].count())),
       DynamicForm.countDocuments(),
       FormSubmission.countDocuments(),
       WeeklyOutlookReport.countDocuments(),
@@ -173,16 +147,10 @@ export default async function AdminPage() {
         .sort({ createdAt: -1 })
         .limit(8)
         .lean(),
-      Contact.find({})
-        .select("name phone email subject message createdAt")
-        .sort({ createdAt: -1 })
-        .limit(6)
-        .lean(),
-      Lead.find({})
-        .select("name phone text createdAt")
-        .sort({ createdAt: -1 })
-        .limit(6)
-        .lean(),
+      Promise.all(intakeTypes.map(async type => {
+        const rows = await intakeSources[type].recent(8);
+        return rows.map(row => ({ ...row, type }));
+      })),
       DynamicForm.find({})
         .select("title slug status revision updatedAt")
         .sort({ updatedAt: -1 })
@@ -198,8 +166,7 @@ export default async function AdminPage() {
     data = {
       counts: {
         users,
-        contacts,
-        leads,
+        intakes: intakeCounts.reduce((sum, count) => sum + count, 0),
         forms,
         submissions,
         reports,
@@ -209,14 +176,7 @@ export default async function AdminPage() {
         ...row,
         id: String(row._id),
       })),
-      contacts: (contactRows as AdminContactRow[]).map((row) => ({
-        ...row,
-        id: String(row._id),
-      })),
-      leads: (leadRows as AdminLeadRow[]).map((row) => ({
-        ...row,
-        id: String(row._id),
-      })),
+      intakes: recentIntakes.flat().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 8),
       forms: (formRows as AdminFormRow[]).map((row) => ({
         ...row,
         id: String(row._id),
@@ -230,32 +190,6 @@ export default async function AdminPage() {
     loadError = true;
   }
 
-  const intakeItems = [
-    ...data.contacts.map((item) => ({
-      id: item.id,
-      type: "پیام تماس",
-      name: item.name,
-      phone: item.phone,
-      text: item.subject || item.message,
-      createdAt: item.createdAt,
-      code: "CNT",
-    })),
-    ...data.leads.map((item) => ({
-      id: item.id,
-      type: "سرنخ اولیه",
-      name: item.name,
-      phone: item.phone,
-      text: item.text,
-      createdAt: item.createdAt,
-      code: "LED",
-    })),
-  ]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    .slice(0, 8);
-
   return (
     <section dir="rtl" className="min-w-0 space-y-4 sm:space-y-5">
       <header className="relative isolate overflow-hidden rounded-[20px] border border-[#dfedf2] bg-white shadow-[0_13px_38px_rgba(9,55,75,.055)] sm:rounded-[22px]">
@@ -263,7 +197,6 @@ export default async function AdminPage() {
 
         <div className="relative z-10 flex min-h-[205px] flex-col justify-between gap-6 p-5 sm:p-7 lg:flex-row lg:items-end lg:gap-6 lg:p-8 xl:min-h-[220px]">
           <div className="relative min-w-0 flex-1 lg:self-center">
-            
             <h1 className="mt-3 text-[26px] font-black leading-[1.5] tracking-[-.025em] text-[#123646] sm:text-[31px] lg:text-[34px] xl:text-[38px]">
               به داشبورد مدیریت خوش آمدید
             </h1>
@@ -314,8 +247,8 @@ export default async function AdminPage() {
         <Metric
           icon={Inbox}
           label="ورودی‌ها"
-          value={data.counts.contacts + data.counts.leads}
-          caption="تماس و لید اولیه"
+          value={data.counts.intakes + data.counts.submissions}
+          caption="درخواست‌های سایت و پاسخ فرم‌های پویا"
           code="INT"
           tone="blue"
         />
@@ -361,7 +294,7 @@ export default async function AdminPage() {
               tone="blue"
             />
             <OperationCard
-              href="/admin#intake"
+              href="/admin/intake"
               icon={MessageSquareText}
               title="بررسی ورودی‌ها"
               text="آخرین پیام‌های تماس و سرنخ‌های صفحه اصلی را مرور کنید."
@@ -421,44 +354,45 @@ export default async function AdminPage() {
         <Panel
           id="intake"
           title="آخرین ورودی‌های سایت"
-          subtitle="جدیدترین تماس‌ها و سرنخ‌های ثبت‌شده"
+          subtitle="آخرین درخواست‌های فرم‌های ثابت سایت"
           icon={ContactRound}
+          footer={{ href: "/admin/intake", label: "مشاهده همه ورودی‌ها" }}
         >
-          {intakeItems.length === 0 ? (
+          {data.intakes.length === 0 ? (
             <EmptyState text="هنوز پیام یا سرنخ جدیدی ثبت نشده است." />
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-              {intakeItems.map((item) => (
+              {data.intakes.map((item) => (
                 <article
-                  key={`${item.code}-${item.id}`}
+                  key={item.id + item.type}
                   data-admin-searchable
-                  data-admin-search-label={`${item.name} ${item.phone} ${item.type} ${item.text}`}
+                  data-admin-search-label={`${item.title} ${item.contact} ${item.source} ${item.summary}`}
                   className="min-w-0 rounded-xl border border-[#e5edf1] bg-[#fbfdfe] p-3.5 transition hover:border-[#bad8e2]"
                 >
                   <div className="flex min-w-0 items-start justify-between gap-2">
                     <div className="min-w-0">
                       <p className="text-[10px] font-extrabold text-[#1481a0]">
-                        {item.type}
+                        {item.source}
                       </p>
                       <h3 className="mt-1 truncate text-xs font-black text-[#173a4c]">
-                        {item.name}
+                        {item.title}
                       </h3>
                     </div>
                     <span
                       dir="ltr"
                       className="shrink-0 rounded-md bg-[#edf7fa] px-2 py-1 text-[9px] font-bold tracking-wider text-[#6d9cad]"
                     >
-                      {item.code}-{item.id.slice(-5).toUpperCase()}
+                      <Link href={`/admin/intake/${item.type}?q=${item.id}`} aria-label={`مشاهده درخواست ${item.code}`} className="underline underline-offset-2">{item.code}</Link>
                     </span>
                   </div>
                   <p
                     dir="ltr"
                     className="mt-2 text-right text-[11px] tabular-nums text-[#6c8b9e]"
                   >
-                    {item.phone}
+                    {item.contact}
                   </p>
                   <p className="mt-2 line-clamp-2 text-[11px] leading-6 text-[#456476]">
-                    {item.text}
+                    {item.summary}
                   </p>
                   <p className="mt-3 border-t border-[#e8f0f3] pt-2.5 text-[10px] text-[#9aabb6]">
                     {formatDateTime(item.createdAt)}

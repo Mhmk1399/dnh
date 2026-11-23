@@ -13,18 +13,42 @@ const pageMetadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function WeeklyOutlookPage() {
-  const reports = await getPublishedWeeklyOutlookList();
+export default async function WeeklyOutlookPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
+  const reports = await getPublishedWeeklyOutlookList(locale).catch(() => {
+    console.error("Weekly outlook archive is temporarily unavailable.");
+    return null;
+  });
 
   return (
     <div>
-      <WeeklyOutlookHero />
-      <WeeklyOutlookListSection reports={reports} />
+      <WeeklyOutlookHero locale={locale} />
+      {reports ? (
+        <WeeklyOutlookListSection reports={reports} locale={locale} />
+      ) : (
+        <section id="weekly-outlook-reports" className="dnh-site-shell scroll-mt-28 py-12 text-ink">
+          <p role="status">{locale === "fa"
+            ? "دریافت آرشیو گزارش‌ها ممکن نشد. لطفاً دوباره تلاش کنید."
+            : "The report archive could not be loaded. Please try again."}</p>
+        </section>
+      )}
     </div>
   );
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
-  return localizePageMetadata(pageMetadata, "/knowledge/weekly-outlook", normalizeSiteLocale(locale));
+  return localizePageMetadata(
+    pageMetadata,
+    "/knowledge/weekly-outlook",
+    normalizeSiteLocale(locale),
+  );
 }

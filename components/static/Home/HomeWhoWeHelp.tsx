@@ -1,23 +1,23 @@
-"use client";
-
 import Image from "next/image";
 import {
-  ArrowLeft,
-  ArrowRight,
+  BrainCircuit,
   Building2,
   GitBranch,
   Layers3,
+  LockKeyhole,
+  Scale,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 const audienceIcons = {
   decision: GitBranch,
   portfolio: Layers3,
   holdings: Building2,
+  privacy: LockKeyhole,
+  responsibility: Scale,
+  judgment: BrainCircuit,
 } as const;
 const audienceImages = {
   "major-financial-decision": "/assets/images/big-financial-decision4.webp",
@@ -36,15 +36,15 @@ type AudienceContent = {
     id: string;
     title: string;
     description: string;
-    cta: string;
-    href: string;
+    cta?: string;
+    href?: string;
     icon: keyof typeof audienceIcons;
   }>;
 };
 
-export function HomeWhoWeHelp() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeWhoWeHelp({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "who-we-help" && section.type === "audience_cards",
@@ -54,8 +54,6 @@ export function HomeWhoWeHelp() {
 
   const highlight = content.heading_highlight ?? "";
   const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
-
   return (
     <section
       id={content.id}
@@ -66,7 +64,7 @@ export function HomeWhoWeHelp() {
     >
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1040px] text-center">
-          <div className="flex items-center justify-center gap-3 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex items-center justify-center gap-3 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -106,8 +104,8 @@ export function HomeWhoWeHelp() {
                 key={audience.id}
                 className="group flex min-w-0 flex-col      bg-page transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-surface-soft">
-                  {image ? (
+                {image ? (
+                  <div className="relative aspect-[16/10] overflow-hidden bg-surface-soft">
                     <Image
                       src={image}
                       alt=""
@@ -115,36 +113,44 @@ export function HomeWhoWeHelp() {
                       sizes="(max-width: 1023px) calc(100vw - 24px), 32vw"
                       className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none"
                     />
-                  ) : null}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent"
-                  />
-                </div>
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent"
+                    />
+                  </div>
+                ) : null}
                 <div className="relative flex min-w-0 flex-1 flex-col p-5 pt-8 sm:p-6 sm:pt-9">
+                  <span
+                    aria-hidden="true"
+                    className="mb-5 flex size-11 items-center justify-center border border-line bg-surface-soft text-brand-accent"
+                  >
+                    <Icon size={21} strokeWidth={1.6} />
+                  </span>
                   <h3
                     className={`text-start border-b border-brand-accent! pb-3 text-[20px] font-black sm:text-[16px] ${isRTL ? "leading-[1.65]" : "leading-[1.35]"}`}
                   >
                     {audience.title}
                   </h3>
                   <p
-                    className={`mt-4 text-justify text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
+                    className={`mt-4 text-start text-sm text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.95]" : "leading-[1.72]"}`}
                   >
                     {audience.description}
                   </p>
-                  <div className="mt-auto pt-5">
-                    <ActionButton
-                      href={audience.href}
-                      variant="secondary"
-                      shape="square"
-                      size="sm"
-                      iconPosition="end"
-                      dir={direction}
-                      className="min-h-11 w-full hover:text-black! border-brand-accent! justify-between bg-page text-start text-[13px] shadow-none hover:shadow-none"
-                    >
-                      {audience.cta}
-                    </ActionButton>
-                  </div>
+                  {audience.cta && audience.href ? (
+                    <div className="mt-auto pt-5">
+                      <ActionButton
+                        href={audience.href}
+                        variant="secondary"
+                        shape="square"
+                        size="sm"
+                        iconPosition="end"
+                        dir={direction}
+                        className="min-h-11 w-full hover:text-black! border-brand-accent! justify-between bg-page text-start text-[13px] shadow-none hover:shadow-none"
+                      >
+                        {audience.cta}
+                      </ActionButton>
+                    </div>
+                  ) : null}
                 </div>
               </article>
             );

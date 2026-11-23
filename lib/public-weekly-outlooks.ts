@@ -1,198 +1,101 @@
 import "server-only";
 
+import { cache } from "react";
 import connect from "@/lib/data";
-import WeeklyOutlookReport, {
-  type WeeklyOutlookReportRecord,
-} from "@/models/WeeklyOutlookReport";
-import type {
-  PublicWeeklyOutlookReport,
-  WeeklyOutlookBlock,
-  WeeklyOutlookListItem,
-  WeeklyOutlookSectionDefinition,
-} from "@/lib/weekly-outlook";
+import WeeklyOutlookReport from "@/models/WeeklyOutlookReport";
+import { localizeContentDigits } from "@/lib/localized-digits";
+import type { SiteLocale } from "@/lib/site-language";
+import type { PublicWeeklyOutlookReport, WeeklyOutlookListItem } from "@/lib/weekly-outlook";
 import { normalizeWeeklyOutlookDateCalendar } from "@/lib/weekly-outlook-date";
+import { mapWeeklyOutlookSections } from "@/lib/weekly-outlook-sections";
 
-type WeeklyOutlookLean = WeeklyOutlookReportRecord & {
-  _id: unknown;
-};
+const publicationFilter = (locale: SiteLocale) =>
+  locale === "en" ? { status: "published", "english.ready": true } : { status: "published" };
 
-function isoDate(value: Date | string | undefined | null) {
-  if (!value) return undefined;
-
-  const date = new Date(value);
-
-  return Number.isNaN(date.getTime())
-    ? undefined
-    : date.toISOString();
+function publishedLocales(hasEnglish?: boolean): SiteLocale[] {
+  return hasEnglish ? ["fa", "en"] : ["fa"];
 }
 
-function reportDate(value: Date | string) {
-  const date = new Date(value);
-
-  return Number.isNaN(date.getTime())
-    ? new Date().toISOString().slice(0, 10)
-    : date.toISOString().slice(0, 10);
+function isoDate(value: Date | string) {
+  return new Date(value).toISOString();
 }
 
-function mapSections(
-  sections: WeeklyOutlookReportRecord["sections"],
-): WeeklyOutlookSectionDefinition[] {
-  return sections.map((section) => ({
-    id: section.id,
-    eyebrow: section.eyebrow,
-    title: section.title,
-    summary: section.summary,
-    icon: section.icon,
-    tone: section.tone,
-    visual: section.visual ?? "grid",
-    blocks: section.blocks.map((block) => {
-      if (block.type === "heading") {
-        return {
-          id: block.id,
-          type: "heading",
-          text: block.text ?? "",
-          level: block.level === "h2" ? "h2" : "h3",
-        };
-      }
+export async function getPublishedWeeklyOutlookList(locale: SiteLocale): Promise<WeeklyOutlookListItem[]> {
+  await connect();
+  const copyFields = locale === "fa"
+    ? "title edition excerpt coverImageAlt sections.id"
+    : "english.title english.edition english.excerpt english.coverImageAlt english.sections.id";
+  const rows = await WeeklyOutlookReport.find(publicationFilter(locale))
+    .select(`slug reportDate dateCalendar coverImage publishedAt ${copyFields}`)
+    .sort({ reportDate: -1, updatedAt: -1 })
+    .limit(100)
+    .lean();
 
-      if (block.type === "list") {
-        return {
-          id: block.id,
-          type: "list",
-          items: block.items ? [...block.items] : [],
-        };
-      }
-
-      if (block.type === "callout") {
-        return {
-          id: block.id,
-          type: "callout",
-          title: block.title,
-          text: block.text ?? "",
-          tone: block.tone ?? "info",
-        };
-      }
-
-      if (block.type === "quote") {
-        return {
-          id: block.id,
-          type: "quote",
-          text: block.text ?? "",
-          cite: block.cite,
-        };
-      }
-
-      if (block.type === "image") {
-        return {
-          id: block.id,
-          type: "image",
-          src: block.src ?? "",
-          alt: block.alt ?? "",
-          caption: block.caption,
-        };
-      }
-
-      if (block.type === "button") {
-        return {
-          id: block.id,
-          type: "button",
-          label: block.label ?? "",
-          href: block.href ?? "/",
-          variant: block.variant ?? "primary",
-          note: block.note,
-        };
-      }
-
-      if (block.type === "divider") {
-        return {
-          id: block.id,
-          type: "divider",
-        };
-      }
-
-      return {
-        id: block.id,
-        type: "paragraph",
-        text: block.text ?? "",
-      };
-    }) as WeeklyOutlookBlock[],
-  }));
+  return rows.map((row) => {
+    const copy = locale === "en" ? row.english! : row;
+    return localizeContentDigits({
+      id: String(row._id),
+      title: copy.title,
+      slug: row.slug,
+      edition: copy.edition,
+      reportDate: isoDate(row.reportDate).slice(0, 10),
+      dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
+      excerpt: copy.excerpt,
+      coverImage: row.coverImage || undefined,
+      coverImageAlt: copy.coverImageAlt || undefined,
+      sectionCount: copy.sections.length,
+      publishedAt: row.publishedAt ? isoDate(row.publishedAt) : null,
+    }, locale);
+  });
 }
 
-function mapReport(row: WeeklyOutlookLean): PublicWeeklyOutlookReport {
-  return {
+type PublishedReport = PublicWeeklyOutlookReport & { availableLocales: SiteLocale[] };
+
+// The page and its metadata share one database read per request.
+export const getPublishedWeeklyOutlookReport = cache(async (
+  slug: string, locale: SiteLocale,
+): Promise<PublishedReport | null> => {
+  await connect();
+  const copyFields = locale === "fa"
+    ? "title edition excerpt coverImageAlt seoTitle seoDescription sections english.ready"
+    : "english";
+  const row = await WeeklyOutlookReport.findOne({ ...publicationFilter(locale), slug })
+    .select(`slug reportDate dateCalendar coverImage status revision publishedAt updatedAt createdAt ${copyFields}`)
+    .lean();
+  if (!row) return null;
+
+  const copy = locale === "en" ? row.english! : row;
+  return localizeContentDigits({
     id: String(row._id),
-    title: row.title,
+    title: copy.title,
     slug: row.slug,
-    edition: row.edition,
-    reportDate: reportDate(row.reportDate),
-    dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
-    excerpt: row.excerpt,
+    edition: copy.edition,
+    excerpt: copy.excerpt,
     coverImage: row.coverImage || undefined,
-    coverImageAlt: row.coverImageAlt || undefined,
-    seoTitle: row.seoTitle || undefined,
-    seoDescription: row.seoDescription || undefined,
-    status: row.status,
-    sections: mapSections(row.sections),
+    coverImageAlt: copy.coverImageAlt || undefined,
+    seoTitle: copy.seoTitle || undefined,
+    seoDescription: copy.seoDescription || undefined,
+    sections: mapWeeklyOutlookSections(copy.sections),
+    reportDate: isoDate(row.reportDate).slice(0, 10),
+    dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
+    publishedAt: row.publishedAt ? isoDate(row.publishedAt) : null,
+    createdAt: row.createdAt ? isoDate(row.createdAt) : undefined,
+    updatedAt: row.updatedAt ? isoDate(row.updatedAt) : undefined,
     revision: row.revision,
-    publishedAt: isoDate(row.publishedAt) ?? null,
-    createdAt: isoDate(row.createdAt),
-    updatedAt: isoDate(row.updatedAt),
-  };
-}
+    status: row.status,
+    availableLocales: publishedLocales(row.english?.ready),
+  }, locale);
+});
 
-function mapListItem(row: WeeklyOutlookLean): WeeklyOutlookListItem {
-  return {
-    id: String(row._id),
-    title: row.title,
+export async function getWeeklyOutlookSitemapEntries() {
+  await connect();
+  const rows = await WeeklyOutlookReport.find({ status: "published" })
+    .select("slug english.ready updatedAt reportDate")
+    .sort({ reportDate: -1 })
+    .lean();
+  return rows.map((row) => ({
     slug: row.slug,
-    edition: row.edition,
-    reportDate: reportDate(row.reportDate),
-    dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
-    excerpt: row.excerpt,
-    coverImage: row.coverImage || undefined,
-    coverImageAlt: row.coverImageAlt || undefined,
-    sectionCount: row.sections.length,
-    publishedAt: isoDate(row.publishedAt) ?? null,
-  };
-}
-
-export async function getPublishedWeeklyOutlookList(): Promise<
-  WeeklyOutlookListItem[]
-> {
-  try {
-    await connect();
-
-    const rows = await WeeklyOutlookReport.find({ status: "published" })
-      .select(
-        "title slug edition reportDate dateCalendar excerpt coverImage coverImageAlt sections publishedAt",
-      )
-      .sort({ reportDate: -1, updatedAt: -1 })
-      .limit(100)
-      .lean();
-
-    return (rows as WeeklyOutlookLean[]).map(mapListItem);
-  } catch (error) {
-    console.error("Unable to load weekly outlook list", error);
-    return [];
-  }
-}
-
-export async function getPublishedWeeklyOutlookReport(
-  slug: string,
-): Promise<PublicWeeklyOutlookReport | null> {
-  try {
-    await connect();
-
-    const row = await WeeklyOutlookReport.findOne({
-      slug,
-      status: "published",
-    }).lean();
-
-    if (row) return mapReport(row as WeeklyOutlookLean);
-  } catch (error) {
-    console.error("Unable to load weekly outlook report", error);
-  }
-
-  return null;
+    locales: publishedLocales(row.english?.ready),
+    lastModified: isoDate(row.updatedAt ?? row.reportDate),
+  }));
 }

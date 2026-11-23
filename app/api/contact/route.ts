@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   try {
     await connect();
     const user = await getCurrentUser();
-    const record = await Contact.create({ name, phone, email: email || undefined, subject: subject || undefined, message, userId: user?.id || null });
+    const record = await Contact.create({ locale: isEnglish ? "en" : "fa", name, phone, email: email || undefined, subject: subject || undefined, message, userId: user?.id || null });
     return NextResponse.json({ message: copy.success, reference: `CNT-${String(record._id).slice(-6).toUpperCase()}` }, { status: 201 });
   } catch {
     return NextResponse.json({ message: copy.unavailable }, { status: 503 });

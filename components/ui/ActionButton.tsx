@@ -55,10 +55,11 @@ const variantClasses: Record<ActionButtonVariant, string> = {
     gap-[10px]
     bg-brand-primary
     font-bold
-    text-[var(--dnh-text-on-brand)]
+    text-brand-secondary
     shadow-[0_14px_34px_color-mix(in_srgb,var(--dnh-primary)_24%,transparent)]
     hover:-translate-y-px
     hover:bg-brand-secondary
+    hover:text-brand-primary
     hover:shadow-[0_17px_38px_color-mix(in_srgb,var(--dnh-primary)_29%,transparent)]
     active:translate-y-0
   `,
@@ -72,15 +73,16 @@ const variantClasses: Record<ActionButtonVariant, string> = {
     shadow-[0_8px_24px_color-mix(in_srgb,var(--dnh-primary)_5%,transparent)]
     hover:border-line-strong
     hover:bg-page
-    hover:text-brand-primary
+    hover:text-brand-accent
   `,
   assessment: `
     bg-brand-primary
     font-black
-    text-[var(--dnh-text-on-brand)]
+    text-brand-secondary
     shadow-[0_14px_32px_color-mix(in_srgb,var(--dnh-primary)_23%,transparent)]
     hover:-translate-y-[2px]
     hover:bg-brand-secondary
+    hover:text-brand-primary
     hover:shadow-[0_18px_40px_color-mix(in_srgb,var(--dnh-primary)_29%,transparent)]
     active:translate-y-[1px]
   `,
@@ -91,7 +93,7 @@ const sizeClasses: Record<
   Record<ActionButtonSize, string>
 > = {
   primary: {
-    sm: "min-h-[42px] px-4 py-2 text-[10px]",
+    sm: "min-h-11 px-4 py-2 text-xs",
     md: "min-h-[52px] px-6 py-3 text-[12px]",
     lg: `
       min-h-[54px]
@@ -104,7 +106,7 @@ const sizeClasses: Record<
     `,
   },
   secondary: {
-    sm: "min-h-[42px] px-4 py-2 text-[10px]",
+    sm: "min-h-11 px-4 py-2 text-xs",
     md: "min-h-[52px] px-6 py-3 text-[12px]",
     lg: `
       min-h-[52px]
@@ -147,6 +149,8 @@ export function ActionButton(props: ActionButtonProps) {
     group/action
     relative
     inline-flex
+    min-w-0
+    max-w-full
     items-center
     overflow-hidden
     outline-none
@@ -182,7 +186,7 @@ export function ActionButton(props: ActionButtonProps) {
     <>
       {variant !== "assessment" && iconPosition === "start" ? icon : null}
 
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 min-w-0 [overflow-wrap:anywhere]">{children}</span>
 
       {variant !== "assessment" && iconPosition === "end" ? icon : null}
       {variant === "assessment" ? icon : null}
@@ -366,7 +370,7 @@ function ActionIcon({
               bg-surface-soft
               text-brand-primary
               group-hover/action:bg-brand-primary
-              group-hover/action:text-[var(--dnh-text-on-brand)]
+              group-hover/action:text-brand-secondary
             `
         }
         motion-reduce:transform-none

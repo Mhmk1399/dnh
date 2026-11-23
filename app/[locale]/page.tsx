@@ -6,16 +6,15 @@ import { HomeFramework } from "@/components/static/Home/WholeWealthViewSection";
 import { HomeIntelligenceDesk } from "@/components/static/Home/HomeIntelligenceDesk";
 import { HomeWeeklyOutlook } from "@/components/static/Home/HomeWeeklyOutlook";
 import { HomeInsights } from "@/components/static/Home/HomeInsights";
-import { HomeResearchCaseStudies } from "@/components/static/Home/HomeResearchCaseStudies";
 import { AboutDrNasimSection } from "@/components/static/Home/AboutDrNasimSection";
 import { FinancialDecisionAssessmentSection } from "@/components/static/Home/FinancialDecisionAssessmentSection";
 import type { Metadata } from "next";
-import homepageFa from "@/config/DNH_Homepage_Final_FA.json";
-import homepageEn from "@/config/DNH_Homepage_Final_EN.json";
-import { localizePageMetadata, getLocalizedAlternates } from "@/lib/site-seo";
+import { getHomepageContent } from "@/lib/homepage-content";
+import { localizePageMetadata } from "@/lib/site-seo";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { HomeServices } from "@/components/static/Home/HomeServices";
 import { HomeProblemRecognition } from "@/components/static/Home/HomeProblemRecognition";
+import { PageSectionIndex } from "@/components/static/reviewed-pages/PageSectionIndex";
 
 export async function generateMetadata({
   params,
@@ -24,89 +23,49 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: routeLocale } = await params;
   const locale = normalizeSiteLocale(routeLocale);
-  const homepage = locale === "fa" ? homepageFa : homepageEn;
+  const homepage = getHomepageContent(locale);
   return localizePageMetadata(
     {
       title: homepage.seo.title,
       description: homepage.seo.description,
-      alternates: getLocalizedAlternates("/", locale),
       applicationName: homepage.brand,
-      manifest: "/manifest.webmanifest",
-      appleWebApp: {
-        capable: true,
-        title: homepage.brand,
-        statusBarStyle: "default",
-      },
-      formatDetection: {
-        telephone: false,
-      },
-      icons: {
-        icon: [
-          {
-            url: "/favicon.ico",
-            sizes: "any",
-          },
-          {
-            url: "/icons/favicon-32x32.png",
-            sizes: "32x32",
-            type: "image/png",
-          },
-          {
-            url: "/icons/icon-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-        ],
-        apple: [
-          {
-            url: "/icons/icon-180x180.png",
-            sizes: "180x180",
-            type: "image/png",
-          },
-        ],
-        shortcut: ["/favicon.ico"],
-      },
-      other: {
-        "mobile-web-app-capable": "yes",
-        "msapplication-TileColor": "#167394",
-        "msapplication-config": "none",
-      },
     },
     "/",
     locale,
   );
 }
 
-export default function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = normalizeSiteLocale((await params).locale);
+  const homepage = getHomepageContent(locale);
   return (
     <>
-      <main>
-        <HomeHero />
+      <div className="dnh-home-sections [&>section[id]]:scroll-mt-24 lg:[&>section[id]]:scroll-mt-28">
+        <HomeHero locale={locale} />
+        <PageSectionIndex sections={homepage.sections.filter((section) => section.type !== "hero")} locale={locale} />
 
-        <HomeServices />
+        <HomeProblemRecognition homepage={homepage} />
 
-        <HomeProblemRecognition />
+        <HomeDecisionComparison homepage={homepage} />
 
-        <HomeWhoWeHelp />
+        <HomeFramework homepage={homepage} />
 
-        <HomeDecisionComparison />
+        <HomeIntelligenceDesk homepage={homepage} />
 
-        <HomeFramework />
+        <HomeWholeWealthView homepage={homepage} />
 
-        <HomeWholeWealthView />
+        <HomeServices homepage={homepage} />
 
-        <HomeIntelligenceDesk />
+        <HomeWeeklyOutlook homepage={homepage} />
 
-        <HomeWeeklyOutlook />
+        <HomeInsights homepage={homepage} />
 
-        <HomeInsights />
+        <AboutDrNasimSection homepage={homepage} />
 
-        <HomeResearchCaseStudies />
+        <HomeWhoWeHelp homepage={homepage} />
 
-        <FinancialDecisionAssessmentSection />
-
-        <AboutDrNasimSection />
-      </main>
+        <FinancialDecisionAssessmentSection homepage={homepage} />
+      </div>
     </>
   );
 }

@@ -1,494 +1,382 @@
 {
-  "page": "risk-management-wealth-protection", 
+  "page": "risk-management-wealth-protection",
+  "route": "/services/risk-management-wealth-protection",
   "brand": "DNH",
-  "locale": "en-US",
+  "locale": "en",
   "direction": "ltr",
   "title": "Risk Management & Wealth Protection",
   "english_title": "Risk Management & Wealth Protection",
-  "section_count": 12,
+  "seo": {
+    "title": "Risk Management & Wealth Protection | DNH",
+    "description": "Identify concentrations, dependencies, liquidity constraints and structural vulnerabilities to clarify wealth-risk priorities."
+  },
   "sections": [
     {
       "order": 1,
-      "id": "risk-management-wealth-protection-hero",
+      "id": "risk-hero",
       "type": "hero",
       "eyebrow": "Risk Management & Wealth Protection",
-      "english_label": "Risk Management & Wealth Protection",
-      "heading": "Protecting wealth does not begin by predicting a crisis; it begins by understanding where your structure is vulnerable to change.",
+      "heading": "Risk Management & Wealth Protection: identify hidden vulnerabilities in capital",
+      "heading_highlight": "hidden vulnerabilities",
       "paragraphs": [
-        "Financial risk does not always appear as a sudden market decline. Sometimes it exists in excessive concentration, limited liquidity, dependence on one business, currency exposure, erosion of purchasing power or obligations that create no problem under normal conditions but become important when circumstances change.",
-        "For this reason, wealth protection is not simply about choosing low-risk assets.",
-        "DNH begins by understanding the existing structure: where wealth is held, what it depends on, which areas are more sensitive to changing conditions, and which risks can affect several parts of the structure at the same time.",
-        "The objective is not to eliminate risk completely—something that is not possible in financial decision-making. The objective is to create a clearer view of vulnerabilities, protection priorities and decisions that can strengthen the resilience of the wealth structure."
+        "Risk does not always arrive as a sudden crisis. Asset concentration, limited liquidity or dependence on one income source can make wealth vulnerable to change.",
+        "Drawing on Dr Nasim Mohammadhassani’s specialist perspective, DNH helps identify and assess these risks and clarify review priorities."
       ],
       "ctas": [
         {
-          "label": "Start an Initial Risk Assessment",
+          "id": "assessment",
+          "label": "Start a financial decision assessment",
+          "href": "/financial-decision-assessment",
           "type": "primary"
-        },
-        {
-          "label": "Request Strategic Advice",
-          "type": "secondary"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/risk-management-wealth-protection-hero.webp",
+        "mobile_src": "/assets/images/risk-management-wealth-protection-hero.webp",
+        "alt": "A conceptual view of risk management and wealth protection"
+      }
     },
     {
       "order": 2,
-      "id": "risk-is-not-always-where-you-expect-it",
-      "type": "problem-recognition",
-      "eyebrow": "Risk Is Not Always Where You Expect It",
-      "english_label": "Risk Is Not Always Where You Expect It",
-      "heading": "A wealth structure can appear diversified while several parts remain exposed to the same underlying risk.",
-      "intro": "Some risks are visible. Others only become apparent when conditions change.",
+      "id": "risk-vulnerabilities",
+      "type": "cards",
+      "theme": "soft",
+      "eyebrow": "Hidden vulnerabilities",
+      "heading": "Diverse assets do not always mean lower risk",
+      "heading_highlight": "lower risk",
+      "paragraphs": [
+        "You may hold valuable assets while much of the structure still depends on one market, income source or economic condition.",
+        "Understanding those dependencies matters before they turn into financial constraints."
+      ],
       "items": [
         {
-          "title": "A large share of wealth is concentrated in one area",
-          "description": "One asset, market, business or income source may account for a very large part of the overall structure."
+          "id": "concentration",
+          "title": "Capital concentration",
+          "description": "A material share of wealth sits in one asset or market."
         },
         {
-          "title": "There is substantial wealth but limited liquidity",
-          "description": "Total asset value may be high, while a meaningful portion requires time or specific conditions to be converted into cash."
+          "id": "shared-risks",
+          "title": "Common risk drivers",
+          "description": "Different assets may respond to the same economic factor."
         },
         {
-          "title": "Different assets are exposed to one common factor",
-          "description": "Apparent diversification does not always mean diversified risk; several parts of the structure may respond similarly to inflation, currencies, recession or one industry."
+          "id": "liquidity",
+          "title": "Limited liquidity",
+          "description": "Asset values are high, but rapid access to cash is difficult."
         },
         {
-          "title": "Personal wealth is highly dependent on a business",
-          "description": "A decline in income, a change in industry conditions or an unexpected need for business capital can affect the company and the owner's personal finances at the same time."
+          "id": "business",
+          "title": "Business dependency",
+          "description": "Personal capital and income depend materially on one business."
         },
         {
-          "title": "Future obligations are not aligned with the asset structure",
-          "description": "Short-term financial needs may arise while a large portion of wealth is held in illiquid assets."
-        },
-        {
-          "title": "Decisions are designed only for normal conditions",
-          "description": "A structure may look appropriate in the base case but become vulnerable when several variables change at once."
-        }
-      ],
-      "closing": "Identifying these points before they become actual problems is one of the most important purposes of risk assessment.",
-      "ctas": [
-        {
-          "label": "Identify Hidden Risks in My Structure",
-          "type": "primary"
+          "id": "commitments",
+          "title": "Future financial obligations",
+          "description": "Upcoming payments may not align with available liquid resources."
         }
       ]
     },
     {
       "order": 3,
-      "id": "what-is-risk-management-wealth-protection",
-      "type": "definition",
-      "eyebrow": "What Is Risk Management & Wealth Protection?",
-      "english_label": "What Is Risk Management & Wealth Protection?",
-      "heading": "Risk management means understanding what can put the wealth structure under pressure and considering its effect before decisions are made.",
-      "intro": "At DNH, risk management does not mean trying to eliminate all volatility or uncertainty.",
+      "id": "risk-definition",
+      "type": "cards",
+      "eyebrow": "About the service",
+      "heading": "Risk management means identifying pressure points before a decision",
+      "heading_highlight": "before a decision",
+      "paragraphs": [
+        "At DNH, risk management does not mean eliminating every risk or predicting a crisis.",
+        "It focuses on the wealth structure, its vulnerabilities and the relative importance of different risks."
+      ],
       "items": [
         {
-          "title": "What risks exist?",
-          "description": "The first step is to identify the points that can affect wealth, liquidity or future decisions."
+          "id": "identify",
+          "number": "01",
+          "title": "Identify risks",
+          "description": "Recognise factors that may affect assets, liquidity or obligations."
         },
         {
-          "title": "What does each risk affect?",
-          "description": "A risk may affect one asset or several parts of the structure at the same time."
+          "id": "relationships",
+          "number": "02",
+          "title": "Understand risk relationships",
+          "description": "Identify dependencies that can affect several parts of wealth at once."
         },
         {
-          "title": "Which risks matter more?",
-          "description": "Not every risk requires the same response, so priorities need to be established."
-        },
-        {
-          "title": "What happens if conditions change?",
-          "description": "Different scenarios help reveal the circumstances in which the structure becomes more vulnerable."
-        },
-        {
-          "title": "Which areas need review?",
-          "description": "The ultimate objective is to identify the areas that may deserve deeper consideration in order to improve resilience."
+          "id": "priorities",
+          "number": "03",
+          "title": "Prioritise vulnerabilities",
+          "description": "Determine which matters deserve greater attention given the circumstances and objectives."
         }
       ],
-      "framework_logic": "Risk identification → Impact review → Scenario analysis → Prioritization → Structural review",
-      "closing": "The outcome is not a promise of “risk-free wealth.” The objective is to understand risk more clearly and make better-informed decisions in response to it.",
-      "ctas": [
-        {
-          "label": "Start Understanding My Risk Structure",
-          "type": "primary"
-        }
-      ]
+      "closing": "The purpose is a clearer view of wealth risks and the matters that need attention before decisions are made."
     },
     {
       "order": 4,
-      "id": "who-is-it-for",
-      "type": "audience",
-      "eyebrow": "Who Is It For?",
-      "english_label": "Who Is It For?",
-      "heading": "The more complex or concentrated a wealth structure becomes, the more important it is to understand how its risks are connected.",
+      "id": "risk-audience",
+      "type": "cards",
+      "theme": "soft",
+      "eyebrow": "Who it is for",
+      "heading": "Who should consider a wealth-risk review?",
+      "intro": "As assets, obligations and sources of income become more complex, understanding the connections between risks becomes more important.",
       "items": [
         {
-          "title": "Individuals with diverse assets",
-          "description": "When capital is spread across several areas and it is unclear how risk is truly distributed across the overall structure."
+          "id": "investors",
+          "number": "01",
+          "title": "Individuals and investors",
+          "description": "You hold diverse or concentrated assets and want a clearer view of risk, liquidity and financial dependencies."
         },
         {
+          "id": "families",
+          "number": "02",
           "title": "Families",
-          "description": "When assets, objectives, obligations and financial decisions are interconnected across several family members."
+          "description": "Family wealth involves obligations, future needs and decisions across several people and needs an integrated review."
         },
         {
-          "title": "Capital owners",
-          "description": "When capital preservation and risk management have become ongoing, multidimensional responsibilities."
-        },
-        {
+          "id": "owners",
+          "number": "03",
           "title": "Business owners",
-          "description": "When a significant share of wealth, income or personal liquidity depends on the performance of one business."
-        },
-        {
-          "title": "Individuals with high capital concentration",
-          "description": "When a substantial share of wealth is held in property, a business, currencies, gold, equities or another specific area."
-        },
-        {
-          "title": "Individuals with important obligations or liquidity needs",
-          "description": "When the timing of access to capital matters as much as total asset value."
-        },
-        {
-          "title": "People approaching a major financial decision",
-          "description": "Because a new decision can reduce, shift or increase the risks already present in the structure."
-        }
-      ],
-      "ctas": [
-        {
-          "label": "Assess Whether Risk Review Fits My Situation",
-          "type": "primary"
+          "description": "Personal wealth or income depends on a business whose performance can affect the wider financial position."
         }
       ]
     },
     {
       "order": 5,
-      "id": "wealth-risk-map",
-      "type": "risk-map",
-      "eyebrow": "Wealth Risk Map",
-      "english_label": "Wealth Risk Map",
-      "heading": "To manage risk, we first need to understand where it enters the structure and which areas it can affect.",
-      "intro": "Risk assessment is not limited to one number or one risk-tolerance score. Depending on the circumstances, several types of risk may need to be considered together:",
+      "id": "risk-map",
+      "type": "demo",
+      "theme": "dark",
+      "eyebrow": "Risk exposure map",
+      "heading": "Which part of the wealth structure is more vulnerable?",
+      "heading_highlight": "more vulnerable",
+      "intro": "A risk review is not simply a list of threats. It should show which part of wealth is exposed, how risks connect and which matters require priority attention.",
+      "badge": "DEMO | HYPOTHETICAL EXAMPLE, NOT A DNH CLIENT REPORT",
       "items": [
         {
-          "title": "Concentration risk",
-          "description": "How much wealth depends on one asset, market, industry, business or source of income?"
+          "id": "dependency",
+          "title": "Concentration and dependency",
+          "description": "Areas dependent on one asset, market or income source."
         },
         {
-          "title": "Liquidity risk",
-          "description": "How much capital is genuinely accessible when it is needed?"
+          "id": "liquidity",
+          "title": "Liquidity",
+          "description": "Access to financial resources when they are needed."
         },
         {
-          "title": "Financial-obligation risk",
-          "description": "Which future payments or requirements could place greater pressure on available resources?"
+          "id": "commitments",
+          "title": "Financial obligations",
+          "description": "Payments and needs that may reduce financial flexibility."
         },
         {
-          "title": "Inflation and purchasing-power risk",
-          "description": "Which parts of the wealth structure are more vulnerable to a decline in the real value of capital?"
-        },
-        {
-          "title": "Currency risk",
-          "description": "How can exchange-rate movements affect assets, costs, income or financial objectives?"
-        },
-        {
-          "title": "Market and economic-environment risk",
-          "description": "Which parts of the structure are more sensitive to changing economic or market conditions?"
-        },
-        {
-          "title": "Business-dependency risk",
-          "description": "How much of the family's wealth or income depends on the performance of a company or commercial activity?"
-        },
-        {
-          "title": "Time-horizon risk",
-          "description": "Are the characteristics of the assets aligned with when the capital will need to be used?"
+          "id": "environment",
+          "title": "Environmental risks",
+          "description": "Sensitivity to inflation, currencies, markets and economic developments."
         }
       ],
-      "closing": "The purpose of a risk map is not to overwhelm the decision-maker with a list of threats. It is to create a clearer picture of the structure's sensitive points and how they are connected.",
-      "ctas": [
-        {
-          "label": "Start Mapping My Risk Structure",
-          "type": "primary"
-        }
-      ]
+      "closing": "Core question: if economic conditions change, which part of the wealth structure could come under pressure first?",
+      "note": "Illustrative position: an individual holds much of their wealth in property and a business while facing future obligations. This preview explains the risk-map concept only."
     },
     {
       "order": 6,
-      "id": "concentration-dependency-risk",
-      "type": "concentration-risk",
-      "eyebrow": "Concentration & Dependency Risk",
-      "english_label": "Concentration & Dependency Risk",
-      "heading": "Nominal diversification does not always mean genuine diversification of risk.",
-      "intro": "An individual can hold many different assets while a large share of them still depends on the same economic factor, market or source of income.",
+      "id": "risk-concentration",
+      "type": "cards",
+      "eyebrow": "Capital concentration and common risk",
+      "heading": "Asset variety does not always create genuine risk diversification",
+      "heading_highlight": "genuine risk diversification",
+      "intro": "Capital may be divided among several assets while all remain exposed to the same economic change.",
       "items": [
         {
+          "id": "asset",
           "title": "Concentration in one asset",
-          "description": "When changes in the value or liquidity of one asset can materially affect the entire wealth structure."
+          "description": "A material share of wealth depends on changes in one asset’s value."
         },
         {
-          "title": "Concentration in one market or industry",
-          "description": "Different assets may appear independent while all being affected by the same market or industry conditions."
+          "id": "market",
+          "title": "Concentration in one market",
+          "description": "Several investments depend on one market or industry."
         },
         {
-          "title": "Dependence on a privately owned business",
-          "description": "If both income and a significant share of wealth depend on one business, a single event can put several parts of the structure under pressure at the same time."
-        },
-        {
+          "id": "income",
           "title": "Dependence on one income source",
-          "description": "A decline or interruption in one income stream can affect the ability to maintain other assets and meet obligations."
+          "description": "A decline in primary income could affect expenses and obligations."
         },
         {
-          "title": "Geographic or economic concentration",
-          "description": "Assets may share exposure to similar inflation, currency or policy risks."
+          "id": "personal-business",
+          "title": "Personal and business dependency",
+          "description": "Personal wealth is connected to the financial performance and risks of the business."
         }
       ],
-      "closing": "The objective is not always to eliminate every concentration. Some concentrations are a natural part of how wealth is created. The important point is to understand the degree of dependence and its possible consequences.",
-      "ctas": [
-        {
-          "label": "Review Concentration and Dependency in My Wealth Structure",
-          "type": "primary"
-        }
-      ]
+      "closing": "The aim is not to remove every concentration, but to understand dependencies and their potential implications."
     },
     {
       "order": 7,
-      "id": "liquidity-financial-commitments",
-      "type": "liquidity-risk",
-      "eyebrow": "Liquidity & Financial Commitments",
-      "english_label": "Liquidity & Financial Commitments",
-      "heading": "Asset value matters more when you also understand how much of it can actually be accessed when needed.",
-      "intro": "One important source of risk arises when the timing of access to capital does not match the timing of financial obligations.",
-      "questions": [
-        "How much of the wealth is accessible quickly?",
-        "Which assets require time to convert into cash?",
-        "What limitations or costs could arise from selling an asset quickly?",
-        "How will short- and medium-term obligations be funded?",
-        "Is there enough liquidity buffer for unexpected events?",
-        "What happens if an asset market is not sufficiently liquid when capital is needed?",
-        "If a new opportunity appears at the same time, will there be enough available capital to act on it?"
-      ],
+      "id": "risk-liquidity-economy",
+      "type": "cards",
+      "theme": "soft",
+      "eyebrow": "Liquidity and economic risk",
+      "heading": "Capital value matters; access to capital matters too",
+      "heading_highlight": "access to capital",
       "paragraphs": [
-        "Liquidity is not only about managing a crisis; it is part of financial flexibility and decision-making capacity.",
-        "A resilient structure should balance long-term investment with sufficient access to resources for real-world needs."
+        "A valuable asset meets a financial need only if it can be used at the appropriate time.",
+        "Liquidity should therefore be considered alongside obligations, inflation, currencies and economic conditions."
       ],
-      "ctas": [
+      "items": [
         {
-          "label": "Review Liquidity Risk in My Structure",
-          "type": "primary"
+          "id": "asset-liquidity",
+          "title": "Asset liquidity",
+          "description": "Which assets can become usable cash, when, and at what cost or constraint?"
+        },
+        {
+          "id": "future-obligations",
+          "title": "Future obligations",
+          "description": "Do available resources align with payment timing?"
+        },
+        {
+          "id": "inflation",
+          "title": "Inflation and purchasing power",
+          "description": "How could higher prices affect real capital value?"
+        },
+        {
+          "id": "currency",
+          "title": "Currency risk",
+          "description": "How might exchange-rate changes affect assets and financial needs?"
+        },
+        {
+          "id": "financing",
+          "title": "Financing conditions",
+          "description": "What constraints arise if financing costs or access change?"
+        },
+        {
+          "id": "environmental",
+          "title": "Economic and external risks",
+          "description": "Which economic, political or international changes may affect the wealth structure?"
         }
-      ]
+      ],
+      "note": "Asset liquidity is distinct from cash already available or access to external financing."
     },
     {
       "order": 8,
-      "id": "inflation-currency-macro-risk",
-      "type": "macro-risk",
-      "eyebrow": "Inflation, Currency & Macro Risk",
-      "english_label": "Inflation, Currency & Macro Risk",
-      "heading": "A wealth structure does not exist in a vacuum; the economic environment can change the value, liquidity and role of its assets.",
-      "intro": "Especially in environments where inflation, currencies and economic policy are associated with greater uncertainty, risk cannot be assessed at the level of a single asset alone.",
+      "id": "risk-scenarios",
+      "type": "cards",
+      "eyebrow": "Adverse scenarios and resilience",
+      "heading": "How flexible is the wealth structure if conditions change?",
+      "heading_highlight": "how flexible",
+      "intro": "Considering different hypothetical conditions helps identify assets, obligations and income sources that are more sensitive.",
       "items": [
         {
-          "title": "Inflation and purchasing power",
-          "description": "Rising price levels can change the real value of cash, income and certain assets over time."
+          "id": "inflation",
+          "title": "Higher inflation",
+          "description": "Which needs and assets are more exposed if purchasing power declines?"
         },
         {
-          "title": "Currency risk",
-          "description": "Exchange-rate changes can affect asset values, costs, income and purchasing power in different ways."
+          "id": "liquidity",
+          "title": "Lower liquidity",
+          "description": "How would funds be raised if some assets became difficult to sell?"
         },
         {
-          "title": "Liquidity conditions",
-          "description": "Changes in the availability of money and credit can affect market behavior and access to financing."
+          "id": "income",
+          "title": "Lower primary income",
+          "description": "Which obligations come under pressure if business or primary income falls?"
         },
         {
-          "title": "Economic and regulatory policy",
-          "description": "Policy changes may affect certain industries, assets or capital decisions."
-        },
-        {
-          "title": "Cost of capital and financing",
-          "description": "Changing financial conditions can alter the attractiveness of opportunities and the ability to access new resources."
-        },
-        {
-          "title": "Political and environmental risks",
-          "description": "Some changes can increase uncertainty or create additional financial constraints."
+          "id": "obligations",
+          "title": "Higher financial obligations",
+          "description": "How much flexibility remains if essential costs or payments rise?"
         }
       ],
-      "closing_question": "If the economic environment changes, which part of your wealth structure would be most sensitive?",
-      "ctas": [
-        {
-          "label": "Review My Structure's Sensitivity to Economic Risk",
-          "type": "primary"
-        }
-      ]
+      "closing": "These scenarios are used to clarify important questions. Advanced stress testing or ongoing monitoring, if offered, is scoped separately."
     },
     {
       "order": 9,
-      "id": "scenario-analysis-resilience",
-      "type": "scenario-analysis",
-      "eyebrow": "Scenario Analysis & Resilience",
-      "english_label": "Scenario Analysis & Resilience",
-      "heading": "Resilience becomes visible when the structure is tested beyond normal conditions.",
-      "intro": "One useful way to understand risk is to consider several different situations rather than trying to predict one certain future.",
-      "questions": [
-        "What happens if inflation rises further?",
-        "What happens if exchange rates move significantly?",
-        "What happens if the liquidity of some assets declines?",
-        "What happens if the main source of income falls for a period?",
-        "What happens if the business suddenly needs new capital?",
-        "What happens if a financial obligation arises earlier than expected?",
-        "If several risks occur at the same time, which part of the structure will experience the greatest pressure?"
-      ],
-      "paragraphs": [
-        "Scenario analysis is not intended to say which outcome will definitely occur.",
-        "The objective is to understand where the structure becomes more vulnerable, how much flexibility remains and which risks should receive attention before others.",
-        "This approach does not try to remove uncertainty; it helps build greater preparedness for dealing with it."
-      ],
-      "ctas": [
+      "id": "risk-process",
+      "type": "process",
+      "theme": "dark",
+      "eyebrow": "The DNH risk-review process",
+      "heading": "From understanding the wealth structure to prioritising risks",
+      "heading_highlight": "prioritising risks",
+      "intro": "The review begins with the issue and financial circumstances. Its scope is then defined around the need and complexity of the wealth structure.",
+      "items": [
         {
-          "label": "Review Risk Scenarios for My Structure",
-          "type": "primary"
+          "id": "initial",
+          "number": "01",
+          "title": "Initial assessment",
+          "description": "Clarify the decision, principal concerns and fit with DNH’s services."
+        },
+        {
+          "id": "scope",
+          "number": "02",
+          "title": "Define the review scope",
+          "description": "Agree subjects, required information and engagement boundaries."
+        },
+        {
+          "id": "structure",
+          "number": "03",
+          "title": "Understand the financial structure",
+          "description": "Review relationships between assets, obligations, liquidity and income."
+        },
+        {
+          "id": "prioritise",
+          "number": "04",
+          "title": "Identify and prioritise risks",
+          "description": "Clarify vulnerabilities, important dependencies and matters requiring attention."
+        },
+        {
+          "id": "next",
+          "number": "05",
+          "title": "Conclude and define the next step",
+          "description": "Set review priorities and identify an appropriate path for the decision or further work."
         }
-      ]
+      ],
+      "note": "Periodic monitoring, protective implementation or advanced analysis falls within the engagement only when separately defined and agreed."
     },
     {
       "order": 10,
-      "id": "dnh-risk-review-process",
-      "type": "process",
-      "eyebrow": "The DNH Risk Review Process",
-      "english_label": "The DNH Risk Review Process",
-      "heading": "Risk management does not begin with a list of threats; it begins with understanding the real structure and your priorities.",
-      "steps": [
+      "id": "risk-outcomes",
+      "type": "comparison",
+      "eyebrow": "Risk-assessment outputs",
+      "heading": "What becomes clearer after a risk assessment?",
+      "heading_highlight": "becomes clearer",
+      "intro": "The value of the assessment lies in identifying vulnerabilities and decision priorities.",
+      "groups": [
         {
-          "number": 1,
-          "title": "Initial Assessment",
-          "english_label": "Initial Assessment",
-          "description": "The nature of the issue, reason for the review, urgency and areas likely to require further analysis are established."
+          "id": "outputs",
+          "label": "POTENTIAL OUTPUTS",
+          "title": "A structural view of risk",
+          "bullets": [
+            "Material risks and their relationships",
+            "Concentrations and dependencies",
+            "Liquidity constraints",
+            "Priorities for review and action"
+          ]
         },
         {
-          "number": 2,
-          "title": "Wealth Structure & Objectives",
-          "english_label": "Wealth Structure & Objectives",
-          "description": "Assets, obligations, liquidity, income sources, objectives and time horizon are considered together."
-        },
-        {
-          "number": 3,
-          "title": "Risk Identification",
-          "english_label": "Risk Identification",
-          "description": "The points that can put the structure under pressure or create material dependencies are identified."
-        },
-        {
-          "number": 4,
-          "title": "Concentration & Liquidity Review",
-          "english_label": "Concentration & Liquidity Review",
-          "description": "The degree of dependence on different areas and the ability to access capital are assessed."
-        },
-        {
-          "number": 5,
-          "title": "Scenario Analysis",
-          "english_label": "Scenario Analysis",
-          "description": "The effect of changing conditions on the important parts of the structure is considered."
-        },
-        {
-          "number": 6,
-          "title": "Risk Prioritization",
-          "english_label": "Risk Prioritization",
-          "description": "The risks that could have greater consequences and require earlier attention are identified."
-        },
-        {
-          "number": 7,
-          "title": "Protection Priorities",
-          "english_label": "Protection Priorities",
-          "description": "Areas that may deserve deeper review in order to improve resilience or reduce vulnerability are clarified."
-        },
-        {
-          "number": 8,
-          "title": "Next-Step Planning",
-          "english_label": "Next-Step Planning",
-          "description": "Depending on the scope, the outcome may lead to an action plan, deeper specialist review or, where appropriate, periodic reassessment."
+          "id": "services",
+          "label": "SERVICE POSITION",
+          "title": "How this assessment differs",
+          "bullets": [
+            "Private Wealth Strategy: alignment of assets, goals and the broader wealth path",
+            "Portfolio Intelligence: investment mix and shared portfolio risks",
+            "Risk Management: vulnerabilities affecting the whole wealth structure"
+          ]
         }
       ],
-      "closing": "In DNH's current model, risk assessment is an active service, while the broader structure for “risk assessment and wealth protection,” scenario analysis and periodic monitoring is being standardized. The precise scope of the engagement is therefore defined after the initial assessment.",
-      "ctas": [
-        {
-          "label": "Start an Initial Risk Assessment",
-          "type": "primary"
-        }
-      ]
+      "note": "The service assesses and prioritises risk; it does not guarantee value preservation or eliminate risk. Trading and protective implementation are not part of the base assessment."
     },
     {
       "order": 11,
-      "id": "what-you-gain",
-      "type": "outcomes",
-      "eyebrow": "What You Gain",
-      "english_label": "What You Gain",
-      "heading": "The purpose of risk assessment is not simply to know that “risk exists”; it is to understand which risks matter more and what requires attention.",
-      "intro": "Depending on the issue and the scope of the engagement, the output may include:",
-      "items": [
-        {
-          "title": "A structured picture of risks",
-          "description": "A clearer view of the most important risks affecting wealth or the business."
-        },
-        {
-          "title": "Risk map",
-          "description": "A view of the main areas of risk and how they may relate to different parts of the structure."
-        },
-        {
-          "title": "Concentration and dependency points",
-          "description": "Identifying areas on which a large share of wealth or income depends."
-        },
-        {
-          "title": "Liquidity risks",
-          "description": "Understanding the parts of the structure that may limit access to capital when it is needed."
-        },
-        {
-          "title": "Vulnerabilities",
-          "description": "Areas that can place greater pressure on the structure under different scenarios."
-        },
-        {
-          "title": "Important scenarios",
-          "description": "Situations worth considering before major decisions are made."
-        },
-        {
-          "title": "Protection priorities",
-          "description": "Risks that may require earlier attention or deeper review."
-        },
-        {
-          "title": "Areas requiring review",
-          "description": "Parts of the structure that may need further analysis or a change in future decision-making."
-        },
-        {
-          "title": "Action plan or next step",
-          "description": "Turning the assessment into a practical path for continued review or action."
-        }
-      ],
-      "closing": "Wealth protection does not mean eliminating all risk, guaranteeing against loss or guaranteeing returns. The objective is to understand vulnerabilities better and make more informed, resilient decisions.",
-      "ctas": [
-        {
-          "label": "Explore the Right Output for My Structure",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 12,
-      "id": "understand-risk-before-it-becomes-a-problem",
-      "type": "final-cta",
-      "eyebrow": "Understand Risk Before It Becomes a Problem",
-      "english_label": "Understand Risk Before It Becomes a Problem",
-      "heading": "You do not need to wait for a crisis before managing risk.",
+      "id": "risk-final",
+      "type": "final_cta",
+      "eyebrow": "Next step",
+      "heading": "Do not wait for a crisis to understand wealth risk",
+      "heading_highlight": "do not wait for a crisis",
       "paragraphs": [
-        "If a significant part of your wealth is concentrated in one or several areas, liquidity is important to you, personal wealth is connected to a business, or you want to understand how vulnerable the current structure may be to changing economic conditions, an initial risk assessment can be the starting point.",
-        "At this stage, you are not expected to provide every financial detail or sensitive document.",
-        "The first step is to establish:"
+        "If wealth is concentrated, financially dependent on a business, or exposed to liquidity and future-obligation concerns, an initial assessment can be a practical starting point.",
+        "Submitting the form does not mean automatic acceptance or delivery of a full specialist assessment."
       ],
-      "checklist": [
-        "What the core issue is;",
-        "Which types of risk are likely to matter most;",
-        "Which areas require deeper review;",
-        "and which specialist path is most appropriate for the next stage."
-      ],
-      "closing": "If the issue falls within the scope of this service, the next stage of review can be defined around your circumstances. The objective is simple: identify a hidden vulnerability more clearly before it becomes a real problem.",
+      "closing": "You do not need to provide confidential documents or complete asset details at the initial stage.",
       "ctas": [
         {
-          "label": "Start an Initial Risk Assessment",
+          "id": "assessment",
+          "label": "Start a financial decision assessment",
+          "href": "/financial-decision-assessment",
           "type": "primary"
-        },
-        {
-          "label": "Request Strategic Advice",
-          "type": "secondary"
         }
       ]
     }

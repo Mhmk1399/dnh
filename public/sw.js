@@ -1,5 +1,5 @@
-const STATIC_CACHE = "dnh-static-v2";
-const RUNTIME_CACHE = "dnh-runtime-v2";
+const STATIC_CACHE = "dnh-static-v3";
+const RUNTIME_CACHE = "dnh-runtime-v3";
 
 const PRECACHE_URLS = [
   "/fa",
@@ -14,7 +14,9 @@ const PRECACHE_URLS = [
 ];
 
 function isCacheable(response) {
-  return response && response.ok && ["basic", "default"].includes(response.type);
+  return (
+    response && response.ok && ["basic", "default"].includes(response.type)
+  );
 }
 
 function shouldUseStaleWhileRevalidate(pathname) {
@@ -38,9 +40,11 @@ async function networkFirst(request) {
     }
 
     return response;
-  } catch (error) {
+  } catch {
     const cachedResponse = await caches.match(request);
-    const locale = /^\/en(?:\/|$)/.test(new URL(request.url).pathname) ? "en" : "fa";
+    const locale = /^\/en(?:\/|$)/.test(new URL(request.url).pathname)
+      ? "en"
+      : "fa";
     const cachedHome = await caches.match(`/${locale}`);
 
     return cachedResponse || cachedHome || Response.error();
@@ -91,7 +95,9 @@ self.addEventListener("activate", (event) => {
       .then((cacheNames) =>
         Promise.all(
           cacheNames
-            .filter((cacheName) => ![STATIC_CACHE, RUNTIME_CACHE].includes(cacheName))
+            .filter(
+              (cacheName) => ![STATIC_CACHE, RUNTIME_CACHE].includes(cacheName),
+            )
             .map((cacheName) => caches.delete(cacheName)),
         ),
       )
@@ -106,7 +112,12 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   if (url.origin !== self.location.origin) return;
   if (/^\/api(?:\/|$)/.test(url.pathname)) return;
-  if (/^\/(?:(?:fa|en)\/)?(?:admin|dashboard|login|register)(?:\/|$)/.test(url.pathname)) return;
+  if (
+    /^\/(?:(?:fa|en)\/)?(?:admin|dashboard|login|register)(?:\/|$)/.test(
+      url.pathname,
+    )
+  )
+    return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
@@ -123,7 +134,7 @@ self.addEventListener("push", (event) => {
 
   try {
     payload = event.data ? event.data.json() : {};
-  } catch (error) {
+  } catch {
     payload = {
       body: event.data ? event.data.text() : "",
     };

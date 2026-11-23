@@ -27,8 +27,11 @@ export function stripLocalePrefix(pathname: string) {
 
 /** Private tools, APIs and static files keep their existing shared URLs. */
 export function isSharedSitePath(pathname: string) {
-  return /^\/(?:admin|api|dashboard|test|test-form|_next|assets|icons|uploads|fonts)(?:\/|$)/.test(pathname)
-    || /^\/[^/]+\.[^/]+$/.test(pathname);
+  return (
+    /^\/(?:admin|api|dashboard|_next|assets|icons|social|uploads|fonts)(?:\/|$)/.test(
+      pathname,
+    ) || /^\/[^/]+\.[^/]+$/.test(pathname)
+  );
 }
 
 export function getLocalizedSiteHref(href: string, locale: SiteLocale): string {

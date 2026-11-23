@@ -1,9 +1,10 @@
 import { model, models, Schema, type Model, type Types } from "mongoose";
 
-export type ContactRecord = { name: string; phone: string; email?: string; subject?: string; message: string; userId?: Types.ObjectId | null; createdAt: Date; updatedAt: Date };
+export type ContactRecord = { locale?: "fa" | "en"; name: string; phone: string; email?: string; subject?: string; message: string; userId?: Types.ObjectId | null; createdAt: Date; updatedAt: Date };
 
 const contactSchema = new Schema<ContactRecord>(
   {
+    locale: { type: String, enum: ["fa", "en"] },
     name: { type: String, required: true, trim: true, maxlength: 100 },
     phone: { type: String, required: true, index: true },
     email: { type: String, trim: true, lowercase: true, maxlength: 160 },

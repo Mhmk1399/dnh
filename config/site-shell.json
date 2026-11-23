@@ -1,11 +1,23 @@
 {
   "fa": {
+    "skipToContent": "رفتن به محتوای اصلی",
+    "logoutDialog": {
+      "title": "از حساب خارج می‌شوید؟",
+      "confirm": "خروج از حساب",
+      "cancel": "در حساب بمانم",
+      "success": "از حساب کاربری خارج شدید.",
+      "error": "خروج از حساب انجام نشد. دوباره تلاش کنید."
+    },
     "navbar": {
       "home": "دی‌ان‌اچ؛ صفحه اصلی",
       "navigation": "منوی اصلی",
       "auth": "ورود و ثبت‌نام",
       "login": "ورود",
       "signup": "ثبت‌نام",
+      "dashboard": "داشبورد",
+      "account": "حساب کاربری",
+      "closeAccount": "بستن پنجره حساب کاربری",
+      "logout": "خروج از حساب",
       "consultation": "درخواست مشاوره",
       "mobileConsultation": "مشاوره",
       "menu": "منو",
@@ -58,12 +70,24 @@
     }
   },
   "en": {
+    "skipToContent": "Skip to main content",
+    "logoutDialog": {
+      "title": "Sign out of your account?",
+      "confirm": "Sign out",
+      "cancel": "Stay signed in",
+      "success": "You have been signed out.",
+      "error": "Unable to sign out. Please try again."
+    },
     "navbar": {
       "home": "DNH home",
       "navigation": "Main navigation",
       "auth": "Sign in and register",
       "login": "Sign in",
       "signup": "Register",
+      "dashboard": "Dashboard",
+      "account": "My account",
+      "closeAccount": "Close account dialog",
+      "logout": "Sign out",
       "consultation": "Request consultation",
       "mobileConsultation": "Consultation",
       "menu": "Menu",

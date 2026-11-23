@@ -33,8 +33,6 @@ export const jalaliMonthNames = [
 ] as const;
 
 const ISO_DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
-const GREGORIAN_CALENDAR_LOCALE = "fa-IR-u-ca-gregory";
-const JALALI_CALENDAR_LOCALE = "fa-IR-u-ca-persian";
 const breaks = [
   -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097,
   2192, 2262, 2324, 2394, 2456, 3178,
@@ -265,6 +263,7 @@ export function formatWeeklyOutlookDate(
   value: Date | string,
   calendar: WeeklyOutlookDateCalendar = "jalali",
   dateStyle: Intl.DateTimeFormatOptions["dateStyle"] = "long",
+  language: "fa" | "en" = "fa",
 ) {
   const date =
     value instanceof Date
@@ -272,12 +271,8 @@ export function formatWeeklyOutlookDate(
       : parseIsoDateOnly(value);
 
   const resolvedDate = date ?? parseIsoDateOnly(todayIsoDate())!;
-  const locale =
-    calendar === "gregorian"
-      ? GREGORIAN_CALENDAR_LOCALE
-      : JALALI_CALENDAR_LOCALE;
-
-  return new Intl.DateTimeFormat(locale, {
+  return new Intl.DateTimeFormat(language === "fa" ? "fa-IR" : "en-US", {
+    calendar: calendar === "gregorian" ? "gregory" : "persian",
     dateStyle,
     timeZone: "UTC",
   }).format(resolvedDate);

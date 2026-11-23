@@ -145,7 +145,7 @@ export function FrameworkDecisionOutputs() {
               />
 
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                <p className="text-start text-xs font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
                   {content.eyebrow}
                 </p>
 

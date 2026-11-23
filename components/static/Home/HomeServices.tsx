@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,10 +10,9 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 const serviceIcons = {
   wealth: Landmark,
@@ -33,7 +29,7 @@ type ServiceItem = {
   id: string;
   title: string;
   description: string;
-  cta: string;
+  cta?: string;
   href: string;
   icon: ServiceIconKey;
   media: {
@@ -48,63 +44,22 @@ type ServicesContent = {
   eyebrow: string;
   heading: string;
   heading_highlight?: string;
+  intro: string;
   services: ServiceItem[];
+  ctas: Array<{
+    id: string;
+    label: string;
+    type: "primary" | "secondary";
+    href: string;
+  }>;
 };
 
-export function HomeServices() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeServices({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) => section.id === "services" && section.type === "service_cards",
   ) as ServicesContent | undefined;
-
-  // Progressive enhancement: HTML and content are visible without JS.
-  // Only cards still below the viewport are animated, once, on entry.
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (
-      !root ||
-      typeof IntersectionObserver === "undefined" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const waiting = new Set<HTMLElement>();
-
-    root
-      .querySelectorAll<HTMLElement>("[data-service-reveal]")
-      .forEach((card) => {
-        card.removeAttribute("data-reveal");
-
-        if (card.getBoundingClientRect().top > window.innerHeight - 40) {
-          card.dataset.reveal = "pending";
-          waiting.add(card);
-        }
-      });
-
-    if (waiting.size === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const card = entry.target as HTMLElement;
-          card.dataset.reveal = "shown";
-          observer.unobserve(card);
-          waiting.delete(card);
-        });
-
-        if (waiting.size === 0) observer.disconnect();
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
-    );
-
-    waiting.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
-  }, [locale]);
 
   if (!content) return null;
 
@@ -114,7 +69,6 @@ export function HomeServices() {
 
   return (
     <section
-      ref={sectionRef}
       id={content.id}
       dir={direction}
       lang={languageTag}
@@ -124,7 +78,7 @@ export function HomeServices() {
       <div className="dnh-site-shell">
         <div className="min-w-0">
           <header className="mx-auto max-w-[980px] min-w-0 text-center">
-            <div className="flex items-center justify-center gap-3 text-[12px] font-semibold leading-[1.8] text-brand-primary sm:text-[13px]">
+            <div className="flex items-center justify-center gap-3 text-[12px] font-semibold leading-[1.8] text-brand-accent sm:text-[13px]">
               <span
                 aria-hidden="true"
                 className="h-px w-9 shrink-0 bg-brand-accent sm:w-9"
@@ -151,6 +105,11 @@ export function HomeServices() {
                 </>
               )}
             </h2>
+            <p
+              className={`mx-auto mt-4 max-w-[92ch] text-[14px] text-ink-muted sm:text-[16px] ${isRTL ? "leading-[2]" : "leading-[1.72]"}`}
+            >
+              {content.intro}
+            </p>
           </header>
 
           <div className="mt-10 grid min-w-0 grid-cols-1 gap-1 border border-line bg-line sm:mt-12 md:grid-cols-2 lg:grid-cols-3">
@@ -161,16 +120,24 @@ export function HomeServices() {
               return (
                 <article
                   key={service.id}
-                  data-service-reveal=""
-                  className="group relative flex min-h-[430px] min-w-0 flex-col overflow-hidden bg-brand-secondary p-5 text-white sm:min-h-[460px] sm:p-7 lg:p-7 xl:p-8 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-3 motion-safe:data-[reveal=pending]:opacity-0"
+                  className="group relative flex min-h-60 min-w-0 flex-col overflow-hidden bg-brand-secondary p-5 text-white sm:min-h-72 sm:p-6 xl:p-7"
                 >
+                  {!service.cta ? (
+                    <Link
+                      href={service.href}
+                      aria-label={service.title}
+                      className="absolute inset-0 z-20 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-brand-primary/55"
+                    >
+                      <span className="sr-only">{service.title}</span>
+                    </Link>
+                  ) : null}
                   {service.media.src.trim() ? (
                     <Image
                       src={service.media.src.trim()}
                       alt={service.media.alt}
                       fill
                       sizes="(max-width: 767px) calc(100vw - 24px), (max-width: 1023px) calc(50vw - 24px), calc(33vw - 32px)"
-                      className="object-cover group-hover:blur-sm object-center transition-all duration-700 ease-out motion-reduce:transition-none group-hover:scale-[1.035]"
+                      className="object-cover object-center motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.02]"
                     />
                   ) : null}
 
@@ -181,21 +148,17 @@ export function HomeServices() {
                     }`}
                   />
 
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 start-0 z-20   origin-top scale-y-0 bg-brand-accent transition-transform duration-300 motion-reduce:transition-none group-hover:scale-y-100 group-focus-within:scale-y-100"
-                  />
-
-                  <div className="relative z-10 mb-7 flex items-start justify-between gap-4 sm:mb-8">
+                  <div className="relative z-10 mb-4 flex items-center justify-between gap-4 sm:mb-5">
                     <span
                       aria-hidden="true"
                       className="flex size-12 shrink-0 items-center justify-center border border-white/30 bg-brand-secondary/65 text-white sm:size-14"
                     >
                       <Icon size={24} strokeWidth={1.65} />
                     </span>
+                    {!service.cta && <Arrow size={20} aria-hidden="true" />}
                   </div>
 
-                  <h3 className="relative  pb-3 border-b z-10 max-w-[28ch] text-start text-[19px] font-bold leading-[1.75] [overflow-wrap:break-word] sm:text-[21px] lg:text-[22px] lg:text-nowrap">
+                  <h3 className="relative z-10 border-b border-white/35 pb-2 text-start text-[19px] font-bold leading-[1.55] [overflow-wrap:anywhere] sm:text-[21px]">
                     {service.title}
                   </h3>
 
@@ -207,23 +170,44 @@ export function HomeServices() {
                     {service.description}
                   </p>
 
-                  <div className="relative z-10 mt-auto min-w-0  ">
-                    <ActionButton
-                      href={service.href}
-                      variant="secondary"
-                      shape="square"
-                      size="md"
-                      iconPosition="end"
-                      dir={direction}
-                      className="min-h-11 w-full min-w-0 whitespace-normal text-white! border-white/35 bg-black/10! text-start text-[13px] text-brand-primary shadow-none [overflow-wrap:anywhere] hover:border-white hover:bg-page hover:text-brand-primary sm:w-auto sm:max-w-full"
-                    >
-                      {service.cta}
-                    </ActionButton>
-                  </div>
+                  {service.cta ? (
+                    <div className="relative z-30 mt-auto min-w-0 pt-4">
+                      <ActionButton
+                        href={service.href}
+                        variant="secondary"
+                        shape="square"
+                        size="md"
+                        iconPosition="end"
+                        dir={direction}
+                        className="min-h-11 w-full min-w-0 whitespace-normal border-white/50 bg-brand-secondary! text-start text-sm text-white! shadow-none [overflow-wrap:anywhere] hover:border-white hover:bg-white! hover:text-ink! sm:w-auto sm:max-w-full"
+                      >
+                        {service.cta}
+                      </ActionButton>
+                    </div>
+                  ) : null}
                 </article>
               );
             })}
           </div>
+          {content.ctas.length > 0 ? (
+            <div className="mt-8 flex justify-center sm:mt-10">
+              {content.ctas.map((cta) => (
+                <ActionButton
+                  key={cta.id}
+                  href={cta.href}
+                  variant={cta.type}
+                  shape="square"
+                  size="md"
+                  icon={Arrow}
+                  iconPosition="end"
+                  dir={direction}
+                  className="w-full shadow-none hover:shadow-none sm:w-auto sm:min-w-[260px]"
+                >
+                  {cta.label}
+                </ActionButton>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

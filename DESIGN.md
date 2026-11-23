@@ -9,7 +9,7 @@ colors:
   page: "#f7f4ef"
 typography:
   sans:
-    fontFamily: "Estedad, sans-serif"
+    fontFamily: "IRANSans, sans-serif"
 rounded:
   shell: "24px"
   item: "14px"
@@ -45,7 +45,7 @@ Use `--dnh-text` for readable navigation text and `--dnh-text-muted` for support
 
 ## Typography
 
-Retain the installed Estedad family and its existing weight mapping. Headings use 750–900 weights, navigation 600–750, and descriptions 400–500. Persian text needs relaxed line heights (1.8–2.1), natural shaping, and no letter spacing. Navigation titles wrap on phones; essential labels are never ellipsized. DNH remains the brand spelling; interface instructions and actions are Persian.
+Retain the installed IranSans family and its existing weight mapping. Headings use 750–900 weights, navigation 600–750, and descriptions 400–500. Persian text needs relaxed line heights (1.8–2.1), natural shaping, and no letter spacing. Navigation titles wrap on phones; essential labels are never ellipsized. DNH remains the brand spelling; interface instructions and actions are localized for Persian and English.
 
 ## Layout
 
@@ -81,7 +81,7 @@ Global scrollbars are styled in `app/globals.css`: the track uses the dark petro
 
 ## Public page heroes
 
-`components/static/DNH/wealth-architecture/WealthPageHero.tsx` is the approved visual reference for every public page hero except Home. `components/ui/DnhPageHero.tsx` carries that system to the remaining routes. Keep the secondary near-black surface, white copy, gold eyebrow rule and highlighted heading phrase, square ActionButtons, shared shell alignment, and the same responsive type and spacing rhythm.
+`components/ui/DnhPageHero.tsx` is the approved shared implementation and visual reference for every public page hero except Home. Keep the secondary near-black surface, white copy, gold eyebrow rule and highlighted heading phrase, square ActionButtons, shared shell alignment, and the same responsive type and spacing rhythm.
 
 The hero system has two intentional media modes. Use `side` when the image is a distinct editorial panel; on phones the reading order is heading and description, image, then actions. Use `background` when the route already depends on a full-bleed identity image; preserve the full image and add a direction-aware scrim so RTL copy remains readable from the right and LTR copy from the left. Both modes use the same description width (up to 109ch), measured mobile/desktop collapse with an accessible read-more control, reduced-motion behavior, and a single eager LCP image.
 

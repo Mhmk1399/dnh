@@ -1,527 +1,449 @@
 {
-  "page": "executive-briefings", 
+  "page": "executive-briefings",
   "brand": "DNH",
-  "locale": "en-US",
+  "locale": "en",
   "direction": "ltr",
-  "title": "Executive Briefings",
-  "english_title": "Executive Briefings",
-  "section_count": 12,
+  "title": "DNH Executive Briefings | Focused Review of Important Decisions",
+  "english_title": "DNH Executive Briefings",
+  "section_count": 10,
   "sections": [
     {
       "order": 1,
       "id": "executive-briefings-hero",
       "type": "hero",
       "eyebrow": "Executive Briefings",
-      "english_label": "Executive Briefings",
-      "heading": "When a major decision is on the executive agenda, what you need may not be a long project but a focused session built around sound analysis, clear scenarios and a usable synthesis.",
+      "heading": "DNH Executive Briefings: focused attention on important decisions",
+      "heading_highlight": "important decisions",
       "paragraphs": [
-        "Senior executives and decision-makers are rarely short of information. The greater challenge is determining, amid large volumes of data, reports, conflicting views and limited time, what truly matters for the decision in front of them.",
-        "DNH Executive Briefings are designed for exactly these situations: a private, focused setting for examining an important financial, capital, economic or strategic issue at decision-maker level.",
-        "The subject of the session is defined in advance, relevant information is reviewed, key risks and scenarios are considered together, and the discussion is structured around the real implications of the decision.",
-        "The objective is not to provide more information.",
-        "The objective is for the decision-maker to leave with a clearer picture of the issue, the options, the risks, the scenarios and the areas that still require attention."
+        "Important management decisions do not always require more reports. Sometimes the issue, the available options and the implications of each choice need to be examined in a specialist session.",
+        "Drawing on Dr Nasim Mohammadhassani’s analytical perspective, DNH Executive Briefings create a focused setting in which to examine a specific financial or strategic issue."
       ],
       "ctas": [
         {
-          "label": "Request an Executive Briefing",
-          "type": "primary"
+          "id": "request",
+          "label": "Request an executive briefing",
+          "type": "primary",
+          "href": "#executive-briefing-request"
         },
         {
-          "label": "Submit a Topic for Assessment",
-          "type": "secondary"
+          "id": "assessment",
+          "label": "Submit an issue for assessment",
+          "type": "secondary",
+          "href": "#executive-briefing-request"
         }
-      ]
+      ],
+      "note": "A briefing is arranged after the subject has been reviewed and the scope of the engagement has been defined.",
+      "media": {
+        "src": "/assets/images/executive-briefings-hero.webp",
+        "alt": "Professional executive meeting focused on an important decision"
+      }
     },
     {
       "order": 2,
-      "id": "some-decisions-require-executive-level-focus",
-      "type": "problem-recognition",
-      "eyebrow": "Some Decisions Require Executive-Level Focus",
-      "english_label": "Some Decisions Require Executive-Level Focus",
-      "heading": "The more important the decision, the higher the cost of ambiguity around it.",
-      "intro": "Some issues cannot be properly synthesized through routine meetings, fragmented reports or separate analyses.",
+      "id": "when-an-executive-briefing-is-needed",
+      "type": "situations",
+      "eyebrow": "When an executive briefing may be useful",
+      "heading": "When the decision matters, the issue needs to be clearer",
+      "heading_highlight": "the issue needs to be clearer",
+      "paragraphs": [
+        "For significant decisions, fragmented information, multiple options and differing perspectives can make it difficult to choose a route.",
+        "A specialist briefing helps centre the discussion on one defined issue and clarify the principal questions before a decision is made."
+      ],
       "items": [
         {
-          "title": "A major financial decision is approaching approval",
-          "description": "But there is still insufficient clarity about its implications for capital, liquidity or the organization's future."
+          "id": "important-decision",
+          "number": "01",
+          "title": "An important decision is approaching",
+          "description": "You need to choose between several routes for expansion, investment or financing.",
+          "icon": "decision"
         },
         {
-          "title": "Several options are on the table",
-          "description": "Each path has different benefits, constraints and risks, and comparing them on one criterion alone is not enough."
+          "id": "different-options",
+          "number": "02",
+          "title": "There are different options",
+          "description": "Each choice carries its own costs, constraints and risks.",
+          "icon": "options"
         },
         {
+          "id": "different-views",
+          "number": "03",
+          "title": "Executive perspectives differ",
+          "description": "Members of the management team hold different views about priorities or the implications of the decision.",
+          "icon": "views"
+        },
+        {
+          "id": "fragmented-information",
+          "number": "04",
+          "title": "Information is fragmented",
+          "description": "Several reports may exist, yet the underlying issue is still not sufficiently clear.",
+          "icon": "information"
+        },
+        {
+          "id": "economic-change",
+          "number": "05",
           "title": "Economic conditions have changed",
-          "description": "The effect of inflation, currencies, liquidity or other environmental variables on an earlier decision needs to be reconsidered."
-        },
-        {
-          "title": "An investment or expansion opportunity has emerged",
-          "description": "But the assumptions, risks and scenarios should be reviewed before resources are committed."
-        },
-        {
-          "title": "Decision-makers see the issue differently",
-          "description": "The subject needs to be placed within a common framework that can support focused discussion."
-        },
-        {
-          "title": "There is plenty of information but the decision picture is still unclear",
-          "description": "Data, reports and viewpoints exist, but it is not yet clear which points matter most to the final decision."
-        }
-      ],
-      "closing": "Executive Briefing is designed for these moments—when an important issue needs to move from the level of information to the level of decision.",
-      "ctas": [
-        {
-          "label": "Submit the Briefing Topic",
-          "type": "primary"
+          "description": "Market or economic developments have altered the assumptions behind an earlier decision.",
+          "icon": "economy"
         }
       ]
     },
     {
       "order": 3,
-      "id": "what-is-an-executive-briefing",
-      "type": "definition",
-      "eyebrow": "What Is a DNH Executive Briefing?",
-      "english_label": "What Is an Executive Briefing?",
-      "heading": "A private, structured session focused on one important decision—not a public presentation and not a training session.",
+      "id": "executive-briefing-audience",
+      "type": "audience",
+      "eyebrow": "Who Executive Briefings are for",
+      "heading": "Which decision-makers may benefit from a briefing?",
+      "heading_highlight": "Which decision-makers",
       "paragraphs": [
-        "A DNH Executive Briefing is built around one clearly defined question or issue.",
-        "The starting point is the decision itself:"
+        "Executive Briefings are intended for people responsible for reviewing or making significant financial and capital decisions."
       ],
-      "questions": [
-        "What is the issue?",
-        "Which information matters for it?",
-        "Which variables could change the outcome?",
-        "Which options and scenarios should be considered?",
-        "What implications or trade-offs does each path create?",
-        "And what should be clearer by the end of the session?"
-      ],
-      "framework_logic": "Issue → Intelligence → Scenarios → Implications → Decision Focus",
-      "closing_paragraphs": [
-        "The session is therefore not designed around collecting more information; it is designed around creating focus and clarity for a decision.",
-        "An Executive Briefing is not a substitute for a deep analytical project. If the issue requires broader data, modeling or investigation, the initial assessment can identify a more suitable specialist service."
-      ],
-      "ctas": [
+      "items": [
         {
-          "label": "Assess a Topic for an Executive Briefing",
-          "type": "primary"
+          "id": "board",
+          "number": "01",
+          "title": "Chief executives and board members",
+          "description": "You need a focused review of options and risks for an important decision about expansion, investment or the company’s future.",
+          "icon": "board"
+        },
+        {
+          "id": "owners",
+          "number": "02",
+          "title": "Owners and business principals",
+          "description": "You face a decision about capital, financing or business structure that may affect your resources and commitments.",
+          "icon": "owners"
+        },
+        {
+          "id": "finance",
+          "number": "03",
+          "title": "Senior finance executives",
+          "description": "You need a specialist synthesis to present the financial position clearly, compare options and consider the implications of a decision.",
+          "icon": "finance"
         }
       ]
     },
     {
       "order": 4,
-      "id": "who-is-it-for",
-      "type": "audience",
-      "eyebrow": "Who Is It For?",
-      "english_label": "Who Is It For?",
-      "heading": "This service is designed for people who carry responsibility for an important decision.",
+      "id": "executive-briefing-topics",
+      "type": "topics",
+      "eyebrow": "Suitable subjects for an Executive Briefing",
+      "heading": "What decisions can be examined in a focused briefing?",
+      "heading_highlight": "What decisions",
+      "paragraphs": [
+        "Each briefing focuses on a defined issue. The subject needs to be sufficiently clear for its options, constraints and principal questions to be examined."
+      ],
       "items": [
         {
-          "title": "CEOs and senior executives",
-          "description": "When they must make an important decision under time pressure and uncertainty."
+          "id": "investment",
+          "number": "01",
+          "title": "Investment decisions",
+          "description": "Review investment options and the potential implications of each route.",
+          "icon": "investment"
         },
         {
-          "title": "Board members",
-          "description": "When a financial, capital or strategic issue needs focused review before a formal decision."
+          "id": "financing",
+          "number": "02",
+          "title": "Financing",
+          "description": "Compare sources of finance, their costs and the associated commitments.",
+          "icon": "financing"
         },
         {
-          "title": "CFOs and finance leaders",
-          "description": "When the financial implications of a decision need to be considered alongside risks and alternative scenarios."
+          "id": "liquidity",
+          "number": "03",
+          "title": "Liquidity and working capital",
+          "description": "Understand cash constraints and how they may affect company decisions.",
+          "icon": "liquidity"
         },
         {
-          "title": "Business owners",
-          "description": "When a company decision is directly connected to capital, liquidity, growth or the owner's wealth."
+          "id": "growth",
+          "number": "04",
+          "title": "Business expansion",
+          "description": "Consider the financial dimensions of an expansion plan and the risks ahead.",
+          "icon": "growth"
         },
         {
-          "title": "Capital owners",
-          "description": "When a major decision can affect the asset structure or long-term direction of wealth."
+          "id": "capital",
+          "number": "05",
+          "title": "Capital structure",
+          "description": "Understand the implications of changing the balance between debt and owners’ capital.",
+          "icon": "capital"
         },
         {
-          "title": "Families and structures with significant capital",
-          "description": "When a decision involves several assets, several objectives or several stakeholders."
-        },
-        {
-          "title": "Key decision-makers in companies and business groups",
-          "description": "When an issue has moved beyond the operational level and requires focused senior-management attention."
+          "id": "shared",
+          "number": "06",
+          "title": "Shared management decisions",
+          "description": "Examine issues that require a clearer understanding of options and better alignment between decision-makers’ perspectives.",
+          "icon": "shared"
         }
       ],
-      "ctas": [
-        {
-          "label": "Assess Whether a Briefing Fits My Issue",
-          "type": "primary"
-        }
-      ]
+      "closing": "Subjects requiring extensive analysis or the examination of several independent issues may require a separately defined specialist engagement."
     },
     {
       "order": 5,
-      "id": "topics-we-can-brief-on",
-      "type": "topics",
-      "eyebrow": "Topics We Can Brief On",
-      "english_label": "Topics We Can Brief On",
-      "heading": "The subject of a briefing can vary, but it should involve a real issue at decision-maker level.",
-      "intro": "Depending on the circumstances, an Executive Briefing may focus on topics such as:",
+      "id": "briefing-versus-advisory-project",
+      "type": "service-scope",
+      "eyebrow": "How a briefing differs from an advisory project",
+      "heading": "One defined issue, one focused briefing",
+      "heading_highlight": "one focused briefing",
+      "paragraphs": [
+        "An Executive Briefing is not a substitute for an extensive analytical project. It concentrates on one important decision and clarifies the matters that decision-makers need to discuss and examine."
+      ],
       "items": [
         {
-          "title": "A major capital decision",
-          "description": "Reviewing a capital commitment or decision that involves significant resources."
+          "id": "focus",
+          "number": "01",
+          "title": "Focus on one issue",
+          "description": "Rather than considering several matters at once, one decision or central question sits at the heart of the briefing.",
+          "icon": "focus"
         },
         {
-          "title": "Liquidity and working capital",
-          "description": "When the use or protection of cash resources has become a strategic decision."
+          "id": "information",
+          "number": "02",
+          "title": "Review relevant information",
+          "description": "The essential information and assumptions are identified and reviewed in the context of the briefing subject.",
+          "icon": "information"
         },
         {
-          "title": "Financing",
-          "description": "Reviewing the assumptions, options and implications of a financing decision."
-        },
-        {
-          "title": "Capital structure",
-          "description": "Reviewing an issue related to debt, capital or future financial flexibility."
-        },
-        {
-          "title": "Assessment of a financial or investment opportunity",
-          "description": "Creating a clearer picture of assumptions, risks and key questions before resources are committed."
-        },
-        {
-          "title": "The effect of economic conditions on a decision",
-          "description": "Understanding what changes in inflation, currencies, liquidity or the market environment mean for a specific issue."
-        },
-        {
-          "title": "Risks in a project or decision",
-          "description": "Identifying the points that could change the outcome under different scenarios."
-        },
-        {
-          "title": "Asset or wealth structure",
-          "description": "When a specific issue involving concentration, liquidity, time horizon or capital structure requires decision-level review."
-        },
-        {
-          "title": "Business expansion",
-          "description": "Reviewing the financial and scenario implications of a growth, development or market-entry decision."
-        },
-        {
-          "title": "Preparation for an important management or board meeting",
-          "description": "When a complex issue needs to be synthesized more clearly before the main meeting."
+          "id": "next-step",
+          "number": "03",
+          "title": "Clarify the next step",
+          "description": "Open questions, constraints and matters requiring further review are identified.",
+          "icon": "next"
         }
       ],
-      "closing": "The subject of the briefing does not have to fit a fixed category in advance; the issue and the decision are clarified first.",
-      "ctas": [
-        {
-          "label": "Submit a Topic for Initial Assessment",
-          "type": "primary"
-        }
-      ]
+      "distinction": "An Executive Briefing provides a focused review of one issue, while a Strategic Financial Advisory engagement may involve a wider analytical scope and a more extensive working process.",
+      "service_link": {
+        "label": "Strategic Financial Advisory",
+        "href": "/services/strategic-financial-advisory"
+      }
     },
     {
       "order": 6,
-      "id": "pre-briefing-review",
-      "type": "pre-briefing",
-      "eyebrow": "Pre-Briefing Review",
-      "english_label": "Pre-Briefing Review",
-      "heading": "The quality of the session is built before the session begins.",
-      "intro": "To prevent an Executive Briefing from becoming a general conversation, the decision context is clarified in advance.",
-      "items": [
+      "id": "executive-briefing-process",
+      "type": "process",
+      "eyebrow": "The Executive Briefing process",
+      "heading": "From preparing the issue to concluding the briefing",
+      "heading_highlight": "concluding the briefing",
+      "paragraphs": [
+        "The quality of a briefing depends on a clearly framed subject and appropriate preparation.",
+        "The working process is defined according to the nature of the decision, the information available and the agreed scope."
+      ],
+      "steps": [
         {
-          "title": "What is the core issue?",
-          "description": "Exactly what problem should the session focus on?"
+          "id": "prepare",
+          "number": "01",
+          "title": "Preparation before the briefing",
+          "subtitle": "Understand the issue and define the focus",
+          "description": "The central issue, the decision ahead, the relevant participants and the information required for an initial review are established."
         },
         {
-          "title": "What decision needs to be made?",
-          "description": "Is the goal simply to understand the issue, or should the session create greater clarity for a specific choice?"
+          "id": "session",
+          "number": "02",
+          "title": "Specialist briefing session",
+          "subtitle": "Examine options and implications",
+          "description": "The issue, available options, assumptions, constraints and important risks are considered in a focused discussion."
         },
         {
-          "title": "When does the decision need to be made?",
-          "description": "The urgency and time horizon of the issue matter."
-        },
-        {
-          "title": "What options are currently being considered?",
-          "description": "Is the decision already between specific paths, or do the options still need to be defined?"
-        },
-        {
-          "title": "What information is available?",
-          "description": "The documents, data or assumptions necessary to understand the issue are identified."
-        },
-        {
-          "title": "What is the decision-maker most concerned about?",
-          "description": "Risk, liquidity, cost, timing, uncertainty or long-term implications may carry different weight depending on the issue."
+          "id": "summary",
+          "number": "03",
+          "title": "Post-briefing conclusion",
+          "subtitle": "Clarify open matters and possible next steps",
+          "description": "Open questions, principal considerations and matters requiring further review are brought together."
         }
       ],
-      "closing_paragraphs": [
-        "At the initial stage, the objective is not to request every piece of information held by the organization. Only the information required to understand the issue and prepare the session appropriately is requested.",
-        "If the initial review shows that the issue requires analysis beyond the scope of a briefing, the appropriate scope is defined before proceeding."
-      ],
-      "ctas": [
-        {
-          "label": "Start an Assessment of the Briefing Topic",
-          "type": "primary"
-        }
-      ]
+      "note": "Before specialist preparation begins, the subject and scope, duration, participants, required information, level of prior review and format of any conclusion are discussed and agreed with you."
     },
     {
       "order": 7,
-      "id": "from-information-to-decision-intelligence",
-      "type": "decision-intelligence",
-      "eyebrow": "From Information to Decision Intelligence",
-      "english_label": "From Information to Decision Intelligence",
-      "heading": "Executives are rarely short of information; the challenge is knowing which information belongs in the decision.",
+      "id": "executive-briefing-example",
+      "type": "example",
+      "eyebrow": "A practical Executive Briefing example",
+      "heading": "How can a specialist briefing support a decision review?",
+      "heading_highlight": "support a decision review",
       "paragraphs": [
-        "An important issue may involve multiple reports, financial data, market analysis and differing viewpoints.",
-        "But they do not all carry the same weight.",
-        "An Executive Briefing is designed to distinguish the information that truly matters for the decision from the information that does not."
+        "Suppose a company’s board is considering an expansion plan, but different views exist about how it should be financed and the financial implications involved.",
+        "The briefing could focus on that specific decision."
       ],
-      "items": [
-        {
-          "title": "What is genuinely decisive?",
-          "description": "Variables that can change the outcome of the decision should be separated from less important detail."
-        },
-        {
-          "title": "Which information is simply noise?",
-          "description": "The volume of information should not distract management from the core issue."
-        },
-        {
-          "title": "What assumptions sit behind the decision?",
-          "description": "Some decisions depend on assumptions that, if changed, would change the conclusion as well."
-        },
-        {
-          "title": "Which risk has not received enough attention?",
-          "description": "One overlooked issue may matter more than many pages of reporting."
-        },
-        {
-          "title": "What is still uncertain?",
-          "description": "Knowing which parts still do not have a definitive answer is itself part of high-quality decision-making."
-        }
-      ],
-      "closing": "DNH's objective is to turn information into a picture that can be used at decision-maker level—a picture that supports better questions and a clearer view of the available paths.",
-      "ctas": [
-        {
-          "label": "Turn My Issue Into a Focused Briefing",
-          "type": "primary"
-        }
-      ]
+      "brief": {
+        "label": "Educational preview | Executive Decision Brief",
+        "title": "Reviewing financing options for business expansion",
+        "status": "DEMO | Hypothetical example, not a DNH client case",
+        "sections": [
+          {
+            "title": "Decision subject",
+            "description": "The company needs additional resources for expansion and must consider how the capital should be raised."
+          },
+          {
+            "title": "Options that may be considered",
+            "items": [
+              "Use internal resources",
+              "Arrange borrowing",
+              "Bring in a partner or investor"
+            ]
+          },
+          {
+            "title": "Decision considerations",
+            "items": [
+              "Liquidity: how would each option affect the company’s cash resources?",
+              "Commitments: what costs and responsibilities would be created?",
+              "Ownership: would the ownership structure or decision rights change?",
+              "The company’s future: what constraints could each route place on later plans?"
+            ]
+          }
+        ],
+        "closing": "The purpose of the briefing is not to declare one option definitively best, but to clarify the differences between routes and the questions that need to be answered before a final decision.",
+        "note": "This example is provided solely to illustrate the kinds of subjects that may be examined in an Executive Briefing."
+      }
     },
     {
       "order": 8,
-      "id": "scenarios-options-trade-offs",
-      "type": "scenario-options",
-      "eyebrow": "Scenarios, Options & Trade-Offs",
-      "english_label": "Scenarios, Options & Trade-Offs",
-      "heading": "A good decision does not always mean choosing an option with no cost; what matters is understanding the implications of each choice.",
+      "id": "executive-briefing-outcomes",
+      "type": "outcomes",
+      "eyebrow": "Executive Briefing outcomes and conclusions",
+      "heading": "What can become clearer after the briefing?",
+      "heading_highlight": "What can become clearer",
       "paragraphs": [
-        "In many executive decisions, the choice is not between a “good option” and a “bad option.”",
-        "Each path may solve one part of the problem while creating a new constraint or risk.",
-        "An Executive Briefing can therefore review the options from several angles:"
+        "The value of a specialist briefing lies not only in the discussion, but in making the issue, the options and the matters decision-makers need to consider clearer.",
+        "The nature and format of the conclusion depend on the agreed scope."
       ],
-      "questions": [
-        "What advantage does the first option create?",
-        "What constraint is accepted in return?",
-        "What different type of risk does the second option introduce?",
-        "If economic or financial conditions change, how would each option be affected?",
-        "Which path leaves greater flexibility for future decisions?",
-        "What is lost or limited by choosing each path?",
-        "Which assumptions need to remain valid for each option to succeed?"
-      ],
-      "closing_paragraphs": [
-        "Scenarios help prevent the decision from being considered only in an ideal environment.",
-        "Trade-offs help the decision-maker understand which cost, limitation or risk is being accepted consciously in exchange for the benefit of each option."
-      ],
-      "ctas": [
+      "items": [
         {
-          "label": "Review Decision Options and Scenarios",
-          "type": "primary"
+          "id": "definition",
+          "number": "01",
+          "title": "A clear definition of the issue",
+          "description": "The central subject of the briefing and the decision facing management are established.",
+          "icon": "definition"
+        },
+        {
+          "id": "options",
+          "number": "02",
+          "title": "Options and their considerations",
+          "description": "The routes discussed and the differences in their costs, constraints and possible risks are reviewed.",
+          "icon": "options"
+        },
+        {
+          "id": "open-items",
+          "number": "03",
+          "title": "Matters requiring further review",
+          "description": "Incomplete information, important assumptions and questions that remain unresolved are identified.",
+          "icon": "open"
+        },
+        {
+          "id": "priorities",
+          "number": "04",
+          "title": "Priorities and possible next steps",
+          "description": "The matters requiring attention for further review or decision-making become clearer.",
+          "icon": "priorities"
         }
-      ]
+      ],
+      "brief": {
+        "label": "Conceptual example | Executive decision summary",
+        "title": "Executive Decision Brief",
+        "status": "Hypothetical example, not a DNH client case",
+        "fields": [
+          {
+            "label": "Subject",
+            "value": "Selecting a financing route"
+          },
+          {
+            "label": "Central issue",
+            "value": "Funding expansion while accounting for liquidity constraints"
+          },
+          {
+            "label": "Options",
+            "value": "Internal resources, borrowing or bringing in an investor"
+          },
+          {
+            "label": "Considerations",
+            "value": "Cost of capital, commitments, liquidity and ownership changes"
+          },
+          {
+            "label": "Open matter",
+            "value": "A closer review of repayment capacity and the constraints attached to each option"
+          },
+          {
+            "label": "Possible next step",
+            "value": "Complete the information required before making the decision"
+          }
+        ],
+        "note": "This is a conceptual format for a possible briefing conclusion. Before specialist preparation begins, the format, whether it will be written, the level of detail and delivery timing are discussed and agreed with you."
+      }
     },
     {
       "order": 9,
-      "id": "private-focused-decision-level",
-      "type": "positioning",
-      "eyebrow": "Private. Focused. Decision-Level.",
-      "english_label": "Private. Focused. Decision-Level.",
-      "heading": "Executive Briefing is designed for important decisions, so its structure should reflect the level of importance of the issue.",
+      "id": "professional-principles",
+      "type": "principles",
+      "eyebrow": "Professional principles and boundaries",
+      "heading": "Specialist review focused on the issue and grounded in confidentiality",
+      "heading_highlight": "grounded in confidentiality",
+      "paragraphs": [
+        "Executive Briefings are based on professional discussion, understanding risk and examining options. The final decision remains with the organisation’s responsible officers and decision-making bodies."
+      ],
       "items": [
         {
-          "title": "Private",
-          "description": "Financial, capital and management issues can be sensitive. The session is focused on the decision-maker's specific issue, and information is requested only to the extent needed for the review."
+          "id": "confidentiality",
+          "number": "01",
+          "title": "Focus and confidentiality",
+          "description": "The briefing subject is defined, and information is requested and used only as required for the review and in accordance with confidentiality arrangements.",
+          "icon": "confidentiality"
         },
         {
-          "title": "Focused",
-          "description": "The purpose is not to cover every possible topic. The clearer the decision question, the more precise the analysis and discussion can be."
+          "id": "responsibility",
+          "number": "02",
+          "title": "Responsible analysis",
+          "description": "Options are examined without guaranteeing an outcome, profitability or the success of a decision.",
+          "icon": "responsibility"
         },
         {
-          "title": "Decision-Level",
-          "description": "The content is prepared for the person who needs to decide, not as a general introduction to the topic."
-        },
-        {
-          "title": "Structured",
-          "description": "Information, scenarios, risks and options are organized in a form that can support discussion and decision-making."
-        },
-        {
-          "title": "Independent in Thinking",
-          "description": "The purpose is not to validate a decision that has already been made; the issue should be capable of being examined from different angles."
-        },
-        {
-          "title": "Action-Oriented",
-          "description": "The session is most valuable when it clarifies not only the issue itself but also what requires a decision, deeper review or a next action."
+          "id": "boundaries",
+          "number": "03",
+          "title": "Clear service boundaries",
+          "description": "A specialist briefing does not, by itself, mean implementing the decision, producing a comprehensive report or assuming project-management responsibility.",
+          "icon": "boundaries"
         }
       ],
-      "ctas": [
-        {
-          "label": "Request a Focused Executive Session",
-          "type": "primary"
-        }
-      ]
+      "closing": "If the issue requires a deeper review, the scope of any additional engagement must be defined separately."
     },
     {
       "order": 10,
-      "id": "dnh-executive-briefing-process",
-      "type": "process",
-      "eyebrow": "The DNH Executive Briefing Process",
-      "english_label": "The DNH Executive Briefing Process",
-      "heading": "From defining the topic to synthesizing the discussion, each stage is designed to sharpen the focus of the session.",
-      "steps": [
-        {
-          "number": 1,
-          "title": "Briefing Request",
-          "english_label": "Briefing Request",
-          "description": "The initial topic and the reason for requesting the session are submitted."
-        },
-        {
-          "number": 2,
-          "title": "Issue Definition",
-          "english_label": "Issue Definition",
-          "description": "The exact subject to be reviewed and the type of clarity the decision-maker needs are established."
-        },
-        {
-          "number": 3,
-          "title": "Fit Assessment",
-          "english_label": "Fit Assessment",
-          "description": "DNH assesses whether an Executive Briefing is the right format or whether the issue requires a broader analytical project."
-        },
-        {
-          "number": 4,
-          "title": "Relevant Information",
-          "english_label": "Relevant Information",
-          "description": "Only the data, documents or assumptions necessary to prepare the session are identified."
-        },
-        {
-          "number": 5,
-          "title": "Briefing Preparation",
-          "english_label": "Briefing Preparation",
-          "description": "Key points, important variables, risks, options and relevant scenarios are structured for the session."
-        },
-        {
-          "number": 6,
-          "title": "Executive Session",
-          "english_label": "Executive Session",
-          "description": "The issue is reviewed with a focus on the decision, its implications and the areas requiring attention."
-        },
-        {
-          "number": 7,
-          "title": "Decision Synthesis",
-          "english_label": "Decision Synthesis",
-          "description": "The most important insights, scenarios and possible paths are consolidated."
-        },
-        {
-          "number": 8,
-          "title": "Next Step",
-          "english_label": "Next Step",
-          "description": "If the issue requires action, further analysis or another specialist service, the next path is identified."
-        }
-      ],
-      "closing": "DNH includes financial decision-making sessions among its active services, and its broader engagement path moves from initial assessment and issue definition through analysis and decision support to recommendations or the next appropriate step.",
-      "ctas": [
-        {
-          "label": "Request an Executive Briefing",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 11,
-      "id": "what-you-leave-with",
-      "type": "outcomes",
-      "eyebrow": "What You Leave With",
-      "english_label": "What You Leave With",
-      "heading": "The value of the session should remain useful in the decision after the meeting has ended.",
-      "intro": "Depending on the nature of the issue and the scope of the briefing, the outcome may include:",
-      "items": [
-        {
-          "title": "A clearer definition of the issue",
-          "description": "Clarifying what the real decision is and separating the core question from secondary matters."
-        },
-        {
-          "title": "A professional synthesis of the topic",
-          "description": "A focused picture of the most important dimensions of the decision."
-        },
-        {
-          "title": "Key decision points",
-          "description": "The matters that carry the greatest importance for the decision-maker."
-        },
-        {
-          "title": "Important variables",
-          "description": "Factors whose movement could change the result or the assumptions behind the decision."
-        },
-        {
-          "title": "Primary risks",
-          "description": "Issues that should be understood consciously before action is taken."
-        },
-        {
-          "title": "Relevant scenarios",
-          "description": "Situations worth considering because they could change the decision path."
-        },
-        {
-          "title": "Options for consideration",
-          "description": "Possible directions available for the next stage of the decision."
-        },
-        {
-          "title": "Key trade-offs",
-          "description": "The benefits, limitations or risks accepted in exchange for each path."
-        },
-        {
-          "title": "Areas requiring further review",
-          "description": "Parts of the issue that still need additional information or analysis before a final decision."
-        },
-        {
-          "title": "Next step",
-          "description": "Clarifying what the decision, action or further review should focus on after the session."
-        }
-      ],
-      "closing": "The purpose of these outputs is not to make the decision on behalf of the executive; it is to improve the quality and clarity of a decision for which responsibility remains with the decision-maker.",
-      "ctas": [
-        {
-          "label": "Assess a Topic for an Executive Briefing",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 12,
-      "id": "bring-the-decision-into-focus",
-      "type": "final-cta",
-      "eyebrow": "Bring the Decision Into Focus",
-      "english_label": "Bring the Decision Into Focus",
-      "heading": "Before a major decision, bring the issue out from among the information, assumptions and competing scenarios and place it at the center of attention.",
+      "id": "executive-briefing-request",
+      "type": "request-form",
+      "eyebrow": "Request an Executive Briefing",
+      "heading": "Facing an important decision? Share the issue with DNH",
+      "heading_highlight": "Share the issue with DNH",
       "paragraphs": [
-        "If you, your board or your management team are facing an issue that could materially affect capital, liquidity, financial structure, assets or the future of the business, you can submit the topic for an initial assessment.",
-        "The first stage establishes:"
+        "If you are approaching a decision about investment, financing or business expansion, you can submit the issue for an initial assessment.",
+        "Once the issue and its fit with the service have been considered, the feasibility and framework of a briefing can be defined."
       ],
-      "checklist": [
-        "What the core issue is;",
-        "What decision is ahead;",
-        "How much review is required before the session;",
-        "Which people need to be involved at decision-making level;",
-        "and whether an Executive Briefing is the right format for the issue."
-      ],
-      "closing_paragraphs": [
-        "If the issue requires a broader review, a more appropriate path can be identified from the outset so that the briefing does not substitute for necessary analysis.",
-        "The objective is simple:",
-        "When an important decision is ahead, do not make the session more crowded with information. Make the issue clearer, the scenarios more comparable and the decision path more focused."
-      ],
-      "ctas": [
-        {
-          "label": "Request an Executive Briefing",
-          "type": "primary"
+      "form": {
+        "title": "Request an Executive Briefing",
+        "intro": "A short description of the issue is sufficient for the initial review. There is no need to submit confidential company documents.",
+        "required_label": "Required",
+        "fields": {
+          "contact": "Phone number or email",
+          "role": "Your role",
+          "urgency": "Level of urgency",
+          "description": "Short description of the issue"
         },
-        {
-          "label": "Submit a Topic for Initial Assessment",
-          "type": "secondary"
-        }
-      ]
+        "placeholders": {
+          "contact": "Phone number or email address",
+          "role": "Your role in the decision",
+          "description": "Briefly describe the decision and the main uncertainty"
+        },
+        "urgency_options": [
+          "Urgent",
+          "Within the next few weeks",
+          "Under consideration",
+          "Not yet determined"
+        ],
+        "sensitive_note": "Do not include banking information, confidential company documents or unnecessary sensitive details in this form.",
+        "submit_label": "Request an Executive Briefing",
+        "pending_label": "Submitting request…",
+        "success_message": "Your request has been received. The feasibility and framework of a briefing will be considered after the initial review.",
+        "error_message": "The request could not be submitted. Please try again.",
+        "privacy_label": "Privacy",
+        "privacy_href": "/legal/privacy-policy"
+      },
+      "note": "Submitting this form does not confirm acceptance, reserve a time or initiate specialist analysis."
     }
   ]
 }

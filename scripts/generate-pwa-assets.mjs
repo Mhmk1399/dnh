@@ -1,70 +1,96 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
 const rootDir = process.cwd();
 const iconsDir = path.join(rootDir, "public", "icons");
+const socialDir = path.join(rootDir, "public", "social");
 const appDir = path.join(rootDir, "app");
+const sourceLogoPath = path.join(
+  rootDir,
+  "public",
+  "assets",
+  "images",
+  "LOGO.svg",
+);
 
 const brand = {
-  primary: "#167394",
-  secondary: "#157293",
-  accent: "#FC8502",
-  ink: "#073A4B",
-  light: "#FFFFFF",
+  page: "#F7F4EF",
 };
 
-function buildIconSvg({ maskable = false } = {}) {
-  const cornerRadius = maskable ? 0 : 224;
-  const contentScale = maskable ? 0.82 : 1;
-  const translate = maskable ? 92 : 0;
+/**
+ * LOGO.svg is the single source of truth. The square app icon uses the exact
+ * brand mark cropped from that artwork; no replacement geometry is drawn.
+ */
+async function getBrandMark() {
+  const sourceRaster = await sharp(sourceLogoPath).png().toBuffer();
+  const croppedMark = await sharp(sourceRaster)
+    .extract({ left: 120, top: 130, width: 560, height: 430 })
+    .png()
+    .toBuffer();
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="DNH">
-  <defs>
-    <linearGradient id="bg" x1="160" y1="80" x2="890" y2="940" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="${brand.primary}"/>
-      <stop offset="0.52" stop-color="${brand.secondary}"/>
-      <stop offset="1" stop-color="${brand.ink}"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="50%" cy="28%" r="72%">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.24"/>
-      <stop offset="0.46" stop-color="#FFFFFF" stop-opacity="0.07"/>
-      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#031A24" flood-opacity="0.24"/>
-    </filter>
-  </defs>
-
-  <rect width="1024" height="1024" rx="${cornerRadius}" fill="url(#bg)"/>
-  <rect width="1024" height="1024" rx="${cornerRadius}" fill="url(#glow)"/>
-
-  <g transform="translate(${translate} ${translate}) scale(${contentScale})" filter="url(#shadow)">
-    <circle cx="512" cy="442" r="292" fill="#FFFFFF" opacity="0.08"/>
-    <path d="M267 282c0-18 15-33 33-33h79c18 0 33 15 33 33v281c0 18-15 33-33 33h-79c-18 0-33-15-33-33V282Z" fill="${brand.light}" opacity="0.94"/>
-    <path d="M442 214c0-18 15-33 33-33h79c18 0 33 15 33 33v349c0 18-15 33-33 33h-79c-18 0-33-15-33-33V214Z" fill="${brand.light}" opacity="0.98"/>
-    <path d="M617 143c0-18 15-33 33-33h79c18 0 33 15 33 33v420c0 18-15 33-33 33h-79c-18 0-33-15-33-33V143Z" fill="${brand.light}"/>
-
-    <rect x="252" y="642" width="520" height="34" rx="17" fill="${brand.accent}"/>
-    <path d="M319 724c57 51 122 76 193 76 72 0 137-25 193-76" fill="none" stroke="${brand.accent}" stroke-width="30" stroke-linecap="round" opacity="0.92"/>
-
-    <text x="512" y="890" text-anchor="middle"
-      font-family="Arial, Helvetica, sans-serif" font-size="178" font-weight="800"
-      letter-spacing="8" fill="${brand.light}">DNH</text>
-  </g>
-</svg>`;
+  return sharp(croppedMark)
+    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer();
 }
 
-async function pngFromSvg(svg, size) {
-  return sharp(Buffer.from(svg))
-    .resize(size, size, {
-      fit: "cover",
+async function buildSquareIcon(
+  mark,
+  size,
+  { maskable = false, transparent = false } = {},
+) {
+  const markWidth = Math.max(1, Math.round(size * (maskable ? 0.58 : 0.72)));
+  const resizedMark = await sharp(mark)
+    .resize({
+      width: markWidth,
+      height: markWidth,
+      fit: "inside",
+      withoutEnlargement: false,
     })
-    .png({
-      compressionLevel: 9,
-      adaptiveFiltering: true,
-    })
+    .png()
+    .toBuffer();
+  const markMetadata = await sharp(resizedMark).metadata();
+  const left = Math.round((size - (markMetadata.width ?? markWidth)) / 2);
+  const top = Math.round((size - (markMetadata.height ?? markWidth)) / 2);
+
+  return sharp({
+    create: {
+      width: size,
+      height: size,
+      channels: 4,
+      background: transparent ? "#00000000" : brand.page,
+    },
+  })
+    .composite([{ input: resizedMark, left, top }])
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+}
+
+async function buildSocialCard() {
+  const wordmark = await sharp(sourceLogoPath)
+    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize({ width: 920, height: 360, fit: "inside" })
+    .png()
+    .toBuffer();
+  const metadata = await sharp(wordmark).metadata();
+
+  return sharp({
+    create: {
+      width: 1200,
+      height: 630,
+      channels: 4,
+      background: brand.page,
+    },
+  })
+    .composite([
+      {
+        input: wordmark,
+        left: Math.round((1200 - (metadata.width ?? 920)) / 2),
+        top: Math.round((630 - (metadata.height ?? 300)) / 2),
+      },
+    ])
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toBuffer();
 }
 
@@ -97,48 +123,64 @@ function buildIco(entries) {
     offset += entry.buffer.length;
   });
 
-  return Buffer.concat([header, directory, ...entries.map((entry) => entry.buffer)]);
+  return Buffer.concat([
+    header,
+    directory,
+    ...entries.map((entry) => entry.buffer),
+  ]);
 }
 
 async function main() {
-  await mkdir(iconsDir, { recursive: true });
+  await Promise.all([
+    mkdir(iconsDir, { recursive: true }),
+    mkdir(socialDir, { recursive: true }),
+  ]);
 
-  const iconSvg = buildIconSvg();
-  const maskableSvg = buildIconSvg({ maskable: true });
+  const mark = await getBrandMark();
 
-  await writeFile(path.join(iconsDir, "dnh-icon.svg"), iconSvg);
+  // Keep an SVG copy of the original artwork alongside the generated icons.
+  await copyFile(sourceLogoPath, path.join(iconsDir, "dnh-icon.svg"));
 
   const iconSizes = [72, 96, 128, 144, 152, 180, 192, 384, 512];
 
   for (const size of iconSizes) {
-    const png = await pngFromSvg(iconSvg, size);
+    const png = await buildSquareIcon(mark, size);
     await writeFile(path.join(iconsDir, `icon-${size}x${size}.png`), png);
   }
 
   for (const size of [192, 512]) {
-    const png = await pngFromSvg(maskableSvg, size);
-    await writeFile(path.join(iconsDir, `maskable-icon-${size}x${size}.png`), png);
+    const png = await buildSquareIcon(mark, size, { maskable: true });
+    await writeFile(
+      path.join(iconsDir, `maskable-icon-${size}x${size}.png`),
+      png,
+    );
   }
 
   const faviconEntries = [];
 
   for (const size of [16, 32, 48]) {
-    const png = await pngFromSvg(iconSvg, size);
-
+    const png = await buildSquareIcon(mark, size, { transparent: true });
     await writeFile(path.join(iconsDir, `favicon-${size}x${size}.png`), png);
-    faviconEntries.push({
-      size,
-      buffer: png,
-    });
+    faviconEntries.push({ size, buffer: png });
   }
 
   const ico = buildIco(faviconEntries);
+  const appIcon = await buildSquareIcon(mark, 512);
+  const appleIcon = await buildSquareIcon(mark, 180);
 
-  await writeFile(path.join(appDir, "favicon.ico"), ico);
-  await writeFile(path.join(appDir, "icon.png"), await pngFromSvg(iconSvg, 512));
-  await writeFile(path.join(appDir, "apple-icon.png"), await pngFromSvg(iconSvg, 180));
+  await Promise.all([
+    writeFile(path.join(appDir, "favicon.ico"), ico),
+    writeFile(path.join(appDir, "icon.png"), appIcon),
+    writeFile(path.join(appDir, "apple-icon.png"), appleIcon),
+    writeFile(
+      path.join(socialDir, "dnh-social-card.png"),
+      await buildSocialCard(),
+    ),
+  ]);
 
-  console.log("PWA assets generated in public/icons and app icon files.");
+  console.log(
+    "Favicon, PWA icons and the default social card were generated from LOGO.svg.",
+  );
 }
 
 main().catch((error) => {

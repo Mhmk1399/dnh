@@ -19,7 +19,6 @@ export function PwaRegister() {
           scope: "/",
           updateViaCache: "none",
         })
-        .then((registration) => registration.update())
         .catch(() => {
           // Registration is intentionally silent; the site should work normally
           // even if the browser blocks service workers.

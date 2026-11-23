@@ -178,7 +178,7 @@
             "fields": [
               { "id": "name", "kind": "input", "name": "name", "label": "Full name", "auto_complete": "name", "required": true, "placeholder": "Your full name" },
               { "id": "phone", "kind": "input", "name": "phone", "label": "Phone number", "type": "tel", "input_mode": "tel", "dir": "ltr", "auto_complete": "tel", "required": true, "placeholder": "+98 ..." },
-              { "id": "email", "kind": "input", "name": "email", "label": "Email address", "type": "email", "input_mode": "email", "dir": "ltr", "auto_complete": "email", "hint": "Optional", "placeholder": "name@example.com" },
+              { "id": "email", "kind": "input", "name": "email", "label": "Email address", "type": "email", "input_mode": "email", "dir": "ltr", "auto_complete": "email", "hint": "Required for email follow-up", "placeholder": "name@example.com" },
               { "id": "communication-method", "kind": "select", "name": "communicationMethod", "label": "Preferred contact method", "required": true, "options": [
                 { "value": "", "label": "Select an option" },
                 { "value": "phone", "label": "Phone call" },
@@ -234,7 +234,9 @@
         "submit_label": "Submit consultation request",
         "submit_note": "Submitting a request does not automatically confirm a meeting.",
         "privacy_note": "Please do not submit bank information, passwords, confidential contracts, unnecessary identity documents or extensive financial files at this stage.",
-        "reference_label": "Reference"
+        "reference_label": "Reference",
+        "required_error": "This field is required.",
+        "validation_message": "Complete the required fields highlighted below."
       }
     },
     "confidentiality": {

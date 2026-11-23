@@ -22,7 +22,9 @@ import {
 } from "lucide-react";
 
 import { FormField } from "@/components/forms/FormField";
+import feedback from "@/config/intake-feedback.json";
 import { FormStatus } from "@/components/forms/FormStatus";
+import { siteToast } from "@/components/ui/siteToast";
 import { ActionButton } from "@/components/ui/ActionButton";
 import type { SiteDirection } from "@/lib/site-language";
 import type {
@@ -34,14 +36,6 @@ import styles from "./StrategicConsultationRequestSection.module.css";
 type StrategicConsultationRequestSectionProps = {
   content: ConsultationRequestContent;
   direction: SiteDirection;
-  onSubmit?: FormEventHandler<HTMLFormElement>;
-  pending?: boolean;
-  result?: {
-    ok: boolean;
-    message?: string;
-    reference?: string;
-    errors?: Record<string, string>;
-  } | null;
 };
 
 type SelectOption = { value: string; label: string };
@@ -55,50 +49,102 @@ const NOTE_ICONS: Record<
   privacy: LockKeyhole,
 };
 
-const preventDefaultSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-  event.preventDefault();
-};
-
 export function StrategicConsultationRequestSection({
   content,
   direction,
-  onSubmit = preventDefaultSubmit,
-  pending = false,
-  result = null,
 }: StrategicConsultationRequestSectionProps) {
   const isRTL = direction === "rtl";
   const formRef = useRef<HTMLFormElement>(null);
+  const [clientErrors, setClientErrors] = useState<Record<string, string>>({});
+  const [pending, setPending] = useState(false);
+  const [result, setResult] = useState<{
+    ok: boolean; message: string; reference?: string;
+  } | null>(null);
+  const [resetKey, setResetKey] = useState(0);
   const locale = isRTL ? "fa" : "en";
   const mobileNotesCount = new Intl.NumberFormat(
     isRTL ? "fa-IR" : "en-US",
   ).format(content.notes.length);
 
-  // On a failed server submission, take mobile users to the first invalid
-  // control instead of leaving them at the bottom of a long form.
-  useEffect(() => {
-    if (
-      !result ||
-      result.ok ||
-      !result.errors ||
-      !Object.keys(result.errors).length
-    )
+  const clearClientError = useCallback((name: string, value: string) => {
+    setResult(null);
+    if (!value.trim()) return;
+    setClientErrors((current) => {
+      if (!current[name]) return current;
+      const next = { ...current };
+      delete next[name];
+      return next;
+    });
+  }, []);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    if (pending) return;
+    setResult(null);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const errors: Record<string, string> = {};
+
+    for (const field of content.form.groups.flatMap((group) => group.fields)) {
+      const requiresEmail = field.name === "email" && formData.get("communicationMethod") === "email";
+      if (!field.required && !requiresEmail) continue;
+      const value = formData.get(field.name);
+      if (typeof value !== "string" || !value.trim()) {
+        errors[field.name] = content.form.required_error;
+      }
+    }
+
+    if (Object.keys(errors).length) {
+      setClientErrors(errors);
+      requestAnimationFrame(focusFirstError);
       return;
+    }
+
+    setClientErrors({});
+    setPending(true);
+    try {
+      const response = await fetch("/api/strategic-consultations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept-Language": locale },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+      const payload = await response.json();
+      const message = payload.message || (response.ok ? feedback[locale].consultation : feedback[locale].unavailable);
+      setResult({ ok: response.ok, message, reference: payload.reference });
+      if (response.ok) {
+        siteToast.success(message);
+        form.reset();
+        setResetKey(value => value + 1);
+      } else {
+        siteToast.error(message);
+        if (payload.errors) {
+          setClientErrors(payload.errors);
+          requestAnimationFrame(focusFirstError);
+        }
+      }
+    } catch {
+      siteToast.error(feedback[locale].unavailable);
+      setResult({ ok: false, message: feedback[locale].unavailable });
+    } finally {
+      setPending(false);
+    }
+  };
+
+  // Take mobile users to the first invalid control instead of leaving them at
+  // the bottom of a long form after client or server validation.
+  function focusFirstError() {
     const control = formRef.current?.querySelector<HTMLElement>(
       '[aria-invalid="true"]',
     );
     if (!control) return;
-    const frame = window.requestAnimationFrame(() => {
-      control.focus({ preventScroll: true });
-      const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      control.scrollIntoView({
-        block: "center",
-        behavior: reducedMotion ? "instant" : "smooth",
-      });
+    control.focus({ preventScroll: true });
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    control.scrollIntoView({
+      block: "center",
+      behavior: reducedMotion ? "instant" : "smooth",
     });
-    return () => window.cancelAnimationFrame(frame);
-  }, [result]);
+  }
+
 
   return (
     <section
@@ -271,14 +317,16 @@ export function StrategicConsultationRequestSection({
 
             <form
               ref={formRef}
-              onSubmit={onSubmit}
+              method="post"
+              onSubmit={handleSubmit}
               noValidate
               aria-label={content.form.aria_label}
               className={`${styles.formSkin} px-4 py-5 sm:px-7 sm:py-8 xl:px-9`}
             >
+              <fieldset disabled={pending} className="m-0 min-w-0 border-0 p-0">
               {content.form.groups.map((group, index) => (
                 <FieldGroup
-                  key={group.id}
+                  key={`${resetKey}-${group.id}`}
                   number={group.number}
                   title={group.title}
                   description={group.description}
@@ -292,7 +340,8 @@ export function StrategicConsultationRequestSection({
                       >
                         <RequestField
                           field={field}
-                          error={result?.errors?.[field.name]}
+                          error={clientErrors[field.name]}
+                          onValueChange={clearClientError}
                         />
                       </div>
                     ))}
@@ -300,7 +349,15 @@ export function StrategicConsultationRequestSection({
                 </FieldGroup>
               ))}
 
-              {result?.message ? (
+              </fieldset>
+              {Object.keys(clientErrors).length > 0 && !result?.message ? (
+                <div className="mt-7" role="status" aria-live="polite">
+                  <FormStatus
+                    kind="error"
+                    message={content.form.validation_message}
+                  />
+                </div>
+              ) : result?.message ? (
                 <div className="mt-7" role="status" aria-live="polite">
                   <FormStatus
                     kind={result.ok ? "success" : "error"}
@@ -318,7 +375,7 @@ export function StrategicConsultationRequestSection({
                   size="lg"
                   loading={pending}
                   disabled={pending}
-                  className="!min-h-[54px] !w-full !bg-brand-primary !text-white !shadow-none hover:!bg-brand-secondary hover:!shadow-none sm:!w-auto sm:!min-w-[220px]"
+                  className="!min-h-[54px] !w-full !bg-brand-secondary !text-white !shadow-none hover:!bg-brand-accent hover:!shadow-none sm:!w-auto sm:!min-w-[220px]"
                 >
                   {pending
                     ? content.form.pending_label
@@ -354,9 +411,11 @@ export function StrategicConsultationRequestSection({
 function RequestField({
   field,
   error,
+  onValueChange,
 }: {
   field: ConsultationFormField;
   error?: string;
+  onValueChange: (name: string, value: string) => void;
 }) {
   if (field.kind === "select") {
     return (
@@ -367,6 +426,7 @@ function RequestField({
         required={field.required}
         error={error}
         hint={field.hint}
+        onValueChange={(value) => onValueChange(field.name, value)}
       />
     );
   }
@@ -383,6 +443,9 @@ function RequestField({
         maxLength={field.max_length}
         placeholder={field.placeholder}
         error={error}
+        onInput={(event) =>
+          onValueChange(field.name, event.currentTarget.value)
+        }
       />
     );
   }
@@ -401,6 +464,7 @@ function RequestField({
       maxLength={field.max_length}
       placeholder={field.placeholder}
       error={error}
+      onInput={(event) => onValueChange(field.name, event.currentTarget.value)}
     />
   );
 }
@@ -420,6 +484,7 @@ function DesignSelect({
   required = false,
   error,
   hint,
+  onValueChange,
 }: {
   label: string;
   name: string;
@@ -427,6 +492,7 @@ function DesignSelect({
   required?: boolean;
   error?: string;
   hint?: string;
+  onValueChange?: (value: string) => void;
 }) {
   const uid = useId();
   const labelId = `${uid}-label`;
@@ -479,6 +545,7 @@ function DesignSelect({
 
   const choose = (option: SelectOption) => {
     setSelected(option.value);
+    onValueChange?.(option.value);
     closeMenu(true);
   };
 

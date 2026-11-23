@@ -23,6 +23,15 @@ export function isValidPhone(phone: string) {
   return /^09\d{9}$/.test(phone);
 }
 
+/** Intake forms also accept international phone numbers. */
+export function normalizeContactPhone(phone: string) {
+  return normalizeDigits(phone).replace(/[\s()-]/g, "");
+}
+
+export function isValidContactPhone(phone: string) {
+  return /^\+?\d{7,15}$/.test(normalizeContactPhone(phone));
+}
+
 export function cleanText(value: unknown, max: number) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }

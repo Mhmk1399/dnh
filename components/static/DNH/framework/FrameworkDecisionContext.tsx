@@ -147,7 +147,7 @@ export function FrameworkDecisionContext() {
               />
 
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                <p className="text-start text-xs font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
                   {content.eyebrow}
                 </p>
 
@@ -253,7 +253,7 @@ export function FrameworkDecisionContext() {
           className="mt-8 grid min-w-0 gap-5 border-t border-line pt-6 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-2 motion-safe:data-[reveal=pending]:opacity-0 sm:mt-9 sm:pt-7 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:pt-8"
         >
           <p
-            className={`max-w-[84ch] text-start text-[14px] font-semibold text-brand-primary sm:text-[15px] ${
+            className={`max-w-prose text-start text-sm font-semibold text-ink-muted sm:text-[15px] ${
               isRTL ? "leading-[1.95]" : "leading-[1.68]"
             }`}
           >

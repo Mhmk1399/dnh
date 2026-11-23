@@ -1,5 +1,7 @@
 "use client";
 
+import { BuilderSectionPicker } from "@/components/admin/BuilderSectionPicker";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -41,6 +43,7 @@ import {
   type WeeklyOutlookButtonVariant,
   type WeeklyOutlookCalloutTone,
   type WeeklyOutlookDateCalendar,
+  type WeeklyOutlookEnglishEdition,
   type WeeklyOutlookReportDefinition,
   type WeeklyOutlookSectionDefinition,
   type WeeklyOutlookSectionIcon,
@@ -58,18 +61,17 @@ import {
   weeklyOutlookDateCalendarLabels,
 } from "@/lib/weekly-outlook-date";
 import { normalizeWeeklyOutlookSlug } from "@/lib/weekly-outlook-validation";
+import { getLocalizedSiteHref, SITE_LANGUAGES, type SiteLocale } from "@/lib/site-language";
 
 type Props = {
   initial?: WeeklyOutlookReportDefinition;
   reportId?: string;
 };
 
-type Notice =
-  | {
-      kind: "success" | "error";
-      message: string;
-    }
-  | null;
+type Notice = {
+  kind: "success" | "error";
+  message: string;
+} | null;
 
 const sectionToneLabels: Record<WeeklyOutlookSectionTone, string> = {
   light: "روشن",
@@ -164,12 +166,37 @@ const buttonVariantLabels: Record<WeeklyOutlookButtonVariant, string> = {
 };
 
 const inputClass =
-  "mt-2 w-full rounded-[14px] border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10";
+  "mt-2 min-h-11 w-full min-w-0 rounded-[14px] border border-line bg-white px-3.5 py-3 text-base text-ink outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10 sm:text-sm";
 
 const dateCalendarOptions: WeeklyOutlookDateCalendar[] = [
   "jalali",
   "gregorian",
 ];
+
+type EditionContent = Omit<WeeklyOutlookEnglishEdition, "ready">;
+
+const emptyEnglish: WeeklyOutlookEnglishEdition = {
+  ready: false, title: "", edition: "", excerpt: "", sections: [],
+};
+const languageNames = { fa: "فارسی", en: "انگلیسی" } as const;
+
+// Reuse layout and media for translators while keeping every editorial field independent.
+function translationOutline(sections: WeeklyOutlookSectionDefinition[]): WeeklyOutlookSectionDefinition[] {
+  return sections.map((section) => ({
+    ...section, eyebrow: "", title: "", summary: "",
+    blocks: section.blocks.map((block): WeeklyOutlookBlock => {
+      switch (block.type) {
+        case "image": return { ...block, alt: "", caption: "" };
+        case "button": return { ...block, label: "", note: "" };
+        case "quote": return { ...block, text: "", cite: "" };
+        case "callout": return { ...block, text: "", title: "" };
+        case "list": return { ...block, items: [] };
+        case "divider": return { ...block };
+        default: return { ...block, text: "" };
+      }
+    }),
+  }));
+}
 
 function buildJalaliYearOptions(selectedYear: number) {
   const currentYear = gregorianToJalaliDateParts(todayIsoDate()).year;
@@ -184,30 +211,44 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   const [report, setReport] = useState<WeeklyOutlookReportDefinition>(
     () => initial ?? createWeeklyOutlookTemplate(),
   );
-  const [activeSection, setActiveSection] = useState(0);
+  const [language, setLanguage] = useState<SiteLocale>("fa");
+  const [sectionIndices, setSectionIndices] = useState({ fa: 0, en: 0 });
   const [busy, setBusy] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
   const sectionEditorRef = useRef<HTMLElement | null>(null);
+  const sharedSettings = useRef<HTMLDetailsElement>(null);
+  const isEnglish = language === "en";
+  const contentDir = SITE_LANGUAGES[language].direction;
+  const english = report.english ?? emptyEnglish;
+  const content: EditionContent = isEnglish ? english : report;
+  const activeSection = sectionIndices[language];
+  const publicHref = getLocalizedSiteHref(`/knowledge/weekly-outlook/${report.slug || "report-slug"}`, language);
 
-  const current =
-    report.sections[activeSection] ?? report.sections[0] ?? null;
-  const CurrentSectionIcon = current
-    ? sectionIconMap[current.icon]
-    : FileText;
+  const current = content.sections[activeSection] ?? null;
+  const CurrentSectionIcon = current ? sectionIconMap[current.icon] : FileText;
   const blockCount = useMemo(
     () =>
-      report.sections.reduce(
+      content.sections.reduce(
         (total, section) => total + section.blocks.length,
         0,
       ),
-    [report.sections],
+    [content.sections],
   );
 
   function update(patch: Partial<WeeklyOutlookReportDefinition>) {
     setReport((value) => ({ ...value, ...patch }));
     setDirty(true);
     setNotice(null);
+  }
+
+  function updateContent(patch: Partial<EditionContent>) {
+    if (isEnglish) update({ english: { ...english, ...patch } });
+    else update(patch);
+  }
+
+  function setActiveSection(index: number) {
+    setSectionIndices((value) => ({ ...value, [language]: index }));
   }
 
   function selectSection(index: number, scrollToEditor = true) {
@@ -220,6 +261,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
+      sectionEditorRef.current?.focus({ preventScroll: true });
       sectionEditorRef.current?.scrollIntoView({
         behavior: reducedMotion ? "auto" : "smooth",
         block: "start",
@@ -231,8 +273,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
     index: number,
     patch: Partial<WeeklyOutlookSectionDefinition>,
   ) {
-    update({
-      sections: report.sections.map((section, sectionIndex) =>
+    updateContent({
+      sections: content.sections.map((section, sectionIndex) =>
         sectionIndex === index ? { ...section, ...patch } : section,
       ),
     });
@@ -243,7 +285,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
     blockIndex: number,
     patch: Partial<WeeklyOutlookBlock>,
   ) {
-    const section = report.sections[sectionIndex];
+    const section = content.sections[sectionIndex];
 
     if (!section) return;
 
@@ -268,7 +310,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   }
 
   function addSection() {
-    if (report.sections.length >= 24) {
+    if (content.sections.length >= 24) {
       const message = "حداکثر ۲۴ سکشن مجاز است.";
 
       adminToast.error(message);
@@ -278,8 +320,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
     const section: WeeklyOutlookSectionDefinition = {
       id: makeWeeklyOutlookStableId("section"),
-      eyebrow: "سکشن جدید",
-      title: `سکشن ${report.sections.length + 1}`,
+      eyebrow: "",
+      title: "",
       summary: "",
       icon: "overview",
       tone: "light",
@@ -288,18 +330,18 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         {
           id: makeWeeklyOutlookStableId("block"),
           type: "paragraph",
-          text: "متن این سکشن را وارد کنید.",
+          text: "",
         },
       ],
     };
 
-    update({ sections: [...report.sections, section] });
+    updateContent({ sections: [...content.sections, section] });
     adminToast.success("سکشن جدید اضافه شد.");
-    selectSection(report.sections.length);
+    selectSection(content.sections.length);
   }
 
   function removeSection(index: number) {
-    if (report.sections.length === 1) {
+    if (!isEnglish && content.sections.length === 1) {
       const message = "حداقل یک سکشن باید باقی بماند.";
 
       adminToast.error(message);
@@ -307,8 +349,10 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       return;
     }
 
-    update({
-      sections: report.sections.filter((_, sectionIndex) => sectionIndex !== index),
+    updateContent({
+      sections: content.sections.filter(
+        (_, sectionIndex) => sectionIndex !== index,
+      ),
     });
     adminToast.success("سکشن حذف شد.");
     setActiveSection(Math.max(0, index - 1));
@@ -329,22 +373,22 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
     let block: WeeklyOutlookBlock;
 
     if (type === "heading") {
-      block = { id, type, level: "h3", text: "تیتر جدید" };
+      block = { id, type, level: "h3", text: "" };
     } else if (type === "list") {
-      block = { id, type, items: ["آیتم اول", "آیتم دوم"] };
+      block = { id, type, items: [] };
     } else if (type === "callout") {
       block = {
         id,
         type,
         tone: "info",
-        title: "نکته",
-        text: "متن نکته یا برداشت کلیدی را وارد کنید.",
+        title: "",
+        text: "",
       };
     } else if (type === "quote") {
       block = {
         id,
         type,
-        text: "متن نقل‌قول یا گزاره برجسته را وارد کنید.",
+        text: "",
         cite: "",
       };
     } else if (type === "image") {
@@ -359,8 +403,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       block = {
         id,
         type,
-        label: "مشاهده جزئیات",
-        href: "/request-strategic-consultation",
+        label: "",
+        href: "",
         variant: "primary",
         note: "",
       };
@@ -370,7 +414,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       block = {
         id,
         type: "paragraph",
-        text: "متن پاراگراف را وارد کنید.",
+        text: "",
       };
     }
 
@@ -397,7 +441,9 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
     try {
       const response = await fetch(
-        reportId ? `/api/admin/weekly-outlooks/${reportId}` : "/api/admin/weekly-outlooks",
+        reportId
+          ? `/api/admin/weekly-outlooks/${reportId}`
+          : "/api/admin/weekly-outlooks",
         {
           method: reportId ? "PATCH" : "POST",
           headers: { "Content-Type": "application/json" },
@@ -421,9 +467,30 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
       };
 
       if (!response.ok) {
-        const detail = payload.errors
-          ? Object.values(payload.errors)[0]
-          : undefined;
+        let detail: string | undefined;
+        const issue = Object.entries(payload.errors ?? {})[0];
+        if (issue) {
+          const [field, message] = issue;
+          const shared = ["slug", "reportDate", "dateCalendar", "coverImage"].includes(field);
+          const issueLanguage = field === "english" || field.startsWith("english.") ? "en" : "fa";
+          const section = field.match(/(?:^|\.)sections\.(\d+)/);
+          const block = field.match(/\.blocks\.(\d+)/);
+          const sectionIndex = section ? Number(section[1]) : null;
+          if (shared) {
+            if (sharedSettings.current) sharedSettings.current.open = true;
+          } else {
+            setLanguage(issueLanguage);
+            if (sectionIndex !== null) {
+              setSectionIndices((value) => ({ ...value, [issueLanguage]: sectionIndex }));
+            }
+          }
+          const location = [
+            shared ? "تنظیمات مشترک" : `نسخهٔ ${languageNames[issueLanguage]}`,
+            sectionIndex !== null ? `بخش ${(sectionIndex + 1).toLocaleString("fa-IR")}` : "",
+            block ? `بلوک ${(Number(block[1]) + 1).toLocaleString("fa-IR")}` : "",
+          ].filter(Boolean).join("، ");
+          detail = `${location} — ${message.replace(/^نسخه انگلیسی — /, "")}`;
+        }
 
         throw new Error(
           [payload.message, detail].filter(Boolean).join(" ") ||
@@ -469,19 +536,17 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-[1600px] px-4 py-8 pb-28 sm:px-7 lg:px-10 xl:pb-10"
+      className="@container/builder mx-auto max-w-[1600px] py-3 pb-28 sm:py-5 sm:pb-28 xl:pb-10"
     >
       <header className="border-b border-line pb-7">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
             <Link
               href="/admin/weekly-outlooks"
-              className="text-xs font-bold text-brand-primary hover:text-brand-accent"
+              className="inline-flex min-h-11 items-center text-sm font-bold text-brand-accent hover:underline"
             >
               گزارش‌های هفتگی / بازگشت
             </Link>
-
-        
 
             <h1 className="mt-2 text-3xl font-black tracking-[-.04em] text-ink">
               {reportId ? "ویرایش گزارش هفتگی" : "گزارش هفتگی جدید"}
@@ -492,7 +557,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             <button
               disabled={busy || report.status === "archived"}
               onClick={() => save("save")}
-              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-brand-primary bg-white px-4 py-2.5 text-xs font-black text-brand-primary transition hover:bg-brand-primary hover:text-white disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[14px] border border-brand-accent bg-white px-4 py-2.5 text-sm font-bold text-brand-accent transition hover:bg-surface-soft disabled:pointer-events-none disabled:opacity-50"
             >
               <Save size={16} />
               ذخیره
@@ -508,7 +573,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               </button>
             ) : null}
 
-            {reportId && report.status !== "archived" ? (
+            {reportId && report.status === "draft" ? (
               <button
                 disabled={busy}
                 onClick={() => save("publish")}
@@ -567,26 +632,61 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
         </div>
       </header>
 
-      <div className="mt-7 grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)_390px]">
-        <aside className="overflow-hidden rounded-[24px] border border-line bg-[#f6fbfc] xl:sticky xl:top-28">
-          <div className="border-b border-line p-4">
-            <p
-               className="text-[11px] font-black tracking-[.2em] text-brand-primary"
-            >
-              فهرست سکشن‌ها
-            </p>
+      <fieldset disabled={busy} className="m-0 min-w-0 border-0 p-0">
+      <details ref={sharedSettings} open={!reportId} className="mt-5 rounded-[18px] border border-line bg-white">
+        <summary className="cursor-pointer px-5 py-4 text-sm font-black text-ink">
+          تنظیمات مشترک دو زبان
+          <span className="ms-2 inline-block text-xs font-normal text-ink-muted">نشانی، تاریخ و تصویر جلد</span>
+        </summary>
+        <div className="grid gap-4 border-t border-line p-5 md:grid-cols-2">
+          <Label text="شناسه مسیر انگلیسی" help="در نشانی فارسی و انگلیسی یکسان است.">
+            <input dir="ltr" className={inputClass} value={report.slug}
+              onChange={(event) => update({ slug: event.target.value })}
+              onBlur={(event) => {
+                const slug = normalizeWeeklyOutlookSlug(event.target.value);
+                if (slug !== event.target.value) update({ slug });
+              }} />
+          </Label>
+          <Label text="تصویر اصلی گزارش">
+            <input dir="ltr" className={inputClass} placeholder="/assets/images/report-cover.jpg"
+              value={report.coverImage ?? ""} onChange={(event) => update({ coverImage: event.target.value })} />
+          </Label>
+          <ReportDateField reportDate={report.reportDate} dateCalendar={report.dateCalendar} onChange={update} />
+        </div>
+      </details>
 
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[18px] border border-line bg-white p-4">
+        <div>
+          <h2 className="text-sm font-black text-ink">زبان محتوای گزارش</h2>
+          <p className="mt-1 text-xs leading-6 text-ink-muted">متن و بخش‌های هر نسخه را جداگانه ویرایش کنید. دکمهٔ ذخیره تغییرات هر دو نسخه را ثبت می‌کند.</p>
+        </div>
+        <div role="group" aria-label="زبان محتوای گزارش" className="flex gap-1 rounded-xl border border-line bg-surface-soft p-1">
+          {(["fa", "en"] as const).map((item) => (
+            <button key={item} type="button" aria-pressed={language === item} onClick={() => setLanguage(item)}
+              className={`min-h-11 cursor-pointer rounded-lg px-4 py-1 text-sm font-bold focus-visible:outline-focus ${language === item ? "bg-brand-secondary text-white" : "text-ink hover:bg-white"}`}>
+              {languageNames[item]}
+              {item === "en" && <span className="ms-1.5 text-[10px] font-normal">
+                {english.ready ? "آماده" : report.english ? "پیش‌نویس" : "شروع‌نشده"}
+              </span>}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-[minmax(0,1fr)] items-start gap-4 @min-[50rem]/builder:grid-cols-[13rem_minmax(0,1fr)] @min-[78rem]/builder:grid-cols-[14rem_minmax(0,1fr)_19rem]">
+        <aside className="min-w-0 overflow-hidden rounded-[20px] border border-line bg-[#f6fbfc] @min-[50rem]/builder:sticky @min-[50rem]/builder:top-20">
+          <div className="hidden border-b border-line p-4 @min-[50rem]/builder:block">
             <div className="mt-2 flex items-center justify-between gap-4">
               <h2 className="font-black">سکشن‌های گزارش</h2>
 
               <span className="text-xs text-ink-muted">
-                {report.sections.length.toLocaleString("fa-IR")} / ۲۴
+                {content.sections.length.toLocaleString("fa-IR")} / ۲۴
               </span>
             </div>
           </div>
 
-          <ol>
-            {report.sections.map((section, index) => (
+          <BuilderSectionPicker label={`انتخاب بخش نسخهٔ ${languageNames[language]}`} items={content.sections} selectedIndex={activeSection} onSelect={selectSection} />
+          <ol className="hidden max-h-[55dvh] overflow-auto overscroll-contain @min-[50rem]/builder:block">
+            {content.sections.map((section, index) => (
               <li
                 key={section.id}
                 className="border-b border-line last:border-0"
@@ -597,22 +697,21 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                   aria-current={activeSection === index ? "true" : undefined}
                   className={`w-full cursor-pointer px-4 py-4 text-right transition ${
                     activeSection === index
-                      ? "bg-brand-primary text-white"
+                      ? "bg-brand-secondary text-white"
                       : "hover:bg-white"
                   }`}
                 >
                   <span
-                    dir="ltr"
-                    className={`text-[11px] font-black tracking-[.16em] ${
+                    className={`text-xs font-bold ${
                       activeSection === index
                         ? "text-white/70"
                         : "text-ink-muted"
                     }`}
                   >
-                    سکشن {String(index + 1).padStart(2, "0")}
+                    بخش {(index + 1).toLocaleString("fa-IR")}
                   </span>
 
-                  <span className="mt-1 block text-sm font-black">
+                  <span dir={section.title ? contentDir : "rtl"} className="mt-1 block text-start text-sm font-black">
                     {section.title || "بدون عنوان"}
                   </span>
 
@@ -635,90 +734,64 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
           <button
             type="button"
             onClick={addSection}
-            className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 border-t border-dashed border-brand-primary/30 p-4 text-xs font-black text-brand-primary transition hover:bg-white"
+            className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 border-t border-dashed border-line p-3 text-sm font-bold text-brand-accent transition hover:bg-white"
           >
             <Plus size={15} />
             افزودن سکشن
           </button>
         </aside>
 
-        <main className="space-y-6">
+        <div className="min-w-0 space-y-5">
           <section className="overflow-hidden rounded-[24px] border border-line bg-white">
-            <SectionHeader code="مرحله ۰۱" title="مشخصات گزارش" />
+            <SectionHeader code={`نسخهٔ ${languageNames[language]}`} title="مشخصات گزارش" />
+
+            {isEnglish && (
+              <label className="flex items-start gap-3 border-b border-line bg-surface-soft px-5 py-4">
+                <input type="checkbox" className="mt-0.5 size-5 shrink-0 accent-brand-accent" checked={english.ready}
+                  onChange={(event) => update({ english: { ...english, ready: event.target.checked } })} />
+                <span className="text-sm font-bold text-ink">نسخهٔ انگلیسی آمادهٔ انتشار است
+                  <span className="mt-1 block text-xs font-normal leading-6 text-ink-muted">
+                    با ذخیرهٔ این گزینه، نسخهٔ انگلیسی همراه گزارش منتشر می‌شود. برای ادامهٔ ترجمه در پیش‌نویس، گزینه را غیرفعال بگذارید.
+                  </span>
+                </span>
+              </label>
+            )}
 
             <div className="grid gap-5 p-5 md:grid-cols-2">
               <Label text="عنوان گزارش">
                 <input
                   className={inputClass}
-                  value={report.title}
-                  onChange={(event) =>
-                    update({ title: event.target.value })
-                  }
-                />
-              </Label>
-
-              <Label
-                text="شناسه مسیر انگلیسی"
-                help={`/knowledge/weekly-outlook/${report.slug || "report-slug"}`}
-              >
-                <input
-                  dir="ltr"
-                  className={`${inputClass} text-left`}
-                  value={report.slug}
-                  onChange={(event) =>
-                    update({
-                      slug: normalizeWeeklyOutlookSlug(event.target.value),
-                    })
-                  }
+                  dir={contentDir} lang={language} value={content.title}
+                  onChange={(event) => updateContent({ title: event.target.value })}
                 />
               </Label>
 
               <Label text="نام نسخه">
                 <input
                   className={inputClass}
-                  value={report.edition}
-                  onChange={(event) =>
-                    update({ edition: event.target.value })
-                  }
+                  dir={contentDir} lang={language} value={content.edition}
+                  onChange={(event) => updateContent({ edition: event.target.value })}
                 />
               </Label>
-
-              <ReportDateField
-                reportDate={report.reportDate}
-                dateCalendar={report.dateCalendar}
-                onChange={update}
-              />
 
               <div className="md:col-span-2">
                 <Label text="توضیح کوتاه لیست گزارش‌ها">
                   <textarea
                     className={`${inputClass} min-h-28 resize-none leading-7`}
-                    value={report.excerpt}
+                    dir={contentDir} lang={language} value={content.excerpt}
                     onChange={(event) =>
-                      update({ excerpt: event.target.value })
+                      updateContent({ excerpt: event.target.value })
                     }
                   />
                 </Label>
               </div>
 
-              <Label text="تصویر اصلی گزارش">
-                <input
-                  dir="ltr"
-                  className={`${inputClass} text-left`}
-                  placeholder="/assets/images/report-cover.jpg یا https://..."
-                  value={report.coverImage ?? ""}
-                  onChange={(event) =>
-                    update({ coverImage: event.target.value })
-                  }
-                />
-              </Label>
-
               <Label text="متن جایگزین تصویر اصلی">
                 <input
                   className={inputClass}
-                  value={report.coverImageAlt ?? ""}
+                  dir={contentDir} lang={language} value={content.coverImageAlt ?? ""}
                   onChange={(event) =>
-                    update({ coverImageAlt: event.target.value })
+                    updateContent({ coverImageAlt: event.target.value })
                   }
                 />
               </Label>
@@ -726,32 +799,51 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               <Label text="عنوان سئو">
                 <input
                   className={inputClass}
-                  value={report.seoTitle ?? ""}
-                  onChange={(event) =>
-                    update({ seoTitle: event.target.value })
-                  }
+                  dir={contentDir} lang={language} value={content.seoTitle ?? ""}
+                  onChange={(event) => updateContent({ seoTitle: event.target.value })}
                 />
               </Label>
 
               <Label text="توضیح سئو">
                 <input
                   className={inputClass}
-                  value={report.seoDescription ?? ""}
+                  dir={contentDir} lang={language} value={content.seoDescription ?? ""}
                   onChange={(event) =>
-                    update({ seoDescription: event.target.value })
+                    updateContent({ seoDescription: event.target.value })
                   }
                 />
               </Label>
             </div>
           </section>
 
+          {isEnglish && <PersianSource
+            key={current?.id ?? "report"}
+            source={report}
+            selectedId={current?.id}
+          />}
+
+          {isEnglish && !content.sections.length && (
+            <div className="rounded-[18px] border border-dashed border-line bg-white p-5">
+              <h3 className="text-sm font-black text-ink">بخش‌های نسخهٔ انگلیسی</h3>
+              <p className="mt-2 text-xs leading-6 text-ink-muted">برای ترجمه، چیدمان و تصاویر بخش‌های فارسی را بیاورید یا یک بخش تازه بسازید.</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button type="button" className="min-h-11 rounded-lg bg-brand-secondary px-4 text-xs font-bold text-white" onClick={() => {
+                  updateContent({ sections: translationOutline(report.sections) });
+                  selectSection(0);
+                }}>استفاده از ساختار فارسی</button>
+                <button type="button" className="min-h-11 rounded-lg border border-line px-4 text-xs font-bold text-ink" onClick={addSection}>ساخت بخش خالی</button>
+              </div>
+            </div>
+          )}
           {current ? (
             <section
               ref={sectionEditorRef}
-              className="scroll-mt-28 overflow-hidden rounded-[24px] border border-line bg-white"
+              tabIndex={-1}
+              aria-label="تنظیم بخش گزارش"
+              className="scroll-mt-36 overflow-hidden rounded-[24px] border border-line bg-white sm:scroll-mt-24"
             >
               <SectionHeader
-                code={`سکشن ${String(activeSection + 1).padStart(2, "0")}`}
+                code={`بخش ${(activeSection + 1).toLocaleString("fa-IR")}`}
                 title="تنظیم سکشن"
                 actions={
                   <div className="flex gap-1">
@@ -759,8 +851,8 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                       label="انتقال به بالا"
                       disabled={activeSection === 0}
                       onClick={() => {
-                        update({
-                          sections: move(report.sections, activeSection, -1),
+                        updateContent({
+                          sections: move(content.sections, activeSection, -1),
                         });
                         setActiveSection(activeSection - 1);
                       }}
@@ -770,10 +862,10 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
 
                     <IconButton
                       label="انتقال به پایین"
-                      disabled={activeSection === report.sections.length - 1}
+                      disabled={activeSection === content.sections.length - 1}
                       onClick={() => {
-                        update({
-                          sections: move(report.sections, activeSection, 1),
+                        updateContent({
+                          sections: move(content.sections, activeSection, 1),
                         });
                         setActiveSection(activeSection + 1);
                       }}
@@ -795,7 +887,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 <Label text="عنوان سکشن">
                   <input
                     className={inputClass}
-                    value={current.title}
+                    dir={contentDir} lang={language} value={current.title}
                     onChange={(event) =>
                       updateSection(activeSection, {
                         title: event.target.value,
@@ -807,7 +899,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 <Label text="برچسب بالای سکشن">
                   <input
                     className={inputClass}
-                    value={current.eyebrow ?? ""}
+                    dir={contentDir} lang={language} value={current.eyebrow ?? ""}
                     onChange={(event) =>
                       updateSection(activeSection, {
                         eyebrow: event.target.value,
@@ -863,9 +955,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                 </Label>
 
                 <div className="md:col-span-2">
-                  <p className="text-xs font-bold text-ink">
-                    نمای بصری سکشن
-                  </p>
+                  <p className="text-xs font-bold text-ink">نمای بصری سکشن</p>
 
                   <div className="mt-2 grid gap-3 lg:grid-cols-[168px_1fr]">
                     <SectionVisualPreview visual={current.visual ?? "grid"} />
@@ -891,11 +981,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                       </select>
 
                       <p className="mt-2 text-[10px] leading-5 text-ink-muted">
-                        {
-                          sectionVisualDescriptions[
-                            current.visual ?? "grid"
-                          ]
-                        }
+                        {sectionVisualDescriptions[current.visual ?? "grid"]}
                       </p>
                     </div>
                   </div>
@@ -905,7 +991,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                   <Label text="خلاصه سکشن">
                     <textarea
                       className={`${inputClass} min-h-24 resize-none leading-7`}
-                      value={current.summary ?? ""}
+                      dir={contentDir} lang={language} value={current.summary ?? ""}
                       onChange={(event) =>
                         updateSection(activeSection, {
                           summary: event.target.value,
@@ -962,6 +1048,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                   {current.blocks.map((block, index) => (
                     <BlockEditor
                       key={block.id}
+                      language={language}
                       block={block}
                       index={index}
                       onChange={(patch) =>
@@ -986,39 +1073,37 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
               )}
             </section>
           ) : null}
-        </main>
+        </div>
 
-        <aside className="xl:sticky xl:top-28">
+        <aside id="builder-preview" className="min-w-0 scroll-mt-36 [overflow-wrap:anywhere] sm:scroll-mt-24 @min-[50rem]/builder:col-start-2 @min-[78rem]/builder:sticky @min-[78rem]/builder:top-20 @min-[78rem]/builder:col-start-3">
           <div className="rounded-t-[24px] border border-[#0c526a] bg-[#0d607b] p-5 text-white">
             <div className="flex items-center justify-between gap-4">
               <p
-                dir="ltr"
                 className="text-[11px] font-black tracking-[.2em] text-white/60"
               >
-                نمایش زنده گزارش
+                پیش‌نمایش نسخهٔ {languageNames[language]}
               </p>
-
-               
             </div>
 
-            <h2 className="mt-5 text-xl font-black leading-8">
-              {report.title || "عنوان گزارش شما"}
+            <h2 dir={content.title ? contentDir : "rtl"} className="mt-5 text-start text-xl font-black leading-8">
+              {content.title || "عنوان گزارش شما"}
             </h2>
 
-            <p className="mt-3 text-xs leading-6 text-white/70">
-              {report.excerpt || "توضیح کوتاه گزارش"}
+            <p dir={content.excerpt ? contentDir : "rtl"} className="mt-3 text-start text-xs leading-6 text-white/80">
+              {content.excerpt || "توضیح کوتاه گزارش"}
             </p>
 
             <div
               dir="ltr"
               className="mt-5 border-t border-white/20 pt-3 text-left text-[11px] tracking-wider text-white/60"
             >
-              /knowledge/weekly-outlook/{report.slug || "report-slug"}
+              {publicHref}
               <br />
               {formatWeeklyOutlookDate(
                 report.reportDate,
                 report.dateCalendar,
                 "medium",
+                language,
               )}
             </div>
           </div>
@@ -1029,7 +1114,7 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             </p>
 
             <ol className="mt-4 space-y-3">
-              {report.sections.map((section, index) => (
+              {content.sections.map((section, index) => (
                 <li
                   key={section.id}
                   className="overflow-hidden rounded-[14px] border border-line bg-[#fbfdfd]"
@@ -1076,11 +1161,11 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
                         }
                       `}
                     >
-                      {String(index + 1).padStart(2, "0")}
+                      {(index + 1).toLocaleString("fa-IR", { minimumIntegerDigits: 2 })}
                     </span>
 
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-black text-ink">
+                      <span dir={section.title ? contentDir : "rtl"} className="block text-start text-xs font-black text-ink">
                         {section.title || "بدون عنوان"}
                       </span>
                       <span className="mt-1 block text-[10px] leading-5 text-ink-muted">
@@ -1095,23 +1180,24 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             </ol>
           </div>
 
-          {reportId && report.status === "published" ? (
+          {reportId && !dirty && report.status === "published" && (!isEnglish || english.ready) ? (
             <Link
-              href={`/knowledge/weekly-outlook/${report.slug}`}
+              href={publicHref}
               className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-[14px] border border-line bg-white p-3 text-[11px] font-bold transition hover:border-brand-primary"
             >
               <Eye size={14} />
-              مشاهده صفحه عمومی
+              مشاهده گزارش {languageNames[language]}
             </Link>
           ) : null}
         </aside>
       </div>
+      </fieldset>
 
       {report.status !== "archived" ? (
         <div className="fixed bottom-3 left-3 right-3 z-40 flex items-center justify-between gap-2 rounded-[22px] border border-line bg-white/95 p-2 shadow-[0_12px_40px_rgba(16,24,32,.18)] backdrop-blur-xl xl:hidden">
           <div className="min-w-0">
             <p className="truncate text-[10px] font-black text-ink">
-              {report.title || "گزارش جدید"}
+              نسخهٔ {languageNames[language]}{content.title && <> · <bdi>{content.title}</bdi></>}
             </p>
 
             <p
@@ -1131,17 +1217,17 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             <button
               disabled={busy}
               onClick={() => save("save")}
-              className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] border border-brand-primary px-3 py-2 text-[10px] font-black text-brand-primary disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-[14px] border border-brand-accent px-3 py-2 text-xs font-bold text-brand-accent disabled:pointer-events-none disabled:opacity-50"
             >
               <Save size={13} />
               ذخیره
             </button>
 
-            {reportId ? (
+            {reportId && report.status === "draft" ? (
               <button
                 disabled={busy}
                 onClick={() => save("publish")}
-                className="inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-[14px] bg-brand-accent px-3 py-2 text-[10px] font-black text-white disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-[14px] bg-brand-accent px-3 py-2 text-xs font-bold text-white disabled:pointer-events-none disabled:opacity-50"
               >
                 <Send size={13} />
                 انتشار
@@ -1154,6 +1240,48 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
   );
 }
 
+function PersianSource({ source, selectedId }: {
+  source: EditionContent;
+  selectedId?: string;
+}) {
+  const [sectionId, setSectionId] = useState(
+    source.sections.find((section) => section.id === selectedId)?.id ?? "",
+  );
+  const section = source.sections.find((item) => item.id === sectionId);
+  const fields = section
+    ? [section.eyebrow, section.summary, ...section.blocks.flatMap((block) => {
+        switch (block.type) {
+          case "divider": return [];
+          case "image": return [block.alt, block.caption];
+          case "list": return block.items;
+          case "callout": return [block.title, block.text];
+          case "quote": return [block.text, block.cite];
+          case "button": return [block.note, block.label];
+          default: return [block.text];
+        }
+      })]
+    : [source.title, source.edition, source.excerpt, source.coverImageAlt, source.seoTitle, source.seoDescription];
+
+  return (
+    <details className="rounded-[18px] border border-line bg-surface-soft">
+      <summary className="cursor-pointer px-5 py-4 text-sm font-bold text-ink">مشاهده متن فارسی هنگام ترجمه</summary>
+      <div className="border-t border-line p-4">
+        <Label text="متن مرجع">
+          <select className={inputClass} value={sectionId} onChange={(event) => setSectionId(event.target.value)}>
+            <option value="">مشخصات گزارش</option>
+            {source.sections.map((item, index) => (
+              <option key={item.id} value={item.id}>بخش {(index + 1).toLocaleString("fa-IR")} · {item.title}</option>
+            ))}
+          </select>
+        </Label>
+        <div dir="rtl" lang="fa" className="mt-3 max-h-64 space-y-2 overflow-y-auto overscroll-contain whitespace-pre-line border-s-2 border-brand-accent ps-3 text-sm leading-7 text-ink">
+          {fields.map((text, index) => text && <p key={index}>{text}</p>)}
+        </div>
+      </div>
+    </details>
+  );
+}
+
 function ReportDateField({
   reportDate,
   dateCalendar,
@@ -1161,7 +1289,7 @@ function ReportDateField({
 }: {
   reportDate: string;
   dateCalendar: WeeklyOutlookDateCalendar;
-  onChange: (patch: Partial<WeeklyOutlookReportDefinition>) => void;
+  onChange: (patch: Partial<Pick<WeeklyOutlookReportDefinition, "reportDate" | "dateCalendar">>) => void;
 }) {
   const calendar = dateCalendar ?? "jalali";
   const jalaliDate = gregorianToJalaliDateParts(reportDate);
@@ -1180,11 +1308,7 @@ function ReportDateField({
     const day = Math.min(next.day, jalaliMonthLength(next.year, next.month));
 
     onChange({
-      reportDate: jalaliToGregorianDateString(
-        next.year,
-        next.month,
-        day,
-      ),
+      reportDate: jalaliToGregorianDateString(next.year, next.month, day),
     });
   }
 
@@ -1192,17 +1316,13 @@ function ReportDateField({
     <div className="md:col-span-2">
       <div className="rounded-[18px] border border-line bg-[#fbfdfd] p-4">
         <div className="grid gap-4 md:grid-cols-[180px_1fr] md:items-start">
-          <Label
-            text="نوع تقویم"
-            help="نوع نمایش تاریخ در سایت و پنل ادمین"
-          >
+          <Label text="نوع تقویم" help="نوع نمایش تاریخ در سایت و پنل ادمین">
             <select
               className={inputClass}
               value={calendar}
               onChange={(event) =>
                 onChange({
-                  dateCalendar: event.target
-                    .value as WeeklyOutlookDateCalendar,
+                  dateCalendar: event.target.value as WeeklyOutlookDateCalendar,
                 })
               }
             >
@@ -1232,9 +1352,7 @@ function ReportDateField({
             </Label>
           ) : (
             <div>
-              <p className="text-xs font-bold text-ink">
-                تاریخ شمسی گزارش
-              </p>
+              <p className="text-xs font-bold text-ink">تاریخ شمسی گزارش</p>
 
               <div className="mt-2 grid gap-3 sm:grid-cols-3">
                 <select
@@ -1312,18 +1430,21 @@ type JalaliDateControls = {
 };
 
 function BlockEditor({
+  language,
   block,
   index,
   onChange,
   onMove,
   onRemove,
 }: {
+  language: SiteLocale;
   block: WeeklyOutlookBlock;
   index: number;
   onChange: (patch: Partial<WeeklyOutlookBlock>) => void;
   onMove: (direction: -1 | 1) => void;
   onRemove: () => void;
 }) {
+  const textInputProps = { dir: SITE_LANGUAGES[language].direction, lang: language };
   return (
     <article className="p-5">
       <div className="mb-5 flex items-center justify-between gap-4">
@@ -1332,16 +1453,18 @@ function BlockEditor({
             dir="ltr"
             className="text-[11px] font-black tracking-[.16em] text-ink-muted"
           >
-            بلوک {String(index + 1).padStart(2, "0")}
+            بلوک {(index + 1).toLocaleString("fa-IR", { minimumIntegerDigits: 2 })}
           </span>
 
-          <h3 className="mt-1 text-sm font-black">
-            {blockLabels[block.type]}
-          </h3>
+          <h3 className="mt-1 text-sm font-black">{blockLabels[block.type]}</h3>
         </div>
 
         <div className="flex">
-          <IconButton label="بالا" disabled={index === 0} onClick={() => onMove(-1)}>
+          <IconButton
+            label="بالا"
+            disabled={index === 0}
+            onClick={() => onMove(-1)}
+          >
             <ArrowUp size={14} />
           </IconButton>
 
@@ -1359,6 +1482,7 @@ function BlockEditor({
         <Label text="متن پاراگراف">
           <textarea
             className={`${inputClass} min-h-36 resize-none leading-8`}
+            {...textInputProps}
             value={block.text}
             onChange={(event) => onChange({ text: event.target.value })}
           />
@@ -1384,6 +1508,7 @@ function BlockEditor({
             <input
               className={inputClass}
               value={block.text}
+              {...textInputProps}
               onChange={(event) => onChange({ text: event.target.value })}
             />
           </Label>
@@ -1395,14 +1520,8 @@ function BlockEditor({
           <textarea
             className={`${inputClass} min-h-44 resize-none leading-8`}
             value={block.items.join("\n")}
-            onChange={(event) =>
-              onChange({
-                items: event.target.value
-                  .split("\n")
-                  .map((item) => item.trim())
-                  .filter(Boolean),
-              })
-            }
+            {...textInputProps}
+            onChange={(event) => onChange({ items: event.target.value.split("\n") })}
           />
         </Label>
       ) : null}
@@ -1431,6 +1550,7 @@ function BlockEditor({
             <input
               className={inputClass}
               value={block.title ?? ""}
+              {...textInputProps}
               onChange={(event) => onChange({ title: event.target.value })}
             />
           </Label>
@@ -1440,6 +1560,7 @@ function BlockEditor({
               <textarea
                 className={`${inputClass} min-h-32 resize-none leading-8`}
                 value={block.text}
+                {...textInputProps}
                 onChange={(event) => onChange({ text: event.target.value })}
               />
             </Label>
@@ -1453,6 +1574,7 @@ function BlockEditor({
             <textarea
               className={`${inputClass} min-h-32 resize-none leading-8`}
               value={block.text}
+              {...textInputProps}
               onChange={(event) => onChange({ text: event.target.value })}
             />
           </Label>
@@ -1461,6 +1583,7 @@ function BlockEditor({
             <input
               className={inputClass}
               value={block.cite ?? ""}
+              {...textInputProps}
               onChange={(event) => onChange({ cite: event.target.value })}
             />
           </Label>
@@ -1483,6 +1606,7 @@ function BlockEditor({
             <input
               className={inputClass}
               value={block.alt}
+              {...textInputProps}
               onChange={(event) => onChange({ alt: event.target.value })}
             />
           </Label>
@@ -1492,9 +1616,8 @@ function BlockEditor({
               <input
                 className={inputClass}
                 value={block.caption ?? ""}
-                onChange={(event) =>
-                  onChange({ caption: event.target.value })
-                }
+                {...textInputProps}
+                onChange={(event) => onChange({ caption: event.target.value })}
               />
             </Label>
           </div>
@@ -1525,6 +1648,7 @@ function BlockEditor({
             <input
               className={inputClass}
               value={block.label}
+              {...textInputProps}
               onChange={(event) => onChange({ label: event.target.value })}
             />
           </Label>
@@ -1549,6 +1673,7 @@ function BlockEditor({
               <input
                 className={inputClass}
                 value={block.note ?? ""}
+                {...textInputProps}
                 onChange={(event) => onChange({ note: event.target.value })}
               />
             </Label>
@@ -1695,9 +1820,7 @@ function Label({
       {text}
       {children}
       {help ? (
-        <span
-          className="mt-1 block text-[10px] font-normal leading-5 text-ink-muted"
-        >
+        <span className="mt-1 block text-[10px] font-normal leading-5 text-ink-muted">
           {help}
         </span>
       ) : null}
@@ -1715,12 +1838,9 @@ function SectionHeader({
   actions?: React.ReactNode;
 }) {
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
+    <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
       <div>
-        <p
-          
-          className="text-[11px] font-black tracking-[.18em] text-brand-primary"
-        >
+        <p className="text-xs font-bold text-ink-muted">
           {code}
         </p>
 
@@ -1747,9 +1867,10 @@ function IconButton({
     <button
       type="button"
       aria-label={label}
+      title={label}
       disabled={disabled}
       onClick={onClick}
-      className="grid h-9 w-9 cursor-pointer place-items-center rounded-xl border border-line bg-white text-ink transition hover:border-brand-accent hover:text-brand-primary disabled:pointer-events-none disabled:opacity-25"
+      className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-xl border border-line bg-white text-ink transition hover:border-brand-accent hover:text-brand-accent disabled:pointer-events-none disabled:opacity-25"
     >
       {children}
     </button>

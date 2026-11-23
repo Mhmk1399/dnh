@@ -83,7 +83,7 @@ export function ServicesAssessmentRouting() {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
           <p
-            className={`text-[12px] font-extrabold text-brand-primary sm:text-[13px] ${
+            className={`text-[12px] font-extrabold text-brand-accent sm:text-[13px] ${
               isRTL ? "leading-[1.9]" : "leading-[1.5]"
             }`}
           >

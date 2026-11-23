@@ -12,6 +12,7 @@ import {
   type WeeklyOutlookButtonVariant,
   type WeeklyOutlookCalloutTone,
   type WeeklyOutlookDateCalendar,
+  type WeeklyOutlookEnglishEdition,
   type WeeklyOutlookReportDefinition,
   type WeeklyOutlookSectionDefinition,
   type WeeklyOutlookSectionVisual,
@@ -137,11 +138,12 @@ function parseLinkHref(
   value: unknown,
   path: string,
   issues: Record<string, string>,
+  requireContent: boolean,
 ) {
   const href = cleanText(value, 900);
 
   if (!href) {
-    issues[path] = "آدرس دکمه الزامی است.";
+    if (requireContent) issues[path] = "آدرس دکمه الزامی است.";
     return "";
   }
 
@@ -180,6 +182,7 @@ function parseBlock(
   sectionIndex: number,
   blockIndex: number,
   issues: Record<string, string>,
+  requireContent: boolean,
 ): WeeklyOutlookBlock {
   const path = `sections.${sectionIndex}.blocks.${blockIndex}`;
   const value =
@@ -195,7 +198,7 @@ function parseBlock(
     const text = cleanText(value.text, 220);
     const level = value.level === "h2" ? "h2" : "h3";
 
-    if (!text) issues[`${path}.text`] = "متن تیتر الزامی است.";
+    if (requireContent && !text) issues[`${path}.text`] = "متن تیتر الزامی است.";
 
     return { id, type, text, level };
   }
@@ -203,7 +206,7 @@ function parseBlock(
   if (type === "list") {
     const items = parseListItems(value.items);
 
-    if (items.length < 1) issues[`${path}.items`] = "حداقل یک آیتم وارد کنید.";
+    if (requireContent && !items.length) issues[`${path}.items`] = "حداقل یک آیتم وارد کنید.";
 
     return { id, type, items };
   }
@@ -217,7 +220,7 @@ function parseBlock(
       ? value.tone
       : "info";
 
-    if (!text) issues[`${path}.text`] = "متن نکته الزامی است.";
+    if (requireContent && !text) issues[`${path}.text`] = "متن نکته الزامی است.";
 
     return {
       id,
@@ -231,7 +234,7 @@ function parseBlock(
   if (type === "quote") {
     const text = cleanLongText(value.text, 1600);
 
-    if (!text) issues[`${path}.text`] = "متن نقل‌قول الزامی است.";
+    if (requireContent && !text) issues[`${path}.text`] = "متن نقل‌قول الزامی است.";
 
     return {
       id,
@@ -245,8 +248,8 @@ function parseBlock(
     const src = parseImageSrc(value.src, `${path}.src`, issues);
     const alt = cleanText(value.alt, 220);
 
-    if (!src) issues[`${path}.src`] = "آدرس تصویر الزامی است.";
-    if (!alt) issues[`${path}.alt`] = "متن جایگزین تصویر الزامی است.";
+    if (requireContent && !src) issues[`${path}.src`] = "آدرس تصویر الزامی است.";
+    if (requireContent && !alt) issues[`${path}.alt`] = "متن جایگزین تصویر الزامی است.";
 
     return {
       id,
@@ -259,7 +262,7 @@ function parseBlock(
 
   if (type === "button") {
     const label = cleanText(value.label, 120);
-    const href = parseLinkHref(value.href, `${path}.href`, issues);
+    const href = parseLinkHref(value.href, `${path}.href`, issues, requireContent);
     const variant: WeeklyOutlookButtonVariant = isOneOf(
       value.variant,
       WEEKLY_OUTLOOK_BUTTON_VARIANTS,
@@ -267,7 +270,7 @@ function parseBlock(
       ? value.variant
       : "primary";
 
-    if (!label) issues[`${path}.label`] = "متن دکمه الزامی است.";
+    if (requireContent && !label) issues[`${path}.label`] = "متن دکمه الزامی است.";
 
     return {
       id,
@@ -285,7 +288,7 @@ function parseBlock(
 
   const text = cleanLongText(value.text, 5000);
 
-  if (!text) issues[`${path}.text`] = "متن پاراگراف الزامی است.";
+  if (requireContent && !text) issues[`${path}.text`] = "متن پاراگراف الزامی است.";
 
   return { id, type: "paragraph", text };
 }
@@ -294,6 +297,7 @@ function parseSection(
   raw: unknown,
   index: number,
   issues: Record<string, string>,
+  requireContent: boolean,
 ): WeeklyOutlookSectionDefinition {
   const path = `sections.${index}`;
   const value =
@@ -315,7 +319,7 @@ function parseSection(
     ? value.visual
     : "grid";
 
-  if (!title) issues[`${path}.title`] = "عنوان سکشن الزامی است.";
+  if (requireContent && !title) issues[`${path}.title`] = "عنوان سکشن الزامی است.";
   if (blocksRaw.length > 40) {
     issues[`${path}.blocks`] = "حداکثر ۴۰ بلوک برای هر سکشن مجاز است.";
   }
@@ -331,8 +335,44 @@ function parseSection(
     blocks: blocksRaw
       .slice(0, 40)
       .map((block, blockIndex) =>
-        parseBlock(block, index, blockIndex, issues),
+        parseBlock(block, index, blockIndex, issues, requireContent),
       ),
+  };
+}
+
+function parseEditionContent(
+  value: Record<string, unknown>,
+  issues: Record<string, string>,
+  requireContent: boolean,
+  coverImage: string,
+): Omit<WeeklyOutlookEnglishEdition, "ready"> {
+  const title = cleanText(value.title, 180);
+  const edition = cleanText(value.edition, 120);
+  const excerpt = cleanLongText(value.excerpt, 900);
+  const coverImageAlt = cleanText(value.coverImageAlt, 220);
+  const sectionsRaw = Array.isArray(value.sections) ? value.sections : [];
+
+  if (requireContent) {
+    if (title.length < 4) issues.title = "عنوان گزارش باید حداقل ۴ حرف باشد.";
+    if (edition.length < 2) issues.edition = "نام نسخه گزارش الزامی است.";
+    if (excerpt.length < 10) issues.excerpt = "توضیح کوتاه گزارش باید حداقل ۱۰ حرف باشد.";
+    if (coverImage && !coverImageAlt) issues.coverImageAlt = "برای تصویر اصلی، متن جایگزین لازم است.";
+    if (!sectionsRaw.length) issues.sections = "حداقل یک سکشن لازم است.";
+  }
+  if (sectionsRaw.length > 24) issues.sections = "حداکثر ۲۴ سکشن مجاز است.";
+
+  return {
+    title,
+    edition,
+    excerpt,
+    coverImageAlt: coverImageAlt || undefined,
+    seoTitle: cleanText(value.seoTitle, 180) || undefined,
+    seoDescription: cleanLongText(value.seoDescription, 320) || undefined,
+    sections: ensureUniqueStableIds(
+      sectionsRaw.slice(0, 24).map((section, index) =>
+        parseSection(section, index, issues, requireContent),
+      ),
+    ),
   };
 }
 
@@ -345,7 +385,6 @@ export function validateWeeklyOutlookReport(
     raw && typeof raw === "object" && !Array.isArray(raw)
       ? (raw as Record<string, unknown>)
       : {};
-  const title = cleanText(value.title, 180);
   const slug = normalizeWeeklyOutlookSlug(value.slug);
   const reportDate = parseDate(value.reportDate, issues);
   const dateCalendar: WeeklyOutlookDateCalendar = isOneOf(
@@ -359,33 +398,40 @@ export function validateWeeklyOutlookReport(
     (isOneOf(value.status, WEEKLY_OUTLOOK_STATUSES)
       ? value.status
       : "draft");
-  const sectionsRaw = Array.isArray(value.sections) ? value.sections : [];
-  const sections = ensureUniqueStableIds(
-    sectionsRaw
-      .slice(0, 24)
-      .map((section, index) => parseSection(section, index, issues)),
-  );
-
-  if (title.length < 4) issues.title = "عنوان گزارش باید حداقل ۴ حرف باشد.";
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
     issues.slug = "شناسه مسیر باید انگلیسی و با خط تیره باشد.";
   }
-  if (cleanText(value.edition, 120).length < 2) {
-    issues.edition = "نام نسخه گزارش الزامی است.";
-  }
-  if (cleanLongText(value.excerpt, 900).length < 10) {
-    issues.excerpt = "توضیح کوتاه گزارش باید حداقل ۱۰ حرف باشد.";
-  }
-  if (sectionsRaw.length < 1) issues.sections = "حداقل یک سکشن لازم است.";
-  if (sectionsRaw.length > 24) issues.sections = "حداکثر ۲۴ سکشن مجاز است.";
   const coverImage = parseImageSrc(
     value.coverImage,
     "coverImage",
     issues,
   );
 
-  if (coverImage && !cleanText(value.coverImageAlt, 220)) {
-    issues.coverImageAlt = "برای تصویر اصلی، متن جایگزین لازم است.";
+  const persian = parseEditionContent(value, issues, true, coverImage);
+  let english: WeeklyOutlookEnglishEdition | undefined;
+  if (value.english !== undefined) {
+    if (!value.english || typeof value.english !== "object" || Array.isArray(value.english)) {
+      issues.english = "اطلاعات نسخه انگلیسی معتبر نیست.";
+    } else {
+      const translation = value.english as Record<string, unknown>;
+      const translationIssues: Record<string, string> = {};
+      const ready = translation.ready === true;
+      if (typeof translation.ready !== "boolean") {
+        translationIssues.ready = "وضعیت انتشار نسخه را مشخص کنید.";
+      }
+      const content = parseEditionContent(translation, translationIssues, ready, coverImage);
+      if (ready) {
+        content.sections.forEach((section, index) => {
+          if (!section.summary && !section.blocks.some((block) => block.type !== "divider")) {
+            translationIssues[`sections.${index}.blocks`] = "برای بخش گزارش، خلاصه یا بلوک محتوا وارد کنید.";
+          }
+        });
+      }
+      english = { ...content, ready };
+      for (const [path, message] of Object.entries(translationIssues)) {
+        issues[`english.${path}`] = `نسخه انگلیسی — ${message}`;
+      }
+    }
   }
 
   if (Object.keys(issues).length) {
@@ -393,18 +439,13 @@ export function validateWeeklyOutlookReport(
   }
 
   return {
-    title,
+    ...persian,
+    ...(english && { english }),
     slug,
-    edition: cleanText(value.edition, 120),
     reportDate,
     dateCalendar,
-    excerpt: cleanLongText(value.excerpt, 900),
     coverImage: coverImage || undefined,
-    coverImageAlt: cleanText(value.coverImageAlt, 220) || undefined,
-    seoTitle: cleanText(value.seoTitle, 180) || undefined,
-    seoDescription: cleanLongText(value.seoDescription, 320) || undefined,
     status,
-    sections,
     revision: Number.isInteger(Number(value.revision))
       ? Math.max(0, Number(value.revision))
       : 0,

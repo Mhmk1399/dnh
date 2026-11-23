@@ -1,7 +1,5 @@
 import Image from "next/image";
 import {
-  ArrowLeft,
-  ArrowRight,
   BarChart3,
   BriefcaseBusiness,
   Building2,
@@ -12,6 +10,7 @@ import {
 
 import { ActionButton } from "@/components/ui/ActionButton";
 import { DnhPageHero } from "@/components/ui/DnhPageHero";
+import { PageSectionIndex } from "@/components/static/reviewed-pages/PageSectionIndex";
 import type { SiteLocale } from "@/lib/site-language";
 
 type CTA = { label: string; type: string };
@@ -154,7 +153,7 @@ function Eyebrow({
   return (
     <div>
       <div
-        className={`flex items-center gap-3 text-[13px] font-bold leading-7 ${dark ? "text-[#b4dae3]" : "text-brand-primary"}`}
+        className={`flex items-center gap-3 text-[13px] font-bold leading-7 ${dark ? "text-[#b4dae3]" : "text-brand-accent"}`}
       >
         <span aria-hidden="true" className="h-0.5 w-9 bg-brand-accent" />
         <span>{section.eyebrow}</span>
@@ -175,7 +174,7 @@ function Heading({
   return (
     <h2
       id={id}
-      className={`mt-4 max-w-[22ch] text-pretty text-[clamp(2rem,5vw,3.9rem)] font-black leading-[1.55] tracking-normal ${dark ? "text-white" : "text-ink"}`}
+      className={`mt-4 max-w-[26ch] text-pretty text-[clamp(1.75rem,5vw,3.4rem)] font-black leading-[1.5] tracking-normal ${dark ? "text-white [&_span]:text-brand-primary" : "text-ink"}`}
     >
       {children}
     </h2>
@@ -203,14 +202,11 @@ function Copy({
 function SectionActions({
   section,
   dark = false,
-  isRTL,
 }: {
   section: AboutSection;
   dark?: boolean;
-  isRTL: boolean;
 }) {
   if (!section.ctas?.length) return null;
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
   return (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       {section.ctas.map((cta, index) => (
@@ -277,11 +273,9 @@ function Hero({
 function Definition({
   section,
   locale,
-  isRTL,
 }: {
   section: AboutSection;
   locale: SiteLocale;
-  isRTL: boolean;
 }) {
   const question = section.paragraphs?.[3];
   return (
@@ -302,7 +296,7 @@ function Definition({
             ))}
           </div>
           {question ? (
-            <blockquote className="my-7 border-s-[3px] border-brand-accent py-2 ps-5 text-[20px] font-black leading-[1.9] text-brand-primary sm:text-[23px]">
+            <blockquote className="my-7 max-w-prose border-s-[3px] border-brand-accent py-2 ps-5 text-[20px] font-bold leading-[1.8] text-brand-accent sm:text-[23px]">
               {question}
             </blockquote>
           ) : null}
@@ -311,7 +305,7 @@ function Definition({
               <Copy key={p}>{p}</Copy>
             ))}
           </div>
-          <SectionActions section={section} isRTL={isRTL} />
+          <SectionActions section={section} />
         </div>
         <div>
           <figure className="relative aspect-[4/5] overflow-hidden border border-line sm:aspect-[5/4] lg:aspect-[.84/1]">
@@ -332,11 +326,9 @@ function Definition({
 function Purpose({
   section,
   locale,
-  isRTL,
 }: {
   section: AboutSection;
   locale: SiteLocale;
-  isRTL: boolean;
 }) {
   const flow =
     locale === "fa"
@@ -396,7 +388,7 @@ function Purpose({
               </Copy>
             ))}
           </div>
-          <SectionActions section={section} dark isRTL={isRTL} />
+          <SectionActions section={section} dark />
         </div>
       </div>
       <div
@@ -459,13 +451,7 @@ function Boundaries({ section }: { section: AboutSection }) {
   );
 }
 
-function Domains({
-  section,
-  isRTL,
-}: {
-  section: AboutSection;
-  isRTL: boolean;
-}) {
+function Domains({ section }: { section: AboutSection }) {
   return (
     <section
       id={section.id}
@@ -483,7 +469,7 @@ function Domains({
           ))}
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {section.domains?.map((domain, index) => (
+          {section.domains?.map((domain) => (
             <article key={domain.title} className="border border-line bg-page">
               <div className="p-6 sm:p-8">
                 <h3 className="text-[24px] font-black leading-[1.7]">
@@ -499,7 +485,7 @@ function Domains({
             </article>
           ))}
         </div>
-        <SectionActions section={section} isRTL={isRTL} />
+        <SectionActions section={section} />
       </div>
     </section>
   );
@@ -538,7 +524,7 @@ function Framework({
               className="border-b border-line p-6 text-start last:border-b-0 md:border-b-0 md:border-e md:last:border-e-0"
               dir={isRTL ? "rtl" : "ltr"}
             >
-              <div className="border-b-4 border-brand-accent pb-4 text-[74px] font-black leading-none text-brand-primary">
+              <div className="border-b-2 border-brand-accent pb-3 text-5xl font-black leading-none text-brand-accent sm:text-6xl">
                 {pillar.code}
               </div>
               <h3 className="mt-5 text-[22px] font-black leading-8">
@@ -551,22 +537,14 @@ function Framework({
         </div>
 
         <div className="flex justify-center">
-          <SectionActions section={section} isRTL={isRTL} />
+          <SectionActions section={section} />
         </div>
       </div>
     </section>
   );
 }
 
-function Thinking({
-  section,
-  locale,
-  isRTL,
-}: {
-  section: AboutSection;
-  locale: SiteLocale;
-  isRTL: boolean;
-}) {
+function Thinking({ section }: { section: AboutSection }) {
   return (
     <section
       id={section.id}
@@ -579,15 +557,15 @@ function Thinking({
           <Heading id={`${section.id}-title`} dark>
             <HeadingAccent section={section} />
           </Heading>
-          <ol className="mt-7 border-t grid grid-cols-2 border-white/15">
-            {section.steps?.map((step, index) => (
+          <ol className="mt-7 grid gap-x-8 border-t border-white/20 sm:grid-cols-2">
+            {section.steps?.map((step) => (
               <li
                 key={step.title}
-                className="grid grid-cols-2 gap-3 border-b border-white/15 py-4"
+                className="min-w-0 border-b border-white/20 py-4"
               >
                 <div>
                   <h3 className="text-[16px] font-bold">{step.title} </h3>
-                  <Copy dark className="mt-1 text-[12px]">
+                  <Copy dark className="mt-1 max-w-prose">
                     {step.description}
                   </Copy>
                 </div>
@@ -595,20 +573,14 @@ function Thinking({
             ))}
           </ol>
 
-          <SectionActions section={section} dark isRTL={isRTL} />
+          <SectionActions section={section} dark />
         </div>
       </div>
     </section>
   );
 }
 
-function Audience({
-  section,
-  isRTL,
-}: {
-  section: AboutSection;
-  isRTL: boolean;
-}) {
+function Audience({ section }: { section: AboutSection }) {
   return (
     <section
       id={section.id}
@@ -644,55 +616,7 @@ function Audience({
             );
           })}
         </div>
-        <SectionActions section={section} isRTL={isRTL} />
-      </div>
-    </section>
-  );
-}
-
-function Ecosystem({
-  section,
-  locale,
-  isRTL,
-}: {
-  section: AboutSection;
-  locale: SiteLocale;
-  isRTL: boolean;
-}) {
-  return (
-    <section
-      id={section.id}
-      aria-labelledby={`${section.id}-title`}
-      className="border-b border-line bg-surface-soft py-16 sm:py-20 lg:py-28"
-    >
-      <div className="dnh-site-shell grid items-start gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-        <div>
-          <Eyebrow section={section} />
-          <Heading id={`${section.id}-title`}>
-            <HeadingAccent section={section} />
-          </Heading>
-          {section.closing ? (
-            <Copy className="mt-5">{section.closing}</Copy>
-          ) : null}
-
-          <SectionActions section={section} isRTL={isRTL} />
-        </div>
-        <div className="grid border-s border-t border-line sm:grid-cols-2">
-          {section.components?.map((item) => (
-            <article
-              key={item.title}
-              className="border-b border-e border-line bg-page p-5"
-            >
-              <h3
-                dir="ltr"
-                className="text-start text-[14px] font-black leading-7 text-brand-primary"
-              >
-                {item.title}
-              </h3>
-              <Copy className="mt-2 text-[12px]">{item.description}</Copy>
-            </article>
-          ))}
-        </div>
+        <SectionActions section={section} />
       </div>
     </section>
   );
@@ -717,26 +641,25 @@ function Engagement({
           <HeadingAccent section={section} />
         </Heading>
         <ol
-          className="mt-10 grid border-s border-t border-white/15 sm:grid-cols-2 lg:grid-cols-7"
-          dir="ltr"
+          className="mt-8 grid gap-x-8 border-t border-white/20 sm:grid-cols-2 xl:grid-cols-3"
         >
-          {section.steps?.map((step, index) => (
+          {section.steps?.map((step) => (
             <li
               key={step.title}
-              className="min-h-[190px] border-b border-e border-white/15 p-5 text-start"
+              className="min-w-0 border-b border-white/20 py-4 text-start"
               dir={isRTL ? "rtl" : "ltr"}
             >
-              <h3 className="mt-5 text-[14px] font-black leading-7">
+              <h3 className="text-base font-bold leading-7">
                 {step.title}
               </h3>
-              <Copy dark className="mt-2 text-[11px]">
+              <Copy dark className="mt-1 max-w-prose">
                 {step.description}
               </Copy>
             </li>
           ))}
         </ol>
 
-        <SectionActions section={section} dark isRTL={isRTL} />
+        <SectionActions section={section} dark />
       </div>
     </section>
   );
@@ -745,11 +668,9 @@ function Engagement({
 function Founder({
   section,
   locale,
-  isRTL,
 }: {
   section: AboutSection;
   locale: SiteLocale;
-  isRTL: boolean;
 }) {
   return (
     <section
@@ -790,7 +711,7 @@ function Founder({
               return (
                 <div
                   key={statement}
-                  className="border-b border-line p-5 text-start font-black text-brand-primary last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0"
+                  className="border-b border-line p-5 text-start font-bold text-brand-accent last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0"
                 >
                   {name}
                   <small className="mt-1 block text-[10px] font-normal tracking-[.1em] text-ink-muted">
@@ -803,20 +724,14 @@ function Founder({
           {section.closing ? (
             <Copy className="mt-5">{section.closing}</Copy>
           ) : null}
-          <SectionActions section={section} isRTL={isRTL} />
+          <SectionActions section={section} />
         </div>
       </div>
     </section>
   );
 }
 
-function FinalCTA({
-  section,
-  isRTL,
-}: {
-  section: AboutSection;
-  isRTL: boolean;
-}) {
+function FinalCTA({ section }: { section: AboutSection }) {
   return (
     <section
       id={section.id}
@@ -863,7 +778,7 @@ function FinalCTA({
           </div>
         </div>
         <div className="border-s border-white/20 ps-0 lg:ps-8">
-          <SectionActions section={section} dark isRTL={isRTL} />
+          <SectionActions section={section} dark />
         </div>
       </div>
     </section>
@@ -885,32 +800,30 @@ export function AboutPage({
     <div
       dir={content.direction}
       lang={content.locale}
-      className="overflow-x-clip bg-page text-ink"
+      className="overflow-x-clip bg-page text-ink [&>section[id]]:scroll-mt-24 lg:[&>section[id]]:scroll-mt-28"
     >
       <Hero
         section={sections["about-dnh-hero"]}
         locale={locale}
         isRTL={isRTL}
       />
+      <PageSectionIndex
+        sections={content.sections.filter((section) => section.type !== "hero" && section.type !== "ecosystem")}
+        locale={locale}
+      />
       <Definition
         section={sections["what-is-dnh"]}
         locale={locale}
-        isRTL={isRTL}
       />
       <Purpose
         section={sections["why-dnh-exists"]}
         locale={locale}
-        isRTL={isRTL}
       />
       <Boundaries section={sections["what-dnh-is-not"]} />
-      <Domains section={sections["two-core-advisory-domains"]} isRTL={isRTL} />
+      <Domains section={sections["two-core-advisory-domains"]} />
       <Framework section={sections["the-dnh-framework"]} isRTL={isRTL} />
-      <Thinking
-        section={sections["how-dnh-thinks"]}
-        locale={locale}
-        isRTL={isRTL}
-      />
-      <Audience section={sections["who-dnh-is-built-for"]} isRTL={isRTL} />
+      <Thinking section={sections["how-dnh-thinks"]} />
+      <Audience section={sections["who-dnh-is-built-for"]} />
 
       <Engagement
         section={sections["from-problem-recognition-to-decision"]}
@@ -919,12 +832,8 @@ export function AboutPage({
       <Founder
         section={sections["dr-nasim-and-dnh"]}
         locale={locale}
-        isRTL={isRTL}
       />
-      <FinalCTA
-        section={sections["bring-structure-to-the-decision"]}
-        isRTL={isRTL}
-      />
+      <FinalCTA section={sections["bring-structure-to-the-decision"]} />
     </div>
   );
 }

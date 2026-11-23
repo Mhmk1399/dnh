@@ -176,24 +176,32 @@ export type WeeklyOutlookSectionDefinition = {
   blocks: WeeklyOutlookBlock[];
 };
 
-export type WeeklyOutlookReportDefinition = {
+type WeeklyOutlookEditionContent = {
   title: string;
-  slug: string;
   edition: string;
-  reportDate: string;
-  dateCalendar: WeeklyOutlookDateCalendar;
   excerpt: string;
-  coverImage?: string;
   coverImageAlt?: string;
   seoTitle?: string;
   seoDescription?: string;
-  status: WeeklyOutlookStatus;
   sections: WeeklyOutlookSectionDefinition[];
+};
+
+export type WeeklyOutlookEnglishEdition = WeeklyOutlookEditionContent & {
+  ready: boolean;
+};
+
+export type WeeklyOutlookReportDefinition = WeeklyOutlookEditionContent & {
+  slug: string;
+  reportDate: string;
+  dateCalendar: WeeklyOutlookDateCalendar;
+  coverImage?: string;
+  status: WeeklyOutlookStatus;
+  english?: WeeklyOutlookEnglishEdition;
   revision: number;
 };
 
 export type PublicWeeklyOutlookReport =
-  WeeklyOutlookReportDefinition & {
+  Omit<WeeklyOutlookReportDefinition, "english"> & {
     id: string;
     publishedAt?: string | null;
     createdAt?: string;

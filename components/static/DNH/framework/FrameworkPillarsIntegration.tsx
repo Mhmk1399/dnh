@@ -4,10 +4,6 @@ import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  Database,
-  Route,
-  Telescope,
-  type LucideIcon,
 } from "lucide-react";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -43,12 +39,6 @@ type PillarsIntegrationContent = {
     type: "primary" | "secondary";
     href: string;
   }>;
-};
-
-const stepIcons: Record<IntegrationStep["code"], LucideIcon> = {
-  D: Database,
-  N: Route,
-  H: Telescope,
 };
 
 export function FrameworkPillarsIntegration() {

@@ -129,7 +129,6 @@ export function FrameworkStructuredAssessmentCTA() {
   const highlight = content.heading_highlight?.trim() ?? "";
   const highlightIndex = highlight ? content.heading.indexOf(highlight) : -1;
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
-  const brand = (framework as { brand?: string }).brand ?? "DNH";
 
   return (
     <section
@@ -163,7 +162,7 @@ export function FrameworkStructuredAssessmentCTA() {
               />
 
               <div className="min-w-0">
-                <p className="text-start text-[12px] font-extrabold leading-[1.8] text-brand-primary sm:text-[13px]">
+                <p className="text-start text-xs font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
                   {content.eyebrow}
                 </p>
               </div>

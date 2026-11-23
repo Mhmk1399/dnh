@@ -1,6 +1,7 @@
 "use client";
 
 import toast, { type ToastOptions } from "react-hot-toast";
+import { siteToast } from "@/components/ui/siteToast";
 
 type ToastId = string;
 
@@ -9,13 +10,8 @@ function getMessage(error: unknown, fallback: string) {
 }
 
 export const adminToast = {
-  success(message: string, options?: ToastOptions) {
-    return toast.success(message, options);
-  },
-
-  error(message: string, options?: ToastOptions) {
-    return toast.error(message, options);
-  },
+  success: siteToast.success,
+  error: siteToast.error,
 
   loading(message: string, options?: ToastOptions) {
     return toast.loading(message, options);

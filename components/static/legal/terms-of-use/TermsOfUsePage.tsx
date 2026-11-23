@@ -71,7 +71,7 @@ export function TermsOfUsePage({ content }: { content: TermsOfUseContent }) {
   const CornerArrow = isRtl ? CornerDownLeft : CornerDownRight;
 
   return (
-    <main dir={content.direction} className="overflow-x-clip bg-page text-ink">
+    <div dir={content.direction} className="overflow-x-clip bg-page text-ink">
       <section className="bg-[#032f3f] text-white">
         <div aria-hidden="true" className="h-[116px]" />
         <div className={`${shell} pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20`}>
@@ -194,7 +194,7 @@ export function TermsOfUsePage({ content }: { content: TermsOfUseContent }) {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

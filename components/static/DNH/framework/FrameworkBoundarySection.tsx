@@ -204,9 +204,8 @@ export function FrameworkDataIntelligence() {
             ) : null}
 
             <ol className="min-w-0 border-y border-[color-mix(in_srgb,var(--dnh-text-on-brand)_16%,transparent)]">
-              {content.items.map((item, index) => {
+              {content.items.map((item) => {
                 const Icon = itemIcons[item.id] ?? Activity;
-                const number = String(index + 1).padStart(2, "0");
 
                 return (
                   <li

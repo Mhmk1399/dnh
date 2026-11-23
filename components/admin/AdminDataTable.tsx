@@ -46,6 +46,15 @@ export type AdminTableAction<T> =
   | AdminTableDeleteAction<T>
   | AdminTableCustomAction<T>;
 
+/** Keep related values together in a row, while letting mobile cards stack them. */
+export function AdminTableCellPair({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-w-0 flex-col items-start gap-1 lg:flex-row lg:items-center lg:gap-3">
+      {children}
+    </div>
+  );
+}
+
 export function AdminDataTable<T>({
   title,
   code,
@@ -68,6 +77,7 @@ export function AdminDataTable<T>({
   minWidth?: number;
 }) {
   const visibleActionCount = actions.length;
+  const [mobileIdentity, ...mobileDetails] = columns.filter((column) => !column.hideOnMobile);
 
   if (rows.length === 0) {
     return (
@@ -79,14 +89,14 @@ export function AdminDataTable<T>({
   }
 
   return (
-    <section className="overflow-hidden rounded-[24px] border border-line bg-white/92 shadow-[0_18px_52px_rgba(3,45,59,0.05)] backdrop-blur-xl">
+    <section className="@container/table min-w-0 overflow-hidden rounded-[20px] border border-line bg-white shadow-[0_8px_28px_rgba(3,45,59,0.05)]">
       {title || code ? (
         <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
           <div>
-            {code ? (
+            {code && code !== title ? (
               <p
-                dir="ltr"
-                className="text-[10px] font-black tracking-[0.2em] text-brand-primary"
+                dir="auto"
+                className="text-xs font-bold text-ink-muted"
               >
                 {code}
               </p>
@@ -95,16 +105,21 @@ export function AdminDataTable<T>({
               <h2 className="mt-1 text-base font-black text-ink">{title}</h2>
             ) : null}
           </div>
-          <span className="rounded-full border border-line bg-[#fbfdfd] px-3 py-1.5 text-[10px] font-black text-ink-muted">
+          <span className="shrink-0 rounded-full bg-surface-soft px-3 py-1.5 text-xs font-bold text-ink-muted">
             {rows.length.toLocaleString("fa-IR")} رکورد
           </span>
         </header>
       ) : null}
 
-      <div className="hidden overflow-x-auto lg:block">
+      <div
+        role="region"
+        aria-label={title ?? "جدول رکوردها"}
+        tabIndex={0}
+        className="hidden max-w-full overflow-x-auto overscroll-x-contain focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus lg:block"
+      >
         <table
-          className="w-full border-collapse text-right text-xs"
-          style={{ minWidth }}
+          className="w-max border-collapse whitespace-nowrap text-start text-xs"
+          style={{ minWidth: `max(100%, ${minWidth}px)` }}
         >
           <thead>
             <tr className="border-b border-line bg-[#edf5f7] text-ink-muted">
@@ -112,14 +127,14 @@ export function AdminDataTable<T>({
                 <th
                   key={column.key}
                   scope="col"
-                  className={`px-5 py-4 font-black ${column.headerClassName ?? ""}`}
+                  className={`px-4 py-3 text-start font-black ${column.headerClassName ?? ""}`}
                 >
                   {column.header}
                 </th>
               ))}
 
               {visibleActionCount > 0 ? (
-                <th scope="col" className="px-5 py-4 font-black">
+                <th scope="col" className="sticky end-0 bg-[#edf5f7] px-4 py-3 text-start font-black">
                   عملیات
                 </th>
               ) : null}
@@ -135,14 +150,14 @@ export function AdminDataTable<T>({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className={`px-5 py-4 align-middle ${column.className ?? ""}`}
+                    className={`px-4 py-3 align-middle ${column.className ?? ""}`}
                   >
                     {column.cell(row)}
                   </td>
                 ))}
 
                 {visibleActionCount > 0 ? (
-                  <td className="px-5 py-4 align-middle">
+                  <td className="sticky end-0 bg-white px-4 py-3 align-middle">
                     <AdminTableActions row={row} actions={actions} compact />
                   </td>
                 ) : null}
@@ -152,29 +167,33 @@ export function AdminDataTable<T>({
         </table>
       </div>
 
-      <div className="divide-y divide-line lg:hidden">
+      <div className="grid gap-3 bg-surface-soft p-2 @min-[40rem]/table:grid-cols-2 lg:hidden">
         {rows.map((row) => (
-          <article key={getRowId(row)} className="bg-white p-4">
-            <div className="space-y-3">
-              {columns
-                .filter((column) => !column.hideOnMobile)
-                .map((column) => (
+          <article key={getRowId(row)} className="flex min-w-0 flex-col rounded-xl border border-line bg-white p-4 text-start [overflow-wrap:anywhere]">
+            {mobileIdentity && (
+              <header className="mb-3 border-b border-line pb-3">
+                <p className="mb-1 text-xs text-ink-muted">{mobileIdentity.mobileLabel ?? mobileIdentity.header}</p>
+                {mobileIdentity.cell(row)}
+              </header>
+            )}
+            <dl className="space-y-2.5">
+              {mobileDetails.map((column) => (
                   <div
                     key={column.key}
-                    className="flex items-start justify-between gap-4"
+                    className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-baseline gap-2"
                   >
-                    <span className="shrink-0 text-[10px] font-black text-ink-muted">
+                    <dt className="text-xs leading-6 text-ink-muted">
                       {column.mobileLabel ?? column.header}
-                    </span>
-                    <div className="min-w-0 text-left text-xs font-bold text-ink">
+                    </dt>
+                    <dd className="min-w-0 text-start text-sm font-bold text-ink">
                       {column.cell(row)}
-                    </div>
+                    </dd>
                   </div>
                 ))}
-            </div>
+            </dl>
 
             {visibleActionCount > 0 ? (
-              <div className="mt-4 border-t border-dashed border-line pt-4">
+              <div className="mt-auto pt-3">
                 <AdminTableActions row={row} actions={actions} />
               </div>
             ) : null}
@@ -202,11 +221,11 @@ function AdminTableActions<T>({
     <div
       className={`
         flex
-        flex-wrap
         items-center
+        justify-start
         gap-2
 
-        ${compact ? "justify-start" : "justify-end"}
+        ${compact ? "w-max flex-nowrap" : "flex-wrap border-t border-line pt-3 [&>a]:min-h-11 [&>button]:min-h-11"}
       `}
     >
       {visibleActions.map((action) => {
@@ -256,8 +275,8 @@ function AdminTableActions<T>({
 
               ${
                 action.primary
-                  ? "border-brand-primary bg-brand-primary text-white hover:bg-brand-secondary"
-                  : "border-line bg-white text-ink hover:border-brand-accent hover:text-brand-primary"
+                  ? "border-brand-accent bg-brand-accent text-white hover:bg-brand-secondary"
+                  : "border-line bg-white text-ink hover:border-brand-accent hover:text-brand-accent"
               }
 
               ${compact ? "h-9 w-9" : "min-h-10 px-3 py-2"}

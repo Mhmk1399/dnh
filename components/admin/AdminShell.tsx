@@ -21,7 +21,6 @@ import {
   ClipboardList,
   Home,
   Inbox,
-  LayoutDashboard,
   LogOut,
   Mail,
   Menu,
@@ -32,14 +31,13 @@ import {
   Send,
   Settings,
   ShieldCheck,
-  Sparkles,
   UserRound,
   UsersRound,
   X,
   type LucideIcon,
 } from "lucide-react";
 
-import { AdminToastProvider } from "@/components/admin/AdminToastProvider";
+import { LogoutButton, LogoutConfirmDialog } from "@/components/auth/LogoutConfirmDialog";
 import type { SafeUser } from "@/lib/auth";
 import Image from "next/image";
 
@@ -95,6 +93,54 @@ const adminNavGroups: AdminNavGroup[] = [
         description: "ایجاد گزارش جدید",
         href: "/admin/weekly-outlooks/new",
         icon: Send,
+      },
+    ],
+  },
+  {
+    title: "ورودی‌ها و لیدها",
+    items: [
+      {
+        title: "نمای کلی ورودی‌ها",
+        description: "آمار و دسترسی به همه فرم‌ها",
+        href: "/admin/intake",
+        icon: Inbox,
+        exact: true,
+      },
+      {
+        title: "لیدهای سریع",
+        description: "نام، تلفن و متن درخواست",
+        href: "/admin/intake/leads",
+        icon: UserRound,
+      },
+      {
+        title: "پیام‌های تماس",
+        description: "ورودی‌های صفحه تماس",
+        href: "/admin/intake/contacts",
+        icon: Mail,
+      },
+      {
+        title: "مشاوره راهبردی",
+        description: "درخواست‌های مشاوره",
+        href: "/admin/intake/strategic-consultations",
+        icon: CalendarDays,
+      },
+      {
+        title: "ارزیابی چهارمرحله‌ای",
+        description: "ارزیابی اولیه تصمیم مالی",
+        href: "/admin/intake/financial-decision-assessments",
+        icon: ClipboardList,
+      },
+      {
+        title: "تصمیم مالی مهم",
+        description: "درخواست‌های فرم کوتاه تصمیم مالی",
+        href: "/admin/intake/decision-assessments",
+        icon: ClipboardList,
+      },
+      {
+        title: "نشست‌های مدیران",
+        description: "درخواست‌های نشست تخصصی",
+        href: "/admin/intake/executive-briefings",
+        icon: UsersRound,
       },
     ],
   },
@@ -270,7 +316,6 @@ export function AdminShell({ user, children }: AdminShellProps) {
         />
       )}
 
-      <AdminToastProvider />
     </div>
   );
 }
@@ -509,6 +554,8 @@ function AdminSearch({ compact = false }: { compact?: boolean }) {
                 ? "جستجو در پنل مدیریت..."
                 : "جستجو در بخش‌ها، فرم‌ها، گزارش‌ها و..."
             }
+            role="combobox"
+            aria-autocomplete="list"
             aria-expanded={open}
             aria-controls={
               compact ? "admin-search-mobile" : "admin-search-desktop"
@@ -582,6 +629,8 @@ function AdminSearch({ compact = false }: { compact?: boolean }) {
 
 function UserDropdown({ user }: { user: SafeUser }) {
   const [open, setOpen] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const name = accountName(user);
 
@@ -603,6 +652,7 @@ function UserDropdown({ user }: { user: SafeUser }) {
   return (
     <div ref={wrapperRef} className="relative">
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-haspopup="menu"
@@ -653,24 +703,33 @@ function UserDropdown({ user }: { user: SafeUser }) {
           </Link>
           <Link
             role="menuitem"
-            href="/"
+            href="/fa"
             onClick={() => setOpen(false)}
             className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-bold text-[#31556a] hover:bg-[#edf7fa]"
           >
-            <ArrowUpLeft size={17} /> مشاهده سایت
+            <Home size={17} aria-hidden="true" /> صفحه اصلی
           </Link>
           <div className="my-2 h-px bg-[#e6eff3]" />
-          <form action="/api/auth/logout" method="post">
-            <button
-              type="submit"
-              role="menuitem"
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-right text-xs font-bold text-[#b94a47] transition hover:bg-red-50"
-            >
-              <LogOut size={17} /> خروج امن از حساب
-            </button>
-          </form>
+          <button
+            type="button"
+            role="menuitem"
+            aria-haspopup="dialog"
+            onClick={() => {
+              setOpen(false);
+              triggerRef.current?.focus();
+              setConfirmLogout(true);
+            }}
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-right text-xs font-bold text-[#b94a47] transition hover:bg-red-50"
+          >
+            <LogOut size={17} aria-hidden="true" /> خروج امن از حساب
+          </button>
         </div>
       )}
+      <LogoutConfirmDialog
+        open={confirmLogout}
+        onClose={() => setConfirmLogout(false)}
+        locale="fa"
+      />
     </div>
   );
 }
@@ -713,11 +772,11 @@ function NotificationPopover() {
             کنید.
           </p>
           <Link
-            href="/admin#intake"
+            href="/admin/intake"
             onClick={() => setOpen(false)}
             className="mt-4 flex items-center justify-between rounded-xl bg-[#edf8fb] px-3 py-3 text-xs font-extrabold text-[#0f7492] hover:bg-[#e3f3f8]"
           >
-            مشاهده آخرین ورودی‌ها <ArrowLeft size={16} />
+            مشاهده همه ورودی‌ها <ArrowLeft size={16} />
           </Link>
         </div>
       )}
@@ -822,30 +881,28 @@ function SidebarContent({
         className={`relative z-10 shrink-0 space-y-2 border-t border-white/10 ${collapsed ? "p-2" : "p-3"}`}
       >
         <Link
-          href="/"
+          href="/fa"
           onClick={onNavigate}
-          title="مشاهده سایت"
+          title="صفحه اصلی"
           className={`flex min-h-11 items-center rounded-xl border border-white/10 bg-white/[0.055] text-xs font-bold text-white/85 transition hover:bg-white/10 ${collapsed ? "justify-center" : "justify-between px-3"}`}
         >
           <span className="inline-flex items-center gap-2">
-            <LayoutDashboard size={17} />
-            {!collapsed && "مشاهده سایت"}
+            <Home size={17} aria-hidden="true" />
+            {!collapsed && "صفحه اصلی"}
           </span>
           {!collapsed && <ArrowUpLeft size={16} className="text-white/60" />}
         </Link>
-        <form action="/api/auth/logout" method="post">
-          <button
-            type="submit"
-            title="خروج امن"
-            className={`flex min-h-11 w-full items-center rounded-xl border border-white/10 bg-white/[0.035] text-right text-xs font-bold text-white/75 transition hover:border-red-300/20 hover:bg-red-500/10 hover:text-red-100 ${collapsed ? "justify-center" : "justify-between px-3"}`}
-          >
-            <span className="inline-flex items-center gap-2">
-              <LogOut size={17} />
-              {!collapsed && "خروج امن"}
-            </span>
-            {!collapsed && <ShieldCheck size={15} className="text-white/40" />}
-          </button>
-        </form>
+        <LogoutButton
+          title="خروج امن"
+          aria-label="خروج امن"
+          className={`flex min-h-11 w-full items-center rounded-xl border border-white/10 bg-white/[0.035] text-right text-xs font-bold text-white/75 transition hover:border-red-300/20 hover:bg-red-500/10 hover:text-red-100 ${collapsed ? "justify-center" : "justify-between px-3"}`}
+        >
+          <span className="inline-flex items-center gap-2">
+            <LogOut size={17} aria-hidden="true" />
+            {!collapsed && "خروج امن"}
+          </span>
+          {!collapsed && <ShieldCheck size={15} className="text-white/40" />}
+        </LogoutButton>
         {!collapsed && (
           <p className="truncate px-1 pt-1 text-center text-[10px] text-white/35">
             {accountName(user)}

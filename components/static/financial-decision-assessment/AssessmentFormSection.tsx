@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useRef, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 
 import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+import feedback from "@/config/intake-feedback.json";
+import { FormStatus } from "@/components/forms/FormStatus";
+import { siteToast } from "@/components/ui/siteToast";
 import { ActionButton } from "@/components/ui/ActionButton";
 import type { SiteDirection } from "@/lib/site-language";
 import type { AssessmentFormContent } from "./assessmentTypes";
@@ -29,6 +32,7 @@ type AssessmentData = {
   name: string;
   email: string;
   contactMethod: string;
+  contactDetail: string;
   shortDescription: string;
 };
 
@@ -42,6 +46,7 @@ const INITIAL_DATA: AssessmentData = {
   name: "",
   email: "",
   contactMethod: "",
+  contactDetail: "",
   shortDescription: "",
 };
 
@@ -64,7 +69,10 @@ export function AssessmentFormSection({
 }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<AssessmentData>(INITIAL_DATA);
-  const [submitted, setSubmitted] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [result, setResult] = useState<{ok: boolean; message: string; reference?: string; errors?: Record<string,string>} | null>(null);
+  const locale = direction === "rtl" ? "fa" : "en";
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const NextArrow = direction === "rtl" ? ArrowLeft : ArrowRight;
   const PreviousArrow = direction === "rtl" ? ArrowRight : ArrowLeft;
   const progress = ((step + 1) / content.steps.length) * 100;
@@ -76,14 +84,7 @@ export function AssessmentFormSection({
         data.decisionTopic && data.currentSituation.trim().length >= 10,
       );
     if (step === 2) return Boolean(data.horizon && data.urgency);
-    if (step === 3)
-      return Boolean(
-        data.name.trim() &&
-        data.email.trim() &&
-        data.contactMethod &&
-        data.shortDescription.trim().length >= 10,
-      );
-    return false;
+    return step === 3;
   }, [data, step]);
 
   function updateField<K extends keyof AssessmentData>(
@@ -91,16 +92,56 @@ export function AssessmentFormSection({
     value: AssessmentData[K],
   ) {
     setData((current) => ({ ...current, [field]: value }));
+    setResult(null);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function changeStep(next: number) {
+    setStep(next);
+    requestAnimationFrame(() => headingRef.current?.focus());
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (currentStepValid) setSubmitted(true);
+    if (!currentStepValid || pending) return;
+    if (step < content.steps.length - 1) {
+      changeStep(step + 1);
+      return;
+    }
+    const form = event.currentTarget;
+    setPending(true);
+    setResult(null);
+    try {
+      const response = await fetch("/api/financial-decision-assessments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept-Language": locale },
+        body: JSON.stringify(data),
+      });
+      const payload = await response.json();
+      const message = payload.message || (response.ok ? content.success.title : feedback[locale].unavailable);
+      setResult({ ...payload, message, ok: response.ok });
+      if (response.ok) {
+        siteToast.success(message);
+        setData(INITIAL_DATA);
+      } else {
+        siteToast.error(message);
+        if (!payload.errors) return;
+        const field = Object.keys(payload.errors)[0];
+        const fieldStep = [["audience"], ["decisionTopic","currentSituation","decisionSize"], ["horizon","urgency"]]
+          .findIndex(keys => keys.includes(field));
+        if (fieldStep >= 0) changeStep(fieldStep);
+        requestAnimationFrame(() => form.querySelector<HTMLElement>(`[name="${CSS.escape(field)}"]`)?.focus());
+      }
+    } catch {
+      siteToast.error(feedback[locale].unavailable);
+      setResult({ ok: false, message: feedback[locale].unavailable });
+    } finally {
+      setPending(false);
+    }
   }
 
   const counter = content.step_counter
-    .replace("{current}", String(step + 1))
-    .replace("{total}", String(content.steps.length));
+    .replace("{current}", (step + 1).toLocaleString(direction === "rtl" ? "fa-IR" : "en-US"))
+    .replace("{total}", content.steps.length.toLocaleString(direction === "rtl" ? "fa-IR" : "en-US"));
 
   return (
     <section
@@ -129,8 +170,18 @@ export function AssessmentFormSection({
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:mt-14 lg:mt-16 lg:grid-cols-[0.31fr_0.69fr] lg:gap-7">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+        <details className="mt-4 border border-line bg-white px-4 lg:hidden">
+          <summary className="cursor-pointer py-3 text-sm font-bold leading-6 text-ink">{content.progress_title}</summary>
+          <p className="pb-3 text-sm leading-7 text-ink-muted">{content.progress_description}</p>
+          <ol className="list-inside list-decimal space-y-1 border-y border-line py-3 text-sm leading-7">
+            {content.steps.map((item, index) => (
+              <li key={item.id} aria-current={index === step ? "step" : undefined} className={index === step ? "font-bold text-brand-accent" : "text-ink-muted"}>{item.title}</li>
+            ))}
+          </ol>
+          <p className="py-3 text-sm leading-7 text-ink-muted">{content.privacy_description}</p>
+        </details>
+        <div className="mt-5 grid gap-6 sm:mt-14 lg:mt-16 lg:grid-cols-[0.31fr_0.69fr] lg:gap-7">
+          <aside className="hidden lg:block lg:sticky lg:top-28 lg:self-start">
             <div className="overflow-hidden border border-line bg-white">
               <div className="border-b border-line bg-brand-secondary px-5 py-6 text-white sm:px-6">
                 <p className="mt-2 text-[15px] font-black">
@@ -196,24 +247,29 @@ export function AssessmentFormSection({
                 style={{ width: `${progress}%` }}
               />
             </div>
-            {!submitted ? (
-              <form onSubmit={handleSubmit} noValidate>
+              {result?.ok ? (
+                <div className="space-y-4 p-5 sm:p-8">
+                  <FormStatus kind="success" message={result.message} reference={result.reference} referenceLabel={feedback[locale].reference} />
+                  <p className="text-sm leading-7 text-ink-muted">{content.success.description}</p>
+                  <Link href={content.success.after_cta.href} className="inline-flex min-h-11 items-center font-bold text-brand-accent underline">{content.success.after_cta.label}</Link>
+                </div>
+              ) : <form method="post" onSubmit={handleSubmit} noValidate>
                 <div className="flex flex-col gap-4 border-b border-line px-5 pb-5 pt-7 sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
                   <div>
                     <bdi
-                      dir="ltr"
-                      className="text-[9px] font-black tracking-[0.14em] text-brand-primary/55"
+                      dir={direction}
+                      className="text-xs font-bold text-brand-accent"
                     >
                       {counter}
                     </bdi>
-                    <h3 className="mt-2 text-[17px] font-black text-ink sm:text-[19px]">
+                    <h3 ref={headingRef} tabIndex={-1} className="mt-2 scroll-mt-32 text-[17px] font-black text-ink sm:text-[19px]">
                       {content.steps[step]?.title}
                     </h3>
                   </div>
               
                 </div>
 
-                <div className="min-h-[520px] px-5 py-7 sm:px-7 sm:py-8 lg:px-8 lg:py-9">
+                <fieldset disabled={pending} className="min-w-0 px-5 py-7 sm:px-7 sm:py-8 lg:px-8 lg:py-9">
                   {step === 0 && (
                     <ProfileStep
                       content={content.profile}
@@ -238,18 +294,22 @@ export function AssessmentFormSection({
                   {step === 3 && (
                     <ContactStep
                       content={content.contact}
+                      locale={locale}
+                      errors={result?.errors}
                       data={data}
                       updateField={updateField}
                     />
                   )}
-                </div>
+                </fieldset>
+                {result && <div className="px-5 pb-4"><FormStatus kind="error" message={result.message} /></div>}
 
                 <div className="flex flex-col-reverse gap-3 border-t border-line bg-surface-soft/40 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
                   {step > 0 ? (
                     <ActionButton
                       type="button"
+                      disabled={pending}
                       onClick={() =>
-                        setStep((current) => Math.max(current - 1, 0))
+                        changeStep(step - 1)
                       }
                       variant="secondary"
                       size="md"
@@ -264,13 +324,7 @@ export function AssessmentFormSection({
                   )}
                   {step < content.steps.length - 1 ? (
                     <ActionButton
-                      type="button"
-                      onClick={() =>
-                        currentStepValid &&
-                        setStep((current) =>
-                          Math.min(current + 1, content.steps.length - 1),
-                        )
-                      }
+                      type="submit"
                       disabled={!currentStepValid}
                       variant="primary"
                       size="md"
@@ -283,21 +337,19 @@ export function AssessmentFormSection({
                   ) : (
                     <ActionButton
                       type="submit"
-                      disabled={!currentStepValid}
+                      disabled={pending}
+                      loading={pending}
                       variant="assessment"
                       size="md"
                       shape="square"
                       icon={NextArrow}
                       className="w-full bg-brand-accent text-white sm:w-auto sm:min-w-[210px] disabled:pointer-events-none disabled:opacity-40"
                     >
-                      {content.submit_label}
+                      {pending ? feedback[locale].pending : content.submit_label}
                     </ActionButton>
                   )}
                 </div>
-              </form>
-            ) : (
-              <SuccessState content={content.success} Arrow={NextArrow} />
-            )}
+              </form>}
           </div>
         </div>
       </div>
@@ -319,7 +371,7 @@ function ProfileStep({
       <legend className="text-[15px] font-black leading-[1.9] text-ink">
         {content.title}
       </legend>
-      <p className="mt-2 max-w-[600px] text-[10px] font-medium leading-[2] text-ink-muted">
+      <p className="mt-2 max-w-[600px] text-sm font-medium leading-7 text-ink-muted">
         {content.description}
       </p>
       <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -376,6 +428,7 @@ function DecisionStep({
         <textarea
           id="currentSituation"
           name="currentSituation"
+          maxLength={2500}
           rows={5}
           value={data.currentSituation}
           onChange={(event) =>
@@ -465,10 +518,14 @@ function TimingStep({
 
 function ContactStep({
   content,
+  locale,
+  errors,
   data,
   updateField,
 }: {
   content: AssessmentFormContent["contact"];
+  locale: "fa" | "en";
+  errors?: Record<string,string>;
   data: AssessmentData;
   updateField: UpdateField;
 }) {
@@ -481,11 +538,15 @@ function ContactStep({
           <input
             id="assessment-name"
             name="name"
+            required
+            aria-invalid={Boolean(errors?.name)}
+            maxLength={100}
             autoComplete="name"
             value={data.name}
             onChange={(event) => updateField("name", event.target.value)}
             className={inputClassName}
           />
+          {errors?.name && <p className="mt-1 text-sm text-red-700">{errors.name}</p>}
         </div>
         <div>
           <FieldLabel htmlFor="assessment-email" title={content.email_label} />
@@ -494,6 +555,9 @@ function ContactStep({
               id="assessment-email"
               type="email"
               name="email"
+              required
+              aria-invalid={Boolean(errors?.email)}
+              maxLength={160}
               autoComplete="email"
               dir="ltr"
               value={data.email}
@@ -506,6 +570,7 @@ function ContactStep({
               strokeWidth={1.5}
             />
           </div>
+          {errors?.email && <p className="mt-1 text-sm text-red-700">{errors.email}</p>}
         </div>
       </div>
       <div className="mt-7">
@@ -522,6 +587,16 @@ function ContactStep({
             />
           ))}
         </div>
+        {errors?.contactMethod && <p className="mt-1 text-sm text-red-700">{errors.contactMethod}</p>}
+        {data.contactMethod && data.contactMethod !== "email" && (
+          <div className="mt-4">
+            <FieldLabel htmlFor="assessment-contact-detail" title={data.contactMethod === "phone" ? feedback[locale].phoneLabel : feedback[locale].messengerLabel} />
+            <input id="assessment-contact-detail" type={data.contactMethod === "phone" ? "tel" : "text"} dir="auto" name="contactDetail"
+              required maxLength={160} aria-invalid={Boolean(errors?.contactDetail)} value={data.contactDetail}
+              onChange={event => updateField("contactDetail", event.target.value)} className={inputClassName} />
+            {errors?.contactDetail && <p className="mt-1 text-sm text-red-700">{errors.contactDetail}</p>}
+          </div>
+        )}
       </div>
       <div className="mt-7">
         <FieldLabel
@@ -532,6 +607,9 @@ function ContactStep({
         <textarea
           id="shortDescription"
           name="shortDescription"
+          required
+          maxLength={2500}
+          aria-invalid={Boolean(errors?.shortDescription)}
           rows={5}
           value={data.shortDescription}
           onChange={(event) =>
@@ -540,6 +618,7 @@ function ContactStep({
           placeholder={content.summary_placeholder}
           className={inputClassName}
         />
+        {errors?.shortDescription && <p className="mt-1 text-sm text-red-700">{errors.shortDescription}</p>}
       </div>
       <div className="mt-7 flex items-start gap-3 border border-brand-primary/15 bg-surface-soft/55 p-4">
         <ShieldCheck
@@ -620,7 +699,7 @@ function Choice({
 }) {
   return (
     <label
-      className={`flex min-h-12 cursor-pointer items-center gap-3 border px-4 py-3 text-[11px] font-bold transition-colors ${checked ? "border-brand-primary bg-brand-primary/[0.05] text-brand-primary" : "border-line text-ink hover:border-brand-primary/35"}`}
+      className={`flex min-h-12 cursor-pointer focus-within:outline-2 focus-within:outline-focus items-center gap-3 border px-4 py-3 text-[11px] font-bold transition-colors ${checked ? "border-brand-accent bg-brand-accent/5 text-ink" : "border-line text-ink hover:border-brand-primary/35"}`}
     >
       <input
         className="sr-only"
@@ -659,7 +738,7 @@ function ChoiceCard({
 }) {
   return (
     <label
-      className={`group cursor-pointer border p-5 transition-colors ${checked ? "border-brand-primary bg-brand-primary/[0.055]" : "border-line bg-white hover:border-brand-primary/35"}`}
+      className={`group cursor-pointer border p-4 focus-within:outline-2 focus-within:outline-focus transition-colors ${checked ? "border-brand-primary bg-brand-primary/[0.055]" : "border-line bg-white hover:border-brand-primary/35"}`}
     >
       <input
         type="radio"
@@ -699,7 +778,7 @@ function StepTitle({
   return (
     <div>
       <h4 className="text-[15px] font-black leading-[1.9] text-ink">{title}</h4>
-      <p className="mt-2 max-w-[620px] text-[10px] font-medium leading-[2] text-ink-muted">
+      <p className="mt-2 max-w-[620px] text-sm font-medium leading-7 text-ink-muted">
         {description}
       </p>
     </div>
@@ -716,9 +795,9 @@ function FieldLabel({
 }) {
   return (
     <label htmlFor={htmlFor} className="mb-3 block">
-      <span className="text-[11px] font-black text-ink">{title}</span>
+      <span className="text-sm font-bold text-ink">{title}</span>
       {helper ? (
-        <span className="mt-1 block text-[10px] font-medium leading-5 text-ink-muted">
+        <span className="mt-1 block text-xs font-medium leading-6 text-ink-muted">
           {helper}
         </span>
       ) : null}
@@ -726,61 +805,13 @@ function FieldLabel({
   );
 }
 
-function SuccessState({
-  content,
-  Arrow,
-}: {
-  content: AssessmentFormContent["success"];
-  Arrow: LucideIcon;
-}) {
-  return (
-    <div className="flex min-h-[680px] flex-col items-center justify-center px-5 py-16 text-center sm:px-10">
-      <span className="grid size-16 place-items-center bg-brand-secondary text-brand-primary">
-        <Check size={25} />
-      </span>
-      <bdi
-        dir="ltr"
-        className="mt-7 text-[11px] font-black tracking-[0.2em] text-brand-primary/50"
-      >
-        {content.eyebrow}
-      </bdi>
-      <h3 className="mt-3 text-[23px] font-black text-ink sm:text-[28px]">
-        {content.title}
-      </h3>
-      <p className="mt-4 max-w-[560px] text-[11px] font-medium leading-[2.1] text-ink-muted sm:text-[12px]">
-        {content.description}
-      </p>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <ActionButton
-          href={content.after_cta.href}
-          variant="primary"
-          size="md"
-          shape="square"
-          icon={Arrow}
-        >
-          {content.after_cta.label}
-        </ActionButton>
-        <ActionButton
-          href={content.privacy_cta.href}
-          variant="secondary"
-          size="md"
-          shape="square"
-          icon={ShieldCheck}
-        >
-          {content.privacy_cta.label}
-        </ActionButton>
-      </div>
-    </div>
-  );
-}
-
 const inputClassName =
-  "w-full border border-line bg-white px-4 py-3.5 text-[12px] text-ink outline-none transition placeholder:text-ink-muted/45 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10";
+  "w-full border border-line bg-white px-4 py-3.5 text-base sm:text-sm text-ink outline-none transition placeholder:text-ink-muted/45 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10";
 function Eyebrow({ children }: { children: string }) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <span aria-hidden="true" className="h-px w-10 bg-brand-accent" />
-      <span className="text-[10px] font-black text-brand-primary sm:text-[11px]">
+      <span className="text-xs font-bold text-brand-accent sm:text-[11px]">
         {children}
       </span>
     </div>
@@ -792,7 +823,7 @@ function Highlight({ text, highlight }: { text: string; highlight: string }) {
   return (
     <>
       {text.slice(0, index)}
-      <span className="text-brand-primary">{highlight}</span>
+      <span className="text-brand-accent">{highlight}</span>
       {text.slice(index + highlight.length)}
     </>
   );

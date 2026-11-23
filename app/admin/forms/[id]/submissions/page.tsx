@@ -9,6 +9,7 @@ import {
   type AdminTableColumn,
 } from "@/components/admin/AdminDataTable";
 import { AdminRecordView } from "@/components/admin/AdminRecordView";
+import { AdminTablePagination } from "@/components/admin/AdminTablePagination";
 import {
   AdminStatusBadge,
   type AdminStatusTone,
@@ -27,7 +28,11 @@ type SubmissionStatus = "new" | "read" | "archived";
 type SubmissionRow = {
   id: string;
   reference: string;
+  formTitle: string;
+  formSlug: string;
   formRevision: number;
+  serviceName: string;
+  serviceRoute: string;
   status: SubmissionStatus;
   createdAt: Date;
   user?: string;
@@ -59,8 +64,10 @@ const dateTimeFormatter = new Intl.DateTimeFormat("fa-IR", {
 
 export default async function SubmissionsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const currentUser = await getCurrentUser();
 
@@ -68,6 +75,11 @@ export default async function SubmissionsPage({
   if (currentUser.role !== "admin") redirect("/dashboard");
 
   const { id } = await params;
+  const pageSize = 25;
+  const requestedPage = Number((await searchParams).page);
+  let page = 1;
+  let total = 0;
+  let totalPages = 1;
 
   if (!Types.ObjectId.isValid(id)) notFound();
 
@@ -83,22 +95,17 @@ export default async function SubmissionsPage({
   try {
     await connect();
 
-    const formRow = await DynamicForm.findById(id)
+    form = await DynamicForm.findById(id)
       .select("title slug serviceName revision")
       .lean();
 
-    if (!formRow) notFound();
-
-    form = {
-      title: formRow.title,
-      slug: formRow.slug,
-      serviceName: formRow.serviceName,
-      revision: formRow.revision,
-    };
-
+    total = await FormSubmission.countDocuments({ formId: id });
+    totalPages = Math.max(1, Math.ceil(total / pageSize));
+    page = Number.isSafeInteger(requestedPage) ? Math.min(totalPages, Math.max(1, requestedPage)) : 1;
     const submissions = await FormSubmission.find({ formId: id })
-      .sort({ createdAt: -1 })
-      .limit(200)
+      .sort({ createdAt: -1, _id: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .lean();
     const userIds = [
       ...new Set(
@@ -122,7 +129,11 @@ export default async function SubmissionsPage({
     rows = submissions.map((item) => ({
       id: String(item._id),
       reference: item.reference,
+      formTitle: item.formTitle,
+      formSlug: item.formSlug,
       formRevision: item.formRevision,
+      serviceName: item.serviceName,
+      serviceRoute: item.serviceRoute,
       status: item.status,
       createdAt: item.createdAt,
       user: item.userId ? userMap.get(String(item.userId)) : undefined,
@@ -153,7 +164,7 @@ export default async function SubmissionsPage({
         <p
           className="mt-6 text-[10px] font-black text-brand-primary"
         >
-          پرونده پاسخ‌ها / حداکثر ۲۰۰ پاسخ
+          پرونده پاسخ‌ها
         </p>
 
         <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -168,7 +179,7 @@ export default async function SubmissionsPage({
           </div>
 
           <span className="border border-line bg-white px-4 py-2 text-xs font-black">
-            {rows.length.toLocaleString("fa-IR")} پاسخ اخیر
+            {total.toLocaleString("fa-IR")} پاسخ ثبت‌شده
           </span>
         </div>
       </header>
@@ -209,6 +220,7 @@ export default async function SubmissionsPage({
               },
             ]}
           />
+          <AdminTablePagination basePath={`/admin/forms/${id}/submissions`} page={page} totalPages={totalPages} />
 
           <div className="space-y-4">
             <div className="border border-line bg-white/92 px-5 py-4">
@@ -233,12 +245,16 @@ export default async function SubmissionsPage({
                     ? `کاربر واردشده: ${submission.user}`
                     : "ارسال عمومی یا بدون ورود"
                 }
-                items={submission.answers.map((answer) => ({
-                  label: answer.label,
-                  value: formatAnswerValue(answer.value),
-                  code: `${answer.type} / ${answer.fieldId.slice(-8)}`,
-                  wide: answer.type === "textarea",
-                }))}
+                items={[
+                  { label: "فرم هنگام ارسال", value: submission.formTitle, code: `/forms/${submission.formSlug}` },
+                  { label: "خدمت هنگام ارسال", value: submission.serviceName, code: submission.serviceRoute },
+                  ...submission.answers.map((answer) => ({
+                    label: answer.label,
+                    value: formatAnswerValue(answer.value),
+                    code: `${answer.type} / ${answer.fieldId.slice(-8)}`,
+                    wide: answer.type === "textarea",
+                  })),
+                ]}
               />
             ))}
           </div>
