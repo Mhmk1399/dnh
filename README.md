@@ -142,3 +142,6 @@ These colors describe the README artwork. They do not replace the application's 
 <img src="docs/readme/footer.svg" alt="DNH - Clarity. Structure. Intent." width="1440">
 
 <p align="center"><a href="#readme-top">Back to top</a></p>
+DNH!XXFhvnKrLtgMOKThkMPR9a  
+09000000001
+user pass DNH

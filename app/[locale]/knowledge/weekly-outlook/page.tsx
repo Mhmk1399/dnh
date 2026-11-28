@@ -15,10 +15,13 @@ export const dynamic = "force-dynamic";
 
 export default async function WeeklyOutlookPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ market?: string | string[] }>;
 }) {
-  const locale = normalizeSiteLocale((await params).locale);
+  const [route, query] = await Promise.all([params, searchParams]);
+  const locale = normalizeSiteLocale(route.locale);
   const reports = await getPublishedWeeklyOutlookList(locale).catch(() => {
     console.error("Weekly outlook archive is temporarily unavailable.");
     return null;
@@ -28,7 +31,11 @@ export default async function WeeklyOutlookPage({
     <div>
       <WeeklyOutlookHero locale={locale} />
       {reports ? (
-        <WeeklyOutlookListSection reports={reports} locale={locale} />
+        <WeeklyOutlookListSection
+          reports={reports}
+          locale={locale}
+          market={query.market === "iran" || query.market === "global" ? query.market : undefined}
+        />
       ) : (
         <section id="weekly-outlook-reports" className="dnh-site-shell scroll-mt-28 py-12 text-ink">
           <p role="status">{locale === "fa"

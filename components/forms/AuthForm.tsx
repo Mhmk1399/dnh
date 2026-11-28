@@ -17,7 +17,7 @@ type ApiResult = {
   role?: string;
 };
 
-export function AuthForm({ mode, locale }: { mode: "login" | "register"; locale: SiteLocale }) {
+export function AuthForm({ mode, locale, emailLogin = false, afterLogin = "/dashboard" }: { mode: "login" | "register"; locale: SiteLocale; emailLogin?: boolean; afterLogin?: string }) {
   const copy = authCopy[locale];
   const Arrow = locale === "fa" ? ArrowLeft : ArrowRight;
   const router = useRouter();
@@ -42,7 +42,7 @@ export function AuthForm({ mode, locale }: { mode: "login" | "register"; locale:
       const payload = (await response.json()) as ApiResult;
       if (response.ok) {
         siteToast.success(payload.message || (registering ? copy.created : copy.loginSuccess));
-        router.push("/dashboard");
+        router.push(afterLogin);
         router.refresh();
         return;
       }
@@ -86,7 +86,10 @@ export function AuthForm({ mode, locale }: { mode: "login" | "register"; locale:
           />
         </div>
       )}
-      <FormField
+      {(emailLogin || registering) && (
+        <FormField label={locale === "fa" ? (registering ? "ایمیل (اختیاری)" : "ایمیل") : (registering ? "Email (optional)" : "Email")} name="email" type="email" dir="ltr" autoComplete="email" required={emailLogin} error={result?.errors?.email} />
+      )}
+      {!emailLogin && <FormField
         label={copy.phone}
         name="phone"
         type="tel"
@@ -96,7 +99,7 @@ export function AuthForm({ mode, locale }: { mode: "login" | "register"; locale:
         required
         placeholder={copy.phoneExample}
         error={result?.errors?.phone}
-      />
+      />}
       <FormField
         label={copy.password}
         name="password"

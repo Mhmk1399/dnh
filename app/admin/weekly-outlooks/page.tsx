@@ -50,6 +50,7 @@ type ReportRow = {
   title: string;
   slug: string;
   edition: string;
+  market?: "iran" | "global";
   reportDate: Date;
   dateCalendar?: WeeklyOutlookDateCalendar;
   status: WeeklyOutlookStatus;
@@ -100,7 +101,7 @@ export default async function WeeklyOutlooksAdminPage({
 
     const rows = await WeeklyOutlookReport.find(filter)
       .select(
-        "title slug edition reportDate dateCalendar status revision sections.id english.ready updatedAt",
+        "title slug edition reportDate dateCalendar market status revision sections.id english.ready updatedAt",
       )
       .sort({ reportDate: -1, updatedAt: -1 })
       .limit(150)
@@ -244,6 +245,11 @@ const reportColumns: AdminTableColumn<Omit<ReportRow, "_id"> & { id: string }>[]
           {report.edition}
         </span>
       ),
+    },
+    {
+      key: "market",
+      header: "بازار",
+      cell: (report) => report.market === "iran" ? "ایران" : "جهان",
     },
     {
       key: "english",

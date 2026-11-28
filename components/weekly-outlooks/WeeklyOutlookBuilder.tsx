@@ -651,6 +651,13 @@ export function WeeklyOutlookBuilder({ initial, reportId }: Props) {
             <input dir="ltr" className={inputClass} placeholder="/assets/images/report-cover.jpg"
               value={report.coverImage ?? ""} onChange={(event) => update({ coverImage: event.target.value })} />
           </Label>
+          <Label text="بازار گزارش">
+            <select className={inputClass} value={report.market ?? (report.dateCalendar === "jalali" ? "iran" : "global")}
+              onChange={(event) => update({ market: event.target.value === "iran" ? "iran" : "global" })}>
+              <option value="iran">ایران</option>
+              <option value="global">جهان</option>
+            </select>
+          </Label>
           <ReportDateField reportDate={report.reportDate} dateCalendar={report.dateCalendar} onChange={update} />
         </div>
       </details>

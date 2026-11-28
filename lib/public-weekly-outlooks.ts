@@ -26,7 +26,7 @@ export async function getPublishedWeeklyOutlookList(locale: SiteLocale): Promise
     ? "title edition excerpt coverImageAlt sections.id"
     : "english.title english.edition english.excerpt english.coverImageAlt english.sections.id";
   const rows = await WeeklyOutlookReport.find(publicationFilter(locale))
-    .select(`slug reportDate dateCalendar coverImage publishedAt ${copyFields}`)
+    .select(`slug reportDate dateCalendar market coverImage publishedAt ${copyFields}`)
     .sort({ reportDate: -1, updatedAt: -1 })
     .limit(100)
     .lean();
@@ -37,6 +37,7 @@ export async function getPublishedWeeklyOutlookList(locale: SiteLocale): Promise
       id: String(row._id),
       title: copy.title,
       slug: row.slug,
+      market: row.market ?? "global",
       edition: copy.edition,
       reportDate: isoDate(row.reportDate).slice(0, 10),
       dateCalendar: normalizeWeeklyOutlookDateCalendar(row.dateCalendar),
@@ -60,7 +61,7 @@ export const getPublishedWeeklyOutlookReport = cache(async (
     ? "title edition excerpt coverImageAlt seoTitle seoDescription sections english.ready"
     : "english";
   const row = await WeeklyOutlookReport.findOne({ ...publicationFilter(locale), slug })
-    .select(`slug reportDate dateCalendar coverImage status revision publishedAt updatedAt createdAt ${copyFields}`)
+    .select(`slug reportDate dateCalendar market coverImage status revision publishedAt updatedAt createdAt ${copyFields}`)
     .lean();
   if (!row) return null;
 
@@ -69,6 +70,7 @@ export const getPublishedWeeklyOutlookReport = cache(async (
     id: String(row._id),
     title: copy.title,
     slug: row.slug,
+    market: row.market ?? "global",
     edition: copy.edition,
     excerpt: copy.excerpt,
     coverImage: row.coverImage || undefined,

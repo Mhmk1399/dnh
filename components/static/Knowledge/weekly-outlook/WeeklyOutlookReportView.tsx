@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthForm } from "@/components/forms/AuthForm";
 import {
   Activity, ArrowLeft, ArrowRight, Banknote, BarChart3, BookOpen, ChevronDown,
   CircleDollarSign, Clock3, ExternalLink, Eye, FileText, Landmark, Layers3,
@@ -65,16 +66,17 @@ const buttonStyles = {
   outline: "border border-current/45 text-current hover:underline",
 } satisfies Record<WeeklyOutlookButtonVariant, string>;
 
-export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeeklyOutlookReport; locale: SiteLocale }) {
+export function WeeklyOutlookReportView({ report, locale, signedIn }: { report: PublicWeeklyOutlookReport; locale: SiteLocale; signedIn: boolean }) {
   const labels = copy[locale];
   const language = SITE_LANGUAGES[locale];
+  const coverImage = report.coverImage || `/assets/images/weekly-outlook-${report.market ?? "global"}.webp`;
   const Back = locale === "fa" ? ArrowRight : ArrowLeft;
   const sectionNumber = new Intl.NumberFormat(language.languageTag, { minimumIntegerDigits: 2 });
   const contents = (
     <ol className="divide-y divide-line">
       {report.sections.map((section, index) => (
         <li key={section.id}>
-          <a href={`#${section.id}`} className="flex min-h-11 items-baseline gap-3 py-3 text-sm leading-6 text-ink hover:text-brand-accent hover:underline focus-visible:outline-focus">
+          <a href={signedIn ? `#${section.id}` : "#report-sign-in"} className="flex min-h-11 items-baseline gap-3 py-3 text-sm leading-6 text-ink hover:text-brand-accent hover:underline focus-visible:outline-focus">
             <span aria-hidden="true" className="shrink-0 font-bold tabular-nums text-brand-accent">{sectionNumber.format(index + 1)}</span>
             {section.title}
           </a>
@@ -84,14 +86,14 @@ export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeek
   );
 
   return (
-    <article dir={language.direction} lang={language.languageTag} className="bg-page text-start text-ink [overflow-wrap:anywhere]">
+    <article dir={language.direction} lang={language.languageTag} className="relative isolate bg-page text-start text-ink [overflow-wrap:anywhere]">
       <header className="border-b-4 border-brand-primary bg-brand-secondary pb-8 pt-24 text-white sm:pb-12 sm:pt-28">
         <div className="dnh-site-shell">
           <Link href={getLocalizedSiteHref("/knowledge/weekly-outlook", locale)} className="inline-flex min-h-11 items-center gap-2 text-sm text-white/80 hover:text-white hover:underline focus-visible:outline-brand-primary">
             <Back size={16} aria-hidden="true" />{labels.archive}
           </Link>
-          <div className={`mt-3 grid min-w-0 items-center gap-6 border-t border-white/20 pt-7 sm:mt-5 sm:pt-10 ${report.coverImage ? "lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-14" : ""}`}>
-            <div className="min-w-0">
+          <div dir="ltr" className="mt-3 grid min-w-0 grid-cols-[minmax(0,1fr)_6.25rem] items-start gap-4 border-t border-white/20 pt-7 sm:mt-5 sm:grid-cols-[minmax(0,1fr)_15rem] sm:gap-8 sm:pt-10">
+            <div dir={language.direction} className="min-w-0 text-start">
               <p className="flex items-center gap-3 text-sm font-bold text-brand-primary">
                 <span aria-hidden="true" className="h-px w-10 bg-current" />{labels.publication}
               </p>
@@ -101,17 +103,15 @@ export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeek
                 <time dateTime={report.reportDate}>{formatWeeklyOutlookDate(report.reportDate, report.dateCalendar, "long", locale)}</time>
               </div>
             </div>
-            {report.coverImage && (
-              <div className="border border-white/15 bg-white/5">
-                {/* eslint-disable-next-line @next/next/no-img-element -- Editors can supply local uploads or external image URLs. */}
-                <img src={report.coverImage} alt={report.coverImageAlt ?? ""} className="aspect-[2/1] w-full object-contain" />
-              </div>
-            )}
+            <div className="overflow-hidden rounded-md border border-white/15 bg-white/5">
+              {/* eslint-disable-next-line @next/next/no-img-element -- Editors can supply local uploads or external image URLs. */}
+              <img src={coverImage} alt={report.coverImageAlt ?? ""} className="aspect-[4/3] w-full object-cover" />
+            </div>
           </div>
         </div>
       </header>
       <div className="dnh-site-shell py-6 sm:py-10 lg:py-12">
-        <div className="mx-auto grid max-w-6xl items-start gap-5 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)] lg:gap-10 xl:gap-14">
+        <div className="grid w-full items-start gap-5 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)] lg:gap-10 xl:gap-14">
           <nav aria-label={labels.contents} className="min-w-0 border-y border-ink/15 bg-surface-soft px-4 lg:sticky lg:top-28">
             <details className="group lg:hidden">
               <summary className="flex min-h-12 cursor-pointer list-none items-center gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
@@ -129,9 +129,10 @@ export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeek
             {report.excerpt && (
               <section aria-labelledby="report-summary-title" className="border-s-4 border-brand-accent bg-white px-5 py-4 sm:px-8 sm:py-6">
                 <h2 id="report-summary-title" className="font-bold text-ink">{labels.summary}</h2>
-                <p className="mt-2 max-w-prose whitespace-pre-line text-base leading-8 text-ink-muted sm:text-lg sm:leading-9">{report.excerpt}</p>
+                <p className="mt-2 whitespace-pre-line text-base leading-8 text-ink-muted sm:text-lg sm:leading-9">{report.excerpt}</p>
               </section>
             )}
+            {signedIn ? <>
             {report.sections.map((section, index) => (
               <ReportSection key={section.id} section={section} number={sectionNumber.format(index + 1)} locale={locale} />
             ))}
@@ -141,6 +142,28 @@ export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeek
                 {labels.consultation}
               </Link>
             </footer>
+            </> : (
+        <div className="relative isolate grid min-h-[34rem] place-items-center overflow-hidden rounded-xl py-8 sm:py-12">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-5 top-5 -z-10 space-y-5 overflow-hidden blur-[3px]">
+            {[0, 1, 2, 3].map((row) => (
+              <div key={row} className="space-y-4 rounded-xl border border-line bg-surface-soft px-5 py-7 sm:px-9">
+                <div className="mb-5 h-5 w-1/3 rounded bg-brand-primary/30" />
+                <div className="h-3 w-full rounded bg-ink/15" />
+                <div className="h-3 w-4/5 rounded bg-ink/15" />
+                <div className="h-3 w-3/5 rounded bg-ink/15" />
+              </div>
+            ))}
+          </div>
+          <section aria-labelledby="report-sign-in" className="relative w-full max-w-md rounded-xl border border-line border-t-4 border-t-brand-accent bg-white p-5 shadow-xl sm:p-8">
+            <h2 id="report-sign-in" className="mb-2 scroll-mt-32 text-xl font-black">{locale === "fa" ? "برای خواندن گزارش وارد شوید" : "Sign in to read the report"}</h2>
+            <p className="mb-5 text-sm leading-7 text-ink-muted">{locale === "fa" ? "با ایمیل و رمز عبور حساب خود وارد شوید." : "Use your account email and password."}</p>
+            <AuthForm mode="login" locale={locale} emailLogin afterLogin={getLocalizedSiteHref(`/knowledge/weekly-outlook/${encodeURIComponent(report.slug)}`, locale)} />
+            <Link href={getLocalizedSiteHref("/login", locale)} className="inline-flex min-h-11 items-center text-sm font-bold text-brand-accent underline">
+              {locale === "fa" ? "ورود با شمارهٔ موبایل" : "Sign in with a mobile number"}
+            </Link>
+          </section>
+        </div>
+            )}
           </div>
         </div>
       </div>
@@ -161,9 +184,9 @@ function ReportSection({ section, number, locale }: { section: WeeklyOutlookSect
           {section.eyebrow && <span className="border-s border-current/30 ps-2">{section.eyebrow}</span>}
         </div>
         <h2 id={`${section.id}-title`} className="mt-3 font-black text-current">{section.title}</h2>
-        {section.summary && <p className="mt-3 max-w-prose whitespace-pre-line text-base leading-8 opacity-85">{section.summary}</p>}
+        {section.summary && <p className="mt-3 whitespace-pre-line text-base leading-8 opacity-85">{section.summary}</p>}
       </header>
-      <div className="mt-5 max-w-[74ch] space-y-5 text-base leading-8 sm:text-[17px] sm:leading-9">
+      <div className="mt-5 w-full min-w-0 space-y-5 text-base leading-8 sm:text-[17px] sm:leading-9">
         {section.blocks.map((block) => <ReportBlock key={block.id} block={block} locale={locale} />)}
       </div>
     </section>

@@ -42,6 +42,7 @@ export default async function EditWeeklyOutlookPage({
   const initial: WeeklyOutlookReportDefinition = {
     title: row.title,
     slug: row.slug,
+    market: row.market ?? "global",
     edition: row.edition,
     reportDate: new Date(row.reportDate).toISOString().slice(0, 10),
     dateCalendar: row.dateCalendar ?? "jalali",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getCurrentUser } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { WeeklyOutlookReportView } from "@/components/static/Knowledge/weekly-outlook/WeeklyOutlookReportView";
 import { getPublishedWeeklyOutlookReport } from "@/lib/public-weekly-outlooks";
@@ -65,5 +66,6 @@ export default async function WeeklyOutlookReportPage({
 
   if (!report) notFound();
 
-  return <WeeklyOutlookReportView locale={locale} report={report} />;
+  const user = await getCurrentUser();
+  return <WeeklyOutlookReportView locale={locale} report={report} signedIn={Boolean(user)} />;
 }

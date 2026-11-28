@@ -191,6 +191,7 @@ export type WeeklyOutlookEnglishEdition = WeeklyOutlookEditionContent & {
 };
 
 export type WeeklyOutlookReportDefinition = WeeklyOutlookEditionContent & {
+  market?: "iran" | "global";
   slug: string;
   reportDate: string;
   dateCalendar: WeeklyOutlookDateCalendar;
@@ -209,6 +210,7 @@ export type PublicWeeklyOutlookReport =
   };
 
 export type WeeklyOutlookListItem = {
+  market?: "iran" | "global";
   id: string;
   title: string;
   slug: string;
@@ -235,6 +237,7 @@ export function createWeeklyOutlookTemplate(): WeeklyOutlookReportDefinition {
   return {
     title: "",
     slug: "",
+    market: "iran",
     edition: "نسخه هفتگی",
     reportDate: new Date().toISOString().slice(0, 10),
     dateCalendar: "jalali",

@@ -442,6 +442,7 @@ export function validateWeeklyOutlookReport(
     ...persian,
     ...(english && { english }),
     slug,
+    market: value.market === "iran" || value.market === "global" ? value.market : dateCalendar === "jalali" ? "iran" : "global",
     reportDate,
     dateCalendar,
     coverImage: coverImage || undefined,

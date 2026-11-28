@@ -5,6 +5,7 @@ import connect from "@/lib/data";
 import User from "@/models/User";
 import {
   cleanText,
+  isValidEmail,
   isValidPhone,
   normalizeDigits,
   normalizeIranianPhone,
@@ -23,6 +24,8 @@ export async function POST(request: Request) {
   const firstName = cleanText(body.firstName, 50);
   const lastName = cleanText(body.lastName, 70);
   const phone = normalizeIranianPhone(cleanText(body.phone, 30));
+  const email = cleanText(body.email, 254).toLowerCase();
+  const emailTaken = copy === authCopy.en ? "This email is already registered." : "این ایمیل قبلاً ثبت شده است.";
   const password = typeof body.password === "string" ? body.password : "";
   const confirmPassword =
     typeof body.confirmPassword === "string" ? body.confirmPassword : "";
@@ -30,6 +33,7 @@ export async function POST(request: Request) {
   const passwordForValidation = normalizeDigits(password);
   if (firstName.length < 2) errors.firstName = copy.firstNameError;
   if (lastName.length < 2) errors.lastName = copy.lastNameError;
+  if (email && !isValidEmail(email)) errors.email = copy === authCopy.en ? "Enter a valid email address." : "ایمیل معتبر وارد کنید.";
   if (!isValidPhone(phone)) errors.phone = copy.invalidPhone;
   if (
     password.length < 8 ||
@@ -55,11 +59,13 @@ export async function POST(request: Request) {
         },
         { status: 409 },
       );
+    if (email && await User.exists({ email })) return NextResponse.json({ message: emailTaken, errors: { email: emailTaken } }, { status: 409 });
     const adminPhone = normalizeIranianPhone(process.env.ADMIN_PHONE || "");
     const user = await User.create({
       firstName,
       lastName,
       phone,
+      ...(email ? { email } : {}),
       passwordHash: await hashPassword(password),
       role: adminPhone && phone === adminPhone ? "admin" : "user",
     });
@@ -74,7 +80,10 @@ export async function POST(request: Request) {
       error &&
       "code" in error &&
       error.code === 11000
-    )
+    ) {
+      if ("keyPattern" in error && typeof error.keyPattern === "object" && error.keyPattern && "email" in error.keyPattern) {
+        return NextResponse.json({ message: emailTaken, errors: { email: emailTaken } }, { status: 409 });
+      }
       return NextResponse.json(
         {
           message: copy.duplicate,
@@ -82,6 +91,7 @@ export async function POST(request: Request) {
         },
         { status: 409 },
       );
+    }
     return NextResponse.json(
       { message: copy.network },
       { status: 503 },

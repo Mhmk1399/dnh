@@ -14,6 +14,7 @@ import type {
 export type WeeklyOutlookReportRecord = {
   title: string;
   slug: string;
+  market?: "iran" | "global";
   edition: string;
   reportDate: Date;
   dateCalendar: WeeklyOutlookDateCalendar;
@@ -112,6 +113,7 @@ const englishEditionSchema = new Schema(
 const weeklyOutlookReportSchema = new Schema<WeeklyOutlookReportRecord>(
   {
     title: { type: String, required: true, maxlength: 180 },
+    market: { type: String, enum: ["iran", "global"] },
     slug: {
       type: String,
       required: true,
