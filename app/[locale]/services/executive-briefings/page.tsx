@@ -4,6 +4,7 @@ import briefingsEn from "@/config/DNH_Executive_Briefings_Final_EN.json";
 import briefingsFa from "@/config/DNH_Executive_Briefings_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 
 const ROUTE = "/services/executive-briefings";
@@ -45,8 +46,10 @@ export async function generateMetadata({
   );
 }
 
-export default function ExecutiveBriefingsPage() {
+export default async function ExecutiveBriefingsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
+    <>
     <ServiceDetailPage
       faData={briefingsFa}
       enData={briefingsEn}
@@ -76,5 +79,7 @@ export default function ExecutiveBriefingsPage() {
         },
       }}
     />
+    <ServiceLeadForm serviceKey="executive-briefings" routeLocale={locale} />
+    </>
   );
 }

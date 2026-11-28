@@ -29,6 +29,8 @@ export type DynamicStepDefinition = {
 };
 
 export type DynamicFormDefinition = {
+  locale?: "fa" | "en";
+  showOnService?: boolean;
   title: string;
   slug: string;
   description: string;
@@ -53,6 +55,8 @@ export function makeStableId(prefix: "step" | "field") {
 
 export function createFormTemplate(): DynamicFormDefinition {
   return {
+    locale: "fa",
+    showOnService: false,
     title: "",
     slug: "",
     description: "برای شروع گفت‌وگوی تخصصی، اطلاعات این فرم را تکمیل کنید.",

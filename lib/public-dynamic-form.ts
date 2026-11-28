@@ -1,20 +1,30 @@
 import "server-only";
 
 import connect from "@/lib/data";
+import type { SiteLocale } from "@/lib/site-language";
 import type { PublicDynamicForm } from "@/lib/dynamic-forms";
 import DynamicForm from "@/models/DynamicForm";
 
 export async function getPublishedDynamicForm(
   slug: string,
 ): Promise<PublicDynamicForm | null> {
+  return findPublishedForm({ slug });
+}
+
+export async function getPublishedServiceForm(serviceKey: string, locale: SiteLocale) {
+  return findPublishedForm({ serviceKey, locale, showOnService: true });
+}
+
+async function findPublishedForm(filter: { slug: string } | { serviceKey: string; locale: SiteLocale; showOnService: true }): Promise<PublicDynamicForm | null> {
   try {
     await connect();
-    const row = await DynamicForm.findOne({ slug, status: "published" }).lean();
+    const row = await DynamicForm.findOne({ ...filter, status: "published" }).sort({ publishedAt: -1, _id: -1 }).lean();
 
     if (!row) return null;
 
     return {
       id: String(row._id),
+      locale: row.locale ?? "fa",
       title: row.title,
       slug: row.slug,
       description: row.description,

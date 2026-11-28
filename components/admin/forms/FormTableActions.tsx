@@ -30,6 +30,7 @@ import type {
 } from "@/lib/dynamic-forms";
 
 export type AdminDynamicFormTableRow = {
+  locale?: "fa" | "en";
   id: string;
   title: string;
   slug: string;
@@ -201,7 +202,7 @@ export function FormTableActions({
 
       {form.status === "published" ? (
         <Link
-          href={`/forms/${form.slug}`}
+          href={`/${form.locale ?? "fa"}/forms/${form.slug}`}
           title={compact ? "مشاهده عمومی" : undefined}
           aria-label={compact ? `مشاهده عمومی فرم ${form.title}` : undefined}
           className={tableActionButtonClass({ compact })}

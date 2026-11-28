@@ -4,6 +4,7 @@ import strategicEn from "@/config/DNH_Strategic_Financial_Advisory_Final_EN.json
 import strategicFa from "@/config/DNH_Strategic_Financial_Advisory_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 
 const ROUTE = "/services/strategic-financial-advisory";
@@ -45,8 +46,10 @@ export async function generateMetadata({
   );
 } 
 
-export default function StrategicFinancialAdvisoryPage() {
+export default async function StrategicFinancialAdvisoryPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
+    <>
     <ServiceDetailPage
       faData={strategicFa}
       enData={strategicEn}
@@ -69,5 +72,7 @@ export default function StrategicFinancialAdvisoryPage() {
         secondary: "/request-strategic-consultation",
       }}
     />
+    <ServiceLeadForm serviceKey="strategic-financial-advisory" routeLocale={locale} />
+    </>
   );
 }

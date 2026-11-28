@@ -89,10 +89,13 @@ export function validateFormDefinition(raw: unknown, requestedStatus?: DynamicFo
   if (fields.length > 30) issues.fields = "حداکثر ۳۰ فیلد مجاز است.";
   const ids = [...steps.map((step) => step.id), ...fields.map((field) => field.id)];
   if (ids.some((id, index) => ids.indexOf(id) !== index)) issues.ids = "شناسه مراحل و فیلدها باید یکتا باشد.";
-  const submitLabel = cleanText(value.submitLabel, 80) || "ثبت درخواست";
-  const successMessage = cleanText(value.successMessage, 500) || "درخواست شما با موفقیت ثبت شد.";
+  const locale = value.locale === "en" ? "en" : "fa";
+  const submitLabel = cleanText(value.submitLabel, 80) || (locale === "en" ? "Submit request" : "ثبت درخواست");
+  const successMessage = cleanText(value.successMessage, 500) || (locale === "en" ? "Your request has been submitted." : "درخواست شما با موفقیت ثبت شد.");
   if (Object.keys(issues).length) throw new FormDefinitionError(issues);
   return {
+    ...(value.locale === undefined ? {} : { locale }),
+    ...(typeof value.showOnService === "boolean" ? { showOnService: value.showOnService } : {}),
     title, slug, description: cleanText(value.description, 700), formType,
     serviceKey: service!.key, serviceName: service!.name, serviceRoute: service!.route,
     status, steps, submitLabel, successMessage,

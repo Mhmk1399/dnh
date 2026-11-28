@@ -104,6 +104,7 @@ export default async function FormsPage({
       id: String(row._id),
       title: row.title,
       slug: row.slug,
+      locale: row.locale,
       status: row.status,
       formType: row.formType,
       serviceName: row.serviceName,

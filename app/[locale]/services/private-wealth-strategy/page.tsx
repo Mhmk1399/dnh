@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { localizePageMetadata, getLocalizedAlternates } from "@/lib/site-seo";
 import { normalizeSiteLocale } from "@/lib/site-language";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 import serviceFa from "@/config/DNH_Private_Wealth_Strategy_Final_FA.json";
 import serviceEn from "@/config/DNH_Private_Wealth_Strategy_Final_EN.json";
@@ -25,7 +26,8 @@ export async function generateMetadata({
     locale,
   );
 }
-const page = () => {
+const page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
   return (
     <main>
       <ServiceDetailPage
@@ -49,6 +51,7 @@ const page = () => {
           secondary: "/request-strategic-consultation",
         }}
       />
+      <ServiceLeadForm serviceKey="private-wealth-strategy" routeLocale={locale} />
     </main>
   );
 };

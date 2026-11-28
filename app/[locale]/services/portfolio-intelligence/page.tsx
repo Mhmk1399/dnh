@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { localizePageMetadata, getLocalizedAlternates } from "@/lib/site-seo";
 import { normalizeSiteLocale } from "@/lib/site-language";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 import portfolioFa from "@/config/DNH_Portfolio_Intelligence_Final_FA.json";
 import portfolioEn from "@/config/DNH_Portfolio_Intelligence_Final_EN.json";
@@ -29,7 +30,8 @@ export async function generateMetadata({
   );
 }
 
-const page = () => {
+const page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
   return (
     <main>
       <ServiceDetailPage
@@ -52,6 +54,7 @@ const page = () => {
           secondary: "/request-strategic-consultation",
         }}
       />
+      <ServiceLeadForm serviceKey="portfolio-intelligence" routeLocale={locale} />
     </main>
   );
 };

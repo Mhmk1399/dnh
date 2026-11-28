@@ -4,6 +4,7 @@ import macroEn from "@/config/DNH_Macro_Market_Advisory_Final_EN.json";
 import macroFa from "@/config/DNH_Macro_Market_Advisory_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 
 const ROUTE = "/services/macro-market-advisory";
@@ -45,8 +46,10 @@ export async function generateMetadata({
   );
 }
 
-export default function MacroMarketAdvisoryPage() {
+export default async function MacroMarketAdvisoryPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
+    <>
     <ServiceDetailPage
       faData={macroFa}
       enData={macroEn}
@@ -70,5 +73,7 @@ export default function MacroMarketAdvisoryPage() {
         secondary: "/request-strategic-consultation",
       }}
     />
+    <ServiceLeadForm serviceKey="macro-market-advisory" routeLocale={locale} />
+    </>
   );
 }

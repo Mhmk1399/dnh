@@ -2,6 +2,8 @@ import { model, models, Schema, type Model, type Types } from "mongoose";
 import type { DynamicFieldType, DynamicFormStatus, DynamicFormType, DynamicStepType } from "@/lib/dynamic-forms";
 
 export type DynamicFormRecord = {
+  locale?: "fa" | "en";
+  showOnService?: boolean;
   title: string; slug: string; description: string; formType: DynamicFormType;
   serviceKey: string; serviceName: string; serviceRoute: string; status: DynamicFormStatus;
   steps: Array<{ id: string; title: string; description?: string; stepType: DynamicStepType; fields: Array<{ id: string; type: DynamicFieldType; label: string; required: boolean; placeholder?: string; helpText?: string; options?: string[]; minLength?: number; maxLength?: number }> }>;
@@ -20,6 +22,8 @@ const stepSchema = new Schema({
 }, { _id: false });
 
 const dynamicFormSchema = new Schema<DynamicFormRecord>({
+  locale: { type: String, enum: ["fa", "en"], default: "fa" },
+  showOnService: { type: Boolean, default: false },
   title: { type: String, required: true, maxlength: 140 },
   slug: { type: String, required: true, unique: true, index: true, maxlength: 80 },
   description: { type: String, default: "", maxlength: 700 },

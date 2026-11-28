@@ -4,6 +4,7 @@ import riskEn from "@/config/DNH_Risk_Management_Wealth_Protection_Final_EN.json
 import riskFa from "@/config/DNH_Risk_Management_Wealth_Protection_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
 import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
 
 const ROUTE = "/services/risk-management-wealth-protection";
@@ -45,8 +46,10 @@ export async function generateMetadata({
   );
 }
 
-export default function RiskManagementWealthProtectionPage() {
+export default async function RiskManagementWealthProtectionPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
+    <>
     <ServiceDetailPage
       faData={riskFa}
       enData={riskEn}
@@ -70,5 +73,7 @@ export default function RiskManagementWealthProtectionPage() {
         secondary: "/request-strategic-consultation",
       }}
     />
+    <ServiceLeadForm serviceKey="risk-management-wealth-protection" routeLocale={locale} />
+    </>
   );
 }
