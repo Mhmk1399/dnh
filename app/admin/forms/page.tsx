@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { AdminTablePagination } from "@/components/admin/AdminTablePagination";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Plus } from "lucide-react";
 
 import {
   AdminDataTable,
+  AdminTableCellPair,
   type AdminTableColumn,
 } from "@/components/admin/AdminDataTable";
 import { AdminDynamicForm } from "@/components/admin/AdminDynamicForm";
@@ -53,7 +55,7 @@ const dateFormatter = new Intl.DateTimeFormat("fa-IR", {
 export default async function FormsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string }>;
+  searchParams: Promise<{ q?: string; status?: string; page?: string }>;
 }) {
   const user = await getCurrentUser();
 
@@ -65,6 +67,9 @@ export default async function FormsPage({
 
   let forms: AdminFormRow[] = [];
   let loadError = false;
+  const pageSize = 25;
+  let page = 1;
+  let totalPages = 1;
 
   try {
     await connect();
@@ -88,14 +93,23 @@ export default async function FormsPage({
       ];
     }
 
+    const total = await DynamicForm.countDocuments(filter);
+    totalPages = Math.max(1, Math.ceil(total / pageSize));
+    const requestedPage = Number(query.page);
+    page = Number.isSafeInteger(requestedPage) ? Math.min(totalPages, Math.max(1, requestedPage)) : 1;
     const rows = await DynamicForm.find(filter)
-      .sort({ updatedAt: -1 })
-      .limit(150)
+      .select("title slug status formType serviceName revision updatedAt")
+      .sort({ updatedAt: -1, _id: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .lean();
     const counts = await FormSubmission.aggregate<{
       _id: unknown;
       count: number;
-    }>([{ $group: { _id: "$formId", count: { $sum: 1 } } }]);
+    }>([
+      { $match: { formId: { $in: rows.map((row) => row._id) } } },
+      { $group: { _id: "$formId", count: { $sum: 1 } } },
+    ]);
     const countMap = new Map(
       counts.map((item) => [String(item._id), item.count]),
     );
@@ -206,6 +220,7 @@ export default async function FormsPage({
           ]}
         />
       )}
+      {!loadError && <AdminTablePagination basePath="/admin/forms" page={page} totalPages={totalPages} filters={{ q: query.q, status: query.status }} />}
     </section>
   );
 }
@@ -215,12 +230,12 @@ const formColumns: AdminTableColumn<AdminFormRow>[] = [
     key: "form",
     header: "فرم / مسیر عمومی",
     cell: (form) => (
-      <div>
-        <h2 className="text-sm font-black leading-7 text-ink">{form.title}</h2>
-        <p dir="ltr" className="mt-2 text-left text-[10px] text-ink-muted">
+      <AdminTableCellPair>
+        <span className="text-sm font-bold leading-6 text-ink">{form.title}</span>
+        <bdi dir="ltr" title={`/forms/${form.slug}`} className="max-w-full text-[11px] text-ink-muted lg:max-w-56 lg:truncate">
           /forms/{form.slug}
-        </p>
-      </div>
+        </bdi>
+      </AdminTableCellPair>
     ),
   },
   {
@@ -236,28 +251,28 @@ const formColumns: AdminTableColumn<AdminFormRow>[] = [
     key: "type",
     header: "نوع / وضعیت",
     cell: (form) => (
-      <div>
+      <AdminTableCellPair>
         <AdminStatusBadge tone={statusTone[form.status]}>
           {statusLabel[form.status]}
         </AdminStatusBadge>
-        <p className="mt-3 text-[10px] text-ink-muted">
+        <span className="text-[11px] text-ink-muted">
           {typeLabel[form.formType]}
-        </p>
-      </div>
+        </span>
+      </AdminTableCellPair>
     ),
   },
   {
     key: "revision",
     header: "نسخه / پاسخ",
     cell: (form) => (
-      <div className="text-xs">
-        <p dir="ltr" className="font-black text-ink">
+      <AdminTableCellPair>
+        <span className="text-xs font-bold text-ink">
           نسخه {String(form.revision).padStart(2, "0")}
-        </p>
-        <p className="mt-2 text-ink-muted">
+        </span>
+        <span className="text-xs text-ink-muted">
           {form.submissions.toLocaleString("fa-IR")} پاسخ
-        </p>
-      </div>
+        </span>
+      </AdminTableCellPair>
     ),
   },
   {

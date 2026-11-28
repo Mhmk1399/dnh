@@ -5,25 +5,24 @@ import { usePathname } from "next/navigation";
 import Footer from "@/components/global/Footer";
 import { Navbar } from "@/components/global/Navbar";
 import { FloatingContact } from "@/components/ui/FloatingContact";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import shell from "@/config/site-shell.json";
 
 export function PublicChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const { locale } = useLanguage();
+  const isAuthRoute = /^\/(?:fa|en)\/(?:login|register)\/?$/.test(pathname);
 
-  if (isAdminRoute) {
+  if (isAuthRoute) {
     return <>{children}</>;
   }
 
   return (
     <>
+      <a href="#main-content" className="dnh-skip-link">{shell[locale].skipToContent}</a>
       <Navbar />
-      <FloatingContact
-        phone="+98XXXXXXXXXX"
-        phoneDisplay="09120000000"
-        whatsappNumber="+989XXXXXXXXX"
-        email="info@your-domain.com"
-      />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>{children}</main>
+      {pathname !== `/${locale}/contact` && <FloatingContact />}
       <Footer />
     </>
   );

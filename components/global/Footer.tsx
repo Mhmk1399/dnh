@@ -270,40 +270,28 @@ function FooterLinks({
 function FooterSocials() {
   const { locale } = useLanguage();
   const copy = shellContent[locale].footer;
-  const hasPendingProfiles = SOCIAL_PROFILES.some((profile) => !profile.href);
+  const profiles = SOCIAL_PROFILES.filter((profile) => profile.href);
+  if (!profiles.length) return null;
 
   return (
     <div className={styles.socials}>
       <p className={styles.socialTitle}>{copy.socialTitle}</p>
       <ul>
-        {SOCIAL_PROFILES.map(({ id, icon: Icon, href }) => (
+        {profiles.map(({ id, icon: Icon, href }) => (
           <li key={id}>
-            {href ? (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${copy.socials[id]} DNH, ${copy.newWindow}`}
-                title={copy.socials[id]}
-                className={styles.socialLink}
-              >
-                <Icon size={18} strokeWidth={1.7} aria-hidden={true} />
-              </a>
-            ) : (
-              <span
-                className={styles.pendingSocial}
-                aria-label={`${copy.socials[id]}, ${copy.unavailable}`}
-                title={`${copy.socials[id]} - ${copy.unavailable}`}
-              >
-                <Icon size={18} strokeWidth={1.7} aria-hidden={true} />
-              </span>
-            )}
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${copy.socials[id]} DNH, ${copy.newWindow}`}
+              title={copy.socials[id]}
+              className={styles.socialLink}
+            >
+              <Icon size={18} strokeWidth={1.7} aria-hidden={true} />
+            </a>
           </li>
         ))}
       </ul>
-      {hasPendingProfiles ? (
-        <p className={styles.socialNote}>{copy.socialPending}</p>
-      ) : null}
     </div>
   );
 }

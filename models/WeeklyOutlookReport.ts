@@ -4,6 +4,7 @@ import type {
   WeeklyOutlookButtonVariant,
   WeeklyOutlookCalloutTone,
   WeeklyOutlookDateCalendar,
+  WeeklyOutlookEnglishEdition,
   WeeklyOutlookSectionIcon,
   WeeklyOutlookSectionTone,
   WeeklyOutlookSectionVisual,
@@ -21,6 +22,7 @@ export type WeeklyOutlookReportRecord = {
   coverImageAlt?: string;
   seoTitle?: string;
   seoDescription?: string;
+  english?: WeeklyOutlookEnglishEdition;
   status: WeeklyOutlookStatus;
   sections: Array<{
     id: string;
@@ -90,6 +92,23 @@ const sectionSchema = new Schema(
   { _id: false },
 );
 
+const englishSectionSchema = sectionSchema.clone();
+englishSectionSchema.path("title").required(false);
+
+const englishEditionSchema = new Schema(
+  {
+    ready: { type: Boolean, default: false },
+    title: { type: String, default: "", maxlength: 180 },
+    edition: { type: String, default: "", maxlength: 120 },
+    excerpt: { type: String, default: "", maxlength: 900 },
+    coverImageAlt: { type: String, maxlength: 220 },
+    seoTitle: { type: String, maxlength: 180 },
+    seoDescription: { type: String, maxlength: 320 },
+    sections: { type: [englishSectionSchema], default: [] },
+  },
+  { _id: false },
+);
+
 const weeklyOutlookReportSchema = new Schema<WeeklyOutlookReportRecord>(
   {
     title: { type: String, required: true, maxlength: 180 },
@@ -121,6 +140,7 @@ const weeklyOutlookReportSchema = new Schema<WeeklyOutlookReportRecord>(
       index: true,
     },
     sections: { type: [sectionSchema], required: true },
+    english: { type: englishEditionSchema, default: undefined },
     revision: { type: Number, required: true, default: 1 },
     createdBy: {
       type: Schema.Types.ObjectId,

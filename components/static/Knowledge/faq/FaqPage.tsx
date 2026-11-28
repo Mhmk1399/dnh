@@ -67,13 +67,9 @@ export function FaqPage({ content }: FaqPageProps) {
   const isRTL = content.direction === "rtl";
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
   const CornerArrow = isRTL ? CornerDownLeft : CornerDownRight;
-  const questionCount = content.categories.reduce(
-    (total, category) => total + category.items.length,
-    0,
-  );
 
   return (
-    <main dir={content.direction} lang={content.locale} className="min-w-0 bg-[#f7f6f2] text-ink">
+    <div dir={content.direction} lang={content.locale} className="min-w-0 bg-[#f7f6f2] text-ink">
       {/* Shared dynamic hero. Image is optional; otherwise it uses an editorial gradient. */}
       <DnhPageHero
         id="faq-hero"
@@ -151,7 +147,7 @@ export function FaqPage({ content }: FaqPageProps) {
 
               {content.categories.map((category, categoryIndex) => {
                 const inverted = category.id === "professional-boundaries";
-                const chapterNumber = String(categoryIndex + 1).padStart(2, "0");
+                const chapterNumber = (categoryIndex + 1).toLocaleString(content.locale, { minimumIntegerDigits: 2 });
                 return (
                   <section
                     key={category.id}
@@ -195,7 +191,7 @@ export function FaqPage({ content }: FaqPageProps) {
                         <FaqDisclosure
                           key={item.id}
                           item={item}
-                          number={String(itemIndex + 1).padStart(2, "0")}
+                          number={(itemIndex + 1).toLocaleString(content.locale, { minimumIntegerDigits: 2 })}
                           categoryId={category.id}
                           openLabel={content.ui.openAnswer}
                           closeLabel={content.ui.closeAnswer}
@@ -284,7 +280,7 @@ export function FaqPage({ content }: FaqPageProps) {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

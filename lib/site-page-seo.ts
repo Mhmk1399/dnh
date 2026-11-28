@@ -28,7 +28,7 @@ const pageSeo: Record<string, PageSeoEntry> = {
     en: {
       title: "Wealth Architecture and Strategic Financial Advisory",
       description:
-        "DNH helps individuals, families, capital owners and executives evaluate important financial decisions through an integrated view of wealth, risk, liquidity and scenarios.",
+        "DNH helps individuals, families and executives evaluate important financial decisions through an integrated view of wealth, risk, liquidity and scenarios.",
       keywords: [
         "wealth architecture",
         "strategic financial advisory",
@@ -50,7 +50,7 @@ const pageSeo: Record<string, PageSeoEntry> = {
     en: {
       title: "About DNH and Its Wealth Architecture Approach",
       description:
-        "Discover DNH, its structured decision-making philosophy, and Dr. Nasim Mohammadhassani’s approach to wealth, risk, investment and strategic financial decisions.",
+        "Discover DNH, its decision philosophy and Dr. Nasim Mohammadhassani’s approach to wealth, risk, investment and strategic financial decisions.",
       keywords: ["about DNH", "Nasim Mohammadhassani", "wealth architecture", "strategic financial adviser"],
       image: "/assets/images/about-hero-desktop.png",
     },
@@ -82,7 +82,7 @@ const pageSeo: Record<string, PageSeoEntry> = {
     en: {
       title: "What Is Wealth Architecture?",
       description:
-        "Wealth architecture is an integrated approach to defining the role of assets, risk, liquidity, objectives and time horizon within an overall wealth structure.",
+        "Wealth architecture defines the role of assets, risk, liquidity, objectives and time horizon within an integrated wealth structure.",
       keywords: ["wealth architecture", "wealth structure", "asset management", "risk and liquidity", "financial objectives"],
       image: "/assets/images/DNH-Wealth-Architecture.webp",
     },
@@ -98,7 +98,7 @@ const pageSeo: Record<string, PageSeoEntry> = {
     en: {
       title: "The DNH Financial Decision Framework",
       description:
-        "The DNH Framework connects data intelligence, decision navigation and horizon architecture to evaluate conditions, scenarios, risks and long-term objectives.",
+        "The DNH Framework connects data intelligence, decision navigation and horizon architecture to assess scenarios, risks and long-term objectives.",
       keywords: ["DNH framework", "financial decision framework", "data intelligence", "scenario analysis", "horizon architecture"],
       image: "/assets/images/dnh-framework-hero.webp",
     },
@@ -130,7 +130,7 @@ const pageSeo: Record<string, PageSeoEntry> = {
     en: {
       title: "Financial Advisory and Wealth Management Services",
       description:
-        "DNH services include private wealth strategy, portfolio intelligence, strategic financial advisory, macro and market advisory, risk management and executive briefings.",
+        "Explore DNH services for private wealth strategy, portfolio intelligence, strategic financial advisory, market analysis and risk management.",
       keywords: ["financial advisory services", "wealth management", "investment advisory", "risk analysis", "DNH advisory"],
       image: "/assets/images/risk.webp",
     },

@@ -1,25 +1,8 @@
-"use client";
-
 import Image from "next/image";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BriefcaseBusiness,
-  GraduationCap,
-  Layers3,
-  Quote,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
-
-const credentialIcons = {
-  experience: BriefcaseBusiness,
-  portfolio: Layers3,
-  education: GraduationCap,
-} as const;
 
 type AboutContent = {
   id: "about-dr-nasim";
@@ -33,7 +16,7 @@ type AboutContent = {
     id: string;
     value: string;
     label: string;
-    icon: keyof typeof credentialIcons;
+    icon: "experience" | "portfolio" | "education";
   }>;
   philosophy_intro: string;
   philosophy_quote: string;
@@ -57,9 +40,9 @@ type AboutContent = {
   };
 };
 
-export function AboutDrNasimSection() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function AboutDrNasimSection({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) => section.id === "about-dr-nasim" && section.type === "about",
   ) as AboutContent | undefined;
@@ -89,7 +72,7 @@ export function AboutDrNasimSection() {
 
       <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.78fr)_minmax(0,1.35fr)] lg:grid-rows-[auto_auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
           </div>
@@ -130,7 +113,7 @@ export function AboutDrNasimSection() {
           ))}
         </div>
 
-        <div className="relative aspect-[4/5] min-h-[480px] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-5 lg:row-start-1 lg:h-full lg:min-h-[790px] lg:aspect-auto">
+        <div className="relative aspect-[4/5] sm:aspect-[3/2] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-5 lg:row-start-1 lg:h-full lg:min-h-[790px] lg:aspect-auto">
           <Image
             src={content.media.src}
             alt={content.media.alt}
@@ -157,7 +140,7 @@ export function AboutDrNasimSection() {
                   aria-hidden="true"
                   size={26}
                   strokeWidth={1.55}
-                  className="shrink-0 text-brand-primary"
+                  className="shrink-0 text-brand-accent"
                 />
                 <div>
                   {credential.value ? (
@@ -183,7 +166,7 @@ export function AboutDrNasimSection() {
             aria-hidden="true"
             className="absolute inset-0 -z-10 bg-page/88"
           />
-          <div className="flex items-center gap-3 text-start text-[13px] font-bold text-brand-primary sm:text-[14px]">
+          <div className="flex items-center gap-3 text-start text-[13px] font-bold text-brand-accent sm:text-[14px]">
             <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
             <p>{content.philosophy_intro}</p>
           </div>
@@ -203,13 +186,15 @@ export function AboutDrNasimSection() {
         </blockquote>
 
         <footer className="grid min-w-0 gap-4 lg:col-start-2 lg:row-start-5">
-          <p
-            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[13px] ${
-              isRTL ? "leading-[1.9]" : "leading-[1.7]"
-            }`}
-          >
-            {content.closing}
-          </p>
+          {content.closing ? (
+            <p
+              className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[13px] ${
+                isRTL ? "leading-[1.9]" : "leading-[1.7]"
+              }`}
+            >
+              {content.closing}
+            </p>
+          ) : null}
 
           <div className="flex justify-start">
             {content.ctas.map((cta) => (
@@ -222,7 +207,7 @@ export function AboutDrNasimSection() {
                 icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto sm:min-w-[290px]"
+                className="w-full shadow-none hover:shadow-none sm:w-auto sm:min-w-[290px]"
               >
                 {cta.label}
               </ActionButton>

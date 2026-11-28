@@ -38,15 +38,15 @@ export function AdminDynamicForm({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const visibleFields = fields.filter((field) => field.type !== "hidden");
-  const gridTemplate =
-    visibleFields.length <= 1
-      ? "sm:grid-cols-[1fr_auto]"
-      : "sm:grid-cols-[minmax(0,1fr)_220px_auto_auto]";
 
   return (
     <form
       noValidate
+      key={JSON.stringify(
+        fields.map((field) =>
+          field.type === "hidden" ? field.value : field.defaultValue,
+        ),
+      )}
       onSubmit={(event) => {
         event.preventDefault();
 
@@ -61,10 +61,12 @@ export function AdminDynamicForm({
           }
         }
 
-        router.push(params.size ? `${pathname}?${params.toString()}` : pathname);
+        router.push(
+          params.size ? `${pathname}?${params.toString()}` : pathname,
+        );
       }}
       className={`
-        grid
+        flex flex-wrap items-end
         gap-3
         rounded-[24px]
         border
@@ -74,26 +76,33 @@ export function AdminDynamicForm({
         shadow-[0_12px_34px_rgba(3,45,59,0.04)]
         backdrop-blur-xl
 
-        ${gridTemplate}
         ${className}
       `}
     >
       {fields.map((field) => {
         if (field.type === "hidden") {
           return (
-            <input key={field.name} type="hidden" name={field.name} value={field.value} />
+            <input
+              key={field.name}
+              type="hidden"
+              name={field.name}
+              value={field.value}
+            />
           );
         }
 
         return (
-          <label key={field.name} className="text-xs font-bold text-ink">
+          <label
+            key={field.name}
+            className={`min-w-0 basis-full text-sm font-bold text-ink ${field.type === "search" ? "sm:flex-[2_1_17rem]" : "sm:flex-[1_1_11rem]"}`}
+          >
             {field.label}
 
             {field.type === "select" ? (
               <select
                 name={field.name}
                 defaultValue={field.defaultValue}
-                className="mt-2 w-full rounded-[14px] border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                className="mt-2 min-h-11 w-full rounded-xl border border-line bg-white px-3 py-2.5 text-base outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10 sm:text-sm"
               >
                 {field.options.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -108,21 +117,24 @@ export function AdminDynamicForm({
                 dir={field.dir}
                 defaultValue={field.defaultValue}
                 placeholder={field.placeholder}
-                className="mt-2 w-full rounded-[14px] border border-line bg-white px-3 py-2.5 text-sm outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10"
+                className="mt-2 min-h-11 w-full rounded-xl border border-line bg-white px-3 py-2.5 text-base outline-none transition focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/10 sm:text-sm"
               />
             )}
           </label>
         );
       })}
 
-      <button className="min-h-11 cursor-pointer self-end rounded-[14px] bg-brand-primary px-5 py-3 text-xs font-black text-white transition hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25">
+      <button
+        type="submit"
+        className="min-h-11 flex-1 cursor-pointer rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/25 sm:flex-none"
+      >
         {submitLabel}
       </button>
 
       {resetHref ? (
         <Link
           href={resetHref}
-          className="inline-flex min-h-11 items-center justify-center self-end rounded-[14px] border border-line bg-white px-4 py-3 text-xs font-black text-ink-muted transition hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20"
+          className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-line bg-white px-4 py-3 text-sm font-bold text-ink-muted transition hover:border-brand-accent hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/20 sm:flex-none"
         >
           پاک کردن
         </Link>

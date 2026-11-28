@@ -111,7 +111,7 @@ function ServiceHeader({
         <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
         <p
           className={`text-[12px] font-extrabold sm:text-[13px] ${
-            dark ? "text-white" : "text-brand-primary"
+            dark ? "text-white" : "text-brand-accent"
           } ${isRTL ? "leading-[1.9]" : "leading-[1.5]"}`}
         >
           {content.eyebrow}
@@ -370,7 +370,7 @@ function AnalysisLayout({
         <div className="border-b border-line py-6 lg:border-b-0 lg:border-e lg:pe-8">
           <p
             className={`text-[14px] font-bold sm:text-[15px] ${
-              dark ? "text-white/75" : "text-brand-primary"
+              dark ? "text-white/75" : "text-ink-muted"
             } ${isRTL ? "leading-[2]" : "leading-[1.75]"}`}
           >
             {content.paragraphs[0]}
@@ -473,7 +473,7 @@ function BriefingLayout({
       <div className="border-t border-line lg:mt-2">
         <p
           className={`border-b border-line py-5 text-[14px] font-semibold sm:text-[15px] ${
-            dark ? "text-white/75" : "text-brand-primary"
+            dark ? "text-white/75" : "text-ink-muted"
           } ${isRTL ? "leading-[2]" : "leading-[1.75]"}`}
         >
           {content.paragraphs[0]}

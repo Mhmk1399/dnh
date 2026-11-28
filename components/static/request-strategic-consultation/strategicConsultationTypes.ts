@@ -141,6 +141,8 @@ export type ConsultationRequestContent = ConsultationHeading & {
     submit_note: string;
     privacy_note: string;
     reference_label: string;
+    required_error: string;
+    validation_message: string;
   };
 };
 

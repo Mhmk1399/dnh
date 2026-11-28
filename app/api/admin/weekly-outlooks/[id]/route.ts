@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
@@ -133,10 +134,14 @@ export async function PATCH(
 
     const update = {
       ...definition,
+      coverImage: definition.coverImage ?? "",
+      coverImageAlt: definition.coverImageAlt ?? "",
+      seoTitle: definition.seoTitle ?? "",
+      seoDescription: definition.seoDescription ?? "",
       reportDate: dateOnlyToStorageDate(definition.reportDate),
       status: requestedStatus,
       revision: expectedRevision + 1,
-      ...(requestedStatus === "published"
+      ...(action === "publish" && currentStatus !== "published"
         ? { publishedAt: new Date() }
         : requestedStatus === "draft"
           ? { publishedAt: null }
@@ -163,6 +168,7 @@ export async function PATCH(
       );
     }
 
+    revalidatePath("/sitemap.xml");
     return NextResponse.json({
       message:
         action === "publish"
@@ -240,6 +246,7 @@ export async function DELETE(
       );
     }
 
+    revalidatePath("/sitemap.xml");
     return NextResponse.json({ message: "گزارش حذف شد." });
   } catch {
     return NextResponse.json(

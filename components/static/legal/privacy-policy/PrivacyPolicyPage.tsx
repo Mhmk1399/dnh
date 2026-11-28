@@ -82,7 +82,7 @@ export function PrivacyPolicyPage({ content }: { content: PrivacyPolicyContent }
   const CornerArrow = isRtl ? CornerDownLeft : CornerDownRight;
 
   return (
-    <main dir={content.direction} className="overflow-x-clip bg-page text-ink">
+    <div dir={content.direction} className="overflow-x-clip bg-page text-ink">
       <section className="bg-[#032f3f] text-white">
         <div aria-hidden="true" className="h-[116px]" />
         <div className={`${shell} py-10 sm:py-14 lg:py-16`}>
@@ -216,7 +216,7 @@ export function PrivacyPolicyPage({ content }: { content: PrivacyPolicyContent }
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

@@ -2,19 +2,19 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "DNH | مشاوره مالی راهبردی",
+    id: "/",
+    name: "DNH | Wealth Architecture",
     short_name: "DNH",
     description:
-      "وب‌اپلیکیشن DNH برای معماری ثروت، مشاوره مالی راهبردی و ارزیابی تصمیم‌های مالی.",
-    lang: "fa-IR",
-    dir: "rtl",
+      "Wealth architecture, strategic financial advisory and structured financial decision support.",
     start_url: "/fa",
     scope: "/",
     display: "standalone",
-    orientation: "portrait",
-    background_color: "#ffffff",
-    theme_color: "#167394",
+    display_override: ["window-controls-overlay", "standalone"],
+    background_color: "#F7F4EF",
+    theme_color: "#14181B",
     categories: ["finance", "business", "productivity"],
+    prefer_related_applications: false,
     icons: [
       {
         src: "/icons/icon-192x192.png",

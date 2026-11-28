@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
 import Session from "@/models/Session";
 import User from "@/models/User";
-import { readJson } from "@/lib/validation";
+import { cleanText, isValidPhone, normalizeIranianPhone, readJson } from "@/lib/validation";
 
 async function authorize() {
   const user = await getCurrentUser();
@@ -14,18 +14,15 @@ async function authorize() {
 }
 
 function sanitizeUserPatch(body: Record<string, unknown>) {
-  const firstName =
-    typeof body.firstName === "string" ? body.firstName.trim().slice(0, 50) : "";
-  const lastName =
-    typeof body.lastName === "string" ? body.lastName.trim().slice(0, 70) : "";
-  const phone =
-    typeof body.phone === "string" ? body.phone.trim().slice(0, 24) : "";
+  const firstName = cleanText(body.firstName, 50);
+  const lastName = cleanText(body.lastName, 70);
+  const phone = normalizeIranianPhone(cleanText(body.phone, 30));
   const role = body.role === "admin" ? "admin" : "user";
   const errors: Record<string, string> = {};
 
   if (firstName.length < 2) errors.firstName = "نام باید حداقل ۲ کاراکتر باشد.";
   if (lastName.length < 2) errors.lastName = "نام خانوادگی باید حداقل ۲ کاراکتر باشد.";
-  if (!/^09\d{9}$/.test(phone)) errors.phone = "شماره موبایل باید با فرمت 09xxxxxxxxx باشد.";
+  if (!isValidPhone(phone)) errors.phone = "شماره موبایل ایران را به‌درستی وارد کنید.";
 
   return {
     value: { firstName, lastName, phone, role },

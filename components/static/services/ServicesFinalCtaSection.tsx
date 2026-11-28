@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ActionButton } from "@/components/ui/ActionButton";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -67,7 +67,6 @@ export function ServicesFinalCtaSection() {
   if (!content) return null;
 
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
-  const [primaryCta, secondaryCta] = content.ctas;
   const intro = content.paragraphs[0];
   const [
     contextParagraph,
@@ -88,7 +87,7 @@ export function ServicesFinalCtaSection() {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
           <p
-            className={`text-[12px] font-extrabold text-brand-primary sm:text-[13px] ${
+            className={`text-[12px] font-extrabold text-brand-accent sm:text-[13px] ${
               isRTL ? "leading-[1.9]" : "leading-[1.5]"
             }`}
           >
@@ -120,10 +119,10 @@ export function ServicesFinalCtaSection() {
             >
               {intro}
             </p>
-            {content.checklist.map((item, index) => (
+            {content.checklist.map((item) => (
               <div
                 key={item}
-                className="grid grid-cols-2 items-start gap-4 border-b border-line py-4 sm:py-5"
+                className="max-w-prose border-b border-line py-4 sm:py-5"
               >
               
                 <p
@@ -141,7 +140,7 @@ export function ServicesFinalCtaSection() {
 
       <div className="bg-brand-accent text-white ">
         <div className="dnh-site-shell py-10 sm:py-12 lg:py-14">
-          <div className="  gap-10 items-center flex  flex-row-reverse lg:gap-16 ">
+          <div className="grid min-w-0 gap-6 lg:grid-cols-2 lg:items-center lg:gap-16">
             <div className="min-w-0">
               <p
                 className={`text-[15px] font-semibold text-white/78 sm:text-[16px] ${
@@ -150,10 +149,11 @@ export function ServicesFinalCtaSection() {
               >
                 {contextParagraph}
               </p>
+              {processParagraph && <p className="mt-3 max-w-prose text-sm leading-7 text-white/90">{processParagraph}</p>}
             </div>
 
             <div className="min-w-0 lg:border-s lg:border-white/18 lg:ps-10 xl:ps-14">
-              <p className="text-[12px] font-extrabold text-brand-primary sm:text-[13px]">
+              <p className="text-sm font-bold text-white/90">
                 {objectiveLabel}
               </p>
 
@@ -166,22 +166,12 @@ export function ServicesFinalCtaSection() {
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                {primaryCta ? (
-                  <Link
-                    href={primaryCta.href}
-                    className="group inline-flex min-h-[54px] items-center justify-between gap-5 border border-brand-accent bg-brand-accent px-5 py-3 text-[13px] font-extrabold text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-brand-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus/30 sm:min-w-[17rem] sm:text-[14px] motion-reduce:transition-none"
-                  >
-                    <span>{primaryCta.label}</span>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-8 w-8 items-center justify-center border border-current/30"
-                    >
-                      <Arrow className="h-4 w-4" strokeWidth={1.8} />
-                    </span>
-                  </Link>
-                ) : null}
-
-             
+                {content.ctas.map((cta) => (
+                  <ActionButton key={cta.id} href={cta.href} variant={cta.type} icon={Arrow} shape="square"
+                    className={cta.type === "secondary" ? "border-white/65! bg-transparent! text-white! hover:bg-white! hover:text-ink!" : ""}>
+                    {cta.label}
+                  </ActionButton>
+                ))}
               </div>
             </div>
           </div>

@@ -32,6 +32,7 @@ export function FaqChapterIndex({
   const tabRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const rtl = direction === "rtl";
   const Arrow = rtl ? ArrowLeft : ArrowRight;
+  const countFormat = new Intl.NumberFormat(rtl ? "fa" : "en", { minimumIntegerDigits: 2 });
   const searchLabel = rtl ? "جست‌وجو در سؤال‌ها" : "Search questions";
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
   const matches = normalizedQuery
@@ -103,7 +104,7 @@ export function FaqChapterIndex({
     const tabRect = tab.getBoundingClientRect();
     const delta =
       tabRect.left + tabRect.width / 2 - (stripRect.left + stripRect.width / 2);
-    strip.scrollBy({ left: delta, behavior: "smooth" });
+    strip.scrollBy({ left: delta, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }, [activeId, variant]);
 
   useEffect(() => {
@@ -133,7 +134,7 @@ export function FaqChapterIndex({
         <div ref={menuRef} className="relative dnh-site-shell min-w-0">
           <div className="flex min-h-[66px] min-w-0 items-center gap-2 py-2">
             <div className="hidden shrink-0 border-e border-line pe-3 sm:block">
-              <span className="block text-[10px] font-black text-brand-primary">
+              <span className="block text-[10px] font-black text-brand-accent">
                 {label}
               </span>
               <span className="block text-[10px] text-ink-muted">
@@ -159,17 +160,17 @@ export function FaqChapterIndex({
                       setActiveId(category.id);
                       setAllOpen(false);
                     }}
-                    className={`group inline-flex min-h-10 shrink-0 items-center gap-2 border px-3 py-2 text-[11px] font-bold transition-[background-color,color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent sm:text-[12px] ${
+                    className={`group inline-flex min-h-11 shrink-0 items-center gap-2 border px-3 py-2 text-[11px] font-bold transition-[background-color,color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent sm:text-[12px] ${
                       active
-                        ? "border-brand-primary bg-brand-primary text-white"
-                        : "border-line bg-white/65 text-ink-muted hover:border-brand-primary/40 hover:text-brand-primary"
+                        ? "border-brand-secondary bg-brand-secondary text-white"
+                        : "border-line bg-white/65 text-ink-muted hover:border-brand-primary/40 hover:text-brand-accent"
                     }`}
                   >
                     <span
                       aria-hidden="true"
                       className={`font-mono text-[10px] tabular-nums ${active ? "text-white/65" : "text-brand-accent"}`}
                     >
-                      {String(index + 1).padStart(2, "0")}
+                      {countFormat.format(index + 1)}
                     </span>
                     <span className="max-w-[160px] truncate">
                       {category.label}
@@ -187,8 +188,8 @@ export function FaqChapterIndex({
               onClick={() => setAllOpen((current) => !current)}
               className={`inline-flex size-11 shrink-0 items-center justify-center border transition-colors focus-visible:outline-2 focus-visible:outline-brand-accent ${
                 allOpen
-                  ? "border-brand-primary bg-brand-primary text-white"
-                  : "border-line bg-page text-brand-primary hover:bg-surface-soft"
+                  ? "border-brand-secondary bg-brand-secondary text-white"
+                  : "border-line bg-page text-brand-accent hover:bg-surface-soft"
               }`}
             >
               {allOpen ? (
@@ -217,7 +218,7 @@ export function FaqChapterIndex({
               <Search
                 aria-hidden="true"
                 size={17}
-                className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-brand-primary"
+                className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-brand-accent"
               />
               <input
                 type="search"
@@ -226,7 +227,7 @@ export function FaqChapterIndex({
                 placeholder={searchLabel}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="min-h-12 w-full min-w-0 border border-line bg-surface-soft py-2 pe-4 ps-10 text-start text-[13px] text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-brand-primary"
+                className="min-h-12 w-full min-w-0 border border-line bg-surface-soft py-2 pe-4 ps-10 text-start text-base text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-brand-primary"
               />
             </div>
             {normalizedQuery ? (
@@ -251,17 +252,17 @@ export function FaqChapterIndex({
                       aria-current={active ? "location" : undefined}
                       className={`flex min-h-12 min-w-0 items-center gap-3 border-s-[3px] px-3 py-2 text-[12px] font-bold leading-6 transition-colors focus-visible:outline-2 focus-visible:outline-brand-accent ${
                         active
-                          ? "border-brand-accent bg-surface-soft text-brand-primary"
+                          ? "border-brand-accent bg-surface-soft text-brand-accent"
                           : "border-transparent text-ink hover:bg-surface-soft"
                       }`}
                     >
                       <span className="font-mono text-[11px] text-brand-accent">
-                        {String(index + 1).padStart(2, "0")}
+                        {countFormat.format(index + 1)}
                       </span>
                       <span className="min-w-0 flex-1">{category.label}</span>
                       <Arrow
                         aria-hidden="true"
-                        className="shrink-0 text-brand-primary"
+                        className="shrink-0 text-brand-accent"
                         size={15}
                       />
                     </a>
@@ -283,8 +284,8 @@ export function FaqChapterIndex({
     >
       <div className="flex items-center justify-between border-b border-line bg-surface-soft px-5 py-4">
         <span className="text-[12px] font-black text-ink">{label}</span>
-        <span className="font-mono text-[11px] text-brand-primary">
-          {String(categories.length).padStart(2, "0")}
+        <span className="font-mono text-[11px] text-brand-accent">
+          {countFormat.format(categories.length)}
         </span>
       </div>
       <div className="p-2">
@@ -292,7 +293,7 @@ export function FaqChapterIndex({
           <Search
             aria-hidden="true"
             size={17}
-            className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-brand-primary"
+            className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-brand-accent"
           />
           <input
             type="search"
@@ -322,15 +323,15 @@ export function FaqChapterIndex({
                 onClick={() => setActiveId(category.id)}
                 className={`group relative flex min-h-[62px] items-center gap-3 border-s-[3px] px-3 py-3 text-[12px] leading-[1.85] transition-[background-color,color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary ${
                   active
-                    ? "border-brand-accent bg-surface-soft font-black text-brand-primary"
+                    ? "border-brand-accent bg-surface-soft font-black text-brand-accent"
                     : "border-transparent font-bold text-ink-muted hover:border-brand-primary/30 hover:bg-surface-soft/70 hover:text-ink"
                 }`}
               >
                 <span
                   aria-hidden="true"
-                  className={`font-mono text-[11px] tabular-nums ${active ? "text-brand-primary" : "text-brand-accent"}`}
+                  className={`font-mono text-[11px] tabular-nums ${active ? "text-brand-accent" : "text-brand-accent"}`}
                 >
-                  {String(index + 1).padStart(2, "0")}
+                  {countFormat.format(index + 1)}
                 </span>
                 <span className="min-w-0 flex-1 text-pretty">
                   {category.label}
@@ -399,7 +400,7 @@ function SearchResultLinks({
           className="group flex min-h-14 items-center gap-3 border-b border-line px-3 py-3 transition-colors hover:bg-surface-soft focus-visible:outline-2 focus-visible:outline-brand-primary"
         >
           <span className="min-w-0 flex-1">
-            <span className="block text-[10px] font-bold text-brand-primary">
+            <span className="block text-[10px] font-bold text-brand-accent">
               {category.label}
             </span>
             <span className="mt-1 block text-[12px] font-bold leading-6 text-ink">

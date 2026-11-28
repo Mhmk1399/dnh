@@ -79,7 +79,7 @@ export function ServicesPositioning() {
         <div className="mx-auto max-w-[1120px]">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <span aria-hidden="true" className="h-[2px] w-10 bg-brand-accent" />
-            <p className="text-[12px] font-bold leading-[1.8] text-brand-primary sm:text-[13px]">
+            <p className="text-[12px] font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
               {content.eyebrow}
             </p>
          
@@ -142,7 +142,7 @@ export function ServicesPositioning() {
                     icon={Arrow}
                     iconPosition="end"
                     dir={direction}
-                    className="min-h-12 w-full sm:w-auto bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none"
+                    className="min-h-12 w-full sm:w-auto shadow-none hover:shadow-none"
                   >
                     {primaryCta.label}
                   </ActionButton>

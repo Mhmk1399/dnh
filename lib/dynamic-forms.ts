@@ -1,7 +1,26 @@
-export const FORM_TYPES = ["single_step", "multi_step", "service_assessment"] as const;
+export const FORM_TYPES = [
+  "single_step",
+  "multi_step",
+  "service_assessment",
+] as const;
 export const FORM_STATUSES = ["draft", "published", "archived"] as const;
-export const STEP_TYPES = ["identity", "contact", "questions", "confirmation", "custom"] as const;
-export const FIELD_TYPES = ["text", "textarea", "phone", "email", "number", "select", "radio", "checkbox"] as const;
+export const STEP_TYPES = [
+  "identity",
+  "contact",
+  "questions",
+  "confirmation",
+  "custom",
+] as const;
+export const FIELD_TYPES = [
+  "text",
+  "textarea",
+  "phone",
+  "email",
+  "number",
+  "select",
+  "radio",
+  "checkbox",
+] as const;
 
 export type DynamicFormType = (typeof FORM_TYPES)[number];
 export type DynamicFormStatus = (typeof FORM_STATUSES)[number];
@@ -66,7 +85,8 @@ export function createFormTemplate(): DynamicFormDefinition {
     serviceRoute: "/services/private-wealth-strategy",
     status: "draft",
     submitLabel: "ثبت درخواست بررسی",
-    successMessage: "درخواست شما با موفقیت ثبت شد. مشاوران DNH در اولین فرصت با شما تماس می‌گیرند.",
+    successMessage:
+      "درخواست شما با موفقیت ثبت شد. مشاوران DNH در اولین فرصت با شما تماس می‌گیرند.",
     revision: 0,
     steps: [
       {
@@ -75,8 +95,24 @@ export function createFormTemplate(): DynamicFormDefinition {
         description: "اطلاعات پایه برای هماهنگی گفت‌وگو",
         stepType: "identity",
         fields: [
-          { id: makeStableId("field"), type: "text", label: "نام و نام خانوادگی", required: true, placeholder: "مثلاً آرمان احمدی", minLength: 2, maxLength: 100 },
-          { id: makeStableId("field"), type: "phone", label: "شماره موبایل", required: true, placeholder: "۰۹۱۲۱۲۳۴۵۶۷", minLength: 11, maxLength: 20 },
+          {
+            id: makeStableId("field"),
+            type: "text",
+            label: "نام و نام خانوادگی",
+            required: true,
+            placeholder: "مثلاً آرمان احمدی",
+            minLength: 2,
+            maxLength: 100,
+          },
+          {
+            id: makeStableId("field"),
+            type: "phone",
+            label: "شماره موبایل",
+            required: true,
+            placeholder: "09121234567",
+            minLength: 11,
+            maxLength: 20,
+          },
         ],
       },
       {
@@ -85,10 +121,17 @@ export function createFormTemplate(): DynamicFormDefinition {
         description: "زمینه تصمیم مالی مورد نظر را شرح دهید",
         stepType: "questions",
         fields: [
-          { id: makeStableId("field"), type: "textarea", label: "مهم‌ترین پرسش یا تصمیم شما چیست؟", required: true, placeholder: "شرح کوتاهی از شرایط و هدف خود بنویسید…", minLength: 10, maxLength: 1200 },
+          {
+            id: makeStableId("field"),
+            type: "textarea",
+            label: "مهم‌ترین پرسش یا تصمیم شما چیست؟",
+            required: true,
+            placeholder: "شرح کوتاهی از شرایط و هدف خود بنویسید…",
+            minLength: 10,
+            maxLength: 1200,
+          },
         ],
       },
     ],
   };
 }
-

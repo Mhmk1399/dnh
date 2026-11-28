@@ -111,7 +111,7 @@ export function FormTableActions({
   const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    if ((!viewOpen && !editOpen) || details || loading || loadError) return;
+    if (!viewOpen && !editOpen) return;
 
     let cancelled = false;
     const controller = new AbortController();
@@ -158,7 +158,7 @@ export function FormTableActions({
       cancelled = true;
       controller.abort();
     };
-  }, [details, editOpen, form.id, loadError, loading, viewOpen]);
+  }, [editOpen, form.id, form.revision, viewOpen]);
 
   return (
     <>

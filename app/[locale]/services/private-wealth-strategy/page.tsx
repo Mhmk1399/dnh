@@ -1,59 +1,41 @@
-import { Metadata } from "next";
-import { localizePageMetadata, getLocalizedAlternates } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
+import type { Metadata } from "next";
 import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
-import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
-import serviceFa from "@/config/DNH_Private_Wealth_Strategy_Final_FA.json";
-import serviceEn from "@/config/DNH_Private_Wealth_Strategy_Final_EN.json";
+
+import { ReviewedContentPage } from "@/components/static/reviewed-pages/ReviewedContentPage";
+import type { ReviewedPageDocument } from "@/components/static/reviewed-pages/reviewedPageTypes";
+import contentEn from "@/config/DNH_Private_Wealth_Strategy_Final_EN.json";
+import contentFa from "@/config/DNH_Private_Wealth_Strategy_Final_FA.json";
+import { normalizeSiteLocale, type SiteLocale } from "@/lib/site-language";
+import { localizePageMetadata } from "@/lib/site-seo";
+
+const ROUTE = "/services/private-wealth-strategy";
+const getContent = (locale: SiteLocale) =>
+  (locale === "fa" ? contentFa : contentEn) as ReviewedPageDocument;
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale: routeLocale } = await params;
-  const locale = normalizeSiteLocale(routeLocale);
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = getContent(locale);
   return localizePageMetadata(
-    {
-      title: "استراتژی ثروت خصوصی | DNH",
-      description:
-        "استراتژی ثروت خصوصی DNH برای بررسی یکپارچه دارایی‌ها، اهداف، نقدشوندگی، ریسک و مسیرهای تصمیم مالی طراحی شده است.",
-      alternates: getLocalizedAlternates(
-        "/services/private-wealth-strategy",
-        locale,
-      ),
-    },
-    "/services/private-wealth-strategy",
+    { title: content.seo.title, description: content.seo.description },
+    ROUTE,
     locale,
   );
 }
-const page = async ({ params }: { params: Promise<{ locale: string }> }) => {
-  const { locale } = await params;
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
   return (
-    <main>
-      <ServiceDetailPage
-        faData={serviceFa}
-        enData={serviceEn}
-        media={{
-          1: {
-            src: "/assets/images/private-wealth-strategy-hero.webp",
-            mobileSrc: "/assets/images/private-wealth-strategy-hero.webp",
-            alt: "Private Wealth Strategy",
-          },
-
-          6: {
-            src: "/assets/images/what-we-assess.webp",
-            mobileSrc: "/assets/images/what-we-assess.webp",
-            alt: "Wealth assessment",
-          },
-        }}
-        ctaTargets={{
-          primary: "/financial-decision-assessment",
-          secondary: "/request-strategic-consultation",
-        }}
-      />
+    <>
+      <ReviewedContentPage content={getContent(locale)} locale={locale} />
       <ServiceLeadForm serviceKey="private-wealth-strategy" routeLocale={locale} />
-    </main>
+    </>
   );
-};
-
-export default page;
+}

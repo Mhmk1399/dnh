@@ -1,85 +1,59 @@
 import type { Metadata } from "next";
+import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
 
+import {
+  ExecutiveBriefingsPage,
+  type ExecutiveBriefingsDocument,
+} from "@/components/static/services/executive-briefings/ExecutiveBriefingsPage";
 import briefingsEn from "@/config/DNH_Executive_Briefings_Final_EN.json";
 import briefingsFa from "@/config/DNH_Executive_Briefings_Final_FA.json";
 import { normalizeSiteLocale } from "@/lib/site-language";
-import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
-import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
-import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
+import { localizePageMetadata } from "@/lib/site-seo";
 
 const ROUTE = "/services/executive-briefings";
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = (locale === "fa" ? briefingsFa : briefingsEn) as ExecutiveBriefingsDocument;
+
+  return (
+    <>
+      <ExecutiveBriefingsPage content={content} locale={locale} />
+      <ServiceLeadForm serviceKey="executive-briefings" routeLocale={locale} />
+    </>
+  );
+}
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale: routeLocale } = await params;
-  const locale = normalizeSiteLocale(routeLocale);
-  const alternates = getLocalizedAlternates(ROUTE, locale);
-  const isFa = locale === "fa";
-
-  const title = isFa
-    ? "نشست‌های مدیران | Executive Briefings برای تصمیم‌های مهم | DNH"
-    : "Executive Briefings | Focused Decision-Level Advisory | DNH";
-
-  const description = isFa
-    ? "Executive Briefings DNH نشست‌های خصوصی و متمرکز برای بررسی تصمیم‌های مهم مالی، سرمایه‌ای، اقتصادی و راهبردی در سطح مدیران، هیئت‌مدیره و صاحبان سرمایه است."
-    : "DNH Executive Briefings are private, focused sessions for important financial, capital, economic and strategic decisions at executive and board level.";
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = locale === "fa" ? briefingsFa : briefingsEn;
+  const hero = content.sections[0];
+  const description = hero.paragraphs?.[0] ?? content.title;
 
   return localizePageMetadata(
     {
-      title,
+      title: content.title,
       description,
-      alternates,
       openGraph: {
-        type: "website",
-        locale: isFa ? "fa_IR" : "en_US",
-        alternateLocale: isFa ? "en_US" : "fa_IR",
-        url: alternates.canonical,
-        title,
+        title: content.title,
         description,
+        images: [
+          {
+            url: "/assets/images/executive-briefings-hero.webp",
+            alt: hero.media?.alt ?? content.title,
+          },
+        ],
       },
     },
     ROUTE,
     locale,
-  );
-}
-
-export default async function ExecutiveBriefingsPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return (
-    <>
-    <ServiceDetailPage
-      faData={briefingsFa}
-      enData={briefingsEn}
-      media={{
-        1: {
-          src: "/assets/images/executive-briefings-hero.webp",
-          mobileSrc: "/assets/images/executive-briefings-hero.webp",
-          alt: "Private executive briefing for senior decision-makers",
-          objectPosition: "center center",
-        },
-        6: {
-          src: "/assets/images/pre-briefing-review.webp",
-          mobileSrc: "/assets/images/pre-briefing-review.webp",
-          alt: "Focused pre-briefing review for an executive decision",
-          objectPosition: "center center",
-        },
-      }}
-      ctaTargets={{
-        primary: "/financial-decision-assessment",
-        secondary: "/request-strategic-consultation",
-        byLabel: {
-          "درخواست نشست مدیران": "/request-strategic-consultation",
-          "Request an executive briefing": "/request-strategic-consultation",
-          "Request Executive Briefing": "/request-strategic-consultation",
-          "درخواست یک نشست متمرکز": "/request-strategic-consultation",
-          "Request a focused briefing": "/request-strategic-consultation",
-        },
-      }}
-    />
-    <ServiceLeadForm serviceKey="executive-briefings" routeLocale={locale} />
-    </>
   );
 }

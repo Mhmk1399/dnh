@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export type TermsIndexItem = { id: string; label: string; title: string };
@@ -47,9 +48,11 @@ export function TermsOfUseIndex({
   if (variant === "mobile") {
     return (
       <nav id="terms-contents" aria-label={label} className="scroll-mt-28 lg:hidden">
-        <p className="border-b-2 border-ink pb-3 text-[11px] font-black uppercase tracking-[.16em] text-brand-accent">
+        <details className="group border-y border-line">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4  border-ink px-1 py-2 text-sm font-bold text-ink [&::-webkit-details-marker]:hidden">
           {label}
-        </p>
+          <ChevronDown aria-hidden="true" size={17} className="text-brand-accent group-open:rotate-180" />
+        </summary>
         <div className="grid grid-cols-1 border-s border-ink/15 min-[360px]:grid-cols-2 md:grid-cols-3">
           {items.map((item) => {
             const active = item.id === activeId;
@@ -57,8 +60,9 @@ export function TermsOfUseIndex({
               <a
                 key={item.id}
                 href={`#${item.id}`}
+                onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}
                 aria-current={active ? "location" : undefined}
-                className={`relative flex min-h-[64px] min-w-0 items-center border-b border-e border-ink/15 px-4 py-3 text-start text-[12px] font-black leading-6 transition focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus ${
+                className={`relative flex min-h-12 min-w-0 items-center border-b border-e border-ink/15 px-4 py-3 text-start text-[12px] font-black leading-6 transition focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus ${
                   active ? "bg-white text-ink" : "text-ink-muted hover:bg-white hover:text-ink"
                 }`}
               >
@@ -68,6 +72,7 @@ export function TermsOfUseIndex({
             );
           })}
         </div>
+        </details>
       </nav>
     );
   }

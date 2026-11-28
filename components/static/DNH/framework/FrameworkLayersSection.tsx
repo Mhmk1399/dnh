@@ -140,7 +140,7 @@ export function FrameworkWhyDecisionMatters() {
                 aria-hidden="true"
                 className="h-px w-9 shrink-0 bg-brand-accent"
               />
-              <p className="min-w-0 text-[12px] font-bold leading-[1.8] text-brand-primary sm:text-[13px]">
+              <p className="min-w-0 text-xs font-bold leading-[1.8] text-brand-accent sm:text-[13px]">
                 {content.eyebrow}
               </p>
             </div>
@@ -200,7 +200,7 @@ export function FrameworkWhyDecisionMatters() {
                     </span>
 
                     <h3
-                      className={`min-w-0 text-start text-[12px] font-extrabold text-ink transition-colors duration-300 group-hover:text-brand-primary motion-reduce:transition-none   lg:text-[16px] ${
+                      className={`min-w-0 text-start text-base font-bold text-ink ${
                         isRTL ? "leading-[1.8]" : "leading-[1.45]"
                       }`}
                     >
@@ -224,7 +224,7 @@ export function FrameworkWhyDecisionMatters() {
               className="grid min-w-0 gap-5 border-b border-line py-6 motion-safe:transition-[opacity,transform] motion-safe:duration-500 motion-safe:ease-out motion-safe:data-[reveal=pending]:translate-y-3 motion-safe:data-[reveal=pending]:opacity-0 sm:py-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:px-4"
             >
               <p
-                className={`max-w-[72ch] text-start text-[14px] font-semibold text-brand-primary sm:text-[15px] ${
+                className={`max-w-prose text-start text-sm font-semibold text-ink-muted sm:text-[15px] ${
                   isRTL ? "leading-[1.95]" : "leading-[1.72]"
                 }`}
               >

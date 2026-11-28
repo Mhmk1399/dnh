@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 
-import NextLink from "next/link";
-
 import { usePathname } from "next/navigation";
 
 import {
@@ -28,7 +26,9 @@ import {
   CircleDollarSign,
   Gem,
   Landmark,
+  LayoutDashboard,
   LogIn,
+  LogOut,
   Menu,
   Network,
   PieChart,
@@ -64,6 +64,7 @@ import {
 } from "@/config/site-navigation";
 
 import styles from "./Navbar.module.css";
+import { LogoutConfirmDialog } from "@/components/auth/LogoutConfirmDialog";
 
 const ICONS: Record<NavigationIcon, LucideIcon> = {
   architecture: Landmark,
@@ -111,6 +112,16 @@ const WHITE_LOGO = "/assets/images/LOGOWHITE.svg";
 
 type OpenPanel = MegaMenuKey | "auth" | null;
 
+type NavbarSessionUser = {
+  firstName: string;
+  lastName: string;
+  role: "user" | "admin";
+};
+
+type NavbarSession = {
+  user: NavbarSessionUser | null;
+};
+
 function subscribeToScroll(listener: () => void) {
   window.addEventListener("scroll", listener, { passive: true });
 
@@ -149,8 +160,14 @@ function NavigationShell({ pathname }: { pathname: string }) {
   );
 
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
+  const [desktopNavEngaged, setDesktopNavEngaged] = useState(false);
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [accountDialog, setAccountDialog] = useState<"account" | "logout" | null>(null);
+
+  const [sessionUser, setSessionUser] = useState<
+    NavbarSessionUser | null | undefined
+  >(undefined);
 
   const headerRef = useRef<HTMLElement>(null);
 
@@ -177,8 +194,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
   const forceSolid =
     publicPath === "/admin/forms" ||
     publicPath.startsWith("/admin/forms/") ||
-    publicPath.startsWith("/forms/") ||
-    publicPath === "/test-form";
+    publicPath.startsWith("/forms/");
 
   // No scroll: transparent, colorless frosted glass on both desktop and mobile.
 
@@ -215,6 +231,50 @@ function NavigationShell({ pathname }: { pathname: string }) {
   }, []);
 
   useEffect(() => clearTimers, [clearTimers]);
+
+  useEffect(() => {
+    let pending: AbortController | undefined;
+
+    async function loadSession() {
+      pending?.abort();
+      const controller = new AbortController();
+      pending = controller;
+      try {
+        const response = await fetch("/api/auth/session", {
+          cache: "no-store",
+          credentials: "same-origin",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) throw new Error("Session request failed");
+
+        const payload = (await response.json()) as NavbarSession;
+        if (payload.user) closeDesktop();
+        else setAccountDialog(null);
+        setSessionUser(payload.user ?? null);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setAccountDialog(null);
+        setSessionUser(null);
+      }
+    }
+
+    void loadSession();
+
+    function onPageShow(event: PageTransitionEvent) {
+      if (event.persisted) void loadSession();
+    }
+    function onVisibilityChange() {
+      if (document.visibilityState === "visible") void loadSession();
+    }
+    window.addEventListener("pageshow", onPageShow);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      pending?.abort();
+      window.removeEventListener("pageshow", onPageShow);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [closeDesktop]);
 
   useEffect(() => {
     const breakpoint = window.matchMedia("(min-width: 1280px)");
@@ -296,6 +356,24 @@ function NavigationShell({ pathname }: { pathname: string }) {
   };
 
   const authLabel = `${copy.login} / ${copy.signup}`;
+  const accountName = sessionUser && (
+    [sessionUser.firstName, sessionUser.lastName].filter(Boolean).join(" ").trim() || copy.account
+  );
+
+  function openAccount() {
+    closeDesktop();
+    setMobileOpen(false);
+    setAccountDialog("account");
+  }
+
+  function closeAccount() {
+    setAccountDialog(null);
+    requestAnimationFrame(() => {
+      const desktopTrigger = authTriggerRef.current;
+      const trigger = desktopTrigger?.getClientRects().length ? desktopTrigger : mobileTriggerRef.current;
+      trigger?.focus({ preventScroll: true });
+    });
+  }
 
   const closeAny = () => closeDesktop();
 
@@ -348,6 +426,8 @@ function NavigationShell({ pathname }: { pathname: string }) {
             <nav
               className={styles.desktopNavigation}
               aria-label={copy.navigation}
+              onPointerEnter={() => setDesktopNavEngaged(true)}
+              onFocusCapture={() => setDesktopNavEngaged(true)}
             >
               {navigation.map((item) => {
                 const key = item.menu;
@@ -385,7 +465,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
                     className={styles.navItem}
                     data-active={active}
                     aria-expanded={openPanel === key}
-                    aria-controls={`${uid}-mega-${key}`}
+                    aria-controls={desktopNavEngaged || openPanel === key ? `${uid}-mega-${key}` : undefined}
                     onPointerEnter={(event) => {
                       if (event.pointerType === "mouse") openOnHover(key);
                     }}
@@ -418,75 +498,107 @@ function NavigationShell({ pathname }: { pathname: string }) {
               <LanguageSwitch onSwitch={closeDesktop} />
 
               <div className={styles.authArea}>
-                <button
-                  ref={authTriggerRef}
-                  type="button"
-                  className={styles.authTrigger}
-                  aria-label={authLabel}
-                  aria-haspopup="true"
-                  aria-expanded={openPanel === "auth"}
-                  aria-controls={`${uid}-auth`}
-                  onClick={() => {
-                    clearTimers();
+                {accountName ? (
+                  <button
+                    ref={authTriggerRef}
+                    type="button"
+                    className={styles.authTrigger}
+                    aria-haspopup="dialog"
+                    onClick={openAccount}
+                  >
+                    <UserRound size={16} strokeWidth={1.8} aria-hidden="true" />
 
-                    openedByHover.current = null;
+                    <bdi className={styles.accountName}>{accountName}</bdi>
+                    <ChevronDown size={13} aria-hidden="true" />
+                  </button>
+                ) : sessionUser === null ? (
+                  <>
+                    <button
+                      ref={authTriggerRef}
+                      type="button"
+                      className={styles.authTrigger}
+                      aria-label={authLabel}
+                      aria-haspopup="true"
+                      aria-expanded={openPanel === "auth"}
+                      aria-controls={`${uid}-auth`}
+                      onClick={() => {
+                        clearTimers();
 
-                    setOpenPanel((current) =>
-                      current === "auth" ? null : "auth",
-                    );
-                  }}
-                  onPointerEnter={() => {
-                    if (openPanel !== "auth") closeDesktop();
-                  }}
-                >
-                  <UserRound size={16} strokeWidth={1.8} aria-hidden="true" />
+                        openedByHover.current = null;
 
-                  <span>{authLabel}</span>
+                        setOpenPanel((current) =>
+                          current === "auth" ? null : "auth",
+                        );
+                      }}
+                      onPointerEnter={() => {
+                        if (openPanel !== "auth") closeDesktop();
+                      }}
+                    >
+                      <UserRound
+                        size={16}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                      />
 
-                  <ChevronDown
-                    className={styles.chevron}
-                    size={13}
+                      <span>{authLabel}</span>
+
+                      <ChevronDown
+                        className={styles.chevron}
+                        size={13}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    <div
+                      id={`${uid}-auth`}
+                      className={styles.authPopover}
+                      data-open={openPanel === "auth"}
+                      inert={openPanel !== "auth"}
+                      aria-hidden={openPanel !== "auth"}
+                    >
+                      <span className={styles.authPopoverCaption}>
+                        {copy.auth}
+                      </span>
+
+                      <Link
+                        href={LOGIN_PATH}
+                        onClick={closeDesktop}
+                        className={styles.authOption}
+                      >
+                        <span className={styles.authOptionIcon}>
+                          <LogIn size={17} aria-hidden="true" />
+                        </span>
+
+                        <span>{copy.login}</span>
+
+                        <DirectionArrow size={15} aria-hidden="true" />
+                      </Link>
+
+                      <Link
+                        href={SIGNUP_PATH}
+                        onClick={closeDesktop}
+                        className={styles.authOption}
+                      >
+                        <span className={styles.authOptionIcon}>
+                          <UserRoundPlus size={17} aria-hidden="true" />
+                        </span>
+
+                        <span>{copy.signup}</span>
+
+                        <DirectionArrow size={15} aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <span
+                    className={styles.authTrigger}
+                    style={{ visibility: "hidden" }}
                     aria-hidden="true"
-                  />
-                </button>
-
-                <div
-                  id={`${uid}-auth`}
-                  className={styles.authPopover}
-                  data-open={openPanel === "auth"}
-                  inert={openPanel !== "auth"}
-                  aria-hidden={openPanel !== "auth"}
-                >
-                  <span className={styles.authPopoverCaption}>{copy.auth}</span>
-
-                  <NextLink
-                    href={LOGIN_PATH}
-                    onClick={closeDesktop}
-                    className={styles.authOption}
                   >
-                    <span className={styles.authOptionIcon}>
-                      <LogIn size={17} aria-hidden="true" />
-                    </span>
-
-                    <span>{copy.login}</span>
-
-                    <DirectionArrow size={15} aria-hidden="true" />
-                  </NextLink>
-
-                  <NextLink
-                    href={SIGNUP_PATH}
-                    onClick={closeDesktop}
-                    className={styles.authOption}
-                  >
-                    <span className={styles.authOptionIcon}>
-                      <UserRoundPlus size={17} aria-hidden="true" />
-                    </span>
-
-                    <span>{copy.signup}</span>
-
-                    <DirectionArrow size={15} aria-hidden="true" />
-                  </NextLink>
-                </div>
+                    <UserRound size={16} aria-hidden="true" />
+                    <span>{copy.dashboard}</span>
+                  </span>
+                )}
               </div>
 
               <Link
@@ -539,6 +651,7 @@ function NavigationShell({ pathname }: { pathname: string }) {
             const menu = megaMenus[key];
 
             const opened = openPanel === key;
+            if (!desktopNavEngaged && !opened) return null;
 
             return (
               <div
@@ -631,10 +744,85 @@ function NavigationShell({ pathname }: { pathname: string }) {
         <MobileNavigation
           id={`${uid}-mobile`}
           pathname={pathname}
+          accountName={accountName}
+          onOpenAccount={openAccount}
           onDismiss={closeMobile}
         />
       ) : null}
+      {accountDialog === "account" && accountName && (
+        <AccountDialog
+          name={accountName}
+          onDismiss={closeAccount}
+          onLogout={() => setAccountDialog("logout")}
+        />
+      )}
+      <LogoutConfirmDialog open={accountDialog === "logout"} onClose={closeAccount} locale={locale} />
     </>
+  );
+}
+
+function AccountDialog({ name, onDismiss, onLogout }: {
+  name: string;
+  onDismiss: () => void;
+  onLogout: () => void;
+}) {
+  const { locale, direction, languageTag } = useLanguage();
+  const copy = shellContent[locale].navbar;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const root = document.documentElement;
+    const overflow = root.style.overflow;
+    root.style.overflow = "hidden";
+    dialog.showModal();
+    return () => {
+      dialog.close();
+      root.style.overflow = overflow;
+    };
+  }, []);
+
+  const actionClass = "flex min-h-12 w-full items-center gap-3 border border-line px-4 py-3 text-start text-sm font-bold hover:border-focus hover:bg-surface-soft focus-visible:outline-focus";
+  return (
+    <dialog
+      ref={dialogRef}
+      dir={direction}
+      lang={languageTag}
+      aria-labelledby={titleId}
+      className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(24rem,calc(100%-2rem))] overflow-y-auto border border-line bg-page p-0 text-ink shadow-2xl backdrop:bg-brand-secondary/60"
+      onCancel={(event) => {
+        event.preventDefault();
+        onDismiss();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onDismiss();
+      }}
+    >
+      <div className="p-5 text-start sm:p-6" data-lenis-prevent>
+        <div className="flex items-start justify-between gap-4 border-b border-line pb-4">
+          <div className="min-w-0">
+            <p className="text-sm text-ink-muted">{copy.account}</p>
+            <h2 id={titleId} className="mt-1 text-xl font-bold [overflow-wrap:anywhere]"><bdi>{name}</bdi></h2>
+          </div>
+          <button type="button" aria-label={copy.closeAccount} onClick={onDismiss}
+            className="grid size-11 shrink-0 cursor-pointer place-items-center border border-line hover:border-focus focus-visible:outline-focus">
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
+        <div className="mt-4 grid gap-2">
+          <Link href="/dashboard" className={actionClass} onClick={onDismiss}>
+            <LayoutDashboard size={18} aria-hidden="true" />
+            {copy.dashboard}
+          </Link>
+          <button type="button" className={actionClass} onClick={onLogout}>
+            <LogOut size={18} aria-hidden="true" />
+            {copy.logout}
+          </button>
+        </div>
+      </div>
+    </dialog>
   );
 }
 
@@ -696,11 +884,17 @@ function MobileNavigation({
 
   pathname,
 
+  accountName,
+  onOpenAccount,
+
   onDismiss,
 }: {
   id: string;
 
   pathname: string;
+
+  accountName: string | null | undefined;
+  onOpenAccount: () => void;
 
   onDismiss: () => void;
 }) {
@@ -826,55 +1020,74 @@ function MobileNavigation({
 
       <div className={styles.drawerBody} data-lenis-prevent>
         <div className={styles.drawerIntro}>
-          <span className={styles.drawerEyebrow}>{copy.quickAccess}</span>
-
           <p
             id={`${id}-title`}
             className={styles.drawerTitle}
             role="heading"
             aria-level={2}
           >
-            {copy.choosePath}
+            {copy.navigation}
           </p>
         </div>
 
-        {/* One visible auth trigger; both existing destinations remain accessible. */}
+        {accountName ? (
+          <div className={styles.mobileAuthDisclosure}>
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              onClick={onOpenAccount}
+              className={styles.mobileAuthTrigger}
+            >
+              <span className={styles.mobileAuthIcon}>
+                <UserRound size={19} aria-hidden="true" />
+              </span>
 
-        <details className={styles.mobileAuthDisclosure}>
-          <summary className={styles.mobileAuthTrigger}>
-            <span className={styles.mobileAuthIcon}>
-              <UserRound size={19} aria-hidden="true" />
-            </span>
+              <bdi className={styles.accountName}>{accountName}</bdi>
 
-            <span>
-              {copy.login} / {copy.signup}
-            </span>
-
-            <ChevronDown
-              className={styles.mobileAuthChevron}
-              size={17}
-              aria-hidden="true"
-            />
-          </summary>
-
-          <div className={styles.mobileAuthOptions}>
-            <NextLink href={LOGIN_PATH} onClick={onDismiss}>
-              <LogIn size={17} aria-hidden="true" />
-
-              {copy.login}
-
-              <DirectionArrow size={15} aria-hidden="true" />
-            </NextLink>
-
-            <NextLink href={SIGNUP_PATH} onClick={onDismiss}>
-              <UserRoundPlus size={17} aria-hidden="true" />
-
-              {copy.signup}
-
-              <DirectionArrow size={15} aria-hidden="true" />
-            </NextLink>
+              <DirectionArrow
+                className={styles.mobileAuthChevron}
+                size={17}
+                aria-hidden="true"
+              />
+            </button>
           </div>
-        </details>
+        ) : accountName === null ? (
+          <details className={styles.mobileAuthDisclosure}>
+            <summary className={styles.mobileAuthTrigger}>
+              <span className={styles.mobileAuthIcon}>
+                <UserRound size={19} aria-hidden="true" />
+              </span>
+
+              <span>
+                {copy.login} / {copy.signup}
+              </span>
+
+              <ChevronDown
+                className={styles.mobileAuthChevron}
+                size={17}
+                aria-hidden="true"
+              />
+            </summary>
+
+            <div className={styles.mobileAuthOptions}>
+              <Link href={LOGIN_PATH} onClick={onDismiss}>
+                <LogIn size={17} aria-hidden="true" />
+
+                {copy.login}
+
+                <DirectionArrow size={15} aria-hidden="true" />
+              </Link>
+
+              <Link href={SIGNUP_PATH} onClick={onDismiss}>
+                <UserRoundPlus size={17} aria-hidden="true" />
+
+                {copy.signup}
+
+                <DirectionArrow size={15} aria-hidden="true" />
+              </Link>
+            </div>
+          </details>
+        ) : null}
 
         <nav aria-label={copy.mobileLinks} className={styles.quickLinks}>
           {navigation
@@ -970,8 +1183,6 @@ function MobileNavigation({
       </div>
 
       <div className={styles.drawerFooter}>
-        <p>{copy.conversation}</p>
-
         <Link
           href={getSiteHref(CONSULTATION_PATH, pathname)}
           className={styles.drawerConsult}

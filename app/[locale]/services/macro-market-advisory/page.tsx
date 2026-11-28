@@ -1,79 +1,41 @@
 import type { Metadata } from "next";
-
-import macroEn from "@/config/DNH_Macro_Market_Advisory_Final_EN.json";
-import macroFa from "@/config/DNH_Macro_Market_Advisory_Final_FA.json";
-import { normalizeSiteLocale } from "@/lib/site-language";
-import { getLocalizedAlternates, localizePageMetadata } from "@/lib/site-seo";
 import { ServiceLeadForm } from "@/components/dynamic-forms/ServiceLeadForm";
-import { ServiceDetailPage } from "@/components/static/services/details/ServiceDetailPage";
+
+import { ReviewedContentPage } from "@/components/static/reviewed-pages/ReviewedContentPage";
+import type { ReviewedPageDocument } from "@/components/static/reviewed-pages/reviewedPageTypes";
+import contentEn from "@/config/DNH_Macro_Market_Advisory_Final_EN.json";
+import contentFa from "@/config/DNH_Macro_Market_Advisory_Final_FA.json";
+import { normalizeSiteLocale, type SiteLocale } from "@/lib/site-language";
+import { localizePageMetadata } from "@/lib/site-seo";
 
 const ROUTE = "/services/macro-market-advisory";
+const getContent = (locale: SiteLocale) =>
+  (locale === "fa" ? contentFa : contentEn) as ReviewedPageDocument;
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale: routeLocale } = await params;
-  const locale = normalizeSiteLocale(routeLocale);
-  const alternates = getLocalizedAlternates(ROUTE, locale);
-  const isFa = locale === "fa";
-
-  const title = isFa
-    ? "مشاوره اقتصاد و بازار | تحلیل سناریو برای تصمیم مالی | DNH"
-    : "Macro & Market Advisory | Scenario Analysis for Decisions | DNH";
-
-  const description = isFa
-    ? "مشاوره اقتصاد و بازار DNH برای ترجمه تغییرات تورم، ارز، نقدینگی، سیاست‌های اقتصادی و بازارها به سناریوها و پیامدهای قابل استفاده در تصمیم‌گیری."
-    : "DNH Macro & Market Advisory translates changes in inflation, currencies, liquidity, policy and markets into scenarios and implications for real financial decisions.";
-
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = getContent(locale);
   return localizePageMetadata(
-    {
-      title,
-      description,
-      alternates,
-      openGraph: {
-        type: "website",
-        locale: isFa ? "fa_IR" : "en_US",
-        alternateLocale: isFa ? "en_US" : "fa_IR",
-        url: alternates.canonical,
-        title,
-        description,
-      },
-    },
+    { title: content.seo.title, description: content.seo.description },
     ROUTE,
     locale,
   );
 }
 
-export default async function MacroMarketAdvisoryPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
   return (
     <>
-    <ServiceDetailPage
-      faData={macroFa}
-      enData={macroEn}
-      media={{
-        1: {
-          src: "/assets/images/macro-market-advisory-hero.webp",
-          mobileSrc: "/assets/images/macro-market-advisory-hero.webp",
-          alt: "Macro and market advisory for financial decision-making",
-          objectPosition: "center center",
-        },
-        6: {
-          src: "/assets/images/from-macro-conditions-to-financial-decisions.webp",
-          mobileSrc:
-            "/assets/images/from-macro-conditions-to-financial-decisions.webp",
-          alt: "Economic environment and market implications assessment",
-          objectPosition: "center center",
-        },
-      }}
-      ctaTargets={{
-        primary: "/financial-decision-assessment",
-        secondary: "/request-strategic-consultation",
-      }}
-    />
-    <ServiceLeadForm serviceKey="macro-market-advisory" routeLocale={locale} />
+      <ReviewedContentPage content={getContent(locale)} locale={locale} />
+      <ServiceLeadForm serviceKey="macro-market-advisory" routeLocale={locale} />
     </>
   );
 }

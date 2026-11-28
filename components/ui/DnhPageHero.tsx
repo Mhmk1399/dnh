@@ -120,12 +120,13 @@ function HeroDescription({
 
   const descriptionId = `${id}-description`;
   const height = expanded || !isOverflowing ? fullHeight : shortHeight;
+  const isCollapsed = isOverflowing && !expanded;
 
   return (
     <div className="mt-5 max-w-[78ch] border-s-2 border-brand-accent/70 ps-4 sm:mt-7 sm:ps-5 lg:mt-8">
       <div
         id={descriptionId}
-        className="overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none"
+        className="relative overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none"
         style={{ maxHeight: height === undefined ? undefined : `${height}px` }}
       >
         <div
@@ -133,11 +134,37 @@ function HeroDescription({
           className={`space-y-3 text-start text-[13px] font-normal text-white/80 sm:text-[15px] lg:text-[16px] ${
             direction === "rtl" ? "leading-[2]" : "leading-[1.75]"
           }`}
+          style={
+            isCollapsed
+              ? {
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.92) 62%, rgba(0,0,0,.62) 75%, rgba(0,0,0,.22) 88%, transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.92) 62%, rgba(0,0,0,.62) 75%, rgba(0,0,0,.22) 88%, transparent 100%)",
+                }
+              : undefined
+          }
         >
           {paragraphs.map((paragraph) => (
             <p key={paragraph.id}>{paragraph.text}</p>
           ))}
         </div>
+        {isOverflowing ? (
+          <span
+            aria-hidden="true"
+            className={`pointer-events-none absolute -inset-x-3 bottom-0 h-24 transition-opacity duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:-inset-x-5 sm:h-28 lg:h-32 motion-reduce:transition-none ${
+              expanded ? "opacity-0" : "opacity-100"
+            }`}
+            style={{
+              backgroundImage:
+                "linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--dnh-secondary) 7%, transparent) 25%, color-mix(in srgb, var(--dnh-secondary) 20%, transparent) 48%, color-mix(in srgb, var(--dnh-secondary) 42%, transparent) 70%, color-mix(in srgb, var(--dnh-secondary) 62%, transparent) 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)",
+            }}
+          />
+        ) : null}
       </div>
       {isOverflowing && (
         <button
@@ -260,7 +287,6 @@ export function DnhPageHero({
             sizes={mobileImage.sizes}
           />
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img {...desktopImage} alt={media?.alt ?? ""} />
       </picture>
     );

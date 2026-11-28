@@ -22,13 +22,13 @@
       {
         "number": "۰۱",
         "label": "تلفن دفتر",
-        "value": "021 9100 0000",
+        "value": "۰۲۱ ۹۱۰۰ ۰۰۰۰",
         "direction": "ltr"
       },
       {
         "number": "۰۲",
         "label": "شماره همراه",
-        "value": "0912 000 0000",
+        "value": "۰۹۱۲ ۰۰۰ ۰۰۰۰",
         "direction": "ltr"
       },
       {
@@ -53,17 +53,17 @@
     "stepLabel": "مرحله",
     "steps": [
       {
-        "number": "01",
+        "number": "۰۱",
         "title": "شرح مسئله",
         "description": "موضوع، زمینه تصمیم و انتظار خود از گفت‌وگو را کوتاه و روشن ثبت کنید."
       },
       {
-        "number": "02",
+        "number": "۰۲",
         "title": "بررسی اولیه",
         "description": "درخواست از نظر موضوع، فوریت و تناسب با خدمات مشاوره‌ای DNH ارزیابی می‌شود."
       },
       {
-        "number": "03",
+        "number": "۰۳",
         "title": "پیگیری مناسب",
         "description": "در صورت امکان همکاری، مسیر و زمان‌بندی گفت‌وگوی بعدی با شما هماهنگ می‌شود."
       }
@@ -80,7 +80,7 @@
         "label": "نام و نام خانوادگی",
         "placeholder": "مثلاً آرمان احمدی"
       },
-      "phone": { "label": "شماره موبایل", "placeholder": "09xxxxxxxxx" },
+      "phone": { "label": "شماره موبایل", "placeholder": "۰۹xxxxxxxxx" },
       "email": {
         "label": "ایمیل",
         "placeholder": "name@example.com",

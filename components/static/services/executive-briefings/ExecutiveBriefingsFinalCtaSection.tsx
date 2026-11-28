@@ -1,303 +1,135 @@
-import { ArrowLeft, ArrowUpLeft } from "lucide-react";
+"use client";
 
+import { useState, type FormEvent } from "react";
+import { ArrowLeft, ArrowRight, LoaderCircle, ShieldCheck } from "lucide-react";
+
+import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
 import { ActionButton } from "@/components/ui/ActionButton";
+import { siteToast } from "@/components/ui/siteToast";
+import type { ExecutiveBriefingSection } from "./executiveBriefingsTypes";
 
-/* =============================================================================
-   EXECUTIVE BRIEFINGS — FINAL CTA
+type ApiResult = {
+  message?: string;
+  reference?: string;
+  errors?: Record<string, string>;
+};
 
-   Dark
-   Executive
-   Compact
-   No decorative visual
-============================================================================= */
+const fieldClass =
+  "mt-2 min-h-12 w-full border border-line bg-page px-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-muted/55 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/15";
 
-export function ExecutiveBriefingsFinalCtaSection() {
+export function ExecutiveBriefingsFinalCtaSection({
+  section,
+  rtl,
+}: {
+  section: ExecutiveBriefingSection;
+  rtl: boolean;
+}) {
+  const copy = section.form;
+  const [pending, setPending] = useState(false);
+  const [result, setResult] = useState<(ApiResult & { ok: boolean }) | null>(null);
+  const Arrow = rtl ? ArrowLeft : ArrowRight;
+
+  if (!copy) return null;
+  const errorMessage = copy.error_message;
+  const successMessage = copy.success_message;
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    setResult(null);
+    const form = event.currentTarget;
+
+    try {
+      const response = await fetch("/api/executive-briefing-requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": rtl ? "fa" : "en",
+        },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const payload = (await response.json()) as ApiResult;
+      const message = payload.message || (response.ok ? successMessage : errorMessage);
+      setResult({ ...payload, message, ok: response.ok });
+      if (response.ok) {
+        siteToast.success(message);
+        form.reset();
+      } else {
+        siteToast.error(message);
+      }
+    } catch {
+      siteToast.error(errorMessage);
+      setResult({ ok: false, message: errorMessage });
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
-    <section
-      id="executive-briefings-cta"
-      dir="rtl"
-      aria-labelledby="executive-briefings-cta-title"
-      className="
-        relative
-        isolate
-        scroll-mt-24
-        overflow-hidden
+    <section id={section.id} aria-labelledby={`${section.id}-title`} className="scroll-mt-24 border-b border-white/10 bg-brand-secondary py-14 text-white sm:py-18 lg:py-24">
+      <div className="dnh-site-shell">
+        <header className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16">
+          <div>
+            <p className="flex items-center gap-3 text-[12px] font-bold leading-7 text-white/85 sm:text-[13px]"><span aria-hidden="true" className="h-[2px] w-9 bg-brand-primary" />{section.eyebrow}</p>
+            <h2 id={`${section.id}-title`} className="mt-4 max-w-[31ch] text-pretty text-[clamp(1.85rem,6.5vw,3.2rem)] font-black leading-[1.5] tracking-[-0.035em] text-white sm:leading-[1.4]">{section.heading}</h2>
+          </div>
+          <div className="max-w-[76ch] space-y-2 border-s-2 border-brand-primary/70 ps-5 text-white/75">
+            {section.paragraphs?.map((paragraph, index) => <p key={`${section.id}-p-${index}`} className="text-start text-[14px] leading-[2] sm:text-[16px]">{paragraph}</p>)}
+          </div>
+        </header>
 
-        bg-[#022f3e]
-        text-white
+        <div className="mt-10 grid gap-px bg-white/15 lg:grid-cols-[minmax(17rem,.34fr)_minmax(0,.66fr)]">
+          <aside className="bg-white/[.045] p-5 sm:p-7 lg:p-8">
+            <ShieldCheck aria-hidden="true" className="size-9 text-brand-primary" strokeWidth={1.5} />
+            <h3 className="mt-6 text-[22px] font-black leading-[1.65] text-white">{copy.title}</h3>
+            <p className="mt-4 text-start text-[14px] leading-[2] text-white/70">{copy.intro}</p>
+            <p className="mt-6 border-s-2 border-brand-primary ps-4 text-start text-[13px] leading-[1.9] text-white/70">{copy.sensitive_note}</p>
+            <Link href={copy.privacy_href} className="mt-6 inline-flex min-h-11 items-center border-b border-brand-primary text-[13px] font-bold text-brand-primary transition-colors hover:text-white">{copy.privacy_label}</Link>
+          </aside>
 
-        py-20
-
-        sm:scroll-mt-28
-        sm:py-24
-
-        lg:py-24
-      "
-    >
-      <FinalBackground />
-
-      <div
-        className="
-          dnh-site-shell
-          relative
-          z-10
-
-          mx-auto
-          w-full
-          max-w-[1536px]
-
-          px-5
-          sm:px-8
-          lg:px-12
-          xl:px-16
-          2xl:px-20
-        "
-      >
-        
-
-        {/* ===========================================================
-            MAIN
-        ============================================================ */}
-
-        <div
-          className="
-            grid
-            gap-10
-
-            lg:grid-cols-[1fr_auto]
-            lg:items-end
-            lg:gap-16
-          "
-        >
-          {/* COPY */}
-
-          <div className="max-w-[980px]">
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-3
-              "
-            >
-              <span aria-hidden="true" className="h-px w-9 bg-brand-accent" />
-
-              <p
-                className="
-                  text-[13px]
-                  font-black
-
-                  text-white/62
-                "
-              >
-                قدم بعدی
-              </p>
+          <form onSubmit={submit} noValidate className="bg-page p-5 text-ink sm:p-7 lg:p-9">
+            <input name="faxNumber" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="min-w-0">
+                <span className="flex items-center justify-between gap-3 text-[13px] font-black text-ink">{copy.fields.contact}<small className="text-[10px] font-bold text-ink-muted">{copy.required_label}</small></span>
+                <input name="contact" required dir="ltr" autoComplete="email" placeholder={copy.placeholders.contact} className={`${fieldClass} text-left`} aria-invalid={Boolean(result?.errors?.contact) || undefined} />
+                {result?.errors?.contact ? <span className="mt-1 block text-[11px] text-red-700">{result.errors.contact}</span> : null}
+              </label>
+              <label className="min-w-0">
+                <span className="flex items-center justify-between gap-3 text-[13px] font-black text-ink">{copy.fields.role}<small className="text-[10px] font-bold text-ink-muted">{copy.required_label}</small></span>
+                <input name="role" required maxLength={120} placeholder={copy.placeholders.role} className={fieldClass} aria-invalid={Boolean(result?.errors?.role) || undefined} />
+                {result?.errors?.role ? <span className="mt-1 block text-[11px] text-red-700">{result.errors.role}</span> : null}
+              </label>
+              <label className="min-w-0 sm:col-span-2">
+                <span className="flex items-center justify-between gap-3 text-[13px] font-black text-ink">{copy.fields.urgency}<small className="text-[10px] font-bold text-ink-muted">{copy.required_label}</small></span>
+                <select name="urgency" required defaultValue="" className={fieldClass} aria-invalid={Boolean(result?.errors?.urgency) || undefined}>
+                  <option value="" disabled>{copy.fields.urgency}</option>
+                  {copy.urgency_options.map((option) => <option key={option} value={option}>{option}</option>)}
+                </select>
+                {result?.errors?.urgency ? <span className="mt-1 block text-[11px] text-red-700">{result.errors.urgency}</span> : null}
+              </label>
+              <label className="min-w-0 sm:col-span-2">
+                <span className="flex items-center justify-between gap-3 text-[13px] font-black text-ink">{copy.fields.description}<small className="text-[10px] font-bold text-ink-muted">{copy.required_label}</small></span>
+                <textarea name="description" required minLength={10} maxLength={1600} rows={6} placeholder={copy.placeholders.description} className={`${fieldClass} resize-y py-3`} aria-invalid={Boolean(result?.errors?.description) || undefined} />
+                {result?.errors?.description ? <span className="mt-1 block text-[11px] text-red-700">{result.errors.description}</span> : null}
+              </label>
             </div>
 
-            <h2
-              id="executive-briefings-cta-title"
-              className="
-                max-w-[960px]
-                [text-wrap:balance]
+            {result?.message ? (
+              <div role="status" className={`mt-5 border-s-[3px] p-4 text-[13px] font-bold leading-[1.9] ${result.ok ? "border-emerald-600 bg-emerald-50 text-emerald-900" : "border-red-600 bg-red-50 text-red-900"}`}>
+                {result.message}{result.reference ? <bdi className="ms-2" dir="ltr">{result.reference}</bdi> : null}
+              </div>
+            ) : null}
 
-                text-[31px]
-                font-black
-                leading-[1.72]
-                tracking-[-0.05em]
-
-                text-white
-
-                sm:text-[39px]
-
-                lg:text-[47px]
-                lg:leading-[1.58]
-
-                xl:text-[51px]
-              "
-            >
-              اگر یک موضوع مهم نیاز به جمع‌بندی در سطح مدیریت ارشد دارد،{" "}
-              <span className="text-brand-accent">
-                آن را متمرکز روی میز تصمیم بگذارید.
-              </span>
-            </h2>
-
-            <p
-              className="
-                mt-6
-                max-w-[730px]
-
-                text-[15px]
-                font-medium
-                leading-[2.1]
-
-                text-white/52
-
-                sm:text-[16px]
-              "
-            >
-              بریفینگ اجرایی برای زمانی است که تصمیم‌گیرنده باید بدون پراکندگی،
-              نکات کلیدی، سناریوهای مرتبط و مسیرهای قابل بررسی را در یک تصویر
-              حرفه‌ای ببیند.
-            </p>
-          </div>
-
-          {/* ACTIONS */}
-
-          <div
-            className="
-              flex
-              w-full
-              flex-col
-              gap-3
-
-              lg:w-auto
-              lg:min-w-[305px]
-            "
-          >
-            <ActionButton
-              href="/financial-decision-assessment"
-              variant="assessment"
-              size="lg"
-              icon={ArrowLeft}
-              className="
-                w-full
-
-                bg-brand-accent
-                text-white
-
-                shadow-[0_18px_48px_rgba(252,133,2,.18)]
-
-                hover:-translate-y-0.5
-                hover:bg-[#eb7c01]
-
-                lg:min-w-[305px]
-              "
-            >
-              شروع ارزیابی اولیه تصمیم مالی
-            </ActionButton>
-
-            <ActionButton
-              href="/request-strategic-consultation"
-              variant="secondary"
-              size="lg"
-              icon={ArrowUpLeft}
-              className="
-                w-full
-
-                border-white/18
-                bg-white/[0.025]
-
-                text-white
-
-                shadow-none
-
-                hover:-translate-y-0.5
-                hover:border-white/35
-                hover:bg-white/[0.055]
-                hover:text-white
-
-                lg:min-w-[305px]
-              "
-            >
-              درخواست بریفینگ اجرایی
-            </ActionButton>
-          </div>
-        </div>
-
-        {/* ===========================================================
-            CLOSING STATEMENT
-        ============================================================ */}
-
-        <div
-          className="
-            mt-14
-
-            flex
-            items-start
-            gap-4
-
-            border-t
-            border-white/[0.09]
-
-            pt-5
-
-            lg:mt-16
-          "
-        >
-          <span
-            aria-hidden="true"
-            className="
-              mt-[11px]
-
-              h-[11px]
-              w-[11px]
-
-              shrink-0
-
-              bg-brand-accent
-            "
-          />
-
-          <p
-            className="
-              max-w-[790px]
-
-              text-[14px]
-              font-medium
-              leading-7
-
-              text-white/42
-
-              sm:text-[15px]
-            "
-          >
-            هدف، افزایش حجم گزارش نیست؛{" "}
-            <span className="text-white/68">
-              هدف، روشن‌تر شدن نکات کلیدی، سناریوها و مسیرهای قابل بررسی برای
-              ادامه تصمیم است.
-            </span>
-          </p>
+            <div className="mt-6 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-[58ch] text-start text-[12px] leading-[1.9] text-ink-muted">{section.note}</p>
+              <ActionButton type="submit" disabled={pending} loading={pending} variant="primary" shape="square" size="lg" icon={pending ? LoaderCircle : Arrow} className="shrink-0 shadow-none hover:shadow-none">
+                {pending ? copy.pending_label : copy.submit_label}
+              </ActionButton>
+            </div>
+          </form>
         </div>
       </div>
     </section>
-  );
-}
-
-/* =============================================================================
-   BACKGROUND
-============================================================================= */
-
-function FinalBackground() {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 70% 44%,rgba(22,115,148,.22),transparent 31%),radial-gradient(circle at 18% 78%,rgba(252,133,2,.025),transparent 18%),linear-gradient(116deg,#022936 0%,#033847 52%,#022d3a 100%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-
-          opacity-[0.045]
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,rgba(255,255,255,.08) 1px,transparent 1px)",
-          backgroundSize: "118px 100%",
-        }}
-      />
-    </>
   );
 }

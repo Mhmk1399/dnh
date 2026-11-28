@@ -1,22 +1,21 @@
-"use client";
-
 import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
   Banknote,
   Building2,
+  Clock3,
   Coins,
   Droplets,
   Gem,
   Landmark,
+  Layers3,
+  ShieldAlert,
   TrendingUp,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type WholeWealthContent = {
   id: "whole-wealth-view";
@@ -44,20 +43,13 @@ const assetIcons = {
   "fixed-income": Banknote,
   liquidity: Droplets,
   alternatives: Landmark,
+  "asset-mix": Layers3,
+  "capital-risk": ShieldAlert,
+  "financial-horizon": Clock3,
 } as const;
-const assetImages = [
-  "/assets/images/private-wealth-strategy .webp",
-  "/assets/images/macro-market-advisory .webp",
-  "/assets/images/portfolio-intelligence .webp",
-  "/assets/images/complex-financial-structure .png",
-  "/assets/images/strategic-financial-advisory .webp",
-  "/assets/images/risk-management-wealth-protection .webp",
-  "/assets/images/executive-briefings .webp",
-];
-
-export function HomeWholeWealthView() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeWholeWealthView({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "whole-wealth-view" && section.type === "asset_roles",
@@ -79,10 +71,9 @@ export function HomeWholeWealthView() {
     >
       <div className="dnh-site-shell grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.82fr)] lg:grid-rows-[auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-1 lg:row-start-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-          
           </div>
           <h2
             id="home-whole-wealth-heading"
@@ -110,20 +101,18 @@ export function HomeWholeWealthView() {
           </p>
         </header>
 
-        <div className="relative aspect-[4/5] min-h-[480px] overflow-hidden border border-line bg-surface-soft lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[820px] lg:aspect-auto">
+        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface-soft lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:h-full lg:min-h-[820px] lg:aspect-auto">
           <Image
             src="/assets/images/home-whole-wealth-heading.webp"
-            alt="home-whole-wealth"
+            alt=""
             fill
             sizes="(max-width: 1023px) calc(100vw - 24px), 38vw"
             className="object-cover object-center"
           />
-        
-       
         </div>
 
-        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3   lg:col-start-1 lg:row-start-2 lg:mt-7">
-          {content.assets.map((asset, index) => {
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mt-7">
+          {content.assets.map((asset) => {
             const Icon =
               assetIcons[asset.id as keyof typeof assetIcons] ?? Landmark;
             return (
@@ -131,11 +120,10 @@ export function HomeWholeWealthView() {
                 key={asset.id}
                 className="group min-w-0 border border-line  transition-colors duration-300 hover:border-brand-primary motion-reduce:transition-none"
               >
-              
                 <div className="relative p-4 pt-7 sm:p-5 sm:pt-8">
                   <span
                     aria-hidden="true"
-                    className="absolute start-4 top-0 flex size-10 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-primary sm:start-5"
+                    className="absolute start-4 top-0 flex size-10 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-accent sm:start-5"
                   >
                     <Icon size={20} strokeWidth={1.6} />
                   </span>
@@ -156,11 +144,15 @@ export function HomeWholeWealthView() {
         </div>
 
         <footer className="grid min-w-0 gap-4 border border-line bg-surface-soft p-4 sm:p-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:col-start-1 lg:row-start-3 lg:mt-5">
-          <p
-            className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
-          >
-            {content.closing}
-          </p>
+          {content.closing ? (
+            <p
+              className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
+            >
+              {content.closing}
+            </p>
+          ) : (
+            <span aria-hidden="true" />
+          )}
           {content.ctas.map((cta) => (
             <ActionButton
               key={cta.id}
@@ -171,7 +163,7 @@ export function HomeWholeWealthView() {
               icon={Arrow}
               iconPosition="end"
               dir={direction}
-              className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto"
+              className="w-full shadow-none hover:shadow-none sm:w-auto"
             >
               {cta.label}
             </ActionButton>

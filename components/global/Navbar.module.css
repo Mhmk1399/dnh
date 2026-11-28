@@ -76,7 +76,7 @@
 
   border: 1px solid rgba(255, 255, 255, 0.22);
 
-  background: rgba(255, 255, 255, 0.075);
+  background: color-mix(in srgb, var(--dnh-secondary) 82%, transparent);
 
   color: var(--nav-hero-text);
 
@@ -300,7 +300,7 @@
 .header[data-scrolled="true"] .navItem[aria-expanded="true"] {
   background: var(--nav-soft);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .chevron {
@@ -374,13 +374,29 @@
 .header[data-scrolled="true"] .languageSwitch:hover {
   background: var(--nav-soft);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .authArea {
   position: relative;
 
   flex: 0 0 auto;
+}
+
+.accountName {
+  min-width: 0;
+  max-inline-size: 13ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+button.mobileAuthTrigger {
+  inline-size: 100%;
+}
+
+.mobileAuthTrigger .accountName {
+  max-inline-size: none;
 }
 
 .authTrigger {
@@ -435,7 +451,7 @@
 
   background: var(--nav-soft);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .authPopover {
@@ -538,7 +554,7 @@
 
   background: var(--nav-soft);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .authOption > svg {
@@ -548,7 +564,7 @@
 .authOption:hover {
   background: var(--nav-soft);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .consultButton {
@@ -611,11 +627,12 @@
 
   background: var(--nav-primary);
 
-  color: #fff;
+  color: var(--nav-ink);
 }
 
 .header[data-scrolled="true"] .consultButton:hover {
   background: var(--nav-night);
+  color: white;
 }
 
 .mobileActions {
@@ -984,7 +1001,7 @@
 
   background: var(--nav-paper);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 
   transition:
     border-color 200ms ease,
@@ -998,7 +1015,7 @@
 
   background: var(--nav-primary);
 
-  color: #fff;
+  color: var(--nav-ink);
 }
 
 .cardCopy {
@@ -1082,7 +1099,7 @@
 
   gap: 8px;
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 
   font-weight: 800;
 }
@@ -1202,7 +1219,7 @@
 .drawerHeader .languageSwitch {
   border: 1px solid var(--nav-line);
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .drawerHeader .languageSwitch:hover {
@@ -1234,7 +1251,7 @@
 .closeButton:hover {
   background: var(--nav-primary);
 
-  color: #fff;
+  color: var(--nav-ink);
 }
 
 .drawerBody {
@@ -1342,7 +1359,7 @@
 
   background: var(--nav-primary);
 
-  color: #fff;
+  color: var(--nav-ink);
 }
 
 .mobileAuthChevron {
@@ -1386,7 +1403,7 @@
 }
 
 .mobileAuthOptions a svg:first-child {
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .mobileAuthOptions a svg:last-child {
@@ -1449,7 +1466,7 @@
 .quickLinks svg {
   flex: 0 0 auto;
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .mobileGroups {
@@ -1496,7 +1513,7 @@
 
 .accordionTrigger:hover,
 .accordionTrigger[aria-expanded="true"] {
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 }
 
 .accordionTitle {
@@ -1612,7 +1629,7 @@
 
   padding: 9px 12px;
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 
   font-size: 12px;
 
@@ -1664,7 +1681,7 @@
 
   background: var(--nav-primary);
 
-  color: #fff;
+  color: var(--nav-ink);
 
   font-size: 13px;
 
@@ -1687,6 +1704,7 @@
 
 .drawerConsult:hover {
   background: var(--nav-night);
+  color: white;
 }
 
 .assessmentLink {
@@ -1702,7 +1720,7 @@
 
   margin-top: 6px;
 
-  color: var(--nav-primary);
+  color: var(--nav-accent);
 
   font-size: 11.5px;
 
@@ -1801,12 +1819,12 @@
     background: rgba(255, 255, 255, 0.16);
   }
 
-  .header[data-scrolled="true"] .mobileConsult {
+.header[data-scrolled="true"] .mobileConsult {
     border-color: var(--nav-line);
 
     background: var(--nav-soft);
 
-    color: var(--nav-primary);
+    color: var(--nav-accent);
   }
 
   .menuToggle {
@@ -1841,16 +1859,17 @@
     background: rgba(255, 255, 255, 0.2);
   }
 
-  .header[data-scrolled="true"] .menuToggle {
+.header[data-scrolled="true"] .menuToggle {
     border-color: var(--nav-primary);
 
     background: var(--nav-primary);
 
-    color: #fff;
+    color: var(--nav-ink);
   }
 
-  .header[data-scrolled="true"] .menuToggle:hover {
+.header[data-scrolled="true"] .menuToggle:hover {
     background: var(--nav-night);
+    color: white;
   }
 }
 
@@ -1905,12 +1924,6 @@
 }
 
 @media (max-width: 400px) {
-  .mobileConsultLabel,
-  .menuLabel {
-    display: none;
-  }
-
-  .mobileConsult,
   .menuToggle {
     width: 43px;
 
@@ -1933,7 +1946,6 @@
     width: 99px;
   }
 
-  .mobileConsult,
   .menuToggle {
     width: 40px;
 
@@ -2138,28 +2150,29 @@
   padding-inline: 24px;
 }
 .drawerBody {
-  padding: 28px 23px 32px;
+  padding: 18px 16px 24px;
 }
 .drawerTitle {
-  font-size: 24px;
+  margin: 0;
+  font-size: 18px;
 }
 .mobileAuthDisclosure {
   overflow: hidden;
 }
 
 .quickLinks {
-  gap: 10px;
-  margin-top: 25px;
+  gap: 6px;
+  margin-top: 14px;
 }
 .quickLinks a {
-  min-height: 60px;
-  padding-inline: 15px;
+  min-height: 46px;
+  padding-inline: 10px;
 }
 .mobileGroups {
-  margin-top: 30px;
+  margin-top: 16px;
 }
 .accordionTrigger {
-  min-height: 68px;
+  min-height: 52px;
 }
 .navigationCard[data-compact="true"] {
   min-height: 65px;
@@ -2190,7 +2203,7 @@
 }
 @media (max-width: 400px) {
   .menuToggle {
-    width: 43px;
-    min-width: 43px;
+    width: 44px;
+    min-width: 44px;
   }
 }

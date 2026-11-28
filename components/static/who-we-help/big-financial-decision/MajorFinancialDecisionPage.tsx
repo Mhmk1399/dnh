@@ -1,12 +1,11 @@
 import type { SiteLocale } from "@/lib/site-language";
-import { MajorDecisionClaritySection } from "./MajorDecisionClaritySection";
-import { MajorDecisionDimensionsSection } from "./MajorDecisionDimensionsSection";
+import { PageSectionIndex } from "@/components/static/reviewed-pages/PageSectionIndex";
+import {
+  MajorDecisionComparisonSection,
+  MajorDecisionContentSection,
+} from "./MajorDecisionContentSection";
 import { MajorDecisionDnhSection } from "./MajorDecisionDnhSection";
 import { MajorDecisionFinalCtaSection } from "./MajorDecisionFinalCtaSection";
-import { MajorDecisionOptionsLedgerSection } from "./MajorDecisionOptionsLedgerSection";
-import { MajorDecisionDownsideBoundarySection } from "./MajorDecisionDownsideBoundarySection";
-import { MajorDecisionLiquidityRunwaySection } from "./MajorDecisionLiquidityRunwaySection";
-import { MajorDecisionScenarioFieldSection } from "./MajorDecisionScenarioFieldSection";
 import { MajorFinancialDecisionHero } from "./MajorFinancialDecisionHero";
 import type {
   MajorDecisionDocument,
@@ -30,42 +29,9 @@ function renderSection(
           rtl={rtl}
         />
       );
-    case "decision-dimensions":
+    case "assessment-comparison":
       return (
-        <MajorDecisionDimensionsSection
-          key={section.id}
-          section={section}
-          locale={locale}
-          rtl={rtl}
-        />
-      );
-    case "options-tradeoffs":
-      return (
-        <MajorDecisionOptionsLedgerSection
-          key={section.id}
-          section={section}
-          rtl={rtl}
-        />
-      );
-    case "downside-risk":
-      return (
-        <MajorDecisionDownsideBoundarySection
-          key={section.id}
-          section={section}
-          rtl={rtl}
-        />
-      );
-    case "liquidity-timing":
-      return (
-        <MajorDecisionLiquidityRunwaySection
-          key={section.id}
-          section={section}
-          rtl={rtl}
-        />
-      );
-    case "scenario-analysis":
-      return (
-        <MajorDecisionScenarioFieldSection
+        <MajorDecisionComparisonSection
           key={section.id}
           section={section}
           rtl={rtl}
@@ -75,7 +41,7 @@ function renderSection(
       return (
         <MajorDecisionDnhSection key={section.id} section={section} rtl={rtl} />
       );
-    case "final-cta":
+    case "assessment-form":
       return (
         <MajorDecisionFinalCtaSection
           key={section.id}
@@ -85,7 +51,7 @@ function renderSection(
       );
     default:
       return (
-        <MajorDecisionClaritySection
+        <MajorDecisionContentSection
           key={section.id}
           section={section}
           rtl={rtl}
@@ -102,9 +68,15 @@ export function MajorFinancialDecisionPage({
   locale: SiteLocale;
 }) {
   const rtl = content.direction === "rtl";
+  const sections = [...content.sections].sort((a, b) => a.order - b.order);
+  const body = sections.filter((section) => section.type !== "hero");
+  const hero = sections.find((section) => section.type === "hero");
+
   return (
-    <main dir={content.direction} className={rtl ? "[&_p]:text-justify" : ""}>
-      {content.sections.map((section) => renderSection(section, locale, rtl))}
-    </main>
+    <div dir={content.direction} className="[&>section[id]]:scroll-mt-24 lg:[&>section[id]]:scroll-mt-28">
+      {hero && renderSection(hero, locale, rtl)}
+      <PageSectionIndex sections={body} locale={locale} />
+      {body.map((section) => renderSection(section, locale, rtl))}
+    </div>
   );
 }

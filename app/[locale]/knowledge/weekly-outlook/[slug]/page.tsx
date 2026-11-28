@@ -12,31 +12,58 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug, locale } = await params;
-  const report = await getPublishedWeeklyOutlookReport(slug);
+  const { slug, locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const report = await getPublishedWeeklyOutlookReport(slug, locale);
 
   if (!report) {
-    return localizePageMetadata({
-      title: "گزارش پیدا نشد",
-      robots: { index: false, follow: false },
-    }, `/knowledge/weekly-outlook/${slug}`, normalizeSiteLocale(locale));
+    return {
+      title: locale === "fa" ? "گزارش پیدا نشد" : "Report unavailable",
+      robots: { index: false, follow: true },
+      alternates: null,
+    };
   }
 
-  return localizePageMetadata({
-    title: report.seoTitle || report.title,
-    description: report.seoDescription || report.excerpt,
-  }, `/knowledge/weekly-outlook/${slug}`, normalizeSiteLocale(locale));
+  return localizePageMetadata(
+    {
+      title: report.seoTitle || report.title,
+      description: report.seoDescription || report.excerpt,
+      openGraph: {
+        type: "article",
+        publishedTime: report.publishedAt ?? undefined,
+        modifiedTime: report.updatedAt,
+        images: report.coverImage
+          ? [
+              {
+                url: report.coverImage,
+                alt: report.coverImageAlt || report.title,
+              },
+            ]
+          : undefined,
+      },
+      twitter: report.coverImage
+        ? {
+            card: "summary_large_image",
+            images: [report.coverImage],
+          }
+        : undefined,
+    },
+    `/knowledge/weekly-outlook/${slug}`,
+    locale,
+    report.availableLocales,
+  );
 }
 
 export default async function WeeklyOutlookReportPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const report = await getPublishedWeeklyOutlookReport(slug);
+  const { slug, locale: routeLocale } = await params;
+  const locale = normalizeSiteLocale(routeLocale);
+  const report = await getPublishedWeeklyOutlookReport(slug, locale);
 
   if (!report) notFound();
 
-  return <WeeklyOutlookReportView report={report} />;
+  return <WeeklyOutlookReportView locale={locale} report={report} />;
 }

@@ -1,0 +1,32 @@
+{
+  "fa": {
+    "invalid": "لطفاً فیلدهای مشخص‌شده را بررسی کنید.",
+    "required": "تکمیل این فیلد الزامی است.",
+    "choice": "یکی از گزینه‌های موجود را انتخاب کنید.",
+    "length": "طول متن باید بین {min} و {max} نویسه باشد.",
+    "email": "یک ایمیل معتبر وارد کنید.",
+    "phone": "یک شماره تماس معتبر وارد کنید.",
+    "pending": "در حال ثبت درخواست…",
+    "contact": "پیام شما ثبت شد.",
+    "consultation": "درخواست مشاوره شما ثبت شد.",
+    "unavailable": "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید.",
+    "reference": "کد پیگیری",
+    "phoneLabel": "شماره تماس",
+    "messengerLabel": "شماره یا شناسه پیام‌رسان"
+  },
+  "en": {
+    "invalid": "Please check the highlighted fields.",
+    "required": "This field is required.",
+    "choice": "Select one of the available options.",
+    "length": "Use between {min} and {max} characters.",
+    "email": "Enter a valid email address.",
+    "phone": "Enter a valid phone number.",
+    "pending": "Submitting…",
+    "contact": "Your message has been received.",
+    "consultation": "Your consultation request has been recorded.",
+    "unavailable": "Your request could not be saved. Please try again.",
+    "reference": "Reference",
+    "phoneLabel": "Phone number",
+    "messengerLabel": "Messaging app number or handle"
+  }
+}

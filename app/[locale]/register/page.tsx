@@ -7,7 +7,15 @@ import { AuthPage } from "@/components/pages/AuthPage";
 
 const pageMetadata: Metadata = { title: "ثبت‌نام | DNH" };
 export const dynamic = "force-dynamic";
-export default async function RegisterPage() { if (await getCurrentUser()) redirect("/dashboard"); return <AuthPage mode="register" />; }
+export default async function RegisterPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  if (await getCurrentUser()) redirect("/dashboard");
+  const locale = normalizeSiteLocale((await params).locale);
+  return <AuthPage mode="register" locale={locale} />;
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

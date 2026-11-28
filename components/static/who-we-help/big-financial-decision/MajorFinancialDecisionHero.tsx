@@ -3,11 +3,6 @@ import type { SiteLocale } from "@/lib/site-language";
 
 import type { MajorDecisionSection } from "./majorDecisionTypes";
 
-const heroCtaRoutes = [
-  "/financial-decision-assessment",
-  "/request-strategic-consultation",
-] as const;
-
 export function MajorFinancialDecisionHero({
   section,
   locale,
@@ -17,34 +12,35 @@ export function MajorFinancialDecisionHero({
   locale: SiteLocale;
   rtl: boolean;
 }) {
-  const words = section.heading.trim().split(/\s+/);
-
   return (
-    <DnhPageHero
-      id={section.id}
-      direction={rtl ? "rtl" : "ltr"}
-      lang={locale === "fa" ? "fa-IR" : "en"}
-      eyebrow={section.eyebrow}
-      heading={section.heading}
-      headingHighlight={words.slice(-Math.min(rtl ? 4 : 3, words.length)).join(" ")}
-      paragraphs={(section.paragraphs ?? []).map((text, index) => ({
-        id: `${section.id}-paragraph-${index + 1}`,
-        text,
-      }))}
-      ctas={(section.ctas ?? []).map((cta, index) => ({
-        id: `${section.id}-cta-${index + 1}`,
-        label: cta.label,
-        type: index === 0 ? "primary" : "secondary",
-        href: heroCtaRoutes[index] ?? "/financial-decision-assessment",
-      }))}
-      media={{
-        src: "/assets/images/big-financial-decision4.webp",
-        alt:
-          locale === "fa"
-            ? "تصویر تحلیلی برای یک تصمیم مالی بزرگ"
-            : "Analytical context for a major financial decision",
-      }}
-      mediaMode="background"
-    />
+    <>
+      <DnhPageHero
+        id={section.id}
+        direction={rtl ? "rtl" : "ltr"}
+        lang={locale === "fa" ? "fa-IR" : "en"}
+        eyebrow={section.eyebrow}
+        heading={section.heading}
+        headingHighlight={section.heading_highlight}
+        paragraphs={(section.paragraphs ?? []).map((text, index) => ({
+          id: `${section.id}-paragraph-${index + 1}`,
+          text,
+        }))}
+        ctas={(section.ctas ?? []).map((cta) => ({
+          id: cta.id,
+          label: cta.label,
+          type: cta.type,
+          href: cta.href,
+        }))}
+        media={section.media}
+        mediaMode="background"
+      />
+      {section.note ? (
+        <div className="border-b border-line bg-surface-soft py-4 text-ink">
+          <p className="dnh-site-shell border-s-2 border-brand-primary ps-4 text-start text-[13px] font-bold leading-[1.9] text-ink-muted sm:text-[14px]">
+            {section.note}
+          </p>
+        </div>
+      ) : null}
+    </>
   );
 }

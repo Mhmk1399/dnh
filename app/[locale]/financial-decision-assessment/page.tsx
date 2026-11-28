@@ -22,7 +22,7 @@ const page = async ({ params }: PageProps) => {
   const { direction, lang, sections } = pageContent;
 
   return (
-    <main lang={lang} dir={direction}>
+    <div lang={lang} dir={direction}>
       <FinancialDecisionAssessmentHero
         content={sections.hero}
         direction={direction}
@@ -46,7 +46,7 @@ const page = async ({ params }: PageProps) => {
         content={sections.contact}
         direction={direction}
       />
-    </main>
+    </div>
   );
 };
 

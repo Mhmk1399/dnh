@@ -1,48 +1,35 @@
+import type { Metadata } from "next";
+
+import { ReviewedContentPage } from "@/components/static/reviewed-pages/ReviewedContentPage";
+import type { ReviewedPageDocument } from "@/components/static/reviewed-pages/reviewedPageTypes";
+import contentEn from "@/config/DNH_Intelligence_Desk_Final_EN.json";
+import contentFa from "@/config/DNH_Intelligence_Desk_Final_FA.json";
+import { normalizeSiteLocale, type SiteLocale } from "@/lib/site-language";
 import { localizePageMetadata } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
-import { IntelligenceDeskHero } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskHero";
-import { IntelligenceDeskWhatWeMonitor } from "@/components/static/DNH/intelligence-desk/IntelligenceLayersSection";
-import { CurrentIntelligenceSnapshot } from "@/components/static/DNH/intelligence-desk/IntelligenceViewSection";
-import { IntelligenceDeskMacroRiskView } from "@/components/static/DNH/intelligence-desk/StrategicImplicationsSection";
-import { IntelligenceDeskEconomicPressure } from "@/components/static/DNH/intelligence-desk/HighlightedHeading";
-import { IntelligenceDeskAssetPositioning } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskAssetPositioning";
-import { IntelligenceDeskRiskTemperature } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskRiskTemperature";
-import { IntelligenceDeskWeeklyBias } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskWeeklyBias";
-import { IntelligenceDeskWhatToWatch } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskWhatToWatch";
-import { IntelligenceDeskStrategicImplications } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskStrategicImplications";
-import { IntelligenceDeskBoundaries } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskBoundaries";
-import { IntelligenceDeskFinalCTA } from "@/components/static/DNH/intelligence-desk/IntelligenceDeskFinalCTA";
 
-const page = () => {  
-  return (
-    <div>
-      <IntelligenceDeskHero />
-      <CurrentIntelligenceSnapshot />
-      <IntelligenceDeskWhatWeMonitor />
-      <IntelligenceDeskMacroRiskView />
-      <IntelligenceDeskEconomicPressure />
-      <IntelligenceDeskAssetPositioning />
-      <IntelligenceDeskRiskTemperature />
-      <IntelligenceDeskWeeklyBias />
-      <IntelligenceDeskWhatToWatch />
-      <IntelligenceDeskStrategicImplications />
-      <IntelligenceDeskBoundaries />
-      <IntelligenceDeskFinalCTA />
-    </div>
-  );
-};
-
-export default page;
+const ROUTE = "/dnh/intelligence-desk";
+const getContent = (locale: SiteLocale) =>
+  (locale === "fa" ? contentFa : contentEn) as ReviewedPageDocument;
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+}): Promise<Metadata> {
+  const locale = normalizeSiteLocale((await params).locale);
+  const content = getContent(locale);
   return localizePageMetadata(
-    {},
-    "/dnh/intelligence-desk",
-    normalizeSiteLocale(locale),
+    { title: content.seo.title, description: content.seo.description },
+    ROUTE,
+    locale,
   );
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
+  return <ReviewedContentPage content={getContent(locale)} locale={locale} />;
 }

@@ -1,10 +1,12 @@
-import { localizePageMetadata } from "@/lib/site-seo";
-import { normalizeSiteLocale } from "@/lib/site-language";
-export default function KnowledgeCaseStudiesPage() {
-  return null;
-}
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return localizePageMetadata({}, "/knowledge/case-studies", normalizeSiteLocale(locale));
+import { getLocalizedSiteHref, normalizeSiteLocale } from "@/lib/site-language";
+
+export default async function KnowledgeCaseStudiesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const locale = normalizeSiteLocale((await params).locale);
+  redirect(getLocalizedSiteHref("/knowledge/weekly-outlook", locale));
 }

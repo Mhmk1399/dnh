@@ -5,6 +5,7 @@ import { UsersRound } from "lucide-react";
 
 import {
   AdminDataTable,
+  AdminTableCellPair,
   type AdminTableColumn,
 } from "@/components/admin/AdminDataTable";
 import { AdminDynamicForm } from "@/components/admin/AdminDynamicForm";
@@ -12,6 +13,7 @@ import { AdminStatusBadge } from "@/components/admin/AdminStatusBadge";
 import { UserTableActions } from "@/components/admin/users/UserTableActions";
 import { getCurrentUser } from "@/lib/auth";
 import connect from "@/lib/data";
+import { normalizeIranianPhone } from "@/lib/validation";
 import User from "@/models/User";
 
 export const metadata: Metadata = { title: "کاربران | مدیریت DNH" };
@@ -58,15 +60,14 @@ export default async function AdminUsersPage({
     }
 
     if (query.q?.trim()) {
-      const search = query.q
-        .trim()
-        .slice(0, 80)
-        .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const term = query.q.trim().slice(0, 80);
+      const search = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const phone = normalizeIranianPhone(term);
 
       filter.$or = [
         { firstName: { $regex: search, $options: "i" } },
         { lastName: { $regex: search, $options: "i" } },
-        { phone: { $regex: search, $options: "i" } },
+        ...(/^\d+$/.test(phone) ? [{ phone: { $regex: phone } }] : []),
       ];
     }
 
@@ -190,14 +191,14 @@ const userColumns: AdminTableColumn<AdminUserRow>[] = [
     key: "name",
     header: "کاربر",
     cell: (user) => (
-      <div>
-        <p className="text-sm font-black leading-7 text-ink">
+      <AdminTableCellPair>
+        <span className="text-sm font-bold leading-6 text-ink">
           {user.firstName} {user.lastName}
-        </p>
-        <p dir="ltr" className="mt-1 text-left text-[10px] text-ink-muted">
+        </span>
+        <bdi dir="ltr" className="text-[11px] text-ink-muted">
           USR-{user.id.slice(-6).toUpperCase()}
-        </p>
-      </div>
+        </bdi>
+      </AdminTableCellPair>
     ),
   },
   {

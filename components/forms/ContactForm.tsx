@@ -1,10 +1,12 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
 import { FormField } from "@/components/forms/FormField";
 import { FormStatus } from "@/components/forms/FormStatus";
+import { siteToast } from "@/components/ui/siteToast";
+import feedback from "@/config/intake-feedback.json";
 
 export type ContactFormContent = {
   eyebrow: string;
@@ -46,8 +48,6 @@ export function ContactForm({
     null,
   );
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const Arrow = isRTL ? ArrowLeft : ArrowRight;
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
@@ -64,9 +64,17 @@ export function ContactForm({
         body: JSON.stringify(data),
       });
       const payload = (await response.json()) as ApiResult;
-      setResult({ ...payload, ok: response.ok });
-      if (response.ok) form.reset();
+      const message = payload.message || (response.ok ? feedback[isRTL ? "fa" : "en"].contact : content.networkError);
+      setResult({ ...payload, message, ok: response.ok });
+      if (response.ok) {
+        siteToast.success(message);
+        form.reset();
+      } else {
+        siteToast.error(message);
+        if (payload.errors) requestAnimationFrame(() => form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus());
+      }
     } catch {
+      siteToast.error(content.networkError);
       setResult({ ok: false, message: content.networkError });
     } finally {
       setPending(false);
@@ -77,11 +85,11 @@ export function ContactForm({
     <section
       id="contact-form"
       aria-labelledby="contact-form-title"
-      className="scroll-mt-24 bg-page py-16 sm:py-20 lg:py-28"
+      className="scroll-mt-24 bg-page py-10 sm:py-16 lg:py-20"
     >
-      <div className="dnh-site-shell mx-auto grid w-full max-w-[1536px] gap-10 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="dnh-site-shell grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="flex items-center gap-3 text-[13px] font-black text-brand-primary">
+          <p className="flex items-center gap-3 text-[13px] font-black text-brand-accent">
             <span className="h-px w-9 bg-brand-accent" aria-hidden="true" />
             {content.eyebrow}
           </p>
@@ -108,6 +116,8 @@ export function ContactForm({
             aria-hidden="true"
           />
           <form
+            method="post"
+            action="/api/contact"
             onSubmit={submit}
             noValidate
             aria-label={content.formLabel}
@@ -202,9 +212,9 @@ export function ContactForm({
                 variant="primary"
                 size="md"
                 shape="square"
-                 loading={pending}
+                loading={pending}
                 disabled={pending}
-                className="w-full !bg-[#fc8502] !text-[#10242c] hover:!bg-[#d96f00] hover:!text-white focus-visible:!ring-[#fc8502]/35 sm:w-auto sm:min-w-[220px]"
+                className="w-full sm:w-auto sm:min-w-[220px]"
               >
                 {pending ? content.submitting : content.submit}
               </ActionButton>

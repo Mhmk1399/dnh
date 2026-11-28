@@ -234,7 +234,7 @@ export function FrameworkHorizonArchitecture() {
                       transition-colors duration-200
 
                       group-hover:bg-brand-primary
-                      group-hover:text-white
+                      group-hover:text-ink
                     "
                   >
                     <Icon aria-hidden="true" size={20} strokeWidth={1.55} />
@@ -303,8 +303,7 @@ export function FrameworkHorizonArchitecture() {
             {content.closing_question}
           </p>
 
-          <DnhEditorialActions ctas={content.ctas} direction={direction} />
-        </footer>
+         </footer>
       </div>
     </section>
   );

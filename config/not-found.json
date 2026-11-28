@@ -1,0 +1,29 @@
+{
+  "fa": {
+    "title": "صفحه پیدا نشد",
+    "description": "ممکن است نشانی تغییر کرده باشد. از صفحهٔ اصلی شروع کنید یا یکی از بخش‌های زیر را ببینید.",
+    "home": "بازگشت به صفحهٔ اصلی",
+    "linksLabel": "دسترسی به بخش‌های سایت",
+    "services": "خدمات",
+    "knowledge": "دانش و پژوهش",
+    "contact": "تماس با ما",
+    "reportTitle": "گزارش هفتگی پیدا نشد",
+    "reportDescription": "می‌توانید گزارش‌های منتشرشده را در آرشیو هفتگی بخوانید.",
+    "archive": "آرشیو گزارش‌های هفتگی"
+  },
+  "en": {
+    "title": "Page not found",
+    "description": "This address may have changed. Return to the homepage or explore one of the sections below.",
+    "home": "Back to home",
+    "linksLabel": "Explore the site",
+    "services": "Services",
+    "knowledge": "Knowledge & Research",
+    "contact": "Contact",
+    "reportTitle": "Weekly report not found",
+    "reportDescription": "You can browse published reports in the weekly archive.",
+    "archive": "Weekly report archive",
+    "translationTitle": "English edition unavailable",
+    "translationDescription": "You can read the Persian edition of this report or explore other weekly reports.",
+    "persianEdition": "Read the Persian edition"
+  }
+}

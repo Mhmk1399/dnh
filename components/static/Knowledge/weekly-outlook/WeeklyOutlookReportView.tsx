@@ -1,627 +1,224 @@
-import { LocalizedLink as Link } from "@/components/providers/LanguageProvider";
+import Link from "next/link";
 import {
-  Activity,
-  ArrowLeft,
-  ArrowRight,
-  BarChart3,
-  Banknote,
-  CircleDollarSign,
-  Clock3,
-  Eye,
-  ExternalLink,
-  FileText,
-  Landmark,
-  Layers3,
-  LineChart,
-  Quote,
-  ShieldAlert,
-  Sparkles,
-  Target,
-  TrendingUp,
-  TriangleAlert,
-  WalletCards,
+  Activity, ArrowLeft, ArrowRight, Banknote, BarChart3, BookOpen, ChevronDown,
+  CircleDollarSign, Clock3, ExternalLink, Eye, FileText, Landmark, Layers3,
+  LineChart, ShieldAlert, Sparkles, Target, TrendingUp, TriangleAlert, WalletCards,
 } from "lucide-react";
+import { getLocalizedSiteHref, SITE_LANGUAGES, type SiteLocale } from "@/lib/site-language";
 import type {
-  PublicWeeklyOutlookReport,
-  WeeklyOutlookBlock,
-  WeeklyOutlookButtonVariant,
-  WeeklyOutlookCalloutTone,
-  WeeklyOutlookSectionDefinition,
-  WeeklyOutlookSectionIcon,
-  WeeklyOutlookSectionTone,
-  WeeklyOutlookSectionVisual,
+  PublicWeeklyOutlookReport, WeeklyOutlookBlock, WeeklyOutlookButtonVariant,
+  WeeklyOutlookCalloutTone, WeeklyOutlookSectionDefinition, WeeklyOutlookSectionIcon,
+  WeeklyOutlookSectionTone, WeeklyOutlookSectionVisual,
 } from "@/lib/weekly-outlook";
 import { formatWeeklyOutlookDate } from "@/lib/weekly-outlook-date";
 
-type WeeklyOutlookReportViewProps = {
-  report: PublicWeeklyOutlookReport;
+const copy = {
+  fa: {
+    archive: "آرشیو گزارش‌های هفتگی", publication: "چشم‌انداز هفتگی DNH",
+    contents: "فهرست این گزارش", section: "بخش", summary: "خلاصه گزارش",
+    consultation: "درخواست مشاوره راهبردی",
+    notice: "این گزارش برای کمک به فهم زمینه تصمیم تهیه شده است و سیگنال خرید یا فروش، توصیه سرمایه‌گذاری یا تضمین بازده محسوب نمی‌شود.",
+  },
+  en: {
+    archive: "Weekly report archive", publication: "DNH Weekly Outlook",
+    contents: "In this report", section: "Section", summary: "Report summary",
+    consultation: "Request a strategic consultation",
+    notice: "This report provides context for financial decisions. It does not provide trading signals, investment advice or a guarantee of returns.",
+  },
 };
 
-const iconMap = {
-  overview: FileText,
-  risk: ShieldAlert,
-  market: BarChart3,
-  policy: Landmark,
-  asset: CircleDollarSign,
-  watch: Eye,
-  conclusion: Layers3,
-  trend: TrendingUp,
-  liquidity: WalletCards,
-  currency: Banknote,
-  inflation: LineChart,
-  portfolio: Activity,
-  timeline: Clock3,
-  target: Target,
-  warning: TriangleAlert,
-  opportunity: Sparkles,
+const sectionIcons = {
+  overview: FileText, risk: ShieldAlert, market: BarChart3, policy: Landmark,
+  asset: CircleDollarSign, watch: Eye, conclusion: Layers3, trend: TrendingUp,
+  liquidity: WalletCards, currency: Banknote, inflation: LineChart, portfolio: Activity,
+  timeline: Clock3, target: Target, warning: TriangleAlert, opportunity: Sparkles,
 } satisfies Record<WeeklyOutlookSectionIcon, typeof FileText>;
 
-const buttonVariantClasses = {
-  primary: "bg-brand-primary text-white hover:bg-brand-secondary",
-  secondary: "bg-brand-accent text-white hover:bg-[#ec7d01]",
-  outline:
-    "border border-current/15 bg-transparent text-current hover:border-brand-accent hover:text-brand-accent",
-} satisfies Record<WeeklyOutlookButtonVariant, string>;
+const sectionSurfaces = {
+  light: "bg-white text-ink", soft: "bg-surface-soft text-ink", dark: "bg-brand-secondary text-white",
+  teal: "bg-[color-mix(in_srgb,var(--dnh-accent)_43%,var(--dnh-secondary))] text-white",
+  accent: "bg-[color-mix(in_srgb,var(--dnh-primary)_15%,white)] text-ink",
+} satisfies Record<WeeklyOutlookSectionTone, string>;
 
-const toneClasses = {
-  light: {
-    section: "bg-white text-ink",
-    panel: "border-brand-primary/12 bg-[#fbfdfd]",
-    eyebrow: "text-brand-primary",
-    title: "text-ink",
-    summary: "text-ink-muted",
-    rule: "border-line",
-  },
-  soft: {
-    section: "bg-[#f6f9fa] text-ink",
-    panel: "border-brand-primary/12 bg-white",
-    eyebrow: "text-brand-primary",
-    title: "text-ink",
-    summary: "text-ink-muted",
-    rule: "border-line",
-  },
-  dark: {
-    section: "bg-[#022936] text-white",
-    panel: "border-white/10 bg-white/[0.035]",
-    eyebrow: "text-brand-accent",
-    title: "text-white",
-    summary: "text-white/62",
-    rule: "border-white/10",
-  },
-  teal: {
-    section: "bg-[#063d4d] text-white",
-    panel: "border-white/10 bg-white/[0.04]",
-    eyebrow: "text-[#9ce5fa]",
-    title: "text-white",
-    summary: "text-white/64",
-    rule: "border-white/10",
-  },
-  accent: {
-    section: "bg-[#fff7ef] text-ink",
-    panel: "border-brand-accent/18 bg-white",
-    eyebrow: "text-brand-accent",
-    title: "text-ink",
-    summary: "text-ink-muted",
-    rule: "border-brand-accent/15",
-  },
-} satisfies Record<
-  WeeklyOutlookSectionTone,
-  {
-    section: string;
-    panel: string;
-    eyebrow: string;
-    title: string;
-    summary: string;
-    rule: string;
-  }
->;
+// Confine the selected pattern to the chapter header to keep long passages easy to read.
+const sectionPatterns = {
+  plain: "",
+  grid: "bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[20px_20px]",
+  gradient: "bg-linear-to-br from-brand-accent to-transparent",
+  blueprint: "bg-[repeating-linear-gradient(135deg,currentColor_0_1px,transparent_1px_13px)]",
+  market: "bg-[repeating-linear-gradient(90deg,currentColor_0_3px,transparent_3px_16px)]",
+  spotlight: "bg-[radial-gradient(ellipse_at_center,currentColor,transparent_72%)]",
+  glass: "bg-[linear-gradient(115deg,transparent_30%,currentColor_30%_52%,transparent_52%_58%,currentColor_58%_70%,transparent_70%)]",
+  accent: "border-e-[6px] border-brand-primary",
+} satisfies Record<WeeklyOutlookSectionVisual, string>;
 
-const calloutClasses = {
-  info: "border-brand-primary/18 bg-[#eef8fb] text-[#143a45]",
-  risk: "border-orange-300/40 bg-orange-50 text-orange-950",
-  opportunity: "border-emerald-300/45 bg-emerald-50 text-emerald-950",
-  neutral: "border-line bg-[#f7f9fa] text-ink",
+const calloutStyles = {
+  info: "border-brand-accent bg-sky-50 text-sky-950",
+  risk: "border-amber-700 bg-amber-50 text-amber-950",
+  opportunity: "border-emerald-700 bg-emerald-50 text-emerald-950",
+  neutral: "border-ink-muted bg-surface-soft text-ink",
 } satisfies Record<WeeklyOutlookCalloutTone, string>;
 
-export function WeeklyOutlookReportView({
-  report,
-}: WeeklyOutlookReportViewProps) {
+const buttonStyles = {
+  primary: "border border-transparent bg-brand-accent text-white hover:underline",
+  secondary: "border border-transparent bg-page text-ink hover:underline",
+  outline: "border border-current/45 text-current hover:underline",
+} satisfies Record<WeeklyOutlookButtonVariant, string>;
+
+export function WeeklyOutlookReportView({ report, locale }: { report: PublicWeeklyOutlookReport; locale: SiteLocale }) {
+  const labels = copy[locale];
+  const language = SITE_LANGUAGES[locale];
+  const Back = locale === "fa" ? ArrowRight : ArrowLeft;
+  const sectionNumber = new Intl.NumberFormat(language.languageTag, { minimumIntegerDigits: 2 });
+  const contents = (
+    <ol className="divide-y divide-line">
+      {report.sections.map((section, index) => (
+        <li key={section.id}>
+          <a href={`#${section.id}`} className="flex min-h-11 items-baseline gap-3 py-3 text-sm leading-6 text-ink hover:text-brand-accent hover:underline focus-visible:outline-focus">
+            <span aria-hidden="true" className="shrink-0 font-bold tabular-nums text-brand-accent">{sectionNumber.format(index + 1)}</span>
+            {section.title}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+
   return (
-    <article dir="rtl" className="bg-white">
-      <header className="relative isolate overflow-hidden bg-[#021f2a] text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 80% 30%,rgba(22,115,148,.20),transparent 30%),linear-gradient(118deg,#021d27 0%,#022936 58%,#021e28 100%)",
-          }}
-        />
-
-        <div className="dnh-site-shell relative z-10 mx-auto w-full max-w-[1536px] px-5 pb-12 pt-[118px] sm:px-8 sm:pb-14 sm:pt-[126px] lg:px-12 lg:pb-16 lg:pt-[120px] xl:px-16 2xl:px-20">
-          <Link
-            href="/knowledge/weekly-outlook"
-            className="inline-flex min-h-10 items-center gap-2 text-xs font-black text-white/64 transition hover:text-brand-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
-          >
-            <ArrowRight aria-hidden="true" size={15} />
-            بازگشت به آرشیو گزارش‌ها
+    <article dir={language.direction} lang={language.languageTag} className="bg-page text-start text-ink [overflow-wrap:anywhere]">
+      <header className="border-b-4 border-brand-primary bg-brand-secondary pb-8 pt-24 text-white sm:pb-12 sm:pt-28">
+        <div className="dnh-site-shell">
+          <Link href={getLocalizedSiteHref("/knowledge/weekly-outlook", locale)} className="inline-flex min-h-11 items-center gap-2 text-sm text-white/80 hover:text-white hover:underline focus-visible:outline-brand-primary">
+            <Back size={16} aria-hidden="true" />{labels.archive}
           </Link>
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:gap-16">
-            <div>
-              <p
-                dir="ltr"
-                className="text-[11px] font-black tracking-[.22em] text-brand-accent"
-              >
-                {report.edition}
+          <div className={`mt-3 grid min-w-0 items-center gap-6 border-t border-white/20 pt-7 sm:mt-5 sm:pt-10 ${report.coverImage ? "lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-14" : ""}`}>
+            <div className="min-w-0">
+              <p className="flex items-center gap-3 text-sm font-bold text-brand-primary">
+                <span aria-hidden="true" className="h-px w-10 bg-current" />{labels.publication}
               </p>
-
-              <p className="mt-4 inline-flex items-center gap-2 border border-white/10 bg-white/[0.035] px-3 py-2 text-xs font-bold text-white/58">
-                {formatWeeklyOutlookDate(
-                  report.reportDate,
-                  report.dateCalendar,
-                  "long",
-                )}
-              </p>
+              <h1 className="mt-4 max-w-[37ch] text-balance text-[clamp(1.75rem,3.3vw,3.5rem)] font-black leading-[1.45] text-white">{report.title}</h1>
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/85">
+                {report.edition && <bdi className="border-e border-white/30 pe-4 font-bold">{report.edition}</bdi>}
+                <time dateTime={report.reportDate}>{formatWeeklyOutlookDate(report.reportDate, report.dateCalendar, "long", locale)}</time>
+              </div>
             </div>
-
-            <div>
-              <h1 className="max-w-[980px] text-[33px] font-black leading-[1.7] tracking-[-0.055em] text-white sm:text-[42px] lg:text-[54px] lg:leading-[1.52]">
-                {report.title}
-              </h1>
-
-              <p className="mt-6 max-w-[820px] text-[15px] font-medium leading-[2.05] text-white/62 sm:text-[16px]">
-                {report.excerpt}
-              </p>
-            </div>
+            {report.coverImage && (
+              <div className="border border-white/15 bg-white/5">
+                {/* eslint-disable-next-line @next/next/no-img-element -- Editors can supply local uploads or external image URLs. */}
+                <img src={report.coverImage} alt={report.coverImageAlt ?? ""} className="aspect-[2/1] w-full object-contain" />
+              </div>
+            )}
           </div>
-
-          {report.coverImage ? (
-            <figure className="mt-10 overflow-hidden border border-white/10 bg-white/[0.03]">
-              <img
-                src={report.coverImage}
-                alt={report.coverImageAlt ?? ""}
-                className="h-auto w-full object-cover"
-              />
-
-              {report.coverImageAlt ? (
-                <figcaption className="border-t border-white/10 px-5 py-3 text-xs leading-6 text-white/52">
-                  {report.coverImageAlt}
-                </figcaption>
-              ) : null}
-            </figure>
-          ) : null}
         </div>
       </header>
-
-      <div>
-        {report.sections.map((section, index) => (
-          <ReportSection
-            key={section.id}
-            section={section}
-            index={index}
-          />
-        ))}
-      </div>
-
-      <footer className="bg-white py-12">
-        <div className="dnh-site-shell mx-auto w-full max-w-[1536px] px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-          <div className="border border-line bg-[#fbfdfd] p-5 sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
-            <p className="max-w-3xl text-[13px] font-medium leading-7 text-ink-muted">
-              این گزارش برای کمک به فهم زمینه تصمیم تهیه شده است و سیگنال خرید
-              یا فروش، توصیه سرمایه‌گذاری یا تضمین بازده محسوب نمی‌شود.
-            </p>
-
-            <Link
-              href="/request-strategic-consultation"
-              className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 bg-brand-primary px-5 py-3 text-xs font-black text-white transition hover:bg-brand-secondary lg:mt-0"
-            >
-              درخواست مشاوره راهبردی
-            </Link>
+      <div className="dnh-site-shell py-6 sm:py-10 lg:py-12">
+        <div className="mx-auto grid max-w-6xl items-start gap-5 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)] lg:gap-10 xl:gap-14">
+          <nav aria-label={labels.contents} className="min-w-0 border-y border-ink/15 bg-surface-soft px-4 lg:sticky lg:top-28">
+            <details className="group lg:hidden">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
+                <BookOpen size={18} aria-hidden="true" />{labels.contents}
+                <ChevronDown size={16} aria-hidden="true" className="ms-auto group-open:rotate-180" />
+              </summary>
+              {contents}
+            </details>
+            <div data-lenis-prevent className="hidden py-3 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
+              <p className="flex items-center gap-3 border-b border-ink/20 py-3 font-bold"><BookOpen size={18} aria-hidden="true" />{labels.contents}</p>
+              {contents}
+            </div>
+          </nav>
+          <div className="min-w-0 space-y-5 sm:space-y-7">
+            {report.excerpt && (
+              <section aria-labelledby="report-summary-title" className="border-s-4 border-brand-accent bg-white px-5 py-4 sm:px-8 sm:py-6">
+                <h2 id="report-summary-title" className="font-bold text-ink">{labels.summary}</h2>
+                <p className="mt-2 max-w-prose whitespace-pre-line text-base leading-8 text-ink-muted sm:text-lg sm:leading-9">{report.excerpt}</p>
+              </section>
+            )}
+            {report.sections.map((section, index) => (
+              <ReportSection key={section.id} section={section} number={sectionNumber.format(index + 1)} locale={locale} />
+            ))}
+            <footer className="border-t border-line pt-5 text-sm leading-7 text-ink-muted">
+              <p>{labels.notice}</p>
+              <Link href={getLocalizedSiteHref("/request-strategic-consultation", locale)} className="inline-flex min-h-11 items-center font-bold text-brand-accent underline underline-offset-4 focus-visible:outline-focus">
+                {labels.consultation}
+              </Link>
+            </footer>
           </div>
         </div>
-      </footer>
+      </div>
     </article>
   );
 }
 
-function ReportSection({
-  section,
-  index,
-}: {
-  section: WeeklyOutlookSectionDefinition;
-  index: number;
-}) {
-  const tone = toneClasses[section.tone];
-  const Icon = iconMap[section.icon];
-
+function ReportSection({ section, number, locale }: { section: WeeklyOutlookSectionDefinition; number: string; locale: SiteLocale }) {
+  const Icon = sectionIcons[section.icon] ?? FileText;
+  const dark = section.tone === "dark" || section.tone === "teal";
+  const pattern = sectionPatterns[section.visual ?? "grid"];
   return (
-    <section className={`relative isolate overflow-hidden py-14 sm:py-16 lg:py-20 ${tone.section}`}>
-      <SectionVisualLayer
-        visual={section.visual ?? "grid"}
-        tone={section.tone}
-      />
-
-      <div className="dnh-site-shell relative z-10 mx-auto grid w-full max-w-[1536px] gap-8 px-5 sm:px-8 lg:grid-cols-[0.38fr_1fr] lg:gap-14 lg:px-12 xl:px-16 2xl:px-20">
-        <aside className="lg:sticky lg:top-32 lg:self-start">
-          <div className={`border ${tone.panel} p-5 sm:p-6`}>
-            <div className="flex items-start justify-between gap-5">
-              <div className="grid size-11 place-items-center border border-current/12">
-                <Icon aria-hidden="true" strokeWidth={1.6} className="size-5" />
-              </div>
-
-              <span
-                dir="ltr"
-                className="text-[11px] font-black tracking-[.18em] opacity-35"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-            </div>
-
-            {section.eyebrow ? (
-              <p className={`mt-6 text-[12px] font-black ${tone.eyebrow}`}>
-                {section.eyebrow}
-              </p>
-            ) : null}
-
-            <h2 className={`mt-2 text-[25px] font-black leading-[1.7] tracking-[-0.04em] sm:text-[30px] ${tone.title}`}>
-              {section.title}
-            </h2>
-
-            {section.summary ? (
-              <p className={`mt-4 text-[14px] font-medium leading-8 ${tone.summary}`}>
-                {section.summary}
-              </p>
-            ) : null}
-          </div>
-        </aside>
-
-        <div className={`border ${tone.rule} ${tone.panel}`}>
-          <div className="divide-y divide-current/10">
-            {section.blocks.map((block) => (
-              <ReportBlock
-                key={block.id}
-                block={block}
-                tone={section.tone}
-              />
-            ))}
-          </div>
+    <section id={section.id} aria-labelledby={`${section.id}-title`} className={`min-w-0 scroll-mt-28 border border-line px-5 py-6 sm:px-8 sm:py-8 lg:px-10 ${sectionSurfaces[section.tone]}`}>
+      <header className="relative isolate border-b border-current/15 pb-4">
+        {pattern && <span aria-hidden="true" className={`pointer-events-none absolute end-0 top-0 -z-10 h-10 w-16 opacity-[0.12] sm:w-24 ${pattern}`} />}
+        <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-bold ${dark ? "text-white/85" : "text-ink-muted"}`}>
+          <Icon size={16} aria-hidden="true" />{copy[locale].section} {number}
+          {section.eyebrow && <span className="border-s border-current/30 ps-2">{section.eyebrow}</span>}
         </div>
+        <h2 id={`${section.id}-title`} className="mt-3 font-black text-current">{section.title}</h2>
+        {section.summary && <p className="mt-3 max-w-prose whitespace-pre-line text-base leading-8 opacity-85">{section.summary}</p>}
+      </header>
+      <div className="mt-5 max-w-[74ch] space-y-5 text-base leading-8 sm:text-[17px] sm:leading-9">
+        {section.blocks.map((block) => <ReportBlock key={block.id} block={block} locale={locale} />)}
       </div>
     </section>
   );
 }
 
-function SectionVisualLayer({
-  visual,
-  tone,
-}: {
-  visual: WeeklyOutlookSectionVisual;
-  tone: WeeklyOutlookSectionTone;
-}) {
-  const dark = tone === "dark" || tone === "teal";
-  const gridColor = dark
-    ? "rgba(255,255,255,.085)"
-    : "rgba(22,115,148,.075)";
-  const lineColor = dark
-    ? "rgba(255,255,255,.16)"
-    : "rgba(22,115,148,.16)";
-
-  if (visual === "plain") {
-    return null;
-  }
-
-  if (visual === "gradient") {
-    return (
-      <>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background: dark
-              ? "radial-gradient(circle at 78% 18%,rgba(252,133,2,.18),transparent 28%),radial-gradient(circle at 10% 72%,rgba(115,216,250,.11),transparent 34%)"
-              : "radial-gradient(circle at 82% 16%,rgba(252,133,2,.18),transparent 28%),radial-gradient(circle at 10% 70%,rgba(22,115,148,.10),transparent 34%)",
-          }}
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute left-[10%] top-16 h-px w-48 bg-brand-accent/35"
-        />
-      </>
-    );
-  }
-
-  if (visual === "blueprint") {
-    return (
-      <>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-80"
-          style={{
-            backgroundImage: `linear-gradient(to right,${gridColor} 1px,transparent 1px),linear-gradient(to bottom,${gridColor} 1px,transparent 1px)`,
-            backgroundSize: "72px 72px",
-          }}
-        />
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 900 520"
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-55"
-          fill="none"
-        >
-          <path
-            d="M72 350L454 128L832 350M140 118L748 410M760 96L222 436"
-            stroke={lineColor}
-          />
-          <rect
-            x="320"
-            y="152"
-            width="250"
-            height="178"
-            stroke={lineColor}
-          />
-          <path
-            d="M320 152L445 88L570 152M570 152L710 102"
-            stroke={lineColor}
-          />
-        </svg>
-      </>
-    );
-  }
-
-  if (visual === "market") {
-    return (
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 1200 520"
-        className="pointer-events-none absolute inset-x-0 top-8 h-[420px] w-full opacity-55"
-        fill="none"
-      >
-        <path
-          d="M20 360C122 310 174 372 276 248C384 116 468 310 574 202C696 78 808 222 930 126C1038 40 1110 98 1180 56"
-          stroke="currentColor"
-          strokeOpacity={dark ? 0.16 : 0.12}
-          strokeWidth="2"
-        />
-        <path
-          d="M48 426H1152M160 80V440M360 80V440M560 80V440M760 80V440M960 80V440"
-          stroke="currentColor"
-          strokeOpacity={dark ? 0.075 : 0.06}
-        />
-        <rect
-          x="572"
-          y="194"
-          width="9"
-          height="9"
-          fill="var(--dnh-accent)"
-        />
-      </svg>
-    );
-  }
-
-  if (visual === "spotlight") {
-    return (
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: dark
-            ? "radial-gradient(circle at 50% 34%,rgba(252,133,2,.22),transparent 18%),radial-gradient(circle at 50% 34%,rgba(116,216,250,.13),transparent 44%)"
-            : "radial-gradient(circle at 50% 34%,rgba(252,133,2,.18),transparent 18%),radial-gradient(circle at 50% 34%,rgba(22,115,148,.10),transparent 44%)",
-        }}
-      />
-    );
-  }
-
-  if (visual === "glass") {
-    return (
-      <>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{
-            background: dark
-              ? "linear-gradient(126deg,rgba(255,255,255,.06),transparent 42%,rgba(252,133,2,.08))"
-              : "linear-gradient(126deg,rgba(22,115,148,.08),transparent 42%,rgba(252,133,2,.09))",
-          }}
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[8%] top-20 h-44 w-28 border border-current/10 bg-current/[0.025]"
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[18%] top-36 h-52 w-32 border border-current/10 bg-current/[0.018]"
-        />
-      </>
-    );
-  }
-
-  if (visual === "accent") {
-    return (
-      <>
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-16 right-[max(1.25rem,calc((100vw-1536px)/2+5rem))] w-px bg-brand-accent/55"
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[max(1.25rem,calc((100vw-1536px)/2+5rem))] top-28 h-3 w-3 translate-x-1/2 bg-brand-accent"
-        />
-      </>
-    );
-  }
-
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 opacity-[0.055]"
-      style={{
-        backgroundImage:
-          "linear-gradient(to right,currentColor 1px,transparent 1px),linear-gradient(to bottom,currentColor 1px,transparent 1px)",
-        backgroundSize: "118px 118px",
-      }}
-    />
-  );
-}
-
-function ReportBlock({
-  block,
-  tone,
-}: {
-  block: WeeklyOutlookBlock;
-  tone: WeeklyOutlookSectionTone;
-}) {
-  const dark = tone === "dark" || tone === "teal";
-  const textClass = dark ? "text-white/72" : "text-ink-muted";
-  const titleClass = dark ? "text-white" : "text-ink";
-
-  if (block.type === "heading") {
-    const Heading = block.level === "h2" ? "h2" : "h3";
-
-    return (
-      <div className="px-5 py-6 sm:px-7 lg:px-9">
-        <Heading
-          className={`font-black leading-[1.7] tracking-[-0.035em] ${
-            block.level === "h2" ? "text-[26px] sm:text-[32px]" : "text-[21px] sm:text-[24px]"
-          } ${titleClass}`}
-        >
-          {block.text}
-        </Heading>
-      </div>
-    );
-  }
-
-  if (block.type === "list") {
-    return (
-      <div className="px-5 py-6 sm:px-7 lg:px-9">
-        <ul className="space-y-4">
-          {block.items.map((item, index) => (
-            <li key={`${item}-${index}`} className="grid grid-cols-[auto_1fr] gap-3">
-              <span className="mt-3 h-1.5 w-1.5 bg-brand-accent" aria-hidden="true" />
-
-              <span className={`text-[15px] font-medium leading-8 ${textClass}`}>
-                {item}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
-  if (block.type === "callout") {
-    return (
-      <div className="px-5 py-6 sm:px-7 lg:px-9">
-        <div className={`border p-5 sm:p-6 ${calloutClasses[block.tone]}`}>
-          {block.title ? (
-            <p className="text-[14px] font-black">{block.title}</p>
-          ) : null}
-
-          <p className="mt-2 whitespace-pre-line text-[15px] font-medium leading-8">
-            {block.text}
-          </p>
+function ReportBlock({ block, locale }: { block: WeeklyOutlookBlock; locale: SiteLocale }) {
+  switch (block.type) {
+    case "heading": {
+      const Heading = block.level === "h2" ? "h2" : "h3";
+      return <Heading className="mt-7 text-xl font-bold leading-relaxed">{block.text}</Heading>;
+    }
+    case "paragraph":
+      return <p className="whitespace-pre-line">{block.text}</p>;
+    case "list":
+      return <ul className="list-disc space-y-2 ps-6 marker:text-current">{block.items.map((item, index) => <li key={index} className="whitespace-pre-line ps-1">{item}</li>)}</ul>;
+    case "quote":
+      return (
+        <figure className="border-s-[3px] border-brand-primary py-1 ps-4 sm:ps-6">
+          <blockquote className="whitespace-pre-line text-lg font-bold leading-9 sm:text-xl sm:leading-10">{block.text}</blockquote>
+          {block.cite && <figcaption className="mt-2 text-sm opacity-85">{block.cite}</figcaption>}
+        </figure>
+      );
+    case "callout":
+      return (
+        <aside className={`border-s-[3px] px-4 py-3 sm:px-6 ${calloutStyles[block.tone]}`}>
+          {block.title && <p className="mb-1 font-bold">{block.title}</p>}
+          <p className="whitespace-pre-line">{block.text}</p>
+        </aside>
+      );
+    case "image":
+      return (
+        <figure>
+          {/* eslint-disable-next-line @next/next/no-img-element -- Preserve the entire figure, including externally hosted charts. */}
+          <img src={block.src} alt={block.alt} loading="lazy" decoding="async" className="mx-auto h-auto max-w-full" />
+          {block.caption && <figcaption className="mt-2 border-s-2 border-current/25 ps-3 text-sm leading-6 opacity-85">{block.caption}</figcaption>}
+        </figure>
+      );
+    case "button": {
+      const external = /^(?:https?:)?\/\//i.test(block.href);
+      const Icon = external ? ExternalLink : locale === "fa" ? ArrowLeft : ArrowRight;
+      const className = `inline-flex min-h-11 max-w-full items-center justify-center gap-3 px-4 py-2 text-sm font-bold leading-6 focus-visible:outline focus-visible:outline-offset-2 ${buttonStyles[block.variant]}`;
+      const label = <><span>{block.label}</span><Icon size={16} className="shrink-0" aria-hidden="true" /></>;
+      return (
+        <div>
+          {block.note && <p className="mb-2 text-sm leading-6 opacity-85">{block.note}</p>}
+          {external || block.href.startsWith("#") ? (
+            <a href={block.href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} className={className}>{label}</a>
+          ) : (
+            <Link href={getLocalizedSiteHref(block.href, locale)} className={className}>{label}</Link>
+          )}
         </div>
-      </div>
-    );
+      );
+    }
+    case "divider":
+      return <hr className="border-current/20" />;
   }
-
-  if (block.type === "quote") {
-    return (
-      <figure className="px-5 py-6 sm:px-7 lg:px-9">
-        <blockquote className={`relative border-r-2 border-brand-accent pr-5 text-[18px] font-black leading-9 ${titleClass}`}>
-          <Quote
-            aria-hidden="true"
-            className="mb-4 h-5 w-5 text-brand-accent"
-            strokeWidth={1.6}
-          />
-          {block.text}
-        </blockquote>
-
-        {block.cite ? (
-          <figcaption className={`mt-4 text-[12px] font-bold ${textClass}`}>
-            {block.cite}
-          </figcaption>
-        ) : null}
-      </figure>
-    );
-  }
-
-  if (block.type === "image") {
-    return (
-      <figure className="px-5 py-6 sm:px-7 lg:px-9">
-        <img
-          src={block.src}
-          alt={block.alt}
-          className="h-auto w-full border border-current/10 object-cover"
-        />
-
-        {block.caption ? (
-          <figcaption className={`mt-3 text-[12px] font-medium leading-6 ${textClass}`}>
-            {block.caption}
-          </figcaption>
-        ) : null}
-      </figure>
-    );
-  }
-
-  if (block.type === "button") {
-    const isExternal = block.href.startsWith("https://");
-    const isHash = block.href.startsWith("#");
-    const className = `inline-flex min-h-12 items-center justify-center gap-2 px-5 py-3 text-[13px] font-black transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent ${buttonVariantClasses[block.variant]}`;
-    const content = (
-      <>
-        {block.label}
-        {isExternal ? (
-          <ExternalLink aria-hidden="true" size={15} />
-        ) : (
-          <ArrowLeft aria-hidden="true" size={15} />
-        )}
-      </>
-    );
-
-    return (
-      <div className="px-5 py-6 sm:px-7 lg:px-9">
-        {block.note ? (
-          <p className={`mb-3 text-[13px] font-medium leading-7 ${textClass}`}>
-            {block.note}
-          </p>
-        ) : null}
-
-        {isExternal || isHash ? (
-          <a
-            href={block.href}
-            target={isExternal ? "_blank" : undefined}
-            rel={isExternal ? "noreferrer" : undefined}
-            className={className}
-          >
-            {content}
-          </a>
-        ) : (
-          <Link href={block.href} className={className}>
-            {content}
-          </Link>
-        )}
-      </div>
-    );
-  }
-
-  if (block.type === "divider") {
-    return (
-      <div className="px-5 py-6 sm:px-7 lg:px-9">
-        <div className="flex items-center gap-4">
-          <span className="h-px flex-1 bg-current/10" />
-          <span className="h-1.5 w-1.5 bg-brand-accent" />
-          <span className="h-px flex-1 bg-current/10" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="px-5 py-6 sm:px-7 lg:px-9">
-      <p className={`whitespace-pre-line text-[16px] font-medium leading-[2.05] ${textClass}`}>
-        {block.text}
-      </p>
-    </div>
-  );
 }

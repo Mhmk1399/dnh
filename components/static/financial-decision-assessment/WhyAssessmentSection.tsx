@@ -112,7 +112,6 @@ export function WhyAssessmentSection({
               />
               <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-              
                   <h3 className="mt-2 text-[15px] font-black text-ink sm:text-[17px]">
                     {content.outcome.title}
                   </h3>
@@ -126,7 +125,7 @@ export function WhyAssessmentSection({
                   size="md"
                   icon={Arrow}
                   shape="square"
-                  className="w-full shrink-0 border-line-strong bg-white text-ink shadow-none hover:bg-brand-primary! hover:text-white sm:w-auto sm:min-w-[205px]"
+                  className="w-full shrink-0 border-line-strong bg-white text-ink shadow-none hover:bg-brand-primary! hover:text-ink sm:w-auto sm:min-w-[205px]"
                 >
                   {content.outcome.cta.label}
                 </ActionButton>

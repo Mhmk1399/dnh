@@ -1,489 +1,323 @@
 {
   "page": "private-wealth-strategy",
-  "brand": "DNH",    
-  "locale": "en-US",
+  "route": "/services/private-wealth-strategy",
+  "brand": "DNH",
+  "locale": "en",
   "direction": "ltr",
   "title": "Private Wealth Strategy",
   "english_title": "Private Wealth Strategy",
-  "section_count": 12,
+  "seo": {
+    "title": "Private Wealth Strategy | DNH",
+    "description": "An integrated review of assets, obligations, liquidity, risk and financial goals to clarify your wealth structure and the paths ahead."
+  },
   "sections": [
     {
       "order": 1,
-      "id": "private-wealth-strategy-hero",
+      "id": "private-wealth-hero",
       "type": "hero",
       "eyebrow": "Private Wealth Strategy",
-      "english_label": "Private Wealth Strategy",
-      "heading": "As wealth becomes more complex, financial decisions should follow one coherent strategy.",
+      "heading": "Private wealth strategy: financial decisions aligned with your goals",
+      "heading_highlight": "aligned with your goals",
       "paragraphs": [
-        "Over time, wealth may become distributed across property, gold, currencies, equities, businesses, private investments and cash. At the same time, there may be multiple objectives such as preserving purchasing power, growing capital, generating income, maintaining liquidity, supporting the family's future or transferring wealth.",
-        "In these circumstances, managing each asset or decision independently may not provide a complete picture of your financial position.",
-        "DNH Private Wealth Strategy is designed to create an integrated view of wealth, where assets, objectives, risk, liquidity, time horizon and major financial decisions are considered in relation to one another.",
-        "The objective is not to identify the “best investment today.” The objective is to ensure that different financial decisions make sense within a coherent strategic direction tailored to your specific circumstances."
+        "As assets, obligations and financial goals become more diverse, evaluating each investment in isolation is no longer enough.",
+        "Drawing on Dr Nasim Mohammadhassani’s specialist perspective, DNH reviews your financial position to make the structure of your wealth, its risks and the available paths clearer."
       ],
       "ctas": [
         {
-          "label": "Start an Initial Wealth Assessment",
+          "id": "assessment",
+          "label": "Start a financial decision assessment",
+          "href": "/financial-decision-assessment",
           "type": "primary"
         },
         {
-          "label": "Request a Private Consultation",
+          "id": "consultation",
+          "label": "Request a private consultation",
+          "href": "/request-strategic-consultation",
           "type": "secondary"
         }
-      ]
+      ],
+      "media": {
+        "src": "/assets/images/private-wealth-strategy-hero.webp",
+        "mobile_src": "/assets/images/private-wealth-strategy-hero.webp",
+        "alt": "A conceptual representation of private wealth strategy"
+      }
     },
     {
       "order": 2,
-      "id": "when-wealth-becomes-complex",
-      "type": "problem-recognition",
-      "eyebrow": "When Wealth Becomes More Complex",
-      "english_label": "When Wealth Becomes Complex",
-      "heading": "The issue is not always a lack of capital; sometimes the complexity of the decisions exceeds the complexity of the assets themselves.",
-      "intro": "As assets, objectives and financial responsibilities increase, the questions change as well. The issue is no longer simply “where should we invest?” It becomes necessary to understand which decision relates to which objective and how a change in one part of the structure may affect the whole.",
+      "id": "private-wealth-definition",
+      "type": "cards",
+      "theme": "soft",
+      "eyebrow": "About the service",
+      "heading": "From a collection of assets to a coherent strategy",
+      "heading_highlight": "coherent strategy",
+      "paragraphs": [
+        "Private Wealth Strategy is tailored to the circumstances of each individual or family and examines assets, obligations, liquidity and financial goals.",
+        "Its purpose is to clarify the current position, identify material risks and examine paths that can support more coherent wealth decisions."
+      ],
       "items": [
         {
-          "title": "You hold diverse assets but do not have one integrated picture",
-          "description": "Capital is distributed across several markets or asset classes, but the role of each part within the overall strategy is not clearly defined."
-        },
-        {
-          "title": "You are pursuing several financial objectives at the same time",
-          "description": "Capital preservation, growth, income, liquidity and the family's future may each create different requirements."
-        },
-        {
-          "title": "Personal wealth and the business are interconnected",
-          "description": "A significant portion of wealth may be concentrated in a company or business, meaning commercial decisions can directly affect personal wealth."
-        },
-        {
-          "title": "Major financial decisions are ahead",
-          "description": "Buying or selling a significant asset, reallocating capital, exiting a business or entering a new opportunity can materially change the financial structure."
-        },
-        {
-          "title": "Liquidity is not the same as asset value",
-          "description": "Total wealth may be substantial while a large portion of it cannot be accessed easily when needed."
-        }
-      ],
-      "closing": "At this point, the question moves beyond selecting an individual asset and becomes a need for a strategy covering the entire wealth structure.",
-      "ctas": [
-        {
-          "label": "See Whether I Need a Wealth Strategy",
-          "type": "primary"
+          "id": "service-distinction",
+          "title": "How this service differs",
+          "description": "Wealth Architecture explains how financial components relate to one another. Private Wealth Strategy applies that perspective to your circumstances through a defined specialist review.",
+          "href": "/dnh/wealth-architecture",
+          "link_label": "Explore Wealth Architecture"
         }
       ]
     },
     {
       "order": 3,
-      "id": "what-is-private-wealth-strategy",
-      "type": "definition",
-      "eyebrow": "What Is Private Wealth Strategy?",
-      "english_label": "What Is Private Wealth Strategy?",
-      "heading": "Private Wealth Strategy means turning a collection of assets, objectives and decisions into one coherent financial direction.",
-      "paragraphs": [
-        "Private Wealth Strategy is not a generic investment plan or a standard recommendation applied to everyone. It begins with the real circumstances, asset structure, objectives, constraints and priorities of each individual or family.",
-        "The aim is to develop clearer answers to several fundamental questions:"
-      ],
-      "questions": [
+      "id": "private-wealth-audience",
+      "type": "cards",
+      "eyebrow": "Who it is for",
+      "heading": "Who can benefit from a private wealth strategy?",
+      "intro": "This service is designed for individuals and families managing varied assets, financial obligations or important decisions about capital and the future.",
+      "items": [
         {
-          "title": "Where do you stand today?",
-          "description": "What does your current wealth structure, asset base, obligations and available resources look like?"
+          "id": "investors",
+          "number": "01",
+          "title": "Individuals and investors",
+          "description": "You hold different assets and want to assess their mix, risks and liquidity against your own objectives."
         },
         {
-          "title": "What is this wealth expected to do for you?",
-          "description": "Preserve value, grow, generate income, meet future needs or support intergenerational transfer?"
+          "id": "families",
+          "number": "02",
+          "title": "Families",
+          "description": "You need to align wealth preservation, family needs, long-term objectives and future planning."
         },
         {
-          "title": "How much risk and uncertainty exists within the current structure?"
-        },
-        {
-          "title": "How much liquidity should remain readily available?"
-        },
-        {
-          "title": "Which decisions matter in the short term and which matter over a longer horizon?"
-        },
-        {
-          "title": "What should be reviewed before any major change is made to the asset structure?"
-        }
-      ],
-      "closing": "Private Wealth Strategy brings these answers together so that financial decisions become part of a clear long-term path rather than a series of disconnected choices.",
-      "ctas": [
-        {
-          "label": "Start Understanding My Wealth Structure",
-          "type": "primary"
+          "id": "business-owners",
+          "number": "03",
+          "title": "Business owners",
+          "description": "Part of your wealth is tied to a business, so commercial decisions can affect your personal capital and obligations."
         }
       ]
     },
     {
       "order": 4,
-      "id": "who-is-it-for",
-      "type": "audience",
-      "eyebrow": "Who Is It For?",
-      "english_label": "Who Is It For?",
-      "heading": "Wealth strategy becomes more important when financial decisions are no longer independent of one another.",
+      "id": "private-wealth-review-signals",
+      "type": "cards",
+      "theme": "dark",
+      "eyebrow": "When to review your structure",
+      "heading": "When should you revisit your wealth structure?",
+      "heading_highlight": "revisit your wealth structure",
+      "paragraphs": [
+        "Financial, family or economic changes can mean that an existing asset structure no longer serves your needs.",
+        "At those moments, reviewing the overall wealth picture may be more useful than choosing another investment in isolation."
+      ],
       "items": [
         {
-          "title": "Individuals with diverse assets",
-          "description": "When wealth is distributed across several asset types and investments and an integrated view is needed."
+          "id": "more-diverse-assets",
+          "title": "Your assets have become more diverse",
+          "description": "Capital now sits across several areas, but its coordination and concentration of risk are unclear."
         },
         {
-          "title": "Families",
-          "description": "When several family members are involved in asset ownership, financial objectives, wealth preservation and growth, or intergenerational transfer."
+          "id": "major-decision",
+          "title": "A major financial decision lies ahead",
+          "description": "Selling an asset, expanding a business or reallocating capital could affect the whole wealth structure."
         },
         {
-          "title": "Capital owners",
-          "description": "For individuals for whom preserving, organizing and making decisions about capital has become an ongoing responsibility."
+          "id": "family-needs",
+          "title": "Your family’s financial needs have changed",
+          "description": "New obligations or long-term goals have shifted liquidity and investment priorities."
         },
         {
-          "title": "Executives and business owners",
-          "description": "When a significant portion of wealth is tied to a company or business and personal and commercial decisions affect one another."
-        },
-        {
-          "title": "People facing a major financial decision",
-          "description": "Such as selling a business, buying or selling a major asset, changing the capital structure or reallocating significant resources."
-        },
-        {
-          "title": "Families thinking about the future of their wealth",
-          "description": "When the focus extends beyond today to wealth preservation, future needs and intergenerational transfer."
-        }
-      ],
-      "ctas": [
-        {
-          "label": "Assess Whether This Service Fits My Situation",
-          "type": "primary"
+          "id": "market-conditions",
+          "title": "Market conditions are influencing decisions",
+          "description": "Economic volatility has made risk, timing or the asset mix worthy of closer review."
         }
       ]
     },
     {
       "order": 5,
-      "id": "when-you-may-need-a-wealth-strategy",
-      "type": "need-signals",
-      "eyebrow": "When You May Need a Wealth Strategy",
-      "english_label": "When You May Need a Wealth Strategy",
-      "heading": "Some financial changes are not just individual decisions; they are points at which the entire wealth strategy should be reconsidered.",
+      "id": "private-wealth-scope",
+      "type": "diagram",
+      "theme": "soft",
+      "eyebrow": "Scope of review",
+      "heading": "What does a private wealth strategy examine?",
+      "heading_highlight": "what does",
+      "paragraphs": [
+        "A meaningful review is not limited to asset values. It considers the relationship between capital, obligations, risks and future goals.",
+        "The final scope is defined around the issue and circumstances of each client."
+      ],
       "items": [
         {
-          "title": "Your assets have become dispersed over time",
-          "description": "A series of separate decisions has shaped the current mix of wealth, but there is still no unifying logic connecting the different parts."
+          "id": "assets-ownership",
+          "number": "01",
+          "title": "Assets and ownership",
+          "description": "The capital mix, concentrations and links between personal, family and business assets."
         },
         {
-          "title": "A large share of wealth is concentrated in one asset or business",
-          "description": "A change in that single area can have a significant effect on the overall financial position."
+          "id": "goals",
+          "number": "02",
+          "title": "Financial goals and priorities",
+          "description": "Needs relating to preservation, growth, income and future plans."
         },
         {
-          "title": "You are about to receive or create significant new capital",
-          "description": "A sale of an asset, business profits, inheritance or another major financial event may require priorities to be redesigned."
+          "id": "commitments",
+          "number": "03",
+          "title": "Obligations and financial flows",
+          "description": "Debt, future commitments and their relationship to available resources."
         },
         {
-          "title": "Your liquidity needs have changed",
-          "description": "A new obligation, lifestyle change, business expansion or family requirement may alter the amount of capital that needs to remain accessible."
+          "id": "liquidity",
+          "number": "04",
+          "title": "Liquidity and financial flexibility",
+          "description": "Access to capital and its fit with short- and long-term needs."
         },
         {
-          "title": "Life or family objectives have changed",
-          "description": "Changes in personal circumstances can alter the balance between growth, capital preservation, income and liquidity."
+          "id": "structural-risk",
+          "number": "05",
+          "title": "Structural risks",
+          "description": "Concentration, dependencies and factors that could make wealth more vulnerable."
         },
         {
-          "title": "Your decisions have become overly influenced by market movements",
-          "description": "If currencies, inflation or market news repeatedly change your decision-making, a longer-term strategic framework becomes more important."
+          "id": "horizon",
+          "number": "06",
+          "title": "Time horizon and economic conditions",
+          "description": "The effect of inflation, currencies and economic change in relation to goals and timing."
         }
       ],
-      "closing": "These are often the moments when reviewing the complete picture creates more value than deciding on a single asset in isolation.",
-      "ctas": [
-        {
-          "label": "Start a Review of My Wealth Position",
-          "type": "primary"
-        }
-      ]
+      "closing": "The aim is to understand how these factors interact, so financial decisions are not considered apart from the wider wealth position."
     },
     {
       "order": 6,
-      "id": "what-we-assess",
-      "type": "assessment-areas",
-      "eyebrow": "What We Assess in a Wealth Strategy",
-      "english_label": "What We Assess",
-      "heading": "Before designing a path forward, we need to understand how wealth is structured today and what needs it must serve.",
-      "intro": "Depending on the circumstances of the individual or family, the review may include the following elements:",
+      "id": "private-wealth-approach",
+      "type": "cards",
+      "eyebrow": "The DNH approach",
+      "heading": "Wealth strategy begins with understanding—not a ready-made prescription",
+      "heading_highlight": "begins with understanding",
+      "intro": "DNH’s work in private wealth is grounded in a professional framework shaped by Dr Nasim Mohammadhassani’s analytical perspective and brings three complementary lenses together.",
       "items": [
         {
-          "title": "Asset structure",
-          "description": "The types of assets held, how much capital is allocated to each area, and the degree of concentration or dispersion across the wealth structure."
+          "id": "data",
+          "label": "D | DATA INTELLIGENCE",
+          "title": "Understand the current position",
+          "description": "Review relevant information about assets, goals, liquidity and economic conditions."
         },
         {
-          "title": "Financial obligations",
-          "description": "Expenses, debts, future commitments and other requirements that affect financial decisions."
+          "id": "navigation",
+          "label": "N | NAVIGATION STRATEGY",
+          "title": "Examine the available paths",
+          "description": "Identify the constraints, risks and implications of different decision paths."
         },
         {
-          "title": "Cash flow and liquidity",
-          "description": "How accessible capital is and whether that level of access is appropriate for current and future needs."
-        },
-        {
-          "title": "Risk",
-          "description": "Risk tolerance, points of vulnerability and risks created by the existing structure."
-        },
-        {
-          "title": "Financial objectives",
-          "description": "Preserving purchasing power, growing capital, generating income, supporting the family's future or other specific objectives."
-        },
-        {
-          "title": "Time horizon",
-          "description": "Separating short-, medium- and long-term needs."
-        },
-        {
-          "title": "Business interests and private investments",
-          "description": "Where relevant, the role of businesses or illiquid assets within the overall wealth structure."
-        },
-        {
-          "title": "Real-world constraints",
-          "description": "Legal, family, corporate, banking or other constraints that need to be incorporated into the decision."
-        },
-        {
-          "title": "Economic environment",
-          "description": "Inflation, currencies, liquidity conditions and other variables that can influence financial decisions."
+          "id": "horizon",
+          "label": "H | HORIZON ARCHITECTURE",
+          "title": "Keep the future of wealth in view",
+          "description": "Assess how today’s decisions align with long-term goals and future needs."
         }
       ],
-      "closing": "At the initial stage, the objective is to understand the issue and assess fit. It is not necessarily necessary to provide all sensitive or confidential information at the outset.",
-      "ctas": [
-        {
-          "label": "Start an Initial Wealth Assessment",
-          "type": "primary"
-        }
-      ]
+      "closing": "These three pillars describe DNH’s general perspective. The scope and form of each engagement are defined separately."
     },
     {
       "order": 7,
-      "id": "from-assets-to-objectives",
-      "type": "objective-mapping",
-      "eyebrow": "From Assets to Objectives",
-      "english_label": "From Assets to Objectives",
-      "heading": "An asset gains strategic meaning when we understand the role it is expected to play within your wealth.",
-      "intro": "In Private Wealth Strategy, the value of an asset is not the only consideration. Each part of the wealth structure should be viewed in relation to one or more objectives.",
+      "id": "private-wealth-process",
+      "type": "process",
+      "theme": "dark",
+      "eyebrow": "How the engagement works",
+      "heading": "From defining the issue to examining the paths ahead",
+      "heading_highlight": "paths ahead",
+      "paragraphs": [
+        "An engagement begins by understanding your needs and financial circumstances. The issues and scope are then defined after an initial assessment.",
+        "The process can be adjusted to the complexity of the issue and the nature of the service."
+      ],
       "items": [
         {
-          "title": "Preserving value",
-          "description": "Which parts of the structure should focus more on protecting purchasing power and maintaining resilience under adverse conditions?"
+          "id": "initial",
+          "number": "01",
+          "title": "Initial assessment",
+          "description": "Clarify the decision, principal objectives and fit with DNH’s services."
         },
         {
-          "title": "Capital growth",
-          "description": "How much of the wealth can be allocated to longer-term objectives and tolerate greater volatility?"
+          "id": "scope",
+          "number": "02",
+          "title": "Define the engagement",
+          "description": "Agree the subjects, required information and intended outputs."
         },
         {
-          "title": "Generating income",
-          "description": "Should part of the asset structure generate regular cash flow for current or future needs?"
+          "id": "structure",
+          "number": "03",
+          "title": "Review the wealth structure",
+          "description": "Understand the relationships between assets, obligations, liquidity and current risks."
         },
         {
-          "title": "Liquidity and flexibility",
-          "description": "How much capital should remain available for opportunities, commitments or unexpected circumstances?"
+          "id": "options",
+          "number": "04",
+          "title": "Examine options and scenarios",
+          "description": "Compare possible paths against constraints, risks and financial objectives."
         },
         {
-          "title": "Risk management",
-          "description": "Which assets or structures can reduce the overall dependence of wealth on a single market or scenario?"
-        },
-        {
-          "title": "Family and future objectives",
-          "description": "Which parts of the structure relate to longer-term family needs or the transfer of wealth?"
-        }
-      ],
-      "closing": "Once the role of each part becomes clear, the discussion shifts from simply “holding assets” to building a strategy for the entire wealth structure.",
-      "ctas": [
-        {
-          "label": "Define the Objectives and Roles of My Assets",
-          "type": "primary"
+          "id": "next-step",
+          "number": "05",
+          "title": "Conclude and define the next step",
+          "description": "Present the agreed findings and identify matters requiring action or review. Implementation or periodic follow-up is defined separately if agreed."
         }
       ]
     },
     {
       "order": 8,
-      "id": "risk-liquidity-time-horizon",
-      "type": "strategy-dimensions",
-      "eyebrow": "Risk, Liquidity & Time Horizon",
-      "english_label": "Risk, Liquidity & Time Horizon",
-      "heading": "A strategy is more dependable when it balances expected return, risk, liquidity and time.",
-      "intro": "Three variables can materially change many wealth decisions:",
+      "id": "private-wealth-outcomes",
+      "type": "demo",
+      "eyebrow": "Potential outputs",
+      "heading": "What picture of your wealth can the review provide?",
+      "intro": "Outputs depend on your issue and the agreed scope. The purpose is to make the financial position, material risks, available options and decision priorities clearer.",
+      "badge": "DEMO | ILLUSTRATIVE EXAMPLE",
       "items": [
         {
-          "title": "Risk",
-          "description": "The question is not only how much risk you are willing to accept, but how much risk—and what kind of risk—the current structure actually creates."
+          "id": "current-structure",
+          "number": "01",
+          "title": "The current wealth structure",
+          "description": "A view of the relationships between assets, obligations, liquid resources and financial goals."
         },
         {
-          "title": "Liquidity",
-          "description": "High asset value without appropriate access to capital can create constraints when funds are needed. A strategy should define how much capital must remain accessible."
+          "id": "risks",
+          "number": "02",
+          "title": "Material risks and constraints",
+          "description": "Concentrations, vulnerabilities and liquidity limitations."
         },
         {
-          "title": "Time horizon",
-          "description": "A decision that may be appropriate for a ten-year objective is not necessarily appropriate for a six-month need. Each objective should be considered within its own time horizon."
-        }
-      ],
-      "paragraphs": [
-        "These three dimensions are interdependent. Increasing exposure to an asset may create more growth potential while at the same time increasing risk or reducing liquidity.",
-        "A wealth strategy therefore evaluates decisions not only on the attractiveness of an opportunity, but also on how well it fits acceptable risk, liquidity requirements and the time available to achieve the objective."
-      ],
-      "ctas": [
+          "id": "scenarios",
+          "number": "03",
+          "title": "Options and scenarios",
+          "description": "A comparison of possible paths and their implications under different conditions."
+        },
         {
-          "label": "Review the Risk and Liquidity of My Structure",
-          "type": "primary"
+          "id": "priorities",
+          "number": "04",
+          "title": "Decision and review priorities",
+          "description": "Matters requiring action, further analysis or later review."
+        },
+        {
+          "id": "demo",
+          "title": "Illustrative wealth-structure view",
+          "description": "In a hypothetical case, much of an individual’s wealth is concentrated in property and a business. Capital concentration, cash flow and possible liquidity routes would be examined before deciding on an asset sale or financing."
         }
-      ]
+      ],
+      "note": "This is an illustrative example, not a real DNH report. The report structure, documentation and level of detail are agreed within the engagement scope."
     },
     {
       "order": 9,
-      "id": "dnh-approach-private-wealth-strategy",
-      "type": "framework",
-      "eyebrow": "The DNH Approach to Private Wealth Strategy",
-      "english_label": "The DNH Approach",
-      "heading": "A wealth strategy does not begin with a ready-made recommendation; it begins by understanding the circumstances and building a decision logic.",
-      "intro": "DNH reviews wealth-related issues through three core layers:",
-      "pillars": [
-        {
-          "code": "D",
-          "title": "Data Intelligence",
-          "english_label": "Data Intelligence",
-          "description": "The starting point is the actual position: asset structure, objectives, liquidity, risks and relevant economic variables."
-        },
-        {
-          "code": "N",
-          "title": "Navigation Strategy",
-          "english_label": "Navigation Strategy",
-          "description": "Options, scenarios, constraints and the implications of different paths are then assessed so decisions become less reactive."
-        },
-        {
-          "code": "H",
-          "title": "Horizon Architecture",
-          "english_label": "Horizon Architecture",
-          "description": "Finally, today's decisions are aligned more closely with future objectives, long-term wealth structure, resilience and time horizon."
-        }
-      ],
-      "closing": "Using the DNH framework in this service does not mean applying one fixed formula to every client. The starting point is always the client's specific circumstances and question.",
-      "ctas": [
-        {
-          "label": "Learn More About the DNH Framework",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 10,
-      "id": "private-wealth-strategy-process",
-      "type": "process",
-      "eyebrow": "The Private Wealth Strategy Process",
-      "english_label": "The Private Wealth Strategy Process",
-      "heading": "Wealth strategy is not a one-time document; it is a path from understanding the issue to decision, implementation and review.",
-      "steps": [
-        {
-          "number": 1,
-          "title": "Initial Assessment",
-          "english_label": "Initial Assessment",
-          "description": "The nature of the issue, the reason for engagement and the initial fit for collaboration are established."
-        },
-        {
-          "number": 2,
-          "title": "Current Position & Objectives",
-          "english_label": "Current Position & Objectives",
-          "description": "Assets, obligations, liquidity, objectives, time horizon and key constraints are reviewed."
-        },
-        {
-          "number": 3,
-          "title": "Wealth Structure Analysis",
-          "english_label": "Wealth Structure Analysis",
-          "description": "Capital concentration, relationships among assets, vulnerabilities and the alignment of the current position with objectives are assessed."
-        },
-        {
-          "number": 4,
-          "title": "Scenario Analysis",
-          "english_label": "Scenario Analysis",
-          "description": "Possible paths and the potential implications of decisions are considered from the perspective of risk, liquidity and objectives."
-        },
-        {
-          "number": 5,
-          "title": "Strategic Direction",
-          "english_label": "Strategic Direction",
-          "description": "The main priorities and areas requiring action or further review are identified."
-        },
-        {
-          "number": 6,
-          "title": "Implementation Support",
-          "english_label": "Implementation Support",
-          "description": "Depending on the scope of the engagement, decisions can also be supported through the implementation stage."
-        },
-        {
-          "number": 7,
-          "title": "Ongoing Review",
-          "english_label": "Ongoing Review",
-          "description": "As financial circumstances, objectives or the economic environment change, the strategy can be revisited."
-        }
-      ],
-      "ctas": [
-        {
-          "label": "Start the Initial Assessment Stage",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 11,
-      "id": "what-you-gain",
-      "type": "outcomes",
-      "eyebrow": "What You Gain",
-      "english_label": "What You Gain",
-      "heading": "The outcome of a wealth strategy is not a generic answer; it is a clearer picture of your position and the paths worth considering.",
-      "intro": "Depending on the nature and scope of the engagement, the outcome may include:",
-      "items": [
-        {
-          "title": "A structured picture of your current wealth position",
-          "description": "A clearer view of how capital is currently distributed across different assets and obligations."
-        },
-        {
-          "title": "Key areas and major concentrations",
-          "description": "The parts of the structure that carry greater weight or importance."
-        },
-        {
-          "title": "Risks and vulnerabilities",
-          "description": "Factors that may have a greater impact on wealth under different conditions."
-        },
-        {
-          "title": "A liquidity picture",
-          "description": "The degree of financial flexibility and the areas where access to capital is more limited."
-        },
-        {
-          "title": "Connection between assets and objectives",
-          "description": "How closely the current structure aligns with financial objectives and time horizons."
-        },
-        {
-          "title": "Areas requiring review",
-          "description": "Parts of the structure that may warrant deeper analysis or a new decision."
-        },
-        {
-          "title": "Scenarios and paths for consideration",
-          "description": "Options that merit further analysis before a final decision is made."
-        },
-        {
-          "title": "Decision priorities",
-          "description": "Which issues should be addressed sooner and which decisions can be considered at a later stage."
-        }
-      ],
-      "closing": "The objective is not to guarantee a financial result or predict the future; it is to create greater clarity for decisions affecting the entire wealth structure.",
-      "ctas": [
-        {
-          "label": "Explore the Right Outcome for My Situation",
-          "type": "primary"
-        }
-      ]
-    },
-    {
-      "order": 12,
-      "id": "build-your-private-wealth-strategy",
-      "type": "final-cta",
-      "eyebrow": "Your Wealth Strategy Should Begin With Your Own Circumstances",
-      "english_label": "Build Your Private Wealth Strategy",
-      "heading": "No two wealth structures are exactly alike, so the starting point should not be a ready-made template either.",
+      "id": "private-wealth-final",
+      "type": "final_cta",
+      "eyebrow": "Next step",
+      "heading": "Your wealth strategy should begin with your own circumstances",
+      "heading_highlight": "your own circumstances",
       "paragraphs": [
-        "The amount of wealth is only one variable in a wealth strategy. Objectives, family, business interests, liquidity needs, time horizon, risk level and the decisions ahead can all materially change the appropriate structure.",
-        "For this reason, engagement with DNH begins with an initial assessment of your circumstances and the question you are facing.",
-        "At this stage, the objective is not to collect every document or all confidential details. The first step is to clarify the core issue, identify the priorities and determine whether Private Wealth Strategy is the right service for the next stage or whether another DNH service may be a better fit.",
-        "If a deeper review is appropriate, the next stage can then be defined according to the scope you require."
+        "No two wealth structures are identical. Each individual or family has a different combination of assets, obligations and objectives.",
+        "If you want a clearer view of your financial position, an initial assessment is a practical place to begin."
       ],
+      "closing": "You do not need to provide confidential documents or full asset details at the initial stage.",
       "ctas": [
         {
-          "label": "Start an Initial Wealth Assessment",
+          "id": "assessment",
+          "label": "Start a financial decision assessment",
+          "href": "/financial-decision-assessment",
           "type": "primary"
         },
         {
-          "label": "Request a Private Consultation",
+          "id": "consultation",
+          "label": "Request a private consultation",
+          "href": "/request-strategic-consultation",
           "type": "secondary"
         }
       ]

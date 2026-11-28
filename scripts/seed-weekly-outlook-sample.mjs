@@ -99,6 +99,15 @@ const weeklyOutlookReportSchema = new Schema(
       index: true,
     },
     sections: { type: [sectionSchema], required: true },
+    english: {
+      ready: Boolean,
+      title: String,
+      edition: String,
+      excerpt: String,
+      seoTitle: String,
+      seoDescription: String,
+      sections: { type: [sectionSchema], default: undefined },
+    },
     revision: { type: Number, required: true, default: 1 },
     createdBy: {
       type: Schema.Types.ObjectId,
@@ -139,6 +148,178 @@ const sampleReport = {
   status: "published",
   revision: 1,
   publishedAt: new Date("2026-10-02T12:00:00.000Z"),
+  english: {
+    ready: true,
+    title: "Global markets face high long-term yields, energy risks and a slowing US economy",
+    edition: "DNH Global Economic Weekly",
+    excerpt: "This edition reviews the global economy for the week ending 11 Mehr 1405, focusing on elevated long-term yields, energy markets and US employment data, and what they mean for financial decisions.",
+    seoTitle: "Global Economic Weekly | 2 October 2026",
+    seoDescription: "DNH reviews the US and European economies, monetary policy, energy, bonds, gold and global markets for the week ending 2 October 2026.",
+    sections: [
+      {
+        id: "section_global_snapshot",
+        eyebrow: "Week ending 11 Mehr 1405",
+        title: "The world at a glance",
+        summary: "Global markets weighed persistently high long-term yields, energy risks and weaker US economic data.",
+        icon: "overview",
+        tone: "light",
+        blocks: [
+          {
+            id: "block_snapshot_intro",
+            type: "paragraph",
+            text: "This edition examines the developments most likely to affect financial decisions, risk assessments and asset allocation over the near term.",
+          },
+          {
+            id: "block_snapshot_list",
+            type: "list",
+            items: [
+              "US employment figures for September fell short of expectations, and revisions pointed to a weaker labour market in previous months.",
+              "Long-term US Treasury yields remained near multi-year highs, and selling pressure spread to parts of the European bond market.",
+              "The dollar continued to gain against the euro and remained near the upper end of its range.",
+              "Rising risks in French government debt and higher inflation renewed investor scrutiny of European public finances.",
+              "Developments in the Middle East and the outlook for supply continued to drive energy markets.",
+              "Following a sharp correction, gold fluctuated as bond yields and interest rate expectations shifted.",
+              "US equities proved resilient at the end of the week, with technology stocks still in focus.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "section_us_economy",
+        eyebrow: "US economy",
+        title: "Hiring slows markedly",
+        summary: "US labour market data played a central role in monetary policy expectations and asset pricing.",
+        icon: "market",
+        tone: "soft",
+        blocks: [
+          {
+            id: "block_us_jobs",
+            type: "paragraph",
+            text: "The US economy added only 29,000 jobs in September, while the unemployment rate reached 4.2%. Revisions to prior months also pointed to a weaker trend in hiring.",
+          },
+          {
+            id: "block_us_policy",
+            type: "paragraph",
+            text: "The figures came as investors continued to weigh Federal Reserve policy and elevated interest rates. Economic releases now carry greater weight in market expectations of the Fed’s next move.",
+          },
+          {
+            id: "block_us_takeaway",
+            type: "callout",
+            tone: "info",
+            title: "Weekly takeaway",
+            text: "September’s employment report was one of the week’s most closely watched US releases and shifted market expectations for monetary policy.",
+          },
+          {
+            id: "block_us_bonds_heading",
+            type: "heading",
+            level: "h3",
+            text: "US Treasuries and equities",
+          },
+          {
+            id: "block_us_bonds",
+            type: "paragraph",
+            text: "The 10-year US Treasury yield traded above 5% during the week and briefly reached about 5.37%, a level rarely seen in recent years. Major US equity indices recovered some of their earlier losses at the end of the week, with technology shares still in focus.",
+          },
+        ],
+      },
+      {
+        id: "section_europe",
+        eyebrow: "Europe",
+        title: "Debt and energy risks return to focus",
+        summary: "Europe ended the week facing higher inflation, sovereign debt risks and sensitivity to energy prices.",
+        icon: "risk",
+        tone: "light",
+        blocks: [
+          {
+            id: "block_europe_debt",
+            type: "paragraph",
+            text: "The spread between French and German 10-year government bond yields exceeded 150 basis points, drawing renewed attention to France’s public finances and risks across European debt markets.",
+          },
+          {
+            id: "block_europe_inflation",
+            type: "paragraph",
+            text: "Euro area inflation rose to 3.8% in September from 3.2% the previous month. Higher energy prices were reported to be a major contributor.",
+          },
+          {
+            id: "block_europe_takeaway",
+            type: "callout",
+            tone: "risk",
+            title: "Weekly takeaway",
+            text: "By the end of the week, energy inflation and sovereign debt concerns were exerting a stronger influence on European markets.",
+          },
+        ],
+      },
+      {
+        id: "section_policy_markets",
+        eyebrow: "Monetary policy and markets",
+        title: "Higher rates for longer",
+        summary: "Global markets continued to face the prospect of elevated interest rates, with asset prices highly sensitive to bond yields.",
+        icon: "policy",
+        tone: "teal",
+        blocks: [
+          {
+            id: "block_policy_fed",
+            type: "paragraph",
+            text: "After the Federal Reserve’s recent decision to raise its policy rate to a range of 3.75% to 4%, the September employment figures have become a key consideration in assessing its next move.",
+          },
+          {
+            id: "block_policy_list",
+            type: "list",
+            items: [
+              "The dollar gained against the euro for a fourth consecutive week.",
+              "Long-term US Treasury yields remained elevated, and pressure spread to bond markets in several European economies.",
+              "Oil traded in a wide range, with developments in the Middle East remaining a major driver.",
+              "After a sharp correction early in the week, gold continued to trade unevenly.",
+              "US equities performed better towards the end of the week, with technology stocks still in focus.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "section_geo_trade",
+        eyebrow: "Trade and geopolitics",
+        title: "Energy risk alongside monetary policy",
+        summary: "Energy, trade and supply chain risks remain relevant alongside monetary policy and government debt.",
+        icon: "watch",
+        tone: "soft",
+        blocks: [
+          {
+            id: "block_geo",
+            type: "paragraph",
+            text: "Developments in the Middle East continued to feed through to energy markets and asset prices. Globally, investors face energy, trade and supply chain risks alongside monetary policy decisions and sovereign debt concerns.",
+          },
+          {
+            id: "block_oecd",
+            type: "quote",
+            text: "Global economic growth in 2026 is estimated at around 2.9%. Rising long-term yields and persistent energy risks remain important considerations for the world economy.",
+            cite: "DNH summary based on the data in this week’s report",
+          },
+        ],
+      },
+      {
+        id: "section_conclusion",
+        eyebrow: "Implications for decisions",
+        title: "Financial decisions depend on more than market direction",
+        summary: "This week again illustrated the limits of relying on a single market or indicator when making a financial decision.",
+        icon: "conclusion",
+        tone: "dark",
+        blocks: [
+          {
+            id: "block_conclusion",
+            type: "paragraph",
+            text: "Elevated long-term yields, energy risks, relatively weak US employment figures and greater sensitivity in European debt markets point to the need to examine how the economy, monetary policy, liquidity and geopolitical risk interact.",
+          },
+          {
+            id: "block_disclaimer",
+            type: "callout",
+            tone: "neutral",
+            title: "Scope of this report",
+            text: "This report provides context for financial decisions. It does not provide trading signals, investment advice or a guarantee of returns.",
+          },
+        ],
+      },
+    ],
+  },
   sections: [
     {
       id: "section_global_snapshot",
@@ -332,27 +513,29 @@ await mongoose.connect(process.env.MONGODB_URI, {
 const adminUser = await User.findOne({ role: "admin" }).select("_id").lean();
 const createdBy = adminUser?._id ?? new Types.ObjectId();
 
-const result = await WeeklyOutlookReport.findOneAndUpdate(
+const now = new Date();
+const result = await WeeklyOutlookReport.updateOne(
   { slug: sampleReport.slug },
   {
-    $set: {
+    $setOnInsert: {
       ...sampleReport,
       createdBy,
-    },
-    $setOnInsert: {
-      createdAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
     },
   },
   {
     upsert: true,
-    new: true,
+    timestamps: false,
     runValidators: true,
     setDefaultsOnInsert: true,
   },
-).lean();
+);
 
 console.log(
-  `Seeded weekly outlook: ${result.slug} (${String(result._id)})`,
+  result.upsertedCount
+    ? `Seeded bilingual weekly outlook: ${sampleReport.slug}`
+    : `Weekly outlook already exists: ${sampleReport.slug}`,
 );
 
 await mongoose.disconnect();

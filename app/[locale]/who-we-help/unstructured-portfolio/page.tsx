@@ -1,28 +1,35 @@
-import { PortfolioIntelligencePage, type PortfolioDocument } from "@/components/static/who-we-help/unstructured-portfolio/PortfolioIntelligencePage";
-import contentFa from "@/config/DNH_Fragmented_Portfolio_Without_Architecture_Final_FA.json";
+import type { Metadata } from "next";
+
+import { ReviewedContentPage } from "@/components/static/reviewed-pages/ReviewedContentPage";
+import type { ReviewedPageDocument } from "@/components/static/reviewed-pages/reviewedPageTypes";
 import contentEn from "@/config/DNH_Fragmented_Portfolio_Without_Architecture_Final_EN.json";
-import { normalizeSiteLocale } from "@/lib/site-language";
+import contentFa from "@/config/DNH_Fragmented_Portfolio_Without_Architecture_Final_FA.json";
+import { normalizeSiteLocale, type SiteLocale } from "@/lib/site-language";
 import { localizePageMetadata } from "@/lib/site-seo";
 
-const path = "/who-we-help/unstructured-portfolio";
+const ROUTE = "/who-we-help/unstructured-portfolio";
+const getContent = (locale: SiteLocale) =>
+  (locale === "fa" ? contentFa : contentEn) as ReviewedPageDocument;
 
-export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const locale = normalizeSiteLocale((await params).locale);
-  const content = (locale === "fa" ? contentFa : contentEn) as PortfolioDocument;
-  return <PortfolioIntelligencePage content={content} locale={locale} />;
+  const content = getContent(locale);
+  return localizePageMetadata(
+    { title: content.seo.title, description: content.seo.description },
+    ROUTE,
+    locale,
+  );
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const locale = normalizeSiteLocale((await params).locale);
-  const content = locale === "fa" ? contentFa : contentEn;
-  const description = content.sections[0].paragraphs?.[0] ?? content.title;
-  return localizePageMetadata({
-    title: content.title,
-    description,
-    openGraph: {
-      title: content.title,
-      description,
-      images: [{ url: "/assets/images/unstructured-portfolio.png", alt: content.title }],
-    },
-  }, path, locale);
+  return <ReviewedContentPage content={getContent(locale)} locale={locale} />;
 }

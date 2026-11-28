@@ -1,6 +1,3 @@
-"use client";
-
-import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,10 +10,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 type InsightsContent = {
   id: "insights";
@@ -49,18 +44,9 @@ const categoryIcons = {
   "economy-inflation-currency": Globe2,
   "behavioral-finance": BrainCircuit,
 } as const;
-const categoryImages = [
-  "/assets/images/private-wealth-strategy .webp",
-  "/assets/images/strategic-financial-advisory .webp",
-  "/assets/images/risk-management-wealth-protection .webp",
-  "/assets/images/portfolio-intelligence .webp",
-  "/assets/images/macro-market-advisory .webp",
-  "/assets/images/executive-briefings .webp",
-];
-
-export function HomeInsights() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function HomeInsights({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "insights" && section.type === "insight_categories",
@@ -93,10 +79,9 @@ export function HomeInsights() {
       />
       <div className="dnh-site-shell relative z-10">
         <header className="mx-auto max-w-[1180px] text-center">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-          
           </div>
           <h2
             id="home-insights-heading"
@@ -127,7 +112,7 @@ export function HomeInsights() {
         </header>
 
         <div className="mt-9 grid min-w-0 grid-cols-1 gap-5 sm:mt-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
-          {content.categories.map((category, index) => {
+          {content.categories.map((category) => {
             const Icon =
               categoryIcons[category.id as keyof typeof categoryIcons] ??
               BookOpenText;
@@ -136,11 +121,10 @@ export function HomeInsights() {
                 key={category.id}
                 className="group min-w-0 border border-line bg-page transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-brand-primary motion-reduce:transform-none motion-reduce:transition-none"
               >
-             
                 <div className="relative p-5 pt-8 sm:p-6 sm:pt-9">
                   <span
                     aria-hidden="true"
-                    className="absolute start-5 top-0 flex size-12 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-primary sm:start-6"
+                    className="absolute start-5 top-0 flex size-12 -translate-y-1/2 items-center justify-center bg-surface-soft text-brand-accent sm:start-6"
                   >
                     <Icon size={23} strokeWidth={1.6} />
                   </span>
@@ -149,7 +133,7 @@ export function HomeInsights() {
                   >
                     {category.title}
                   </h3>
-               
+
                   <p
                     className={`mt-3 text-start text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
                   >
@@ -162,11 +146,13 @@ export function HomeInsights() {
         </div>
 
         <footer className="mx-auto mt-7 grid max-w-[1080px] gap-5 text-center sm:mt-9">
-          <p
-            className={`border-y border-line py-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
-          >
-            {content.closing}
-          </p>
+          {content.closing ? (
+            <p
+              className={`border-y border-line py-4 text-[14px] text-ink-muted sm:text-[15px] ${isRTL ? "leading-[1.9]" : "leading-[1.68]"}`}
+            >
+              {content.closing}
+            </p>
+          ) : null}
           <div className="flex justify-center">
             {content.ctas.map((cta) => (
               <ActionButton
@@ -178,7 +164,7 @@ export function HomeInsights() {
                 icon={Arrow}
                 iconPosition="end"
                 dir={direction}
-                className="w-full bg-brand-accent shadow-none hover:bg-brand-primary hover:shadow-none sm:w-auto sm:min-w-[280px]"
+                className="w-full shadow-none hover:shadow-none sm:w-auto sm:min-w-[280px]"
               >
                 {cta.label}
               </ActionButton>

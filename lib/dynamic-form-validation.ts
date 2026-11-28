@@ -41,9 +41,12 @@ function parseField(raw: unknown, path: string, issues: Record<string, string>):
   if (choice && options.length < 1) issues[`${path}.options`] = "حداقل یک گزینه وارد کنید.";
   if (options.length > 50) issues[`${path}.options`] = "حداکثر ۵۰ گزینه مجاز است.";
   if (new Set(options).size !== options.length) issues[`${path}.options`] = "گزینه‌های تکراری مجاز نیست.";
-  const minLength = integer(value.minLength, 0, 0, 5000);
-  const maxLength = integer(value.maxLength, type === "textarea" ? 1200 : 200, 1, 5000);
-  if (minLength > maxLength) issues[`${path}.length`] = "حداقل طول نمی‌تواند از حداکثر بیشتر باشد.";
+  const hasTextLength = !choice && type !== "checkbox";
+  const minLength = hasTextLength ? integer(value.minLength, 0, 0, 5000) : undefined;
+  const maxLength = hasTextLength ? integer(value.maxLength, type === "textarea" ? 1200 : 200, 1, 5000) : undefined;
+  if (minLength !== undefined && maxLength !== undefined && minLength > maxLength) {
+    issues[`${path}.length`] = "حداقل طول نمی‌تواند از حداکثر بیشتر باشد.";
+  }
   return {
     id: stableId(value.id, `${path}.id`, issues), type, label,
     required: value.required === true,
@@ -86,6 +89,7 @@ export function validateFormDefinition(raw: unknown, requestedStatus?: DynamicFo
   if (formType === "single_step" && stepsRaw.length !== 1) issues.steps = "فرم تک‌مرحله‌ای باید دقیقاً یک مرحله داشته باشد.";
   const steps = stepsRaw.slice(0, 10).map((step, index) => parseStep(step, index, issues));
   const fields = steps.flatMap((step) => step.fields);
+  if (status === "published" && !fields.length) issues.fields = "برای انتشار فرم، حداقل یک فیلد اضافه کنید.";
   if (fields.length > 30) issues.fields = "حداکثر ۳۰ فیلد مجاز است.";
   const ids = [...steps.map((step) => step.id), ...fields.map((field) => field.id)];
   if (ids.some((id, index) => ids.indexOf(id) !== index)) issues.ids = "شناسه مراحل و فیلدها باید یکتا باشد.";

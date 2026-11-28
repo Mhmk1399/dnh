@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import {
   ArrowLeft,
@@ -15,10 +13,8 @@ import {
   Target,
 } from "lucide-react";
 
-import { useLanguage } from "@/components/providers/LanguageProvider";
+import type { HomepageContent } from "@/lib/homepage-content";
 import { ActionButton } from "@/components/ui/ActionButton";
-import homeFa from "@/config/DNH_Homepage_Final_FA.json";
-import homeEn from "@/config/DNH_Homepage_Final_EN.json";
 
 const paragraphIcons = {
   decision: BarChart3,
@@ -68,9 +64,9 @@ type AssessmentContent = {
   }>;
 };
 
-export function FinancialDecisionAssessmentSection() {
-  const { locale, direction, isRTL, languageTag } = useLanguage();
-  const homepage = locale === "en" ? homeEn : homeFa;
+export function FinancialDecisionAssessmentSection({ homepage }: { homepage: HomepageContent }) {
+  const { direction, locale: languageTag } = homepage;
+  const isRTL = direction === "rtl";
   const content = homepage.sections.find(
     (section) =>
       section.id === "financial-decision-assessment" &&
@@ -102,10 +98,9 @@ export function FinancialDecisionAssessmentSection() {
 
       <div className="dnh-site-shell relative z-10 grid min-w-0 gap-7 lg:grid-cols-[minmax(360px,0.82fr)_minmax(0,1.32fr)] lg:grid-rows-[auto_auto_auto_auto] lg:gap-x-10 xl:gap-x-14">
         <header className="min-w-0 text-start lg:col-start-2 lg:row-start-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-primary sm:text-[13px]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold text-brand-accent sm:text-[13px]">
             <span aria-hidden="true" className="h-[2px] w-9 bg-brand-accent" />
             <p>{content.eyebrow}</p>
-         
           </div>
 
           <h2
@@ -131,7 +126,7 @@ export function FinancialDecisionAssessmentSection() {
           </h2>
         </header>
 
-        <div className="grid min-w-0 gap-3 sm:grid-cols-3 lg:col-start-2 lg:row-start-2 lg:mt-2">
+        <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:col-start-2 lg:row-start-2 lg:mt-2">
           {content.paragraphs.map((paragraph) => {
             const Icon = paragraphIcons[paragraph.icon] ?? Target;
 
@@ -144,7 +139,7 @@ export function FinancialDecisionAssessmentSection() {
                   aria-hidden="true"
                   size={27}
                   strokeWidth={1.55}
-                  className="text-brand-primary"
+                  className="text-brand-accent"
                 />
                 <p
                   className={`mt-4 text-[13px] text-ink-muted sm:text-[14px] ${
@@ -158,7 +153,7 @@ export function FinancialDecisionAssessmentSection() {
           })}
         </div>
 
-        <div className="relative aspect-[4/5] min-h-[460px] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:h-full lg:min-h-[760px] lg:aspect-auto">
+        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface-soft lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:h-full lg:min-h-[760px] lg:aspect-auto">
           <Image
             src={content.media.src}
             alt={content.media.alt}
@@ -170,52 +165,62 @@ export function FinancialDecisionAssessmentSection() {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-ink/28 via-transparent to-brand-primary/5"
           />
-        
         </div>
 
-        <div className="border border-line bg-page lg:col-start-2 lg:row-start-3 lg:mt-2">
-          <div className="flex items-center gap-3 border-b border-line px-5 py-4 sm:px-6">
-            <Target
-              aria-hidden="true"
-              size={24}
-              strokeWidth={1.6}
-              className="text-brand-primary"
-            />
-            <h3 className="text-[16px] font-black sm:text-[18px]">
-              {content.assessment_title}
-            </h3>
-            <span aria-hidden="true" className="ms-auto h-[2px] w-10 bg-brand-accent" />
+        {content.assessment_items.length > 0 ? (
+          <div className="border border-line bg-page lg:col-start-2 lg:row-start-3 lg:mt-2">
+            <div className="flex items-center gap-3 border-b border-line px-5 py-4 sm:px-6">
+              <Target
+                aria-hidden="true"
+                size={24}
+                strokeWidth={1.6}
+                className="text-brand-accent"
+              />
+              <h3 className="text-[16px] font-black sm:text-[18px]">
+                {content.assessment_title}
+              </h3>
+              <span
+                aria-hidden="true"
+                className="ms-auto h-[2px] w-10 bg-brand-accent"
+              />
+            </div>
+
+            <ul className="grid min-w-0 grid-cols-1 sm:grid-cols-2">
+              {content.assessment_items.map((item) => {
+                const Icon = assessmentIcons[item.icon] ?? FileText;
+
+                return (
+                  <li
+                    key={item.id}
+                    className="flex min-h-[68px] items-center gap-3 border-b border-line px-4 py-3 text-start odd:sm:border-e sm:px-5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-accent"
+                    >
+                      <Icon size={20} strokeWidth={1.6} />
+                    </span>
+                    <span
+                      className={`text-[13px] font-bold text-ink sm:text-[14px] ${
+                        isRTL ? "leading-[1.75]" : "leading-[1.45]"
+                      }`}
+                    >
+                      {item.text}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+        ) : null}
 
-          <ul className="grid min-w-0 grid-cols-1 sm:grid-cols-2">
-            {content.assessment_items.map((item) => {
-              const Icon = assessmentIcons[item.icon] ?? FileText;
-
-              return (
-                <li
-                  key={item.id}
-                  className="flex min-h-[68px] items-center gap-3 border-b border-line px-4 py-3 text-start odd:sm:border-e sm:px-5"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-primary"
-                  >
-                    <Icon size={20} strokeWidth={1.6} />
-                  </span>
-                  <span
-                    className={`text-[13px] font-bold text-ink sm:text-[14px] ${
-                      isRTL ? "leading-[1.75]" : "leading-[1.45]"
-                    }`}
-                  >
-                    {item.text}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
-        <footer className="grid min-w-0 gap-4 lg:col-start-2 lg:row-start-4 lg:mt-1">
+        <footer
+          className={`grid min-w-0 gap-4 lg:col-start-2 lg:mt-1 ${
+            content.assessment_items.length > 0
+              ? "lg:row-start-4"
+              : "lg:row-start-3"
+          }`}
+        >
           <p
             className={`border-s-2 border-brand-primary ps-4 text-start text-[13px] text-ink-muted sm:text-[14px] ${
               isRTL ? "leading-[1.9]" : "leading-[1.7]"

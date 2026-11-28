@@ -115,7 +115,7 @@ export function FrameworkApplications() {
                     }`}
                   >
                     <div className="flex items-start gap-4">
-                      <span className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-primary transition-colors duration-200 group-hover:bg-brand-primary group-hover:text-white">
+                      <span className="flex size-10 shrink-0 items-center justify-center bg-surface-soft text-brand-primary transition-colors duration-200 group-hover:bg-brand-primary group-hover:text-ink">
                         <Icon aria-hidden="true" size={19} strokeWidth={1.55} />
                       </span>
                       <div className="min-w-0">
@@ -152,10 +152,7 @@ export function FrameworkApplications() {
         </div>
 
         <footer className="mt-7 flex min-w-0 justify-start border-t border-line pt-7 lg:justify-end">
-          <DnhEditorialActions
-            ctas={content.ctas}
-            direction={direction}
-          />
+          <DnhEditorialActions ctas={content.ctas} direction={direction} />
         </footer>
       </div>
     </section>
